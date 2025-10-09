@@ -1,0 +1,45 @@
+{
+  "HomePage": {
+    "title": "Foreign Investment Property Fee Calculator",
+    "subtitle": "Calculate your property investment costs with confidence",
+    "description": "Our advanced calculator helps international investors understand all associated fees and costs when purchasing property abroad.",
+    "cta": "Calculate Fees Now",
+    "learnMore": "Learn More",
+    "features": {
+      "title": "Why Choose Our Calculator",
+      "accurate": "Accurate Calculations",
+      "accurateDesc": "Get precise fee estimates based on current rates and regulations",
+      "fast": "Instant Results",
+      "fastDesc": "Calculate fees in seconds with our intelligent algorithm",
+      "transparent": "Transparent Pricing",
+      "transparentDesc": "No hidden costs - see a complete breakdown of all fees"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "step1": "Enter Property Details",
+      "step1Desc": "Provide the purchase price and property location",
+      "step2": "Review Calculations",
+      "step2Desc": "See a detailed breakdown of all applicable fees",
+      "step3": "Make Informed Decisions",
+      "step3Desc": "Understand your total investment cost before committing"
+    }
+  },
+  "Calculator": {
+    "title": "Calculate Your Fees",
+    "propertyPrice": "Property Price (USD)",
+    "interestRate": "Annual Interest Rate (%)",
+    "years": "Investment Period (Years)",
+    "calculate": "Calculate Fees",
+    "results": "Calculation Results",
+    "totalFees": "Total Fees",
+    "interestAmount": "Interest Amount",
+    "totalCost": "Total Cost",
+    "breakdown": "Fee Breakdown"
+  },
+  "Nav": {
+    "home": "Home",
+    "calculator": "Calculator",
+    "about": "About",
+    "contact": "Contact"
+  }
+}

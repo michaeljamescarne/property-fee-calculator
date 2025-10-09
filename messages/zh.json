@@ -1,0 +1,45 @@
+{
+  "HomePage": {
+    "title": "海外投资房产费用计算器",
+    "subtitle": "自信地计算您的房产投资成本",
+    "description": "我们的高级计算器帮助国际投资者了解在海外购买房产时的所有相关费用和成本。",
+    "cta": "立即计算费用",
+    "learnMore": "了解更多",
+    "features": {
+      "title": "为什么选择我们的计算器",
+      "accurate": "精确计算",
+      "accurateDesc": "基于当前费率和法规获得精确的费用估算",
+      "fast": "即时结果",
+      "fastDesc": "使用我们的智能算法在几秒钟内计算费用",
+      "transparent": "透明定价",
+      "transparentDesc": "没有隐藏成本 - 查看所有费用的完整明细"
+    },
+    "howItWorks": {
+      "title": "工作原理",
+      "step1": "输入房产详情",
+      "step1Desc": "提供购买价格和房产位置",
+      "step2": "查看计算结果",
+      "step2Desc": "查看所有适用费用的详细明细",
+      "step3": "做出明智决策",
+      "step3Desc": "在承诺之前了解您的总投资成本"
+    }
+  },
+  "Calculator": {
+    "title": "计算您的费用",
+    "propertyPrice": "房产价格（美元）",
+    "interestRate": "年利率（%）",
+    "years": "投资期限（年）",
+    "calculate": "计算费用",
+    "results": "计算结果",
+    "totalFees": "总费用",
+    "interestAmount": "利息金额",
+    "totalCost": "总成本",
+    "breakdown": "费用明细"
+  },
+  "Nav": {
+    "home": "首页",
+    "calculator": "计算器",
+    "about": "关于",
+    "contact": "联系"
+  }
+}
