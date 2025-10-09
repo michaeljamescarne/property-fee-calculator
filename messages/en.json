@@ -101,6 +101,11 @@
           "Loss of capital gains and future approval difficulties"
         ]
       }
+    },
+    "cta": {
+      "title": "Ready to Verify Your Investment?",
+      "subtitle": "Get instant calculations of all fees and costs associated with your Australian property investment.",
+      "button": "Calculate Fees Now"
     }
   },
   "Calculator": {
