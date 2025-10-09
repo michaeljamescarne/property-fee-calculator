@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calculator, TrendingUp, Shield } from 'lucide-react';
+import { ArrowRight, Calculator, TrendingUp, Shield, FileText, CheckCircle } from 'lucide-react';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -110,6 +110,66 @@ export default function HomePage() {
               <h3 className="text-xl font-semibold mb-2">{t('howItWorks.step3')}</h3>
               <p className="text-muted-foreground">{t('howItWorks.step3Desc')}</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Fees Required Section */}
+      <section className="bg-muted/50 py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-6">
+            {t('feesRequired.title')}
+          </h2>
+          <p className="text-lg text-muted-foreground text-center mb-12 max-w-4xl mx-auto">
+            {t('feesRequired.subtitle')}
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* FIRB Fees Required */}
+            <Card className="border-orange-200 bg-orange-50/50">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-orange-100 p-3 rounded-lg">
+                    <FileText className="h-6 w-6 text-orange-600" />
+                  </div>
+                  <CardTitle className="text-orange-800">{t('feesRequired.required.title')}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {t.raw('feesRequired.required.items').map((item: string, index: number) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <div className="bg-orange-200 rounded-full p-1 mt-0.5">
+                        <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
+                      </div>
+                      <span className="text-orange-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Fees NOT Required */}
+            <Card className="border-green-200 bg-green-50/50">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-green-100 p-3 rounded-lg">
+                    <CheckCircle className="h-6 w-6 text-green-600" />
+                  </div>
+                  <CardTitle className="text-green-800">{t('feesRequired.notRequired.title')}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {t.raw('feesRequired.notRequired.items').map((item: string, index: number) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-green-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

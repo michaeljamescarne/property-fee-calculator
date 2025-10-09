@@ -22,6 +22,27 @@
       "step2Desc": "See a detailed breakdown of all applicable fees",
       "step3": "Make Informed Decisions",
       "step3Desc": "Understand your total investment cost before committing"
+    },
+    "feesRequired": {
+      "title": "When Are These Fees Required?",
+      "subtitle": "Foreign investment fees are required in specific circumstances when purchasing Australian residential property:",
+      "required": {
+        "title": "FIRB Fees Required",
+        "items": [
+          "Foreign citizens purchasing any Australian residential property",
+          "Temporary residents buying established dwellings or vacant land",
+          "Non-residents making any residential property investment",
+          "Companies/trusts with foreign ownership purchasing residential property"
+        ]
+      },
+      "notRequired": {
+        "title": "Fees NOT required if you are:",
+        "items": [
+          "An Australian citizen or permanent resident",
+          "A New Zealand citizen with Special Category Visa (subclass 444)",
+          "A temporary resident buying a new dwelling to live in"
+        ]
+      }
     }
   },
   "Calculator": {
