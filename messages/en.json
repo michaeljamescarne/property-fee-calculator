@@ -43,6 +43,64 @@
           "A temporary resident buying a new dwelling to live in"
         ]
       }
+    },
+    "firbApproval": {
+      "title": "When is FIRB Approval Required?",
+      "subtitle": "Understanding the Foreign Investment Review Board (FIRB) approval process and requirements",
+      "whatIs": {
+        "title": "What is FIRB?",
+        "content": "The Foreign Investment Review Board (FIRB) is an Australian government body that reviews foreign investment proposals. Under the Foreign Acquisitions and Takeovers Act 1975, foreign persons must obtain FIRB approval before purchasing residential property in Australia."
+      },
+      "timeline": {
+        "title": "Processing Timeline",
+        "standard": "Standard applications take 30 days from receipt of complete application",
+        "expedited": "Expedited processing available for additional fee (10 days)",
+        "complex": "Complex applications may take 90+ days"
+      },
+      "process": {
+        "title": "The FIRB Process",
+        "steps": [
+          {
+            "step": "1",
+            "title": "Apply Online",
+            "description": "Submit your application through the FIRB portal with property details and supporting documents"
+          },
+          {
+            "step": "2", 
+            "title": "Pay Application Fee",
+            "description": "Application fees range from $13,200 to $100,000+ based on property value"
+          },
+          {
+            "step": "3",
+            "title": "Wait for Decision",
+            "description": "Standard processing takes 30 days. You'll receive a 'no objection' notification if approved"
+          },
+          {
+            "step": "4",
+            "title": "Settle Property",
+            "description": "Complete your purchase within 12 months of approval and comply with all conditions"
+          }
+        ]
+      },
+      "requirements": {
+        "title": "Key Requirements",
+        "items": [
+          "Property-specific application (cannot get pre-approval)",
+          "Complete documentation including passport, visa, and property details",
+          "Non-refundable application fee",
+          "Compliance with approval conditions (e.g., primary residence for temporary residents)"
+        ]
+      },
+      "penalties": {
+        "title": "Important: Penalties for Non-Compliance",
+        "warning": "Purchasing without FIRB approval when required is a serious offence with severe penalties:",
+        "items": [
+          "Fines up to $3.3 million for individuals",
+          "Criminal prosecution with up to 10 years imprisonment", 
+          "Forced divestment (must sell the property)",
+          "Loss of capital gains and future approval difficulties"
+        ]
+      }
     }
   },
   "Calculator": {
