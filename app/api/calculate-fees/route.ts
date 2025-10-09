@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
       totalCost: Math.round(totalCost * 100) / 100
     });
   } catch (error) {
+    console.error('Calculation error:', error);
     return NextResponse.json(
       { error: 'Calculation failed' },
       { status: 500 }

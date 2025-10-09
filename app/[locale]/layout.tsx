@@ -1,5 +1,4 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 import Navigation from '@/components/Navigation';
@@ -8,17 +7,20 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const messages = await getMessages();
+  const { locale } = await params;
+  
+  // Load messages directly
+  const messages = await import(`../../messages/${locale}.json`);
 
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages.default}>
           <Navigation />
           {children}
         </NextIntlClientProvider>
