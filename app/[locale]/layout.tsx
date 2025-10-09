@@ -14,13 +14,16 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   
+  // Ensure locale is valid, fallback to 'en'
+  const validLocale = locale && ['en', 'zh'].includes(locale) ? locale : 'en';
+  
   // Load messages directly
-  const messages = await import(`../../messages/${locale}.json`);
+  const messages = await import(`../../messages/${validLocale}.json`);
 
   return (
-    <html lang={locale}>
+    <html lang={validLocale}>
       <body className={inter.className}>
-        <NextIntlClientProvider messages={messages.default} locale={locale}>
+        <NextIntlClientProvider messages={messages.default} locale={validLocale}>
           <Navigation />
           {children}
         </NextIntlClientProvider>
