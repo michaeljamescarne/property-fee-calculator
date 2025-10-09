@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,6 +8,7 @@ import { ArrowRight, Calculator, TrendingUp, Shield, FileText, CheckCircle, Cloc
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
+  const locale = useLocale();
 
   return (
     <main className="min-h-screen">
@@ -316,7 +317,7 @@ export default function HomePage() {
           <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
             {t('cta.subtitle')}
           </p>
-          <Link href={`/${useLocale()}/calculator`}>
+          <Link href={`/${locale}/calculator`}>
             <Button size="lg" variant="secondary" className="text-lg px-8 py-6 h-auto">
               {t('cta.button')}
               <ArrowRight className="ml-2 h-5 w-5" />
