@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calculator, TrendingUp, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2, DollarSign } from 'lucide-react';
+import { ArrowRight, Calculator, TrendingUp, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -243,7 +243,7 @@ export default function HomePage() {
           <div className="max-w-5xl mx-auto mb-16">
             <h3 className="text-2xl font-bold text-center mb-8">{t('firbApproval.process.title')}</h3>
             <div className="grid md:grid-cols-4 gap-6">
-              {t.raw('firbApproval.process.steps').map((step: any, index: number) => (
+              {t.raw('firbApproval.process.steps').map((step: { step: string; title: string; description: string }, index: number) => (
                 <div key={index} className="text-center">
                   <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">
                     {step.step}
