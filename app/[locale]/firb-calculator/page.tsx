@@ -173,6 +173,31 @@ export default function FIRBCalculatorPage() {
     setCurrentStep('review');
   };
 
+  // Handle start again - reset everything
+  const handleStartAgain = () => {
+    // Reset all form data
+    setFormData({
+      citizenshipStatus: undefined,
+      visaType: undefined,
+      isOrdinarilyResident: undefined,
+      propertyType: undefined,
+      propertyValue: undefined,
+      state: undefined,
+      propertyAddress: '',
+      isFirstHome: false,
+      depositPercent: 20,
+      entityType: 'individual',
+    });
+    
+    // Reset steps
+    setCurrentStep('citizenship');
+    setCompletedSteps([]);
+    
+    // Clear results
+    setEligibility(null);
+    setCosts(null);
+  };
+
   return (
     <main className="min-h-screen bg-muted">
       <div className="container mx-auto px-4 py-12 md:py-16">
@@ -295,6 +320,7 @@ export default function FIRBCalculatorPage() {
               onDownloadPDF={handleDownloadPDF}
               onEmailResults={handleEmailResults}
               onEditCalculation={handleEditCalculation}
+              onStartAgain={handleStartAgain}
             />
           )}
         </div>

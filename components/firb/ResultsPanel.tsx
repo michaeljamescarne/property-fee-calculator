@@ -15,7 +15,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Download, Mail, Edit, CheckCircle, AlertTriangle, XCircle, Info } from 'lucide-react';
+import { Download, Mail, Edit, CheckCircle, AlertTriangle, XCircle, Info, RotateCcw } from 'lucide-react';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 
@@ -25,6 +25,7 @@ interface ResultsPanelProps {
   onDownloadPDF: () => void;
   onEmailResults: () => void;
   onEditCalculation: () => void;
+  onStartAgain: () => void;
 }
 
 export default function ResultsPanel({
@@ -32,7 +33,8 @@ export default function ResultsPanel({
   costs,
   onDownloadPDF,
   onEmailResults,
-  onEditCalculation
+  onEditCalculation,
+  onStartAgain
 }: ResultsPanelProps) {
   const t = useTranslations('FIRBCalculator.results');
 
@@ -251,6 +253,15 @@ export default function ResultsPanel({
         >
           <Edit className="h-5 w-5" />
           {t('actions.editCalculation')}
+        </Button>
+        <Button
+          onClick={onStartAgain}
+          variant="outline"
+          size="lg"
+          className="gap-2"
+        >
+          <RotateCcw className="h-5 w-5" />
+          {t('actions.startAgain')}
         </Button>
       </div>
 
