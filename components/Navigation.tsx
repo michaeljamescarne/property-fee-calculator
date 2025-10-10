@@ -34,6 +34,9 @@ export default function Navigation() {
           <Link href={`/${locale}/calculator`} className="hover:text-primary transition-colors">
             {t('calculator')}
           </Link>
+          <Link href={`/${locale}/firb-calculator`} className="hover:text-primary transition-colors">
+            {t('firbCalculator')}
+          </Link>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
