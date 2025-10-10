@@ -111,6 +111,7 @@
   "Nav": {
     "home": "Home",
     "calculator": "FIRB Calculator",
+    "faq": "FAQ",
     "about": "About",
     "contact": "Contact"
   },
@@ -125,7 +126,8 @@
       "home": "Home",
       "calculator": "Calculator",
       "features": "Features",
-      "howItWorks": "How It Works"
+      "howItWorks": "How It Works",
+      "faq": "FAQ"
     },
     "resources": {
       "title": "Official Resources",
