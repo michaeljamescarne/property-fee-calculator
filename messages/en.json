@@ -125,5 +125,40 @@
     "calculator": "Calculator",
     "about": "About",
     "contact": "Contact"
+  },
+  "Footer": {
+    "company": {
+      "name": "Property Fee Calculator",
+      "description": "Helping international investors understand Australian property investment costs with accurate, transparent calculations.",
+      "rights": "All rights reserved"
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "calculator": "Calculator",
+      "features": "Features",
+      "howItWorks": "How It Works"
+    },
+    "resources": {
+      "title": "Official Resources",
+      "firb": "FIRB (Foreign Investment Review Board)",
+      "ato": "Australian Taxation Office",
+      "homeAffairs": "Department of Home Affairs",
+      "legislation": "Australian Legislation"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "email": "info@propertyfeecalculator.com",
+      "phone": "+61 1 2345 6789",
+      "address": "Sydney, NSW, Australia"
+    },
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "disclaimer": "Disclaimer"
+    },
+    "disclaimer": {
+      "text": "Disclaimer: This calculator provides estimates only and should not be considered financial or legal advice. Fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions. We are not affiliated with FIRB or any Australian government agency."
+    }
   }
 }

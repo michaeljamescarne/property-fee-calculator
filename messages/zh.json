@@ -125,5 +125,40 @@
     "calculator": "计算器",
     "about": "关于",
     "contact": "联系"
+  },
+  "Footer": {
+    "company": {
+      "name": "房产费用计算器",
+      "description": "帮助国际投资者通过准确、透明的计算了解澳大利亚房产投资成本。",
+      "rights": "版权所有"
+    },
+    "quickLinks": {
+      "title": "快速链接",
+      "home": "首页",
+      "calculator": "计算器",
+      "features": "功能",
+      "howItWorks": "工作原理"
+    },
+    "resources": {
+      "title": "官方资源",
+      "firb": "FIRB（外国投资审查委员会）",
+      "ato": "澳大利亚税务局",
+      "homeAffairs": "内政部",
+      "legislation": "澳大利亚立法"
+    },
+    "contact": {
+      "title": "联系我们",
+      "email": "info@propertyfeecalculator.com",
+      "phone": "+61 1 2345 6789",
+      "address": "澳大利亚新南威尔士州悉尼"
+    },
+    "legal": {
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "disclaimer": "免责声明"
+    },
+    "disclaimer": {
+      "text": "免责声明：本计算器仅提供估算，不应被视为财务或法律建议。费用、法规和要求可能会发生变化。在做出房产投资决策之前，请务必咨询合格的专业人士，包括移民律师、税务顾问和持牌产权转让师。我们与FIRB或任何澳大利亚政府机构无关联。"
+    }
   }
 }
