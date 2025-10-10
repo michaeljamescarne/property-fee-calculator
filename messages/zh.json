@@ -111,6 +111,7 @@
   "Nav": {
     "home": "首页",
     "calculator": "FIRB计算器",
+    "faq": "常见问题",
     "about": "关于",
     "contact": "联系"
   },
@@ -125,7 +126,8 @@
       "home": "首页",
       "calculator": "计算器",
       "features": "功能",
-      "howItWorks": "工作原理"
+      "howItWorks": "工作原理",
+      "faq": "常见问题"
     },
     "resources": {
       "title": "官方资源",

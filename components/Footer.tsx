@@ -87,6 +87,14 @@ export default function Footer() {
                   {t('quickLinks.howItWorks')}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/${locale}/faq`}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('quickLinks.faq')}
+                </Link>
+              </li>
             </ul>
           </div>
 
