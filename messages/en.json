@@ -108,21 +108,9 @@
       "button": "Calculate Fees Now"
     }
   },
-  "Calculator": {
-    "title": "Calculate Your Fees",
-    "propertyPrice": "Property Price (USD)",
-    "interestRate": "Annual Interest Rate (%)",
-    "years": "Investment Period (Years)",
-    "calculate": "Calculate Fees",
-    "results": "Calculation Results",
-    "totalFees": "Total Fees",
-    "interestAmount": "Interest Amount",
-    "totalCost": "Total Cost",
-    "breakdown": "Fee Breakdown"
-  },
   "Nav": {
     "home": "Home",
-    "calculator": "Calculator",
+    "calculator": "FIRB Calculator",
     "about": "About",
     "contact": "Contact"
   },
@@ -159,6 +147,176 @@
     },
     "disclaimer": {
       "text": "Disclaimer: This calculator provides estimates only and should not be considered financial or legal advice. Fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions. We are not affiliated with FIRB or any Australian government agency."
+    }
+  },
+  "FIRBCalculator": {
+    "title": "FIRB Calculator",
+    "description": "Calculate your complete property investment costs including FIRB fees, stamp duty, and ongoing expenses",
+    "next": "Next",
+    "back": "Back",
+    "progress": {
+      "citizenship": "Citizenship",
+      "property": "Property",
+      "review": "Review",
+      "results": "Results"
+    },
+    "citizenship": {
+      "title": "Citizenship Status",
+      "description": "Tell us about your citizenship status to determine your eligibility and requirements",
+      "statusLabel": "What is your citizenship status?",
+      "australian": {
+        "title": "Australian Citizen",
+        "description": "Born in Australia or naturalized Australian citizen"
+      },
+      "permanent": {
+        "title": "Permanent Resident",
+        "description": "Hold a permanent residence visa (subclass 100, 189, 190, etc.)"
+      },
+      "temporary": {
+        "title": "Temporary Resident",
+        "description": "Hold a temporary visa (student, work, partner visa)"
+      },
+      "foreign": {
+        "title": "Foreign Person",
+        "description": "Do not hold Australian citizenship or residency"
+      },
+      "visaType": {
+        "label": "What type of visa do you hold?",
+        "description": "Select your current visa subclass",
+        "placeholder": "Select visa type"
+      },
+      "ordinaril yResident": {
+        "label": "I am ordinarily resident in Australia",
+        "description": "You live in Australia and it is your permanent home (even if temporarily overseas)"
+      },
+      "info": {
+        "australian": "As an Australian citizen ordinarily resident, you generally have no restrictions on property purchases and no FIRB approval required.",
+        "permanent": "As a permanent resident, you have the same property rights as Australian citizens with no FIRB approval required.",
+        "temporary": "As a temporary resident, you can purchase new dwellings for use as your principal place of residence. FIRB approval is required.",
+        "foreign": "As a foreign person, you can purchase new dwellings or vacant land for development. FIRB approval is mandatory for all purchases."
+      }
+    },
+    "property": {
+      "title": "Property Details",
+      "description": "Provide information about the property you're considering",
+      "typeLabel": "Property Type",
+      "types": {
+        "newDwelling": {
+          "title": "New Dwelling",
+          "description": "Brand new property or off-the-plan purchase"
+        },
+        "established": {
+          "title": "Established Dwelling",
+          "description": "Existing property with previous owners"
+        },
+        "vacantLand": {
+          "title": "Vacant Land",
+          "description": "Empty land for development"
+        },
+        "commercial": {
+          "title": "Commercial Property",
+          "description": "Commercial or investment property"
+        }
+      },
+      "valueLabel": "Property Purchase Price",
+      "stateLabel": "State or Territory",
+      "statePlaceholder": "Select state",
+      "addressLabel": "Property Address",
+      "addressPlaceholder": "123 Example Street, Suburb, State",
+      "optional": "Optional",
+      "firstHome": {
+        "label": "I am a first home buyer",
+        "description": "You may be eligible for stamp duty concessions"
+      },
+      "depositLabel": "Deposit Percentage",
+      "depositAmount": "Deposit amount",
+      "entityLabel": "Purchasing Entity",
+      "entityPlaceholder": "Select entity type",
+      "entities": {
+        "individual": "Individual",
+        "company": "Company",
+        "trust": "Trust"
+      },
+      "entityDescription": "The legal entity that will own the property"
+    },
+    "review": {
+      "title": "Review Your Information",
+      "description": "Please review your details before calculating",
+      "citizenshipTitle": "Citizenship Information",
+      "propertyTitle": "Property Information",
+      "edit": "Edit",
+      "calculateButton": "Calculate Costs",
+      "calculating": "Calculating...",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "results": {
+      "eligible": {
+        "title": "Eligible to Purchase",
+        "firbRequired": "FIRB approval is required before you can proceed with the purchase",
+        "noFirbRequired": "You can proceed without FIRB approval"
+      },
+      "notEligible": {
+        "title": "Purchase Restrictions Apply",
+        "description": "Based on your citizenship status, you may not be eligible to purchase this type of property"
+      },
+      "processingTime": {
+        "title": "FIRB Processing Timeline",
+        "standard": "Standard Processing",
+        "expedited": "Expedited Processing",
+        "expeditedNote": "Double the application fee"
+      },
+      "restrictions": {
+        "title": "Restrictions & Requirements",
+        "description": "Important conditions that apply to your purchase"
+      },
+      "recommendations": {
+        "title": "Recommendations"
+      },
+      "costs": {
+        "title": "Investment Cost Breakdown",
+        "description": "Detailed breakdown of all costs associated with your property purchase",
+        "totalInvestment": "Total Investment Required",
+        "propertyPrice": "Property Price",
+        "upfrontCosts": "Additional Upfront Costs",
+        "subtotal": "Subtotal",
+        "annualOngoing": "Annual Ongoing Costs",
+        "annualOngoingNote": "Estimated annual recurring expenses"
+      },
+      "actions": {
+        "downloadPDF": "Download PDF Report",
+        "emailResults": "Email Results",
+        "editCalculation": "Edit Calculation"
+      },
+      "disclaimer": {
+        "title": "Important Disclaimer",
+        "content": "This calculator provides estimates only and should not be considered financial or legal advice. Actual costs may vary. FIRB regulations are subject to change. We strongly recommend consulting with qualified professionals including lawyers, accountants, and FIRB specialists before making any property investment decisions."
+      }
+    },
+    "emailModal": {
+      "title": "Email Your Results",
+      "description": "Enter your email address to receive a copy of your FIRB calculation results",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "nameLabel": "Your Name",
+      "namePlaceholder": "John Smith",
+      "optional": "Optional",
+      "consentLabel": "I consent to receive my calculation results via email",
+      "consentDescription": "We will only use your email to send you the requested results. We do not share your information with third parties.",
+      "info": "You will receive a detailed PDF report with your complete cost breakdown and eligibility information.",
+      "send": "Send Results",
+      "sending": "Sending...",
+      "cancel": "Cancel",
+      "success": {
+        "title": "Email Sent Successfully!",
+        "description": "Check your inbox for your FIRB calculation results."
+      },
+      "errors": {
+        "required": "Please fill in all required fields",
+        "invalidEmail": "Please enter a valid email address",
+        "sendFailed": "Failed to send email. Please try again.",
+        "general": "An error occurred. Please try again."
+      }
     }
   }
 }

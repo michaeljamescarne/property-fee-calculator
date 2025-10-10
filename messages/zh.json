@@ -108,21 +108,9 @@
       "button": "立即计算费用"
     }
   },
-  "Calculator": {
-    "title": "计算您的费用",
-    "propertyPrice": "房产价格（美元）",
-    "interestRate": "年利率（%）",
-    "years": "投资期限（年）",
-    "calculate": "计算费用",
-    "results": "计算结果",
-    "totalFees": "总费用",
-    "interestAmount": "利息金额",
-    "totalCost": "总成本",
-    "breakdown": "费用明细"
-  },
   "Nav": {
     "home": "首页",
-    "calculator": "计算器",
+    "calculator": "FIRB计算器",
     "about": "关于",
     "contact": "联系"
   },
@@ -159,6 +147,176 @@
     },
     "disclaimer": {
       "text": "免责声明：本计算器仅提供估算，不应被视为财务或法律建议。费用、法规和要求可能会发生变化。在做出房产投资决策之前，请务必咨询合格的专业人士，包括移民律师、税务顾问和持牌产权转让师。我们与FIRB或任何澳大利亚政府机构无关联。"
+    }
+  },
+  "FIRBCalculator": {
+    "title": "FIRB计算器",
+    "description": "计算包括FIRB费用、印花税和持续费用在内的完整房产投资成本",
+    "next": "下一步",
+    "back": "返回",
+    "progress": {
+      "citizenship": "公民身份",
+      "property": "房产",
+      "review": "审核",
+      "results": "结果"
+    },
+    "citizenship": {
+      "title": "公民身份状态",
+      "description": "告诉我们您的公民身份状态，以确定您的资格和要求",
+      "statusLabel": "您的公民身份状态是什么？",
+      "australian": {
+        "title": "澳大利亚公民",
+        "description": "在澳大利亚出生或入籍的澳大利亚公民"
+      },
+      "permanent": {
+        "title": "永久居民",
+        "description": "持有永久居留签证（100、189、190等子类）"
+      },
+      "temporary": {
+        "title": "临时居民",
+        "description": "持有临时签证（学生签证、工作签证、伴侣签证）"
+      },
+      "foreign": {
+        "title": "外国人",
+        "description": "不持有澳大利亚公民身份或居留权"
+      },
+      "visaType": {
+        "label": "您持有什么类型的签证？",
+        "description": "选择您当前的签证子类",
+        "placeholder": "选择签证类型"
+      },
+      "ordinaril yResident": {
+        "label": "我通常居住在澳大利亚",
+        "description": "您居住在澳大利亚，这是您的永久家园（即使暂时在海外）"
+      },
+      "info": {
+        "australian": "作为通常居住在澳大利亚的澳大利亚公民，您通常对房产购买没有限制，也不需要FIRB批准。",
+        "permanent": "作为永久居民，您拥有与澳大利亚公民相同的房产权利，不需要FIRB批准。",
+        "temporary": "作为临时居民，您可以购买新住宅作为您的主要居所。需要FIRB批准。",
+        "foreign": "作为外国人，您可以购买新住宅或空地用于开发。所有购买都必须获得FIRB批准。"
+      }
+    },
+    "property": {
+      "title": "房产详情",
+      "description": "提供您正在考虑的房产信息",
+      "typeLabel": "房产类型",
+      "types": {
+        "newDwelling": {
+          "title": "新住宅",
+          "description": "全新房产或期房购买"
+        },
+        "established": {
+          "title": "现房",
+          "description": "有过前业主的现有房产"
+        },
+        "vacantLand": {
+          "title": "空地",
+          "description": "用于开发的空地"
+        },
+        "commercial": {
+          "title": "商业房产",
+          "description": "商业或投资房产"
+        }
+      },
+      "valueLabel": "房产购买价格",
+      "stateLabel": "州或地区",
+      "statePlaceholder": "选择州",
+      "addressLabel": "房产地址",
+      "addressPlaceholder": "123 Example Street, Suburb, State",
+      "optional": "可选",
+      "firstHome": {
+        "label": "我是首次购房者",
+        "description": "您可能有资格获得印花税优惠"
+      },
+      "depositLabel": "首付款百分比",
+      "depositAmount": "首付款金额",
+      "entityLabel": "购买实体",
+      "entityPlaceholder": "选择实体类型",
+      "entities": {
+        "individual": "个人",
+        "company": "公司",
+        "trust": "信托"
+      },
+      "entityDescription": "将拥有该房产的法律实体"
+    },
+    "review": {
+      "title": "审核您的信息",
+      "description": "请在计算前审核您的详细信息",
+      "citizenshipTitle": "公民身份信息",
+      "propertyTitle": "房产信息",
+      "edit": "编辑",
+      "calculateButton": "计算费用",
+      "calculating": "计算中...",
+      "yes": "是",
+      "no": "否"
+    },
+    "results": {
+      "eligible": {
+        "title": "符合购买资格",
+        "firbRequired": "在继续购买之前需要获得FIRB批准",
+        "noFirbRequired": "您可以在没有FIRB批准的情况下继续"
+      },
+      "notEligible": {
+        "title": "适用购买限制",
+        "description": "根据您的公民身份状态，您可能没有资格购买此类房产"
+      },
+      "processingTime": {
+        "title": "FIRB处理时间",
+        "standard": "标准处理",
+        "expedited": "加急处理",
+        "expeditedNote": "申请费加倍"
+      },
+      "restrictions": {
+        "title": "限制和要求",
+        "description": "适用于您购买的重要条件"
+      },
+      "recommendations": {
+        "title": "建议"
+      },
+      "costs": {
+        "title": "投资成本明细",
+        "description": "与您的房产购买相关的所有费用的详细明细",
+        "totalInvestment": "所需总投资",
+        "propertyPrice": "房产价格",
+        "upfrontCosts": "额外前期费用",
+        "subtotal": "小计",
+        "annualOngoing": "年度持续费用",
+        "annualOngoingNote": "估计的年度经常性费用"
+      },
+      "actions": {
+        "downloadPDF": "下载PDF报告",
+        "emailResults": "通过电子邮件发送结果",
+        "editCalculation": "编辑计算"
+      },
+      "disclaimer": {
+        "title": "重要免责声明",
+        "content": "此计算器仅提供估算，不应被视为财务或法律建议。实际费用可能会有所不同。FIRB法规可能会发生变化。我们强烈建议在做出任何房产投资决策之前咨询合格的专业人士，包括律师、会计师和FIRB专家。"
+      }
+    },
+    "emailModal": {
+      "title": "通过电子邮件发送您的结果",
+      "description": "输入您的电子邮件地址以接收您的FIRB计算结果副本",
+      "emailLabel": "电子邮件地址",
+      "emailPlaceholder": "your@email.com",
+      "nameLabel": "您的姓名",
+      "namePlaceholder": "张三",
+      "optional": "可选",
+      "consentLabel": "我同意通过电子邮件接收我的计算结果",
+      "consentDescription": "我们只会使用您的电子邮件向您发送请求的结果。我们不会与第三方共享您的信息。",
+      "info": "您将收到一份详细的PDF报告，其中包含您的完整费用明细和资格信息。",
+      "send": "发送结果",
+      "sending": "发送中...",
+      "cancel": "取消",
+      "success": {
+        "title": "电子邮件发送成功！",
+        "description": "请查看您的收件箱以获取您的FIRB计算结果。"
+      },
+      "errors": {
+        "required": "请填写所有必填字段",
+        "invalidEmail": "请输入有效的电子邮件地址",
+        "sendFailed": "发送电子邮件失败。请重试。",
+        "general": "发生错误。请重试。"
+      }
     }
   }
 }

@@ -11,8 +11,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-muted/30 border-t">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="bg-gradient-to-t from-muted/30 to-background border-t border-border/40 mt-auto">
+      <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
@@ -65,7 +65,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href={`/${locale}/calculator`}
+                  href={`/${locale}/firb-calculator`}
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t('quickLinks.calculator')}
