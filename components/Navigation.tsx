@@ -31,11 +31,8 @@ export default function Navigation() {
           <Link href={`/${locale}`} className="hover:text-primary transition-colors">
             {t('home')}
           </Link>
-          <Link href={`/${locale}/calculator`} className="hover:text-primary transition-colors">
-            {t('calculator')}
-          </Link>
           <Link href={`/${locale}/firb-calculator`} className="hover:text-primary transition-colors">
-            {t('firbCalculator')}
+            {t('calculator')}
           </Link>
           
           <DropdownMenu>

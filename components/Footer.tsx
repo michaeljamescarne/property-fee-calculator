@@ -65,7 +65,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href={`/${locale}/calculator`}
+                  href={`/${locale}/firb-calculator`}
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t('quickLinks.calculator')}

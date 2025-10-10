@@ -108,22 +108,9 @@
       "button": "立即计算费用"
     }
   },
-  "Calculator": {
-    "title": "计算您的费用",
-    "propertyPrice": "房产价格（美元）",
-    "interestRate": "年利率（%）",
-    "years": "投资期限（年）",
-    "calculate": "计算费用",
-    "results": "计算结果",
-    "totalFees": "总费用",
-    "interestAmount": "利息金额",
-    "totalCost": "总成本",
-    "breakdown": "费用明细"
-  },
   "Nav": {
     "home": "首页",
-    "calculator": "计算器",
-    "firbCalculator": "FIRB计算器",
+    "calculator": "FIRB计算器",
     "about": "关于",
     "contact": "联系"
   },

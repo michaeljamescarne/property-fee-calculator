@@ -108,22 +108,9 @@
       "button": "Calculate Fees Now"
     }
   },
-  "Calculator": {
-    "title": "Calculate Your Fees",
-    "propertyPrice": "Property Price (USD)",
-    "interestRate": "Annual Interest Rate (%)",
-    "years": "Investment Period (Years)",
-    "calculate": "Calculate Fees",
-    "results": "Calculation Results",
-    "totalFees": "Total Fees",
-    "interestAmount": "Interest Amount",
-    "totalCost": "Total Cost",
-    "breakdown": "Fee Breakdown"
-  },
   "Nav": {
     "home": "Home",
-    "calculator": "Calculator",
-    "firbCalculator": "FIRB Calculator",
+    "calculator": "FIRB Calculator",
     "about": "About",
     "contact": "Contact"
   },
