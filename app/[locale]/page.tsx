@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-24 md:py-32 text-center">
+      <section className="bg-white container mx-auto px-4 py-24 md:py-32 text-center">
         <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
           {t('title')}
         </h1>
@@ -36,7 +36,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="bg-gradient-to-b from-muted/30 to-background py-24">
+      <section id="features" className="bg-muted py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-4">
             {t('features.title')}
@@ -45,7 +45,7 @@ export default function HomePage() {
             Transparent, accurate, and instant calculations for your Australian property investment
           </p>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-card/50 backdrop-blur rounded-2xl">
+            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-white rounded-2xl">
               <CardHeader className="pb-6 pt-8">
                 <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                   <Calculator className="h-8 w-8 text-primary" />
@@ -59,7 +59,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-card/50 backdrop-blur rounded-2xl">
+            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-white rounded-2xl">
               <CardHeader className="pb-6 pt-8">
                 <div className="bg-accent/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                   <TrendingUp className="h-8 w-8 text-accent" />
@@ -73,7 +73,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-card/50 backdrop-blur rounded-2xl">
+            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-white rounded-2xl">
               <CardHeader className="pb-6 pt-8">
                 <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                   <Shield className="h-8 w-8 text-primary" />
@@ -91,7 +91,7 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20">
+      <section className="bg-white py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
             {t('howItWorks.title')}
@@ -125,7 +125,7 @@ export default function HomePage() {
       </section>
 
       {/* Fees Required Section */}
-      <section className="bg-muted/50 py-20">
+      <section className="bg-muted py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-6">
             {t('feesRequired.title')}
@@ -185,7 +185,7 @@ export default function HomePage() {
       </section>
 
       {/* FIRB Approval Section */}
-      <section className="py-20">
+      <section className="bg-white py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-6">
             {t('firbApproval.title')}

@@ -174,8 +174,9 @@ export default function FIRBCalculatorPage() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-12 md:py-16">
-      <div className="max-w-5xl mx-auto">
+    <main className="min-h-screen bg-muted">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{t('title')}</h1>
@@ -297,17 +298,18 @@ export default function FIRBCalculatorPage() {
             />
           )}
         </div>
-      </div>
 
-      {/* Email Modal */}
-      {eligibility && costs && (
-        <EmailResultsModal
-          isOpen={isEmailModalOpen}
-          onClose={() => setIsEmailModalOpen(false)}
-          eligibility={eligibility}
-          costs={costs}
-        />
-      )}
+        {/* Email Modal */}
+        {eligibility && costs && (
+          <EmailResultsModal
+            isOpen={isEmailModalOpen}
+            onClose={() => setIsEmailModalOpen(false)}
+            eligibility={eligibility}
+            costs={costs}
+          />
+        )}
+        </div>
+      </div>
     </main>
   );
 }
