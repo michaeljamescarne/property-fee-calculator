@@ -288,7 +288,8 @@
       "actions": {
         "downloadPDF": "下载PDF报告",
         "emailResults": "通过电子邮件发送结果",
-        "editCalculation": "编辑计算"
+        "editCalculation": "编辑计算",
+        "startAgain": "重新开始"
       },
       "disclaimer": {
         "title": "重要免责声明",
