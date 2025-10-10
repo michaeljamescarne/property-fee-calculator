@@ -24,9 +24,9 @@ export default function ProgressIndicator({ currentStep, completedSteps }: Progr
   const currentIndex = getStepIndex(currentStep);
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-10">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-4">
           {steps.map((step, index) => {
             const isCompleted = completedSteps.includes(step);
             const isCurrent = step === currentStep;
@@ -38,10 +38,10 @@ export default function ProgressIndicator({ currentStep, completedSteps }: Progr
                 <div className="flex flex-col items-center">
                   <div
                     className={`
-                      flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all
-                      ${isCurrent ? 'border-primary bg-primary text-primary-foreground' : ''}
+                      flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all shadow-sm
+                      ${isCurrent ? 'border-primary bg-gradient-to-br from-primary to-accent text-primary-foreground scale-110' : ''}
                       ${isPast || isCompleted ? 'border-primary bg-primary text-primary-foreground' : ''}
-                      ${!isCurrent && !isPast && !isCompleted ? 'border-muted-foreground/30 bg-background text-muted-foreground' : ''}
+                      ${!isCurrent && !isPast && !isCompleted ? 'border-border bg-muted text-muted-foreground' : ''}
                     `}
                   >
                     {isPast || isCompleted ? (

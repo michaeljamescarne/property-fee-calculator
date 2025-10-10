@@ -13,66 +13,75 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+      <section className="container mx-auto px-4 py-24 md:py-32 text-center">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
           {t('title')}
         </h1>
-        <p className="text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
+        <p className="text-xl md:text-2xl text-foreground/80 mb-4 max-w-2xl mx-auto font-medium">
           {t('subtitle')}
         </p>
-        <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
+        <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
           {t('description')}
         </p>
-        <div className="flex gap-4 justify-center">
-          <Button size="lg" asChild>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button size="lg" asChild className="rounded-xl px-8 py-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all">
             <Link href={`/${locale}/firb-calculator`}>
-              {t('cta.button')} <ArrowRight className="ml-2 h-4 w-4" />
+              {t('cta.button')} <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
-          <Button size="lg" variant="outline" asChild>
+          <Button size="lg" variant="outline" asChild className="rounded-xl px-8 py-6 text-base font-semibold">
             <Link href="#features">{t('learnMore')}</Link>
           </Button>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="bg-muted/50 py-20">
+      <section id="features" className="bg-gradient-to-b from-muted/30 to-background py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
+          <h2 className="text-4xl font-bold text-center mb-4">
             {t('features.title')}
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <Calculator className="h-12 w-12 mb-4 text-primary" />
-                <CardTitle>{t('features.accurate')}</CardTitle>
+          <p className="text-muted-foreground text-center mb-16 max-w-2xl mx-auto text-lg">
+            Transparent, accurate, and instant calculations for your Australian property investment
+          </p>
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-card/50 backdrop-blur rounded-2xl">
+              <CardHeader className="pb-6 pt-8">
+                <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                  <Calculator className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-xl mb-3">{t('features.accurate')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base leading-relaxed">
                   {t('features.accurateDesc')}
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <TrendingUp className="h-12 w-12 mb-4 text-primary" />
-                <CardTitle>{t('features.fast')}</CardTitle>
+            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-card/50 backdrop-blur rounded-2xl">
+              <CardHeader className="pb-6 pt-8">
+                <div className="bg-accent/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                  <TrendingUp className="h-8 w-8 text-accent" />
+                </div>
+                <CardTitle className="text-xl mb-3">{t('features.fast')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base leading-relaxed">
                   {t('features.fastDesc')}
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <Shield className="h-12 w-12 mb-4 text-primary" />
-                <CardTitle>{t('features.transparent')}</CardTitle>
+            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-card/50 backdrop-blur rounded-2xl">
+              <CardHeader className="pb-6 pt-8">
+                <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                  <Shield className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-xl mb-3">{t('features.transparent')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base leading-relaxed">
                   {t('features.transparentDesc')}
                 </CardDescription>
               </CardContent>
@@ -309,16 +318,17 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
+      <section className="bg-gradient-to-br from-primary via-accent to-primary py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/5 [mask-image:radial-gradient(white,transparent_70%)]"></div>
+        <div className="container mx-auto px-4 text-center relative">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
             {t('cta.title')}
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
             {t('cta.subtitle')}
           </p>
-          <Link href={`/${locale}/calculator`}>
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6 h-auto">
+          <Link href={`/${locale}/firb-calculator`}>
+            <Button size="lg" variant="secondary" className="text-lg px-10 py-7 h-auto rounded-xl font-semibold shadow-2xl hover:scale-105 transition-transform">
               {t('cta.button')}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

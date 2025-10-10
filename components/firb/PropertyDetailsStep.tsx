@@ -10,7 +10,6 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Slider } from '@/components/ui/slider';
 import {
   Select,
   SelectContent,
@@ -21,6 +20,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PropertyType, AustralianState, EntityType } from '@/lib/firb/constants';
 import { Home, Building, MapPin, DollarSign, Percent } from 'lucide-react';
+import AddressAutocomplete from './AddressAutocomplete';
 
 interface PropertyDetailsStepProps {
   propertyType: PropertyType | '';
@@ -67,10 +67,10 @@ export default function PropertyDetailsStep({
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t('title')}</CardTitle>
-        <CardDescription>{t('description')}</CardDescription>
+    <Card className="border-none shadow-lg rounded-2xl">
+      <CardHeader className="pb-6">
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
+        <CardDescription className="text-base mt-2">{t('description')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Property Type */}
@@ -84,53 +84,61 @@ export default function PropertyDetailsStep({
             onValueChange={(value) => onPropertyTypeChange(value as PropertyType)}
             className="grid grid-cols-1 md:grid-cols-2 gap-3"
           >
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="newDwelling" id="newDwelling" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="newDwelling" className="font-medium cursor-pointer">
-                  {t('types.newDwelling.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('types.newDwelling.description')}
-                </p>
+            <Label htmlFor="newDwelling" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="newDwelling" id="newDwelling" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('types.newDwelling.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('types.newDwelling.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
 
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="established" id="established" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="established" className="font-medium cursor-pointer">
-                  {t('types.established.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('types.established.description')}
-                </p>
+            <Label htmlFor="established" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="established" id="established" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('types.established.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('types.established.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
 
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="vacantLand" id="vacantLand" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="vacantLand" className="font-medium cursor-pointer">
-                  {t('types.vacantLand.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('types.vacantLand.description')}
-                </p>
+            <Label htmlFor="vacantLand" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="vacantLand" id="vacantLand" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('types.vacantLand.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('types.vacantLand.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
 
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="commercial" id="commercial" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="commercial" className="font-medium cursor-pointer">
-                  {t('types.commercial.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('types.commercial.description')}
-                </p>
+            <Label htmlFor="commercial" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="commercial" id="commercial" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('types.commercial.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('types.commercial.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
           </RadioGroup>
         </div>
 
@@ -165,7 +173,7 @@ export default function PropertyDetailsStep({
             {t('stateLabel')}
           </Label>
           <Select value={state} onValueChange={(value) => onStateChange(value as AustralianState)}>
-            <SelectTrigger id="state">
+            <SelectTrigger id="state" className="w-full">
               <SelectValue placeholder={t('statePlaceholder')} />
             </SelectTrigger>
             <SelectContent>
@@ -188,13 +196,15 @@ export default function PropertyDetailsStep({
             {t('addressLabel')}
             <span className="text-sm font-normal text-muted-foreground">({t('optional')})</span>
           </Label>
-          <Input
-            id="property-address"
-            type="text"
+          <AddressAutocomplete
             value={propertyAddress || ''}
-            onChange={(e) => onPropertyAddressChange(e.target.value)}
+            onChange={onPropertyAddressChange}
+            onStateChange={onStateChange}
             placeholder={t('addressPlaceholder')}
           />
+          <p className="text-xs text-muted-foreground">
+            Start typing to see address suggestions. Selecting an address will auto-fill the state.
+          </p>
         </div>
 
         {/* First Home Buyer */}
@@ -217,30 +227,36 @@ export default function PropertyDetailsStep({
 
         {/* Deposit Percentage */}
         <div className="space-y-3">
-          <Label className="text-base font-semibold flex items-center gap-2">
+          <Label htmlFor="deposit-percent" className="text-base font-semibold flex items-center gap-2">
             <Percent className="h-5 w-5" />
             {t('depositLabel')}
           </Label>
-          <div className="space-y-4">
-            <Slider
-              value={[depositPercent]}
-              onValueChange={(values) => onDepositPercentChange(values[0])}
-              min={0}
-              max={100}
-              step={5}
-              className="w-full"
-            />
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">0%</span>
-              <span className="font-semibold text-primary">{depositPercent}%</span>
-              <span className="text-muted-foreground">100%</span>
-            </div>
-            {propertyValue > 0 && (
-              <p className="text-sm text-muted-foreground">
-                {t('depositAmount')}: {formatCurrency((propertyValue * depositPercent) / 100)}
-              </p>
-            )}
-          </div>
+          <Select value={depositPercent.toString()} onValueChange={(value) => onDepositPercentChange(Number(value))}>
+            <SelectTrigger id="deposit-percent" className="w-full">
+              <SelectValue placeholder="Select deposit percentage" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5">5%</SelectItem>
+              <SelectItem value="10">10%</SelectItem>
+              <SelectItem value="15">15%</SelectItem>
+              <SelectItem value="20">20%</SelectItem>
+              <SelectItem value="25">25%</SelectItem>
+              <SelectItem value="30">30%</SelectItem>
+              <SelectItem value="35">35%</SelectItem>
+              <SelectItem value="40">40%</SelectItem>
+              <SelectItem value="50">50%</SelectItem>
+              <SelectItem value="60">60%</SelectItem>
+              <SelectItem value="70">70%</SelectItem>
+              <SelectItem value="80">80%</SelectItem>
+              <SelectItem value="90">90%</SelectItem>
+              <SelectItem value="100">100%</SelectItem>
+            </SelectContent>
+          </Select>
+          {propertyValue > 0 && depositPercent > 0 && (
+            <p className="text-sm text-muted-foreground">
+              {t('depositAmount')}: {formatCurrency((propertyValue * depositPercent) / 100)}
+            </p>
+          )}
         </div>
 
         {/* Entity Type */}
@@ -249,7 +265,7 @@ export default function PropertyDetailsStep({
             {t('entityLabel')}
           </Label>
           <Select value={entityType} onValueChange={(value) => onEntityTypeChange(value as EntityType)}>
-            <SelectTrigger id="entity-type">
+            <SelectTrigger id="entity-type" className="w-full">
               <SelectValue placeholder={t('entityPlaceholder')} />
             </SelectTrigger>
             <SelectContent>

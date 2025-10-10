@@ -40,10 +40,10 @@ export default function CitizenshipStep({
   const t = useTranslations('FIRBCalculator.citizenship');
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t('title')}</CardTitle>
-        <CardDescription>{t('description')}</CardDescription>
+    <Card className="border-none shadow-lg rounded-2xl">
+      <CardHeader className="pb-6">
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
+        <CardDescription className="text-base mt-2">{t('description')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Citizenship Status */}
@@ -52,59 +52,67 @@ export default function CitizenshipStep({
           <RadioGroup
             value={citizenshipStatus}
             onValueChange={(value) => onCitizenshipStatusChange(value as CitizenshipStatus)}
-            className="space-y-3"
+            className="grid grid-cols-1 md:grid-cols-2 gap-3"
           >
             {/* Australian Citizen */}
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="australian" id="australian" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="australian" className="font-medium cursor-pointer">
-                  {t('australian.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('australian.description')}
-                </p>
+            <Label htmlFor="australian" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="australian" id="australian" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('australian.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('australian.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
 
             {/* Permanent Resident */}
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="permanent" id="permanent" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="permanent" className="font-medium cursor-pointer">
-                  {t('permanent.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('permanent.description')}
-                </p>
+            <Label htmlFor="permanent" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="permanent" id="permanent" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('permanent.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('permanent.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
 
             {/* Temporary Resident */}
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="temporary" id="temporary" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="temporary" className="font-medium cursor-pointer">
-                  {t('temporary.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('temporary.description')}
-                </p>
+            <Label htmlFor="temporary" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="temporary" id="temporary" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('temporary.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('temporary.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
 
             {/* Foreign Person */}
-            <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 transition-colors">
-              <RadioGroupItem value="foreign" id="foreign" className="mt-1" />
-              <div className="flex-1">
-                <Label htmlFor="foreign" className="font-medium cursor-pointer">
-                  {t('foreign.title')}
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t('foreign.description')}
-                </p>
+            <Label htmlFor="foreign" className="cursor-pointer block">
+              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+                <RadioGroupItem value="foreign" id="foreign" />
+                <div className="flex-1">
+                  <div className="font-semibold text-sm">
+                    {t('foreign.title')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                    {t('foreign.description')}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Label>
           </RadioGroup>
         </div>
 

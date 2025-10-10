@@ -21,23 +21,23 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="border-b">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href={`/${locale}`} className="text-xl font-bold">
+    <nav className="border-b border-border/40 backdrop-blur-sm bg-background/95 sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-5 flex justify-between items-center">
+        <Link href={`/${locale}`} className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity">
           Property Fee Calculator
         </Link>
         
-        <div className="flex gap-6 items-center">
-          <Link href={`/${locale}`} className="hover:text-primary transition-colors">
+        <div className="flex gap-8 items-center">
+          <Link href={`/${locale}`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
             {t('home')}
           </Link>
-          <Link href={`/${locale}/firb-calculator`} className="hover:text-primary transition-colors">
+          <Link href={`/${locale}/firb-calculator`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
             {t('calculator')}
           </Link>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="rounded-lg font-medium">
                 <Globe className="h-4 w-4 mr-2" />
                 {locale === 'en' ? 'English' : '中文'}
               </Button>
