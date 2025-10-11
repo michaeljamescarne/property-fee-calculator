@@ -1,26 +1,16 @@
 'use client';
 
-import { TrendingUp, DollarSign, Percent, Wallet } from 'lucide-react';
+import { TrendingUp, Percent, Wallet } from 'lucide-react';
 import MetricCard from './MetricCard';
 import type { InvestmentAnalytics } from '@/types/investment';
+import { useInvestmentTranslations } from '@/lib/hooks/useInvestmentTranslations';
 
 interface InvestmentSummaryProps {
   analytics: InvestmentAnalytics;
 }
 
 export default function InvestmentSummary({ analytics }: InvestmentSummaryProps) {
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-AU', {
-      style: 'currency',
-      currency: 'AUD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
-  const formatPercent = (value: number) => {
-    return `${value.toFixed(1)}%`;
-  };
+  const { t, currency, percent } = useInvestmentTranslations();
 
   const getYieldTrend = (yieldValue: number, benchmark: number): 'good' | 'neutral' | 'warning' | 'poor' => {
     if (yieldValue >= benchmark * 1.2) return 'good';
@@ -46,9 +36,9 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-2xl font-bold mb-2">Investment Performance Summary</h3>
+        <h3 className="text-2xl font-bold mb-2">{t('summary.title')}</h3>
         <p className="text-muted-foreground">
-          Key metrics at a glance based on your investment assumptions
+          {t('summary.description')}
         </p>
       </div>
 
@@ -56,9 +46,9 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
         {/* Gross Rental Yield */}
         <MetricCard
           icon={<Percent className="h-5 w-5" />}
-          title="Gross Rental Yield"
-          value={formatPercent(analytics.rentalYield.gross)}
-          subtitle={`${formatCurrency(analytics.rentalYield.annualRent)} annual rent`}
+          title={t('summary.grossYield')}
+          value={percent(analytics.rentalYield.gross)}
+          subtitle={`${currency(analytics.rentalYield.annualRent)} ${t('inputs.rental.perYear')}`}
           trend={getYieldTrend(analytics.rentalYield.gross, analytics.rentalYield.benchmark)}
           benchmark={analytics.rentalYield.comparison}
           tooltip="Annual rental income divided by property value"
@@ -67,20 +57,20 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
         {/* Net Rental Yield */}
         <MetricCard
           icon={<Percent className="h-5 w-5" />}
-          title="Net Rental Yield"
-          value={formatPercent(analytics.rentalYield.net)}
-          subtitle="After expenses & vacancy"
+          title={t('summary.netYield')}
+          value={percent(analytics.rentalYield.net)}
+          subtitle={t('summary.afterExpenses')}
           trend={getYieldTrend(analytics.rentalYield.net, analytics.rentalYield.benchmark * 0.6)}
-          benchmark={`Net of ${formatCurrency(analytics.cashFlow.annual.totalExpenses)} expenses`}
+          benchmark={`Net of ${currency(analytics.cashFlow.annual.totalExpenses)} expenses`}
           tooltip="Net rental income after expenses divided by total investment"
         />
 
         {/* Annualized ROI */}
         <MetricCard
           icon={<TrendingUp className="h-5 w-5" />}
-          title="Annualized ROI"
-          value={formatPercent(analytics.roi.annualizedROI)}
-          subtitle={`${formatCurrency(analytics.roi.totalReturn)} total return`}
+          title={t('summary.annualizedROI')}
+          value={percent(analytics.roi.annualizedROI)}
+          subtitle={`${currency(analytics.roi.totalReturn)} ${t('summary.totalReturn')}`}
           trend={getROITrend(analytics.roi.annualizedROI)}
           benchmark={analytics.roi.annualizedROI > 7.2 ? 'Beats ASX average (7.2%)' : 'Below ASX average (7.2%)'}
           tooltip="Total return divided by years held"
@@ -89,11 +79,11 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
         {/* Monthly Cash Flow */}
         <MetricCard
           icon={<Wallet className="h-5 w-5" />}
-          title="Monthly Cash Flow"
-          value={formatCurrency(analytics.cashFlow.monthly.afterTaxCashFlow)}
-          subtitle={analytics.cashFlow.monthly.afterTaxCashFlow < 0 ? 'Negatively geared' : 'Positively geared'}
+          title={t('summary.monthlyCashFlow')}
+          value={currency(analytics.cashFlow.monthly.afterTaxCashFlow)}
+          subtitle={analytics.cashFlow.monthly.afterTaxCashFlow < 0 ? t('summary.negativelyGeared') : t('summary.positivelyGeared')}
           trend={getCashFlowTrend(analytics.cashFlow.annual.afterTaxCashFlow)}
-          benchmark={analytics.cashFlow.annual.taxBenefit > 0 ? `Tax benefit: ${formatCurrency(analytics.cashFlow.annual.taxBenefit / 12)}/mo` : undefined}
+          benchmark={analytics.cashFlow.annual.taxBenefit > 0 ? `${t('summary.taxBenefit')}: ${currency(analytics.cashFlow.annual.taxBenefit / 12)}/mo` : undefined}
           tooltip="Monthly rental income minus all expenses and loan repayments"
         />
       </div>
@@ -101,32 +91,32 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
       {/* Additional Highlight Metrics */}
       <div className="grid md:grid-cols-3 gap-4">
         <div className="p-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl border border-primary/20">
-          <p className="text-sm font-medium text-foreground/70 mb-1">Property Value Growth</p>
+          <p className="text-sm font-medium text-foreground/70 mb-1">{t('summary.propertyValueGrowth')}</p>
           <p className="text-2xl font-bold text-primary">
-            {formatCurrency(analytics.capitalGrowth.estimatedValueAtEnd)}
+            {currency(analytics.capitalGrowth.estimatedValueAtEnd)}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            After {analytics.yearByYear.length} years (+{formatPercent(analytics.capitalGrowth.totalPercentageGain)})
+            {t('summary.afterYears')} {analytics.yearByYear.length} {t('summary.years')} (+{percent(analytics.capitalGrowth.totalPercentageGain)})
           </p>
         </div>
 
         <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200">
-          <p className="text-sm font-medium text-foreground/70 mb-1">Your Equity</p>
+          <p className="text-sm font-medium text-foreground/70 mb-1">{t('summary.yourEquity')}</p>
           <p className="text-2xl font-bold text-green-700">
-            {formatCurrency(analytics.loanMetrics.equityAtEnd)}
+            {currency(analytics.loanMetrics.equityAtEnd)}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            Equity gain: {formatCurrency(analytics.loanMetrics.equityGain)}
+            {t('summary.equityGain')}: {currency(analytics.loanMetrics.equityGain)}
           </p>
         </div>
 
         <div className="p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200">
-          <p className="text-sm font-medium text-foreground/70 mb-1">Tax Savings (Annual)</p>
+          <p className="text-sm font-medium text-foreground/70 mb-1">{t('summary.taxSavings')}</p>
           <p className="text-2xl font-bold text-amber-700">
-            {formatCurrency(analytics.taxAnalysis.annualTaxSaving)}
+            {currency(analytics.taxAnalysis.annualTaxSaving)}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            From negative gearing benefits
+            {t('summary.fromNegativeGearing')}
           </p>
         </div>
       </div>

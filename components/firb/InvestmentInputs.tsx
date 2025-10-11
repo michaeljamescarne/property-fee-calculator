@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/accordion';
 import { Home, DollarSign, TrendingUp, Calculator, Globe } from 'lucide-react';
 import type { InvestmentInputs } from '@/types/investment';
+import { useInvestmentTranslations } from '@/lib/hooks/useInvestmentTranslations';
 
 interface InvestmentInputsProps {
   inputs: InvestmentInputs;
@@ -21,24 +22,17 @@ interface InvestmentInputsProps {
 }
 
 export default function InvestmentInputsComponent({ inputs, onChange }: InvestmentInputsProps) {
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-AU', {
-      style: 'currency',
-      currency: 'AUD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+  const { t, currency, number } = useInvestmentTranslations();
 
   return (
     <Card className="border-2 border-primary/20 shadow-md rounded-2xl bg-white">
       <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 border-b">
         <CardTitle className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />
-          Investment Analysis Parameters
+          {t('inputs.title')}
         </CardTitle>
         <CardDescription>
-          Adjust these values to see how different scenarios affect your investment returns
+          {t('inputs.description')}
         </CardDescription>
       </CardHeader>
       
@@ -49,12 +43,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Home className="h-4 w-4 text-primary" />
-                Rental Income Details
+                {t('inputs.rental.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="weekly-rent">Estimated Weekly Rent</Label>
+                <Label htmlFor="weekly-rent">{t('inputs.rental.weeklyRent')}</Label>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">$</span>
                   <Input
@@ -65,13 +59,13 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     className="flex-1"
                   />
                   <span className="text-sm text-muted-foreground whitespace-nowrap">
-                    (${Math.round(inputs.estimatedWeeklyRent * 52).toLocaleString()}/year)
+                    (${number(inputs.estimatedWeeklyRent * 52)}{t('inputs.rental.perYear')})
                   </span>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label>Vacancy Rate: {inputs.vacancyRate}%</Label>
+                <Label>{t('inputs.rental.vacancyRate')}: {inputs.vacancyRate}%</Label>
                 <Slider
                   value={[inputs.vacancyRate]}
                   onValueChange={(value) => onChange({ vacancyRate: value[0] })}
@@ -81,12 +75,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Typical: 3-5% for good locations, 7-10% for high-risk areas
+                  {t('inputs.rental.vacancyHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>Annual Rent Growth: {inputs.rentGrowthRate}%</Label>
+                <Label>{t('inputs.rental.rentGrowth')}: {inputs.rentGrowthRate}%</Label>
                 <Slider
                   value={[inputs.rentGrowthRate]}
                   onValueChange={(value) => onChange({ rentGrowthRate: value[0] })}
@@ -96,7 +90,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Historical average: 2-4% per year
+                  {t('inputs.rental.rentGrowthHelp')}
                 </p>
               </div>
             </AccordionContent>
