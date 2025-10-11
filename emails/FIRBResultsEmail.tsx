@@ -13,8 +13,6 @@ import {
   Preview,
   Section,
   Text,
-  Row,
-  Column,
 } from '@react-email/components';
 import * as React from 'react';
 import { EligibilityResult } from '@/lib/firb/eligibility';

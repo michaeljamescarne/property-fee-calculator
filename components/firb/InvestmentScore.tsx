@@ -12,7 +12,6 @@ interface InvestmentScoreProps {
 // Simple circular progress component
 function ScoreGauge({ score, label }: { score: number; label: string }) {
   const percentage = (score / 10) * 100;
-  const rotation = (percentage / 100) * 180 - 90;
   
   const getColor = () => {
     if (score >= 8) return '#10B981'; // Green
