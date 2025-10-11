@@ -5,6 +5,7 @@
 
 'use client';
 
+import { useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,9 +16,20 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Download, Mail, Edit, CheckCircle, AlertTriangle, XCircle, Info, RotateCcw } from 'lucide-react';
+import { Download, Mail, Edit, CheckCircle, AlertTriangle, XCircle, Info, RotateCcw, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
+import { PropertyType, AustralianState } from '@/lib/firb/constants';
+import { generateDefaultInputs, calculateInvestmentAnalytics } from '@/lib/firb/investment-analytics';
+import type { InvestmentInputs } from '@/types/investment';
+import InvestmentInputsComponent from './InvestmentInputs';
+import InvestmentSummary from './InvestmentSummary';
+import CashFlowAnalysis from './CashFlowAnalysis';
+import ProjectionChart from './ProjectionChart';
+import InvestmentComparison from './InvestmentComparison';
+import SensitivityAnalysis from './SensitivityAnalysis';
+import TaxAnalysis from './TaxAnalysis';
+import InvestmentScore from './InvestmentScore';
 
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
@@ -26,6 +38,10 @@ interface ResultsPanelProps {
   onEmailResults: () => void;
   onEditCalculation: () => void;
   onStartAgain: () => void;
+  propertyValue: number;
+  propertyType: PropertyType;
+  state: AustralianState;
+  depositPercent: number;
 }
 
 export default function ResultsPanel({
@@ -34,9 +50,30 @@ export default function ResultsPanel({
   onDownloadPDF,
   onEmailResults,
   onEditCalculation,
-  onStartAgain
+  onStartAgain,
+  propertyValue,
+  propertyType,
+  state,
+  depositPercent
 }: ResultsPanelProps) {
   const t = useTranslations('FIRBCalculator.results');
+  
+  // Investment Analytics State
+  const [showInvestmentAnalysis, setShowInvestmentAnalysis] = useState(false);
+  const [investmentInputs, setInvestmentInputs] = useState<InvestmentInputs>(() =>
+    generateDefaultInputs(propertyValue, state, propertyType, depositPercent, costs)
+  );
+  
+  // Calculate investment analytics
+  const investmentAnalytics = useMemo(() => 
+    calculateInvestmentAnalytics(investmentInputs, propertyValue, state, propertyType, costs),
+    [investmentInputs, propertyValue, state, propertyType, costs]
+  );
+  
+  // Handle investment input changes
+  const handleInvestmentInputChange = (updates: Partial<InvestmentInputs>) => {
+    setInvestmentInputs(prev => ({ ...prev, ...updates }));
+  };
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-AU', {
@@ -224,6 +261,77 @@ export default function ResultsPanel({
           </div>
         </CardContent>
       </Card>
+
+      {/* Investment Analytics Toggle */}
+      <Card 
+        className="border-2 border-primary/30 shadow-lg rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 cursor-pointer hover:shadow-xl transition-all"
+        onClick={() => setShowInvestmentAnalysis(!showInvestmentAnalysis)}
+      >
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <TrendingUp className="h-6 w-6 text-primary" />
+                Investment Analysis & Projections
+              </CardTitle>
+              <CardDescription className="mt-2">
+                See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments
+              </CardDescription>
+            </div>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="gap-2 font-semibold"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowInvestmentAnalysis(!showInvestmentAnalysis);
+              }}
+            >
+              {showInvestmentAnalysis ? (
+                <>
+                  Hide Analysis <ChevronUp className="h-5 w-5" />
+                </>
+              ) : (
+                <>
+                  Show Investment Analysis <ChevronDown className="h-5 w-5" />
+                </>
+              )}
+            </Button>
+          </div>
+        </CardHeader>
+      </Card>
+
+      {/* Investment Analytics Content */}
+      {showInvestmentAnalysis && (
+        <div className="space-y-6 animate-in slide-in-from-top-4 duration-500">
+          {/* Investment Inputs */}
+          <InvestmentInputsComponent 
+            inputs={investmentInputs}
+            onChange={handleInvestmentInputChange}
+          />
+
+          {/* Investment Summary */}
+          <InvestmentSummary analytics={investmentAnalytics} />
+
+          {/* Cash Flow Analysis */}
+          <CashFlowAnalysis analytics={investmentAnalytics} />
+
+          {/* 10-Year Projection */}
+          <ProjectionChart analytics={investmentAnalytics} />
+
+          {/* Investment Comparison */}
+          <InvestmentComparison analytics={investmentAnalytics} />
+
+          {/* Sensitivity Analysis */}
+          <SensitivityAnalysis analytics={investmentAnalytics} />
+
+          {/* Tax Analysis */}
+          <TaxAnalysis analytics={investmentAnalytics} />
+
+          {/* Investment Score & Recommendation */}
+          <InvestmentScore analytics={investmentAnalytics} />
+        </div>
+      )}
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">

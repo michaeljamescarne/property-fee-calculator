@@ -186,6 +186,7 @@ export interface InvestmentAnalytics {
       maintenance: number;
       insurance: number;
       depreciation: number;
+      strataFees: number;
       other: number;
       total: number;
     };
@@ -193,8 +194,13 @@ export interface InvestmentAnalytics {
     monthlyTaxSaving: number;
     cgtOnExit: {
       salePrice: number;
+      originalPurchasePrice: number;
+      purchaseCosts: number;
+      improvementCosts: number;
+      sellingCosts: number;
       costBase: number;
       capitalGain: number;
+      cgtRate: number;
       cgtAmount: number;
       withholdingTax: number;
       netProceedsAfterTax: number;
