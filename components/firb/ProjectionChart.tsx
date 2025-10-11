@@ -4,28 +4,22 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { TrendingUp } from 'lucide-react';
 import type { InvestmentAnalytics } from '@/types/investment';
+import { useInvestmentTranslations } from '@/lib/hooks/useInvestmentTranslations';
 
 interface ProjectionChartProps {
   analytics: InvestmentAnalytics;
 }
 
 export default function ProjectionChart({ analytics }: ProjectionChartProps) {
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-AU', {
-      style: 'currency',
-      currency: 'AUD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+  const { t, currency } = useInvestmentTranslations();
 
   // Prepare data for chart
   const chartData = analytics.yearByYear.map((year) => ({
-    year: `Year ${year.year}`,
-    'Property Value': year.propertyValue,
+    year: `${t('projections.yearByYear')} ${year.year}`,
+    [t('projections.tableHeaders.propertyValue')]: year.propertyValue,
     'Loan Balance': year.loanBalance,
-    'Your Equity': year.equity,
-    'Cumulative Return': year.cumulativeReturn,
+    [t('projections.tableHeaders.equity')]: year.equity,
+    [t('projections.tableHeaders.cumulativeReturn')]: year.cumulativeReturn,
   }));
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { year: string }; name: string; value: number; color: string }> }) => {
@@ -35,7 +29,7 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
           <p className="font-semibold mb-2">{payload[0].payload.year}</p>
           {payload.map((entry: { name: string; value: number; color: string }, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              <span className="font-medium">{entry.name}:</span> {formatCurrency(entry.value)}
+              <span className="font-medium">{entry.name}:</span> {currency(entry.value)}
             </p>
           ))}
         </div>
@@ -49,10 +43,10 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-primary" />
-          {analytics.yearByYear.length}-Year Projection
+          {t('projections.title', { years: analytics.yearByYear.length })}
         </CardTitle>
         <CardDescription>
-          Property value, loan balance, and equity growth over time
+          {t('projections.description')}
         </CardDescription>
       </CardHeader>
       
@@ -106,16 +100,16 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
         {/* Key Milestones */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-xs text-purple-600 font-medium mb-1">Starting Value</p>
+            <p className="text-xs text-purple-600 font-medium mb-1">{t('projections.startingValue')}</p>
             <p className="text-xl font-bold text-purple-700">
-              {formatCurrency(analytics.capitalGrowth.initialValue)}
+              {currency(analytics.capitalGrowth.initialValue)}
             </p>
           </div>
 
           <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-xs text-purple-600 font-medium mb-1">Final Value</p>
+            <p className="text-xs text-purple-600 font-medium mb-1">{t('projections.finalValue')}</p>
             <p className="text-xl font-bold text-purple-700">
-              {formatCurrency(analytics.capitalGrowth.estimatedValueAtEnd)}
+              {currency(analytics.capitalGrowth.estimatedValueAtEnd)}
             </p>
             <p className="text-xs text-purple-600 mt-1">
               +{analytics.capitalGrowth.totalPercentageGain.toFixed(1)}%
@@ -123,22 +117,22 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
           </div>
 
           <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-xs text-green-600 font-medium mb-1">Your Equity</p>
+            <p className="text-xs text-green-600 font-medium mb-1">{t('projections.yourEquity')}</p>
             <p className="text-xl font-bold text-green-700">
-              {formatCurrency(analytics.loanMetrics.equityAtEnd)}
+              {currency(analytics.loanMetrics.equityAtEnd)}
             </p>
             <p className="text-xs text-green-600 mt-1">
-              from {formatCurrency(analytics.loanMetrics.equityAtStart)}
+              {t('projections.from')} {currency(analytics.loanMetrics.equityAtStart)}
             </p>
           </div>
 
           <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-xs text-blue-600 font-medium mb-1">Total ROI</p>
+            <p className="text-xs text-blue-600 font-medium mb-1">{t('projections.totalROI')}</p>
             <p className="text-xl font-bold text-blue-700">
               {analytics.roi.totalROI.toFixed(1)}%
             </p>
             <p className="text-xs text-blue-600 mt-1">
-              {analytics.roi.annualizedROI.toFixed(1)}% p.a.
+              {analytics.roi.annualizedROI.toFixed(1)}% {t('projections.perAnnum')}
             </p>
           </div>
         </div>
@@ -146,26 +140,26 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
         {/* Break-Even Information */}
         {analytics.breakEven.yearsToCumulativeBreakEven && (
           <div className="p-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl">
-            <h4 className="font-semibold text-foreground mb-3">Break-Even Analysis</h4>
+            <h4 className="font-semibold text-foreground mb-3">{t('projections.breakEven.title')}</h4>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               <div>
-                <p className="text-muted-foreground mb-1">Cumulative Break-Even</p>
+                <p className="text-muted-foreground mb-1">{t('projections.breakEven.cumulativeBreakEven')}</p>
                 <p className="text-2xl font-bold text-primary">
-                  Year {analytics.breakEven.yearsToCumulativeBreakEven}
+                  {t('projections.breakEven.year')} {analytics.breakEven.yearsToCumulativeBreakEven}
                 </p>
               </div>
               {analytics.breakEven.yearsToPositiveCashFlow && (
                 <div>
-                  <p className="text-muted-foreground mb-1">Positive Cash Flow</p>
+                  <p className="text-muted-foreground mb-1">{t('projections.breakEven.positiveCashFlow')}</p>
                   <p className="text-2xl font-bold text-accent">
-                    Year {analytics.breakEven.yearsToPositiveCashFlow}
+                    {t('projections.breakEven.year')} {analytics.breakEven.yearsToPositiveCashFlow}
                   </p>
                 </div>
               )}
               <div>
-                <p className="text-muted-foreground mb-1">Cash Required</p>
+                <p className="text-muted-foreground mb-1">{t('projections.breakEven.cashRequired')}</p>
                 <p className="text-2xl font-bold text-foreground">
-                  {formatCurrency(analytics.breakEven.totalCashRequired)}
+                  {currency(analytics.breakEven.totalCashRequired)}
                 </p>
               </div>
             </div>
@@ -175,36 +169,36 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
         {/* Year-by-Year Table (Compact View) */}
         <div>
           <h4 className="text-sm font-semibold text-foreground/70 mb-3 uppercase tracking-wide">
-            Year-by-Year Summary
+            {t('projections.yearByYear')}
           </h4>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 border-b border-border/40">
                 <tr>
-                  <th className="text-left p-3 font-semibold">Year</th>
-                  <th className="text-right p-3 font-semibold">Property Value</th>
-                  <th className="text-right p-3 font-semibold">Equity</th>
-                  <th className="text-right p-3 font-semibold">Cash Flow</th>
-                  <th className="text-right p-3 font-semibold">Cumulative Return</th>
+                  <th className="text-left p-3 font-semibold">{t('projections.tableHeaders.year')}</th>
+                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.propertyValue')}</th>
+                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.equity')}</th>
+                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.cashFlow')}</th>
+                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.cumulativeReturn')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
                 {analytics.yearByYear.map((year) => (
                   <tr key={year.year} className="hover:bg-muted/30 transition-colors">
                     <td className="p-3 font-medium">{year.year}</td>
-                    <td className="p-3 text-right">{formatCurrency(year.propertyValue)}</td>
+                    <td className="p-3 text-right">{currency(year.propertyValue)}</td>
                     <td className="p-3 text-right text-green-600 font-medium">
-                      {formatCurrency(year.equity)}
+                      {currency(year.equity)}
                     </td>
                     <td className={`p-3 text-right font-medium ${
                       year.afterTaxCashFlow >= 0 ? 'text-green-600' : 'text-amber-600'
                     }`}>
-                      {formatCurrency(year.afterTaxCashFlow)}
+                      {currency(year.afterTaxCashFlow)}
                     </td>
                     <td className={`p-3 text-right font-semibold ${
                       year.cumulativeReturn >= 0 ? 'text-green-700' : 'text-red-600'
                     }`}>
-                      {formatCurrency(year.cumulativeReturn)}
+                      {currency(year.cumulativeReturn)}
                     </td>
                   </tr>
                 ))}
