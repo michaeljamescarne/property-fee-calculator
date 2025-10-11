@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const createNextIntlPlugin = require('next-intl/plugin');
 
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
@@ -7,4 +8,5 @@ const nextConfig = {
   /* config options here */
 };
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 module.exports = withNextIntl(nextConfig);

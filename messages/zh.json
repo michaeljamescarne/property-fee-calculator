@@ -294,6 +294,273 @@
       "disclaimer": {
         "title": "重要免责声明",
         "content": "此计算器仅提供估算，不应被视为财务或法律建议。实际费用可能会有所不同。FIRB法规可能会发生变化。我们强烈建议在做出任何房产投资决策之前咨询合格的专业人士，包括律师、会计师和FIRB专家。"
+      },
+      "investmentAnalytics": {
+        "toggle": {
+          "title": "投资分析与预测",
+          "description": "查看租金收益率、投资回报率、10年预测、现金流分析，以及与其他投资的比较",
+          "show": "显示投资分析",
+          "hide": "隐藏分析"
+        },
+        "summary": {
+          "title": "投资表现摘要",
+          "description": "基于您的投资假设的关键指标一览",
+          "grossYield": "毛租金收益率",
+          "netYield": "净租金收益率",
+          "annualizedROI": "年化投资回报率",
+          "monthlyCashFlow": "月度现金流",
+          "afterExpenses": "扣除费用和空置期后",
+          "totalReturn": "总回报",
+          "positivelyGeared": "正杠杆",
+          "negativelyGeared": "负杠杆",
+          "taxBenefit": "税收优惠",
+          "propertyValueGrowth": "房产增值",
+          "afterYears": "持有",
+          "years": "年后",
+          "yourEquity": "您的净资产",
+          "equityGain": "资产增值",
+          "taxSavings": "税收节省（年度）",
+          "fromNegativeGearing": "来自负杠杆优势"
+        },
+        "inputs": {
+          "title": "投资分析参数",
+          "description": "调整这些数值以查看不同场景如何影响您的投资回报",
+          "note": "这些是基于当前市场条件和您的假设的估算。实际回报可能会有所不同。计算会随着您调整数值而实时更新。",
+          "rental": {
+            "title": "租金收入详情",
+            "weeklyRent": "预估周租金",
+            "perYear": "每年",
+            "vacancyRate": "空置率",
+            "vacancyHelp": "典型值：好地段3-5%，高风险地区7-10%",
+            "rentGrowth": "年度租金增长率",
+            "rentGrowthHelp": "历史平均值：每年2-4%"
+          },
+          "management": {
+            "title": "物业管理",
+            "selfManaged": "我将自己管理此物业（无管理费）",
+            "managementFee": "物业管理费",
+            "managementHelp": "典型值：租金收入的7-9%。预估",
+            "lettingFee": "租赁费（寻找新租户时）",
+            "weeksRent": "周租金"
+          },
+          "financing": {
+            "title": "融资详情",
+            "loanAmount": "贷款金额",
+            "interestRate": "利率",
+            "interestHelp": "当前市场：投资贷款6.0-6.8%",
+            "loanTerm": "贷款期限",
+            "loanType": "贷款类型",
+            "principalAndInterest": "本息同还",
+            "interestOnly": "只还利息",
+            "interestOnlyPeriod": "只还利息期限"
+          },
+          "assumptions": {
+            "title": "投资假设",
+            "holdPeriod": "持有期",
+            "holdPeriodHelp": "您计划持有此投资多长时间？",
+            "capitalGrowth": "资本增长率",
+            "capitalGrowthHelp": "澳洲房产：历史平均6-7%（长期）",
+            "taxRate": "您的边际税率",
+            "taxRateHelp": "外国居民通常：32.5%或37%或45%",
+            "sellingCosts": "销售成本",
+            "sellingCostsHelp": "中介费(2-3%) + 法律费(0.5-1%) + 营销费(0.5-1%)"
+          },
+          "currency": {
+            "title": "货币转换（可选）",
+            "homeCurrency": "您的本国货币",
+            "aud": "AUD（澳元）",
+            "usd": "USD（美元）",
+            "cny": "CNY（人民币）",
+            "eur": "EUR（欧元）",
+            "gbp": "GBP（英镑）",
+            "jpy": "JPY（日元）",
+            "sgd": "SGD（新加坡元）",
+            "exchangeRate": "汇率（1澳元 = ? {currency}）",
+            "exchangeHelp": "请从您的银行或xe.com更新当前汇率"
+          }
+        },
+        "cashFlow": {
+          "title": "现金流分析",
+          "description": "年度租金收入与费用和贷款还款对比",
+          "annualIncome": "年度收入",
+          "annualExpenses": "年度支出",
+          "afterTaxCashFlow": "税后现金流",
+          "perMonth": "每月",
+          "effectiveAfterVacancy": "扣除空置期后",
+          "includingLoanRepayments": "包括贷款还款",
+          "chartTitle": "年度现金流可视化",
+          "income": "收入",
+          "expenses": "支出",
+          "netCashFlow": "净现金流",
+          "expenseBreakdown": "费用明细",
+          "totalAnnualExpenses": "年度总支出",
+          "negativeGearingBenefit": "负杠杆税收优惠",
+          "savedPerMonth": "每月节省税款",
+          "deductibleExpenses": "可抵扣费用",
+          "monthlySummary": "月度摘要",
+          "beforeTax": "月度现金流（税前）",
+          "afterTax": "月度现金流（税后）"
+        },
+        "projections": {
+          "title": "{years}年预测",
+          "description": "房产价值、贷款余额和净资产随时间增长",
+          "startingValue": "起始价值",
+          "finalValue": "最终价值",
+          "yourEquity": "您的净资产",
+          "from": "从",
+          "totalROI": "总投资回报率",
+          "perAnnum": "每年",
+          "breakEven": {
+            "title": "盈亏平衡分析",
+            "cumulativeBreakEven": "累计盈亏平衡",
+            "year": "年份",
+            "positiveCashFlow": "正现金流",
+            "cashRequired": "所需现金"
+          },
+          "yearByYear": "逐年摘要",
+          "tableHeaders": {
+            "year": "年份",
+            "propertyValue": "房产价值",
+            "equity": "净资产",
+            "cashFlow": "现金流",
+            "cumulativeReturn": "累计回报"
+          }
+        },
+        "comparison": {
+          "title": "投资比较",
+          "description": "将房产投资回报与其他资产类别在{years}年内进行比较",
+          "propertyLeads": "房产投资领先",
+          "propertyLeadsDesc": "根据您的假设，房产投资优于所有其他选择，总回报为{return}（年化{rate}）。",
+          "comparisonResults": "比较结果",
+          "comparisonDesc": "在这些假设下，{best}显示更高的回报（{return}）。房产投资回报{propertyReturn}。",
+          "chartTitle": "投资类型",
+          "detailedComparison": "详细比较",
+          "annualRate": "年化率",
+          "yearReturn": "{years}年回报",
+          "riskLevel": "风险等级",
+          "yourInvestment": "您的投资",
+          "investmentTypes": {
+            "property": "房产投资",
+            "stocks": "ASX 200股票",
+            "bonds": "政府债券",
+            "termDeposit": "定期存款",
+            "savings": "高息储蓄"
+          },
+          "riskLevels": {
+            "veryLow": "极低",
+            "low": "低",
+            "medium": "中高",
+            "high": "高"
+          },
+          "assumptions": "假设：房产增长率{growth}%，ASX 200为7.2%，债券/存款为4-4.5%。房产包括租金收入和税收优惠。过往表现不保证未来回报。"
+        },
+        "sensitivity": {
+          "title": "敏感性分析",
+          "description": "不同场景如何影响您的投资回报",
+          "warning": "投资风险",
+          "warningDesc": "这些场景显示了关键变量变化如何影响您的回报。在做出投资决策时请考虑这些风险。",
+          "vacancyImpact": "空置率影响",
+          "vacancyDesc": "对年度现金流的影响",
+          "vacancyRate": "空置率",
+          "annualRent": "年租金",
+          "impact": "影响",
+          "baseCase": "基准情况",
+          "vacancyNote": "空置率每增加5%，现金流减少约${amount}/年",
+          "interestImpact": "利率影响",
+          "interestDesc": "对贷款还款的影响",
+          "interestRate": "利率",
+          "monthlyRepayment": "月度还款",
+          "annualCost": "年度成本",
+          "cashFlowImpact": "现金流影响",
+          "interestNote": "利率每增加1%，每月多支付约${amount}",
+          "growthScenarios": "资本增长情景",
+          "growthDesc": "不同市场条件",
+          "conservative": "保守",
+          "moderate": "适中",
+          "optimistic": "乐观",
+          "base": "基准",
+          "growthRate": "增长率",
+          "finalValue": "最终价值",
+          "totalReturn": "总回报",
+          "riskFactors": "关键风险因素",
+          "mostSensitive": "最敏感于：",
+          "riskMitigation": "风险缓解：",
+          "sensitivityItems": {
+            "capitalGrowth": "资本增长率（对回报影响最大）",
+            "interestRate": "利率变化（影响月度现金流）",
+            "vacancy": "空置率（减少租金收入）",
+            "highDemand": "选择高需求地区的物业",
+            "fixRate": "锁定利率（降低利率风险）",
+            "cashReserves": "保持现金储备以应对空置期"
+          }
+        },
+        "taxAnalysis": {
+          "title": "税务分析",
+          "description": "税收抵扣、负杠杆优势和退出时的资本利得税",
+          "annualTaxSaving": "年度税收节省",
+          "fromNegativeGearing": "来自负杠杆",
+          "totalDeductions": "总抵扣额",
+          "deductionsDesc": "可抵扣租金收入的年度费用",
+          "breakdownTitle": "年度税收抵扣明细",
+          "deductionItems": {
+            "loanInterest": "贷款利息",
+            "propertyManagement": "物业管理",
+            "maintenance": "维护与修理",
+            "landTax": "土地税",
+            "councilRates": "市政费",
+            "insurance": "保险",
+            "strataFees": "物业管理费",
+            "depreciation": "折旧",
+            "other": "其他"
+          },
+          "negativeGearing": {
+            "title": "负杠杆的运作方式",
+            "rentalIncome": "租金收入",
+            "deductibleExpenses": "可抵扣费用",
+            "netRentalLoss": "净租金损失",
+            "taxBenefit": "税收优惠（按{rate}%边际税率计算）"
+          },
+          "cgtTitle": "退出时的资本利得税（估算）",
+          "cgtItems": {
+            "salePrice": "售价（第{year}年）",
+            "originalPrice": "原始购买价格",
+            "purchaseCosts": "购买成本（FIRB、印花税等）",
+            "sellingCosts": "销售成本（中介、法律）",
+            "costBase": "成本基础",
+            "capitalGain": "资本利得",
+            "cgtRate": "资本利得税率（外国居民 - 无折扣）",
+            "cgtPayable": "应付资本利得税",
+            "withholdingTax": "预扣税",
+            "netProceeds": "税后净收益"
+          },
+          "taxPlanningTip": "税务规划提示：外国居民不享受50%的资本利得税折扣。考虑在出售前获得永久居留权，以显著降低资本利得税负担。请咨询税务专业人士获取个性化建议。"
+        },
+        "score": {
+          "title": "投资评分与建议",
+          "description": "基于综合分析的AI生成评估",
+          "overallVerdict": "总体评价",
+          "investment": "投资",
+          "scoreBreakdown": "评分明细",
+          "dimensions": {
+            "rentalYield": "租金收益率",
+            "capitalGrowth": "资本增长",
+            "cashFlow": "现金流",
+            "taxEfficiency": "税收效率",
+            "riskProfile": "风险概况"
+          },
+          "verdicts": {
+            "excellent": "优秀",
+            "good": "良好",
+            "moderate": "中等",
+            "poor": "较差",
+            "notRecommended": "不推荐"
+          },
+          "strengths": "优势",
+          "weaknesses": "劣势",
+          "suitableFor": "此投资适合：",
+          "risksToConsider": "需要考虑的风险",
+          "keyTakeaways": "关键要点"
+        }
       }
     },
     "emailModal": {

@@ -294,6 +294,273 @@
       "disclaimer": {
         "title": "Important Disclaimer",
         "content": "This calculator provides estimates only and should not be considered financial or legal advice. Actual costs may vary. FIRB regulations are subject to change. We strongly recommend consulting with qualified professionals including lawyers, accountants, and FIRB specialists before making any property investment decisions."
+      },
+      "investmentAnalytics": {
+        "toggle": {
+          "title": "Investment Analysis & Projections",
+          "description": "See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments",
+          "show": "Show Investment Analysis",
+          "hide": "Hide Analysis"
+        },
+        "summary": {
+          "title": "Investment Performance Summary",
+          "description": "Key metrics at a glance based on your investment assumptions",
+          "grossYield": "Gross Rental Yield",
+          "netYield": "Net Rental Yield",
+          "annualizedROI": "Annualized ROI",
+          "monthlyCashFlow": "Monthly Cash Flow",
+          "afterExpenses": "After expenses & vacancy",
+          "totalReturn": "total return",
+          "positivelyGeared": "Positively geared",
+          "negativelyGeared": "Negatively geared",
+          "taxBenefit": "Tax benefit",
+          "propertyValueGrowth": "Property Value Growth",
+          "afterYears": "After",
+          "years": "years",
+          "yourEquity": "Your Equity",
+          "equityGain": "Equity gain",
+          "taxSavings": "Tax Savings (Annual)",
+          "fromNegativeGearing": "From negative gearing benefits"
+        },
+        "inputs": {
+          "title": "Investment Analysis Parameters",
+          "description": "Adjust these values to see how different scenarios affect your investment returns",
+          "note": "These are estimates based on current market conditions and your assumptions. Actual returns may vary. Calculations update in real-time as you adjust values.",
+          "rental": {
+            "title": "Rental Income Details",
+            "weeklyRent": "Estimated Weekly Rent",
+            "perYear": "per year",
+            "vacancyRate": "Vacancy Rate",
+            "vacancyHelp": "Typical: 3-5% for good locations, 7-10% for high-risk areas",
+            "rentGrowth": "Annual Rent Growth",
+            "rentGrowthHelp": "Historical average: 2-4% per year"
+          },
+          "management": {
+            "title": "Property Management",
+            "selfManaged": "I will self-manage this property (no management fees)",
+            "managementFee": "Property Management Fee",
+            "managementHelp": "Typical: 7-9% of rental income. Estimated",
+            "lettingFee": "Letting Fee (when finding new tenant)",
+            "weeksRent": "weeks of rent"
+          },
+          "financing": {
+            "title": "Financing Details",
+            "loanAmount": "Loan Amount",
+            "interestRate": "Interest Rate",
+            "interestHelp": "Current market: 6.0-6.8% for investment loans",
+            "loanTerm": "Loan Term",
+            "loanType": "Loan Type",
+            "principalAndInterest": "Principal & Interest",
+            "interestOnly": "Interest Only",
+            "interestOnlyPeriod": "Interest Only Period"
+          },
+          "assumptions": {
+            "title": "Investment Assumptions",
+            "holdPeriod": "Hold Period",
+            "holdPeriodHelp": "How long do you plan to hold this investment?",
+            "capitalGrowth": "Capital Growth Rate",
+            "capitalGrowthHelp": "Australian property: 6-7% historical average (long-term)",
+            "taxRate": "Your Marginal Tax Rate",
+            "taxRateHelp": "Foreign residents typically: 32.5% or 37% or 45%",
+            "sellingCosts": "Selling Costs",
+            "sellingCostsHelp": "Agent (2-3%) + Legal (0.5-1%) + Marketing (0.5-1%)"
+          },
+          "currency": {
+            "title": "Currency Conversion (Optional)",
+            "homeCurrency": "Your Home Currency",
+            "aud": "AUD (Australian Dollar)",
+            "usd": "USD (US Dollar)",
+            "cny": "CNY (Chinese Yuan)",
+            "eur": "EUR (Euro)",
+            "gbp": "GBP (British Pound)",
+            "jpy": "JPY (Japanese Yen)",
+            "sgd": "SGD (Singapore Dollar)",
+            "exchangeRate": "Exchange Rate (1 AUD = ? {currency})",
+            "exchangeHelp": "Update with current exchange rate from your bank or xe.com"
+          }
+        },
+        "cashFlow": {
+          "title": "Cash Flow Analysis",
+          "description": "Annual rental income vs expenses and loan repayments",
+          "annualIncome": "Annual Income",
+          "annualExpenses": "Annual Expenses",
+          "afterTaxCashFlow": "After-Tax Cash Flow",
+          "perMonth": "per month",
+          "effectiveAfterVacancy": "after vacancy",
+          "includingLoanRepayments": "Including loan repayments",
+          "chartTitle": "Annual Cash Flow Visualization",
+          "income": "Income",
+          "expenses": "Expenses",
+          "netCashFlow": "Net Cash Flow",
+          "expenseBreakdown": "Expense Breakdown",
+          "totalAnnualExpenses": "Total Annual Expenses",
+          "negativeGearingBenefit": "Negative Gearing Tax Benefit",
+          "savedPerMonth": "saved per month in taxes",
+          "deductibleExpenses": "Deductible Expenses",
+          "monthlySummary": "Monthly Summary",
+          "beforeTax": "Monthly Cash Flow (Before Tax)",
+          "afterTax": "Monthly Cash Flow (After Tax)"
+        },
+        "projections": {
+          "title": "{years}-Year Projection",
+          "description": "Property value, loan balance, and equity growth over time",
+          "startingValue": "Starting Value",
+          "finalValue": "Final Value",
+          "yourEquity": "Your Equity",
+          "from": "from",
+          "totalROI": "Total ROI",
+          "perAnnum": "p.a.",
+          "breakEven": {
+            "title": "Break-Even Analysis",
+            "cumulativeBreakEven": "Cumulative Break-Even",
+            "year": "Year",
+            "positiveCashFlow": "Positive Cash Flow",
+            "cashRequired": "Cash Required"
+          },
+          "yearByYear": "Year-by-Year Summary",
+          "tableHeaders": {
+            "year": "Year",
+            "propertyValue": "Property Value",
+            "equity": "Equity",
+            "cashFlow": "Cash Flow",
+            "cumulativeReturn": "Cumulative Return"
+          }
+        },
+        "comparison": {
+          "title": "Investment Comparison",
+          "description": "Compare property investment returns vs other asset classes over {years} years",
+          "propertyLeads": "Property Investment Leads",
+          "propertyLeadsDesc": "Based on your assumptions, property investment outperforms all other options with a {return} total return ({rate} annualized).",
+          "comparisonResults": "Comparison Results",
+          "comparisonDesc": "{best} shows higher returns ({return}) under these assumptions. Property investment returns {propertyReturn}.",
+          "chartTitle": "Investment Type",
+          "detailedComparison": "Detailed Comparison",
+          "annualRate": "Annual Rate",
+          "yearReturn": "{years}-Year Return",
+          "riskLevel": "Risk Level",
+          "yourInvestment": "Your Investment",
+          "investmentTypes": {
+            "property": "Property Investment",
+            "stocks": "ASX 200 Stocks",
+            "bonds": "Government Bonds",
+            "termDeposit": "Term Deposit",
+            "savings": "High-Int. Savings"
+          },
+          "riskLevels": {
+            "veryLow": "Very Low",
+            "low": "Low",
+            "medium": "Medium-High",
+            "high": "High"
+          },
+          "assumptions": "Assumptions: Property at {growth}% growth, ASX 200 at 7.2%, bonds/deposits at 4-4.5%. Property includes rental income and tax benefits. Past performance doesn't guarantee future returns."
+        },
+        "sensitivity": {
+          "title": "Sensitivity Analysis",
+          "description": "How different scenarios impact your investment returns",
+          "warning": "Investment Risks",
+          "warningDesc": "These scenarios show how changes in key variables affect your returns. Consider these risks when making your investment decision.",
+          "vacancyImpact": "Vacancy Rate Impact",
+          "vacancyDesc": "on annual cash flow",
+          "vacancyRate": "Vacancy Rate",
+          "annualRent": "Annual Rent",
+          "impact": "Impact",
+          "baseCase": "Base Case",
+          "vacancyNote": "Each 5% increase in vacancy reduces cash flow by ~${amount}/year",
+          "interestImpact": "Interest Rate Impact",
+          "interestDesc": "on loan repayments",
+          "interestRate": "Interest Rate",
+          "monthlyRepayment": "Monthly Repayment",
+          "annualCost": "Annual Cost",
+          "cashFlowImpact": "Cash Flow Impact",
+          "interestNote": "Each 1% interest rate increase costs ~${amount}/month more",
+          "growthScenarios": "Capital Growth Scenarios",
+          "growthDesc": "different market conditions",
+          "conservative": "Conservative",
+          "moderate": "Moderate",
+          "optimistic": "Optimistic",
+          "base": "Base",
+          "growthRate": "Growth Rate",
+          "finalValue": "Final Value",
+          "totalReturn": "Total Return",
+          "riskFactors": "Key Risk Factors",
+          "mostSensitive": "Most Sensitive To:",
+          "riskMitigation": "Risk Mitigation:",
+          "sensitivityItems": {
+            "capitalGrowth": "Capital growth rate (biggest impact on returns)",
+            "interestRate": "Interest rate changes (affects monthly cash flow)",
+            "vacancy": "Vacancy rates (reduces rental income)",
+            "highDemand": "Choose properties in high-demand areas",
+            "fixRate": "Fix interest rate (reduce rate risk)",
+            "cashReserves": "Maintain cash reserves for vacancies"
+          }
+        },
+        "taxAnalysis": {
+          "title": "Tax Analysis",
+          "description": "Tax deductions, negative gearing benefits, and CGT on exit",
+          "annualTaxSaving": "Annual Tax Saving",
+          "fromNegativeGearing": "from negative gearing",
+          "totalDeductions": "Total Deductions",
+          "deductionsDesc": "Annual deductible expenses against rental income",
+          "breakdownTitle": "Annual Tax Deductions Breakdown",
+          "deductionItems": {
+            "loanInterest": "Loan Interest",
+            "propertyManagement": "Property Management",
+            "maintenance": "Maintenance & Repairs",
+            "landTax": "Land Tax",
+            "councilRates": "Council Rates",
+            "insurance": "Insurance",
+            "strataFees": "Strata Fees",
+            "depreciation": "Depreciation",
+            "other": "Other"
+          },
+          "negativeGearing": {
+            "title": "How Negative Gearing Works",
+            "rentalIncome": "Rental Income",
+            "deductibleExpenses": "Deductible Expenses",
+            "netRentalLoss": "Net Rental Loss",
+            "taxBenefit": "Tax Benefit (at {rate}% marginal rate)"
+          },
+          "cgtTitle": "Capital Gains Tax on Exit (Estimated)",
+          "cgtItems": {
+            "salePrice": "Sale Price (Year {year})",
+            "originalPrice": "Original Purchase Price",
+            "purchaseCosts": "Purchase Costs (FIRB, stamp duty, etc.)",
+            "sellingCosts": "Selling Costs (agent, legal)",
+            "costBase": "Cost Base",
+            "capitalGain": "Capital Gain",
+            "cgtRate": "CGT Rate (foreign resident - no discount)",
+            "cgtPayable": "CGT Payable",
+            "withholdingTax": "Withholding Tax",
+            "netProceeds": "Net Proceeds After Tax"
+          },
+          "taxPlanningTip": "Tax Planning Tip: Foreign residents don't receive the 50% CGT discount. Consider obtaining permanent residency before selling to significantly reduce CGT liability. Consult a tax professional for personalized advice."
+        },
+        "score": {
+          "title": "Investment Score & Recommendation",
+          "description": "AI-generated assessment based on comprehensive analysis",
+          "overallVerdict": "Overall Verdict",
+          "investment": "Investment",
+          "scoreBreakdown": "Score Breakdown",
+          "dimensions": {
+            "rentalYield": "Rental Yield",
+            "capitalGrowth": "Capital Growth",
+            "cashFlow": "Cash Flow",
+            "taxEfficiency": "Tax Efficiency",
+            "riskProfile": "Risk Profile"
+          },
+          "verdicts": {
+            "excellent": "Excellent",
+            "good": "Good",
+            "moderate": "Moderate",
+            "poor": "Poor",
+            "notRecommended": "Not Recommended"
+          },
+          "strengths": "Strengths",
+          "weaknesses": "Weaknesses",
+          "suitableFor": "This Investment is Suitable For:",
+          "risksToConsider": "Risks to Consider",
+          "keyTakeaways": "Key Takeaways"
+        }
       }
     },
     "emailModal": {
