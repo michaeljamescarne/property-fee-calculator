@@ -36,9 +36,9 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-2xl font-bold mb-2">{t('summary.title')}</h3>
+        <h3 className="text-2xl font-bold mb-2">{t('summary.title') || 'Investment Performance Summary'}</h3>
         <p className="text-muted-foreground">
-          {t('summary.description')}
+          {t('summary.description') || 'Key metrics at a glance based on your investment assumptions'}
         </p>
       </div>
 

@@ -29,10 +29,10 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
       <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 border-b">
         <CardTitle className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />
-          {t('inputs.title')}
+          {t('inputs.title') || 'Investment Analysis Parameters'}
         </CardTitle>
         <CardDescription>
-          {t('inputs.description')}
+          {t('inputs.description') || 'Adjust these values to see how different scenarios affect your investment returns'}
         </CardDescription>
       </CardHeader>
       
@@ -43,7 +43,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Home className="h-4 w-4 text-primary" />
-                {t('inputs.rental.title')}
+                {t('inputs.rental.title') || 'Rental Income'}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -101,7 +101,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <DollarSign className="h-4 w-4 text-primary" />
-                {t('inputs.management.title')}
+                {t('inputs.management.title') || 'Property Management'}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -158,7 +158,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Calculator className="h-4 w-4 text-primary" />
-                {t('inputs.financing.title')}
+                {t('inputs.financing.title') || 'Financing Details'}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -245,7 +245,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-primary" />
-                {t('inputs.assumptions.title')}
+                {t('inputs.assumptions.title') || 'Investment Assumptions'}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -316,7 +316,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-primary" />
-                {t('inputs.currency.title')}
+                {t('inputs.currency.title') || 'Currency Conversion (Optional)'}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">

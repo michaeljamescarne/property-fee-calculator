@@ -291,10 +291,10 @@ export default function ResultsPanel({
             <div className="flex-1">
               <CardTitle className="flex items-center gap-2 text-xl">
                 <TrendingUp className="h-6 w-6 text-primary" />
-                {tAnalytics('toggle.title')}
+                {tAnalytics('toggle.title') || 'Investment Analysis & Projections'}
               </CardTitle>
               <CardDescription className="mt-2">
-                {tAnalytics('toggle.description')}
+                {tAnalytics('toggle.description') || 'See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments'}
               </CardDescription>
             </div>
             <Button 
@@ -308,11 +308,11 @@ export default function ResultsPanel({
             >
               {showInvestmentAnalysis ? (
                 <>
-                  {tAnalytics('toggle.hide')} <ChevronUp className="h-5 w-5" />
+                  {tAnalytics('toggle.hide') || 'Hide Analysis'} <ChevronUp className="h-5 w-5" />
                 </>
               ) : (
                 <>
-                  {tAnalytics('toggle.show')} <ChevronDown className="h-5 w-5" />
+                  {tAnalytics('toggle.show') || 'Show Investment Analysis'} <ChevronDown className="h-5 w-5" />
                 </>
               )}
             </Button>
