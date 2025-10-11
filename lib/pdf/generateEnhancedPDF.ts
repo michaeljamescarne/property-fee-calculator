@@ -1,6 +1,7 @@
 /**
  * Enhanced FIRB PDF Generator with Investment Analytics
  * Generates comprehensive 7-page investment analysis report
+ * Supports multiple languages and locales
  */
 
 import jsPDF from 'jspdf';
@@ -9,6 +10,8 @@ import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import { FIRBCalculatorFormData } from '@/lib/validations/firb';
 import type { InvestmentAnalytics } from '@/types/investment';
+import { formatCurrency, formatPercent, formatDate, formatNumber } from '@/lib/utils/format';
+import type { PDFTranslations } from './pdfTranslations';
 
 // Extend jsPDF types for autotable
 interface jsPDFWithAutoTable extends jsPDF {
@@ -17,32 +20,13 @@ interface jsPDFWithAutoTable extends jsPDF {
   };
 }
 
-const formatCurrency = (value: number): string => {
-  return new Intl.NumberFormat('en-AU', {
-    style: 'currency',
-    currency: 'AUD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value);
-};
-
-const formatPercent = (value: number): string => {
-  return `${value.toFixed(1)}%`;
-};
-
-const formatDate = (): string => {
-  return new Date().toLocaleDateString('en-AU', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-};
-
 export function generateEnhancedPDF(
   formData: Partial<FIRBCalculatorFormData>,
   eligibility: EligibilityResult,
   costs: CostBreakdown,
-  analytics: InvestmentAnalytics
+  analytics: InvestmentAnalytics,
+  locale: string = 'en',
+  translations: PDFTranslations
 ): Blob {
   const doc = new jsPDF('p', 'mm', 'a4');
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -74,8 +58,9 @@ export function generateEnhancedPDF(
     const pageCount = (doc as any).internal.getNumberOfPages();
     doc.setFontSize(8);
     doc.setTextColor(150);
-    doc.text(`Page ${pageCount}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
-    doc.text(`Generated ${formatDate()}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+    const pageText = locale === 'zh' ? `${translations.page}${pageCount}页` : `${translations.page} ${pageCount}`;
+    doc.text(pageText, pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.text(`${translations.generatedOn} ${formatDate(new Date(), locale === 'zh' ? 'zh-CN' : 'en-AU')}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
   };
 
   // Helper: Add section header
@@ -91,6 +76,13 @@ export function generateEnhancedPDF(
     doc.setTextColor(0, 0, 0);
   };
 
+  // Locale-aware formatting helpers
+  const fmt = {
+    currency: (value: number): string => formatCurrency(value, locale === 'zh' ? 'zh-CN' : 'en-AU', 'AUD'),
+    percent: (value: number): string => formatPercent(value, locale === 'zh' ? 'zh-CN' : 'en-AU', 1),
+    number: (value: number): string => formatNumber(value, locale === 'zh' ? 'zh-CN' : 'en-AU', { maximumFractionDigits: 0 }),
+  };
+
   // =================
   // PAGE 1: EXECUTIVE SUMMARY
   // =================
@@ -102,12 +94,12 @@ export function generateEnhancedPDF(
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(32);
   doc.setFont('helvetica', 'bold');
-  doc.text('Investment Analysis Report', pageWidth / 2, 20, { align: 'center' });
+  doc.text(translations.title, pageWidth / 2, 20, { align: 'center' });
   
   doc.setFontSize(14);
   doc.setFont('helvetica', 'normal');
-  doc.text('Australian Property Investment', pageWidth / 2, 32, { align: 'center' });
-  doc.text(`Property Fee Calculator | ${formatDate()}`, pageWidth / 2, 42, { align: 'center' });
+  doc.text(translations.subtitle, pageWidth / 2, 32, { align: 'center' });
+  doc.text(`${formatDate(new Date(), locale === 'zh' ? 'zh-CN' : 'en-AU')}`, pageWidth / 2, 42, { align: 'center' });
 
   yPosition = 65;
 
@@ -118,7 +110,7 @@ export function generateEnhancedPDF(
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(20);
   doc.setFont('helvetica', 'bold');
-  doc.text(`${analytics.recommendation.verdict.toUpperCase()} INVESTMENT`, pageWidth / 2, yPosition + 10, { align: 'center' });
+  doc.text(`${analytics.recommendation.verdict.toUpperCase()} ${translations.labels.overallVerdict.toUpperCase()}`, pageWidth / 2, yPosition + 10, { align: 'center' });
   doc.setFontSize(36);
   doc.text(`${analytics.score.overall.toFixed(1)}/10`, pageWidth / 2, yPosition + 22, { align: 'center' });
   
@@ -126,7 +118,7 @@ export function generateEnhancedPDF(
   doc.setTextColor(0, 0, 0);
 
   // Property Details
-  addSectionHeader('Property Details');
+  addSectionHeader(translations.sections.propertyDetails);
   
   autoTable(doc, {
     startY: yPosition,
@@ -135,8 +127,8 @@ export function generateEnhancedPDF(
       ['Address', formData.propertyAddress || 'Not specified'],
       ['Property Type', formData.propertyType?.replace(/([A-Z])/g, ' $1').trim() || 'N/A'],
       ['State/Territory', formData.state || 'N/A'],
-      ['Purchase Price', formatCurrency(formData.propertyValue || 0)],
-      ['Deposit', `${formData.depositPercent}% (${formatCurrency((formData.propertyValue || 0) * (formData.depositPercent || 20) / 100)})`],
+      [translations.labels.value, fmt.currency(formData.propertyValue || 0)],
+      [translations.labels.deposit, `${formData.depositPercent}% (${fmt.currency((formData.propertyValue || 0) * (formData.depositPercent || 20) / 100)})`],
     ],
     theme: 'grid',
     headStyles: { fillColor: primaryColor, fontSize: 11 },
@@ -147,16 +139,16 @@ export function generateEnhancedPDF(
   yPosition = (doc as jsPDFWithAutoTable).lastAutoTable.finalY + 10;
 
   // Key Investment Metrics
-  addSectionHeader('Key Investment Metrics');
+  addSectionHeader(translations.sections.keyMetrics);
   
   autoTable(doc, {
     startY: yPosition,
     head: [['Metric', 'Value', 'Benchmark']],
     body: [
-      ['Gross Rental Yield', formatPercent(analytics.rentalYield.gross), analytics.rentalYield.comparison],
-      ['Net Rental Yield', formatPercent(analytics.rentalYield.net), 'After all expenses'],
-      ['Annualized ROI', formatPercent(analytics.roi.annualizedROI), analytics.roi.annualizedROI > 7.2 ? 'Beats ASX (7.2%)' : 'Below ASX (7.2%)'],
-      ['Monthly Cash Flow', formatCurrency(analytics.cashFlow.monthly.afterTaxCashFlow), analytics.cashFlow.monthly.afterTaxCashFlow >= 0 ? 'Positive' : 'Negative (tax benefits applied)'],
+      ['Gross Rental Yield', fmt.percent(analytics.rentalYield.gross), analytics.rentalYield.comparison],
+      ['Net Rental Yield', fmt.percent(analytics.rentalYield.net), 'After all expenses'],
+      ['Annualized ROI', fmt.percent(analytics.roi.annualizedROI), analytics.roi.annualizedROI > 7.2 ? 'Beats ASX (7.2%)' : 'Below ASX (7.2%)'],
+      ['Monthly Cash Flow', fmt.currency(analytics.cashFlow.monthly.afterTaxCashFlow), analytics.cashFlow.monthly.afterTaxCashFlow >= 0 ? 'Positive' : 'Negative (tax benefits applied)'],
     ],
     theme: 'striped',
     headStyles: { fillColor: primaryColor, fontSize: 11 },
@@ -189,7 +181,7 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader('Complete Cost Breakdown');
+  addSectionHeader(translations.sections.costBreakdown);
 
   // Total Investment
   doc.setFillColor(220, 220, 220);
@@ -198,7 +190,7 @@ export function generateEnhancedPDF(
   doc.setFont('helvetica', 'bold');
   doc.text('Total Investment Required', margin + 5, yPosition + 8);
   doc.setFontSize(18);
-  doc.text(formatCurrency(costs.totalInvestmentCost), pageWidth - margin - 5, yPosition + 14, { align: 'right' });
+  doc.text(fmt.currency(costs.totalInvestmentCost), pageWidth - margin - 5, yPosition + 14, { align: 'right' });
   yPosition += 25;
 
   // Upfront Costs Table
@@ -211,14 +203,14 @@ export function generateEnhancedPDF(
     startY: yPosition,
     head: [['Cost Item', 'Amount']],
     body: [
-      ['Property Price', formatCurrency(costs.upfrontCosts.propertyPrice)],
-      ['FIRB Application Fee', formatCurrency(costs.upfrontCosts.firbFee)],
-      ['Stamp Duty', formatCurrency(costs.upfrontCosts.stampDuty)],
-      ['Foreign Buyer Surcharge', formatCurrency(costs.upfrontCosts.foreignSurcharge)],
-      ['Legal Fees', formatCurrency(costs.upfrontCosts.legalFees)],
-      ['Inspection Fees', formatCurrency(costs.upfrontCosts.inspectionFees)],
-      ['Loan Costs', formatCurrency(costs.upfrontCosts.loanCosts)],
-      ['TOTAL UPFRONT', formatCurrency(costs.upfrontCosts.total)],
+      ['Property Price', fmt.currency(costs.upfrontCosts.propertyPrice)],
+      ['FIRB Application Fee', fmt.currency(costs.upfrontCosts.firbFee)],
+      ['Stamp Duty', fmt.currency(costs.upfrontCosts.stampDuty)],
+      ['Foreign Buyer Surcharge', fmt.currency(costs.upfrontCosts.foreignSurcharge)],
+      ['Legal Fees', fmt.currency(costs.upfrontCosts.legalFees)],
+      ['Inspection Fees', fmt.currency(costs.upfrontCosts.inspectionFees)],
+      ['Loan Costs', fmt.currency(costs.upfrontCosts.loanCosts)],
+      ['TOTAL UPFRONT', fmt.currency(costs.upfrontCosts.total)],
     ],
     theme: 'striped',
     headStyles: { fillColor: primaryColor },
@@ -239,12 +231,12 @@ export function generateEnhancedPDF(
     startY: yPosition,
     head: [['Cost Item', 'Annual Amount']],
     body: [
-      ['Annual Land Tax', formatCurrency(costs.ongoingCosts.annualLandTax)],
-      ['Council Rates', formatCurrency(costs.ongoingCosts.councilRates)],
-      ['Insurance', formatCurrency(costs.ongoingCosts.insurance)],
-      ['Maintenance', formatCurrency(costs.ongoingCosts.maintenance)],
-      ['Vacancy Fee', formatCurrency(costs.ongoingCosts.vacancyFee)],
-      ['TOTAL ANNUAL', formatCurrency(costs.ongoingCosts.total)],
+      ['Annual Land Tax', fmt.currency(costs.ongoingCosts.annualLandTax)],
+      ['Council Rates', fmt.currency(costs.ongoingCosts.councilRates)],
+      ['Insurance', fmt.currency(costs.ongoingCosts.insurance)],
+      ['Maintenance', fmt.currency(costs.ongoingCosts.maintenance)],
+      ['Vacancy Fee', fmt.currency(costs.ongoingCosts.vacancyFee)],
+      ['TOTAL ANNUAL', fmt.currency(costs.ongoingCosts.total)],
     ],
     theme: 'striped',
     headStyles: { fillColor: primaryColor },
@@ -260,19 +252,19 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader('Investment Performance Analysis');
+  addSectionHeader(translations.sections.investmentPerformance);
 
   // Rental Analysis
   autoTable(doc, {
     startY: yPosition,
     head: [['Rental Analysis', 'Value']],
     body: [
-      ['Weekly Rent', formatCurrency(analytics.rentalYield.weeklyRent)],
-      ['Annual Rent', formatCurrency(analytics.rentalYield.annualRent)],
-      ['Vacancy Cost', formatCurrency(analytics.rentalYield.annualRent - analytics.rentalYield.effectiveRent)],
-      ['Effective Annual Rent', formatCurrency(analytics.rentalYield.effectiveRent)],
-      ['Gross Rental Yield', formatPercent(analytics.rentalYield.gross)],
-      ['Net Rental Yield', formatPercent(analytics.rentalYield.net)],
+      ['Weekly Rent', fmt.currency(analytics.rentalYield.weeklyRent)],
+      ['Annual Rent', fmt.currency(analytics.rentalYield.annualRent)],
+      ['Vacancy Cost', fmt.currency(analytics.rentalYield.annualRent - analytics.rentalYield.effectiveRent)],
+      ['Effective Annual Rent', fmt.currency(analytics.rentalYield.effectiveRent)],
+      ['Gross Rental Yield', fmt.percent(analytics.rentalYield.gross)],
+      ['Net Rental Yield', fmt.percent(analytics.rentalYield.net)],
     ],
     theme: 'striped',
     headStyles: { fillColor: primaryColor },
@@ -287,10 +279,10 @@ export function generateEnhancedPDF(
     startY: yPosition,
     head: [['Return on Investment', 'Value']],
     body: [
-      ['Total ROI', formatPercent(analytics.roi.totalROI)],
-      ['Annualized ROI', formatPercent(analytics.roi.annualizedROI)],
-      ['Cash-on-Cash Return', formatPercent(analytics.roi.cashOnCashReturn)],
-      ['Total Return (Dollar)', formatCurrency(analytics.roi.totalReturn)],
+      ['Total ROI', fmt.percent(analytics.roi.totalROI)],
+      ['Annualized ROI', fmt.percent(analytics.roi.annualizedROI)],
+      ['Cash-on-Cash Return', fmt.percent(analytics.roi.cashOnCashReturn)],
+      ['Total Return (Dollar)', fmt.currency(analytics.roi.totalReturn)],
     ],
     theme: 'striped',
     headStyles: { fillColor: accentColor },
@@ -305,11 +297,11 @@ export function generateEnhancedPDF(
     startY: yPosition,
     head: [['Capital Growth Projection', 'Value']],
     body: [
-      ['Initial Property Value', formatCurrency(analytics.capitalGrowth.initialValue)],
-      ['Estimated Value (Year ' + analytics.yearByYear.length + ')', formatCurrency(analytics.capitalGrowth.estimatedValueAtEnd)],
-      ['Total Appreciation', formatCurrency(analytics.capitalGrowth.totalAppreciation)],
-      ['Percentage Gain', formatPercent(analytics.capitalGrowth.totalPercentageGain)],
-      ['Annual Growth Rate', formatPercent(analytics.capitalGrowth.annualGrowthRate)],
+      ['Initial Property Value', fmt.currency(analytics.capitalGrowth.initialValue)],
+      ['Estimated Value (Year ' + analytics.yearByYear.length + ')', fmt.currency(analytics.capitalGrowth.estimatedValueAtEnd)],
+      ['Total Appreciation', fmt.currency(analytics.capitalGrowth.totalAppreciation)],
+      ['Percentage Gain', fmt.percent(analytics.capitalGrowth.totalPercentageGain)],
+      ['Annual Growth Rate', fmt.percent(analytics.capitalGrowth.annualGrowthRate)],
     ],
     theme: 'striped',
     headStyles: { fillColor: greenColor },
@@ -324,30 +316,30 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader('Cash Flow Analysis');
+  addSectionHeader(translations.sections.cashFlow);
 
   // Annual Cash Flow
   autoTable(doc, {
     startY: yPosition,
     head: [['Income & Expenses', 'Annual Amount']],
     body: [
-      ['Rental Income', formatCurrency(analytics.cashFlow.annual.rentalIncome)],
-      ['Vacancy Cost', formatCurrency(-analytics.cashFlow.annual.vacancyCost)],
-      ['Effective Income', formatCurrency(analytics.cashFlow.annual.effectiveIncome)],
+      ['Rental Income', fmt.currency(analytics.cashFlow.annual.rentalIncome)],
+      ['Vacancy Cost', fmt.currency(-analytics.cashFlow.annual.vacancyCost)],
+      ['Effective Income', fmt.currency(analytics.cashFlow.annual.effectiveIncome)],
       ['', ''],
-      ['Loan Repayments', formatCurrency(-analytics.cashFlow.annual.loanRepayments)],
-      ['Property Management', formatCurrency(-analytics.cashFlow.annual.propertyManagement)],
-      ['Maintenance', formatCurrency(-analytics.cashFlow.annual.maintenance)],
-      ['Council Rates', formatCurrency(-analytics.cashFlow.annual.councilRates)],
-      ['Insurance', formatCurrency(-analytics.cashFlow.annual.insurance)],
-      ['Land Tax', formatCurrency(-analytics.cashFlow.annual.landTax)],
-      ['Strata Fees', formatCurrency(-analytics.cashFlow.annual.strataFees)],
-      ['Other Expenses', formatCurrency(-analytics.cashFlow.annual.otherExpenses)],
-      ['Total Expenses', formatCurrency(-analytics.cashFlow.annual.totalExpenses)],
+      ['Loan Repayments', fmt.currency(-analytics.cashFlow.annual.loanRepayments)],
+      ['Property Management', fmt.currency(-analytics.cashFlow.annual.propertyManagement)],
+      ['Maintenance', fmt.currency(-analytics.cashFlow.annual.maintenance)],
+      ['Council Rates', fmt.currency(-analytics.cashFlow.annual.councilRates)],
+      ['Insurance', fmt.currency(-analytics.cashFlow.annual.insurance)],
+      ['Land Tax', fmt.currency(-analytics.cashFlow.annual.landTax)],
+      ['Strata Fees', fmt.currency(-analytics.cashFlow.annual.strataFees)],
+      ['Other Expenses', fmt.currency(-analytics.cashFlow.annual.otherExpenses)],
+      ['Total Expenses', fmt.currency(-analytics.cashFlow.annual.totalExpenses)],
       ['', ''],
-      ['Net Cash Flow (Before Tax)', formatCurrency(analytics.cashFlow.annual.netCashFlow)],
-      ['Tax Benefit', formatCurrency(analytics.cashFlow.annual.taxBenefit)],
-      ['Net Cash Flow (After Tax)', formatCurrency(analytics.cashFlow.annual.afterTaxCashFlow)],
+      ['Net Cash Flow (Before Tax)', fmt.currency(analytics.cashFlow.annual.netCashFlow)],
+      ['Tax Benefit', fmt.currency(analytics.cashFlow.annual.taxBenefit)],
+      ['Net Cash Flow (After Tax)', fmt.currency(analytics.cashFlow.annual.afterTaxCashFlow)],
     ],
     theme: 'grid',
     headStyles: { fillColor: primaryColor },
@@ -374,9 +366,9 @@ export function generateEnhancedPDF(
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
   doc.text('Monthly Cash Flow:', margin + 5, yPosition + 8);
-  doc.text(formatCurrency(analytics.cashFlow.monthly.netCashFlow), margin + 5, yPosition + 15);
+  doc.text(fmt.currency(analytics.cashFlow.monthly.netCashFlow), margin + 5, yPosition + 15);
   doc.text('After-Tax Monthly:', pageWidth / 2 + 10, yPosition + 8);
-  doc.text(formatCurrency(analytics.cashFlow.monthly.afterTaxCashFlow), pageWidth / 2 + 10, yPosition + 15);
+  doc.text(fmt.currency(analytics.cashFlow.monthly.afterTaxCashFlow), pageWidth / 2 + 10, yPosition + 15);
 
   // =================
   // PAGE 5: 10-YEAR PROJECTIONS
@@ -386,16 +378,16 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader(`${analytics.yearByYear.length}-Year Investment Projection`);
+  addSectionHeader(translations.sections.projections);
 
   // Year-by-Year Table (first 10 years)
   const projectionData = analytics.yearByYear.slice(0, 10).map(year => [
     `Year ${year.year}`,
-    formatCurrency(year.propertyValue),
-    formatCurrency(year.loanBalance),
-    formatCurrency(year.equity),
-    formatCurrency(year.afterTaxCashFlow),
-    formatCurrency(year.cumulativeReturn),
+    fmt.currency(year.propertyValue),
+    fmt.currency(year.loanBalance),
+    fmt.currency(year.equity),
+    fmt.currency(year.afterTaxCashFlow),
+    fmt.currency(year.cumulativeReturn),
   ]);
 
   autoTable(doc, {
@@ -433,7 +425,7 @@ export function generateEnhancedPDF(
     doc.text(`• Positive Cash Flow: Year ${analytics.breakEven.yearsToPositiveCashFlow}`, margin + 5, yPosition);
     yPosition += 6;
   }
-  doc.text(`• Total Cash Required: ${formatCurrency(analytics.breakEven.totalCashRequired)}`, margin + 5, yPosition);
+  doc.text(`• Total Cash Required: ${fmt.currency(analytics.breakEven.totalCashRequired)}`, margin + 5, yPosition);
 
   // =================
   // PAGE 6: COMPARISONS & SCENARIOS
@@ -443,18 +435,18 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader('Investment Comparison');
+  addSectionHeader(translations.sections.comparison);
 
   // Comparison Table
   autoTable(doc, {
     startY: yPosition,
     head: [['Investment Type', 'Annual Rate', `${analytics.yearByYear.length}-Year Return`]],
     body: [
-      ['Property Investment', formatPercent(analytics.comparisons.propertyInvestment.annualizedReturn), formatCurrency(analytics.comparisons.propertyInvestment.totalReturn)],
-      ['ASX 200 Stocks', formatPercent(analytics.comparisons.asxStocks.rate), formatCurrency(analytics.comparisons.asxStocks.totalReturn)],
-      ['Term Deposit', formatPercent(analytics.comparisons.termDeposit.rate), formatCurrency(analytics.comparisons.termDeposit.totalReturn)],
-      ['Government Bonds', formatPercent(analytics.comparisons.governmentBonds.rate), formatCurrency(analytics.comparisons.governmentBonds.totalReturn)],
-      ['High-Int. Savings', formatPercent(analytics.comparisons.highInterestSavings.rate), formatCurrency(analytics.comparisons.highInterestSavings.totalReturn)],
+      ['Property Investment', fmt.percent(analytics.comparisons.propertyInvestment.annualizedReturn), fmt.currency(analytics.comparisons.propertyInvestment.totalReturn)],
+      ['ASX 200 Stocks', fmt.percent(analytics.comparisons.asxStocks.rate), fmt.currency(analytics.comparisons.asxStocks.totalReturn)],
+      ['Term Deposit', fmt.percent(analytics.comparisons.termDeposit.rate), fmt.currency(analytics.comparisons.termDeposit.totalReturn)],
+      ['Government Bonds', fmt.percent(analytics.comparisons.governmentBonds.rate), fmt.currency(analytics.comparisons.governmentBonds.totalReturn)],
+      ['High-Int. Savings', fmt.percent(analytics.comparisons.highInterestSavings.rate), fmt.currency(analytics.comparisons.highInterestSavings.totalReturn)],
     ],
     theme: 'striped',
     headStyles: { fillColor: primaryColor },
@@ -471,7 +463,7 @@ export function generateEnhancedPDF(
 
   // Sensitivity Analysis
   checkPageBreak(80);
-  addSectionHeader('Sensitivity Analysis');
+  addSectionHeader(translations.sections.sensitivity);
 
   // Vacancy Impact
   doc.setFontSize(11);
@@ -483,10 +475,10 @@ export function generateEnhancedPDF(
     startY: yPosition,
     head: [['Vacancy Rate', 'Annual Rent', 'Net Cash Flow', 'Impact']],
     body: analytics.sensitivity.vacancyImpact.map(s => [
-      formatPercent(s.rate),
-      formatCurrency(s.annualRent),
-      formatCurrency(s.netCashFlow),
-      s.rate === 5 ? 'Base Case' : formatCurrency(s.impact),
+      fmt.percent(s.rate),
+      fmt.currency(s.annualRent),
+      fmt.currency(s.netCashFlow),
+      s.rate === 5 ? 'Base Case' : fmt.currency(s.impact),
     ]),
     theme: 'grid',
     headStyles: { fillColor: amberColor, fontSize: 9 },
@@ -507,10 +499,10 @@ export function generateEnhancedPDF(
     startY: yPosition,
     head: [['Interest Rate', 'Monthly Repayment', 'Annual Cost', 'Impact']],
     body: analytics.sensitivity.interestRateImpact.map(s => [
-      formatPercent(s.rate),
-      formatCurrency(s.monthlyRepayment),
-      formatCurrency(s.annualCost),
-      s.rate === 6.5 ? 'Base Case' : formatCurrency(s.impact),
+      fmt.percent(s.rate),
+      fmt.currency(s.monthlyRepayment),
+      fmt.currency(s.annualCost),
+      s.rate === 6.5 ? 'Base Case' : fmt.currency(s.impact),
     ]),
     theme: 'grid',
     headStyles: { fillColor: amberColor, fontSize: 9 },
@@ -526,21 +518,21 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader('Tax Analysis');
+  addSectionHeader(translations.sections.taxAnalysis);
 
   // Tax Deductions
   const taxDeductions = analytics.taxAnalysis.annualDeductions;
   const deductionRows = [
-    ['Loan Interest', formatCurrency(taxDeductions.loanInterest)],
-    ['Property Management', formatCurrency(taxDeductions.propertyManagement)],
-    ['Maintenance', formatCurrency(taxDeductions.maintenance)],
-    ['Land Tax', formatCurrency(taxDeductions.landTax)],
-    ['Council Rates', formatCurrency(taxDeductions.councilRates)],
-    ['Insurance', formatCurrency(taxDeductions.insurance)],
-    ['Strata Fees', formatCurrency(taxDeductions.strataFees)],
-    ['Depreciation', formatCurrency(taxDeductions.depreciation)],
-    ['Other', formatCurrency(taxDeductions.other)],
-    ['TOTAL DEDUCTIONS', formatCurrency(taxDeductions.total)],
+    ['Loan Interest', fmt.currency(taxDeductions.loanInterest)],
+    ['Property Management', fmt.currency(taxDeductions.propertyManagement)],
+    ['Maintenance', fmt.currency(taxDeductions.maintenance)],
+    ['Land Tax', fmt.currency(taxDeductions.landTax)],
+    ['Council Rates', fmt.currency(taxDeductions.councilRates)],
+    ['Insurance', fmt.currency(taxDeductions.insurance)],
+    ['Strata Fees', fmt.currency(taxDeductions.strataFees)],
+    ['Depreciation', fmt.currency(taxDeductions.depreciation)],
+    ['Other', fmt.currency(taxDeductions.other)],
+    ['TOTAL DEDUCTIONS', fmt.currency(taxDeductions.total)],
   ].filter(row => row[0] === 'TOTAL DEDUCTIONS' || parseFloat(row[1].replace(/[^0-9.-]/g, '')) > 0);
 
   autoTable(doc, {
@@ -563,7 +555,7 @@ export function generateEnhancedPDF(
   doc.setFont('helvetica', 'bold');
   doc.text('Annual Tax Saving (Negative Gearing):', margin + 5, yPosition + 8);
   doc.setFontSize(16);
-  doc.text(formatCurrency(analytics.taxAnalysis.annualTaxSaving), pageWidth - margin - 5, yPosition + 12, { align: 'right' });
+  doc.text(fmt.currency(analytics.taxAnalysis.annualTaxSaving), pageWidth - margin - 5, yPosition + 12, { align: 'right' });
   yPosition += 25;
 
   // CGT on Exit
@@ -577,13 +569,13 @@ export function generateEnhancedPDF(
   autoTable(doc, {
     startY: yPosition,
     body: [
-      ['Sale Price', formatCurrency(cgt.salePrice)],
-      ['Cost Base', formatCurrency(cgt.costBase)],
-      ['Capital Gain', formatCurrency(cgt.capitalGain)],
-      ['CGT Rate (Foreign Resident)', formatPercent(cgt.cgtRate)],
-      ['CGT Amount', formatCurrency(cgt.cgtAmount)],
-      ['Withholding Tax', formatCurrency(cgt.withholdingTax)],
-      ['Net Proceeds After Tax', formatCurrency(cgt.netProceedsAfterTax)],
+      ['Sale Price', fmt.currency(cgt.salePrice)],
+      ['Cost Base', fmt.currency(cgt.costBase)],
+      ['Capital Gain', fmt.currency(cgt.capitalGain)],
+      ['CGT Rate (Foreign Resident)', fmt.percent(cgt.cgtRate)],
+      ['CGT Amount', fmt.currency(cgt.cgtAmount)],
+      ['Withholding Tax', fmt.currency(cgt.withholdingTax)],
+      ['Net Proceeds After Tax', fmt.currency(cgt.netProceedsAfterTax)],
     ],
     theme: 'plain',
     styles: { fontSize: 10 },
@@ -600,7 +592,7 @@ export function generateEnhancedPDF(
 
   // Final Recommendation
   checkPageBreak(60);
-  addSectionHeader('Investment Recommendation');
+  addSectionHeader(translations.sections.recommendations);
 
   // Verdict
   doc.setFillColor(...(analytics.score.overall >= 7 ? greenColor : analytics.score.overall >= 5.5 ? primaryColor : amberColor));
