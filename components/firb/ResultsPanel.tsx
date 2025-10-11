@@ -57,6 +57,7 @@ export default function ResultsPanel({
   depositPercent
 }: ResultsPanelProps) {
   const t = useTranslations('FIRBCalculator.results');
+  const tAnalytics = useTranslations('FIRBCalculator.investmentAnalytics');
   
   // Investment Analytics State
   const [showInvestmentAnalysis, setShowInvestmentAnalysis] = useState(false);
@@ -272,10 +273,10 @@ export default function ResultsPanel({
             <div className="flex-1">
               <CardTitle className="flex items-center gap-2 text-xl">
                 <TrendingUp className="h-6 w-6 text-primary" />
-                Investment Analysis & Projections
+                {tAnalytics('toggle.title')}
               </CardTitle>
               <CardDescription className="mt-2">
-                See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments
+                {tAnalytics('toggle.description')}
               </CardDescription>
             </div>
             <Button 
@@ -289,11 +290,11 @@ export default function ResultsPanel({
             >
               {showInvestmentAnalysis ? (
                 <>
-                  Hide Analysis <ChevronUp className="h-5 w-5" />
+                  {tAnalytics('toggle.hide')} <ChevronUp className="h-5 w-5" />
                 </>
               ) : (
                 <>
-                  Show Investment Analysis <ChevronDown className="h-5 w-5" />
+                  {tAnalytics('toggle.show')} <ChevronDown className="h-5 w-5" />
                 </>
               )}
             </Button>

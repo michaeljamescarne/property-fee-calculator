@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Award, CheckCircle, AlertTriangle, XCircle, TrendingUp, Users } from 'lucide-react';
 import type { InvestmentAnalytics } from '@/types/investment';
+import { useInvestmentTranslations } from '@/lib/hooks/useInvestmentTranslations';
 
 interface InvestmentScoreProps {
   analytics: InvestmentAnalytics;
@@ -57,6 +58,8 @@ function ScoreGauge({ score, label }: { score: number; label: string }) {
 }
 
 export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
+  const { t, verdict: getTranslatedVerdict } = useInvestmentTranslations();
+  
   const getVerdictColor = () => {
     switch (analytics.recommendation.verdict) {
       case 'Excellent':
@@ -89,10 +92,10 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Award className="h-5 w-5 text-primary" />
-          Investment Score & Recommendation
+          {t('score.title')}
         </CardTitle>
         <CardDescription>
-          AI-generated assessment based on comprehensive analysis
+          {t('score.description')}
         </CardDescription>
       </CardHeader>
       
@@ -102,8 +105,8 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="flex items-center gap-4 mb-4">
             {getVerdictIcon()}
             <div>
-              <p className="text-sm font-medium opacity-90 uppercase tracking-wide">Overall Verdict</p>
-              <p className="text-3xl font-bold">{analytics.recommendation.verdict} Investment</p>
+              <p className="text-sm font-medium opacity-90 uppercase tracking-wide">{t('score.overallVerdict')}</p>
+              <p className="text-3xl font-bold">{getTranslatedVerdict(analytics.score.overall)} {t('score.investment')}</p>
             </div>
           </div>
           <div className="flex items-baseline gap-2">
@@ -114,13 +117,13 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
 
         {/* Score Breakdown */}
         <div>
-          <h4 className="text-base font-semibold text-foreground mb-5">Score Breakdown</h4>
+          <h4 className="text-base font-semibold text-foreground mb-5">{t('score.scoreBreakdown')}</h4>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            <ScoreGauge score={analytics.score.rentalYield} label="Rental Yield" />
-            <ScoreGauge score={analytics.score.capitalGrowth} label="Capital Growth" />
-            <ScoreGauge score={analytics.score.cashFlow} label="Cash Flow" />
-            <ScoreGauge score={analytics.score.taxEfficiency} label="Tax Efficiency" />
-            <ScoreGauge score={analytics.score.riskProfile} label="Risk Profile" />
+            <ScoreGauge score={analytics.score.rentalYield} label={t('score.dimensions.rentalYield')} />
+            <ScoreGauge score={analytics.score.capitalGrowth} label={t('score.dimensions.capitalGrowth')} />
+            <ScoreGauge score={analytics.score.cashFlow} label={t('score.dimensions.cashFlow')} />
+            <ScoreGauge score={analytics.score.taxEfficiency} label={t('score.dimensions.taxEfficiency')} />
+            <ScoreGauge score={analytics.score.riskProfile} label={t('score.dimensions.riskProfile')} />
           </div>
         </div>
 
@@ -138,7 +141,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
             <div>
               <h4 className="text-sm font-semibold text-green-700 mb-3 flex items-center gap-2">
                 <CheckCircle className="h-4 w-4" />
-                Strengths
+                {t('score.strengths')}
               </h4>
               <ul className="space-y-2">
                 {analytics.recommendation.strengths.map((strength, index) => (
@@ -156,7 +159,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
             <div>
               <h4 className="text-sm font-semibold text-red-700 mb-3 flex items-center gap-2">
                 <XCircle className="h-4 w-4" />
-                Weaknesses
+                {t('score.weaknesses')}
               </h4>
               <ul className="space-y-2">
                 {analytics.recommendation.weaknesses.map((weakness, index) => (
@@ -175,7 +178,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="p-5 bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 rounded-xl">
             <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
               <Users className="h-4 w-4 text-primary" />
-              This Investment is Suitable For:
+              {t('score.suitableFor')}
             </h4>
             <ul className="space-y-2">
               {analytics.recommendation.suitableFor.map((profile, index) => (
@@ -193,7 +196,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl">
             <h4 className="text-sm font-semibold text-amber-900 mb-3 flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
-              Risks to Consider
+              {t('score.risksToConsider')}
             </h4>
             <ul className="space-y-2">
               {analytics.recommendation.risksToConsider.map((risk, index) => (
@@ -211,7 +214,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="p-5 bg-gradient-to-r from-muted/50 to-background border border-border/40 rounded-xl">
             <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-primary" />
-              Key Takeaways
+              {t('score.keyTakeaways')}
             </h4>
             <ul className="space-y-2">
               {analytics.recommendation.keyTakeaways.map((takeaway, index) => (

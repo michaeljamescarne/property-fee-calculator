@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/accordion';
 import { Home, DollarSign, TrendingUp, Calculator, Globe } from 'lucide-react';
 import type { InvestmentInputs } from '@/types/investment';
+import { useInvestmentTranslations } from '@/lib/hooks/useInvestmentTranslations';
 
 interface InvestmentInputsProps {
   inputs: InvestmentInputs;
@@ -21,24 +22,17 @@ interface InvestmentInputsProps {
 }
 
 export default function InvestmentInputsComponent({ inputs, onChange }: InvestmentInputsProps) {
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-AU', {
-      style: 'currency',
-      currency: 'AUD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+  const { t, currency, number } = useInvestmentTranslations();
 
   return (
     <Card className="border-2 border-primary/20 shadow-md rounded-2xl bg-white">
       <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 border-b">
         <CardTitle className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />
-          Investment Analysis Parameters
+          {t('inputs.title')}
         </CardTitle>
         <CardDescription>
-          Adjust these values to see how different scenarios affect your investment returns
+          {t('inputs.description')}
         </CardDescription>
       </CardHeader>
       
@@ -49,12 +43,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Home className="h-4 w-4 text-primary" />
-                Rental Income Details
+                {t('inputs.rental.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="weekly-rent">Estimated Weekly Rent</Label>
+                <Label htmlFor="weekly-rent">{t('inputs.rental.weeklyRent')}</Label>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">$</span>
                   <Input
@@ -65,13 +59,13 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     className="flex-1"
                   />
                   <span className="text-sm text-muted-foreground whitespace-nowrap">
-                    (${Math.round(inputs.estimatedWeeklyRent * 52).toLocaleString()}/year)
+                    (${number(inputs.estimatedWeeklyRent * 52)}{t('inputs.rental.perYear')})
                   </span>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label>Vacancy Rate: {inputs.vacancyRate}%</Label>
+                <Label>{t('inputs.rental.vacancyRate')}: {inputs.vacancyRate}%</Label>
                 <Slider
                   value={[inputs.vacancyRate]}
                   onValueChange={(value) => onChange({ vacancyRate: value[0] })}
@@ -81,12 +75,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Typical: 3-5% for good locations, 7-10% for high-risk areas
+                  {t('inputs.rental.vacancyHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>Annual Rent Growth: {inputs.rentGrowthRate}%</Label>
+                <Label>{t('inputs.rental.rentGrowth')}: {inputs.rentGrowthRate}%</Label>
                 <Slider
                   value={[inputs.rentGrowthRate]}
                   onValueChange={(value) => onChange({ rentGrowthRate: value[0] })}
@@ -96,7 +90,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Historical average: 2-4% per year
+                  {t('inputs.rental.rentGrowthHelp')}
                 </p>
               </div>
             </AccordionContent>
@@ -107,7 +101,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <DollarSign className="h-4 w-4 text-primary" />
-                Property Management
+                {t('inputs.management.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -121,14 +115,14 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   htmlFor="self-managed"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
-                  I will self-manage this property (no management fees)
+                  {t('inputs.management.selfManaged')}
                 </label>
               </div>
 
               {!inputs.selfManaged && (
                 <>
                   <div className="space-y-2">
-                    <Label>Property Management Fee: {inputs.propertyManagementFee}%</Label>
+                    <Label>{t('inputs.management.managementFee')}: {inputs.propertyManagementFee}%</Label>
                     <Slider
                       value={[inputs.propertyManagementFee]}
                       onValueChange={(value) => onChange({ propertyManagementFee: value[0] })}
@@ -138,12 +132,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                       className="w-full"
                     />
                     <p className="text-xs text-muted-foreground">
-                      Typical: 7-9% of rental income. Estimated: ${Math.round((inputs.estimatedWeeklyRent * 52 * inputs.propertyManagementFee) / 100).toLocaleString()}/year
+                      {t('inputs.management.managementHelp')}: ${number(((inputs.estimatedWeeklyRent * 52 * inputs.propertyManagementFee) / 100))}{t('inputs.rental.perYear')}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Letting Fee (when finding new tenant)</Label>
+                    <Label>{t('inputs.management.lettingFee')}</Label>
                     <div className="flex items-center gap-2">
                       <Input
                         type="number"
@@ -151,7 +145,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                         onChange={(e) => onChange({ lettingFee: Number(e.target.value) })}
                         className="w-24"
                       />
-                      <span className="text-sm text-muted-foreground">weeks of rent (${Math.round(inputs.estimatedWeeklyRent * inputs.lettingFee).toLocaleString()})</span>
+                      <span className="text-sm text-muted-foreground">{t('inputs.management.weeksRent')} (${number(inputs.estimatedWeeklyRent * inputs.lettingFee)})</span>
                     </div>
                   </div>
                 </>
@@ -164,12 +158,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Calculator className="h-4 w-4 text-primary" />
-                Financing Details
+                {t('inputs.financing.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="loan-amount">Loan Amount</Label>
+                <Label htmlFor="loan-amount">{t('inputs.financing.loanAmount')}</Label>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">$</span>
                   <Input
@@ -183,7 +177,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
               </div>
 
               <div className="space-y-2">
-                <Label>Interest Rate: {inputs.interestRate.toFixed(2)}% p.a.</Label>
+                <Label>{t('inputs.financing.interestRate')}: {inputs.interestRate.toFixed(2)}% p.a.</Label>
                 <Slider
                   value={[inputs.interestRate]}
                   onValueChange={(value) => onChange({ interestRate: value[0] })}
@@ -193,12 +187,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Current market: 6.0-6.8% for investment loans
+                  {t('inputs.financing.interestHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="loan-term">Loan Term</Label>
+                <Label htmlFor="loan-term">{t('inputs.financing.loanTerm')}</Label>
                 <Select
                   value={inputs.loanTerm.toString()}
                   onValueChange={(value) => onChange({ loanTerm: Number(value) })}
@@ -215,7 +209,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="loan-type">Loan Type</Label>
+                <Label htmlFor="loan-type">{t('inputs.financing.loanType')}</Label>
                 <Select
                   value={inputs.loanType}
                   onValueChange={(value: 'principalAndInterest' | 'interestOnly') => onChange({ loanType: value })}
@@ -224,15 +218,15 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="principalAndInterest">Principal & Interest</SelectItem>
-                    <SelectItem value="interestOnly">Interest Only</SelectItem>
+                    <SelectItem value="principalAndInterest">{t('inputs.financing.principalAndInterest')}</SelectItem>
+                    <SelectItem value="interestOnly">{t('inputs.financing.interestOnly')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {inputs.loanType === 'interestOnly' && (
                 <div className="space-y-2">
-                  <Label>Interest Only Period: {inputs.interestOnlyPeriod} years</Label>
+                  <Label>{t('inputs.financing.interestOnlyPeriod')}: {inputs.interestOnlyPeriod} years</Label>
                   <Slider
                     value={[inputs.interestOnlyPeriod]}
                     onValueChange={(value) => onChange({ interestOnlyPeriod: value[0] })}
@@ -251,12 +245,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-primary" />
-                Investment Assumptions
+                {t('inputs.assumptions.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label>Hold Period: {inputs.holdPeriod} years</Label>
+                <Label>{t('inputs.assumptions.holdPeriod')}: {inputs.holdPeriod} years</Label>
                 <Slider
                   value={[inputs.holdPeriod]}
                   onValueChange={(value) => onChange({ holdPeriod: value[0] })}
@@ -266,12 +260,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  How long do you plan to hold this investment?
+                  {t('inputs.assumptions.holdPeriodHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>Capital Growth Rate: {inputs.capitalGrowthRate}% p.a.</Label>
+                <Label>{t('inputs.assumptions.capitalGrowth')}: {inputs.capitalGrowthRate}% p.a.</Label>
                 <Slider
                   value={[inputs.capitalGrowthRate]}
                   onValueChange={(value) => onChange({ capitalGrowthRate: value[0] })}
@@ -281,12 +275,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Australian property: 6-7% historical average (long-term)
+                  {t('inputs.assumptions.capitalGrowthHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>Your Marginal Tax Rate: {inputs.marginalTaxRate}%</Label>
+                <Label>{t('inputs.assumptions.taxRate')}: {inputs.marginalTaxRate}%</Label>
                 <Slider
                   value={[inputs.marginalTaxRate]}
                   onValueChange={(value) => onChange({ marginalTaxRate: value[0] })}
@@ -296,12 +290,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Foreign residents typically: 32.5% or 37% or 45%
+                  {t('inputs.assumptions.taxRateHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>Selling Costs: {inputs.sellingCosts}%</Label>
+                <Label>{t('inputs.assumptions.sellingCosts')}: {inputs.sellingCosts}%</Label>
                 <Slider
                   value={[inputs.sellingCosts]}
                   onValueChange={(value) => onChange({ sellingCosts: value[0] })}
@@ -311,7 +305,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Agent (2-3%) + Legal (0.5-1%) + Marketing (0.5-1%)
+                  {t('inputs.assumptions.sellingCostsHelp')}
                 </p>
               </div>
             </AccordionContent>
@@ -322,12 +316,12 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-primary" />
-                Currency Conversion (Optional)
+                {t('inputs.currency.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="home-currency">Your Home Currency</Label>
+                <Label htmlFor="home-currency">{t('inputs.currency.homeCurrency')}</Label>
                 <Select
                   value={inputs.homeCurrency}
                   onValueChange={(value) => onChange({ homeCurrency: value })}
@@ -336,13 +330,13 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="AUD">AUD (Australian Dollar)</SelectItem>
-                    <SelectItem value="USD">USD (US Dollar)</SelectItem>
-                    <SelectItem value="CNY">CNY (Chinese Yuan)</SelectItem>
-                    <SelectItem value="EUR">EUR (Euro)</SelectItem>
-                    <SelectItem value="GBP">GBP (British Pound)</SelectItem>
-                    <SelectItem value="JPY">JPY (Japanese Yen)</SelectItem>
-                    <SelectItem value="SGD">SGD (Singapore Dollar)</SelectItem>
+                    <SelectItem value="AUD">{t('inputs.currency.aud')}</SelectItem>
+                    <SelectItem value="USD">{t('inputs.currency.usd')}</SelectItem>
+                    <SelectItem value="CNY">{t('inputs.currency.cny')}</SelectItem>
+                    <SelectItem value="EUR">{t('inputs.currency.eur')}</SelectItem>
+                    <SelectItem value="GBP">{t('inputs.currency.gbp')}</SelectItem>
+                    <SelectItem value="JPY">{t('inputs.currency.jpy')}</SelectItem>
+                    <SelectItem value="SGD">{t('inputs.currency.sgd')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -350,7 +344,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
               {inputs.homeCurrency !== 'AUD' && (
                 <div className="space-y-2">
                   <Label htmlFor="exchange-rate">
-                    Exchange Rate (1 AUD = ? {inputs.homeCurrency})
+                    {t('inputs.currency.exchangeRate', { currency: inputs.homeCurrency })}
                   </Label>
                   <Input
                     id="exchange-rate"
@@ -360,7 +354,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     onChange={(e) => onChange({ currencyExchangeRate: Number(e.target.value) })}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Update with current exchange rate from your bank or xe.com
+                    {t('inputs.currency.exchangeHelp')}
                   </p>
                 </div>
               )}
@@ -370,7 +364,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
 
         <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-border/40">
           <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">Note:</strong> These are estimates based on current market conditions and your assumptions. Actual returns may vary. Calculations update in real-time as you adjust values.
+            <strong className="text-foreground">Note:</strong> {t('inputs.note')}
           </p>
         </div>
       </CardContent>
