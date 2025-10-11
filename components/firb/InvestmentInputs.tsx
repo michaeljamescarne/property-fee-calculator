@@ -22,7 +22,7 @@ interface InvestmentInputsProps {
 }
 
 export default function InvestmentInputsComponent({ inputs, onChange }: InvestmentInputsProps) {
-  const { t, currency, number } = useInvestmentTranslations();
+  const { t, number } = useInvestmentTranslations();
 
   return (
     <Card className="border-2 border-primary/20 shadow-md rounded-2xl bg-white">
