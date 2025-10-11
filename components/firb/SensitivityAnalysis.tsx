@@ -22,10 +22,14 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="h-5 w-5 text-primary" />
-          {t('sensitivity.title') || 'Sensitivity Analysis'}
+          {t('sensitivity.title') === 'FIRBCalculator.investmentAnalytics.sensitivity.title' 
+            ? 'Sensitivity Analysis' 
+            : t('sensitivity.title')}
         </CardTitle>
         <CardDescription>
-          {t('sensitivity.description') || 'How changes in key variables affect your investment returns'}
+          {t('sensitivity.description') === 'FIRBCalculator.investmentAnalytics.sensitivity.description'
+            ? 'How changes in key variables affect your investment returns'
+            : t('sensitivity.description')}
         </CardDescription>
       </CardHeader>
       

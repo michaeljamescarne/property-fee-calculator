@@ -36,9 +36,15 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-2xl font-bold mb-2">{t('summary.title') || 'Investment Performance Summary'}</h3>
+        <h3 className="text-2xl font-bold mb-2">
+          {t('summary.title') === 'FIRBCalculator.investmentAnalytics.summary.title' 
+            ? 'Investment Performance Summary' 
+            : t('summary.title')}
+        </h3>
         <p className="text-muted-foreground">
-          {t('summary.description') || 'Key metrics at a glance based on your investment assumptions'}
+          {t('summary.description') === 'FIRBCalculator.investmentAnalytics.summary.description'
+            ? 'Key metrics at a glance based on your investment assumptions'
+            : t('summary.description')}
         </p>
       </div>
 

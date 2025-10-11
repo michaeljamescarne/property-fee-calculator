@@ -29,10 +29,14 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
       <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 border-b">
         <CardTitle className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />
-          {t('inputs.title') || 'Investment Analysis Parameters'}
+          {t('inputs.title') === 'FIRBCalculator.investmentAnalytics.inputs.title' 
+            ? 'Investment Analysis Parameters' 
+            : t('inputs.title')}
         </CardTitle>
         <CardDescription>
-          {t('inputs.description') || 'Adjust these values to see how different scenarios affect your investment returns'}
+          {t('inputs.description') === 'FIRBCalculator.investmentAnalytics.inputs.description'
+            ? 'Adjust these values to see how different scenarios affect your investment returns'
+            : t('inputs.description')}
         </CardDescription>
       </CardHeader>
       
@@ -43,7 +47,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Home className="h-4 w-4 text-primary" />
-                {t('inputs.rental.title') || 'Rental Income'}
+                {t('inputs.rental.title') === 'FIRBCalculator.investmentAnalytics.inputs.rental.title' 
+                  ? 'Rental Income' 
+                  : t('inputs.rental.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -101,7 +107,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <DollarSign className="h-4 w-4 text-primary" />
-                {t('inputs.management.title') || 'Property Management'}
+                {t('inputs.management.title') === 'FIRBCalculator.investmentAnalytics.inputs.management.title' 
+                  ? 'Property Management' 
+                  : t('inputs.management.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -158,7 +166,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Calculator className="h-4 w-4 text-primary" />
-                {t('inputs.financing.title') || 'Financing Details'}
+                {t('inputs.financing.title') === 'FIRBCalculator.investmentAnalytics.inputs.financing.title' 
+                  ? 'Financing Details' 
+                  : t('inputs.financing.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -245,7 +255,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-primary" />
-                {t('inputs.assumptions.title') || 'Investment Assumptions'}
+                {t('inputs.assumptions.title') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.title' 
+                  ? 'Investment Assumptions' 
+                  : t('inputs.assumptions.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
@@ -316,7 +328,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             <AccordionTrigger className="text-base font-semibold hover:text-primary">
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-primary" />
-                {t('inputs.currency.title') || 'Currency Conversion (Optional)'}
+                {t('inputs.currency.title') === 'FIRBCalculator.investmentAnalytics.inputs.currency.title' 
+                  ? 'Currency Conversion (Optional)' 
+                  : t('inputs.currency.title')}
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
