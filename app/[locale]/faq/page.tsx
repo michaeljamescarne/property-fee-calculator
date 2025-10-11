@@ -21,6 +21,7 @@ export default function FAQPage() {
   
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | undefined>();
+  const [openQuestionId, setOpenQuestionId] = useState<string | undefined>();
 
   // Get popular questions
   const popularQuestions = useMemo(() => getPopularQuestions(allCategories, 6), [allCategories]);
@@ -51,19 +52,42 @@ export default function FAQPage() {
   const breadcrumbSchema = generateBreadcrumbSchema(locale);
   const webPageSchema = generateWebPageSchema(locale);
 
-  // Scroll to question from URL hash
+  // Scroll to question from URL hash and auto-expand
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.substring(1);
       if (hash) {
+        // Set the question as open
+        setOpenQuestionId(hash);
+        
+        // Scroll to the element after a short delay
         setTimeout(() => {
           const element = document.getElementById(hash);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-        }, 500);
+        }, 100);
       }
     }
+  }, []);
+  
+  // Listen for hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        setOpenQuestionId(hash);
+        setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   return (
@@ -176,6 +200,7 @@ export default function FAQPage() {
                   key={category.id}
                   category={category}
                   defaultOpen={!!searchTerm}
+                  openQuestionId={openQuestionId}
                 />
               ))}
             </div>
