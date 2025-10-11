@@ -1,6 +1,12 @@
 'use client';
 
 import { Card, CardContent } from '@/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { TrendingUp, TrendingDown, Minus, Info } from 'lucide-react';
 import { ReactNode } from 'react';
 
@@ -63,22 +69,28 @@ export default function MetricCard({
   };
 
   return (
-    <Card className={`border ${getTrendColor()} shadow-sm hover:shadow-md transition-shadow rounded-xl`}>
+    <Card className={`border ${getTrendColor()} shadow-sm hover:shadow-md transition-shadow rounded-xl min-w-0`}>
       <CardContent className="p-5">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-2">
-            {icon && <div className="text-primary">{icon}</div>}
-            <h3 className="text-sm font-semibold text-foreground/70 uppercase tracking-wide">
+        <div className="flex items-start justify-between mb-3 gap-2">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            {icon && <div className="text-primary flex-shrink-0">{icon}</div>}
+            <h3 className="text-sm font-semibold text-foreground/70 uppercase tracking-wide break-words line-clamp-2 min-w-0">
               {title}
             </h3>
           </div>
           {tooltip && (
-            <div className="group relative">
-              <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-              <div className="absolute right-0 top-6 w-48 p-2 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                {tooltip}
-              </div>
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex-shrink-0">
+                    <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="max-w-xs">
+                  <p className="text-sm">{tooltip}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
 

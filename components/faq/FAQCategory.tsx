@@ -9,6 +9,7 @@ import type { FAQCategory as FAQCategoryType } from '@/types/faq';
 interface FAQCategoryProps {
   category: FAQCategoryType;
   defaultOpen?: boolean;
+  openQuestionId?: string;
 }
 
 const iconMap = {
@@ -20,15 +21,18 @@ const iconMap = {
   HelpCircle,
 };
 
-export default function FAQCategory({ category, defaultOpen = false }: FAQCategoryProps) {
-  const [openQuestionId, setOpenQuestionId] = useState<string | null>(
+export default function FAQCategory({ category, defaultOpen = false, openQuestionId: externalOpenQuestionId }: FAQCategoryProps) {
+  const [internalOpenQuestionId, setInternalOpenQuestionId] = useState<string | null>(
     defaultOpen && category.questions.length > 0 ? category.questions[0].id : null
   );
+  
+  // Use external openQuestionId if provided, otherwise use internal state
+  const openQuestionId = externalOpenQuestionId || internalOpenQuestionId;
 
   const Icon = iconMap[category.icon as keyof typeof iconMap] || HelpCircle;
 
   const handleQuestionToggle = (questionId: string) => {
-    setOpenQuestionId(openQuestionId === questionId ? null : questionId);
+    setInternalOpenQuestionId(openQuestionId === questionId ? null : questionId);
   };
 
   return (

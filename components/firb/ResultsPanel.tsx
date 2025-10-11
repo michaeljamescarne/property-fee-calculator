@@ -16,6 +16,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Download, Mail, Edit, CheckCircle, AlertTriangle, XCircle, Info, RotateCcw, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
@@ -106,16 +112,16 @@ export default function ResultsPanel({
   return (
     <div className="space-y-6">
       {/* Eligibility Verdict */}
-      <Alert className={`${getEligibilityColor()} border-2`}>
-        <div className="flex items-start gap-4">
+      <Alert className={`${getEligibilityColor()} border-2 w-full`}>
+        <div className="flex items-start gap-4 w-full">
           <div className={getEligibilityTextColor()}>
             {getEligibilityIcon()}
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <AlertTitle className={`text-xl font-bold ${getEligibilityTextColor()}`}>
               {eligibility.canPurchase ? t('eligible.title') : t('notEligible.title')}
             </AlertTitle>
-            <AlertDescription className={`mt-2 ${getEligibilityTextColor()}`}>
+            <AlertDescription className={`mt-2 ${getEligibilityTextColor()} whitespace-normal break-words`}>
               {eligibility.canPurchase && eligibility.requiresFIRB && (
                 <p className="font-medium">{t('eligible.firbRequired')}</p>
               )}
@@ -135,7 +141,19 @@ export default function ResultsPanel({
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Info className="h-5 w-5" />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-5 w-5 cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-sm">
+                    <p className="text-sm">
+                      FIRB processing times vary depending on application complexity and current workload. 
+                      Expedited processing is available for urgent cases at double the standard fee.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               {t('processingTime.title')}
             </CardTitle>
           </CardHeader>
@@ -273,10 +291,10 @@ export default function ResultsPanel({
             <div className="flex-1">
               <CardTitle className="flex items-center gap-2 text-xl">
                 <TrendingUp className="h-6 w-6 text-primary" />
-                {tAnalytics('toggle.title')}
+                {tAnalytics('toggle.title') || 'Investment Analysis & Projections'}
               </CardTitle>
               <CardDescription className="mt-2">
-                {tAnalytics('toggle.description')}
+                {tAnalytics('toggle.description') || 'See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments'}
               </CardDescription>
             </div>
             <Button 
@@ -290,11 +308,11 @@ export default function ResultsPanel({
             >
               {showInvestmentAnalysis ? (
                 <>
-                  {tAnalytics('toggle.hide')} <ChevronUp className="h-5 w-5" />
+                  {tAnalytics('toggle.hide') || 'Hide Analysis'} <ChevronUp className="h-5 w-5" />
                 </>
               ) : (
                 <>
-                  {tAnalytics('toggle.show')} <ChevronDown className="h-5 w-5" />
+                  {tAnalytics('toggle.show') || 'Show Investment Analysis'} <ChevronDown className="h-5 w-5" />
                 </>
               )}
             </Button>
