@@ -21,7 +21,7 @@ import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import { PropertyType, AustralianState } from '@/lib/firb/constants';
 import { generateDefaultInputs, calculateInvestmentAnalytics } from '@/lib/firb/investment-analytics';
-import type { InvestmentInputs } from '@/types/investment';
+import type { InvestmentInputs, InvestmentAnalytics } from '@/types/investment';
 import InvestmentInputsComponent from './InvestmentInputs';
 import InvestmentSummary from './InvestmentSummary';
 import CashFlowAnalysis from './CashFlowAnalysis';
@@ -34,7 +34,7 @@ import InvestmentScore from './InvestmentScore';
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
   costs: CostBreakdown;
-  onDownloadPDF: () => void;
+  onDownloadPDF: (analytics?: InvestmentAnalytics) => void;
   onEmailResults: () => void;
   onEditCalculation: () => void;
   onStartAgain: () => void;
@@ -336,13 +336,14 @@ export default function ResultsPanel({
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
         <Button
-          onClick={onDownloadPDF}
+          onClick={() => onDownloadPDF(showInvestmentAnalysis ? investmentAnalytics : undefined)}
           variant="default"
           size="lg"
           className="gap-2"
         >
           <Download className="h-5 w-5" />
           {t('actions.downloadPDF')}
+          {showInvestmentAnalysis && <span className="text-xs ml-1">(with analytics)</span>}
         </Button>
         <Button
           onClick={onEmailResults}

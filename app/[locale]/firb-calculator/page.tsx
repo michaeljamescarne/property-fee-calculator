@@ -20,6 +20,8 @@ import { FIRBCalculatorFormData } from '@/lib/validations/firb';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import { generateFIRBPDF } from '@/lib/pdf/generateFIRBPDF';
+import { generateEnhancedPDF } from '@/lib/pdf/generateEnhancedPDF';
+import type { InvestmentAnalytics } from '@/types/investment';
 
 export default function FIRBCalculatorPage() {
   const t = useTranslations('FIRBCalculator');
@@ -144,15 +146,22 @@ export default function FIRBCalculatorPage() {
   };
 
   // Handle download PDF
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = (analytics?: InvestmentAnalytics) => {
     if (!eligibility || !costs) return;
 
     try {
-      const pdfBlob = generateFIRBPDF(formData, eligibility, costs);
+      // Use enhanced PDF if analytics are provided, otherwise basic PDF
+      const pdfBlob = analytics 
+        ? generateEnhancedPDF(formData, eligibility, costs, analytics)
+        : generateFIRBPDF(formData, eligibility, costs);
+        
       const url = URL.createObjectURL(pdfBlob);
       const link = document.createElement('a');
+      const filename = analytics 
+        ? `FIRB-Investment-Analysis-${new Date().toISOString().split('T')[0]}.pdf`
+        : `FIRB-Analysis-${new Date().toISOString().split('T')[0]}.pdf`;
       link.href = url;
-      link.download = `FIRB-Analysis-${new Date().toISOString().split('T')[0]}.pdf`;
+      link.download = filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
