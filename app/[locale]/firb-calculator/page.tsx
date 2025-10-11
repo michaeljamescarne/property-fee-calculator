@@ -313,7 +313,7 @@ export default function FIRBCalculatorPage() {
           )}
 
           {/* Results Step */}
-          {currentStep === 'results' && eligibility && costs && (
+          {currentStep === 'results' && eligibility && costs && formData.propertyValue && formData.propertyType && formData.state && (
             <ResultsPanel
               eligibility={eligibility}
               costs={costs}
@@ -321,6 +321,10 @@ export default function FIRBCalculatorPage() {
               onEmailResults={handleEmailResults}
               onEditCalculation={handleEditCalculation}
               onStartAgain={handleStartAgain}
+              propertyValue={formData.propertyValue}
+              propertyType={formData.propertyType}
+              state={formData.state}
+              depositPercent={formData.depositPercent || 20}
             />
           )}
         </div>
