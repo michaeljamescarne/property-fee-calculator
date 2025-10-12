@@ -150,3 +150,4 @@ export function highlightSearchTerm(text: string, searchTerm: string): string {
   return text.replace(regex, '<mark class="bg-yellow-200">$1</mark>');
 }
 
+

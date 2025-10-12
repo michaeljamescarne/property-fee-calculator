@@ -173,3 +173,4 @@ export function formatYears(years: number, locale: string = 'en-AU'): string {
   return years === 1 ? '1 year' : `${years} years`;
 }
 
+

@@ -445,3 +445,4 @@ Your FIRB calculator is now:
 
 **Built with love**: Next.js 15, React 19, TypeScript, next-intl, shadcn/ui ❤️
 
+

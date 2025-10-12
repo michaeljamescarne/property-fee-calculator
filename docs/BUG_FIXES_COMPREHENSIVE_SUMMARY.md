@@ -186,3 +186,4 @@ Following the user's requirement to use pull requests instead of direct pushes:
 **Workflow**: Proper pull request process implemented and followed
 
 **The FIRB Calculator and FAQ system now provide an excellent user experience!** 🎉
+

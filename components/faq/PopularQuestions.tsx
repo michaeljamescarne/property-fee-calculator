@@ -69,3 +69,4 @@ export default function PopularQuestions({ questions, locale }: PopularQuestions
   );
 }
 
+
