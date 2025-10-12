@@ -60,15 +60,17 @@ export async function POST(request: NextRequest) {
       .lt('expires_at', new Date().toISOString());
 
     // Insert new code
+    const magicCodeData: Database['public']['Tables']['magic_codes']['Insert'] = {
+      email,
+      code: hashedCode,
+      expires_at: expiresAt.toISOString(),
+      attempts: 0,
+      used: false,
+    };
+    
     const { error: dbError } = await supabase
       .from('magic_codes')
-      .insert({
-        email,
-        code: hashedCode,
-        expires_at: expiresAt.toISOString(),
-        attempts: 0,
-        used: false,
-      } as any);
+      .insert(magicCodeData);
 
     if (dbError) {
       console.error('Database error:', dbError);
