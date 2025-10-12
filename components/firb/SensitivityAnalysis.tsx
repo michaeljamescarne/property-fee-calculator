@@ -206,8 +206,14 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
         {/* Capital Growth Scenarios */}
         <div>
           <h4 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
-            {t('sensitivity.growthScenarios')}
-            <span className="text-xs font-normal text-muted-foreground">({t('sensitivity.growthDesc')})</span>
+            {t('sensitivity.growthScenarios') === 'FIRBCalculator.investmentAnalytics.sensitivity.growthScenarios' 
+              ? 'Growth Scenarios' 
+              : t('sensitivity.growthScenarios')}
+            <span className="text-xs font-normal text-muted-foreground">
+              ({t('sensitivity.growthDesc') === 'FIRBCalculator.investmentAnalytics.sensitivity.growthDesc' 
+                ? 'How different growth rates affect your investment' 
+                : t('sensitivity.growthDesc')})
+            </span>
           </h4>
           <div className="grid md:grid-cols-3 gap-4">
             {analytics.sensitivity.growthScenarios.map((scenario, index) => (
@@ -221,24 +227,30 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
               >
                 <div className="flex items-center justify-between mb-3">
                   <h5 className="font-semibold text-foreground">
-                    {scenario.label === 'Conservative' ? t('sensitivity.conservative') :
-                     scenario.label === 'Moderate' ? t('sensitivity.moderate') :
-                     scenario.label === 'Optimistic' ? t('sensitivity.optimistic') :
+                    {scenario.label === 'Conservative' ? (t('sensitivity.conservative') === 'FIRBCalculator.investmentAnalytics.sensitivity.conservative' ? 'Conservative' : t('sensitivity.conservative')) :
+                     scenario.label === 'Moderate' ? (t('sensitivity.moderate') === 'FIRBCalculator.investmentAnalytics.sensitivity.moderate' ? 'Moderate' : t('sensitivity.moderate')) :
+                     scenario.label === 'Optimistic' ? (t('sensitivity.optimistic') === 'FIRBCalculator.investmentAnalytics.sensitivity.optimistic' ? 'Optimistic' : t('sensitivity.optimistic')) :
                      scenario.label}
                   </h5>
                   {scenario.label === 'Moderate' && (
                     <span className="text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full">
-                      {t('sensitivity.base')}
+                      {t('sensitivity.base') === 'FIRBCalculator.investmentAnalytics.sensitivity.base' ? 'Base Case' : t('sensitivity.base')}
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground mb-2">{t('sensitivity.growthRate')}: {scenario.rate}% p.a.</p>
-                <p className="text-sm text-muted-foreground mb-1">{t('sensitivity.finalValue')}:</p>
+                <p className="text-xs text-muted-foreground mb-2">
+                  {t('sensitivity.growthRate') === 'FIRBCalculator.investmentAnalytics.sensitivity.growthRate' ? 'Growth Rate' : t('sensitivity.growthRate')}: {scenario.rate}% p.a.
+                </p>
+                <p className="text-sm text-muted-foreground mb-1">
+                  {t('sensitivity.finalValue') === 'FIRBCalculator.investmentAnalytics.sensitivity.finalValue' ? 'Final Value' : t('sensitivity.finalValue')}:
+                </p>
                 <p className="text-xl font-bold text-primary mb-3">
                   {currency(scenario.valueAtEnd)}
                 </p>
                 <div className="pt-3 border-t border-border/40">
-                  <p className="text-xs text-muted-foreground mb-1">{t('sensitivity.totalReturn')}:</p>
+                  <p className="text-xs text-muted-foreground mb-1">
+                    {t('sensitivity.totalReturn') === 'FIRBCalculator.investmentAnalytics.sensitivity.totalReturn' ? 'Total Return' : t('sensitivity.totalReturn')}:
+                  </p>
                   <p className="text-lg font-semibold text-foreground">
                     {currency(scenario.totalReturn)}
                   </p>
@@ -253,39 +265,75 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
 
         {/* Risk Summary */}
         <div className="p-5 bg-gradient-to-r from-muted/50 to-muted/30 border border-border/40 rounded-xl">
-          <h4 className="font-semibold text-foreground mb-3">{t('sensitivity.riskFactors')}</h4>
+          <h4 className="font-semibold text-foreground mb-3">
+            {t('sensitivity.riskFactors') === 'FIRBCalculator.investmentAnalytics.sensitivity.riskFactors' 
+              ? 'Risk Factors' 
+              : t('sensitivity.riskFactors')}
+          </h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-muted-foreground mb-2">{t('sensitivity.mostSensitive')}</p>
+              <p className="text-muted-foreground mb-2">
+                {t('sensitivity.mostSensitive') === 'FIRBCalculator.investmentAnalytics.sensitivity.mostSensitive' 
+                  ? 'Most Sensitive Factors' 
+                  : t('sensitivity.mostSensitive')}
+              </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-amber-600 font-bold">•</span>
-                  <span>{t('sensitivity.sensitivityItems.capitalGrowth')}</span>
+                  <span>
+                    {t('sensitivity.sensitivityItems.capitalGrowth') === 'FIRBCalculator.investmentAnalytics.sensitivity.sensitivityItems.capitalGrowth' 
+                      ? 'Capital Growth' 
+                      : t('sensitivity.sensitivityItems.capitalGrowth')}
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-amber-600 font-bold">•</span>
-                  <span>{t('sensitivity.sensitivityItems.interestRate')}</span>
+                  <span>
+                    {t('sensitivity.sensitivityItems.interestRate') === 'FIRBCalculator.investmentAnalytics.sensitivity.sensitivityItems.interestRate' 
+                      ? 'Interest Rate' 
+                      : t('sensitivity.sensitivityItems.interestRate')}
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-amber-600 font-bold">•</span>
-                  <span>{t('sensitivity.sensitivityItems.vacancy')}</span>
+                  <span>
+                    {t('sensitivity.sensitivityItems.vacancy') === 'FIRBCalculator.investmentAnalytics.sensitivity.sensitivityItems.vacancy' 
+                      ? 'Vacancy Rate' 
+                      : t('sensitivity.sensitivityItems.vacancy')}
+                  </span>
                 </li>
               </ul>
             </div>
             <div>
-              <p className="text-muted-foreground mb-2">{t('sensitivity.riskMitigation')}</p>
+              <p className="text-muted-foreground mb-2">
+                {t('sensitivity.riskMitigation') === 'FIRBCalculator.investmentAnalytics.sensitivity.riskMitigation' 
+                  ? 'Risk Mitigation' 
+                  : t('sensitivity.riskMitigation')}
+              </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-green-600 font-bold">✓</span>
-                  <span>{t('sensitivity.sensitivityItems.highDemand')}</span>
+                  <span>
+                    {t('sensitivity.sensitivityItems.highDemand') === 'FIRBCalculator.investmentAnalytics.sensitivity.sensitivityItems.highDemand' 
+                      ? 'High Demand Area' 
+                      : t('sensitivity.sensitivityItems.highDemand')}
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-600 font-bold">✓</span>
-                  <span>{t('sensitivity.sensitivityItems.fixRate')}</span>
+                  <span>
+                    {t('sensitivity.sensitivityItems.fixRate') === 'FIRBCalculator.investmentAnalytics.sensitivity.sensitivityItems.fixRate' 
+                      ? 'Fixed Rate Loan' 
+                      : t('sensitivity.sensitivityItems.fixRate')}
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-600 font-bold">✓</span>
-                  <span>{t('sensitivity.sensitivityItems.cashReserves')}</span>
+                  <span>
+                    {t('sensitivity.sensitivityItems.cashReserves') === 'FIRBCalculator.investmentAnalytics.sensitivity.sensitivityItems.cashReserves' 
+                      ? 'Cash Reserves' 
+                      : t('sensitivity.sensitivityItems.cashReserves')}
+                  </span>
                 </li>
               </ul>
             </div>

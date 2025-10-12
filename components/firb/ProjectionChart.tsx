@@ -205,17 +205,39 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
         {/* Year-by-Year Table (Compact View) */}
         <div>
           <h4 className="text-sm font-semibold text-foreground/70 mb-3 uppercase tracking-wide">
-            {t('projections.yearByYear')}
+            {t('projections.yearByYear') === 'FIRBCalculator.investmentAnalytics.projections.yearByYear' 
+              ? '10-Year Projection Table' 
+              : t('projections.yearByYear')}
           </h4>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 border-b border-border/40">
                 <tr>
-                  <th className="text-left p-3 font-semibold">{t('projections.tableHeaders.year')}</th>
-                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.propertyValue')}</th>
-                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.equity')}</th>
-                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.cashFlow')}</th>
-                  <th className="text-right p-3 font-semibold">{t('projections.tableHeaders.cumulativeReturn')}</th>
+                  <th className="text-left p-3 font-semibold">
+                    {t('projections.tableHeaders.year') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.year' 
+                      ? 'Year' 
+                      : t('projections.tableHeaders.year')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('projections.tableHeaders.propertyValue') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.propertyValue' 
+                      ? 'Property Value' 
+                      : t('projections.tableHeaders.propertyValue')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('projections.tableHeaders.equity') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.equity' 
+                      ? 'Your Equity' 
+                      : t('projections.tableHeaders.equity')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('projections.tableHeaders.cashFlow') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.cashFlow' 
+                      ? 'Cash Flow' 
+                      : t('projections.tableHeaders.cashFlow')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('projections.tableHeaders.cumulativeReturn') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.cumulativeReturn' 
+                      ? 'Cumulative Return' 
+                      : t('projections.tableHeaders.cumulativeReturn')}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
