@@ -6,7 +6,7 @@
 import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth/session';
 import { Button } from '@/components/ui/button';
-import { Calculator, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import CalculationList from '@/components/dashboard/CalculationList';
 

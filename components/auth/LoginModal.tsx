@@ -89,7 +89,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
       setExpiresAt(successData.expiresAt || '');
       setStep('code');
       setResendCooldown(60); // 60 second cooldown
-    } catch (err) {
+    } catch {
       setError('Failed to send code. Please try again.');
     } finally {
       setIsLoading(false);
@@ -128,7 +128,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
           onSuccess?.();
         }, 1500);
       }
-    } catch (err) {
+    } catch {
       setError('Failed to verify code. Please try again.');
     } finally {
       setIsLoading(false);
@@ -138,7 +138,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
   const handleResendCode = () => {
     setCode('');
     setError('');
-    handleSendCode(new Event('submit') as any);
+    handleSendCode(new Event('submit') as Event & { preventDefault: () => void });
   };
 
   const handleChangeEmail = () => {
@@ -280,7 +280,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
             <div className="mx-auto w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
               <CheckCircle className="h-8 w-8 text-green-600" />
             </div>
-            <p className="text-lg font-semibold">You're all set!</p>
+            <p className="text-lg font-semibold">You&apos;re all set!</p>
             <p className="text-sm text-muted-foreground">
               Redirecting to your dashboard...
             </p>

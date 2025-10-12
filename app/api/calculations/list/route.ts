@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     
     const filters: CalculationFilters = {
       search: searchParams.get('search') || undefined,
-      eligibility: (searchParams.get('eligibility') || 'all') as any,
+      eligibility: (searchParams.get('eligibility') as 'all' | 'eligible' | 'review-required') || 'all',
       propertyType: searchParams.get('propertyType') || undefined,
       state: searchParams.get('state') || undefined,
       favorites: searchParams.get('favorites') === 'true',

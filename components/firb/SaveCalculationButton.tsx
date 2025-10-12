@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Save, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import Link from 'next/link';
 import { useAuth } from '@/components/auth/AuthProvider';
 import AuthPrompt from '@/components/auth/AuthPrompt';
 import type { CalculationData } from '@/types/database';
@@ -56,7 +57,7 @@ export default function SaveCalculationButton({
         setSaveStatus('error');
         setErrorMessage(data.error || 'Failed to save calculation');
       }
-    } catch (error) {
+    } catch {
       setSaveStatus('error');
       setErrorMessage('An unexpected error occurred. Please try again.');
     } finally {
@@ -111,9 +112,9 @@ export default function SaveCalculationButton({
           <CheckCircle className="h-4 w-4 text-green-600" />
           <AlertDescription>
             Calculation saved! View it in your{' '}
-            <a href="/en/dashboard" className="underline font-medium">
+            <Link href="/en/dashboard" className="underline font-medium">
               dashboard
-            </a>
+            </Link>
             .
           </AlertDescription>
         </Alert>
