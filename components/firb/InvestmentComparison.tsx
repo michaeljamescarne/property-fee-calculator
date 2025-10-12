@@ -50,7 +50,7 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
       return: analytics.comparisons.highInterestSavings.totalReturn,
       rate: analytics.comparisons.highInterestSavings.annualizedReturn,
       fill: '#14B8A6',
-      risk: t('comparison.riskLevels.veryLow'),
+      risk: t('comparison.riskLevels.veryLow') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevels.veryLow' ? 'Very Low' : t('comparison.riskLevels.veryLow'),
     },
   ].sort((a, b) => b.return - a.return);
 
@@ -222,9 +222,9 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
                     </td>
                     <td className="p-3 text-center">
                       <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                        item.risk === t('comparison.riskLevels.veryLow') ? 'bg-green-100 text-green-700' :
-                        item.risk === t('comparison.riskLevels.low') ? 'bg-blue-100 text-blue-700' :
-                        item.risk === t('comparison.riskLevels.medium') ? 'bg-amber-100 text-amber-700' :
+                        item.risk === 'Very Low' ? 'bg-green-100 text-green-700' :
+                        item.risk === (t('comparison.riskLevels.low') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevels.low' ? 'Low' : t('comparison.riskLevels.low')) ? 'bg-blue-100 text-blue-700' :
+                        item.risk === (t('comparison.riskLevels.medium') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevels.medium' ? 'Medium' : t('comparison.riskLevels.medium')) ? 'bg-amber-100 text-amber-700' :
                         'bg-red-100 text-red-700'
                       }`}>
                         {item.risk}

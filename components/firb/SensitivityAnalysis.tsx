@@ -199,7 +199,9 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
             </table>
           </div>
           <p className="text-xs text-muted-foreground mt-3 italic">
-            {t('sensitivity.interestNote', { amount: Math.abs((analytics.sensitivity.interestRateImpact[2].impact - analytics.sensitivity.interestRateImpact[1].impact) / 12).toFixed(0) })}
+            {t('sensitivity.interestNote', { amount: Math.abs((analytics.sensitivity.interestRateImpact[2].impact - analytics.sensitivity.interestRateImpact[1].impact) / 12).toFixed(0) }) === 'FIRBCalculator.investmentAnalytics.sensitivity.interestNote' 
+              ? `Note: A 1% interest rate increase reduces monthly cash flow by approximately $${Math.abs((analytics.sensitivity.interestRateImpact[2].impact - analytics.sensitivity.interestRateImpact[1].impact) / 12).toFixed(0)}`
+              : t('sensitivity.interestNote', { amount: Math.abs((analytics.sensitivity.interestRateImpact[2].impact - analytics.sensitivity.interestRateImpact[1].impact) / 12).toFixed(0) })}
           </p>
         </div>
 
