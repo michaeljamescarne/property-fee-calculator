@@ -18,35 +18,35 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
   // Prepare comparison data with translations
   const comparisonData = [
     {
-      name: t('comparison.investmentTypes.property'),
+      name: t('comparison.investmentTypes.property') === 'FIRBCalculator.investmentAnalytics.comparison.investmentTypes.property' ? 'Property Investment' : t('comparison.investmentTypes.property'),
       return: analytics.comparisons.propertyInvestment.totalReturn,
       rate: analytics.comparisons.propertyInvestment.annualizedReturn,
       fill: '#6366F1',
-      risk: t('comparison.riskLevels.medium'),
+      risk: t('comparison.riskLevels.medium') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevels.medium' ? 'Medium' : t('comparison.riskLevels.medium'),
     },
     {
-      name: t('comparison.investmentTypes.stocks'),
+      name: t('comparison.investmentTypes.stocks') === 'FIRBCalculator.investmentAnalytics.comparison.investmentTypes.stocks' ? 'Stocks (ASX)' : t('comparison.investmentTypes.stocks'),
       return: analytics.comparisons.asxStocks.totalReturn,
       rate: analytics.comparisons.asxStocks.annualizedReturn,
       fill: '#8B5CF6',
-      risk: t('comparison.riskLevels.high'),
+      risk: t('comparison.riskLevels.high') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevels.high' ? 'High' : t('comparison.riskLevels.high'),
     },
     {
-      name: t('comparison.investmentTypes.bonds'),
+      name: t('comparison.investmentTypes.bonds') === 'FIRBCalculator.investmentAnalytics.comparison.investmentTypes.bonds' ? 'Government Bonds' : t('comparison.investmentTypes.bonds'),
       return: analytics.comparisons.governmentBonds.totalReturn,
       rate: analytics.comparisons.governmentBonds.annualizedReturn,
       fill: '#3B82F6',
-      risk: t('comparison.riskLevels.low'),
+      risk: t('comparison.riskLevels.low') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevels.low' ? 'Low' : t('comparison.riskLevels.low'),
     },
     {
-      name: t('comparison.investmentTypes.termDeposit'),
+      name: t('comparison.investmentTypes.termDeposit') === 'FIRBCalculator.investmentAnalytics.comparison.investmentTypes.termDeposit' ? 'Term Deposit' : t('comparison.investmentTypes.termDeposit'),
       return: analytics.comparisons.termDeposit.totalReturn,
       rate: analytics.comparisons.termDeposit.annualizedReturn,
       fill: '#06B6D4',
-      risk: t('comparison.riskLevels.veryLow'),
+      risk: t('comparison.riskLevels.veryLow') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevels.veryLow' ? 'Very Low' : t('comparison.riskLevels.veryLow'),
     },
     {
-      name: t('comparison.investmentTypes.savings'),
+      name: t('comparison.investmentTypes.savings') === 'FIRBCalculator.investmentAnalytics.comparison.investmentTypes.savings' ? 'High Interest Savings' : t('comparison.investmentTypes.savings'),
       return: analytics.comparisons.highInterestSavings.totalReturn,
       rate: analytics.comparisons.highInterestSavings.annualizedReturn,
       fill: '#14B8A6',
@@ -61,13 +61,13 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
         <div className="bg-white p-4 border border-border rounded-lg shadow-lg">
           <p className="font-semibold mb-2">{data.name}</p>
           <p className="text-sm text-green-600">
-            <span className="font-medium">{t('comparison.yearReturn', { years: holdPeriod })}:</span> {currency(data.return)}
+            <span className="font-medium">{t('comparison.yearReturn') === 'FIRBCalculator.investmentAnalytics.comparison.yearReturn' ? `${holdPeriod}-Year Return` : t('comparison.yearReturn', { years: holdPeriod })}:</span> {currency(data.return)}
           </p>
           <p className="text-sm text-muted-foreground">
-            <span className="font-medium">{t('comparison.annualRate')}:</span> {data.rate.toFixed(1)}%
+            <span className="font-medium">{t('comparison.annualRate') === 'FIRBCalculator.investmentAnalytics.comparison.annualRate' ? 'Annual Rate' : t('comparison.annualRate')}:</span> {data.rate.toFixed(1)}%
           </p>
           <p className="text-sm text-muted-foreground">
-            <span className="font-medium">{t('comparison.riskLevel')}:</span> {data.risk}
+            <span className="font-medium">{t('comparison.riskLevel') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevel' ? 'Risk Level' : t('comparison.riskLevel')}:</span> {data.risk}
           </p>
         </div>
       );
@@ -84,10 +84,14 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-primary" />
-          {t('comparison.title')}
+          {t('comparison.title') === 'FIRBCalculator.investmentAnalytics.comparison.title' 
+            ? 'Investment Comparison' 
+            : t('comparison.title')}
         </CardTitle>
         <CardDescription>
-          {t('comparison.description', { years: holdPeriod })}
+          {t('comparison.description') === 'FIRBCalculator.investmentAnalytics.comparison.description'
+            ? 'Compare your property investment returns against other asset classes'
+            : t('comparison.description', { years: holdPeriod })}
         </CardDescription>
       </CardHeader>
       
@@ -97,11 +101,17 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
           <div className="p-5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="h-6 w-6 text-green-600" />
-              <h4 className="font-bold text-green-900">{t('comparison.propertyLeads')}</h4>
+              <h4 className="font-bold text-green-900">
+                {t('comparison.propertyLeads') === 'FIRBCalculator.investmentAnalytics.comparison.propertyLeads' 
+                  ? 'Property Investment Leads!' 
+                  : t('comparison.propertyLeads')}
+              </h4>
             </div>
             <p className="text-sm text-green-700">
-              {t('comparison.propertyLeadsDesc', {
-                return: currency(bestInvestment.return),
+              {t('comparison.propertyLeadsDesc') === 'FIRBCalculator.investmentAnalytics.comparison.propertyLeadsDesc'
+                ? `Your property investment returned ${currency(bestInvestment.return)} over ${holdPeriod} years`
+                : t('comparison.propertyLeadsDesc', {
+                    return: currency(bestInvestment.return),
                 rate: bestInvestment.rate.toFixed(1)
               })}
             </p>
@@ -110,14 +120,20 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
           <div className="p-5 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl">
             <div className="flex items-center gap-3 mb-2">
               <BarChart3 className="h-6 w-6 text-amber-600" />
-              <h4 className="font-bold text-amber-900">{t('comparison.comparisonResults')}</h4>
+              <h4 className="font-bold text-amber-900">
+                {t('comparison.comparisonResults') === 'FIRBCalculator.investmentAnalytics.comparison.comparisonResults' 
+                  ? 'Comparison Results' 
+                  : t('comparison.comparisonResults')}
+              </h4>
             </div>
             <p className="text-sm text-amber-700">
-              {t('comparison.comparisonDesc', {
-                best: bestInvestment.name,
-                return: currency(bestInvestment.return),
-                propertyReturn: currency(analytics.comparisons.propertyInvestment.totalReturn)
-              })}
+              {t('comparison.comparisonDesc') === 'FIRBCalculator.investmentAnalytics.comparison.comparisonDesc'
+                ? `${bestInvestment.name} performed best with ${currency(bestInvestment.return)} return. Property investment returned ${currency(analytics.comparisons.propertyInvestment.totalReturn)}.`
+                : t('comparison.comparisonDesc', {
+                    best: bestInvestment.name,
+                    return: currency(bestInvestment.return),
+                    propertyReturn: currency(analytics.comparisons.propertyInvestment.totalReturn)
+                  })}
             </p>
           </div>
         )}
@@ -154,16 +170,34 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
         {/* Detailed Comparison Table */}
         <div>
           <h4 className="text-sm font-semibold text-foreground/70 mb-3 uppercase tracking-wide">
-            {t('comparison.detailedComparison')}
+            {t('comparison.detailedComparison') === 'FIRBCalculator.investmentAnalytics.comparison.detailedComparison' 
+              ? 'Detailed Comparison' 
+              : t('comparison.detailedComparison')}
           </h4>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 border-b border-border/40">
                 <tr>
-                  <th className="text-left p-3 font-semibold">{t('comparison.chartTitle')}</th>
-                  <th className="text-right p-3 font-semibold">{t('comparison.annualRate')}</th>
-                  <th className="text-right p-3 font-semibold">{t('comparison.yearReturn', { years: holdPeriod })}</th>
-                  <th className="text-center p-3 font-semibold">{t('comparison.riskLevel')}</th>
+                  <th className="text-left p-3 font-semibold">
+                    {t('comparison.chartTitle') === 'FIRBCalculator.investmentAnalytics.comparison.chartTitle' 
+                      ? 'Investment Type' 
+                      : t('comparison.chartTitle')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('comparison.annualRate') === 'FIRBCalculator.investmentAnalytics.comparison.annualRate' 
+                      ? 'Annual Rate' 
+                      : t('comparison.annualRate')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('comparison.yearReturn') === 'FIRBCalculator.investmentAnalytics.comparison.yearReturn' 
+                      ? `${holdPeriod}-Year Return` 
+                      : t('comparison.yearReturn', { years: holdPeriod })}
+                  </th>
+                  <th className="text-center p-3 font-semibold">
+                    {t('comparison.riskLevel') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevel' 
+                      ? 'Risk Level' 
+                      : t('comparison.riskLevel')}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
@@ -176,9 +210,9 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
                   >
                     <td className="p-3 font-medium">
                       {item.name}
-                      {item.name === t('comparison.investmentTypes.property') && (
+                      {item.name === (t('comparison.investmentTypes.property') === 'FIRBCalculator.investmentAnalytics.comparison.investmentTypes.property' ? 'Property Investment' : t('comparison.investmentTypes.property')) && (
                         <span className="ml-2 text-xs font-semibold px-2 py-0.5 bg-primary/20 text-primary rounded-full">
-                          {t('comparison.yourInvestment')}
+                          {t('comparison.yourInvestment') === 'FIRBCalculator.investmentAnalytics.comparison.yourInvestment' ? 'Your Investment' : t('comparison.yourInvestment')}
                         </span>
                       )}
                     </td>
