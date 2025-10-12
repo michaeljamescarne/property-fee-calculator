@@ -91,10 +91,14 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Award className="h-5 w-5 text-primary" />
-          {t('score.title')}
+          {t('score.title') === 'FIRBCalculator.investmentAnalytics.score.title' 
+            ? 'Investment Score' 
+            : t('score.title')}
         </CardTitle>
         <CardDescription>
-          {t('score.description')}
+          {t('score.description') === 'FIRBCalculator.investmentAnalytics.score.description'
+            ? 'Comprehensive analysis of your investment opportunity'
+            : t('score.description')}
         </CardDescription>
       </CardHeader>
       
@@ -104,8 +108,14 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="flex items-center gap-4 mb-4">
             {getVerdictIcon()}
             <div>
-              <p className="text-sm font-medium opacity-90 uppercase tracking-wide">{t('score.overallVerdict')}</p>
-              <p className="text-3xl font-bold">{getTranslatedVerdict(analytics.score.overall)} {t('score.investment')}</p>
+              <p className="text-sm font-medium opacity-90 uppercase tracking-wide">
+                {t('score.overallVerdict') === 'FIRBCalculator.investmentAnalytics.score.overallVerdict' 
+                  ? 'Overall Verdict' 
+                  : t('score.overallVerdict')}
+              </p>
+              <p className="text-3xl font-bold">
+                {getTranslatedVerdict(analytics.score.overall)} {t('score.investment') === 'FIRBCalculator.investmentAnalytics.score.investment' ? 'Investment' : t('score.investment')}
+              </p>
             </div>
           </div>
           <div className="flex items-baseline gap-2">
@@ -116,13 +126,42 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
 
         {/* Score Breakdown */}
         <div>
-          <h4 className="text-base font-semibold text-foreground mb-5">{t('score.scoreBreakdown')}</h4>
+          <h4 className="text-base font-semibold text-foreground mb-5">
+            {t('score.scoreBreakdown') === 'FIRBCalculator.investmentAnalytics.score.scoreBreakdown' 
+              ? 'Score Breakdown' 
+              : t('score.scoreBreakdown')}
+          </h4>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            <ScoreGauge score={analytics.score.rentalYield} label={t('score.dimensions.rentalYield')} />
-            <ScoreGauge score={analytics.score.capitalGrowth} label={t('score.dimensions.capitalGrowth')} />
-            <ScoreGauge score={analytics.score.cashFlow} label={t('score.dimensions.cashFlow')} />
-            <ScoreGauge score={analytics.score.taxEfficiency} label={t('score.dimensions.taxEfficiency')} />
-            <ScoreGauge score={analytics.score.riskProfile} label={t('score.dimensions.riskProfile')} />
+            <ScoreGauge 
+              score={analytics.score.rentalYield} 
+              label={t('score.dimensions.rentalYield') === 'FIRBCalculator.investmentAnalytics.score.dimensions.rentalYield' 
+                ? 'Rental Yield' 
+                : t('score.dimensions.rentalYield')} 
+            />
+            <ScoreGauge 
+              score={analytics.score.capitalGrowth} 
+              label={t('score.dimensions.capitalGrowth') === 'FIRBCalculator.investmentAnalytics.score.dimensions.capitalGrowth' 
+                ? 'Capital Growth' 
+                : t('score.dimensions.capitalGrowth')} 
+            />
+            <ScoreGauge 
+              score={analytics.score.cashFlow} 
+              label={t('score.dimensions.cashFlow') === 'FIRBCalculator.investmentAnalytics.score.dimensions.cashFlow' 
+                ? 'Cash Flow' 
+                : t('score.dimensions.cashFlow')} 
+            />
+            <ScoreGauge 
+              score={analytics.score.taxEfficiency} 
+              label={t('score.dimensions.taxEfficiency') === 'FIRBCalculator.investmentAnalytics.score.dimensions.taxEfficiency' 
+                ? 'Tax Efficiency' 
+                : t('score.dimensions.taxEfficiency')} 
+            />
+            <ScoreGauge 
+              score={analytics.score.riskProfile} 
+              label={t('score.dimensions.riskProfile') === 'FIRBCalculator.investmentAnalytics.score.dimensions.riskProfile' 
+                ? 'Risk Profile' 
+                : t('score.dimensions.riskProfile')} 
+            />
           </div>
         </div>
 
@@ -140,7 +179,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
             <div>
               <h4 className="text-sm font-semibold text-green-700 mb-3 flex items-center gap-2">
                 <CheckCircle className="h-4 w-4" />
-                {t('score.strengths')}
+                {t('score.strengths') === 'FIRBCalculator.investmentAnalytics.score.strengths' 
+                  ? 'Strengths' 
+                  : t('score.strengths')}
               </h4>
               <ul className="space-y-2">
                 {analytics.recommendation.strengths.map((strength, index) => (
@@ -158,7 +199,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
             <div>
               <h4 className="text-sm font-semibold text-red-700 mb-3 flex items-center gap-2">
                 <XCircle className="h-4 w-4" />
-                {t('score.weaknesses')}
+                {t('score.weaknesses') === 'FIRBCalculator.investmentAnalytics.score.weaknesses' 
+                  ? 'Weaknesses' 
+                  : t('score.weaknesses')}
               </h4>
               <ul className="space-y-2">
                 {analytics.recommendation.weaknesses.map((weakness, index) => (
@@ -177,7 +220,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="p-5 bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 rounded-xl">
             <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
               <Users className="h-4 w-4 text-primary" />
-              {t('score.suitableFor')}
+              {t('score.suitableFor') === 'FIRBCalculator.investmentAnalytics.score.suitableFor' 
+                ? 'Suitable For' 
+                : t('score.suitableFor')}
             </h4>
             <ul className="space-y-2">
               {analytics.recommendation.suitableFor.map((profile, index) => (
