@@ -112,16 +112,16 @@ export default function ResultsPanel({
   return (
     <div className="space-y-6">
       {/* Eligibility Verdict */}
-      <Alert className={`${getEligibilityColor()} border-2 w-full`}>
+      <Alert className={`${getEligibilityColor()} border-2 w-full !p-6`}>
         <div className="flex items-start gap-4 w-full">
-          <div className={getEligibilityTextColor()}>
+          <div className={`${getEligibilityTextColor()} flex-shrink-0 mt-1`}>
             {getEligibilityIcon()}
           </div>
-          <div className="flex-1 min-w-0">
-            <AlertTitle className={`text-xl font-bold ${getEligibilityTextColor()}`}>
+          <div className="flex-1 min-w-0 space-y-3">
+            <AlertTitle className={`text-xl font-bold ${getEligibilityTextColor()} !line-clamp-none leading-tight`}>
               {eligibility.canPurchase ? t('eligible.title') : t('notEligible.title')}
             </AlertTitle>
-            <AlertDescription className={`mt-2 ${getEligibilityTextColor()} whitespace-normal break-words`}>
+            <AlertDescription className={`${getEligibilityTextColor()} !col-start-auto !grid-cols-none !text-base leading-relaxed`}>
               {eligibility.canPurchase && eligibility.requiresFIRB && (
                 <p className="font-medium">{t('eligible.firbRequired')}</p>
               )}
