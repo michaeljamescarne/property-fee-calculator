@@ -15,7 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { CustomAlert } from '@/components/ui/custom-alert';
 import {
   Tooltip,
   TooltipContent,
@@ -97,44 +97,25 @@ export default function ResultsPanel({
     return <CheckCircle className="h-6 w-6" />;
   };
 
-  const getEligibilityColor = () => {
-    if (!eligibility.canPurchase) return 'bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900';
-    if (eligibility.requiresFIRB) return 'bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900';
-    return 'bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-900';
-  };
-
-  const getEligibilityTextColor = () => {
-    if (!eligibility.canPurchase) return 'text-red-900 dark:text-red-100';
-    if (eligibility.requiresFIRB) return 'text-amber-900 dark:text-amber-100';
-    return 'text-green-900 dark:text-green-100';
-  };
 
   return (
     <div className="space-y-6">
       {/* Eligibility Verdict */}
-      <Alert className={`${getEligibilityColor()} border-2 w-full !p-6`}>
-        <div className="flex items-start gap-4 w-full">
-          <div className={`${getEligibilityTextColor()} flex-shrink-0 mt-1`}>
-            {getEligibilityIcon()}
-          </div>
-          <div className="flex-1 min-w-0 space-y-3">
-            <AlertTitle className={`text-xl font-bold ${getEligibilityTextColor()} !line-clamp-none leading-tight`}>
-              {eligibility.canPurchase ? t('eligible.title') : t('notEligible.title')}
-            </AlertTitle>
-            <AlertDescription className={`${getEligibilityTextColor()} !col-start-auto !grid-cols-none !text-base leading-relaxed`}>
-              {eligibility.canPurchase && eligibility.requiresFIRB && (
-                <p className="font-medium">{t('eligible.firbRequired')}</p>
-              )}
-              {eligibility.canPurchase && !eligibility.requiresFIRB && (
-                <p className="font-medium">{t('eligible.noFirbRequired')}</p>
-              )}
-              {!eligibility.canPurchase && (
-                <p className="font-medium">{t('notEligible.description')}</p>
-              )}
-            </AlertDescription>
-          </div>
-        </div>
-      </Alert>
+      <CustomAlert 
+        variant={!eligibility.canPurchase ? 'destructive' : eligibility.requiresFIRB ? 'warning' : 'success'}
+        icon={getEligibilityIcon()}
+        title={eligibility.canPurchase ? t('eligible.title') : t('notEligible.title')}
+      >
+        {eligibility.canPurchase && eligibility.requiresFIRB && (
+          <p className="font-medium">{t('eligible.firbRequired')}</p>
+        )}
+        {eligibility.canPurchase && !eligibility.requiresFIRB && (
+          <p className="font-medium">{t('eligible.noFirbRequired')}</p>
+        )}
+        {!eligibility.canPurchase && (
+          <p className="font-medium">{t('notEligible.description')}</p>
+        )}
+      </CustomAlert>
 
       {/* FIRB Processing Timeline */}
       {eligibility.requiresFIRB && eligibility.processingTimeline && (
@@ -402,13 +383,15 @@ export default function ResultsPanel({
       </div>
 
       {/* Disclaimer */}
-      <Alert>
-        <Info className="h-4 w-4" />
-        <AlertTitle>{t('disclaimer.title')}</AlertTitle>
-        <AlertDescription className="text-sm">
+      <CustomAlert 
+        variant="default"
+        icon={<Info className="h-4 w-4" />}
+        title={t('disclaimer.title')}
+      >
+        <p className="text-sm">
           {t('disclaimer.content')}
-        </AlertDescription>
-      </Alert>
+        </p>
+      </CustomAlert>
     </div>
   );
 }
