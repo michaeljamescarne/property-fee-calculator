@@ -697,5 +697,34 @@
         "pastPerformance": "Past performance is not indicative of future results."
       }
     }
+  },
+  "Nav": {
+    "home": "Home",
+    "calculator": "Calculator",
+    "faq": "FAQ"
+  },
+  "Auth": {
+    "loginTitle": "Login to Your Account",
+    "loginDescription": "We'll send you a code to log in",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your@email.com",
+    "sendCodeButton": "Send Magic Code",
+    "sendingCode": "Sending code...",
+    "codeLabel": "6-Digit Code",
+    "codePlaceholder": "000000",
+    "codeDescription": "Check your email for the 6-digit code",
+    "verifyCodeButton": "Verify Code",
+    "verifying": "Verifying...",
+    "changeEmail": "Change email",
+    "resendCode": "Resend code",
+    "resendCooldown": "Resend ({seconds}s)",
+    "codeExpires": "Code expires in 10 minutes",
+    "successTitle": "Welcome Back!",
+    "successDescription": "Successfully authenticated",
+    "redirecting": "Redirecting to your dashboard...",
+    "noPasswordNeeded": "No password needed. We'll email you a secure code.",
+    "freeSignup": "Free to sign up • No credit card required",
+    "loginToUnlock": "Login to unlock",
+    "upgradeToUnlock": "Upgrade to unlock"
   }
 }

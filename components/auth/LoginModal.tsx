@@ -153,14 +153,14 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5 text-primary" />
-            {step === 'email' && 'Login to Your Account'}
+            {step === 'email' && t('loginTitle')}
             {step === 'code' && 'Enter Verification Code'}
-            {step === 'success' && 'Welcome Back!'}
+            {step === 'success' && t('successTitle')}
           </DialogTitle>
           <DialogDescription>
-            {step === 'email' && "We'll send you a code to log in"}
+            {step === 'email' && t('loginDescription')}
             {step === 'code' && `Code sent to ${email}`}
-            {step === 'success' && 'Successfully authenticated'}
+            {step === 'success' && t('successDescription')}
           </DialogDescription>
         </DialogHeader>
 
@@ -168,11 +168,11 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         {step === 'email' && (
           <form onSubmit={handleSendCode} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">{t('emailLabel')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="your@email.com"
+                placeholder={t('emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -191,15 +191,15 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending code...
+                  {t('sendingCode')}
                 </>
               ) : (
-                'Send Magic Code'
+                t('sendCodeButton')
               )}
             </Button>
 
             <p className="text-sm text-muted-foreground text-center">
-              No password needed. We'll email you a secure code.
+              {t('noPasswordNeeded')}
             </p>
           </form>
         )}
