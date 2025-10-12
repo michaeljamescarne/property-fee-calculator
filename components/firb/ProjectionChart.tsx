@@ -15,11 +15,11 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
 
   // Prepare data for chart
   const chartData = analytics.yearByYear.map((year) => ({
-    year: `${t('projections.yearByYear')} ${year.year}`,
-    [t('projections.tableHeaders.propertyValue')]: year.propertyValue,
+    year: `${t('projections.yearByYear') === 'FIRBCalculator.investmentAnalytics.projections.yearByYear' ? 'Year' : t('projections.yearByYear')} ${year.year}`,
+    [t('projections.tableHeaders.propertyValue') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.propertyValue' ? 'Property Value' : t('projections.tableHeaders.propertyValue')]: year.propertyValue,
     'Loan Balance': year.loanBalance,
-    [t('projections.tableHeaders.equity')]: year.equity,
-    [t('projections.tableHeaders.cumulativeReturn')]: year.cumulativeReturn,
+    [t('projections.tableHeaders.equity') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.equity' ? 'Your Equity' : t('projections.tableHeaders.equity')]: year.equity,
+    [t('projections.tableHeaders.cumulativeReturn') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.cumulativeReturn' ? 'Cumulative Return' : t('projections.tableHeaders.cumulativeReturn')]: year.cumulativeReturn,
   }));
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { year: string }; name: string; value: number; color: string }> }) => {
@@ -43,10 +43,14 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-primary" />
-          {t('projections.title', { years: analytics.yearByYear.length })}
+          {t('projections.title') === 'FIRBCalculator.investmentAnalytics.projections.title' 
+            ? `10-Year Investment Projections` 
+            : t('projections.title', { years: analytics.yearByYear.length })}
         </CardTitle>
         <CardDescription>
-          {t('projections.description')}
+          {t('projections.description') === 'FIRBCalculator.investmentAnalytics.projections.description'
+            ? 'See how your investment grows over time with property appreciation and loan paydown'
+            : t('projections.description')}
         </CardDescription>
       </CardHeader>
       
@@ -100,14 +104,22 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
         {/* Key Milestones */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-xs text-purple-600 font-medium mb-1">{t('projections.startingValue')}</p>
+            <p className="text-xs text-purple-600 font-medium mb-1">
+              {t('projections.startingValue') === 'FIRBCalculator.investmentAnalytics.projections.startingValue' 
+                ? 'Starting Value' 
+                : t('projections.startingValue')}
+            </p>
             <p className="text-xl font-bold text-purple-700">
               {currency(analytics.capitalGrowth.initialValue)}
             </p>
           </div>
 
           <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-xs text-purple-600 font-medium mb-1">{t('projections.finalValue')}</p>
+            <p className="text-xs text-purple-600 font-medium mb-1">
+              {t('projections.finalValue') === 'FIRBCalculator.investmentAnalytics.projections.finalValue' 
+                ? 'Final Value' 
+                : t('projections.finalValue')}
+            </p>
             <p className="text-xl font-bold text-purple-700">
               {currency(analytics.capitalGrowth.estimatedValueAtEnd)}
             </p>
@@ -117,22 +129,30 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
           </div>
 
           <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-xs text-green-600 font-medium mb-1">{t('projections.yourEquity')}</p>
+            <p className="text-xs text-green-600 font-medium mb-1">
+              {t('projections.yourEquity') === 'FIRBCalculator.investmentAnalytics.projections.yourEquity' 
+                ? 'Your Equity' 
+                : t('projections.yourEquity')}
+            </p>
             <p className="text-xl font-bold text-green-700">
               {currency(analytics.loanMetrics.equityAtEnd)}
             </p>
             <p className="text-xs text-green-600 mt-1">
-              {t('projections.from')} {currency(analytics.loanMetrics.equityAtStart)}
+              {t('projections.from') === 'FIRBCalculator.investmentAnalytics.projections.from' ? 'from' : t('projections.from')} {currency(analytics.loanMetrics.equityAtStart)}
             </p>
           </div>
 
           <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-xs text-blue-600 font-medium mb-1">{t('projections.totalROI')}</p>
+            <p className="text-xs text-blue-600 font-medium mb-1">
+              {t('projections.totalROI') === 'FIRBCalculator.investmentAnalytics.projections.totalROI' 
+                ? 'Total ROI' 
+                : t('projections.totalROI')}
+            </p>
             <p className="text-xl font-bold text-blue-700">
               {analytics.roi.totalROI.toFixed(1)}%
             </p>
             <p className="text-xs text-blue-600 mt-1">
-              {analytics.roi.annualizedROI.toFixed(1)}% {t('projections.perAnnum')}
+              {analytics.roi.annualizedROI.toFixed(1)}% {t('projections.perAnnum') === 'FIRBCalculator.investmentAnalytics.projections.perAnnum' ? 'per annum' : t('projections.perAnnum')}
             </p>
           </div>
         </div>
@@ -140,24 +160,40 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
         {/* Break-Even Information */}
         {analytics.breakEven.yearsToCumulativeBreakEven && (
           <div className="p-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl">
-            <h4 className="font-semibold text-foreground mb-3">{t('projections.breakEven.title')}</h4>
+            <h4 className="font-semibold text-foreground mb-3">
+              {t('projections.breakEven.title') === 'FIRBCalculator.investmentAnalytics.projections.breakEven.title' 
+                ? 'Break-Even Analysis' 
+                : t('projections.breakEven.title')}
+            </h4>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               <div>
-                <p className="text-muted-foreground mb-1">{t('projections.breakEven.cumulativeBreakEven')}</p>
+                <p className="text-muted-foreground mb-1">
+                  {t('projections.breakEven.cumulativeBreakEven') === 'FIRBCalculator.investmentAnalytics.projections.breakEven.cumulativeBreakEven' 
+                    ? 'Cumulative Break-Even' 
+                    : t('projections.breakEven.cumulativeBreakEven')}
+                </p>
                 <p className="text-2xl font-bold text-primary">
-                  {t('projections.breakEven.year')} {analytics.breakEven.yearsToCumulativeBreakEven}
+                  {t('projections.breakEven.year') === 'FIRBCalculator.investmentAnalytics.projections.breakEven.year' ? 'Year' : t('projections.breakEven.year')} {analytics.breakEven.yearsToCumulativeBreakEven}
                 </p>
               </div>
               {analytics.breakEven.yearsToPositiveCashFlow && (
                 <div>
-                  <p className="text-muted-foreground mb-1">{t('projections.breakEven.positiveCashFlow')}</p>
+                  <p className="text-muted-foreground mb-1">
+                    {t('projections.breakEven.positiveCashFlow') === 'FIRBCalculator.investmentAnalytics.projections.breakEven.positiveCashFlow' 
+                      ? 'Positive Cash Flow' 
+                      : t('projections.breakEven.positiveCashFlow')}
+                  </p>
                   <p className="text-2xl font-bold text-accent">
-                    {t('projections.breakEven.year')} {analytics.breakEven.yearsToPositiveCashFlow}
+                    {t('projections.breakEven.year') === 'FIRBCalculator.investmentAnalytics.projections.breakEven.year' ? 'Year' : t('projections.breakEven.year')} {analytics.breakEven.yearsToPositiveCashFlow}
                   </p>
                 </div>
               )}
               <div>
-                <p className="text-muted-foreground mb-1">{t('projections.breakEven.cashRequired')}</p>
+                <p className="text-muted-foreground mb-1">
+                  {t('projections.breakEven.cashRequired') === 'FIRBCalculator.investmentAnalytics.projections.breakEven.cashRequired' 
+                    ? 'Cash Required' 
+                    : t('projections.breakEven.cashRequired')}
+                </p>
                 <p className="text-2xl font-bold text-foreground">
                   {currency(analytics.breakEven.totalCashRequired)}
                 </p>

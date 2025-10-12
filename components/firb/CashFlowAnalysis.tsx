@@ -16,17 +16,17 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
   // Prepare chart data
   const cashFlowData = [
     {
-      name: t('cashFlow.income'),
+      name: t('cashFlow.income') === 'FIRBCalculator.investmentAnalytics.cashFlow.income' ? 'Income' : t('cashFlow.income'),
       amount: analytics.cashFlow.annual.effectiveIncome,
       fill: '#10B981',
     },
     {
-      name: t('cashFlow.expenses'),
+      name: t('cashFlow.expenses') === 'FIRBCalculator.investmentAnalytics.cashFlow.expenses' ? 'Expenses' : t('cashFlow.expenses'),
       amount: -Math.abs(analytics.cashFlow.annual.totalExpenses),
       fill: '#EF4444',
     },
     {
-      name: t('cashFlow.netCashFlow'),
+      name: t('cashFlow.netCashFlow') === 'FIRBCalculator.investmentAnalytics.cashFlow.netCashFlow' ? 'Net Cash Flow' : t('cashFlow.netCashFlow'),
       amount: analytics.cashFlow.annual.netCashFlow,
       fill: analytics.cashFlow.annual.netCashFlow >= 0 ? '#6366F1' : '#F59E0B',
     },
@@ -34,14 +34,14 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
 
   // Expense breakdown data
   const expenseBreakdown = [
-    { name: t('taxAnalysis.deductionItems.loanInterest'), amount: analytics.cashFlow.annual.loanRepayments },
-    { name: t('taxAnalysis.deductionItems.propertyManagement'), amount: analytics.cashFlow.annual.propertyManagement },
-    { name: t('taxAnalysis.deductionItems.maintenance'), amount: analytics.cashFlow.annual.maintenance },
-    { name: t('taxAnalysis.deductionItems.landTax'), amount: analytics.cashFlow.annual.landTax },
-    { name: t('taxAnalysis.deductionItems.councilRates'), amount: analytics.cashFlow.annual.councilRates },
-    { name: t('taxAnalysis.deductionItems.insurance'), amount: analytics.cashFlow.annual.insurance },
-    { name: t('taxAnalysis.deductionItems.strataFees'), amount: analytics.cashFlow.annual.strataFees },
-    { name: t('taxAnalysis.deductionItems.other'), amount: analytics.cashFlow.annual.otherExpenses },
+    { name: t('taxAnalysis.deductionItems.loanInterest') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.loanInterest' ? 'Loan Interest' : t('taxAnalysis.deductionItems.loanInterest'), amount: analytics.cashFlow.annual.loanRepayments },
+    { name: t('taxAnalysis.deductionItems.propertyManagement') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.propertyManagement' ? 'Property Management' : t('taxAnalysis.deductionItems.propertyManagement'), amount: analytics.cashFlow.annual.propertyManagement },
+    { name: t('taxAnalysis.deductionItems.maintenance') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.maintenance' ? 'Maintenance' : t('taxAnalysis.deductionItems.maintenance'), amount: analytics.cashFlow.annual.maintenance },
+    { name: t('taxAnalysis.deductionItems.landTax') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.landTax' ? 'Land Tax' : t('taxAnalysis.deductionItems.landTax'), amount: analytics.cashFlow.annual.landTax },
+    { name: t('taxAnalysis.deductionItems.councilRates') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.councilRates' ? 'Council Rates' : t('taxAnalysis.deductionItems.councilRates'), amount: analytics.cashFlow.annual.councilRates },
+    { name: t('taxAnalysis.deductionItems.insurance') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.insurance' ? 'Insurance' : t('taxAnalysis.deductionItems.insurance'), amount: analytics.cashFlow.annual.insurance },
+    { name: t('taxAnalysis.deductionItems.strataFees') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.strataFees' ? 'Strata Fees' : t('taxAnalysis.deductionItems.strataFees'), amount: analytics.cashFlow.annual.strataFees },
+    { name: t('taxAnalysis.deductionItems.other') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.deductionItems.other' ? 'Other' : t('taxAnalysis.deductionItems.other'), amount: analytics.cashFlow.annual.otherExpenses },
   ].filter(item => item.amount > 0);
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { name: string }; fill: string; value: number }> }) => {
@@ -63,10 +63,14 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <DollarSign className="h-5 w-5 text-primary" />
-          {t('cashFlow.title')}
+          {t('cashFlow.title') === 'FIRBCalculator.investmentAnalytics.cashFlow.title' 
+            ? 'Cash Flow Analysis' 
+            : t('cashFlow.title')}
         </CardTitle>
         <CardDescription>
-          {t('cashFlow.description')}
+          {t('cashFlow.description') === 'FIRBCalculator.investmentAnalytics.cashFlow.description'
+            ? 'Detailed breakdown of your rental income and expenses'
+            : t('cashFlow.description')}
         </CardDescription>
       </CardHeader>
       
@@ -76,26 +80,36 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-5 w-5 text-green-600" />
-              <p className="text-sm font-medium text-green-900">{t('cashFlow.annualIncome')}</p>
+              <p className="text-sm font-medium text-green-900">
+                {t('cashFlow.annualIncome') === 'FIRBCalculator.investmentAnalytics.cashFlow.annualIncome' 
+                  ? 'Annual Income' 
+                  : t('cashFlow.annualIncome')}
+              </p>
             </div>
             <p className="text-2xl font-bold text-green-700">
               {currency(analytics.cashFlow.annual.rentalIncome)}
             </p>
             <p className="text-xs text-green-600 mt-1">
-              Effective: {currency(analytics.cashFlow.annual.effectiveIncome)} ({t('cashFlow.effectiveAfterVacancy')})
+              Effective: {currency(analytics.cashFlow.annual.effectiveIncome)} ({t('cashFlow.effectiveAfterVacancy') === 'FIRBCalculator.investmentAnalytics.cashFlow.effectiveAfterVacancy' ? 'after vacancy' : t('cashFlow.effectiveAfterVacancy')})
             </p>
           </div>
 
           <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
             <div className="flex items-center gap-2 mb-2">
               <TrendingDown className="h-5 w-5 text-red-600" />
-              <p className="text-sm font-medium text-red-900">{t('cashFlow.annualExpenses')}</p>
+              <p className="text-sm font-medium text-red-900">
+                {t('cashFlow.annualExpenses') === 'FIRBCalculator.investmentAnalytics.cashFlow.annualExpenses' 
+                  ? 'Annual Expenses' 
+                  : t('cashFlow.annualExpenses')}
+              </p>
             </div>
             <p className="text-2xl font-bold text-red-700">
               {currency(analytics.cashFlow.annual.totalExpenses)}
             </p>
             <p className="text-xs text-red-600 mt-1">
-              {t('cashFlow.includingLoanRepayments')}
+              {t('cashFlow.includingLoanRepayments') === 'FIRBCalculator.investmentAnalytics.cashFlow.includingLoanRepayments' 
+                ? 'Including loan repayments' 
+                : t('cashFlow.includingLoanRepayments')}
             </p>
           </div>
 
@@ -111,7 +125,9 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
               <p className={`text-sm font-medium ${
                 analytics.cashFlow.annual.afterTaxCashFlow >= 0 ? 'text-blue-900' : 'text-amber-900'
               }`}>
-                {t('cashFlow.afterTaxCashFlow')}
+                {t('cashFlow.afterTaxCashFlow') === 'FIRBCalculator.investmentAnalytics.cashFlow.afterTaxCashFlow' 
+                  ? 'After Tax Cash Flow' 
+                  : t('cashFlow.afterTaxCashFlow')}
               </p>
             </div>
             <p className={`text-2xl font-bold ${
@@ -122,7 +138,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
             <p className={`text-xs mt-1 ${
               analytics.cashFlow.annual.afterTaxCashFlow >= 0 ? 'text-blue-600' : 'text-amber-600'
             }`}>
-              {currency(analytics.cashFlow.monthly.afterTaxCashFlow)}{t('cashFlow.perMonth')}
+              {currency(analytics.cashFlow.monthly.afterTaxCashFlow)}{t('cashFlow.perMonth') === 'FIRBCalculator.investmentAnalytics.cashFlow.perMonth' ? '/month' : t('cashFlow.perMonth')}
             </p>
           </div>
         </div>
@@ -130,7 +146,9 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
         {/* Cash Flow Chart */}
         <div>
           <h4 className="text-sm font-semibold text-foreground/70 mb-4 uppercase tracking-wide">
-            {t('cashFlow.chartTitle')}
+            {t('cashFlow.chartTitle') === 'FIRBCalculator.investmentAnalytics.cashFlow.chartTitle' 
+              ? 'Annual Cash Flow Breakdown' 
+              : t('cashFlow.chartTitle')}
           </h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={cashFlowData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
@@ -153,7 +171,9 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
         {/* Detailed Breakdown */}
         <div>
           <h4 className="text-sm font-semibold text-foreground/70 mb-4 uppercase tracking-wide">
-            {t('cashFlow.expenseBreakdown')}
+            {t('cashFlow.expenseBreakdown') === 'FIRBCalculator.investmentAnalytics.cashFlow.expenseBreakdown' 
+              ? 'Detailed Expense Breakdown' 
+              : t('cashFlow.expenseBreakdown')}
           </h4>
           <div className="space-y-3">
             {expenseBreakdown.map((item, index) => (

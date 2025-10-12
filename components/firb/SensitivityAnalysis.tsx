@@ -38,9 +38,15 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
         <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
           <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div className="text-sm">
-            <p className="font-semibold text-amber-900 mb-1">{t('sensitivity.warning')}</p>
+            <p className="font-semibold text-amber-900 mb-1">
+              {t('sensitivity.warning') === 'FIRBCalculator.investmentAnalytics.sensitivity.warning' 
+                ? 'Sensitivity Analysis Warning' 
+                : t('sensitivity.warning')}
+            </p>
             <p className="text-amber-700">
-              {t('sensitivity.warningDesc')}
+              {t('sensitivity.warningDesc') === 'FIRBCalculator.investmentAnalytics.sensitivity.warningDesc'
+                ? 'These scenarios show how changes in key variables could impact your investment. Results are estimates and actual outcomes may vary.'
+                : t('sensitivity.warningDesc')}
             </p>
           </div>
         </div>
@@ -48,17 +54,39 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
         {/* Vacancy Rate Scenarios */}
         <div>
           <h4 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
-            {t('sensitivity.vacancyImpact')}
-            <span className="text-xs font-normal text-muted-foreground">({t('sensitivity.vacancyDesc')})</span>
+            {t('sensitivity.vacancyImpact') === 'FIRBCalculator.investmentAnalytics.sensitivity.vacancyImpact' 
+              ? 'Vacancy Impact' 
+              : t('sensitivity.vacancyImpact')}
+            <span className="text-xs font-normal text-muted-foreground">
+              ({t('sensitivity.vacancyDesc') === 'FIRBCalculator.investmentAnalytics.sensitivity.vacancyDesc' 
+                ? 'How vacancy rates affect rental income' 
+                : t('sensitivity.vacancyDesc')})
+            </span>
           </h4>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 border-b border-border/40">
                 <tr>
-                  <th className="text-left p-3 font-semibold">{t('sensitivity.vacancyRate')}</th>
-                  <th className="text-right p-3 font-semibold">{t('sensitivity.annualRent')}</th>
-                  <th className="text-right p-3 font-semibold">{t('cashFlow.netCashFlow')}</th>
-                  <th className="text-right p-3 font-semibold">{t('sensitivity.impact')}</th>
+                  <th className="text-left p-3 font-semibold">
+                    {t('sensitivity.vacancyRate') === 'FIRBCalculator.investmentAnalytics.sensitivity.vacancyRate' 
+                      ? 'Vacancy Rate' 
+                      : t('sensitivity.vacancyRate')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('sensitivity.annualRent') === 'FIRBCalculator.investmentAnalytics.sensitivity.annualRent' 
+                      ? 'Annual Rent' 
+                      : t('sensitivity.annualRent')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('cashFlow.netCashFlow') === 'FIRBCalculator.investmentAnalytics.cashFlow.netCashFlow' 
+                      ? 'Net Cash Flow' 
+                      : t('cashFlow.netCashFlow')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('sensitivity.impact') === 'FIRBCalculator.investmentAnalytics.sensitivity.impact' 
+                      ? 'Impact' 
+                      : t('sensitivity.impact')}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
@@ -73,7 +101,9 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
                       <span className="font-medium">{scenario.rate}%</span>
                       {scenario.rate === 5 && (
                         <span className="ml-2 text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full">
-                          {t('sensitivity.baseCase')}
+                          {t('sensitivity.baseCase') === 'FIRBCalculator.investmentAnalytics.sensitivity.baseCase' 
+                            ? 'Base Case' 
+                            : t('sensitivity.baseCase')}
                         </span>
                       )}
                     </td>
@@ -94,24 +124,48 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
             </table>
           </div>
           <p className="text-xs text-muted-foreground mt-3 italic">
-            {t('sensitivity.vacancyNote', { amount: Math.abs(analytics.sensitivity.vacancyImpact[2].impact - analytics.sensitivity.vacancyImpact[1].impact).toFixed(0) })}
+            {t('sensitivity.vacancyNote') === 'FIRBCalculator.investmentAnalytics.sensitivity.vacancyNote'
+              ? `Note: A 5% increase in vacancy rate reduces annual cash flow by approximately ${Math.abs(analytics.sensitivity.vacancyImpact[2].impact - analytics.sensitivity.vacancyImpact[1].impact).toFixed(0)}.`
+              : t('sensitivity.vacancyNote', { amount: Math.abs(analytics.sensitivity.vacancyImpact[2].impact - analytics.sensitivity.vacancyImpact[1].impact).toFixed(0) })}
           </p>
         </div>
 
         {/* Interest Rate Scenarios */}
         <div>
           <h4 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
-            {t('sensitivity.interestImpact')}
-            <span className="text-xs font-normal text-muted-foreground">({t('sensitivity.interestDesc')})</span>
+            {t('sensitivity.interestImpact') === 'FIRBCalculator.investmentAnalytics.sensitivity.interestImpact' 
+              ? 'Interest Rate Impact' 
+              : t('sensitivity.interestImpact')}
+            <span className="text-xs font-normal text-muted-foreground">
+              ({t('sensitivity.interestDesc') === 'FIRBCalculator.investmentAnalytics.sensitivity.interestDesc' 
+                ? 'How interest rate changes affect loan repayments' 
+                : t('sensitivity.interestDesc')})
+            </span>
           </h4>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 border-b border-border/40">
                 <tr>
-                  <th className="text-left p-3 font-semibold">{t('sensitivity.interestRate')}</th>
-                  <th className="text-right p-3 font-semibold">{t('sensitivity.monthlyRepayment')}</th>
-                  <th className="text-right p-3 font-semibold">{t('sensitivity.annualCost')}</th>
-                  <th className="text-right p-3 font-semibold">{t('sensitivity.cashFlowImpact')}</th>
+                  <th className="text-left p-3 font-semibold">
+                    {t('sensitivity.interestRate') === 'FIRBCalculator.investmentAnalytics.sensitivity.interestRate' 
+                      ? 'Interest Rate' 
+                      : t('sensitivity.interestRate')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('sensitivity.monthlyRepayment') === 'FIRBCalculator.investmentAnalytics.sensitivity.monthlyRepayment' 
+                      ? 'Monthly Repayment' 
+                      : t('sensitivity.monthlyRepayment')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('sensitivity.annualCost') === 'FIRBCalculator.investmentAnalytics.sensitivity.annualCost' 
+                      ? 'Annual Cost' 
+                      : t('sensitivity.annualCost')}
+                  </th>
+                  <th className="text-right p-3 font-semibold">
+                    {t('sensitivity.cashFlowImpact') === 'FIRBCalculator.investmentAnalytics.sensitivity.cashFlowImpact' 
+                      ? 'Cash Flow Impact' 
+                      : t('sensitivity.cashFlowImpact')}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
@@ -126,7 +180,9 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
                       <span className="font-medium">{scenario.rate.toFixed(1)}%</span>
                       {scenario.rate === 6.5 && (
                         <span className="ml-2 text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full">
-                          {t('sensitivity.baseCase')}
+                          {t('sensitivity.baseCase') === 'FIRBCalculator.investmentAnalytics.sensitivity.baseCase' 
+                            ? 'Base Case' 
+                            : t('sensitivity.baseCase')}
                         </span>
                       )}
                     </td>
