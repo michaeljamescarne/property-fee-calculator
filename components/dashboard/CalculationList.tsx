@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { 
@@ -35,9 +35,9 @@ export default function CalculationList({ locale }: CalculationListProps) {
 
   useEffect(() => {
     fetchCalculations();
-  }, [sortBy, eligibilityFilter, showFavoritesOnly, searchTerm]);
+  }, [sortBy, eligibilityFilter, showFavoritesOnly, searchTerm, fetchCalculations]);
 
-  const fetchCalculations = async () => {
+  const fetchCalculations = useCallback(async () => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams({
@@ -58,7 +58,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [sortBy, eligibilityFilter, showFavoritesOnly, searchTerm]);
 
   const handleDelete = async (id: string) => {
     try {

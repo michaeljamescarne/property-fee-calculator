@@ -45,12 +45,12 @@ export async function verifySession(token: string): Promise<Session | null> {
       user: {
         id: payload.userId as string,
         email: payload.email as string,
-        subscription_status: payload.subscriptionStatus as any,
+        subscription_status: payload.subscriptionStatus as 'free' | 'trial' | 'paid',
       } as UserProfile,
       accessToken: token,
       expiresAt: payload.exp as number,
     };
-  } catch (error) {
+  } catch {
     return null;
   }
 }

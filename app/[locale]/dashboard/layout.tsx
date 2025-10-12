@@ -3,7 +3,7 @@
  * Layout wrapper for dashboard pages
  */
 
-import { Separator } from '@/components/ui/separator';
+// Removed unused Separator import
 
 export default function DashboardLayout({
   children,

@@ -69,7 +69,7 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    const updates: any = {};
+    const updates: Record<string, unknown> = {};
 
     // Allow updating specific fields
     if (body.calculation_name !== undefined) updates.calculation_name = body.calculation_name;

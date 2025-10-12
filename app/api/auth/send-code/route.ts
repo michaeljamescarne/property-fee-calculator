@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
         expires_at: expiresAt.toISOString(),
         attempts: 0,
         used: false,
-      });
+      } as any);
 
     if (dbError) {
       console.error('Database error:', dbError);

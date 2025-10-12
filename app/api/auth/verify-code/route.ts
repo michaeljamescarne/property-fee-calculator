@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createServiceRoleClient } from '@/lib/supabase/server';
-import { createClient } from '@/lib/supabase/client';
+// Removed unused import
 import {
   verifyCode,
   isExpired,
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       .eq('id', magicCode.id);
 
     // Check if user exists in Supabase Auth
-    const { data: { users }, error: usersError } = await supabase.auth.admin.listUsers();
+    const { data: { users } } = await supabase.auth.admin.listUsers();
     const existingUser = users?.find(u => u.email === email);
 
     let userId: string;
