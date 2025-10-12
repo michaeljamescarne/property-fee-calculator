@@ -54,7 +54,11 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="weekly-rent">{t('inputs.rental.weeklyRent')}</Label>
+                <Label htmlFor="weekly-rent">
+                  {t('inputs.rental.weeklyRent') === 'FIRBCalculator.investmentAnalytics.inputs.rental.weeklyRent' 
+                    ? 'Estimated Weekly Rent' 
+                    : t('inputs.rental.weeklyRent')}
+                </Label>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">$</span>
                   <Input
@@ -65,13 +69,17 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     className="flex-1"
                   />
                   <span className="text-sm text-muted-foreground whitespace-nowrap">
-                    (${number(inputs.estimatedWeeklyRent * 52)}{t('inputs.rental.perYear')})
+                    (${number(inputs.estimatedWeeklyRent * 52)}{t('inputs.rental.perYear') === 'FIRBCalculator.investmentAnalytics.inputs.rental.perYear' ? ' per year' : t('inputs.rental.perYear')})
                   </span>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label>{t('inputs.rental.vacancyRate')}: {inputs.vacancyRate}%</Label>
+                <Label>
+                  {t('inputs.rental.vacancyRate') === 'FIRBCalculator.investmentAnalytics.inputs.rental.vacancyRate' 
+                    ? 'Vacancy Rate' 
+                    : t('inputs.rental.vacancyRate')}: {inputs.vacancyRate}%
+                </Label>
                 <Slider
                   value={[inputs.vacancyRate]}
                   onValueChange={(value) => onChange({ vacancyRate: value[0] })}
@@ -81,12 +89,18 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  {t('inputs.rental.vacancyHelp')}
+                  {t('inputs.rental.vacancyHelp') === 'FIRBCalculator.investmentAnalytics.inputs.rental.vacancyHelp'
+                    ? 'Typical: 3-5% for good locations, 7-10% for high-risk areas'
+                    : t('inputs.rental.vacancyHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>{t('inputs.rental.rentGrowth')}: {inputs.rentGrowthRate}%</Label>
+                <Label>
+                  {t('inputs.rental.rentGrowth') === 'FIRBCalculator.investmentAnalytics.inputs.rental.rentGrowth' 
+                    ? 'Annual Rent Growth' 
+                    : t('inputs.rental.rentGrowth')}: {inputs.rentGrowthRate}%
+                </Label>
                 <Slider
                   value={[inputs.rentGrowthRate]}
                   onValueChange={(value) => onChange({ rentGrowthRate: value[0] })}
@@ -96,7 +110,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  {t('inputs.rental.rentGrowthHelp')}
+                  {t('inputs.rental.rentGrowthHelp') === 'FIRBCalculator.investmentAnalytics.inputs.rental.rentGrowthHelp'
+                    ? 'Historical average: 2-4% per year'
+                    : t('inputs.rental.rentGrowthHelp')}
                 </p>
               </div>
             </AccordionContent>
@@ -123,14 +139,20 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   htmlFor="self-managed"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
-                  {t('inputs.management.selfManaged')}
+                  {t('inputs.management.selfManaged') === 'FIRBCalculator.investmentAnalytics.inputs.management.selfManaged' 
+                    ? 'I will self-manage this property (no management fees)' 
+                    : t('inputs.management.selfManaged')}
                 </label>
               </div>
 
               {!inputs.selfManaged && (
                 <>
                   <div className="space-y-2">
-                    <Label>{t('inputs.management.managementFee')}: {inputs.propertyManagementFee}%</Label>
+                    <Label>
+                      {t('inputs.management.managementFee') === 'FIRBCalculator.investmentAnalytics.inputs.management.managementFee' 
+                        ? 'Property Management Fee' 
+                        : t('inputs.management.managementFee')}: {inputs.propertyManagementFee}%
+                    </Label>
                     <Slider
                       value={[inputs.propertyManagementFee]}
                       onValueChange={(value) => onChange({ propertyManagementFee: value[0] })}
@@ -140,12 +162,18 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                       className="w-full"
                     />
                     <p className="text-xs text-muted-foreground">
-                      {t('inputs.management.managementHelp')}: ${number(((inputs.estimatedWeeklyRent * 52 * inputs.propertyManagementFee) / 100))}{t('inputs.rental.perYear')}
+                      {t('inputs.management.managementHelp') === 'FIRBCalculator.investmentAnalytics.inputs.management.managementHelp'
+                        ? 'Typical: 7-9% of rental income. Estimated'
+                        : t('inputs.management.managementHelp')}: ${number(((inputs.estimatedWeeklyRent * 52 * inputs.propertyManagementFee) / 100))}{t('inputs.rental.perYear') === 'FIRBCalculator.investmentAnalytics.inputs.rental.perYear' ? ' per year' : t('inputs.rental.perYear')}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <Label>{t('inputs.management.lettingFee')}</Label>
+                    <Label>
+                      {t('inputs.management.lettingFee') === 'FIRBCalculator.investmentAnalytics.inputs.management.lettingFee' 
+                        ? 'Letting Fee (when finding new tenant)' 
+                        : t('inputs.management.lettingFee')}
+                    </Label>
                     <div className="flex items-center gap-2">
                       <Input
                         type="number"
@@ -153,7 +181,11 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                         onChange={(e) => onChange({ lettingFee: Number(e.target.value) })}
                         className="w-24"
                       />
-                      <span className="text-sm text-muted-foreground">{t('inputs.management.weeksRent')} (${number(inputs.estimatedWeeklyRent * inputs.lettingFee)})</span>
+                      <span className="text-sm text-muted-foreground">
+                        {t('inputs.management.weeksRent') === 'FIRBCalculator.investmentAnalytics.inputs.management.weeksRent' 
+                          ? 'weeks of rent' 
+                          : t('inputs.management.weeksRent')} (${number(inputs.estimatedWeeklyRent * inputs.lettingFee)})
+                      </span>
                     </div>
                   </div>
                 </>
@@ -173,7 +205,11 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="loan-amount">{t('inputs.financing.loanAmount')}</Label>
+                <Label htmlFor="loan-amount">
+                  {t('inputs.financing.loanAmount') === 'FIRBCalculator.investmentAnalytics.inputs.financing.loanAmount' 
+                    ? 'Loan Amount' 
+                    : t('inputs.financing.loanAmount')}
+                </Label>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">$</span>
                   <Input
@@ -187,7 +223,11 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
               </div>
 
               <div className="space-y-2">
-                <Label>{t('inputs.financing.interestRate')}: {inputs.interestRate.toFixed(2)}% p.a.</Label>
+                <Label>
+                  {t('inputs.financing.interestRate') === 'FIRBCalculator.investmentAnalytics.inputs.financing.interestRate' 
+                    ? 'Interest Rate' 
+                    : t('inputs.financing.interestRate')}: {inputs.interestRate.toFixed(2)}% p.a.
+                </Label>
                 <Slider
                   value={[inputs.interestRate]}
                   onValueChange={(value) => onChange({ interestRate: value[0] })}
@@ -197,12 +237,18 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  {t('inputs.financing.interestHelp')}
+                  {t('inputs.financing.interestHelp') === 'FIRBCalculator.investmentAnalytics.inputs.financing.interestHelp'
+                    ? 'Current market rates: 5.5-7.5% for investment properties'
+                    : t('inputs.financing.interestHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="loan-term">{t('inputs.financing.loanTerm')}</Label>
+                <Label htmlFor="loan-term">
+                  {t('inputs.financing.loanTerm') === 'FIRBCalculator.investmentAnalytics.inputs.financing.loanTerm' 
+                    ? 'Loan Term' 
+                    : t('inputs.financing.loanTerm')}
+                </Label>
                 <Select
                   value={inputs.loanTerm.toString()}
                   onValueChange={(value) => onChange({ loanTerm: Number(value) })}
@@ -219,7 +265,11 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="loan-type">{t('inputs.financing.loanType')}</Label>
+                <Label htmlFor="loan-type">
+                  {t('inputs.financing.loanType') === 'FIRBCalculator.investmentAnalytics.inputs.financing.loanType' 
+                    ? 'Loan Type' 
+                    : t('inputs.financing.loanType')}
+                </Label>
                 <Select
                   value={inputs.loanType}
                   onValueChange={(value: 'principalAndInterest' | 'interestOnly') => onChange({ loanType: value })}
@@ -228,15 +278,27 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="principalAndInterest">{t('inputs.financing.principalAndInterest')}</SelectItem>
-                    <SelectItem value="interestOnly">{t('inputs.financing.interestOnly')}</SelectItem>
+                    <SelectItem value="principalAndInterest">
+                      {t('inputs.financing.principalAndInterest') === 'FIRBCalculator.investmentAnalytics.inputs.financing.principalAndInterest' 
+                        ? 'Principal and Interest' 
+                        : t('inputs.financing.principalAndInterest')}
+                    </SelectItem>
+                    <SelectItem value="interestOnly">
+                      {t('inputs.financing.interestOnly') === 'FIRBCalculator.investmentAnalytics.inputs.financing.interestOnly' 
+                        ? 'Interest Only' 
+                        : t('inputs.financing.interestOnly')}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {inputs.loanType === 'interestOnly' && (
                 <div className="space-y-2">
-                  <Label>{t('inputs.financing.interestOnlyPeriod')}: {inputs.interestOnlyPeriod} years</Label>
+                  <Label>
+                    {t('inputs.financing.interestOnlyPeriod') === 'FIRBCalculator.investmentAnalytics.inputs.financing.interestOnlyPeriod' 
+                      ? 'Interest Only Period' 
+                      : t('inputs.financing.interestOnlyPeriod')}: {inputs.interestOnlyPeriod} years
+                  </Label>
                   <Slider
                     value={[inputs.interestOnlyPeriod]}
                     onValueChange={(value) => onChange({ interestOnlyPeriod: value[0] })}
@@ -262,7 +324,11 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label>{t('inputs.assumptions.holdPeriod')}: {inputs.holdPeriod} years</Label>
+                <Label>
+                  {t('inputs.assumptions.holdPeriod') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.holdPeriod' 
+                    ? 'Investment Hold Period' 
+                    : t('inputs.assumptions.holdPeriod')}: {inputs.holdPeriod} years
+                </Label>
                 <Slider
                   value={[inputs.holdPeriod]}
                   onValueChange={(value) => onChange({ holdPeriod: value[0] })}
@@ -272,12 +338,18 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  {t('inputs.assumptions.holdPeriodHelp')}
+                  {t('inputs.assumptions.holdPeriodHelp') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.holdPeriodHelp'
+                    ? 'How long you plan to hold this investment property'
+                    : t('inputs.assumptions.holdPeriodHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>{t('inputs.assumptions.capitalGrowth')}: {inputs.capitalGrowthRate}% p.a.</Label>
+                <Label>
+                  {t('inputs.assumptions.capitalGrowth') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.capitalGrowth' 
+                    ? 'Capital Growth Rate' 
+                    : t('inputs.assumptions.capitalGrowth')}: {inputs.capitalGrowthRate}% p.a.
+                </Label>
                 <Slider
                   value={[inputs.capitalGrowthRate]}
                   onValueChange={(value) => onChange({ capitalGrowthRate: value[0] })}
@@ -287,12 +359,18 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  {t('inputs.assumptions.capitalGrowthHelp')}
+                  {t('inputs.assumptions.capitalGrowthHelp') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.capitalGrowthHelp'
+                    ? 'Historical average: 6-8% per year for Australian property'
+                    : t('inputs.assumptions.capitalGrowthHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>{t('inputs.assumptions.taxRate')}: {inputs.marginalTaxRate}%</Label>
+                <Label>
+                  {t('inputs.assumptions.taxRate') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.taxRate' 
+                    ? 'Marginal Tax Rate' 
+                    : t('inputs.assumptions.taxRate')}: {inputs.marginalTaxRate}%
+                </Label>
                 <Slider
                   value={[inputs.marginalTaxRate]}
                   onValueChange={(value) => onChange({ marginalTaxRate: value[0] })}
@@ -302,12 +380,18 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  {t('inputs.assumptions.taxRateHelp')}
+                  {t('inputs.assumptions.taxRateHelp') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.taxRateHelp'
+                    ? 'Your highest tax bracket rate for investment income'
+                    : t('inputs.assumptions.taxRateHelp')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label>{t('inputs.assumptions.sellingCosts')}: {inputs.sellingCosts}%</Label>
+                <Label>
+                  {t('inputs.assumptions.sellingCosts') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.sellingCosts' 
+                    ? 'Selling Costs' 
+                    : t('inputs.assumptions.sellingCosts')}: {inputs.sellingCosts}%
+                </Label>
                 <Slider
                   value={[inputs.sellingCosts]}
                   onValueChange={(value) => onChange({ sellingCosts: value[0] })}
@@ -317,7 +401,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                   className="w-full"
                 />
                 <p className="text-xs text-muted-foreground">
-                  {t('inputs.assumptions.sellingCostsHelp')}
+                  {t('inputs.assumptions.sellingCostsHelp') === 'FIRBCalculator.investmentAnalytics.inputs.assumptions.sellingCostsHelp'
+                    ? 'Typical: 3-4% (agent commission, legal fees, marketing)'
+                    : t('inputs.assumptions.sellingCostsHelp')}
                 </p>
               </div>
             </AccordionContent>
@@ -335,7 +421,11 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
             </AccordionTrigger>
             <AccordionContent className="space-y-4 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="home-currency">{t('inputs.currency.homeCurrency')}</Label>
+                <Label htmlFor="home-currency">
+                  {t('inputs.currency.homeCurrency') === 'FIRBCalculator.investmentAnalytics.inputs.currency.homeCurrency' 
+                    ? 'Home Currency' 
+                    : t('inputs.currency.homeCurrency')}
+                </Label>
                 <Select
                   value={inputs.homeCurrency}
                   onValueChange={(value) => onChange({ homeCurrency: value })}
@@ -344,13 +434,41 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="AUD">{t('inputs.currency.aud')}</SelectItem>
-                    <SelectItem value="USD">{t('inputs.currency.usd')}</SelectItem>
-                    <SelectItem value="CNY">{t('inputs.currency.cny')}</SelectItem>
-                    <SelectItem value="EUR">{t('inputs.currency.eur')}</SelectItem>
-                    <SelectItem value="GBP">{t('inputs.currency.gbp')}</SelectItem>
-                    <SelectItem value="JPY">{t('inputs.currency.jpy')}</SelectItem>
-                    <SelectItem value="SGD">{t('inputs.currency.sgd')}</SelectItem>
+                    <SelectItem value="AUD">
+                      {t('inputs.currency.aud') === 'FIRBCalculator.investmentAnalytics.inputs.currency.aud' 
+                        ? 'Australian Dollar (AUD)' 
+                        : t('inputs.currency.aud')}
+                    </SelectItem>
+                    <SelectItem value="USD">
+                      {t('inputs.currency.usd') === 'FIRBCalculator.investmentAnalytics.inputs.currency.usd' 
+                        ? 'US Dollar (USD)' 
+                        : t('inputs.currency.usd')}
+                    </SelectItem>
+                    <SelectItem value="CNY">
+                      {t('inputs.currency.cny') === 'FIRBCalculator.investmentAnalytics.inputs.currency.cny' 
+                        ? 'Chinese Yuan (CNY)' 
+                        : t('inputs.currency.cny')}
+                    </SelectItem>
+                    <SelectItem value="EUR">
+                      {t('inputs.currency.eur') === 'FIRBCalculator.investmentAnalytics.inputs.currency.eur' 
+                        ? 'Euro (EUR)' 
+                        : t('inputs.currency.eur')}
+                    </SelectItem>
+                    <SelectItem value="GBP">
+                      {t('inputs.currency.gbp') === 'FIRBCalculator.investmentAnalytics.inputs.currency.gbp' 
+                        ? 'British Pound (GBP)' 
+                        : t('inputs.currency.gbp')}
+                    </SelectItem>
+                    <SelectItem value="JPY">
+                      {t('inputs.currency.jpy') === 'FIRBCalculator.investmentAnalytics.inputs.currency.jpy' 
+                        ? 'Japanese Yen (JPY)' 
+                        : t('inputs.currency.jpy')}
+                    </SelectItem>
+                    <SelectItem value="SGD">
+                      {t('inputs.currency.sgd') === 'FIRBCalculator.investmentAnalytics.inputs.currency.sgd' 
+                        ? 'Singapore Dollar (SGD)' 
+                        : t('inputs.currency.sgd')}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -358,7 +476,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
               {inputs.homeCurrency !== 'AUD' && (
                 <div className="space-y-2">
                   <Label htmlFor="exchange-rate">
-                    {t('inputs.currency.exchangeRate', { currency: inputs.homeCurrency })}
+                    {t('inputs.currency.exchangeRate', { currency: inputs.homeCurrency }) === 'FIRBCalculator.investmentAnalytics.inputs.currency.exchangeRate'
+                      ? `Exchange Rate (1 AUD = ${inputs.homeCurrency})`
+                      : t('inputs.currency.exchangeRate', { currency: inputs.homeCurrency })}
                   </Label>
                   <Input
                     id="exchange-rate"
@@ -368,7 +488,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
                     onChange={(e) => onChange({ currencyExchangeRate: Number(e.target.value) })}
                   />
                   <p className="text-xs text-muted-foreground">
-                    {t('inputs.currency.exchangeHelp')}
+                    {t('inputs.currency.exchangeHelp') === 'FIRBCalculator.investmentAnalytics.inputs.currency.exchangeHelp'
+                      ? 'Enter the current exchange rate to convert all amounts to your home currency'
+                      : t('inputs.currency.exchangeHelp')}
                   </p>
                 </div>
               )}
