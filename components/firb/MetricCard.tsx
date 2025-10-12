@@ -74,7 +74,7 @@ export default function MetricCard({
         <div className="flex items-start justify-between mb-3 gap-2">
           <div className="flex items-center gap-2 min-w-0 flex-1">
             {icon && <div className="text-primary flex-shrink-0">{icon}</div>}
-            <h3 className="text-sm font-semibold text-foreground/70 uppercase tracking-wide break-words line-clamp-2 min-w-0">
+            <h3 className="text-sm font-semibold text-foreground/70 uppercase tracking-wide break-words leading-tight min-w-0 flex-1">
               {title}
             </h3>
           </div>
@@ -99,7 +99,7 @@ export default function MetricCard({
         </div>
 
         {subtitle && (
-          <p className="text-sm text-muted-foreground mb-2">{subtitle}</p>
+          <p className="text-sm text-muted-foreground mb-2 break-words leading-relaxed">{subtitle}</p>
         )}
 
         {change !== undefined && changeLabel && (
@@ -114,7 +114,7 @@ export default function MetricCard({
 
         {benchmark && (
           <div className="mt-2 pt-2 border-t border-border/40">
-            <p className="text-xs text-muted-foreground">{benchmark}</p>
+            <p className="text-xs text-muted-foreground break-words leading-relaxed">{benchmark}</p>
           </div>
         )}
       </CardContent>
