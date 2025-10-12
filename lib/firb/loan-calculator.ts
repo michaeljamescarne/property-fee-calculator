@@ -199,3 +199,4 @@ export function calculateRequiredDeposit(
   return propertyValue * (minDepositPercent / 100);
 }
 
+

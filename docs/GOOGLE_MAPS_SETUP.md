@@ -185,3 +185,4 @@ If you see "Google Maps API key not configured", the component will work as a re
 - ✅ Fallback to regular input if no API key
 - ⚠️ Requires `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` to be set
 
+

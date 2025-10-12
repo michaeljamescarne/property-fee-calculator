@@ -8,6 +8,7 @@ export type CitizenshipStatus = 'australian' | 'permanent' | 'temporary' | 'fore
 export type PropertyType = 'newDwelling' | 'established' | 'vacantLand' | 'commercial';
 export type AustralianState = 'NSW' | 'VIC' | 'QLD' | 'SA' | 'WA' | 'TAS' | 'ACT' | 'NT';
 export type EntityType = 'individual' | 'company' | 'trust';
+export type SubscriptionStatus = 'free' | 'trial' | 'paid';
 
 // Eligibility Result structure (stored as JSON)
 export interface EligibilityResult {
@@ -125,4 +126,113 @@ export interface FIRBCalculationStats {
   byState: Record<AustralianState, number>;
   byPropertyType: Record<PropertyType, number>;
 }
+
+// Auth-related types
+
+// User Profile
+export interface UserProfile {
+  id: string;
+  email: string;
+  created_at: string;
+  last_login_at: string;
+  subscription_status: SubscriptionStatus;
+  subscription_tier: string | null;
+  calculations_count: number;
+  updated_at: string;
+}
+
+// Magic Code
+export interface MagicCode {
+  id: string;
+  email: string;
+  code: string; // Hashed
+  expires_at: string;
+  attempts: number;
+  used: boolean;
+  created_at: string;
+}
+
+// Saved Calculation
+export interface SavedCalculation {
+  id: string;
+  user_id: string;
+  calculation_data: CalculationData;
+  property_address: string | null;
+  property_value: number | null;
+  eligibility_status: string | null;
+  calculation_name: string | null;
+  is_favorite: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// Full calculation data structure
+export interface CalculationData {
+  // Form inputs
+  citizenshipStatus: CitizenshipStatus;
+  visaType?: string;
+  isOrdinarilyResident?: boolean;
+  propertyType: PropertyType;
+  propertyValue: number;
+  propertyState: AustralianState;
+  propertyAddress?: string;
+  isFirstHome: boolean;
+  depositPercent?: number;
+  entityType: EntityType;
+  
+  // Investment analytics inputs (optional)
+  weeklyRent?: number;
+  managementFee?: number;
+  loanAmount?: number;
+  interestRate?: number;
+  loanTerm?: number;
+  annualGrowthRate?: number;
+  marginalTaxRate?: number;
+  capitalGainsDiscount?: number;
+  
+  // Results
+  eligibility: EligibilityResult;
+  costs: CostBreakdown;
+  analytics?: any; // Investment analytics results if calculated
+}
+
+// Insert types
+export type SavedCalculationInsert = Omit<
+  SavedCalculation,
+  'id' | 'created_at' | 'updated_at'
+>;
+
+// Update types
+export type SavedCalculationUpdate = Partial<
+  Omit<SavedCalculation, 'id' | 'user_id' | 'created_at' | 'updated_at'>
+>;
+
+// Supabase Database type
+export interface Database {
+  public: {
+    Tables: {
+      user_profiles: {
+        Row: UserProfile;
+        Insert: Omit<UserProfile, 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<UserProfile, 'id' | 'created_at'>>;
+      };
+      magic_codes: {
+        Row: MagicCode;
+        Insert: Omit<MagicCode, 'id' | 'created_at'>;
+        Update: Partial<Omit<MagicCode, 'id' | 'created_at'>>;
+      };
+      saved_calculations: {
+        Row: SavedCalculation;
+        Insert: SavedCalculationInsert;
+        Update: SavedCalculationUpdate;
+      };
+    };
+    Views: {};
+    Functions: {};
+    Enums: {
+      subscription_status: SubscriptionStatus;
+    };
+  };
+}
+
 

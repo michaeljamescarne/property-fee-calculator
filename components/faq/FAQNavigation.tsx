@@ -83,3 +83,4 @@ export default function FAQNavigation({ categories, activeCategory, onCategoryCl
   );
 }
 
+

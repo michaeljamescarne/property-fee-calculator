@@ -191,3 +191,4 @@ CREATE TRIGGER set_share_url_slug_on_insert
   FOR EACH ROW
   EXECUTE FUNCTION set_share_url_slug();
 
+

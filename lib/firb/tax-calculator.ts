@@ -214,3 +214,4 @@ export function calculateEffectiveTaxRate(
   return (taxPaid / grossIncome) * 100;
 }
 
+
