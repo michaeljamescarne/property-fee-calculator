@@ -17,6 +17,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { CitizenshipStatus, TEMPORARY_VISA_TYPES } from '@/lib/firb/constants';
 import { Info } from 'lucide-react';
 
@@ -120,7 +126,18 @@ export default function CitizenshipStep({
         {citizenshipStatus === 'temporary' && (
           <div className="space-y-3 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-900">
             <div className="flex items-start gap-2">
-              <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-5 w-5 text-blue-600 mt-0.5 cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-sm">
+                    <p className="text-sm">
+                      Select your specific visa type to determine FIRB eligibility and any additional restrictions that may apply.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <div className="flex-1">
                 <Label htmlFor="visa-type" className="text-base font-medium">
                   {t('visaType.label')}
@@ -171,7 +188,18 @@ export default function CitizenshipStep({
         {citizenshipStatus && (
           <div className="p-4 bg-muted rounded-lg">
             <div className="flex gap-2">
-              <Info className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5 cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-sm">
+                    <p className="text-sm">
+                      Your citizenship status determines FIRB approval requirements and property purchase eligibility under Australian foreign investment rules.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <div className="text-sm text-muted-foreground">
                 {citizenshipStatus === 'australian' && t('info.australian')}
                 {citizenshipStatus === 'permanent' && t('info.permanent')}
