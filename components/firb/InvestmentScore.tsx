@@ -240,7 +240,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl">
             <h4 className="text-sm font-semibold text-amber-900 mb-3 flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
-              {t('score.risksToConsider')}
+              {t('score.risksToConsider') === 'FIRBCalculator.investmentAnalytics.score.risksToConsider' 
+                ? 'Risks to Consider' 
+                : t('score.risksToConsider')}
             </h4>
             <ul className="space-y-2">
               {analytics.recommendation.risksToConsider.map((risk, index) => (
@@ -258,7 +260,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
           <div className="p-5 bg-gradient-to-r from-muted/50 to-background border border-border/40 rounded-xl">
             <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-primary" />
-              {t('score.keyTakeaways')}
+              {t('score.keyTakeaways') === 'FIRBCalculator.investmentAnalytics.score.keyTakeaways' 
+                ? 'Key Takeaways' 
+                : t('score.keyTakeaways')}
             </h4>
             <ul className="space-y-2">
               {analytics.recommendation.keyTakeaways.map((takeaway, index) => (

@@ -40,16 +40,25 @@ export function useInvestmentTranslations() {
 
     // Get translated risk levels
     riskLevel: (level: string) => {
-      return t(`comparison.riskLevels.${level}`);
+      const key = `comparison.riskLevels.${level}`;
+      const translation = t(key);
+      const fallbacks: Record<string, string> = {
+        'veryLow': 'Very Low',
+        'low': 'Low',
+        'medium': 'Medium',
+        'high': 'High',
+        'veryHigh': 'Very High'
+      };
+      return translation === `FIRBCalculator.investmentAnalytics.${key}` ? fallbacks[level] || level : translation;
     },
 
     // Get translated verdict
     verdict: (score: number) => {
-      if (score >= 8) return t('score.verdicts.excellent');
-      if (score >= 6.5) return t('score.verdicts.good');
-      if (score >= 5) return t('score.verdicts.moderate');
-      if (score >= 3.5) return t('score.verdicts.poor');
-      return t('score.verdicts.notRecommended');
+      if (score >= 8) return t('score.verdicts.excellent') === 'FIRBCalculator.investmentAnalytics.score.verdicts.excellent' ? 'Excellent' : t('score.verdicts.excellent');
+      if (score >= 6.5) return t('score.verdicts.good') === 'FIRBCalculator.investmentAnalytics.score.verdicts.good' ? 'Good' : t('score.verdicts.good');
+      if (score >= 5) return t('score.verdicts.moderate') === 'FIRBCalculator.investmentAnalytics.score.verdicts.moderate' ? 'Moderate' : t('score.verdicts.moderate');
+      if (score >= 3.5) return t('score.verdicts.poor') === 'FIRBCalculator.investmentAnalytics.score.verdicts.poor' ? 'Poor' : t('score.verdicts.poor');
+      return t('score.verdicts.notRecommended') === 'FIRBCalculator.investmentAnalytics.score.verdicts.notRecommended' ? 'Not Recommended' : t('score.verdicts.notRecommended');
     },
 
     // Get translated deduction items

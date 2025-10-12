@@ -256,7 +256,9 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
         {/* Tax Planning Note */}
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm">
           <p className="text-blue-900">
-            {t('taxAnalysis.taxPlanningTip')}
+            {t('taxAnalysis.taxPlanningTip') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.taxPlanningTip' 
+              ? 'Tax planning tip: Consider speaking with a qualified tax advisor to optimize your investment structure and maximize tax benefits. Tax laws and rates can change, affecting your calculations.' 
+              : t('taxAnalysis.taxPlanningTip')}
           </p>
         </div>
       </CardContent>

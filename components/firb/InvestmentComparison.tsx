@@ -240,7 +240,9 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
         {/* Assumptions Note */}
         <div className="p-4 bg-muted/50 rounded-lg border border-border/40 text-sm text-muted-foreground">
           <p>
-            {t('comparison.assumptions', { growth: analytics.capitalGrowth.annualGrowthRate.toFixed(1) })}
+            {t('comparison.assumptions') === 'FIRBCalculator.investmentAnalytics.comparison.assumptions' 
+              ? `Assumptions: Property growth rate of ${analytics.capitalGrowth.annualGrowthRate.toFixed(1)}% p.a., based on historical averages. Returns are estimates and may vary.`
+              : t('comparison.assumptions', { growth: analytics.capitalGrowth.annualGrowthRate.toFixed(1) })}
           </p>
         </div>
       </CardContent>

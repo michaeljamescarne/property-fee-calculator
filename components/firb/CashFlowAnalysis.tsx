@@ -183,7 +183,11 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
               </div>
             ))}
             <div className="flex justify-between items-center p-4 rounded-lg bg-red-50 border border-red-200 font-bold">
-              <span>{t('cashFlow.totalAnnualExpenses')}</span>
+              <span>
+                {t('cashFlow.totalAnnualExpenses') === 'FIRBCalculator.investmentAnalytics.cashFlow.totalAnnualExpenses' 
+                  ? 'Total Annual Expenses' 
+                  : t('cashFlow.totalAnnualExpenses')}
+              </span>
               <span className="text-red-700">{currency(analytics.cashFlow.annual.totalExpenses)}</span>
             </div>
           </div>
@@ -194,14 +198,22 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           <div className="p-5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm font-semibold text-green-900 mb-1">{t('cashFlow.negativeGearingBenefit')}</p>
+                <p className="text-sm font-semibold text-green-900 mb-1">
+                  {t('cashFlow.negativeGearingBenefit') === 'FIRBCalculator.investmentAnalytics.cashFlow.negativeGearingBenefit' 
+                    ? 'Negative Gearing Benefit' 
+                    : t('cashFlow.negativeGearingBenefit')}
+                </p>
                 <p className="text-3xl font-bold text-green-700">{currency(analytics.cashFlow.annual.taxBenefit)}</p>
                 <p className="text-sm text-green-600 mt-2">
-                  {currency(analytics.cashFlow.monthly.afterTaxCashFlow + analytics.cashFlow.monthly.netCashFlow)} {t('cashFlow.savedPerMonth')}
+                  {currency(analytics.cashFlow.monthly.afterTaxCashFlow + analytics.cashFlow.monthly.netCashFlow)} {t('cashFlow.savedPerMonth') === 'FIRBCalculator.investmentAnalytics.cashFlow.savedPerMonth' ? 'saved/month' : t('cashFlow.savedPerMonth')}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-xs text-green-600">{t('cashFlow.deductibleExpenses')}</p>
+                <p className="text-xs text-green-600">
+                  {t('cashFlow.deductibleExpenses') === 'FIRBCalculator.investmentAnalytics.cashFlow.deductibleExpenses' 
+                    ? 'Deductible Expenses' 
+                    : t('cashFlow.deductibleExpenses')}
+                </p>
                 <p className="text-lg font-semibold text-green-700">
                   {currency(analytics.cashFlow.annual.deductibleExpenses)}
                 </p>
@@ -213,7 +225,11 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
         {/* Monthly Summary */}
         <div className="grid md:grid-cols-2 gap-4 p-5 bg-muted/50 rounded-xl border border-border/40">
           <div>
-            <p className="text-sm text-muted-foreground mb-1">{t('cashFlow.beforeTax')}</p>
+            <p className="text-sm text-muted-foreground mb-1">
+              {t('cashFlow.beforeTax') === 'FIRBCalculator.investmentAnalytics.cashFlow.beforeTax' 
+                ? 'Before Tax' 
+                : t('cashFlow.beforeTax')}
+            </p>
             <p className={`text-2xl font-bold ${
               analytics.cashFlow.monthly.netCashFlow >= 0 ? 'text-green-600' : 'text-red-600'
             }`}>
@@ -221,7 +237,11 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
             </p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground mb-1">{t('cashFlow.afterTax')}</p>
+            <p className="text-sm text-muted-foreground mb-1">
+              {t('cashFlow.afterTax') === 'FIRBCalculator.investmentAnalytics.cashFlow.afterTax' 
+                ? 'After Tax' 
+                : t('cashFlow.afterTax')}
+            </p>
             <p className={`text-2xl font-bold ${
               analytics.cashFlow.monthly.afterTaxCashFlow >= 0 ? 'text-green-600' : 'text-amber-600'
             }`}>
