@@ -500,7 +500,9 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
 
         <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-border/40">
           <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">Note:</strong> {t('inputs.note')}
+            <strong className="text-foreground">Note:</strong> {t('inputs.note') === 'FIRBCalculator.investmentAnalytics.inputs.note' 
+              ? 'These are estimates based on current market conditions and typical investor scenarios. Actual results may vary based on specific circumstances, market changes, and individual tax situations.' 
+              : t('inputs.note')}
           </p>
         </div>
       </CardContent>
