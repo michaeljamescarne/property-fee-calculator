@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRB Cost Breakdown - Screenshot Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .cost-breakdown {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .property-summary {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .property-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .property-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .property-detail {
+            text-align: center;
+        }
+
+        .property-detail-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .property-detail-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .costs-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cost-category {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .cost-category-header {
+            background: #f8fafc;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cost-items {
+            padding: 0;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background-color 0.2s ease;
+        }
+
+        .cost-item:hover {
+            background: #f8fafc;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .cost-item-label {
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .cost-item-value {
+            color: #1e293b;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .cost-item:last-child .cost-item-label {
+            color: #1e293b;
+            font-size: 16px;
+        }
+
+        .cost-item:last-child .cost-item-value {
+            color: #3b82f6;
+            font-size: 16px;
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .total-label {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .total-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .total-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .total-item {
+            text-align: center;
+        }
+
+        .total-item-value {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .total-item-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .chart-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 14px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .action-section {
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+        }
+
+        @media (max-width: 640px) {
+            .cost-breakdown {
+                margin: 20px;
+            }
+            
+            .header {
+                padding: 24px;
+            }
+            
+            .content {
+                padding: 24px;
+            }
+            
+            .property-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .total-breakdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cost-breakdown">
+        <!-- Header -->
+        <div class="header">
+            <h1>Investment Cost Breakdown</h1>
+            <p>Complete transparency on all fees and costs</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Property Summary -->
+            <div class="property-summary">
+                <div class="property-title">
+                    <span>🏠</span>
+                    Property Details
+                </div>
+                <div class="property-details">
+                    <div class="property-detail">
+                        <div class="property-detail-label">Property Value</div>
+                        <div class="property-detail-value">$750,000</div>
+                    </div>
+                    <div class="property-detail">
+                        <div class="property-detail-label">Location</div>
+                        <div class="property-detail-value">Sydney, NSW</div>
+                    </div>
+                    <div class="property-detail">
+                        <div class="property-detail-label">Property Type</div>
+                        <div class="property-detail-value">Established Dwelling</div>
+                    </div>
+                    <div class="property-detail">
+                        <div class="property-detail-label">Purchase Date</div>
+                        <div class="property-detail-value">Q2 2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upfront Costs -->
+            <div class="costs-section">
+                <div class="section-title">
+                    <span>💳</span>
+                    Upfront Costs
+                </div>
+                
+                <div class="cost-category">
+                    <div class="cost-category-header">
+                        <span>📋</span>
+                        Government Fees & Taxes
+                    </div>
+                    <div class="cost-items">
+                        <div class="cost-item">
+                            <span class="cost-item-label">FIRB Application Fee</span>
+                            <span class="cost-item-value">$6,350</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Stamp Duty</span>
+                            <span class="cost-item-value">$30,000</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Foreign Surcharge</span>
+                            <span class="cost-item-value">$37,500</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Land Tax (Annual)</span>
+                            <span class="cost-item-value">$0</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Subtotal</span>
+                            <span class="cost-item-value">$73,850</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cost-category">
+                    <div class="cost-category-header">
+                        <span>⚖️</span>
+                        Legal & Professional Fees
+                    </div>
+                    <div class="cost-items">
+                        <div class="cost-item">
+                            <span class="cost-item-label">Conveyancing</span>
+                            <span class="cost-item-value">$2,500</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Settlement Agent</span>
+                            <span class="cost-item-value">$800</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Building & Pest Inspection</span>
+                            <span class="cost-item-value">$600</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Valuation Report</span>
+                            <span class="cost-item-value">$400</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Subtotal</span>
+                            <span class="cost-item-value">$4,300</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cost-category">
+                    <div class="cost-category-header">
+                        <span>🏦</span>
+                        Finance Costs
+                    </div>
+                    <div class="cost-items">
+                        <div class="cost-item">
+                            <span class="cost-item-label">Loan Application Fee</span>
+                            <span class="cost-item-value">$1,200</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">LMI Premium</span>
+                            <span class="cost-item-value">$8,500</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Settlement Fee</span>
+                            <span class="cost-item-value">$300</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Subtotal</span>
+                            <span class="cost-item-value">$10,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ongoing Costs -->
+            <div class="costs-section">
+                <div class="section-title">
+                    <span>📅</span>
+                    Annual Ongoing Costs
+                </div>
+                
+                <div class="cost-category">
+                    <div class="cost-category-header">
+                        <span>🏘️</span>
+                        Property Expenses
+                    </div>
+                    <div class="cost-items">
+                        <div class="cost-item">
+                            <span class="cost-item-label">Council Rates</span>
+                            <span class="cost-item-value">$3,200</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Water Rates</span>
+                            <span class="cost-item-value">$1,800</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Insurance</span>
+                            <span class="cost-item-value">$1,500</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Property Management</span>
+                            <span class="cost-item-value">$4,500</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Maintenance</span>
+                            <span class="cost-item-value">$2,000</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-item-label">Subtotal</span>
+                            <span class="cost-item-value">$13,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Investment -->
+            <div class="total-section">
+                <div class="total-label">Total Investment Required</div>
+                <div class="total-value">$838,150</div>
+                <div class="total-breakdown">
+                    <div class="total-item">
+                        <div class="total-item-value">$750,000</div>
+                        <div class="total-item-label">Property Value</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-item-value">$88,150</div>
+                        <div class="total-item-label">Upfront Costs</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-item-value">$13,000</div>
+                        <div class="total-item-label">Annual Costs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span>📊</span>
+                    Cost Breakdown Visualization
+                </div>
+                <div class="chart-placeholder">
+                    📈 Interactive pie chart showing cost distribution
+                </div>
+            </div>
+
+            <!-- Action Section -->
+            <div class="action-section">
+                <div class="action-buttons">
+                    <a href="#" class="btn btn-primary">
+                        <span>📄</span>
+                        Download Detailed Report
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <span>📧</span>
+                        Email Results
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

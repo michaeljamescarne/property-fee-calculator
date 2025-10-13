@@ -33,7 +33,7 @@ export default function HomePage() {
                 Calculate Your Australian Property Investment Costs
               </h1>
               <p className="text-xl text-foreground/70 mb-8 leading-relaxed">
-                Instant FIRB fee calculations, eligibility checks, and comprehensive investment analytics for foreign property buyers.
+                Get instant FIRB eligibility checks, comprehensive cost breakdowns, and detailed investment analytics with ROI projections and cash flow analysis.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" asChild className="text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all">
@@ -67,22 +67,23 @@ export default function HomePage() {
               </div>
             </div>
             
-            {/* Right: Product screenshot placeholder */}
+            {/* Right: Analytics Dashboard */}
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white">
-                <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Calculator className="w-16 h-16 text-primary mx-auto mb-4" />
-                    <p className="text-muted-foreground">Calculator Interface Preview</p>
-                    <p className="text-sm text-muted-foreground mt-2">(Screenshot to be added)</p>
-                  </div>
-                </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
+                <Image
+                  src="/images/analytics-dashboard-hero.png"
+                  alt="Investment Analytics Dashboard showing ROI, cash flow, and equity growth"
+                  width={800}
+                  height={600}
+                  className="w-full h-auto object-cover"
+                  priority
+                />
               </div>
-              {/* Floating card showing key feature */}
+              {/* Floating card showing key ROI metric */}
               <div className="absolute -left-4 top-1/4 bg-white rounded-lg shadow-lg p-4 animate-float hidden md:block">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span className="text-sm font-medium">Eligibility: Approved</span>
+                  <span className="text-sm font-medium">ROI: 5.8%</span>
                 </div>
               </div>
             </div>

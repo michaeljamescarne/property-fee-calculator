@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRB Investment Analytics Dashboard - Screenshot Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-card.gross-yield {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .metric-card.net-yield {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .metric-card.roi {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .metric-card.cash-flow {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+        }
+
+        .metric-card.equity {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .metric-card.tax-savings {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .metric-card.property-growth {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .metric-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-icon {
+            width: 16px;
+            height: 16px;
+            background: #3b82f6;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .metric-value.gross-yield { color: #1e293b; }
+        .metric-value.net-yield { color: #059669; }
+        .metric-value.roi { color: #d97706; }
+        .metric-value.cash-flow { color: #dc2626; }
+        .metric-value.equity { color: #2563eb; }
+        .metric-value.tax-savings { color: #d97706; }
+        .metric-value.property-growth { color: #0284c7; }
+
+        .metric-details {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .metric-comparison {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .info-icon {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 20px;
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #64748b;
+            cursor: help;
+        }
+
+        .chart-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 14px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .summary-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .summary-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .summary-stat {
+            text-align: center;
+        }
+
+        .summary-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .summary-stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard {
+                padding: 16px;
+            }
+            
+            .metric-value {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <h1>Investment Analytics Dashboard</h1>
+            <p>Comprehensive analysis for your Australian property investment</p>
+        </div>
+
+        <!-- Key Metrics Grid -->
+        <div class="metrics-grid">
+            <!-- Gross Rental Yield -->
+            <div class="metric-card gross-yield">
+                <div class="info-icon">i</div>
+                <div class="metric-title">
+                    <div class="metric-icon">%</div>
+                    GROSS RENTAL YIELD
+                </div>
+                <div class="metric-value gross-yield">3.2%</div>
+                <div class="metric-details">$47,996 per year</div>
+                <div class="metric-comparison">Below NSW average (3.2%)</div>
+            </div>
+
+            <!-- Net Rental Yield -->
+            <div class="metric-card net-yield">
+                <div class="info-icon">i</div>
+                <div class="metric-title">
+                    <div class="metric-icon">%</div>
+                    NET RENTAL YIELD
+                </div>
+                <div class="metric-value net-yield">2.4%</div>
+                <div class="metric-details">After expenses</div>
+                <div class="metric-comparison">Net of $119,011 expenses</div>
+            </div>
+
+            <!-- Annualized ROI -->
+            <div class="metric-card roi">
+                <div class="info-icon">i</div>
+                <div class="metric-title">
+                    <div class="metric-icon">📈</div>
+                    ANNUALIZED ROI
+                </div>
+                <div class="metric-value roi">5.8%</div>
+                <div class="metric-details">$1,035,837 total return</div>
+                <div class="metric-comparison">Below ASX average (7.2%)</div>
+            </div>
+
+            <!-- Monthly Cash Flow -->
+            <div class="metric-card cash-flow">
+                <div class="info-icon">i</div>
+                <div class="metric-title">
+                    <div class="metric-icon">💰</div>
+                    MONTHLY CASH FLOW
+                </div>
+                <div class="metric-value cash-flow">-$2,533</div>
+                <div class="metric-details">Negatively geared</div>
+                <div class="metric-comparison">Tax benefit: $3,584/mo</div>
+            </div>
+
+            <!-- Property Value Growth -->
+            <div class="metric-card property-growth">
+                <div class="info-icon">i</div>
+                <div class="metric-title">
+                    <div class="metric-icon">🏠</div>
+                    PROPERTY VALUE GROWTH
+                </div>
+                <div class="metric-value property-growth">$2,686,270</div>
+                <div class="metric-details">After 10 years (+79.1%)</div>
+            </div>
+
+            <!-- Your Equity -->
+            <div class="metric-card equity">
+                <div class="info-icon">i</div>
+                <div class="metric-title">
+                    <div class="metric-icon">💎</div>
+                    YOUR EQUITY
+                </div>
+                <div class="metric-value equity">$1,668,957</div>
+                <div class="metric-details">Equity gain: $1,368,957</div>
+            </div>
+
+            <!-- Tax Savings -->
+            <div class="metric-card tax-savings">
+                <div class="info-icon">i</div>
+                <div class="metric-title">
+                    <div class="metric-icon">📊</div>
+                    TAX SAVINGS
+                </div>
+                <div class="metric-value tax-savings">$43,013</div>
+                <div class="metric-details">From negative gearing</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="chart-section">
+            <div class="chart-title">10-Year Investment Projections</div>
+            <div class="chart-placeholder">
+                📊 Interactive charts showing ROI, cash flow, and equity growth over time
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <div class="summary-title">Investment Summary</div>
+            <div class="summary-subtitle">Based on current market conditions and your investment profile</div>
+            
+            <div class="summary-stats">
+                <div class="summary-stat">
+                    <div class="summary-stat-value">$1.5M</div>
+                    <div class="summary-stat-label">Total Investment</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value">$2.7M</div>
+                    <div class="summary-stat-label">Projected Value</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value">5.8%</div>
+                    <div class="summary-stat-label">Annual ROI</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value">79%</div>
+                    <div class="summary-stat-label">Growth Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
