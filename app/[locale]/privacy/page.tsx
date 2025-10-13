@@ -7,7 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
-  const t = useTranslations('Footer');
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -132,7 +131,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-semibold mb-4">Changes to This Policy</h2>
             <p className="mb-4">
               We may update this privacy policy from time to time. We will notify you of any changes 
-              by posting the new policy on this page and updating the "Last updated" date.
+              by posting the new policy on this page and updating the &quot;Last updated&quot; date.
             </p>
           </section>
 

@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email with PDF attachment (if available)
-    const emailData: any = {
+    const emailData: Record<string, unknown> = {
       from: EMAIL_CONFIG.from,
       to: [email],
       subject: `Your FIRB Investment Analysis - ${eligibility.canPurchase ? 'Eligible' : 'Review Required'}`,

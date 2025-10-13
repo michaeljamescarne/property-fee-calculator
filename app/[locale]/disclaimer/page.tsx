@@ -67,7 +67,7 @@ export default function DisclaimerPage() {
               <li>Do not provide financial, legal, or investment advice</li>
               <li>Are not liable for decisions made based on calculator results</li>
               <li>Cannot be held responsible for changes in regulations or fees</li>
-              <li>Provide this service on an "as is" basis</li>
+              <li>Provide this service on an &quot;as is&quot; basis</li>
             </ul>
           </section>
 

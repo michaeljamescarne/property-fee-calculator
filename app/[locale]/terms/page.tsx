@@ -7,7 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default function TermsPage() {
-  const t = useTranslations('Footer');
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -120,7 +119,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-2xl font-semibold mb-4">Disclaimer of Warranties</h2>
-            <p className="mb-4">The service is provided on an "as is" and "as available" basis. We disclaim all warranties, express or implied, including but not limited to:</p>
+            <p className="mb-4">The service is provided on an &quot;as is&quot; and &quot;as available&quot; basis. We disclaim all warranties, express or implied, including but not limited to:</p>
             <ul className="list-disc list-inside space-y-2">
               <li>Warranties of merchantability, fitness for a particular purpose, and non-infringement</li>
               <li>Warranties that the service will be uninterrupted, secure, or error-free</li>
@@ -132,7 +131,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Indemnification</h2>
             <p>
-              You agree to indemnify and hold harmless Property Fee Calculator, its officers, directors, employees, and agents from any claims, damages, losses, or expenses (including reasonable attorneys' fees) arising from your use of the service or violation of these terms.
+              You agree to indemnify and hold harmless Property Fee Calculator, its officers, directors, employees, and agents from any claims, damages, losses, or expenses (including reasonable attorneys&apos; fees) arising from your use of the service or violation of these terms.
             </p>
           </section>
 
@@ -159,7 +158,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Changes to Terms</h2>
             <p>
-              We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this page and updating the "Last updated" date. Your continued use of the service after such modifications constitutes acceptance of the updated terms.
+              We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this page and updating the &quot;Last updated&quot; date. Your continued use of the service after such modifications constitutes acceptance of the updated terms.
             </p>
           </section>
 
