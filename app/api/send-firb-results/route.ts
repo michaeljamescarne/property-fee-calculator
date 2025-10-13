@@ -116,6 +116,7 @@ export async function POST(request: NextRequest) {
 
     // Send email with PDF attachment (if available)
     console.log('Email API: Sending email with attachment');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const emailOptions: any = {
       from: EMAIL_CONFIG.from,
       to: [email],
