@@ -211,20 +211,12 @@ export const PROPERTY_ELIGIBILITY = {
   temporary: {
     canBuy: ['newDwelling'],
     requiresFIRB: true,
-    restrictions: [
-      'Property types permitted: new dwellings or off-the-plan properties only',
-      'Must occupy as principal place of residence',
-      'Must sell within 6 months of no longer being your residence or visa ceasing'
-    ]
+    restrictions: []
   },
   foreign: {
     canBuy: ['newDwelling', 'vacantLand'],
     requiresFIRB: true,
-    restrictions: [
-      'Established dwellings prohibited except in exceptional FIRB-approved circumstances',
-      'Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development',
-      'Annual vacancy fee applies if not occupied or genuinely available for rent'
-    ]
+    restrictions: []
   }
 };
 
