@@ -262,6 +262,52 @@
         "title": "Purchase Restrictions Apply",
         "description": "Based on your citizenship status, you may not be eligible to purchase this type of property"
       },
+      "eligibility": {
+        "header": "FIRB Eligibility Assessment",
+        "summary": {
+          "title": "Summary",
+          "description": "A technical assessment of your eligibility based on citizenship status and property type",
+          "citizenshipStatus": "Citizenship Status",
+          "propertyType": "Property Type",
+          "residencyType": "Residency Type",
+          "investmentProperty": "Property Use",
+          "propertyValue": "Property Value",
+          "state": "State/Territory",
+          "entityType": "Purchasing Entity",
+          "firstHome": "First Home Buyer"
+        },
+        "approval": {
+          "required": "FIRB Approval Required",
+          "notRequired": "FIRB Approval Not Required",
+          "prohibited": "Purchase Prohibited",
+          "requiredDesc": "You are eligible to apply for foreign investment approval",
+          "notRequiredDesc": "You can proceed with your property purchase without FIRB approval",
+          "prohibitedDesc": "You are not eligible to purchase this property type"
+        },
+        "requirements": {
+          "title": "Requirements",
+          "firbApplication": "FIRB Application Fee",
+          "processingTime": "Processing Time",
+          "documentation": "Documentation Required",
+          "propertyInspection": "Property Inspection Required"
+        },
+        "restrictions": {
+          "title": "Restrictions"
+        },
+        "recommendations": {
+          "title": "Recommendations"
+        },
+        "processingTimeline": {
+          "title": "Processing Timeline",
+          "standard": "Standard Processing",
+          "expedited": "Expedited Processing"
+        },
+        "whatNext": {
+          "title": "What's Next",
+          "viewCostBreakdown": "View Cost Breakdown",
+          "downloadGuide": "Download Application Guide"
+        }
+      },
       "processingTime": {
         "title": "FIRB Processing Timeline",
         "standard": "Standard Processing",

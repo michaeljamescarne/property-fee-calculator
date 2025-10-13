@@ -16,13 +16,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { CustomAlert } from '@/components/ui/custom-alert';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Download, Mail, Edit, CheckCircle, AlertTriangle, XCircle, Info, RotateCcw, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
+import { Download, Mail, Edit, CheckCircle, RotateCcw, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import { PropertyType, AustralianState } from '@/lib/firb/constants';
@@ -40,6 +34,7 @@ import TaxAnalysis from './TaxAnalysis';
 import InvestmentScore from './InvestmentScore';
 import SaveCalculationButton from './SaveCalculationButton';
 import LoginModal from '@/components/auth/LoginModal';
+import EligibilityResultCard from './EligibilityResultCard';
 
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
@@ -100,12 +95,6 @@ export default function ResultsPanel({
     }).format(value);
   };
 
-  const getEligibilityIcon = () => {
-    if (!eligibility.canPurchase) return <XCircle className="h-6 w-6" />;
-    if (eligibility.requiresFIRB) return <AlertTriangle className="h-6 w-6" />;
-    return <CheckCircle className="h-6 w-6" />;
-  };
-
   // Prepare calculation data for saving
   const calculationData: CalculationData = {
     citizenshipStatus: formData.citizenshipStatus!,
@@ -125,97 +114,11 @@ export default function ResultsPanel({
 
   return (
     <div className="space-y-6">
-      {/* Eligibility Verdict */}
-      <CustomAlert 
-        variant={!eligibility.canPurchase ? 'destructive' : eligibility.requiresFIRB ? 'warning' : 'success'}
-        icon={getEligibilityIcon()}
-        title={eligibility.canPurchase ? t('eligible.title') : t('notEligible.title')}
-      >
-        {eligibility.canPurchase && eligibility.requiresFIRB && (
-          <p className="font-medium">{t('eligible.firbRequired')}</p>
-        )}
-        {eligibility.canPurchase && !eligibility.requiresFIRB && (
-          <p className="font-medium">{t('eligible.noFirbRequired')}</p>
-        )}
-        {!eligibility.canPurchase && (
-          <p className="font-medium">{t('notEligible.description')}</p>
-        )}
-      </CustomAlert>
-
-      {/* FIRB Processing Timeline */}
-      {eligibility.requiresFIRB && eligibility.processingTimeline && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Info className="h-5 w-5 cursor-help" />
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="max-w-sm">
-                    <p className="text-sm">
-                      FIRB processing times vary depending on application complexity and current workload. 
-                      Expedited processing is available for urgent cases at double the standard fee.
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              {t('processingTime.title')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg border bg-muted/50">
-                <p className="text-sm text-muted-foreground">{t('processingTime.standard')}</p>
-                <p className="text-2xl font-bold mt-1">{eligibility.processingTimeline.standard}</p>
-              </div>
-              <div className="p-4 rounded-lg border bg-muted/50">
-                <p className="text-sm text-muted-foreground">{t('processingTime.expedited')}</p>
-                <p className="text-2xl font-bold mt-1">{eligibility.processingTimeline.expedited}</p>
-                <p className="text-xs text-muted-foreground mt-1">{t('processingTime.expeditedNote')}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Restrictions & Recommendations */}
-      {eligibility.restrictions.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('restrictions.title')}</CardTitle>
-            <CardDescription>{t('restrictions.description')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {eligibility.restrictions.map((restriction, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">{restriction}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
-
-      {eligibility.recommendations.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('recommendations.title')}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {eligibility.recommendations.map((recommendation, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">{recommendation}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
+      {/* Enhanced FIRB Eligibility Results */}
+      <EligibilityResultCard 
+        eligibility={eligibility}
+        formData={formData}
+      />
 
       {/* Cost Breakdown */}
       <Card>
