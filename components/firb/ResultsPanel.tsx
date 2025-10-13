@@ -119,7 +119,7 @@ export default function ResultsPanel({
     depositPercent: formData.depositPercent!,
     entityType: formData.entityType!,
     eligibility: eligibility,
-    costs: costs,
+    costs: costs as any, // Type conflict between lib/firb/calculations and types/database CostBreakdown
   };
 
 
