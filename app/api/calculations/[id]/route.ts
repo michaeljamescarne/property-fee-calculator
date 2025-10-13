@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
-import { createClient } from '@/lib/supabase/server';
+import { createServiceRoleClient } from '@/lib/supabase/server';
 
 // GET: Fetch a specific calculation
 export async function GET(
@@ -23,7 +23,7 @@ export async function GET(
       );
     }
 
-    const supabase = await createClient();
+    const supabase = createServiceRoleClient();
     const { data, error } = await supabase
       .from('saved_calculations')
       .select('*')
@@ -82,7 +82,7 @@ export async function PATCH(
       );
     }
 
-    const supabase = await createClient();
+    const supabase = createServiceRoleClient();
     const { data, error } = await supabase
       .from('saved_calculations')
       .update(updates as never)
@@ -129,7 +129,7 @@ export async function DELETE(
       );
     }
 
-    const supabase = await createClient();
+    const supabase = createServiceRoleClient();
     const { error } = await supabase
       .from('saved_calculations')
       .delete()
