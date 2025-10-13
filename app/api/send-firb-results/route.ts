@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email with PDF attachment (if available)
-    const emailData: Record<string, unknown> = {
+    const emailOptions: any = {
       from: EMAIL_CONFIG.from,
       to: [email],
       subject: `Your FIRB Investment Analysis - ${eligibility.canPurchase ? 'Eligible' : 'Review Required'}`,
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
 
     // Add PDF attachment if generation was successful
     if (pdfBase64) {
-      emailData.attachments = [
+      emailOptions.attachments = [
         {
           filename: `FIRB-Investment-Analysis-${new Date().toISOString().split('T')[0]}.pdf`,
           content: pdfBase64,
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
       ];
     }
 
-    const { data, error } = await resend.emails.send(emailData);
+    const { data, error } = await resend.emails.send(emailOptions);
 
     if (error) {
       console.error('Resend error:', error);
