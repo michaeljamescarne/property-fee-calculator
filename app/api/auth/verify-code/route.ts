@@ -101,28 +101,36 @@ export async function POST(request: NextRequest) {
       .update({ used: true } as never)
       .eq('id', magicCode.id);
 
-    // Check if user exists in Supabase Auth
-    const { data: { users } } = await supabase.auth.admin.listUsers();
-    const existingUser = users?.find(u => u.email === email);
+    // Check if user profile already exists
+    const { data: existingProfile } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('email', email)
+      .single();
 
     let userId: string;
 
-    if (existingUser) {
-      // User exists, update last login
-      userId = existingUser.id;
+    if (existingProfile) {
+      // User profile exists, update last login
+      userId = existingProfile.id;
       await supabase
         .from('user_profiles')
         .update({ last_login_at: new Date().toISOString() } as never)
         .eq('id', userId);
     } else {
-      // Create new user in Supabase Auth
-      const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
-        email,
-        email_confirm: true,
-      });
+      // Create new user profile directly (bypass Supabase Auth for now)
+      const { data: newProfile, error: profileError } = await supabase
+        .from('user_profiles')
+        .insert({
+          email,
+          subscription_status: 'free',
+          calculations_count: 0,
+        } as never)
+        .select()
+        .single();
 
-      if (createError || !newUser.user) {
-        console.error('User creation error:', createError);
+      if (profileError || !newProfile) {
+        console.error('Profile creation error:', profileError);
         const error: AuthErrorResponse = {
           error: 'SERVER_ERROR',
           message: 'Failed to create user account. Please try again.',
@@ -130,22 +138,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(error, { status: 500 });
       }
 
-      userId = newUser.user.id;
-      
-      // Manually create user profile (fallback if trigger fails)
-      try {
-        await supabase
-          .from('user_profiles')
-          .insert({
-            id: userId,
-            email,
-            subscription_status: 'free',
-            calculations_count: 0,
-          } as never);
-      } catch (profileError) {
-        console.error('Profile creation error:', profileError);
-        // Continue anyway - profile might already exist
-      }
+      userId = newProfile.id;
     }
 
     // Get user profile
