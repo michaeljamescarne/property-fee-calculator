@@ -131,6 +131,21 @@ export async function POST(request: NextRequest) {
       }
 
       userId = newUser.user.id;
+      
+      // Manually create user profile (fallback if trigger fails)
+      try {
+        await supabase
+          .from('user_profiles')
+          .insert({
+            id: userId,
+            email,
+            subscription_status: 'free',
+            calculations_count: 0,
+          } as never);
+      } catch (profileError) {
+        console.error('Profile creation error:', profileError);
+        // Continue anyway - profile might already exist
+      }
     }
 
     // Get user profile
