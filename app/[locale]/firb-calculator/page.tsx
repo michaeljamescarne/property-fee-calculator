@@ -5,8 +5,9 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import ProgressIndicator, { Step } from '@/components/firb/ProgressIndicator';
@@ -52,6 +53,68 @@ export default function FIRBCalculatorPage() {
 
   // Email modal state
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+
+  // Loading state for saved calculations
+  const [isLoadingSavedCalculation, setIsLoadingSavedCalculation] = useState(false);
+
+  // Get URL search parameters
+  const searchParams = useSearchParams();
+
+  // Load saved calculation if load parameter is present
+  useEffect(() => {
+    const loadId = searchParams.get('load');
+    if (loadId && !isLoadingSavedCalculation && !eligibility && !costs) {
+      loadSavedCalculation(loadId);
+    }
+  }, [searchParams, isLoadingSavedCalculation, eligibility, costs]);
+
+  // Function to load saved calculation
+  const loadSavedCalculation = async (calculationId: string) => {
+    setIsLoadingSavedCalculation(true);
+    
+    try {
+      const response = await fetch(`/api/calculations/${calculationId}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to load calculation');
+      }
+      
+      const data = await response.json();
+      
+      if (data.success && data.calculation) {
+        const calculation = data.calculation;
+        const calculationData = calculation.calculation_data;
+        
+        // Pre-fill form data
+        setFormData({
+          citizenshipStatus: calculationData.citizenshipStatus,
+          visaType: calculationData.visaType,
+          isOrdinarilyResident: calculationData.isOrdinarilyResident,
+          propertyType: calculationData.propertyType,
+          propertyValue: calculationData.propertyValue,
+          state: calculationData.propertyState, // Map propertyState to state
+          propertyAddress: calculationData.propertyAddress,
+          isFirstHome: calculationData.isFirstHome,
+          depositPercent: calculationData.depositPercent,
+          entityType: calculationData.entityType,
+          expeditedFIRB: false // Default value since it's not saved
+        });
+        
+        // Set results
+        setEligibility(calculationData.eligibility);
+        setCosts(calculationData.costs);
+        
+        // Mark all steps as completed and jump to results
+        setCompletedSteps(['citizenship', 'property', 'review']);
+        setCurrentStep('results');
+      }
+    } catch (error) {
+      console.error('Error loading saved calculation:', error);
+      alert('Failed to load saved calculation. Please try again.');
+    } finally {
+      setIsLoadingSavedCalculation(false);
+    }
+  };
 
   // Prepare PDF translations (memoized for performance)
   const pdfTranslations = useMemo(() => ({
@@ -340,8 +403,18 @@ export default function FIRBCalculatorPage() {
 
         {/* Step Content */}
         <div className="mt-8">
+          {/* Loading Saved Calculation */}
+          {isLoadingSavedCalculation && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center space-y-4">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                <p className="text-lg text-muted-foreground">Loading saved calculation...</p>
+              </div>
+            </div>
+          )}
+
           {/* Citizenship Step */}
-          {currentStep === 'citizenship' && (
+          {!isLoadingSavedCalculation && currentStep === 'citizenship' && (
             <div className="space-y-6">
               <CitizenshipStep
                 citizenshipStatus={formData.citizenshipStatus || ''}
@@ -372,7 +445,7 @@ export default function FIRBCalculatorPage() {
           )}
 
           {/* Property Details Step */}
-          {currentStep === 'property' && (
+          {!isLoadingSavedCalculation && currentStep === 'property' && (
             <div className="space-y-6">
               <PropertyDetailsStep
                 propertyType={formData.propertyType || ''}
@@ -415,7 +488,7 @@ export default function FIRBCalculatorPage() {
           )}
 
           {/* Review Step */}
-          {currentStep === 'review' && (
+          {!isLoadingSavedCalculation && currentStep === 'review' && (
             <div className="space-y-6">
               <ReviewStep
                 formData={formData}
@@ -435,7 +508,7 @@ export default function FIRBCalculatorPage() {
           )}
 
           {/* Results Step */}
-          {currentStep === 'results' && eligibility && costs && formData.propertyValue && formData.propertyType && formData.state && (
+          {!isLoadingSavedCalculation && currentStep === 'results' && eligibility && costs && formData.propertyValue && formData.propertyType && formData.state && (
             <ResultsPanel
               eligibility={eligibility}
               costs={costs}
