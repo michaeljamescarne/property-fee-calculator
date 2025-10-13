@@ -135,10 +135,29 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
     }
   };
 
-  const handleResendCode = () => {
+  const handleResendCode = async () => {
     setCode('');
     setError('');
-    handleSendCode(new Event('submit') as Event & { preventDefault: () => void });
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/auth/send-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        setError(data.message || 'Failed to resend code');
+      } else {
+        setResendCooldown(60);
+      }
+    } catch {
+      setError('Failed to resend code. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChangeEmail = () => {

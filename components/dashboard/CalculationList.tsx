@@ -33,10 +33,6 @@ export default function CalculationList({ locale }: CalculationListProps) {
   const [eligibilityFilter, setEligibilityFilter] = useState('all');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
-  useEffect(() => {
-    fetchCalculations();
-  }, [sortBy, eligibilityFilter, showFavoritesOnly, searchTerm, fetchCalculations]);
-
   const fetchCalculations = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -59,6 +55,10 @@ export default function CalculationList({ locale }: CalculationListProps) {
       setIsLoading(false);
     }
   }, [sortBy, eligibilityFilter, showFavoritesOnly, searchTerm]);
+
+  useEffect(() => {
+    fetchCalculations();
+  }, [fetchCalculations]);
 
   const handleDelete = async (id: string) => {
     try {

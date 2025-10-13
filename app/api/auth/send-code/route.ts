@@ -13,6 +13,7 @@ import {
   isValidEmail,
 } from '@/lib/auth/magic-code';
 import type { SendCodeRequest, SendCodeResponse, AuthErrorResponse } from '@/types/auth';
+import type { Database } from '@/types/database';
 
 // Rate limiting store (in production, use Redis or Supabase)
 const rateLimitStore = new Map<string, number[]>();
@@ -60,7 +61,8 @@ export async function POST(request: NextRequest) {
       .lt('expires_at', new Date().toISOString());
 
     // Insert new code
-    const magicCodeData: Database['public']['Tables']['magic_codes']['Insert'] = {
+    type MagicCodeInsert = Database['public']['Tables']['magic_codes']['Insert'];
+    const magicCodeData: MagicCodeInsert = {
       email,
       code: hashedCode,
       expires_at: expiresAt.toISOString(),
@@ -70,7 +72,7 @@ export async function POST(request: NextRequest) {
     
     const { error: dbError } = await supabase
       .from('magic_codes')
-      .insert(magicCodeData);
+      .insert(magicCodeData as never);
 
     if (dbError) {
       console.error('Database error:', dbError);

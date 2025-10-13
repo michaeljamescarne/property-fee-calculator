@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from('saved_calculations')
-      .insert(dataToSave)
+      .insert(dataToSave as never)
       .select()
       .single();
 
