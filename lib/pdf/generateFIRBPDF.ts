@@ -77,7 +77,7 @@ export function generateFIRBPDF(
   };
 
   // ===== HEADER =====
-  doc.setFillColor(79, 70, 229); // Primary blue
+  doc.setFillColor(59, 130, 246); // Soft blue
   doc.rect(0, 0, pageWidth, 40, 'F');
   
   doc.setTextColor(255, 255, 255);
@@ -186,7 +186,7 @@ export function generateFIRBPDF(
   yPosition += 10;
 
   // Total Investment Cost Box
-  doc.setFillColor(79, 70, 229);
+  doc.setFillColor(59, 130, 246);
   doc.roundedRect(margin, yPosition, pageWidth - 2 * margin, 25, 3, 3, 'F');
 
   doc.setTextColor(255, 255, 255);

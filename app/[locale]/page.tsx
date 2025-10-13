@@ -227,9 +227,9 @@ export default function HomePage() {
             </div>
             <div className="relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
-                <div className="aspect-[4/3] bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center p-8">
+                <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
                   <div className="text-center max-w-sm">
-                    <Star className="w-16 h-16 text-purple-600 mx-auto mb-4" />
+                    <Star className="w-16 h-16 text-blue-600 mx-auto mb-4" />
                     <h4 className="text-xl font-bold mb-2">Investment Analytics</h4>
                     <div className="space-y-2 text-sm mt-4">
                       <div className="bg-white/50 rounded p-2">

@@ -237,7 +237,7 @@ const container = {
 
 const header = {
   padding: '32px 40px',
-  backgroundColor: '#4F46E5',
+  backgroundColor: '#3B82F6',
   textAlign: 'center' as const,
 };
 
@@ -322,7 +322,7 @@ const infoText = {
 };
 
 const totalBox = {
-  backgroundColor: '#4F46E5',
+  backgroundColor: '#3B82F6',
   borderRadius: '8px',
   padding: '24px',
   margin: '16px 0',

@@ -34,9 +34,9 @@ export function generateEnhancedPDF(
   const margin = 20;
   let yPosition = margin;
 
-  // Colors
-  const primaryColor: [number, number, number] = [99, 102, 241]; // Indigo
-  const accentColor: [number, number, number] = [139, 92, 246]; // Purple
+  // Colors - Updated to match new blue color scheme
+  const primaryColor: [number, number, number] = [59, 130, 246]; // Soft blue
+  const accentColor: [number, number, number] = [96, 165, 250]; // Lighter blue
   const greenColor: [number, number, number] = [16, 185, 129];
   const redColor: [number, number, number] = [239, 68, 68];
   const amberColor: [number, number, number] = [245, 158, 11];

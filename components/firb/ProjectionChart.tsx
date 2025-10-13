@@ -103,27 +103,27 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
 
         {/* Key Milestones */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-xs text-purple-600 font-medium mb-1">
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-xs text-blue-600 font-medium mb-1">
               {t('projections.startingValue') === 'FIRBCalculator.investmentAnalytics.projections.startingValue' 
                 ? 'Starting Value' 
                 : t('projections.startingValue')}
             </p>
-            <p className="text-xl font-bold text-purple-700">
+            <p className="text-xl font-bold text-blue-700">
               {currency(analytics.capitalGrowth.initialValue)}
             </p>
           </div>
 
-          <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-xs text-purple-600 font-medium mb-1">
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-xs text-blue-600 font-medium mb-1">
               {t('projections.finalValue') === 'FIRBCalculator.investmentAnalytics.projections.finalValue' 
                 ? 'Final Value' 
                 : t('projections.finalValue')}
             </p>
-            <p className="text-xl font-bold text-purple-700">
+            <p className="text-xl font-bold text-blue-700">
               {currency(analytics.capitalGrowth.estimatedValueAtEnd)}
             </p>
-            <p className="text-xs text-purple-600 mt-1">
+            <p className="text-xs text-blue-600 mt-1">
               +{analytics.capitalGrowth.totalPercentageGain.toFixed(1)}%
             </p>
           </div>

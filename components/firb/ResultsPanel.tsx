@@ -225,7 +225,7 @@ export default function ResultsPanel({
         </CardHeader>
         <CardContent>
           {/* Total Investment Cost */}
-          <div className="p-6 mb-6 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+          <div className="p-6 mb-6 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 text-white">
             <p className="text-sm opacity-90">{t('costs.totalInvestment')}</p>
             <p className="text-4xl font-bold mt-2">{formatCurrency(costs.totalInvestmentCost)}</p>
             <p className="text-sm opacity-75 mt-2">
