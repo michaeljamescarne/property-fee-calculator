@@ -63,23 +63,23 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
   const getHeaderStyles = () => {
     if (!eligibility.canPurchase) {
       return {
-        bgClass: 'bg-gradient-to-r from-red-500 to-red-600',
-        icon: <XCircle className="w-8 h-8" />,
+        bgClass: 'bg-gradient-to-br from-red-500 to-red-600',
+        icon: <XCircle className="w-5 h-5 mr-2" />,
         badgeText: t('approval.prohibited'),
         titleText: t('approval.prohibitedDesc')
       };
     }
     if (eligibility.requiresFIRB) {
       return {
-        bgClass: 'bg-gradient-to-r from-green-500 to-green-600',
-        icon: <CheckCircle className="w-8 h-8" />,
+        bgClass: 'bg-gradient-to-br from-amber-500 to-amber-600',
+        icon: <AlertTriangle className="w-5 h-5 mr-2" />,
         badgeText: t('approval.required'),
         titleText: t('approval.requiredDesc')
       };
     }
     return {
-      bgClass: 'bg-gradient-to-r from-blue-500 to-blue-600',
-      icon: <CheckCircle className="w-8 h-8" />,
+      bgClass: 'bg-gradient-to-br from-green-500 to-green-600',
+      icon: <CheckCircle className="w-5 h-5 mr-2" />,
       badgeText: t('approval.notRequired'),
       titleText: t('approval.notRequiredDesc')
     };
@@ -88,21 +88,27 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
   const headerStyles = getHeaderStyles();
 
   return (
-    <Card className="border-none shadow-lg overflow-hidden">
-      {/* Header Section with Approval Status */}
-      <div className={`${headerStyles.bgClass} text-white p-6`}>
-        <div className="flex items-center gap-4">
-          {headerStyles.icon}
-          <div className="flex-1">
-            <Badge className="mb-2 bg-white/20 text-white border-white/30">
-              {headerStyles.badgeText}
-            </Badge>
-            <h2 className="text-2xl font-bold leading-tight">
-              {headerStyles.titleText}
-            </h2>
-          </div>
+    <Card className="shadow-lg border-blue-200/50">
+      <CardHeader className={`${headerStyles.bgClass} text-white p-6 rounded-t-lg`}>
+        <div className="flex items-center justify-between mb-2">
+          <CardTitle className="text-2xl font-bold">{t('header')}</CardTitle>
+          <Badge 
+            variant={!eligibility.canPurchase ? "destructive" : eligibility.requiresFIRB ? "default" : "default"}
+            className={`text-base px-3 py-1.5 ${
+              !eligibility.canPurchase 
+                ? "bg-red-500 text-white" 
+                : eligibility.requiresFIRB 
+                  ? "bg-amber-500 text-white" 
+                  : "bg-green-500 text-white"
+            }`}
+          >
+            {headerStyles.icon} {headerStyles.badgeText}
+          </Badge>
         </div>
-      </div>
+        <CardDescription className="text-white/90 text-base">
+          {headerStyles.titleText}
+        </CardDescription>
+      </CardHeader>
 
       <CardContent className="p-6 space-y-6">
         {/* Summary Section */}
