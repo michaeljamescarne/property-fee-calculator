@@ -64,7 +64,7 @@ export default function ResultsPanel({
   formData
 }: ResultsPanelProps) {
   const t = useTranslations('FIRBCalculator.results');
-  const tAnalytics = useTranslations('FIRBCalculator.investmentAnalytics');
+  const tAnalytics = useTranslations('FIRBCalculator.results.investmentAnalytics');
   
   // Auth state
   const [showLoginModal, setShowLoginModal] = useState(false);
