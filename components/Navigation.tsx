@@ -32,7 +32,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="border-b border-border/40 backdrop-blur-sm bg-background/95 sticky top-0 z-50">
+    <nav className="border-b border-blue-100/50 backdrop-blur-sm bg-white/95 sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4 py-5 flex justify-between items-center">
         <Link href={`/${locale}`} className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity">
           Property Fee Calculator
