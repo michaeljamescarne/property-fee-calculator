@@ -23,19 +23,26 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
+import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
 
 interface EmailResultsModalProps {
   isOpen: boolean;
   onClose: () => void;
   eligibility: EligibilityResult;
   costs: CostBreakdown;
+  formData: FIRBCalculatorFormData;
+  locale: string;
+  pdfTranslations: Record<string, unknown>;
 }
 
 export default function EmailResultsModal({
   isOpen,
   onClose,
   eligibility,
-  costs
+  costs,
+  formData,
+  locale,
+  pdfTranslations
 }: EmailResultsModalProps) {
   const t = useTranslations('FIRBCalculator.emailModal');
   
@@ -74,7 +81,10 @@ export default function EmailResultsModal({
           email,
           name,
           eligibility,
-          costs
+          costs,
+          formData,
+          locale,
+          pdfTranslations
         }),
       });
 

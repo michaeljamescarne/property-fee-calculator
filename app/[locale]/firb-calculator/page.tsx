@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
@@ -52,6 +52,117 @@ export default function FIRBCalculatorPage() {
 
   // Email modal state
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+
+  // Prepare PDF translations (memoized for performance)
+  const pdfTranslations = useMemo(() => ({
+    title: tPdf('title'),
+    subtitle: tPdf('subtitle'),
+    generatedOn: tPdf('generatedOn'),
+    page: tPdf('page'),
+    disclaimer: tPdf('disclaimer'),
+    sections: {
+      executiveSummary: tPdf('sections.executiveSummary'),
+      propertyDetails: tPdf('sections.propertyDetails'),
+      keyMetrics: tPdf('sections.keyMetrics'),
+      firbRequirements: tPdf('sections.firbRequirements'),
+      eligibilityStatus: tPdf('sections.eligibilityStatus'),
+      propertyType: tPdf('sections.propertyType'),
+      costBreakdown: tPdf('sections.costBreakdown'),
+      investmentPerformance: tPdf('sections.investmentPerformance'),
+      rentalYield: tPdf('sections.rentalYield'),
+      cashFlow: tPdf('sections.cashFlow'),
+      projections: tPdf('sections.projections'),
+      equityGrowth: tPdf('sections.equityGrowth'),
+      breakEven: tPdf('sections.breakEven'),
+      comparison: tPdf('sections.comparison'),
+      assetComparison: tPdf('sections.assetComparison'),
+      sensitivity: tPdf('sections.sensitivity'),
+      riskScenarios: tPdf('sections.riskScenarios'),
+      taxAnalysis: tPdf('sections.taxAnalysis'),
+      deductions: tPdf('sections.deductions'),
+      cgtProjection: tPdf('sections.cgtProjection'),
+      recommendations: tPdf('sections.recommendations'),
+      overallScore: tPdf('sections.overallScore'),
+      recommendation: tPdf('sections.recommendation'),
+    },
+    labels: {
+      address: tPdf('labels.address'),
+      state: tPdf('labels.state'),
+      value: tPdf('labels.value'),
+      deposit: tPdf('labels.deposit'),
+      citizenshipStatus: tPdf('labels.citizenshipStatus'),
+      entityType: tPdf('labels.entityType'),
+      eligible: tPdf('labels.eligible'),
+      notEligible: tPdf('labels.notEligible'),
+      firbRequired: tPdf('labels.firbRequired'),
+      noFirbRequired: tPdf('labels.noFirbRequired'),
+      firbFee: tPdf('labels.firbFee'),
+      stampDuty: tPdf('labels.stampDuty'),
+      foreignSurcharge: tPdf('labels.foreignSurcharge'),
+      legalFees: tPdf('labels.legalFees'),
+      totalUpfront: tPdf('labels.totalUpfront'),
+      annualLandTax: tPdf('labels.annualLandTax'),
+      grossYield: tPdf('labels.grossYield'),
+      netYield: tPdf('labels.netYield'),
+      annualizedROI: tPdf('labels.annualizedROI'),
+      monthlyCashFlow: tPdf('labels.monthlyCashFlow'),
+      annualIncome: tPdf('labels.annualIncome'),
+      annualExpenses: tPdf('labels.annualExpenses'),
+      afterTaxCashFlow: tPdf('labels.afterTaxCashFlow'),
+      taxBenefit: tPdf('labels.taxBenefit'),
+      propertyValue: tPdf('labels.propertyValue'),
+      equity: tPdf('labels.equity'),
+      loanBalance: tPdf('labels.loanBalance'),
+      year: tPdf('labels.year'),
+      cumulativeReturn: tPdf('labels.cumulativeReturn'),
+      breakEvenYear: tPdf('labels.breakEvenYear'),
+      cashRequired: tPdf('labels.cashRequired'),
+      investmentType: tPdf('labels.investmentType'),
+      annualReturn: tPdf('labels.annualReturn'),
+      yearReturn: tPdf('labels.yearReturn'),
+      riskLevel: tPdf('labels.riskLevel'),
+      vacancyImpact: tPdf('labels.vacancyImpact'),
+      interestImpact: tPdf('labels.interestImpact'),
+      growthScenarios: tPdf('labels.growthScenarios'),
+      conservative: tPdf('labels.conservative'),
+      moderate: tPdf('labels.moderate'),
+      optimistic: tPdf('labels.optimistic'),
+      deductibleExpenses: tPdf('labels.deductibleExpenses'),
+      loanInterest: tPdf('labels.loanInterest'),
+      propertyManagement: tPdf('labels.propertyManagement'),
+      maintenance: tPdf('labels.maintenance'),
+      landTax: tPdf('labels.landTax'),
+      councilRates: tPdf('labels.councilRates'),
+      insurance: tPdf('labels.insurance'),
+      strataFees: tPdf('labels.strataFees'),
+      depreciation: tPdf('labels.depreciation'),
+      other: tPdf('labels.other'),
+      totalDeductions: tPdf('labels.totalDeductions'),
+      salePrice: tPdf('labels.salePrice'),
+      costBase: tPdf('labels.costBase'),
+      capitalGain: tPdf('labels.capitalGain'),
+      cgtPayable: tPdf('labels.cgtPayable'),
+      withholdingTax: tPdf('labels.withholdingTax'),
+      netProceeds: tPdf('labels.netProceeds'),
+      overallVerdict: tPdf('labels.overallVerdict'),
+      scoreBreakdown: tPdf('labels.scoreBreakdown'),
+      rentalYieldScore: tPdf('labels.rentalYieldScore'),
+      capitalGrowthScore: tPdf('labels.capitalGrowthScore'),
+      cashFlowScore: tPdf('labels.cashFlowScore'),
+      taxEfficiencyScore: tPdf('labels.taxEfficiencyScore'),
+      riskProfileScore: tPdf('labels.riskProfileScore'),
+      strengths: tPdf('labels.strengths'),
+      weaknesses: tPdf('labels.weaknesses'),
+      keyTakeaways: tPdf('labels.keyTakeaways'),
+    },
+    notes: {
+      estimatesOnly: tPdf('notes.estimatesOnly'),
+      professionalAdvice: tPdf('notes.professionalAdvice'),
+      regulationsChange: tPdf('notes.regulationsChange'),
+      assumptionsBased: tPdf('notes.assumptionsBased'),
+      pastPerformance: tPdf('notes.pastPerformance'),
+    },
+  }), [tPdf]);
 
   // Update form data
   const updateFormData = (updates: Partial<FIRBCalculatorFormData>) => {
@@ -152,117 +263,6 @@ export default function FIRBCalculatorPage() {
     if (!eligibility || !costs) return;
 
     try {
-      // Prepare translations for PDF
-      const pdfTranslations = {
-        title: tPdf('title'),
-        subtitle: tPdf('subtitle'),
-        generatedOn: tPdf('generatedOn'),
-        page: tPdf('page'),
-        disclaimer: tPdf('disclaimer'),
-        sections: {
-          executiveSummary: tPdf('sections.executiveSummary'),
-          propertyDetails: tPdf('sections.propertyDetails'),
-          keyMetrics: tPdf('sections.keyMetrics'),
-          firbRequirements: tPdf('sections.firbRequirements'),
-          eligibilityStatus: tPdf('sections.eligibilityStatus'),
-          propertyType: tPdf('sections.propertyType'),
-          costBreakdown: tPdf('sections.costBreakdown'),
-          investmentPerformance: tPdf('sections.investmentPerformance'),
-          rentalYield: tPdf('sections.rentalYield'),
-          cashFlow: tPdf('sections.cashFlow'),
-          projections: tPdf('sections.projections'),
-          equityGrowth: tPdf('sections.equityGrowth'),
-          breakEven: tPdf('sections.breakEven'),
-          comparison: tPdf('sections.comparison'),
-          assetComparison: tPdf('sections.assetComparison'),
-          sensitivity: tPdf('sections.sensitivity'),
-          riskScenarios: tPdf('sections.riskScenarios'),
-          taxAnalysis: tPdf('sections.taxAnalysis'),
-          deductions: tPdf('sections.deductions'),
-          cgtProjection: tPdf('sections.cgtProjection'),
-          recommendations: tPdf('sections.recommendations'),
-          overallScore: tPdf('sections.overallScore'),
-          recommendation: tPdf('sections.recommendation'),
-        },
-        labels: {
-          address: tPdf('labels.address'),
-          state: tPdf('labels.state'),
-          value: tPdf('labels.value'),
-          deposit: tPdf('labels.deposit'),
-          citizenshipStatus: tPdf('labels.citizenshipStatus'),
-          entityType: tPdf('labels.entityType'),
-          eligible: tPdf('labels.eligible'),
-          notEligible: tPdf('labels.notEligible'),
-          firbRequired: tPdf('labels.firbRequired'),
-          noFirbRequired: tPdf('labels.noFirbRequired'),
-          firbFee: tPdf('labels.firbFee'),
-          stampDuty: tPdf('labels.stampDuty'),
-          foreignSurcharge: tPdf('labels.foreignSurcharge'),
-          legalFees: tPdf('labels.legalFees'),
-          totalUpfront: tPdf('labels.totalUpfront'),
-          annualLandTax: tPdf('labels.annualLandTax'),
-          grossYield: tPdf('labels.grossYield'),
-          netYield: tPdf('labels.netYield'),
-          annualizedROI: tPdf('labels.annualizedROI'),
-          monthlyCashFlow: tPdf('labels.monthlyCashFlow'),
-          annualIncome: tPdf('labels.annualIncome'),
-          annualExpenses: tPdf('labels.annualExpenses'),
-          afterTaxCashFlow: tPdf('labels.afterTaxCashFlow'),
-          taxBenefit: tPdf('labels.taxBenefit'),
-          propertyValue: tPdf('labels.propertyValue'),
-          equity: tPdf('labels.equity'),
-          loanBalance: tPdf('labels.loanBalance'),
-          year: tPdf('labels.year'),
-          cumulativeReturn: tPdf('labels.cumulativeReturn'),
-          breakEvenYear: tPdf('labels.breakEvenYear'),
-          cashRequired: tPdf('labels.cashRequired'),
-          investmentType: tPdf('labels.investmentType'),
-          annualReturn: tPdf('labels.annualReturn'),
-          yearReturn: tPdf('labels.yearReturn'),
-          riskLevel: tPdf('labels.riskLevel'),
-          vacancyImpact: tPdf('labels.vacancyImpact'),
-          interestImpact: tPdf('labels.interestImpact'),
-          growthScenarios: tPdf('labels.growthScenarios'),
-          conservative: tPdf('labels.conservative'),
-          moderate: tPdf('labels.moderate'),
-          optimistic: tPdf('labels.optimistic'),
-          deductibleExpenses: tPdf('labels.deductibleExpenses'),
-          loanInterest: tPdf('labels.loanInterest'),
-          propertyManagement: tPdf('labels.propertyManagement'),
-          maintenance: tPdf('labels.maintenance'),
-          landTax: tPdf('labels.landTax'),
-          councilRates: tPdf('labels.councilRates'),
-          insurance: tPdf('labels.insurance'),
-          strataFees: tPdf('labels.strataFees'),
-          depreciation: tPdf('labels.depreciation'),
-          other: tPdf('labels.other'),
-          totalDeductions: tPdf('labels.totalDeductions'),
-          salePrice: tPdf('labels.salePrice'),
-          costBase: tPdf('labels.costBase'),
-          capitalGain: tPdf('labels.capitalGain'),
-          cgtPayable: tPdf('labels.cgtPayable'),
-          withholdingTax: tPdf('labels.withholdingTax'),
-          netProceeds: tPdf('labels.netProceeds'),
-          overallVerdict: tPdf('labels.overallVerdict'),
-          scoreBreakdown: tPdf('labels.scoreBreakdown'),
-          rentalYieldScore: tPdf('labels.rentalYieldScore'),
-          capitalGrowthScore: tPdf('labels.capitalGrowthScore'),
-          cashFlowScore: tPdf('labels.cashFlowScore'),
-          taxEfficiencyScore: tPdf('labels.taxEfficiencyScore'),
-          riskProfileScore: tPdf('labels.riskProfileScore'),
-          strengths: tPdf('labels.strengths'),
-          weaknesses: tPdf('labels.weaknesses'),
-          keyTakeaways: tPdf('labels.keyTakeaways'),
-        },
-        notes: {
-          estimatesOnly: tPdf('notes.estimatesOnly'),
-          professionalAdvice: tPdf('notes.professionalAdvice'),
-          regulationsChange: tPdf('notes.regulationsChange'),
-          assumptionsBased: tPdf('notes.assumptionsBased'),
-          pastPerformance: tPdf('notes.pastPerformance'),
-        },
-      };
-
       // Use enhanced PDF if analytics are provided, otherwise basic PDF
       const pdfBlob = analytics 
         ? generateEnhancedPDF(formData, eligibility, costs, analytics, locale, pdfTranslations)
@@ -447,6 +447,7 @@ export default function FIRBCalculatorPage() {
               propertyType={formData.propertyType}
               state={formData.state}
               depositPercent={formData.depositPercent || 20}
+              formData={formData as FIRBCalculatorFormData}
             />
           )}
         </div>
@@ -458,6 +459,9 @@ export default function FIRBCalculatorPage() {
             onClose={() => setIsEmailModalOpen(false)}
             eligibility={eligibility}
             costs={costs}
+            formData={formData as FIRBCalculatorFormData}
+            locale={locale}
+            pdfTranslations={pdfTranslations}
           />
         )}
         </div>

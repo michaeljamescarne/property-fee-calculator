@@ -8,18 +8,26 @@ import { resend, EMAIL_CONFIG } from '@/lib/resend';
 import FIRBResultsEmail from '@/emails/FIRBResultsEmail';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
+import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
+import type { InvestmentAnalytics } from '@/types/investment';
+import { generateEnhancedPDF } from '@/lib/pdf/generateEnhancedPDF';
+import { generateDefaultInputs, calculateInvestmentAnalytics } from '@/lib/firb/investment-analytics';
+import { blobToBase64 } from '@/lib/pdf/pdfHelpers';
 
 interface EmailRequest {
   email: string;
   name?: string;
   eligibility: EligibilityResult;
   costs: CostBreakdown;
+  formData: FIRBCalculatorFormData;
+  locale: string;
+  pdfTranslations: Record<string, unknown>;
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body: EmailRequest = await request.json();
-    const { email, name, eligibility, costs } = body;
+    const { email, name, eligibility, costs, formData, locale, pdfTranslations } = body;
 
     // Validate email
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -30,7 +38,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate required data
-    if (!eligibility || !costs) {
+    if (!eligibility || !costs || !formData) {
       return NextResponse.json(
         { error: 'Missing calculation data' },
         { status: 400 }
@@ -46,12 +54,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send email
+    // Generate full investment analytics (always include in emailed PDFs per user request)
+    const investmentInputs = generateDefaultInputs(
+      formData.propertyValue!,
+      formData.state!,
+      formData.propertyType!,
+      formData.depositPercent || 20,
+      costs
+    );
+    const analytics: InvestmentAnalytics = calculateInvestmentAnalytics(
+      investmentInputs,
+      formData.propertyValue!,
+      formData.state!,
+      formData.propertyType!,
+      costs
+    );
+
+    // Generate PDF with full analytics
+    const pdfBlob = generateEnhancedPDF(
+      formData,
+      eligibility,
+      costs,
+      analytics,
+      locale || 'en',
+      pdfTranslations
+    );
+
+    // Convert PDF blob to base64 for attachment
+    const pdfBase64 = await blobToBase64(pdfBlob);
+
+    // Send email with PDF attachment
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
       to: [email],
       subject: `Your FIRB Investment Analysis - ${eligibility.canPurchase ? 'Eligible' : 'Review Required'}`,
       react: FIRBResultsEmail({ name, eligibility, costs }),
+      attachments: [
+        {
+          filename: `FIRB-Investment-Analysis-${new Date().toISOString().split('T')[0]}.pdf`,
+          content: pdfBase64,
+        },
+      ],
     });
 
     if (error) {

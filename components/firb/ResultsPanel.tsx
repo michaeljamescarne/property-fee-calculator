@@ -28,6 +28,8 @@ import { CostBreakdown } from '@/lib/firb/calculations';
 import { PropertyType, AustralianState } from '@/lib/firb/constants';
 import { generateDefaultInputs, calculateInvestmentAnalytics } from '@/lib/firb/investment-analytics';
 import type { InvestmentInputs, InvestmentAnalytics } from '@/types/investment';
+import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
+import type { CalculationData } from '@/types/database';
 import InvestmentInputsComponent from './InvestmentInputs';
 import InvestmentSummary from './InvestmentSummary';
 import CashFlowAnalysis from './CashFlowAnalysis';
@@ -36,6 +38,9 @@ import InvestmentComparison from './InvestmentComparison';
 import SensitivityAnalysis from './SensitivityAnalysis';
 import TaxAnalysis from './TaxAnalysis';
 import InvestmentScore from './InvestmentScore';
+import SaveCalculationButton from './SaveCalculationButton';
+import LoginModal from '@/components/auth/LoginModal';
+import { useAuth } from '@/components/auth/AuthProvider';
 
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
@@ -48,6 +53,7 @@ interface ResultsPanelProps {
   propertyType: PropertyType;
   state: AustralianState;
   depositPercent: number;
+  formData: FIRBCalculatorFormData;
 }
 
 export default function ResultsPanel({
@@ -60,10 +66,14 @@ export default function ResultsPanel({
   propertyValue,
   propertyType,
   state,
-  depositPercent
+  depositPercent,
+  formData
 }: ResultsPanelProps) {
   const t = useTranslations('FIRBCalculator.results');
   const tAnalytics = useTranslations('FIRBCalculator.investmentAnalytics');
+  
+  // Auth state
+  const [showLoginModal, setShowLoginModal] = useState(false);
   
   // Investment Analytics State
   const [showInvestmentAnalysis, setShowInvestmentAnalysis] = useState(false);
@@ -95,6 +105,22 @@ export default function ResultsPanel({
     if (!eligibility.canPurchase) return <XCircle className="h-6 w-6" />;
     if (eligibility.requiresFIRB) return <AlertTriangle className="h-6 w-6" />;
     return <CheckCircle className="h-6 w-6" />;
+  };
+
+  // Prepare calculation data for saving
+  const calculationData: CalculationData = {
+    citizenshipStatus: formData.citizenshipStatus!,
+    visaType: formData.visaType,
+    isOrdinarilyResident: formData.isOrdinarilyResident,
+    propertyType: formData.propertyType!,
+    propertyValue: formData.propertyValue!,
+    state: formData.state!,
+    propertyAddress: formData.propertyAddress,
+    isFirstHome: formData.isFirstHome!,
+    depositPercent: formData.depositPercent!,
+    entityType: formData.entityType!,
+    eligibility: eligibility,
+    costs: costs,
   };
 
 
@@ -353,6 +379,14 @@ export default function ResultsPanel({
           {t('actions.downloadPDF')}
           {showInvestmentAnalysis && <span className="text-xs ml-1">(with analytics)</span>}
         </Button>
+        
+        {/* Save Calculation Button */}
+        <SaveCalculationButton
+          calculationData={calculationData}
+          onLoginClick={() => setShowLoginModal(true)}
+          className="sm:flex-shrink-0"
+        />
+        
         <Button
           onClick={onEmailResults}
           variant="outline"
@@ -392,6 +426,12 @@ export default function ResultsPanel({
           {t('disclaimer.content')}
         </p>
       </CustomAlert>
+
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
     </div>
   );
 }
