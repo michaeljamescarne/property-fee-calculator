@@ -130,46 +130,22 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
-                <div className="aspect-[4/3] bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center p-8">
-                  <div className="text-center max-w-sm">
-                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle className="w-12 h-12 text-white" />
-                    </div>
-                    <h4 className="text-2xl font-bold text-green-900 mb-2">Eligible to Purchase</h4>
-                    <p className="text-green-700 text-sm">(Screenshot placeholder - Eligibility result)</p>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="/images/eligibility-screenshot.png" 
+                alt="Eligibility check result showing approval"
+                className="rounded-2xl shadow-2xl border border-border hover-lift"
+              />
             </div>
           </div>
 
           {/* Feature 2: Comprehensive Cost Breakdown */}
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
             <div className="order-2 lg:order-1 relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
-                <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
-                  <div className="text-center max-w-sm">
-                    <TrendingUp className="w-16 h-16 text-primary mx-auto mb-4" />
-                    <h4 className="text-xl font-bold mb-2">Detailed Cost Analysis</h4>
-                    <div className="space-y-2 text-sm text-left mt-4">
-                      <div className="flex justify-between py-1">
-                        <span>FIRB Fee:</span>
-                        <span className="font-medium">$14,200</span>
-                      </div>
-                      <div className="flex justify-between py-1">
-                        <span>Stamp Duty:</span>
-                        <span className="font-medium">$38,500</span>
-                      </div>
-                      <div className="flex justify-between py-1">
-                        <span>Other Costs:</span>
-                        <span className="font-medium">$8,750</span>
-                      </div>
-                    </div>
-                    <p className="text-muted-foreground text-xs mt-4">(Screenshot placeholder)</p>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="/images/cost-breakdown-screenshot.png" 
+                alt="Detailed cost breakdown with charts"
+                className="rounded-2xl shadow-2xl border border-border hover-lift"
+              />
             </div>
             <div className="order-1 lg:order-2">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
@@ -226,25 +202,11 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
-                <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
-                  <div className="text-center max-w-sm">
-                    <Star className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                    <h4 className="text-xl font-bold mb-2">Investment Analytics</h4>
-                    <div className="space-y-2 text-sm mt-4">
-                      <div className="bg-white/50 rounded p-2">
-                        <span className="text-xs text-muted-foreground">10-Year ROI</span>
-                        <p className="text-lg font-bold text-green-600">+142%</p>
-                      </div>
-                      <div className="bg-white/50 rounded p-2">
-                        <span className="text-xs text-muted-foreground">Annual Cash Flow</span>
-                        <p className="text-lg font-bold">$18,500</p>
-                      </div>
-                    </div>
-                    <p className="text-muted-foreground text-xs mt-4">(Screenshot placeholder)</p>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="/images/analytics-screenshot.png" 
+                alt="Investment analytics with charts and projections"
+                className="rounded-2xl shadow-2xl border border-border hover-lift"
+              />
             </div>
           </div>
         </div>
