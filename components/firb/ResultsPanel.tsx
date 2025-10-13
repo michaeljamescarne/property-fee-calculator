@@ -16,7 +16,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { CustomAlert } from '@/components/ui/custom-alert';
-import { Download, Mail, Edit, CheckCircle, RotateCcw, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
+import { Download, Mail, Edit, CheckCircle, Info, RotateCcw, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import { PropertyType, AustralianState } from '@/lib/firb/constants';
