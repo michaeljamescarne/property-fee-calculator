@@ -113,7 +113,7 @@ export default function ResultsPanel({
     isOrdinarilyResident: formData.isOrdinarilyResident,
     propertyType: formData.propertyType!,
     propertyValue: formData.propertyValue!,
-    state: formData.state!,
+    propertyState: formData.state!,
     propertyAddress: formData.propertyAddress,
     isFirstHome: formData.isFirstHome!,
     depositPercent: formData.depositPercent!,
