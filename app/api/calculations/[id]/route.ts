@@ -85,7 +85,7 @@ export async function PATCH(
     const supabase = await createClient();
     const { data, error } = await supabase
       .from('saved_calculations')
-      .update(updates)
+      .update(updates as never)
       .eq('id', id)
       .eq('user_id', session.user.id)
       .select()

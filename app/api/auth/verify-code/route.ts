@@ -13,6 +13,7 @@ import {
   isValidCodeFormat,
 } from '@/lib/auth/magic-code';
 import { createSession, setSessionCookie } from '@/lib/auth/session';
+import type { MagicCode } from '@/types/database';
 import type { VerifyCodeRequest, VerifyCodeResponse, AuthErrorResponse } from '@/types/auth';
 
 export async function POST(request: NextRequest) {
@@ -56,7 +57,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(error, { status: 400 });
     }
 
-    const magicCode = magicCodes[0];
+    // Type assertion for Supabase response
+    const magicCode = magicCodes[0] as MagicCode;
 
     // Check if expired
     if (isExpired(magicCode.expires_at)) {
@@ -83,7 +85,7 @@ export async function POST(request: NextRequest) {
       // Increment attempts
       await supabase
         .from('magic_codes')
-        .update({ attempts: magicCode.attempts + 1 })
+        .update({ attempts: magicCode.attempts + 1 } as never)
         .eq('id', magicCode.id);
 
       const error: AuthErrorResponse = {
@@ -96,7 +98,7 @@ export async function POST(request: NextRequest) {
     // Mark code as used
     await supabase
       .from('magic_codes')
-      .update({ used: true })
+      .update({ used: true } as never)
       .eq('id', magicCode.id);
 
     // Check if user exists in Supabase Auth
@@ -110,7 +112,7 @@ export async function POST(request: NextRequest) {
       userId = existingUser.id;
       await supabase
         .from('user_profiles')
-        .update({ last_login_at: new Date().toISOString() })
+        .update({ last_login_at: new Date().toISOString() } as never)
         .eq('id', userId);
     } else {
       // Create new user in Supabase Auth

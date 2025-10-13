@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { createClient } from '@/lib/supabase/server';
 import { sortCalculations, filterCalculations, type CalculationFilters, type SortOption } from '@/lib/calculations/storage';
+import type { SavedCalculation } from '@/types/database';
 
 export async function GET(request: NextRequest) {
   try {
@@ -48,7 +49,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Apply filters and sorting
-    let calculations = data || [];
+    let calculations = (data || []) as SavedCalculation[];
     calculations = filterCalculations(calculations, filters);
     calculations = sortCalculations(calculations, sortBy);
 

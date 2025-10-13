@@ -16,7 +16,7 @@ export function getCalculationSummary(calculation: SavedCalculation) {
     name: calculation.calculation_name || property_address || 'Unnamed Calculation',
     address: property_address || 'No address provided',
     value: property_value || calculation_data.propertyValue,
-    eligibility: eligibility_status || (calculation_data.eligibility.canPurchase ? 'Eligible' : 'Review Required'),
+    eligibility: eligibility_status || (calculation_data.eligibility.isEligible ? 'Eligible' : 'Review Required'),
     isFirstHome: calculation_data.isFirstHome,
     propertyType: calculation_data.propertyType,
     propertyState: calculation_data.propertyState,
@@ -39,7 +39,7 @@ export function prepareCalculationForStorage(
     calculation_data: calculationData,
     property_address: calculationData.propertyAddress || null,
     property_value: calculationData.propertyValue,
-    eligibility_status: calculationData.eligibility.canPurchase ? 'Eligible' : 'Review Required',
+    eligibility_status: calculationData.eligibility.isEligible ? 'Eligible' : 'Review Required',
     calculation_name: name || null,
     is_favorite: false,
   };
