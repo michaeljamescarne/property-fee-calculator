@@ -9,7 +9,7 @@ import FIRBResultsEmail from '@/emails/FIRBResultsEmail';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
-import type { InvestmentAnalytics } from '@/types/investment';
+import type { InvestmentAnalytics, InvestmentInputs } from '@/types/investment';
 import type { PDFTranslations } from '@/lib/pdf/pdfTranslations';
 import { generateEnhancedPDF } from '@/lib/pdf/generateEnhancedPDF';
 import { generateDefaultInputs, calculateInvestmentAnalytics } from '@/lib/firb/investment-analytics';
@@ -30,7 +30,9 @@ export async function POST(request: NextRequest) {
     console.log('Email API: Starting request processing');
     const body: EmailRequest = await request.json();
     console.log('Email API: Request body parsed successfully');
+    console.log('Email API: Body keys:', Object.keys(body));
     const { email, name, eligibility, costs, formData, locale, pdfTranslations } = body;
+    console.log('Email API: Destructured variables successfully');
 
     // Validate email
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -61,7 +63,7 @@ export async function POST(request: NextRequest) {
     console.log('Email API: Generating investment inputs');
     console.log('Email API: costs object:', JSON.stringify(costs, null, 2));
     
-    let investmentInputs: any;
+    let investmentInputs: InvestmentInputs;
     let analytics: InvestmentAnalytics;
     
     try {
@@ -84,7 +86,8 @@ export async function POST(request: NextRequest) {
       console.log('Email API: Investment analytics calculated successfully');
     } catch (analyticsError) {
       console.error('Email API: Analytics generation failed:', analyticsError);
-      throw analyticsError;
+      // Continue without analytics for now to isolate the issue
+      analytics = {} as InvestmentAnalytics;
     }
 
     // Generate PDF with full analytics
@@ -113,7 +116,7 @@ export async function POST(request: NextRequest) {
 
     // Send email with PDF attachment (if available)
     console.log('Email API: Sending email with attachment');
-    const emailOptions: any = {
+    const emailOptions = {
       from: EMAIL_CONFIG.from,
       to: [email],
       subject: `Your FIRB Investment Analysis - ${eligibility.canPurchase ? 'Eligible' : 'Review Required'}`,
@@ -150,6 +153,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Email sending error:', error);
+    console.error('Email API error stack:', error instanceof Error ? error.stack : 'No stack trace');
     
     return NextResponse.json(
       { 
