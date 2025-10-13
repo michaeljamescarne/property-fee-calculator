@@ -89,8 +89,9 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
 
   return (
     <Card className="shadow-lg border-blue-200/50 overflow-hidden">
-      <CardHeader className={`${headerStyles.bgClass} text-white px-6 py-6 rounded-t-lg -m-6 -mt-6 mb-6`}>
-        <div className="flex items-center justify-between mb-2">
+      <div className={`${headerStyles.bgClass} text-white rounded-t-lg -m-6 -mt-6 mb-6`}>
+        <div className="px-6 py-6">
+          <div className="flex items-center justify-between mb-2">
           <CardTitle className="text-2xl font-bold">{t('header')}</CardTitle>
           <Badge 
             variant={!eligibility.canPurchase ? "destructive" : eligibility.requiresFIRB ? "default" : "default"}
@@ -105,10 +106,11 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
             {headerStyles.icon} {headerStyles.badgeText}
           </Badge>
         </div>
-        <CardDescription className="text-white/90 text-base">
-          {headerStyles.titleText}
-        </CardDescription>
-      </CardHeader>
+          <CardDescription className="text-white/90 text-base">
+            {headerStyles.titleText}
+          </CardDescription>
+        </div>
+      </div>
 
       <CardContent className="p-6 space-y-6">
         {/* Summary Section */}
