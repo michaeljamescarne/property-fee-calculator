@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Download, Mail, ArrowRight } from 'lucide-react';
+import { Download, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 
@@ -27,7 +27,7 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
             Sample FIRB Investment Report
           </DialogTitle>
           <p className="text-muted-foreground text-center mt-2">
-            See what you'll receive after completing your calculation
+            See what you&apos;ll receive after completing your calculation
           </p>
         </DialogHeader>
         
@@ -86,7 +86,7 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
 
           {/* Features List */}
           <div className="bg-blue-50 rounded-lg p-6">
-            <h4 className="font-semibold mb-4 text-blue-900">What's Included in Your Report:</h4>
+            <h4 className="font-semibold mb-4 text-blue-900">What&apos;s Included in Your Report:</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">

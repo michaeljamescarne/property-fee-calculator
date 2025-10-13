@@ -3,8 +3,8 @@
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calculator, TrendingUp, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2, Lock, Star } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Calculator, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2, Lock } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
 import SampleReportModal from '@/components/SampleReportModal';
@@ -130,9 +130,11 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="relative">
-              <img 
+              <Image 
                 src="/images/eligibility-screenshot.png" 
                 alt="Eligibility check result showing approval"
+                width={600}
+                height={400}
                 className="rounded-2xl shadow-2xl border border-border hover-lift"
               />
             </div>
@@ -141,9 +143,11 @@ export default function HomePage() {
           {/* Feature 2: Comprehensive Cost Breakdown */}
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
             <div className="order-2 lg:order-1 relative">
-              <img 
+              <Image 
                 src="/images/cost-breakdown-screenshot.png" 
                 alt="Detailed cost breakdown with charts"
+                width={800}
+                height={500}
                 className="rounded-2xl shadow-2xl border border-border hover-lift"
               />
             </div>
@@ -202,9 +206,11 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="relative">
-              <img 
+              <Image 
                 src="/images/analytics-screenshot.png" 
                 alt="Investment analytics with charts and projections"
+                width={800}
+                height={600}
                 className="rounded-2xl shadow-2xl border border-border hover-lift"
               />
             </div>
