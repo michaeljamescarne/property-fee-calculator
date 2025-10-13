@@ -164,9 +164,18 @@ export function getPropertyRestrictions(
 
   const restrictions: string[] = [];
 
-  // Only add property-specific restrictions, not base restrictions (to avoid duplication)
+  // Only add property-specific restrictions that are NOT already covered by base restrictions
   if (!propertyCheck.eligible && propertyCheck.reason) {
-    restrictions.push(propertyCheck.reason);
+    // Check if this reason is already covered by base restrictions to avoid duplication
+    const baseEligibility = checkCitizenshipEligibility(citizenshipStatus, undefined, isOrdinarilyResident);
+    const isAlreadyCovered = baseEligibility.restrictions.some(baseRestriction => 
+      baseRestriction.includes('Established dwellings prohibited') || 
+      baseRestriction.includes(propertyCheck.reason!)
+    );
+    
+    if (!isAlreadyCovered) {
+      restrictions.push(propertyCheck.reason);
+    }
   }
 
   // Add property-type specific restrictions
