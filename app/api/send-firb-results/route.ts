@@ -72,31 +72,44 @@ export async function POST(request: NextRequest) {
     );
 
     // Generate PDF with full analytics
-    const pdfBlob = generateEnhancedPDF(
-      formData,
-      eligibility,
-      costs,
-      analytics,
-      locale || 'en',
-      pdfTranslations
-    );
+    let pdfBase64: string | undefined;
+    try {
+      const pdfBlob = generateEnhancedPDF(
+        formData,
+        eligibility,
+        costs,
+        analytics,
+        locale || 'en',
+        pdfTranslations
+      );
 
-    // Convert PDF blob to base64 for attachment
-    const pdfBase64 = await blobToBase64(pdfBlob);
+      // Convert PDF blob to base64 for attachment
+      pdfBase64 = await blobToBase64(pdfBlob);
+    } catch (pdfError) {
+      console.error('PDF generation failed:', pdfError);
+      // Continue without PDF attachment
+      pdfBase64 = undefined;
+    }
 
-    // Send email with PDF attachment
-    const { data, error } = await resend.emails.send({
+    // Send email with PDF attachment (if available)
+    const emailData: any = {
       from: EMAIL_CONFIG.from,
       to: [email],
       subject: `Your FIRB Investment Analysis - ${eligibility.canPurchase ? 'Eligible' : 'Review Required'}`,
       react: FIRBResultsEmail({ name, eligibility, costs }),
-      attachments: [
+    };
+
+    // Add PDF attachment if generation was successful
+    if (pdfBase64) {
+      emailData.attachments = [
         {
           filename: `FIRB-Investment-Analysis-${new Date().toISOString().split('T')[0]}.pdf`,
           content: pdfBase64,
         },
-      ],
-    });
+      ];
+    }
+
+    const { data, error } = await resend.emails.send(emailData);
 
     if (error) {
       console.error('Resend error:', error);

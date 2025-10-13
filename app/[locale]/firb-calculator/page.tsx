@@ -182,7 +182,7 @@ export default function FIRBCalculatorPage() {
       cashRequired: tPdf('labels.cashRequired'),
       investmentType: tPdf('labels.investmentType'),
       annualReturn: tPdf('labels.annualReturn'),
-      yearReturn: tPdf('labels.yearReturn'),
+      yearReturn: tPdf('labels.yearReturn', { years: 10 }),
       riskLevel: tPdf('labels.riskLevel'),
       vacancyImpact: tPdf('labels.vacancyImpact'),
       interestImpact: tPdf('labels.interestImpact'),
