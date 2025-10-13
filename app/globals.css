@@ -51,18 +51,18 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.553 0.183 276.598);
+  --primary: oklch(0.65 0.15 250);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.974 0.006 276.598);
+  --secondary: oklch(0.974 0.006 250);
   --secondary-foreground: oklch(0.145 0 0);
   --muted: oklch(0.967 0.008 85.87);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.618 0.207 292.307);
+  --accent: oklch(0.75 0.12 240);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.92 0.008 85.87);
   --input: oklch(0.92 0.008 85.87);
-  --ring: oklch(0.553 0.183 276.598);
+  --ring: oklch(0.65 0.15 250);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -125,4 +125,33 @@
   button {
     @apply transition-all duration-200;
   }
+}
+
+/* Custom animations for homepage */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+/* Hover effects for cards */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }

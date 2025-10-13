@@ -4,88 +4,248 @@ import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calculator, TrendingUp, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Calculator, TrendingUp, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2, Lock, Star } from 'lucide-react';
+import { useState } from 'react';
+import Image from 'next/image';
+import SampleReportModal from '@/components/SampleReportModal';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
   const locale = useLocale();
+  const [showSampleReport, setShowSampleReport] = useState(false);
 
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-white container mx-auto px-4 py-24 md:py-32 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
-          {t('title')}
-        </h1>
-        <p className="text-xl md:text-2xl text-foreground/80 mb-4 max-w-2xl mx-auto font-medium">
-          {t('subtitle')}
-        </p>
-        <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-          {t('description')}
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" asChild className="rounded-xl px-8 py-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all">
-            <Link href={`/${locale}/firb-calculator`}>
-              {t('cta.button')} <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild className="rounded-xl px-8 py-6 text-base font-semibold">
-            <Link href="#features">{t('learnMore')}</Link>
-          </Button>
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50/30 overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 bg-grid-blue-100/20 [mask-image:radial-gradient(white,transparent_80%)]"></div>
+        
+        <div className="container mx-auto px-4 py-32 md:py-40 relative">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Content */}
+            <div className="text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-6">
+                <CheckCircle className="w-4 h-4" />
+                Trusted by 10,000+ foreign investors
+              </div>
+              <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                Calculate Your Australian Property Investment Costs
+              </h1>
+              <p className="text-xl text-foreground/70 mb-8 leading-relaxed">
+                Instant FIRB fee calculations, eligibility checks, and comprehensive investment analytics for foreign property buyers.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" asChild className="text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                  <Link href={`/${locale}/firb-calculator`}>
+                    Start Free Calculation <ArrowRight className="ml-2" />
+                  </Link>
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg px-8 py-6 rounded-xl"
+                  onClick={() => setShowSampleReport(true)}
+                >
+                  View Sample Report
+                </Button>
+              </div>
+              {/* Trust badges */}
+              <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4" />
+                  Free to use
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  Results in 30 seconds
+                </div>
+                <div className="flex items-center gap-2">
+                  <Lock className="w-4 h-4" />
+                  No signup required
+                </div>
+              </div>
+            </div>
+            
+            {/* Right: Product screenshot placeholder */}
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white">
+                <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+                  <div className="text-center p-8">
+                    <Calculator className="w-16 h-16 text-primary mx-auto mb-4" />
+                    <p className="text-muted-foreground">Calculator Interface Preview</p>
+                    <p className="text-sm text-muted-foreground mt-2">(Screenshot to be added)</p>
+                  </div>
+                </div>
+              </div>
+              {/* Floating card showing key feature */}
+              <div className="absolute -left-4 top-1/4 bg-white rounded-lg shadow-lg p-4 animate-float hidden md:block">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <span className="text-sm font-medium">Eligibility: Approved</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="bg-muted py-24">
+      {/* Features Section - Product Showcase */}
+      <section id="features" className="py-32 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4">
-            {t('features.title')}
-          </h2>
-          <p className="text-muted-foreground text-center mb-16 max-w-2xl mx-auto text-lg">
-            Transparent, accurate, and instant calculations for your Australian property investment
-          </p>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-white rounded-2xl">
-              <CardHeader className="pb-6 pt-8">
-                <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-                  <Calculator className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl mb-3">{t('features.accurate')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  {t('features.accurateDesc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-5xl font-bold mb-6">
+              Everything You Need to Invest with Confidence
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Comprehensive tools and insights for foreign property investors in Australia
+            </p>
+          </div>
 
-            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-white rounded-2xl">
-              <CardHeader className="pb-6 pt-8">
-                <div className="bg-accent/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-                  <TrendingUp className="h-8 w-8 text-accent" />
+          {/* Feature 1: Instant Eligibility Check */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+                Feature 01
+              </div>
+              <h3 className="text-4xl font-bold mb-6">
+                Know Your Eligibility Instantly
+              </h3>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Get immediate feedback on whether FIRB approval is required based on your citizenship status, visa type, and property details. No guesswork, just clear answers.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>Instant eligibility determination</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>Clear explanations for all requirements</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>Identifies potential restrictions</span>
+                </li>
+              </ul>
+            </div>
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
+                <div className="aspect-[4/3] bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center p-8">
+                  <div className="text-center max-w-sm">
+                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle className="w-12 h-12 text-white" />
+                    </div>
+                    <h4 className="text-2xl font-bold text-green-900 mb-2">Eligible to Purchase</h4>
+                    <p className="text-green-700 text-sm">(Screenshot placeholder - Eligibility result)</p>
+                  </div>
                 </div>
-                <CardTitle className="text-xl mb-3">{t('features.fast')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  {t('features.fastDesc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+          </div>
 
-            <Card className="border-none shadow-sm hover:shadow-md transition-all bg-white rounded-2xl">
-              <CardHeader className="pb-6 pt-8">
-                <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-                  <Shield className="h-8 w-8 text-primary" />
+          {/* Feature 2: Comprehensive Cost Breakdown */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
+            <div className="order-2 lg:order-1 relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
+                <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8">
+                  <div className="text-center max-w-sm">
+                    <TrendingUp className="w-16 h-16 text-primary mx-auto mb-4" />
+                    <h4 className="text-xl font-bold mb-2">Detailed Cost Analysis</h4>
+                    <div className="space-y-2 text-sm text-left mt-4">
+                      <div className="flex justify-between py-1">
+                        <span>FIRB Fee:</span>
+                        <span className="font-medium">$14,200</span>
+                      </div>
+                      <div className="flex justify-between py-1">
+                        <span>Stamp Duty:</span>
+                        <span className="font-medium">$38,500</span>
+                      </div>
+                      <div className="flex justify-between py-1">
+                        <span>Other Costs:</span>
+                        <span className="font-medium">$8,750</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground text-xs mt-4">(Screenshot placeholder)</p>
+                  </div>
                 </div>
-                <CardTitle className="text-xl mb-3">{t('features.transparent')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  {t('features.transparentDesc')}
-                </CardDescription>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+            <div className="order-1 lg:order-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+                Feature 02
+              </div>
+              <h3 className="text-4xl font-bold mb-6">
+                Complete Cost Transparency
+              </h3>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                See every fee, tax, and cost associated with your property purchase. From FIRB application fees to stamp duty, ongoing costs, and more.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>FIRB fees calculated by property value</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>State-specific stamp duty & surcharges</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>Ongoing costs like land tax & insurance</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Feature 3: Investment Analytics */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+                Feature 03
+              </div>
+              <h3 className="text-4xl font-bold mb-6">
+                Smart Investment Analytics
+              </h3>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Understand your investment potential with detailed ROI projections, cash flow analysis, and equity growth forecasts over 10+ years.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>10-year ROI & cash flow projections</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>Equity growth & appreciation analysis</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>Risk assessment & sensitivity analysis</span>
+                </li>
+              </ul>
+            </div>
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-white hover-lift">
+                <div className="aspect-[4/3] bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center p-8">
+                  <div className="text-center max-w-sm">
+                    <Star className="w-16 h-16 text-purple-600 mx-auto mb-4" />
+                    <h4 className="text-xl font-bold mb-2">Investment Analytics</h4>
+                    <div className="space-y-2 text-sm mt-4">
+                      <div className="bg-white/50 rounded p-2">
+                        <span className="text-xs text-muted-foreground">10-Year ROI</span>
+                        <p className="text-lg font-bold text-green-600">+142%</p>
+                      </div>
+                      <div className="bg-white/50 rounded p-2">
+                        <span className="text-xs text-muted-foreground">Annual Cash Flow</span>
+                        <p className="text-lg font-bold">$18,500</p>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground text-xs mt-4">(Screenshot placeholder)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -335,6 +495,9 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Sample Report Modal */}
+      <SampleReportModal isOpen={showSampleReport} onClose={() => setShowSampleReport(false)} />
     </main>
   );
 }
