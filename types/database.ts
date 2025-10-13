@@ -24,40 +24,34 @@ export interface EligibilityResult {
 }
 
 // Cost Breakdown structure (stored as JSON)
+// This matches the actual output from lib/firb/calculations.ts
 export interface CostBreakdown {
   upfrontCosts: {
-    firbApplicationFee: number;
-    firbExpeditedFee?: number;
-    standardStampDuty: number;
-    stampDutySurcharge: number;
-    totalStampDuty: number;
+    propertyPrice: number;
+    firbFee: number;
+    stampDuty: number;
+    foreignSurcharge: number;
     legalFees: number;
     inspectionFees: number;
-    otherFees: number;
-    totalUpfront: number;
+    loanCosts: number;
+    total: number;
   };
-  annualCosts: {
-    landTaxSurcharge: number;
-    vacancyFee: number;
+  ongoingCosts: {
+    annualLandTax: number;
     councilRates: number;
-    strataFees: number;
-    totalAnnual: number;
+    insurance: number;
+    maintenance: number;
+    vacancyFee: number;
+    total: number;
   };
-  firstYearTotal: number;
-  fiveYearTotal: number;
-  tenYearTotal: number;
-  breakdown: FeeBreakdownItem[];
+  totalInvestmentCost: number;
+  breakdown: {
+    category: string;
+    items: { name: string; amount: number; description?: string }[];
+  }[];
 }
 
-export interface FeeBreakdownItem {
-  id: string;
-  category: string;
-  description: string;
-  amount: number;
-  frequency: 'one-time' | 'annual' | 'monthly';
-  optional: boolean;
-  notes?: string;
-}
+// FeeBreakdownItem interface removed - now using the breakdown structure from calculations.ts
 
 // Database table structure
 export interface FIRBCalculation {
