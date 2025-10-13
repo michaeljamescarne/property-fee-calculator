@@ -27,7 +27,9 @@ interface EmailRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('Email API: Starting request processing');
     const body: EmailRequest = await request.json();
+    console.log('Email API: Request body parsed successfully');
     const { email, name, eligibility, costs, formData, locale, pdfTranslations } = body;
 
     // Validate email
@@ -56,24 +58,39 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate full investment analytics (always include in emailed PDFs per user request)
-    const investmentInputs = generateDefaultInputs(
-      formData.propertyValue!,
-      formData.state!,
-      formData.propertyType!,
-      formData.depositPercent || 20,
-      costs
-    );
-    const analytics: InvestmentAnalytics = calculateInvestmentAnalytics(
-      investmentInputs,
-      formData.propertyValue!,
-      formData.state!,
-      formData.propertyType!,
-      costs
-    );
+    console.log('Email API: Generating investment inputs');
+    console.log('Email API: costs object:', JSON.stringify(costs, null, 2));
+    
+    let investmentInputs: any;
+    let analytics: InvestmentAnalytics;
+    
+    try {
+      investmentInputs = generateDefaultInputs(
+        formData.propertyValue!,
+        formData.state!,
+        formData.propertyType!,
+        formData.depositPercent || 20,
+        costs
+      );
+      console.log('Email API: Investment inputs generated successfully');
+      console.log('Email API: Calculating investment analytics');
+      analytics = calculateInvestmentAnalytics(
+        investmentInputs,
+        formData.propertyValue!,
+        formData.state!,
+        formData.propertyType!,
+        costs
+      );
+      console.log('Email API: Investment analytics calculated successfully');
+    } catch (analyticsError) {
+      console.error('Email API: Analytics generation failed:', analyticsError);
+      throw analyticsError;
+    }
 
     // Generate PDF with full analytics
     let pdfBase64: string | undefined;
     try {
+      console.log('Email API: Generating PDF');
       const pdfBlob = generateEnhancedPDF(
         formData,
         eligibility,
@@ -82,16 +99,20 @@ export async function POST(request: NextRequest) {
         locale || 'en',
         pdfTranslations
       );
+      console.log('Email API: PDF generated successfully');
 
       // Convert PDF blob to base64 for attachment
+      console.log('Email API: Converting PDF to base64');
       pdfBase64 = await blobToBase64(pdfBlob);
+      console.log('Email API: PDF converted to base64 successfully');
     } catch (pdfError) {
-      console.error('PDF generation failed:', pdfError);
+      console.error('Email API: PDF generation failed:', pdfError);
       // Continue without PDF attachment
       pdfBase64 = undefined;
     }
 
     // Send email with PDF attachment (if available)
+    console.log('Email API: Sending email with attachment');
     const emailOptions: any = {
       from: EMAIL_CONFIG.from,
       to: [email],
@@ -101,12 +122,15 @@ export async function POST(request: NextRequest) {
 
     // Add PDF attachment if generation was successful
     if (pdfBase64) {
+      console.log('Email API: Adding PDF attachment to email');
       emailOptions.attachments = [
         {
           filename: `FIRB-Investment-Analysis-${new Date().toISOString().split('T')[0]}.pdf`,
           content: pdfBase64,
         },
       ];
+    } else {
+      console.log('Email API: No PDF attachment (generation failed)');
     }
 
     const { data, error } = await resend.emails.send(emailOptions);
