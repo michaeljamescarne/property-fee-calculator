@@ -70,12 +70,12 @@ export function checkCitizenshipEligibility(
       expedited: FIRB_PROCESSING_TIMES.expedited
     };
     
-    baseResult.restrictions.push('You must occupy the property as your principal place of residence');
-    baseResult.restrictions.push('You must sell the property within 6 months of it no longer being your principal residence or within 6 months of your visa ceasing');
-    baseResult.restrictions.push('You cannot purchase established dwellings - only new dwellings or off-the-plan');
+    // Consolidated restrictions
+    baseResult.restrictions.push('Property types permitted: new dwellings or off-the-plan properties only. Established dwellings and vacant land are prohibited.');
+    baseResult.restrictions.push('Must occupy as principal place of residence and sell within 6 months of no longer being your residence or visa ceasing');
     
-    baseResult.recommendations.push('Apply for FIRB approval before signing a contract');
-    baseResult.recommendations.push('Budget for FIRB application fees ($13,200+ depending on property value)');
+    baseResult.recommendations.push('Apply for FIRB approval before signing any contract');
+    baseResult.recommendations.push('Budget for FIRB application fees - see exact cost in the breakdown below');
     baseResult.recommendations.push('Consider expedited processing if you need faster approval (double the fee)');
     
     if (visaType === '500') {
@@ -92,16 +92,16 @@ export function checkCitizenshipEligibility(
       complex: FIRB_PROCESSING_TIMES.complex
     };
     
-    baseResult.restrictions.push('You can only purchase new dwellings, off-the-plan properties, or vacant land for development');
-    baseResult.restrictions.push('Established dwellings are not permitted except in exceptional circumstances');
-    baseResult.restrictions.push('Annual vacancy fee may apply if the property is not occupied or genuinely available for rent');
+    // Consolidated restrictions
+    baseResult.restrictions.push('Property types permitted: new dwellings, off-the-plan properties, or vacant land for development. Established dwellings are prohibited except in exceptional FIRB-approved circumstances.');
+    baseResult.restrictions.push('Annual vacancy fee applies if property is not occupied or genuinely available for rent (minimum 183 days per year)');
     baseResult.restrictions.push('You must notify the ATO within 30 days of settlement');
     
+    // More precise recommendations
     baseResult.recommendations.push('FIRB approval is mandatory - do not sign any contract before obtaining approval');
-    baseResult.recommendations.push('Budget for significant foreign buyer stamp duty surcharges (7-8% in most states)');
-    baseResult.recommendations.push('Consider engaging a lawyer or conveyancer experienced in foreign purchases');
-    baseResult.recommendations.push('Be aware of annual vacancy fees and land tax surcharges');
-    baseResult.recommendations.push('Ensure you have the property genuinely available for rent or occupied at least 183 days per year to avoid vacancy fees');
+    baseResult.recommendations.push('Budget for foreign buyer stamp duty surcharges - see exact costs in the breakdown below');
+    baseResult.recommendations.push('Ensure property is genuinely available for rent or occupied to avoid vacancy fees');
+    baseResult.recommendations.push('Consider engaging a lawyer or conveyancer experienced in foreign property purchases');
   }
 
   return baseResult;
@@ -129,9 +129,9 @@ export function checkPropertyEligibility(
     
     if (effectiveStatus === 'temporary') {
       if (propertyType === 'established') {
-        reason = 'Temporary residents cannot purchase established dwellings. You can only purchase new dwellings or off-the-plan properties.';
+        reason = 'Temporary residents can only purchase new dwellings or off-the-plan properties.';
       } else if (propertyType === 'vacantLand') {
-        reason = 'Temporary residents cannot purchase vacant land. You can only purchase new dwellings or off-the-plan properties.';
+        reason = 'Temporary residents can only purchase new dwellings or off-the-plan properties.';
       } else if (propertyType === 'commercial') {
         reason = 'Different rules apply for commercial property purchases. Please consult with FIRB directly.';
       }
@@ -139,7 +139,7 @@ export function checkPropertyEligibility(
     
     if (effectiveStatus === 'foreign') {
       if (propertyType === 'established') {
-        reason = 'Foreign persons cannot purchase established dwellings except in exceptional circumstances approved by FIRB.';
+        reason = 'Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development.';
       } else if (propertyType === 'commercial') {
         reason = 'Commercial property purchases by foreign persons require separate FIRB approval and have different thresholds.';
       }
@@ -168,19 +168,16 @@ export function getPropertyRestrictions(
     restrictions.unshift(propertyCheck.reason);
   }
 
-  // Add property-type specific restrictions
+  // Add property-type specific restrictions (avoid duplication with base restrictions)
   if (propertyType === 'newDwelling') {
     if (citizenshipStatus === 'temporary' || citizenshipStatus === 'foreign') {
-      restrictions.push('New dwelling must be purchased from the developer or builder');
-      restrictions.push('Off-the-plan purchases must result in a new dwelling upon completion');
+      restrictions.push('Must be purchased from developer or builder; off-the-plan purchases must result in new dwelling upon completion');
     }
   }
 
   if (propertyType === 'vacantLand') {
     if (citizenshipStatus === 'foreign') {
-      restrictions.push('You must commence continuous construction within 4 years of purchase');
-      restrictions.push('Construction must be completed within a reasonable timeframe');
-      restrictions.push('Failure to develop may result in penalties and forced sale');
+      restrictions.push('Must commence construction within 4 years and complete within reasonable timeframe or face penalties');
     }
   }
 

@@ -212,19 +212,18 @@ export const PROPERTY_ELIGIBILITY = {
     canBuy: ['newDwelling'],
     requiresFIRB: true,
     restrictions: [
-      'Must be used as your principal place of residence',
-      'Must sell property when you leave Australia',
-      'Cannot buy established dwellings or vacant land'
+      'Property types permitted: new dwellings or off-the-plan properties only',
+      'Must occupy as principal place of residence',
+      'Must sell within 6 months of no longer being your residence or visa ceasing'
     ]
   },
   foreign: {
     canBuy: ['newDwelling', 'vacantLand'],
     requiresFIRB: true,
     restrictions: [
-      'Can only purchase new dwellings or off-the-plan properties',
-      'Can purchase vacant land for development',
-      'Cannot purchase established dwellings',
-      'Annual vacancy fee applies if property is not occupied or rented out'
+      'Property types permitted: new dwellings, off-the-plan properties, or vacant land for development',
+      'Established dwellings prohibited except in exceptional FIRB-approved circumstances',
+      'Annual vacancy fee applies if not occupied or genuinely available for rent'
     ]
   }
 };
