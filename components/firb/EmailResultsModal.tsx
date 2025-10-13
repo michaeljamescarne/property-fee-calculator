@@ -24,6 +24,7 @@ import { Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
+import type { PDFTranslations } from '@/lib/pdf/pdfTranslations';
 
 interface EmailResultsModalProps {
   isOpen: boolean;
@@ -32,7 +33,7 @@ interface EmailResultsModalProps {
   costs: CostBreakdown;
   formData: FIRBCalculatorFormData;
   locale: string;
-  pdfTranslations: Record<string, unknown>;
+  pdfTranslations: PDFTranslations;
 }
 
 export default function EmailResultsModal({

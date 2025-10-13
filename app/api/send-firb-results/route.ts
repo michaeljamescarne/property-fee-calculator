@@ -10,6 +10,7 @@ import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
 import type { InvestmentAnalytics } from '@/types/investment';
+import type { PDFTranslations } from '@/lib/pdf/pdfTranslations';
 import { generateEnhancedPDF } from '@/lib/pdf/generateEnhancedPDF';
 import { generateDefaultInputs, calculateInvestmentAnalytics } from '@/lib/firb/investment-analytics';
 import { blobToBase64 } from '@/lib/pdf/pdfHelpers';
@@ -21,7 +22,7 @@ interface EmailRequest {
   costs: CostBreakdown;
   formData: FIRBCalculatorFormData;
   locale: string;
-  pdfTranslations: Record<string, unknown>;
+  pdfTranslations: PDFTranslations;
 }
 
 export async function POST(request: NextRequest) {

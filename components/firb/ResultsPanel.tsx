@@ -40,7 +40,6 @@ import TaxAnalysis from './TaxAnalysis';
 import InvestmentScore from './InvestmentScore';
 import SaveCalculationButton from './SaveCalculationButton';
 import LoginModal from '@/components/auth/LoginModal';
-import { useAuth } from '@/components/auth/AuthProvider';
 
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
