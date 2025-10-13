@@ -92,8 +92,9 @@ export function checkCitizenshipEligibility(
       complex: FIRB_PROCESSING_TIMES.complex
     };
     
-    // Consolidated restrictions
-    baseResult.restrictions.push('Property types permitted: new dwellings, off-the-plan properties, or vacant land for development. Established dwellings are prohibited except in exceptional FIRB-approved circumstances.');
+    // Consolidated restrictions - 2 clear points only
+    baseResult.restrictions.push('Established dwellings prohibited except in exceptional FIRB-approved circumstances');
+    baseResult.restrictions.push('Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development');
     baseResult.restrictions.push('Annual vacancy fee applies if property is not occupied or genuinely available for rent (minimum 183 days per year)');
     baseResult.restrictions.push('You must notify the ATO within 30 days of settlement');
     
@@ -139,7 +140,7 @@ export function checkPropertyEligibility(
     
     if (effectiveStatus === 'foreign') {
       if (propertyType === 'established') {
-        reason = 'Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development.';
+        reason = 'Established dwellings prohibited except in exceptional FIRB-approved circumstances.';
       } else if (propertyType === 'commercial') {
         reason = 'Commercial property purchases by foreign persons require separate FIRB approval and have different thresholds.';
       }
