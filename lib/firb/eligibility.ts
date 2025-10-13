@@ -160,16 +160,16 @@ export function getPropertyRestrictions(
   citizenshipStatus: CitizenshipStatus,
   isOrdinarilyResident?: boolean
 ): string[] {
-  const eligibility = checkCitizenshipEligibility(citizenshipStatus, undefined, isOrdinarilyResident);
   const propertyCheck = checkPropertyEligibility(propertyType, citizenshipStatus, isOrdinarilyResident);
 
-  const restrictions: string[] = [...eligibility.restrictions];
+  const restrictions: string[] = [];
 
+  // Only add property-specific restrictions, not base restrictions (to avoid duplication)
   if (!propertyCheck.eligible && propertyCheck.reason) {
-    restrictions.unshift(propertyCheck.reason);
+    restrictions.push(propertyCheck.reason);
   }
 
-  // Add property-type specific restrictions (avoid duplication with base restrictions)
+  // Add property-type specific restrictions
   if (propertyType === 'newDwelling') {
     if (citizenshipStatus === 'temporary' || citizenshipStatus === 'foreign') {
       restrictions.push('Must be purchased from developer or builder; off-the-plan purchases must result in new dwelling upon completion');
@@ -265,14 +265,17 @@ export function performFullEligibilityCheck(
 ): EligibilityResult {
   const baseEligibility = checkCitizenshipEligibility(citizenshipStatus, visaType, isOrdinarilyResident);
   const propertyCheck = checkPropertyEligibility(propertyType, citizenshipStatus, isOrdinarilyResident);
-  const restrictions = getPropertyRestrictions(propertyType, citizenshipStatus, isOrdinarilyResident);
+  const propertySpecificRestrictions = getPropertyRestrictions(propertyType, citizenshipStatus, isOrdinarilyResident);
   const firbReqs = getFIRBRequirements(citizenshipStatus, propertyType, propertyValue);
+
+  // Combine base restrictions with property-specific restrictions (avoiding duplicates)
+  const allRestrictions = [...baseEligibility.restrictions, ...propertySpecificRestrictions];
 
   return {
     ...baseEligibility,
     isEligible: propertyCheck.eligible,
     canPurchase: propertyCheck.eligible,
-    restrictions,
+    restrictions: allRestrictions,
     processingTimeline: baseEligibility.requiresFIRB ? {
       standard: firbReqs.processingTime,
       expedited: FIRB_PROCESSING_TIMES.expedited
