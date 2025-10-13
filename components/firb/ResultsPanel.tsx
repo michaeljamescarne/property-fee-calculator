@@ -107,7 +107,9 @@ export default function ResultsPanel({
   };
 
   // Prepare calculation data for saving
-  const calculationData: CalculationData = {
+  // Note: costs type conflicts between lib/firb/calculations and types/database
+  // Using unknown for type safety while allowing the actual structure to be stored
+  const calculationData = {
     citizenshipStatus: formData.citizenshipStatus!,
     visaType: formData.visaType,
     isOrdinarilyResident: formData.isOrdinarilyResident,
@@ -119,8 +121,8 @@ export default function ResultsPanel({
     depositPercent: formData.depositPercent!,
     entityType: formData.entityType!,
     eligibility: eligibility,
-    costs: costs as any, // Type conflict between lib/firb/calculations and types/database CostBreakdown
-  };
+    costs: costs as unknown,
+  } as CalculationData;
 
 
   return (
