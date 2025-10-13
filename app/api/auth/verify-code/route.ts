@@ -139,7 +139,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(error, { status: 500 });
       }
 
-      userId = newProfile.id;
+      const profile = newProfile as UserProfile;
+      userId = profile.id;
     }
 
     // Get user profile
