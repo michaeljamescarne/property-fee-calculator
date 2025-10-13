@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
-import { createClient } from '@/lib/supabase/server';
+import { createServiceRoleClient } from '@/lib/supabase/server';
 import { prepareCalculationForStorage } from '@/lib/calculations/storage';
 import type { CalculationData } from '@/types/database';
 
@@ -43,8 +43,8 @@ export async function POST(request: NextRequest) {
       name
     );
 
-    // Save to database
-    const supabase = await createClient();
+    // Save to database using service role client (bypasses RLS)
+    const supabase = createServiceRoleClient();
     const { data, error } = await supabase
       .from('saved_calculations')
       .insert(dataToSave as never)
