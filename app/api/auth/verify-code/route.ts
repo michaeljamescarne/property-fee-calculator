@@ -13,7 +13,7 @@ import {
   isValidCodeFormat,
 } from '@/lib/auth/magic-code';
 import { createSession, setSessionCookie } from '@/lib/auth/session';
-import type { MagicCode } from '@/types/database';
+import type { MagicCode, UserProfile } from '@/types/database';
 import type { VerifyCodeRequest, VerifyCodeResponse, AuthErrorResponse } from '@/types/auth';
 
 export async function POST(request: NextRequest) {
@@ -112,7 +112,8 @@ export async function POST(request: NextRequest) {
 
     if (existingProfile) {
       // User profile exists, update last login
-      userId = existingProfile.id;
+      const profile = existingProfile as UserProfile;
+      userId = profile.id;
       await supabase
         .from('user_profiles')
         .update({ last_login_at: new Date().toISOString() } as never)

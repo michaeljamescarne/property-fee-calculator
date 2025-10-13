@@ -11,13 +11,11 @@ import {
   calculateInterestOnlyRepayment,
   calculateLoanSchedule,
   calculateLVR,
-  calculateDSCR,
 } from './loan-calculator';
 import {
   calculateTaxDeductions,
   calculateTaxBenefit,
   calculateCGT,
-  estimateDepreciation,
 } from './tax-calculator';
 
 /**

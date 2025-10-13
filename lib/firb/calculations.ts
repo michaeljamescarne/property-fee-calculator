@@ -130,7 +130,7 @@ export function calculateAnnualLandTax(
 /**
  * Estimate legal and conveyancing fees
  */
-export function estimateLegalFees(propertyValue: number, _state: AustralianState): number {
+export function estimateLegalFees(propertyValue: number, state: AustralianState): number {
   // Typical legal fees range from $1,500 to $3,000+ depending on complexity
   const baseFee = 1500;
   const percentageFee = propertyValue * 0.001; // 0.1% of property value
@@ -166,7 +166,7 @@ export function estimateLoanCosts(loanAmount: number): number {
 /**
  * Estimate annual council rates
  */
-export function estimateCouncilRates(propertyValue: number, _state: AustralianState): number {
+export function estimateCouncilRates(propertyValue: number, state: AustralianState): number {
   // Council rates vary significantly by location, this is a rough estimate
   // Typically 0.2% - 0.5% of property value annually
   const ratePercentage = 0.003; // 0.3% average
