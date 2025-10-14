@@ -53,10 +53,10 @@ export function generateEnhancedPDF(
       recommendations: translations?.sections?.recommendations || 'Recommendations'
     },
     labels: {
+      ...translations?.labels,
       overallVerdict: translations?.labels?.overallVerdict || 'Investment Rating',
       value: translations?.labels?.value || 'Value',
-      deposit: translations?.labels?.deposit || 'Deposit',
-      ...translations?.labels
+      deposit: translations?.labels?.deposit || 'Deposit'
     }
   } as PDFTranslations;
 
