@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRB Calculator Interface - Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        accent: '#60A5FA'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto p-8">
+        <!-- FIRB Calculator Interface -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-400 text-white p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold mb-2">FIRB Calculator</h1>
+                        <p class="text-blue-100">Calculate your complete property investment costs including FIRB fees, stamp duty, and ongoing expenses</p>
+                    </div>
+                    <div class="bg-white/20 px-4 py-2 rounded-lg">
+                        <span class="text-white font-semibold">Step 2 of 4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="bg-gray-100 px-6 py-3">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-600">Progress</span>
+                    <span class="text-sm text-gray-600">50%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-500 h-2 rounded-full" style="width: 50%"></div>
+                </div>
+                <div class="flex justify-between mt-2">
+                    <span class="text-xs text-gray-500">Citizenship</span>
+                    <span class="text-xs text-blue-600 font-medium">Property Details</span>
+                    <span class="text-xs text-gray-500">Review</span>
+                    <span class="text-xs text-gray-500">Results</span>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <!-- Property Details Section -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-primary">
+                        🏠 Property Details
+                    </h2>
+                    <p class="text-gray-600 mb-6">Provide information about the property you're considering</p>
+
+                    <!-- Property Type Selection -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Property Type</label>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="relative">
+                                <input type="radio" id="newDwelling" name="propertyType" class="sr-only" checked>
+                                <label for="newDwelling" class="block p-4 border-2 border-blue-500 bg-blue-50 rounded-lg cursor-pointer hover:bg-blue-100 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-4 h-4 border-2 border-blue-500 bg-blue-500 rounded-full flex items-center justify-center">
+                                            <div class="w-2 h-2 bg-white rounded-full"></div>
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-blue-800">New Dwelling</div>
+                                            <div class="text-sm text-blue-600">Brand new property or off-the-plan purchase</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <input type="radio" id="established" name="propertyType" class="sr-only">
+                                <label for="established" class="block p-4 border-2 border-gray-200 bg-white rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+                                        <div>
+                                            <div class="font-semibold text-gray-800">Established Dwelling</div>
+                                            <div class="text-sm text-gray-600">Existing property with previous owners</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <input type="radio" id="vacantLand" name="propertyType" class="sr-only">
+                                <label for="vacantLand" class="block p-4 border-2 border-gray-200 bg-white rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+                                        <div>
+                                            <div class="font-semibold text-gray-800">Vacant Land</div>
+                                            <div class="text-sm text-gray-600">Empty land for development</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <input type="radio" id="commercial" name="propertyType" class="sr-only">
+                                <label for="commercial" class="block p-4 border-2 border-gray-200 bg-white rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+                                        <div>
+                                            <div class="font-semibold text-gray-800">Commercial Property</div>
+                                            <div class="text-sm text-gray-600">Commercial or investment property</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Value -->
+                    <div class="mb-6">
+                        <label for="propertyValue" class="block text-sm font-medium text-gray-700 mb-2">Property Purchase Price</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">$</span>
+                            </div>
+                            <input type="number" id="propertyValue" value="750000" class="block w-full pl-7 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold" placeholder="0">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">AUD</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Enter the purchase price of the property</p>
+                    </div>
+
+                    <!-- State Selection -->
+                    <div class="mb-6">
+                        <label for="state" class="block text-sm font-medium text-gray-700 mb-2">State or Territory</label>
+                        <select id="state" class="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg">
+                            <option value="NSW" selected>New South Wales</option>
+                            <option value="VIC">Victoria</option>
+                            <option value="QLD">Queensland</option>
+                            <option value="WA">Western Australia</option>
+                            <option value="SA">South Australia</option>
+                            <option value="TAS">Tasmania</option>
+                            <option value="ACT">Australian Capital Territory</option>
+                            <option value="NT">Northern Territory</option>
+                        </select>
+                    </div>
+
+                    <!-- Property Address -->
+                    <div class="mb-6">
+                        <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Property Address <span class="text-gray-500">(Optional)</span></label>
+                        <input type="text" id="address" class="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="123 Example Street, Suburb, State">
+                    </div>
+
+                    <!-- Additional Options -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- First Home Buyer -->
+                        <div>
+                            <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-lg">
+                                <input type="checkbox" id="firstHome" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                                <label for="firstHome" class="text-sm">
+                                    <span class="font-medium">I am a first home buyer</span>
+                                    <span class="block text-gray-600">You may be eligible for stamp duty concessions</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Deposit -->
+                        <div>
+                            <label for="deposit" class="block text-sm font-medium text-gray-700 mb-2">Deposit Percentage</label>
+                            <div class="relative">
+                                <input type="number" id="deposit" value="20" class="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg" min="5" max="100">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm">%</span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">Deposit amount: $150,000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex justify-between items-center pt-6 border-t border-gray-200">
+                    <button class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                        ← Back
+                    </button>
+                    <div class="flex gap-3">
+                        <button class="px-6 py-3 text-gray-600 font-medium hover:text-gray-800 transition-colors">
+                            Save Draft
+                        </button>
+                        <button class="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-blue-500 transition-colors shadow-lg">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Info Panel -->
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div class="flex items-start gap-3">
+                <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-white text-sm">ℹ️</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-blue-800 mb-1">Property Type Impact</h4>
+                    <p class="text-blue-700 text-sm">Foreign investors can typically purchase new dwellings and vacant land for development. Established dwellings may require special approval or be prohibited in some cases.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

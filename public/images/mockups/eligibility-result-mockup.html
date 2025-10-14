@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRB Eligibility Result - Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        accent: '#60A5FA'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto p-8">
+        <!-- Enhanced FIRB Eligibility Results -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+            <!-- Header with approval status -->
+            <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">FIRB Eligibility Assessment</h2>
+                        <p class="text-green-100 text-lg">You are eligible to apply for foreign investment approval</p>
+                    </div>
+                    <div class="bg-white/20 px-4 py-2 rounded-lg">
+                        <span class="text-white font-semibold">✓ FIRB Approval Required</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-6">
+                <!-- Summary Section -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+                        📋 Summary
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4 bg-blue-50/50 p-6 rounded-lg">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-blue-600 mt-0.5">🌍</div>
+                            <div>
+                                <p class="text-sm text-blue-600 font-medium">Citizenship Status</p>
+                                <p class="font-semibold">Foreign National</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-blue-600 mt-0.5">🏠</div>
+                            <div>
+                                <p class="text-sm text-blue-600 font-medium">Property Type</p>
+                                <p class="font-semibold">New Dwelling</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-blue-600 mt-0.5">📍</div>
+                            <div>
+                                <p class="text-sm text-blue-600 font-medium">State/Territory</p>
+                                <p class="font-semibold">New South Wales</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-blue-600 mt-0.5">💰</div>
+                            <div>
+                                <p class="text-sm text-blue-600 font-medium">Property Value</p>
+                                <p class="font-semibold">$750,000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requirements Section -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+                        ✅ Requirements
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0">✓</div>
+                            <div>
+                                <p class="font-medium">FIRB Application Fee ($6,350)</p>
+                                <p class="text-sm text-gray-600">Required before contract signing</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0">✓</div>
+                            <div>
+                                <p class="font-medium">Processing Time: 30 days</p>
+                                <p class="text-sm text-gray-600">Standard processing timeline</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0">✓</div>
+                            <div>
+                                <p class="font-medium">Documentation Required</p>
+                                <p class="text-sm text-gray-600">Passport, visa, property details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restrictions Section -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+                        ⚠️ Restrictions
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0">⚠️</div>
+                            <div>
+                                <p class="font-medium">Established dwellings prohibited except in exceptional FIRB-approved circumstances</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0">⚠️</div>
+                            <div>
+                                <p class="font-medium">Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations Section -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+                        💡 Recommendations
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0">💡</div>
+                            <div>
+                                <p class="font-medium">FIRB approval is mandatory - do not sign any contract before obtaining approval</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0">💡</div>
+                            <div>
+                                <p class="font-medium">Budget for foreign buyer stamp duty surcharges - see exact costs in the breakdown below</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Timeline -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+                        ⏱️ Processing Timeline
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                    <span class="text-green-600 text-sm">⏱️</span>
+                                </div>
+                                <h4 class="font-semibold text-green-800">Standard Processing</h4>
+                            </div>
+                            <p class="text-green-700 text-sm">30 days from receipt of complete application</p>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center">
+                                    <span class="text-amber-600 text-sm">⚡</span>
+                                </div>
+                                <h4 class="font-semibold text-amber-800">Expedited Processing</h4>
+                            </div>
+                            <p class="text-amber-700 text-sm">10 days (double the application fee)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
