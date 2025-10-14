@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Calculator, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2, Lock } from 'lucide-react';
+import { ArrowRight, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckCircle2, Lock } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
 import SampleReportModal from '@/components/SampleReportModal';
