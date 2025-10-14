@@ -184,7 +184,7 @@ export default function FIRBResultsEmail({
           </Section>
 
           {/* Restrictions */}
-          {eligibility.restrictions.length > 0 && (
+          {eligibility.restrictions && eligibility.restrictions.length > 0 && (
             <>
               <Hr style={hr} />
               <Section style={section}>
