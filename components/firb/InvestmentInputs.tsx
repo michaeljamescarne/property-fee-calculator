@@ -26,7 +26,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
 
   return (
     <Card className="border-2 border-primary/20 shadow-md rounded-2xl bg-white">
-      <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 border-b">
+      <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />
           {t('inputs.title') === 'FIRBCalculator.investmentAnalytics.inputs.title' 
