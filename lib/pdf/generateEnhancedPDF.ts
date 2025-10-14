@@ -34,6 +34,32 @@ export function generateEnhancedPDF(
   const margin = 20;
   let yPosition = margin;
 
+  // Add defensive defaults for translations to prevent undefined errors
+  const safeTranslations = {
+    title: translations?.title || 'FIRB Investment Analysis Report',
+    subtitle: translations?.subtitle || 'Comprehensive Property Investment Analysis',
+    page: translations?.page || 'Page',
+    generatedOn: translations?.generatedOn || 'Generated on',
+    sections: {
+      propertyDetails: translations?.sections?.propertyDetails || 'Property Details',
+      keyMetrics: translations?.sections?.keyMetrics || 'Key Investment Metrics',
+      costBreakdown: translations?.sections?.costBreakdown || 'Cost Breakdown',
+      investmentPerformance: translations?.sections?.investmentPerformance || 'Investment Performance',
+      cashFlow: translations?.sections?.cashFlow || 'Cash Flow Analysis',
+      projections: translations?.sections?.projections || '10-Year Projections',
+      comparison: translations?.sections?.comparison || 'Investment Comparison',
+      sensitivity: translations?.sections?.sensitivity || 'Sensitivity Analysis',
+      taxAnalysis: translations?.sections?.taxAnalysis || 'Tax Analysis',
+      recommendations: translations?.sections?.recommendations || 'Recommendations'
+    },
+    labels: {
+      overallVerdict: translations?.labels?.overallVerdict || 'Investment Rating',
+      value: translations?.labels?.value || 'Value',
+      deposit: translations?.labels?.deposit || 'Deposit',
+      ...translations?.labels
+    }
+  } as PDFTranslations;
+
   // Colors - Updated to match new blue color scheme
   const primaryColor: [number, number, number] = [59, 130, 246]; // Soft blue
   const accentColor: [number, number, number] = [96, 165, 250]; // Lighter blue
@@ -58,9 +84,9 @@ export function generateEnhancedPDF(
     const pageCount = (doc as any).internal.getNumberOfPages();
     doc.setFontSize(8);
     doc.setTextColor(150);
-    const pageText = locale === 'zh' ? `${translations.page}${pageCount}页` : `${translations.page} ${pageCount}`;
+    const pageText = locale === 'zh' ? `${safeTranslations.page}${pageCount}页` : `${safeTranslations.page} ${pageCount}`;
     doc.text(pageText, pageWidth / 2, pageHeight - 10, { align: 'center' });
-    doc.text(`${translations.generatedOn} ${formatDate(new Date(), locale === 'zh' ? 'zh-CN' : 'en-AU')}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+    doc.text(`${safeTranslations.generatedOn} ${formatDate(new Date(), locale === 'zh' ? 'zh-CN' : 'en-AU')}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
   };
 
   // Helper: Add section header
@@ -94,11 +120,11 @@ export function generateEnhancedPDF(
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(32);
   doc.setFont('helvetica', 'bold');
-  doc.text(translations.title, pageWidth / 2, 20, { align: 'center' });
+  doc.text(safeTranslations.title, pageWidth / 2, 20, { align: 'center' });
   
   doc.setFontSize(14);
   doc.setFont('helvetica', 'normal');
-  doc.text(translations.subtitle, pageWidth / 2, 32, { align: 'center' });
+  doc.text(safeTranslations.subtitle, pageWidth / 2, 32, { align: 'center' });
   doc.text(`${formatDate(new Date(), locale === 'zh' ? 'zh-CN' : 'en-AU')}`, pageWidth / 2, 42, { align: 'center' });
 
   yPosition = 65;
@@ -110,7 +136,7 @@ export function generateEnhancedPDF(
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(20);
   doc.setFont('helvetica', 'bold');
-  doc.text(`${analytics.recommendation.verdict.toUpperCase()} ${translations.labels.overallVerdict.toUpperCase()}`, pageWidth / 2, yPosition + 10, { align: 'center' });
+  doc.text(`${analytics.recommendation.verdict.toUpperCase()} ${safeTranslations.labels.overallVerdict?.toUpperCase() || 'INVESTMENT RATING'}`, pageWidth / 2, yPosition + 10, { align: 'center' });
   doc.setFontSize(36);
   doc.text(`${analytics.score.overall.toFixed(1)}/10`, pageWidth / 2, yPosition + 22, { align: 'center' });
   
@@ -118,7 +144,7 @@ export function generateEnhancedPDF(
   doc.setTextColor(0, 0, 0);
 
   // Property Details
-  addSectionHeader(translations.sections.propertyDetails);
+  addSectionHeader(safeTranslations.sections.propertyDetails);
   
   autoTable(doc, {
     startY: yPosition,
@@ -127,8 +153,8 @@ export function generateEnhancedPDF(
       ['Address', formData.propertyAddress || 'Not specified'],
       ['Property Type', formData.propertyType?.replace(/([A-Z])/g, ' $1').trim() || 'N/A'],
       ['State/Territory', formData.state || 'N/A'],
-      [translations.labels.value, fmt.currency(formData.propertyValue || 0)],
-      [translations.labels.deposit, `${formData.depositPercent}% (${fmt.currency((formData.propertyValue || 0) * (formData.depositPercent || 20) / 100)})`],
+      [safeTranslations.labels.value, fmt.currency(formData.propertyValue || 0)],
+      [safeTranslations.labels.deposit, `${formData.depositPercent}% (${fmt.currency((formData.propertyValue || 0) * (formData.depositPercent || 20) / 100)})`],
     ],
     theme: 'grid',
     headStyles: { fillColor: primaryColor, fontSize: 11 },
@@ -139,7 +165,7 @@ export function generateEnhancedPDF(
   yPosition = (doc as jsPDFWithAutoTable).lastAutoTable.finalY + 10;
 
   // Key Investment Metrics
-  addSectionHeader(translations.sections.keyMetrics);
+  addSectionHeader(safeTranslations.sections.keyMetrics);
   
   autoTable(doc, {
     startY: yPosition,
@@ -181,7 +207,7 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader(translations.sections.costBreakdown);
+  addSectionHeader(safeTranslations.sections.costBreakdown);
 
   // Total Investment
   doc.setFillColor(220, 220, 220);
@@ -252,7 +278,7 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader(translations.sections.investmentPerformance);
+  addSectionHeader(safeTranslations.sections.investmentPerformance);
 
   // Rental Analysis
   autoTable(doc, {
@@ -316,7 +342,7 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader(translations.sections.cashFlow);
+  addSectionHeader(safeTranslations.sections.cashFlow);
 
   // Annual Cash Flow
   autoTable(doc, {
@@ -378,7 +404,7 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader(translations.sections.projections);
+  addSectionHeader(safeTranslations.sections.projections);
 
   // Year-by-Year Table (first 10 years)
   const projectionData = analytics.yearByYear.slice(0, 10).map(year => [
@@ -435,7 +461,7 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader(translations.sections.comparison);
+  addSectionHeader(safeTranslations.sections.comparison);
 
   // Comparison Table
   autoTable(doc, {
@@ -463,7 +489,7 @@ export function generateEnhancedPDF(
 
   // Sensitivity Analysis
   checkPageBreak(80);
-  addSectionHeader(translations.sections.sensitivity);
+  addSectionHeader(safeTranslations.sections.sensitivity);
 
   // Vacancy Impact
   doc.setFontSize(11);
@@ -518,7 +544,7 @@ export function generateEnhancedPDF(
   yPosition = margin;
   addFooter();
 
-  addSectionHeader(translations.sections.taxAnalysis);
+  addSectionHeader(safeTranslations.sections.taxAnalysis);
 
   // Tax Deductions
   const taxDeductions = analytics.taxAnalysis.annualDeductions;
@@ -592,7 +618,7 @@ export function generateEnhancedPDF(
 
   // Final Recommendation
   checkPageBreak(60);
-  addSectionHeader(translations.sections.recommendations);
+  addSectionHeader(safeTranslations.sections.recommendations);
 
   // Verdict
   doc.setFillColor(...(analytics.score.overall >= 7 ? greenColor : analytics.score.overall >= 5.5 ? primaryColor : amberColor));
