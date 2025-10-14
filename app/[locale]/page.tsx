@@ -27,18 +27,18 @@ export default function HomePage() {
             <div className="text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-6">
                 <CheckCircle className="w-4 h-4" />
-                Trusted by 10,000+ foreign investors
+{t('hero.trustedBy')}
               </div>
               <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                Calculate Your Australian Property Investment Costs
+{t('hero.title')}
               </h1>
               <p className="text-xl text-foreground/70 mb-8 leading-relaxed">
-                Get instant FIRB eligibility checks, comprehensive cost breakdowns, and detailed investment analytics with ROI projections and cash flow analysis.
+{t('hero.description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" asChild className="text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all">
                   <Link href={`/${locale}/firb-calculator`}>
-                    Start Free Calculation <ArrowRight className="ml-2" />
+{t('hero.startCalculation')} <ArrowRight className="ml-2" />
                   </Link>
                 </Button>
                 <Button 
@@ -47,22 +47,22 @@ export default function HomePage() {
                   className="text-lg px-8 py-6 rounded-xl"
                   onClick={() => setShowSampleReport(true)}
                 >
-                  View Sample Report
+{t('hero.viewSampleReport')}
                 </Button>
               </div>
               {/* Trust badges */}
               <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <Shield className="w-4 h-4" />
-                  Free to use
+{t('hero.freeToUse')}
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4" />
-                  Results in 30 seconds
+{t('hero.resultsIn30Seconds')}
                 </div>
                 <div className="flex items-center gap-2">
                   <Lock className="w-4 h-4" />
-                  No signup required
+{t('hero.noSignupRequired')}
                 </div>
               </div>
             </div>
@@ -96,10 +96,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-5xl font-bold mb-6">
-              Everything You Need to Invest with Confidence
+              {t('featuresIntro.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Comprehensive tools and insights for foreign property investors in Australia
+              {t('featuresIntro.description')}
             </p>
           </div>
 

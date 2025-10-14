@@ -5,6 +5,20 @@
     "description": "Our advanced calculator helps international investors understand all associated fees and costs when purchasing property abroad.",
     "cta": "Calculate Fees Now",
     "learnMore": "Learn More",
+    "hero": {
+      "trustedBy": "Trusted by 10,000+ foreign investors",
+      "title": "Calculate Your Australian Property Investment Costs",
+      "description": "Get instant FIRB eligibility checks, comprehensive cost breakdowns, and detailed investment analytics with ROI projections and cash flow analysis.",
+      "startCalculation": "Start Free Calculation",
+      "viewSampleReport": "View Sample Report",
+      "freeToUse": "Free to use",
+      "resultsIn30Seconds": "Results in 30 seconds",
+      "noSignupRequired": "No signup required"
+    },
+    "featuresIntro": {
+      "title": "Everything You Need to Invest with Confidence",
+      "description": "Comprehensive tools and insights for foreign property investors in Australia"
+    },
     "features": {
       "title": "Why Choose Our Calculator",
       "accurate": "Accurate Calculations",

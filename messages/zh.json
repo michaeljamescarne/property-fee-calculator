@@ -5,6 +5,20 @@
     "description": "我们的高级计算器帮助国际投资者了解在海外购买房产时的所有相关费用和成本。",
     "cta": "立即计算费用",
     "learnMore": "了解更多",
+    "hero": {
+      "trustedBy": "受到10,000+海外投资者的信赖",
+      "title": "计算您的澳大利亚房产投资成本",
+      "description": "获得即时FIRB资格检查、全面的成本明细和详细的投资分析，包括投资回报率预测和现金流分析。",
+      "startCalculation": "开始免费计算",
+      "viewSampleReport": "查看示例报告",
+      "freeToUse": "免费使用",
+      "resultsIn30Seconds": "30秒内获得结果",
+      "noSignupRequired": "无需注册"
+    },
+    "featuresIntro": {
+      "title": "投资所需的一切，让您充满信心",
+      "description": "为海外房产投资者提供的全面工具和洞察"
+    },
     "features": {
       "title": "为什么选择我们的计算器",
       "accurate": "精确计算",
