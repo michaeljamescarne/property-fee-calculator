@@ -89,7 +89,7 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
 
   return (
     <Card className="shadow-lg border-blue-200/50 overflow-hidden">
-      <div className={`${headerStyles.bgClass} text-white rounded-t-lg`}>
+      <div className={`${headerStyles.bgClass} text-white rounded-t-lg -mt-6`}>
         <div className="px-6 py-6">
           <div className="flex items-center justify-between mb-2">
           <CardTitle className="text-2xl font-bold">{t('header')}</CardTitle>
