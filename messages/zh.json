@@ -697,6 +697,35 @@
         "pastPerformance": "过往表现不代表未来结果。"
       }
     }
+  },
+  "Nav": {
+    "home": "首页",
+    "calculator": "计算器",
+    "faq": "常见问题"
+  },
+  "Auth": {
+    "loginTitle": "登录您的账户",
+    "loginDescription": "我们将向您发送验证码以登录",
+    "emailLabel": "电子邮件地址",
+    "emailPlaceholder": "your@email.com",
+    "sendCodeButton": "发送验证码",
+    "sendingCode": "发送中...",
+    "codeLabel": "6位验证码",
+    "codePlaceholder": "000000",
+    "codeDescription": "请查看您的电子邮件获取6位验证码",
+    "verifyCodeButton": "验证码",
+    "verifying": "验证中...",
+    "changeEmail": "更改电子邮件",
+    "resendCode": "重新发送验证码",
+    "resendCooldown": "重新发送 ({seconds}秒)",
+    "codeExpires": "验证码将在10分钟后过期",
+    "successTitle": "欢迎回来！",
+    "successDescription": "认证成功",
+    "redirecting": "正在跳转到您的仪表板...",
+    "noPasswordNeeded": "无需密码。我们将通过电子邮件向您发送安全验证码。",
+    "freeSignup": "免费注册 • 无需信用卡",
+    "loginToUnlock": "登录以解锁",
+    "upgradeToUnlock": "升级以解锁"
   }
 }
 
