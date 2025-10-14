@@ -12,7 +12,31 @@
       "fast": "Instant Results",
       "fastDesc": "Calculate fees in seconds with our intelligent algorithm",
       "transparent": "Transparent Pricing",
-      "transparentDesc": "No hidden costs - see a complete breakdown of all fees"
+      "transparentDesc": "No hidden costs - see a complete breakdown of all fees",
+      "feature1": {
+        "badge": "Feature 01",
+        "title": "Know Your Eligibility Instantly",
+        "description": "Get immediate feedback on whether FIRB approval is required based on your citizenship status, visa type, and property details. No guesswork, just clear answers.",
+        "point1": "Instant eligibility determination",
+        "point2": "Clear explanations for all requirements",
+        "point3": "Identifies potential restrictions"
+      },
+      "feature2": {
+        "badge": "Feature 02",
+        "title": "Complete Cost Transparency",
+        "description": "See every fee, tax, and cost associated with your property purchase. From FIRB application fees to stamp duty, ongoing costs, and more.",
+        "point1": "FIRB fees calculated by property value",
+        "point2": "State-specific stamp duty & surcharges",
+        "point3": "Ongoing costs like land tax & insurance"
+      },
+      "feature3": {
+        "badge": "Feature 03",
+        "title": "Smart Investment Analytics",
+        "description": "Understand your investment potential with detailed ROI projections, cash flow analysis, and equity growth forecasts over 10+ years.",
+        "point1": "10-year ROI & cash flow projections",
+        "point2": "Equity growth & appreciation analysis",
+        "point3": "Risk assessment & sensitivity analysis"
+      }
     },
     "howItWorks": {
       "title": "How It Works",
@@ -772,5 +796,46 @@
     "freeSignup": "Free to sign up • No credit card required",
     "loginToUnlock": "Login to unlock",
     "upgradeToUnlock": "Upgrade to unlock"
+  },
+  "Dashboard": {
+    "title": "My Calculations",
+    "welcomeBack": "Welcome back, {email}",
+    "newCalculation": "New Calculation",
+    "searchPlaceholder": "Search by name or address...",
+    "sortBy": "Sort by...",
+    "sortDateDesc": "Newest First",
+    "sortDateAsc": "Oldest First",
+    "sortValueDesc": "Highest Value",
+    "sortValueAsc": "Lowest Value",
+    "sortName": "Name (A-Z)",
+    "filterBy": "Filter by...",
+    "allCalculations": "All Calculations",
+    "firbRequired": "FIRB Required",
+    "firbNotRequired": "No FIRB Required",
+    "prohibited": "Prohibited",
+    "favorites": "Favorites",
+    "noResultsTitle": "No calculations found matching your filters.",
+    "noResultsAction": "Clear filters to see all calculations",
+    "clearFilters": "Clear Filters",
+    "loading": "Loading your calculations...",
+    "emptyState": {
+      "title": "No Saved Calculations Yet",
+      "description": "Start by running a FIRB calculation. Your calculations will be automatically saved here for easy access later.",
+      "cta": "Start New Calculation"
+    },
+    "calculationCard": {
+      "favorite": "Favorite",
+      "unfavorite": "Unfavorite",
+      "rename": "Rename",
+      "delete": "Delete",
+      "open": "Open",
+      "firbRequired": "FIRB Required",
+      "firbNotRequired": "No FIRB Required",
+      "prohibited": "Prohibited",
+      "confirmDelete": "Are you sure you want to delete this calculation?",
+      "deleteSuccess": "Calculation deleted successfully",
+      "renamePrompt": "Enter new name for calculation:",
+      "renameSuccess": "Calculation renamed successfully"
+    }
   }
 }

@@ -5,6 +5,7 @@
 
 import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth/session';
+import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
@@ -16,6 +17,7 @@ export default async function DashboardPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const t = await getTranslations('Dashboard');
   
   // Check if user is authenticated
   const session = await getSession();
@@ -29,16 +31,16 @@ export default async function DashboardPage({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold mb-2">My Calculations</h1>
+          <h1 className="text-4xl font-bold mb-2">{t('title')}</h1>
           <p className="text-lg text-muted-foreground">
-            Welcome back, {session.user.email}
+            {t('welcomeBack', { email: session.user.email })}
           </p>
         </div>
         
         <Link href={`/${locale}/firb-calculator`}>
           <Button size="lg">
             <Plus className="mr-2 h-5 w-5" />
-            New Calculation
+            {t('newCalculation')}
           </Button>
         </Link>
       </div>

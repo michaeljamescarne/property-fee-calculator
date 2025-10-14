@@ -12,7 +12,31 @@
       "fast": "即时结果",
       "fastDesc": "使用我们的智能算法在几秒钟内计算费用",
       "transparent": "透明定价",
-      "transparentDesc": "没有隐藏成本 - 查看所有费用的完整明细"
+      "transparentDesc": "没有隐藏成本 - 查看所有费用的完整明细",
+      "feature1": {
+        "badge": "功能 01",
+        "title": "即时了解您的资格",
+        "description": "根据您的公民身份、签证类型和房产详情，立即获得是否需要FIRB批准的反馈。无需猜测，只有明确的答案。",
+        "point1": "即时资格判定",
+        "point2": "所有要求的清晰说明",
+        "point3": "识别潜在限制"
+      },
+      "feature2": {
+        "badge": "功能 02",
+        "title": "完全成本透明",
+        "description": "查看与您的房产购买相关的每项费用、税费和成本。从FIRB申请费到印花税、持续成本等。",
+        "point1": "按房产价值计算FIRB费用",
+        "point2": "各州特定的印花税和附加费",
+        "point3": "持续成本如土地税和保险"
+      },
+      "feature3": {
+        "badge": "功能 03",
+        "title": "智能投资分析",
+        "description": "通过详细的投资回报率预测、现金流分析和10年以上的资产增长预测，了解您的投资潜力。",
+        "point1": "10年投资回报率和现金流预测",
+        "point2": "资产增长和升值分析",
+        "point3": "风险评估和敏感性分析"
+      }
     },
     "howItWorks": {
       "title": "工作原理",
@@ -726,6 +750,47 @@
     "freeSignup": "免费注册 • 无需信用卡",
     "loginToUnlock": "登录以解锁",
     "upgradeToUnlock": "升级以解锁"
+  },
+  "Dashboard": {
+    "title": "我的计算",
+    "welcomeBack": "欢迎回来，{email}",
+    "newCalculation": "新建计算",
+    "searchPlaceholder": "按名称或地址搜索...",
+    "sortBy": "排序方式...",
+    "sortDateDesc": "最新优先",
+    "sortDateAsc": "最旧优先",
+    "sortValueDesc": "最高价值",
+    "sortValueAsc": "最低价值",
+    "sortName": "名称 (A-Z)",
+    "filterBy": "筛选...",
+    "allCalculations": "所有计算",
+    "firbRequired": "需要FIRB批准",
+    "firbNotRequired": "无需FIRB批准",
+    "prohibited": "禁止购买",
+    "favorites": "收藏夹",
+    "noResultsTitle": "未找到符合筛选条件的计算。",
+    "noResultsAction": "清除筛选以查看所有计算",
+    "clearFilters": "清除筛选",
+    "loading": "正在加载您的计算...",
+    "emptyState": {
+      "title": "尚无保存的计算",
+      "description": "从运行FIRB计算开始。您的计算将自动保存在此处，以便日后轻松访问。",
+      "cta": "开始新计算"
+    },
+    "calculationCard": {
+      "favorite": "收藏",
+      "unfavorite": "取消收藏",
+      "rename": "重命名",
+      "delete": "删除",
+      "open": "打开",
+      "firbRequired": "需要FIRB批准",
+      "firbNotRequired": "无需FIRB批准",
+      "prohibited": "禁止购买",
+      "confirmDelete": "您确定要删除此计算吗？",
+      "deleteSuccess": "计算已成功删除",
+      "renamePrompt": "输入计算的新名称：",
+      "renameSuccess": "计算已成功重命名"
+    }
   }
 }
 

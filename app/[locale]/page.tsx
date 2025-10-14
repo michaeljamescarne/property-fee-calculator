@@ -107,26 +107,26 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
-                Feature 01
+                {t('features.feature1.badge')}
               </div>
               <h3 className="text-4xl font-bold mb-6">
-                Know Your Eligibility Instantly
+                {t('features.feature1.title')}
               </h3>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Get immediate feedback on whether FIRB approval is required based on your citizenship status, visa type, and property details. No guesswork, just clear answers.
+                {t('features.feature1.description')}
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>Instant eligibility determination</span>
+                  <span>{t('features.feature1.point1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>Clear explanations for all requirements</span>
+                  <span>{t('features.feature1.point2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>Identifies potential restrictions</span>
+                  <span>{t('features.feature1.point3')}</span>
                 </li>
               </ul>
             </div>
@@ -154,26 +154,26 @@ export default function HomePage() {
             </div>
             <div className="order-1 lg:order-2">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
-                Feature 02
+                {t('features.feature2.badge')}
               </div>
               <h3 className="text-4xl font-bold mb-6">
-                Complete Cost Transparency
+                {t('features.feature2.title')}
               </h3>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                See every fee, tax, and cost associated with your property purchase. From FIRB application fees to stamp duty, ongoing costs, and more.
+                {t('features.feature2.description')}
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>FIRB fees calculated by property value</span>
+                  <span>{t('features.feature2.point1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>State-specific stamp duty & surcharges</span>
+                  <span>{t('features.feature2.point2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>Ongoing costs like land tax & insurance</span>
+                  <span>{t('features.feature2.point3')}</span>
                 </li>
               </ul>
             </div>
@@ -183,26 +183,26 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
-                Feature 03
+                {t('features.feature3.badge')}
               </div>
               <h3 className="text-4xl font-bold mb-6">
-                Smart Investment Analytics
+                {t('features.feature3.title')}
               </h3>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Understand your investment potential with detailed ROI projections, cash flow analysis, and equity growth forecasts over 10+ years.
+                {t('features.feature3.description')}
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>10-year ROI & cash flow projections</span>
+                  <span>{t('features.feature3.point1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>Equity growth & appreciation analysis</span>
+                  <span>{t('features.feature3.point2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <span>Risk assessment & sensitivity analysis</span>
+                  <span>{t('features.feature3.point3')}</span>
                 </li>
               </ul>
             </div>

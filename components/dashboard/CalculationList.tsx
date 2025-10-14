@@ -6,6 +6,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { 
@@ -26,6 +27,7 @@ interface CalculationListProps {
 }
 
 export default function CalculationList({ locale }: CalculationListProps) {
+  const t = useTranslations('Dashboard');
   const [calculations, setCalculations] = useState<SavedCalculation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -133,7 +135,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by name or address..."
+            placeholder={t('searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -143,14 +145,14 @@ export default function CalculationList({ locale }: CalculationListProps) {
         <div className="flex gap-2">
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by..." />
+              <SelectValue placeholder={t('sortBy')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="date-desc">Newest First</SelectItem>
-              <SelectItem value="date-asc">Oldest First</SelectItem>
-              <SelectItem value="value-desc">Highest Value</SelectItem>
-              <SelectItem value="value-asc">Lowest Value</SelectItem>
-              <SelectItem value="name">Name (A-Z)</SelectItem>
+              <SelectItem value="date-desc">{t('sortDateDesc')}</SelectItem>
+              <SelectItem value="date-asc">{t('sortDateAsc')}</SelectItem>
+              <SelectItem value="value-desc">{t('sortValueDesc')}</SelectItem>
+              <SelectItem value="value-asc">{t('sortValueAsc')}</SelectItem>
+              <SelectItem value="name">{t('sortName')}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -160,9 +162,9 @@ export default function CalculationList({ locale }: CalculationListProps) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Calculations</SelectItem>
-              <SelectItem value="eligible">Eligible Only</SelectItem>
-              <SelectItem value="review-required">Review Required</SelectItem>
+              <SelectItem value="all">{t('allCalculations')}</SelectItem>
+              <SelectItem value="eligible">{t('firbNotRequired')}</SelectItem>
+              <SelectItem value="review-required">{t('firbRequired')}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -170,7 +172,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
             variant={showFavoritesOnly ? 'default' : 'outline'}
             onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
           >
-            Favorites
+            {t('favorites')}
           </Button>
         </div>
       </div>
@@ -179,7 +181,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
       {calculations.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-muted-foreground">
-            No calculations found matching your filters.
+            {t('noResultsTitle')}
           </p>
           <Button
             variant="link"
@@ -189,7 +191,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
               setShowFavoritesOnly(false);
             }}
           >
-            Clear filters
+            {t('clearFilters')}
           </Button>
         </div>
       ) : (
