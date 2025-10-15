@@ -8,6 +8,7 @@ import { ArrowRight, Shield, FileText, CheckCircle, Clock, AlertTriangle, CheckC
 import { useState } from 'react';
 import Image from 'next/image';
 import SampleReportModal from '@/components/SampleReportModal';
+import { CalculatorSchema, OrganizationSchema } from '@/components/seo/StructuredData';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -15,9 +16,14 @@ export default function HomePage() {
   const [showSampleReport, setShowSampleReport] = useState(false);
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50/30 overflow-hidden">
+    <>
+      {/* SEO Structured Data */}
+      <CalculatorSchema />
+      <OrganizationSchema />
+      
+      <main className="min-h-screen">
+        {/* Hero Section */}
+        <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50/30 overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 bg-grid-blue-100/20 [mask-image:radial-gradient(white,transparent_80%)]"></div>
         
@@ -465,8 +471,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Sample Report Modal */}
-      <SampleReportModal isOpen={showSampleReport} onClose={() => setShowSampleReport(false)} />
-    </main>
+        {/* Sample Report Modal */}
+        <SampleReportModal isOpen={showSampleReport} onClose={() => setShowSampleReport(false)} />
+      </main>
+    </>
   );
 }
