@@ -315,3 +315,62 @@ export function isAffectedByTemporaryBan(
   return isAffectedProperty && isAffectedCitizenship;
 }
 
+// Penalty Information (2025 Verified)
+// Source: Foreign Acquisitions and Takeovers Act 1975, Treasury announcements
+// Last Verified: October 16, 2025
+// Note: Penalties doubled effective January 1, 2023
+
+export const PENALTY_UNIT_VALUE_2025 = 222; // Current penalty unit value (as of July 1, 2025)
+
+export const FIRB_PENALTIES = {
+  // Civil Penalties (in penalty units)
+  civil: {
+    individuals: {
+      maxPenaltyUnits: 30000, // Up to 30,000 penalty units
+      maxAmount: 30000 * PENALTY_UNIT_VALUE_2025, // $6,660,000
+      description: "Failure to advertise dwellings, unauthorized acquisitions"
+    },
+    corporations: {
+      maxPenaltyUnits: 300000, // Up to 300,000 penalty units  
+      maxAmount: 300000 * PENALTY_UNIT_VALUE_2025, // $66,600,000
+      description: "Failure to advertise dwellings, unauthorized acquisitions"
+    }
+  },
+  
+  // Criminal Penalties
+  criminal: {
+    maxImprisonment: 10, // Up to 10 years imprisonment
+    description: "Serious breaches of foreign investment laws"
+  },
+  
+  // Unauthorized Acquisition Penalties
+  unauthorizedAcquisition: {
+    calculation: "Greater of: double capital gain, 50% acquisition consideration, or 50% market value",
+    description: "For foreign persons acquiring property without FIRB approval"
+  },
+  
+  // Vacancy Fee Non-Compliance
+  vacancyFeeNonCompliance: {
+    maxPenalty: 500 * PENALTY_UNIT_VALUE_2025, // $111,000
+    description: "Failure to comply with notice or vacancy fee return requirements"
+  },
+  
+  // Forced Divestment
+  forcedDivestment: {
+    description: "Foreign persons may be forced to sell property, often at a loss",
+    note: "No guarantee of recovering all costs"
+  }
+};
+
+// Vacancy Fee Information (2025 Verified)
+// Source: ATO Foreign Investment Guidelines
+// Last Verified: October 16, 2025
+export const VACANCY_FEE_INFO = {
+  // Vacancy fees doubled as of April 9, 2024
+  doubledAsOf: new Date('2024-04-09'),
+  calculation: "Based on foreign investment application fee paid at acquisition",
+  requirement: "Property must be occupied or genuinely available for rent for minimum 183 days per year",
+  returnDeadline: "Within 30 days from end of each vacancy year",
+  penaltyForLateReturn: "Imposition of vacancy fee itself"
+};
+

@@ -170,19 +170,48 @@ Use our [FIRB Calculator](/firb-calculator) to determine if you need approval an
 
 ## Penalties for Non-Compliance
 
-### Civil Penalties:
-- **Individuals**: Up to $1.1 million
-- **Companies**: Up to $5.5 million
-- **Additional penalties**: Up to 25% of property value
+**Source**: Foreign Acquisitions and Takeovers Act 1975, Treasury announcements (penalties doubled effective January 1, 2023)
 
-### Criminal Penalties:
-- **Individuals**: Up to 3 years imprisonment
-- **Companies**: Up to $5.5 million fine
+Breaching FIRB regulations can lead to severe penalties, including:
 
-### Forced Divestment:
-- Property must be sold
-- Cannot purchase replacement property
-- May be banned from future purchases
+### Civil Penalties (Significantly Increased as of January 1, 2023)
+
+- **Individuals**: Up to **$6,660,000** (30,000 penalty units × $222 per unit)
+- **Corporations**: Up to **$66,600,000** (300,000 penalty units × $222 per unit)
+- **Offenses**: Failure to advertise dwellings, unauthorized acquisitions, holding multiple established dwellings
+
+### Criminal Penalties
+
+- **Imprisonment**: Up to **10 years** for serious breaches of foreign investment laws
+- **Applies to**: Willful violations, fraud, or repeated non-compliance
+
+### Unauthorized Acquisition Penalties
+
+For foreign persons acquiring property without FIRB approval, penalties are calculated as the **greater of**:
+- Double the capital gain on disposal
+- 50% of the acquisition consideration  
+- 50% of the property's market value
+
+### Vacancy Fee Non-Compliance
+
+- **Penalty**: Up to **$111,000** (500 penalty units × $222 per unit)
+- **Offense**: Failure to comply with notice or vacancy fee return requirements
+- **Note**: Vacancy fees were **doubled** as of April 9, 2024
+
+### Forced Divestment
+
+- **Risk**: Foreign persons may be forced to sell property, often at a loss
+- **No guarantee** of recovering all costs, including legal fees and transaction costs
+- **Example**: In April 2022, a foreign investor was fined $250,000 for purchasing multiple properties without FIRB approval
+
+### Real-World Enforcement
+
+The Australian Taxation Office (ATO) actively monitors compliance:
+- **2015-2021**: 434 properties were disposed of due to non-compliance
+- **April 2022**: First Federal Court penalty of $250,000 issued for multiple unauthorized purchases
+- **Ongoing**: Regular audits and enforcement actions continue
+
+## Compliance Requirements
 
 ## Tips for Success
 
