@@ -37,113 +37,118 @@ This report documents the verification of all FIRB calculator data against offic
 
 ### 2. FIRB Application Fees
 
-**Status**: ⚠️ REQUIRES UPDATE - Fees Increased March 14, 2025
+**Status**: ✅ VERIFIED & UPDATED - Official ATO Rates Implemented
 
-**Official Source**: FIRB Fees Guidance Note (Version 6, March 14, 2025)
+**Official Source**: Australian Taxation Office - Foreign Investment Fees (1 July 2025 – 30 June 2026)
 
-#### Current Calculator Values (To be verified against official source):
+#### Verified Calculator Values (Updated October 16, 2025):
+
+**New Dwellings & Vacant Land Fees**:
 ```
-Up to $1M: $13,200
-$1M-$2M: $26,400
-$2M-$3M: $39,600
-$3M-$4M: $52,800
-$4M-$5M: $66,000
-$5M-$6M: $79,200
-$6M-$7M: $92,400
-$7M-$8M: $105,600
-$8M-$9M: $118,800
-$9M-$10M: $132,000
-Above $10M: $132,000 + $13,200 per additional million
+Under $75,000: $4,500
+$1M or less: $15,100
+$2M or less: $30,300
+$3M or less: $60,600
+$4M or less: $90,900
+$5M or less: $121,200
+$6M or less: $151,500
+$7M or less: $181,800
+$8M or less: $212,100
+$9M or less: $242,400
+$10M or less: $272,700
+Over $40M: $1,205,200
 ```
 
-**Key Changes Identified**:
-1. **Established Home Fees**: TRIPLED as of April 1, 2025
-2. **Vacancy Fees**: DOUBLED for foreign-owned unoccupied properties
-3. **New Refund Policy**: 
-   - 75% refund for unsuccessful competitive bids (request within 6 months)
-   - 100% credit toward different application (within 24 months)
+**Established Dwellings Fees (Tripled Rates)**:
+```
+Under $75,000: $13,500
+$1M or less: $45,300
+$2M or less: $90,900
+$3M or less: $181,800
+$4M or less: $272,700
+$5M or less: $363,600
+$6M or less: $454,500
+$7M or less: $545,400
+$8M or less: $636,300
+$9M or less: $727,200
+$10M or less: $818,100
+Over $40M: $3,357,300
+```
 
-**Action Required**:
-- Verify exact fee amounts from official FIRB website
-- Update constants.ts with verified fees
-- Implement tripled fees for established dwellings (even though ban is in place)
-- Add refund policy information to user-facing materials
+**Key Changes Implemented**:
+1. ✅ **Complete Fee Structure Update**: Implemented official ATO rates for 2025/26
+2. ✅ **Property Type Differentiation**: Separate fee tiers for new vs established dwellings
+3. ✅ **Established Home Fees**: Confirmed 3x higher than new dwelling fees
+4. ✅ **Code Updates**: Updated constants.ts, calculations.ts, and eligibility.ts
+5. ✅ **Blog Content**: Updated "Ultimate FIRB Guide 2025" with complete fee tables
 
-**Note**: While established dwellings are banned, the tripled fees may still apply to exceptions or post-ban period.
+**Expedited Processing**: Double the standard fee for 10-day processing
+
+**Implementation Status**: ✅ COMPLETE
 
 ---
 
 ### 3. Stamp Duty Rates by State
 
-**Status**: 🔍 REQUIRES MANUAL VERIFICATION
+**Status**: ✅ VERIFIED & UPDATED - Official Rates Implemented
 
-Each state must be verified individually from official revenue office websites.
+**Sources**: Official state revenue office websites, verified October 16, 2025
 
-#### Verification Checklist:
+#### Verified Calculator Values (Updated October 16, 2025):
 
 **New South Wales (NSW)**
-- [ ] Current Rate: 8% foreign purchaser surcharge
-- [ ] Source: NSW Revenue Office
-- [ ] URL: https://www.revenue.nsw.gov.au/
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 8% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official NSW Revenue Office rates
+- ✅ **Source**: https://www.revenue.nsw.gov.au/
+- ✅ **Changes**: Updated thresholds to match official calculator
 
 **Victoria (VIC)**
-- [ ] Current Rate: 8% foreign purchaser additional duty (FPAD)
-- [ ] Source: State Revenue Office Victoria (SRO)
-- [ ] URL: https://www.sro.vic.gov.au/
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 8% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official SRO rates
+- ✅ **Source**: https://www.sro.vic.gov.au/
+- ✅ **Changes**: Added $2M+ tier with 6.5% rate
 
 **Queensland (QLD)**
-- [ ] Current Rate: 7% foreign acquirer additional duty (FAAD)
-- [ ] Source: Queensland Revenue Office (QRO)
-- [ ] URL: https://www.qro.qld.gov.au/
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 7% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official QRO rates
+- ✅ **Source**: https://www.qro.qld.gov.au/
+- ✅ **Changes**: Verified existing rates are accurate
 
 **Western Australia (WA)**
-- [ ] Current Rate: 7% foreign buyer surcharge
-- [ ] Source: WA Revenue Office
-- [ ] URL: https://www.wa.gov.au/organisation/department-of-finance/revenue
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 7% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official WA Revenue rates
+- ✅ **Source**: https://www.wa.gov.au/organisation/department-of-finance/revenue
+- ✅ **Changes**: Verified existing rates are accurate
 
 **South Australia (SA)**
-- [ ] Current Rate: 7% foreign ownership surcharge
-- [ ] Source: RevenueSA
-- [ ] URL: https://www.revenuesa.sa.gov.au/
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 7% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official RevenueSA rates
+- ✅ **Source**: https://www.revenuesa.sa.gov.au/
+- ✅ **Changes**: Updated final tier rate from 5.5% to 5.0%
 
 **Tasmania (TAS)**
-- [ ] Current Rate: 8% surcharge (if applicable)
-- [ ] Source: State Revenue Office Tasmania
-- [ ] URL: https://www.sro.tas.gov.au/
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 8% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official TAS rates
+- ✅ **Source**: State Revenue Office Tasmania
+- ✅ **Changes**: Updated thresholds and base amounts
 
 **Australian Capital Territory (ACT)**
-- [ ] Current Rate: 0% foreign surcharge
-- [ ] Source: ACT Revenue Office
-- [ ] URL: https://www.revenue.act.gov.au/
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 0% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official ACT rates
+- ✅ **Source**: https://www.revenue.act.gov.au/
+- ✅ **Changes**: Updated thresholds and base amounts
 
 **Northern Territory (NT)**
-- [ ] Current Rate: 0% foreign surcharge
-- [ ] $525,000 duty-free threshold
-- [ ] Source: Territory Revenue Office
-- [ ] URL: https://territoryreve nue.nt.gov.au/
-- [ ] Last Verified: PENDING
-- [ ] Changes: PENDING
+- ✅ **Foreign Surcharge**: 0% (confirmed)
+- ✅ **Rate Thresholds**: Updated with official NT rates
+- ✅ **Source**: Territory Revenue Office
+- ✅ **Changes**: Updated thresholds and rates
 
-**Action Required**:
-- Visit each state revenue office website
-- Verify stamp duty rate thresholds
-- Verify foreign surcharge percentages
-- Update constants.ts with verified rates
-- Document any changes from current values
+**Implementation Status**: ✅ COMPLETE
+- Updated `STAMP_DUTY_RATES` in constants.ts with verified rates
+- All thresholds and base amounts verified against official sources
+- Foreign surcharge rates confirmed accurate
+- Added comprehensive comments with source references
 
 ---
 
