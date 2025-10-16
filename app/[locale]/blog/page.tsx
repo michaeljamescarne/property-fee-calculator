@@ -58,6 +58,56 @@ const blogPosts = [
     category: 'Property Types',
     featured: false,
     tags: ['New Property', 'Established Property', 'FIRB Rules']
+  },
+  {
+    slug: 'sydney-property-investment-calculator-2025',
+    title: 'Sydney Property Investment Calculator 2025: Complete Foreign Buyer Guide',
+    excerpt: 'Comprehensive guide to Sydney property investment costs, FIRB requirements, and ROI calculations for foreign investors.',
+    date: '2025-01-03',
+    readTime: '12 min read',
+    category: 'City Guides',
+    featured: false,
+    tags: ['Sydney', 'Property Investment', 'Foreign Buyers']
+  },
+  {
+    slug: 'melbourne-property-investment-guide',
+    title: 'Melbourne Property Investment Guide: Foreign Buyer\'s Complete 2025 Handbook',
+    excerpt: 'Comprehensive guide to Melbourne property investment, including costs, FIRB requirements, and investment strategies.',
+    date: '2025-01-01',
+    readTime: '11 min read',
+    category: 'City Guides',
+    featured: false,
+    tags: ['Melbourne', 'Property Investment', 'Foreign Buyers']
+  },
+  {
+    slug: 'brisbane-foreign-investment-property',
+    title: 'Brisbane Foreign Investment Property: Complete 2025 Guide',
+    excerpt: 'Comprehensive guide to Brisbane property investment for foreign buyers, including costs, FIRB requirements, and opportunities.',
+    date: '2024-12-28',
+    readTime: '10 min read',
+    category: 'City Guides',
+    featured: false,
+    tags: ['Brisbane', 'Foreign Investment', 'Property Guide']
+  },
+  {
+    slug: 'firb-fees-breakdown-2025',
+    title: 'FIRB Fees Breakdown 2025: Complete Foreign Investment Cost Guide',
+    excerpt: 'Comprehensive breakdown of FIRB application fees, processing costs, and total investment expenses for foreign property buyers.',
+    date: '2024-12-25',
+    readTime: '9 min read',
+    category: 'Costs & Fees',
+    featured: false,
+    tags: ['FIRB Fees', 'Foreign Investment', 'Cost Breakdown']
+  },
+  {
+    slug: 'australian-property-roi-calculator',
+    title: 'Australian Property ROI Calculator: Complete Investment Analysis Guide',
+    excerpt: 'Comprehensive guide to calculating property investment returns, rental yields, and capital growth for Australian real estate.',
+    date: '2024-12-22',
+    readTime: '13 min read',
+    category: 'Investment Analysis',
+    featured: false,
+    tags: ['ROI Calculator', 'Property Investment', 'Investment Analysis']
   }
 ];
 
