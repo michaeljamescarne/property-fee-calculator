@@ -2,6 +2,8 @@
 
 *Last updated: 15 January 2025 | 12 min read*
 
+*This article has been updated with the latest FIRB regulations and policy changes.*
+
 Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn't just recommended—it's mandatory. This comprehensive guide breaks down everything you need to know about FIRB approval, fees, and compliance in 2025.
 
 ## What is FIRB and Why Does It Matter?
