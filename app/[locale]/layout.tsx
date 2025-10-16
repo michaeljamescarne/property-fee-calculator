@@ -17,7 +17,7 @@ export async function generateMetadata({
   const isZh = locale === 'zh';
   
   return {
-    metadataBase: new URL('https://aupropertyinvestment.com'),
+    metadataBase: new URL('https://propertycosts.com.au'),
     title: {
       default: isZh 
         ? 'FIRB计算器 - 澳大利亚房产投资费用计算 | 外国投资审批'
@@ -47,7 +47,7 @@ export async function generateMetadata({
       description: isZh
         ? '免费计算FIRB费用、印花税和投资回报率。为外国投资者提供即时资格检查和详细成本分析。'
         : 'Calculate FIRB fees, stamp duty, and ROI for free. Instant eligibility checks and detailed cost analysis for foreign investors.',
-      url: `https://aupropertyinvestment.com/${locale}`,
+      url: `https://propertycosts.com.au/${locale}`,
       siteName: 'AU Property Investment',
       locale: isZh ? 'zh_CN' : 'en_AU',
       type: 'website',
@@ -67,10 +67,10 @@ export async function generateMetadata({
       images: ['/og-calculator-preview.png']
     },
     alternates: {
-      canonical: `https://aupropertyinvestment.com/${locale}`,
+      canonical: `https://propertycosts.com.au/${locale}`,
       languages: {
-        'en-AU': 'https://aupropertyinvestment.com/en',
-        'zh-CN': 'https://aupropertyinvestment.com/zh'
+        'en-AU': 'https://propertycosts.com.au/en',
+        'zh-CN': 'https://propertycosts.com.au/zh'
       }
     },
     robots: {

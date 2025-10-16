@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://aupropertyinvestment.com'; // Update with actual domain
+  const baseUrl = 'https://propertycosts.com.au'; // Update with actual domain
   const lastModified = new Date();
   
   return [

@@ -25,7 +25,7 @@ export function CalculatorSchema() {
       "Cash flow analysis",
       "Equity growth projections"
     ],
-    "url": "https://aupropertyinvestment.com",
+    "url": "https://propertycosts.com.au",
     "provider": {
       "@type": "Organization",
       "name": "AU Property Investment"
@@ -45,7 +45,7 @@ export function OrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "AU Property Investment",
-    "url": "https://aupropertyinvestment.com",
+    "url": "https://propertycosts.com.au",
     "logo": "https://aupropertyinvestment.com/logo.png",
     "description": "Free FIRB calculator and investment analytics for foreign property investors in Australia",
     "sameAs": [

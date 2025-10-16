@@ -8,7 +8,7 @@ export async function GET() {
   const context = {
     tool: "FIRB Property Investment Calculator",
     purpose: "Calculate fees and analyze investment for foreign buyers of Australian property",
-    url: "https://aupropertyinvestment.com",
+    url: "https://propertycosts.com.au",
     free: true,
     languages: ["English", "Chinese (Simplified)"],
     features: [
