@@ -65,7 +65,6 @@ export default function BlogPage() {
   const t = useTranslations('Blog');
 
   const featuredPosts = blogPosts.filter(post => post.featured);
-  const regularPosts = blogPosts.filter(post => !post.featured);
 
   return (
     <main className="container mx-auto px-4 py-12">

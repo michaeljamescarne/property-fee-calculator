@@ -9,7 +9,19 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 // Mock blog post data - will be replaced with dynamic content from markdown files
-const blogPosts: Record<string, any> = {
+interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: string;
+  featured: boolean;
+  tags: string[];
+  content: string;
+}
+
+const blogPosts: Record<string, BlogPost> = {
   'ultimate-firb-guide-2025': {
     slug: 'ultimate-firb-guide-2025',
     title: 'Ultimate FIRB Guide 2025: Complete Foreign Investment Rules',
@@ -459,9 +471,9 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <h3 className="text-2xl font-bold mb-6">{t('relatedPosts')}</h3>
           <div className="grid md:grid-cols-2 gap-6">
             {Object.values(blogPosts)
-              .filter((relatedPost: any) => relatedPost.slug !== slug)
+              .filter((relatedPost: BlogPost) => relatedPost.slug !== slug)
               .slice(0, 2)
-              .map((relatedPost: any) => (
+              .map((relatedPost: BlogPost) => (
                 <Card key={relatedPost.slug} className="group hover:shadow-lg transition-all duration-300">
                   <CardHeader>
                     <Badge variant="secondary" className="text-xs w-fit mb-2">
