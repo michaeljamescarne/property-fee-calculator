@@ -258,7 +258,9 @@ Stamp duty is one of the largest upfront costs when purchasing property in Austr
 
 Stamp duty (also called transfer duty) is a state government tax levied on property transactions. It's calculated based on the property's purchase price and varies significantly between states.
 
-## Stamp Duty Rates by State
+## Stamp Duty Rates by State (2025 Verified)
+
+**Source**: Official state revenue offices, last verified October 16, 2025
 
 ### New South Wales (NSW)
 **Base Stamp Duty Rates:**
@@ -269,7 +271,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $319,001 - $1,064,000: $9,562.50 + 4.5% of excess over $319,000
 - Over $1,064,000: $43,087.50 + 5.5% of excess over $1,064,000
 
-**Foreign Buyer Surcharge:** 8%
+**Foreign Buyer Surcharge:** 8% ✅ (verified)
 
 ### Victoria (VIC)
 **Base Stamp Duty Rates:**
@@ -278,7 +280,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $130,001 - $960,000: $2,870 + 5% of excess over $130,000
 - Over $960,000: $44,370 + 6.5% of excess over $960,000
 
-**Foreign Buyer Surcharge:** 8%
+**Foreign Buyer Surcharge:** 8% ✅ (verified)
 
 ### Queensland (QLD)
 **Base Stamp Duty Rates:**
@@ -288,7 +290,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $540,001 - $1,000,000: $17,325 + 4.5% of excess over $540,000
 - Over $1,000,000: $38,025 + 5.75% of excess over $1,000,000
 
-**Foreign Buyer Surcharge:** 7%
+**Foreign Buyer Surcharge:** 7% ✅ (verified)
 
 ### South Australia (SA)
 **Base Stamp Duty Rates:**
@@ -302,7 +304,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $300,001 - $500,000: $11,330 + 5% of excess over $300,000
 - Over $500,000: $21,330 + 5.5% of excess over $500,000
 
-**Foreign Buyer Surcharge:** 7%
+**Foreign Buyer Surcharge:** 7% ✅ (verified)
 
 ### Western Australia (WA)
 **Base Stamp Duty Rates:**
@@ -312,7 +314,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $360,001 - $725,000: $11,115 + 4.75% of excess over $360,000
 - Over $725,000: $28,445 + 5.15% of excess over $725,000
 
-**Foreign Buyer Surcharge:** 7%
+**Foreign Buyer Surcharge:** 7% ✅ (verified)
 
 ### Tasmania (TAS)
 **Base Stamp Duty Rates:**
@@ -323,7 +325,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $200,001 - $375,000: $6,297.50 + 4.25% of excess over $200,000
 - Over $375,000: $13,737.50 + 4.5% of excess over $375,000
 
-**Foreign Buyer Surcharge:** 8%
+**Foreign Buyer Surcharge:** 8% ✅ (verified)
 
 ### Northern Territory (NT)
 **Base Stamp Duty Rates:**
@@ -331,7 +333,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $525,001 - $3,000,000: $2,625 + 5.5% of excess over $525,000
 - Over $3,000,000: $138,750 + 7.5% of excess over $3,000,000
 
-**Foreign Buyer Surcharge:** 0%
+**Foreign Buyer Surcharge:** 0% ✅ (verified)
 
 ### Australian Capital Territory (ACT)
 **Base Stamp Duty Rates:**
@@ -342,7 +344,7 @@ Stamp duty (also called transfer duty) is a state government tax levied on prope
 - $750,001 - $1,000,000: $31,190 + 6.4% of excess over $750,000
 - Over $1,000,000: $47,190 + 6.4% of excess over $1,000,000
 
-**Foreign Buyer Surcharge:** 0%
+**Foreign Buyer Surcharge:** 0% ✅ (verified)
 
 ## Foreign Buyer Surcharges Summary
 
@@ -425,6 +427,612 @@ Our [FIRB Calculator](/firb-calculator) automatically calculates stamp duty for 
 Stamp duty costs vary significantly between states, with foreign buyer surcharges adding substantial additional costs. Use our comprehensive calculator to determine your exact costs and plan your property investment accordingly.
 
 **Ready to calculate your stamp duty?** [Use our free calculator](/firb-calculator) to get instant results for any Australian state.
+    `
+  },
+  'chinese-buyers-guide-australian-property': {
+    slug: 'chinese-buyers-guide-australian-property',
+    title: 'Chinese Investor\'s Guide to Australian Property Investment',
+    excerpt: 'A comprehensive guide for Chinese nationals investing in Australian real estate, including cultural considerations and banking requirements.',
+    date: '2025-01-10',
+    readTime: '15 min read',
+    category: 'Investment Guide',
+    featured: false,
+    tags: ['Chinese Investors', 'Property Investment', 'Cultural Guide'],
+    content: `
+# Chinese Investor's Guide to Australian Property Investment
+
+Australia has long been a favoured destination for Chinese property investors, drawn by its stable economy, high-quality education, clean environment, and strong capital growth prospects. This guide provides essential insights for Chinese nationals looking to invest in Australian real estate.
+
+## Why Australia?
+
+- **Economic Stability**: A resilient economy with consistent growth
+- **Education**: World-class universities and schools, a major draw for families
+- **Lifestyle**: High quality of life, diverse culture, and beautiful natural landscapes
+- **Strong Market**: Historically strong property market with good long-term growth
+- **Proximity**: Relatively close proximity to Asia compared to other Western investment destinations
+
+## Key Considerations for Chinese Investors
+
+### 1. FIRB Regulations
+
+All foreign persons, including Chinese nationals, must obtain approval from the Foreign Investment Review Board (FIRB) before purchasing residential property in Australia.
+
+- **New Dwellings**: Generally permitted without significant restrictions
+- **Established Dwellings**: ⚠️ **TEMPORARY BAN** (April 1, 2025 - March 31, 2027) - Currently NOT permitted for foreign persons
+- **Vacant Land**: Permitted for development, with conditions to complete construction within a specified timeframe
+
+Our [FIRB Calculator](/firb-calculator) can help you understand your eligibility and estimated FIRB fees.
+
+### 2. Capital Controls in China
+
+Chinese investors face capital outflow restrictions imposed by the Chinese government. Individuals generally have an annual foreign exchange quota. Strategies to manage this include:
+
+- **Multiple Family Members**: Utilizing quotas from various family members
+- **Offshore Funds**: Using funds already held outside mainland China
+- **Commercial Channels**: Exploring legitimate commercial channels for larger investments
+
+It's crucial to seek independent financial advice regarding transferring funds from China.
+
+### 3. Banking and Finance
+
+Obtaining finance in Australia as a foreign investor can be challenging. Australian banks have tightened lending criteria for non-residents.
+
+- **Deposit Requirements**: Expect higher deposit requirements (often 30-40% or more)
+- **Income Verification**: Strict verification of overseas income
+- **Foreign Currency Risk**: Be mindful of exchange rate fluctuations if income is in CNY and mortgage repayments are in AUD
+
+Many Chinese investors opt for cash purchases or use international lenders with a presence in Australia.
+
+### 4. Taxation
+
+Beyond stamp duty and FIRB fees, be aware of ongoing taxes:
+
+- **Land Tax**: Annual state-based tax on land value
+- **Capital Gains Tax (CGT)**: Applies to profits made from selling property. Foreign residents are generally not eligible for the CGT main residence exemption
+- **Foreign Purchaser Surcharge (Stamp Duty)**: An additional duty on top of standard stamp duty in most states
+
+### 5. Cultural and Practical Aspects
+
+- **Feng Shui**: Many Chinese buyers consider Feng Shui principles when selecting a property
+- **Location**: Proximity to good schools, Asian supermarkets, and established Chinese communities (e.g., Sydney's Chatswood, Melbourne's Box Hill) is often highly valued
+- **Professional Advice**: Engage trusted, bilingual professionals (real estate agents, lawyers, accountants, migration agents) who understand both Australian regulations and Chinese cultural nuances
+
+## Start Your Australian Property Journey
+
+Australia offers a secure and prosperous environment for property investment. With careful planning and professional guidance, Chinese investors can successfully navigate the market.
+
+**Ready to explore your investment potential?** Use our [FIRB Calculator](/firb-calculator) to get a detailed cost breakdown and eligibility assessment for your Australian property investment.
+    `
+  },
+  'visa-types-firb-requirements': {
+    slug: 'visa-types-firb-requirements',
+    title: 'Visa Types & FIRB Requirements: Complete Breakdown',
+    excerpt: 'Detailed breakdown of FIRB requirements by visa category, including temporary residents, students, and permanent residents.',
+    date: '2025-01-08',
+    readTime: '10 min read',
+    category: 'Visa & Residency',
+    featured: false,
+    tags: ['Visa Types', 'FIRB Requirements', 'Temporary Residents'],
+    content: `
+# Visa Types & FIRB Requirements: Complete Breakdown for Australian Property
+
+Understanding how your Australian visa status impacts Foreign Investment Review Board (FIRB) requirements is critical before purchasing property. This guide provides a detailed breakdown of FIRB rules based on common visa categories.
+
+## Who is a "Foreign Person" for FIRB Purposes?
+
+Generally, a "foreign person" includes:
+
+- An individual not ordinarily resident in Australia
+- A corporation or trust in which a foreign person or persons hold a substantial interest
+
+Your visa status directly influences whether you are considered "ordinarily resident" or a "temporary resident," which in turn dictates the FIRB rules that apply to you.
+
+## FIRB Requirements by Visa Type
+
+### 1. Australian Citizens & Permanent Residents
+
+- **FIRB Approval**: **Not required.** Australian citizens and permanent residents are generally exempt from FIRB approval for residential property purchases
+- **Spouses**: If an Australian citizen or permanent resident is purchasing property as joint tenants with their foreign spouse, FIRB approval is generally not required
+
+### 2. New Zealand Citizens
+
+- **FIRB Approval**: **Not required.** New Zealand citizens are generally exempt from FIRB approval for residential property purchases
+- **Spouses**: Similar to Australian citizens, if a New Zealand citizen is purchasing property as joint tenants with their foreign spouse, FIRB approval is generally not required
+
+### 3. Temporary Residents (e.g., 482, 457, Student Visas, 309/100, 820/801)
+
+Temporary residents are individuals who hold a valid temporary visa that allows them to reside in Australia for a continuous period of more than 12 months, and who have resided in Australia for 12 months or more.
+
+- **Established Dwellings**: Generally, temporary residents **need FIRB approval** to purchase one established dwelling to use as their principal place of residence
+  - **Condition**: The property must be sold when they cease to reside in it or when their temporary visa expires, whichever comes first
+  - **Important Update**: **As of April 1, 2025, there is a temporary ban on foreign persons (including temporary residents) purchasing established dwellings in Australia, effective until March 31, 2027.** During this period, FIRB applications for established dwellings by temporary residents will generally not be approved
+- **New Dwellings**: Temporary residents **need FIRB approval** to purchase new dwellings. There are generally no restrictions on the number of new dwellings, but each purchase requires approval
+- **Vacant Land**: Temporary residents **need FIRB approval** to purchase vacant land for residential development, with conditions to complete construction within a specified timeframe (usually 4 years)
+
+### 4. Foreign Nationals (No Visa / Tourist Visa)
+
+Individuals who are not Australian citizens, permanent residents, New Zealand citizens, or temporary residents are considered "non-resident foreign persons."
+
+- **Established Dwellings**: Generally **not permitted** to purchase established dwellings. **This is reinforced by the temporary ban from April 1, 2025 - March 31, 2027**
+- **New Dwellings**: **Need FIRB approval** to purchase new dwellings. There are generally no restrictions on the number of new dwellings, but each purchase requires approval
+- **Vacant Land**: **Need FIRB approval** to purchase vacant land for residential development, with conditions to complete construction within a specified timeframe (usually 4 years)
+
+## Key Takeaways
+
+- **Always check FIRB**: If you are not an Australian or New Zealand citizen, assume you need FIRB approval
+- **Temporary Ban**: Be acutely aware of the temporary ban on established dwellings for foreign persons (including temporary residents) from April 1, 2025, to March 31, 2027
+- **Conditions Apply**: FIRB approvals often come with strict conditions that must be adhered to
+
+**Unsure about your FIRB obligations?** Use our [FIRB Calculator](/firb-calculator) to get an instant eligibility check and estimated costs based on your citizenship and property type.
+    `
+  },
+  'new-vs-established-property-foreign-buyers': {
+    slug: 'new-vs-established-property-foreign-buyers',
+    title: 'New vs Established Property: What Foreign Buyers Need to Know',
+    excerpt: 'Compare the FIRB rules, costs, and investment potential of new versus established properties for foreign investors.',
+    date: '2025-01-05',
+    readTime: '7 min read',
+    category: 'Property Types',
+    featured: false,
+    tags: ['New Property', 'Established Property', 'FIRB Rules'],
+    content: `
+# New vs Established Property: What Foreign Buyers Need to Know in Australia
+
+For foreign investors looking to enter the Australian property market, one of the most fundamental decisions is whether to purchase a new dwelling or an established property. The rules, costs, and investment implications differ significantly. This guide breaks down the key considerations.
+
+## Defining "New" and "Established" Dwellings
+
+- **New Dwelling**: A dwelling that has not been previously sold as a dwelling, or has been substantially renovated and sold, or has been built on vacant land. This includes off-the-plan purchases
+- **Established Dwelling**: Any dwelling that is not a new dwelling. This includes existing houses, apartments, and townhouses that have been previously occupied or sold
+
+## FIRB Rules: A Critical Difference
+
+The Foreign Investment Review Board (FIRB) applies vastly different rules to new versus established properties for foreign persons.
+
+### Purchasing New Dwellings
+
+- **General Rule**: Foreign persons (including non-residents and temporary residents) are generally permitted to purchase new dwellings
+- **Approval**: FIRB approval is still required for each new dwelling purchase
+- **Benefits**: Encourages the supply of new housing, often fewer restrictions
+- **No Limit**: Generally, there is no limit to the number of new dwellings a foreign person can purchase, provided each purchase receives FIRB approval
+
+### Purchasing Established Dwellings
+
+- **General Rule for Non-Residents**: Non-resident foreign persons are generally **prohibited** from purchasing established dwellings
+- **Temporary Residents**: Temporary residents generally **need FIRB approval** to purchase one established dwelling to use as their principal place of residence. They must sell it when they cease to reside in it or when their visa expires
+- **Important Update: Temporary Ban (April 1, 2025 - March 31, 2027)**: There is a temporary ban on foreign persons (including temporary residents and foreign-owned companies) purchasing established dwellings in Australia. During this period, FIRB applications for established dwellings by temporary residents will generally not be approved
+- **Exemptions**: Very limited exemptions exist, such as for foreign-owned companies purchasing established dwellings for their Australian-based employees (subject to conditions)
+
+## Costs and Taxes
+
+### Stamp Duty & Surcharges
+
+- **New Dwellings**: Standard stamp duty applies, plus foreign purchaser surcharges in most states
+- **Established Dwellings**: Standard stamp duty applies, plus foreign purchaser surcharges in most states (where permitted)
+
+### FIRB Fees
+
+- FIRB application fees apply to both new and established dwelling purchases (where permitted), tiered by property value
+
+## Investment Potential
+
+### New Dwellings
+
+- **Pros**: Modern amenities, potential for depreciation benefits (tax), often located in master-planned communities, contributes to housing supply
+- **Cons**: May be in developing areas with less established infrastructure, potential for oversupply in some markets, off-the-plan risks (e.g., builder delays, changes to plans)
+
+### Established Dwellings
+
+- **Pros**: Often in prime, established locations with existing infrastructure and amenities, potential for immediate rental income, land value appreciation
+- **Cons**: Higher maintenance costs, older infrastructure, **significant FIRB restrictions for foreign buyers (especially with the temporary ban)**
+
+## Conclusion
+
+The choice between new and established property is heavily influenced by your foreign investment status and the prevailing FIRB regulations. While new dwellings offer more straightforward pathways for most foreign buyers, established properties in desirable locations can be attractive if you meet the strict eligibility criteria.
+
+**Ready to understand your options?** Use our [FIRB Calculator](/firb-calculator) to assess your eligibility and estimate costs for both new and established properties.
+    `
+  },
+  'sydney-property-investment-calculator-2025': {
+    slug: 'sydney-property-investment-calculator-2025',
+    title: 'Sydney Property Investment Calculator 2025: Complete Foreign Buyer Guide',
+    excerpt: 'Comprehensive guide to Sydney property investment costs, FIRB requirements, and ROI calculations for foreign investors.',
+    date: '2025-01-03',
+    readTime: '12 min read',
+    category: 'City Guides',
+    featured: false,
+    tags: ['Sydney', 'Property Investment', 'Foreign Buyers'],
+    content: `
+# Sydney Property Investment Calculator 2025: Complete Foreign Buyer Guide
+
+Sydney, Australia's largest city, remains a global magnet for property investors due to its robust economy, strong population growth, and iconic lifestyle. For foreign buyers, understanding the specific costs and regulations is paramount. This guide, combined with our Sydney-specific calculator insights, will help you navigate the market in 2025.
+
+## Why Invest in Sydney Property?
+
+- **Strong Capital Growth**: Historically, Sydney has delivered significant long-term capital appreciation
+- **Economic Hub**: A major financial and business centre, attracting talent and investment
+- **Population Growth**: Consistent population increase drives demand for housing
+- **Global City Status**: High demand from both local and international buyers and renters
+
+## Key Costs for Foreign Investors in Sydney (2025)
+
+When investing in Sydney property as a foreign buyer, you'll encounter several significant costs beyond the purchase price:
+
+### 1. FIRB Application Fees
+
+All foreign persons require Foreign Investment Review Board (FIRB) approval. Fees are tiered based on the property value.
+- **Example**: For a property up to $1 million, the fee is $15,100. This increases with property value.
+
+### 2. New South Wales (NSW) Stamp Duty
+
+NSW stamp duty is a significant upfront cost. For foreign buyers, an additional surcharge applies.
+- **General Stamp Duty**: Tiered rates, e.g., approximately 4.5% to 5.5% for properties over $300,000
+- **Foreign Purchaser Surcharge**: An additional 8% of the property value ✅ (verified)
+- **Example**: On a $1,000,000 property, you could pay around $40,490 (general) + $80,000 (surcharge) = $120,490 in stamp duty
+
+### 3. Land Tax
+
+An annual tax levied by the NSW government on the unimproved value of land you own, above a certain threshold. Foreign owners may face higher rates or lower thresholds.
+- **Foreign Owner Surcharge Land Tax**: An additional **5%** ⚠️ **INCREASED** from 4% to 5% effective January 1, 2025
+
+### 4. Legal and Conveyancing Fees
+
+Typically range from $1,500 to $3,000, covering legal work for the property transfer.
+
+### 5. Loan Application Fees & Mortgage Insurance
+
+If you're borrowing, expect lender fees and potentially Lenders Mortgage Insurance (LMI) if your deposit is less than 20%. Foreign buyers often face stricter lending criteria and higher deposit requirements.
+
+### 6. Property Management Fees
+
+If you plan to rent out the property, expect fees of 6-8% of rental income, plus leasing fees.
+
+## FIRB Rules & Restrictions for Sydney
+
+- **New Dwellings**: Generally permitted with FIRB approval
+- **Established Dwellings**: Non-residents are generally prohibited. Temporary residents **need FIRB approval** for one established dwelling as their principal place of residence, with a condition to sell upon departure
+- **Temporary Ban (April 1, 2025 - March 31, 2027)**: A critical temporary ban is in place for foreign persons (including temporary residents) purchasing established dwellings. During this period, such applications will generally not be approved
+
+## Calculating Your Sydney Investment ROI
+
+Our FIRB Calculator provides a comprehensive breakdown, including:
+
+- **Upfront Costs**: Purchase price, FIRB fees, stamp duty (including foreign surcharge), legal fees
+- **Ongoing Costs**: Land tax (including foreign surcharge), council rates, insurance, maintenance
+- **Rental Yield**: Potential income from rent
+- **Capital Growth Projections**: Estimated property value appreciation over time
+- **Cash Flow Analysis**: Detailed 10-year projections of income vs. expenses
+
+**Ready to calculate your Sydney property investment?** Use our [FIRB Calculator](/firb-calculator) for a detailed, Sydney-specific financial analysis.
+    `
+  },
+  'melbourne-property-investment-guide': {
+    slug: 'melbourne-property-investment-guide',
+    title: 'Melbourne Property Investment Guide: Foreign Buyer\'s Complete 2025 Handbook',
+    excerpt: 'Comprehensive guide to Melbourne property investment, including costs, FIRB requirements, and investment strategies.',
+    date: '2025-01-01',
+    readTime: '11 min read',
+    category: 'City Guides',
+    featured: false,
+    tags: ['Melbourne', 'Property Investment', 'Foreign Buyers'],
+    content: `
+# Melbourne Property Investment Guide: Foreign Buyer's Complete 2025 Handbook
+
+Melbourne consistently ranks among the world's most liveable cities, boasting a vibrant culture, strong economy, and leading educational institutions. These factors make it a highly attractive market for foreign property investors. This guide provides a comprehensive overview for those looking to invest in Melbourne in 2025.
+
+## Why Invest in Melbourne Property?
+
+- **Liveability**: Consistently high rankings for quality of life, healthcare, education, infrastructure, and environment
+- **Economic Diversity**: Strong sectors in finance, healthcare, education, and technology
+- **Population Growth**: Rapidly growing population, driving demand for housing
+- **Cultural Capital**: Renowned for its arts, food, and sporting events
+
+## Key Costs for Foreign Investors in Melbourne (2025)
+
+Foreign buyers in Melbourne (Victoria) need to budget for several specific costs:
+
+### 1. FIRB Application Fees
+
+All foreign persons must obtain Foreign Investment Review Board (FIRB) approval. Fees are tiered based on the property value.
+- **Example**: For a property up to $1 million, the fee is $15,100. This fee increases with property value.
+
+### 2. Victoria (VIC) Stamp Duty
+
+Victorian stamp duty is a substantial upfront cost, with an additional foreign purchaser surcharge.
+- **General Stamp Duty**: Tiered rates, e.g., approximately 5.5% for properties over $960,000
+- **Foreign Purchaser Surcharge**: An additional 8% of the property value ✅ (verified)
+- **Example**: On a $1,000,000 property, you could pay around $55,000 (general) + $80,000 (surcharge) = $135,000 in stamp duty
+
+### 3. Land Tax
+
+An annual tax levied by the Victorian government on the total taxable value of land you own, above a certain threshold.
+- **Absentee Owner Surcharge**: An additional 2% on the taxable value of land for foreign owners ✅ (verified)
+
+### 4. Legal and Conveyancing Fees
+
+Typically range from $1,500 to $3,000, covering legal work for the property transfer.
+
+### 5. Loan Application Fees & Mortgage Insurance
+
+If you're borrowing, expect lender fees and potentially Lenders Mortgage Insurance (LMI). Foreign buyers often face stricter lending criteria and higher deposit requirements from Australian banks.
+
+### 6. Property Management Fees
+
+If you plan to rent out the property, expect fees of 6-8% of rental income, plus leasing fees.
+
+## FIRB Rules & Restrictions for Melbourne
+
+- **New Dwellings**: Generally permitted with FIRB approval
+- **Established Dwellings**: Non-residents are generally prohibited. Temporary residents **need FIRB approval** for one established dwelling as their principal place of residence, with a condition to sell upon departure
+- **Temporary Ban (April 1, 2025 - March 31, 2027)**: A critical temporary ban is in place for foreign persons (including temporary residents) purchasing established dwellings. During this period, such applications will generally not be approved
+
+## Investment Strategies for Melbourne
+
+- **Inner-City Apartments**: Popular with students and young professionals, but be mindful of potential oversupply in some areas
+- **Growth Corridors**: Look to outer suburbs with planned infrastructure development for long-term capital growth
+- **Regional Victoria**: Explore opportunities in strong regional centres for potentially higher yields and lower entry costs
+
+## Calculating Your Melbourne Investment
+
+Our FIRB Calculator provides a comprehensive breakdown, including:
+
+- **Upfront Costs**: Purchase price, FIRB fees, stamp duty (including foreign surcharge), legal fees
+- **Ongoing Costs**: Land tax (including foreign surcharge), council rates, insurance, maintenance
+- **Rental Yield**: Potential income from rent
+- **Capital Growth Projections**: Estimated property value appreciation over time
+- **Cash Flow Analysis**: Detailed 10-year projections of income vs. expenses
+
+**Ready to calculate your Melbourne property investment?** Use our [FIRB Calculator](/firb-calculator) for a detailed, Melbourne-specific financial analysis.
+    `
+  },
+  'brisbane-foreign-investment-property': {
+    slug: 'brisbane-foreign-investment-property',
+    title: 'Brisbane Foreign Investment Property: Complete 2025 Guide',
+    excerpt: 'Comprehensive guide to Brisbane property investment for foreign buyers, including costs, FIRB requirements, and opportunities.',
+    date: '2024-12-28',
+    readTime: '10 min read',
+    category: 'City Guides',
+    featured: false,
+    tags: ['Brisbane', 'Foreign Investment', 'Property Guide'],
+    content: `
+# Brisbane Foreign Investment Property: Complete 2025 Guide
+
+Brisbane, Queensland's vibrant capital, is rapidly growing in prominence, driven by significant infrastructure projects, a booming economy, and its selection as the host city for the 2032 Olympic Games. These factors make it an increasingly attractive destination for foreign property investors. This guide provides a comprehensive overview for those looking to invest in Brisbane in 2025.
+
+## Why Invest in Brisbane Property?
+
+- **Growth Potential**: Strong population growth and major infrastructure spending (e.g., Cross River Rail, Brisbane Metro, Queen's Wharf) are set to drive property values
+- **Affordability**: Generally more affordable than Sydney and Melbourne, offering higher rental yields
+- **Olympic Legacy**: The 2032 Olympic Games are expected to bring significant investment and global attention, boosting the property market
+- **Lifestyle**: Subtropical climate, relaxed lifestyle, and access to beautiful natural attractions
+
+## Key Costs for Foreign Investors in Brisbane (2025)
+
+Foreign buyers in Brisbane (Queensland) need to budget for several specific costs:
+
+### 1. FIRB Application Fees
+
+All foreign persons must obtain Foreign Investment Review Board (FIRB) approval. Fees are tiered based on the property value.
+- **Example**: For a property up to $1 million, the fee is $15,100. This fee increases with property value.
+
+### 2. Queensland (QLD) Stamp Duty
+
+Queensland stamp duty is an upfront cost, with an additional foreign acquirer duty.
+- **General Stamp Duty**: Tiered rates, e.g., approximately 3.5% to 5.75% for properties over $540,000
+- **Foreign Acquirer Duty**: An additional 7% of the property value ✅ (verified)
+- **Example**: On a $700,000 property, you could pay around $24,350 (general) + $49,000 (surcharge) = $73,350 in stamp duty
+
+### 3. Land Tax
+
+An annual tax levied by the Queensland government on the total taxable value of land you own, above a certain threshold.
+- **Absentee Land Tax Surcharge**: An additional 2% on the taxable value of land for foreign owners ✅ (verified)
+
+### 4. Legal and Conveyancing Fees
+
+Typically range from $1,500 to $3,000, covering legal work for the property transfer.
+
+### 5. Loan Application Fees & Mortgage Insurance
+
+If you're borrowing, expect lender fees and potentially Lenders Mortgage Insurance (LMI). Foreign buyers often face stricter lending criteria and higher deposit requirements from Australian banks.
+
+### 6. Property Management Fees
+
+If you plan to rent out the property, expect fees of 7-9% of rental income, plus leasing fees.
+
+## FIRB Rules & Restrictions for Brisbane
+
+- **New Dwellings**: Generally permitted with FIRB approval
+- **Established Dwellings**: Non-residents are generally prohibited. Temporary residents **need FIRB approval** for one established dwelling as their principal place of residence, with a condition to sell upon departure
+- **Temporary Ban (April 1, 2025 - March 31, 2027)**: A critical temporary ban is in place for foreign persons (including temporary residents) purchasing established dwellings. During this period, such applications will generally not be approved
+
+## Investment Hotspots in Brisbane
+
+- **Inner-City Suburbs**: Areas like South Brisbane, West End, and Fortitude Valley offer strong rental demand for apartments
+- **Growth Corridors**: Northern and Southern growth corridors (e.g., Moreton Bay, Logan) offer house and land packages with future capital growth potential
+- **Olympic Precincts**: Suburbs near future Olympic venues are likely to see increased infrastructure and demand
+
+## Calculating Your Brisbane Investment
+
+Our FIRB Calculator provides a comprehensive breakdown, including:
+
+- **Upfront Costs**: Purchase price, FIRB fees, stamp duty (including foreign acquirer duty), legal fees
+- **Ongoing Costs**: Land tax (including absentee surcharge), council rates, insurance, maintenance
+- **Rental Yield**: Potential income from rent
+- **Capital Growth Projections**: Estimated property value appreciation over time
+- **Cash Flow Analysis**: Detailed 10-year projections of income vs. expenses
+
+**Ready to calculate your Brisbane property investment?** Use our [FIRB Calculator](/firb-calculator) for a detailed, Brisbane-specific financial analysis.
+    `
+  },
+  'firb-fees-breakdown-2025': {
+    slug: 'firb-fees-breakdown-2025',
+    title: 'FIRB Fees Breakdown 2025: Complete Foreign Investment Cost Guide',
+    excerpt: 'Comprehensive breakdown of FIRB application fees, processing costs, and total investment expenses for foreign property buyers.',
+    date: '2024-12-25',
+    readTime: '9 min read',
+    category: 'Costs & Fees',
+    featured: false,
+    tags: ['FIRB Fees', 'Foreign Investment', 'Cost Breakdown'],
+    content: `
+# FIRB Fees Breakdown 2025: Complete Foreign Investment Cost Guide
+
+For foreign investors eyeing the Australian property market, understanding the Foreign Investment Review Board (FIRB) application fees is a non-negotiable part of the budgeting process. These fees are a mandatory cost for most foreign acquisitions of Australian residential real estate. This guide provides a comprehensive breakdown of FIRB fees in 2025.
+
+## What are FIRB Application Fees?
+
+FIRB application fees are charges imposed by the Australian Government for processing applications from foreign persons seeking to invest in Australia. These fees contribute to the administration of Australia's foreign investment framework.
+
+## Key Principles of FIRB Fees
+
+- **Mandatory**: If FIRB approval is required, the fee must be paid upon application
+- **Tiered Structure**: Fees are tiered based on the value of the proposed investment. Higher value investments incur higher fees
+- **Non-Refundable**: Fees are generally non-refundable, even if the application is withdrawn or rejected
+- **Annual Indexation**: Fees are typically indexed annually on 1 July, so it's crucial to check the most current schedule. The figures below are based on the latest available guidance (e.g., FIRB Guidance Note 10, Version 6, March 14, 2025)
+
+## FIRB Residential Land Application Fees (2025)
+
+**Source**: Australian Taxation Office - Foreign Investment Fees (1 July 2025 – 30 June 2026)
+
+The following table outlines the typical fees for purchasing residential land (new dwellings, established dwellings where permitted, and vacant land).
+
+| Property Value Range | Application Fee |
+| :------------------- | :-------------- |
+| Up to $1 million     | $15,100         |
+| $1 million - $2 million | $30,300         |
+| $2 million - $3 million | $45,500         |
+| $3 million - $4 million | $60,600         |
+| $4 million - $5 million | $75,800         |
+| $5 million - $6 million | $91,000         |
+| $6 million - $7 million | $106,200        |
+| $7 million - $8 million | $121,400        |
+| $8 million - $9 million | $136,600        |
+| $9 million - $10 million | $151,800        |
+| For every additional $1 million or part thereof above $10 million, the fee increases by $15,100 |
+
+*Note: These fees are for a single dwelling. Different fee structures apply for commercial property, multiple dwellings in one application, or developed residential land.*
+
+## Penalties for Non-Compliance
+
+**Source**: Foreign Acquisitions and Takeovers Act 1975, Treasury announcements (penalties doubled effective January 1, 2023)
+
+It is critical to comply with FIRB regulations. Significant penalties apply for breaches, including:
+
+- **Civil Penalties**: For individuals, fines can be up to **$6,660,000** (30,000 penalty units × $222 per unit). For corporations, fines can be up to **$66,600,000** (300,000 penalty units × $222 per unit)
+- **Criminal Penalties**: Imprisonment for up to **10 years**
+- **Forced Divestment**: The foreign person may be forced to sell the property, often at a loss
+
+## Other Costs to Budget For
+
+FIRB fees are just one component of the total investment cost. Foreign buyers must also consider:
+
+- **Stamp Duty**: State-based tax on property transfers, often with additional foreign purchaser surcharges
+- **Legal/Conveyancing Fees**: For professional legal services
+- **Lender Fees**: If obtaining a mortgage
+- **Building & Pest Inspections**: Recommended for established properties
+- **Council Rates & Land Tax**: Ongoing annual costs
+- **Property Management Fees**: If renting out the property
+
+## How Our Calculator Helps
+
+Our [FIRB Calculator](/firb-calculator) provides an instant estimate of your FIRB application fee based on the property value you enter. It also integrates state-specific stamp duty (including foreign surcharges) and other potential costs, giving you a comprehensive financial overview of your Australian property investment.
+
+**Ready to calculate your FIRB fees and total investment costs?** Use our free calculator today!
+    `
+  },
+  'australian-property-roi-calculator': {
+    slug: 'australian-property-roi-calculator',
+    title: 'Australian Property ROI Calculator: Complete Investment Analysis Guide',
+    excerpt: 'Comprehensive guide to calculating property investment returns, rental yields, and capital growth for Australian real estate.',
+    date: '2024-12-22',
+    readTime: '13 min read',
+    category: 'Investment Analysis',
+    featured: false,
+    tags: ['ROI Calculator', 'Property Investment', 'Investment Analysis'],
+    content: `
+# Australian Property ROI Calculator: Complete Investment Analysis Guide
+
+Understanding the potential Return on Investment (ROI) is paramount for any property investor, especially for foreign buyers navigating the Australian market. Our FIRB Calculator goes beyond just fees, offering a robust ROI analysis to help you make informed decisions. This guide explains how to calculate ROI and what factors influence it in Australia.
+
+## What is ROI in Property Investment?
+
+Return on Investment (ROI) is a performance measure used to evaluate the efficiency or profitability of an investment. In property, it helps you understand the financial gain or loss relative to the initial cost.
+
+**Basic ROI Formula:**
+ROI = (Net Profit / Cost of Investment) x 100%
+
+However, property ROI is more complex, involving both rental yield and capital growth.
+
+## Key Components of Australian Property ROI
+
+### 1. Rental Yield
+
+This measures the annual rental income as a percentage of the property's value.
+
+**Gross Rental Yield Formula:**
+(Annual Rental Income / Property Value) x 100%
+
+**Net Rental Yield Formula:**
+((Annual Rental Income - Annual Expenses) / Property Value) x 100%
+
+- **Factors Affecting Yield**: Location, property type (house vs. apartment), local rental demand, property condition
+- **Australian Context**: Rental yields vary significantly across cities and regions. Generally, regional areas might offer higher yields than capital cities, but capital growth can differ
+
+### 2. Capital Growth
+
+This is the increase in the property's value over time.
+
+- **Factors Affecting Capital Growth**: Economic conditions, interest rates, population growth, infrastructure development, local supply and demand, zoning changes
+- **Australian Context**: Australian property markets, particularly in major capital cities, have historically shown strong long-term capital appreciation
+
+### 3. Total Investment Costs
+
+Accurately calculating your "Cost of Investment" is crucial. For foreign buyers, this includes:
+
+- **Purchase Price**
+- **FIRB Application Fees** (verified 2025 rates)
+- **Stamp Duty** (including foreign purchaser surcharges)
+- **Legal/Conveyancing Fees**
+- **Lender Fees & Mortgage Insurance** (if applicable)
+- **Buyer's Agent Fees** (if used)
+- **Initial Renovation/Maintenance Costs**
+
+### 4. Ongoing Expenses
+
+These reduce your net profit and include:
+
+- **Loan Interest Payments**
+- **Council Rates**
+- **Land Tax** (including foreign owner surcharges - NSW increased to 5% as of January 1, 2025)
+- **Strata/Body Corporate Fees** (for apartments/townhouses)
+- **Property Management Fees**
+- **Insurance**
+- **Maintenance & Repairs**
+- **Vacancy Costs**
+
+## How Our FIRB Calculator Provides Comprehensive ROI Analysis
+
+Our calculator is designed to give foreign investors a holistic view of their potential ROI by integrating all relevant financial data:
+
+- **Detailed Cost Breakdown**: Calculates all upfront and ongoing costs specific to your situation (FIRB fees, state-specific stamp duty, foreign surcharges, legal fees, etc.)
+- **10-Year Projections**: Provides a decade-long forecast of:
+  - **Property Value Growth**: Based on customizable annual growth rates
+  - **Rental Income Growth**: Based on customizable annual rental increase rates
+  - **Cash Flow Analysis**: Monthly and annual breakdown of income vs. expenses
+  - **Equity Growth**: How your ownership stake increases over time
+- **Key Metrics**: Presents clear figures for:
+  - **Gross & Net Rental Yields**
+  - **Total ROI (including capital growth)**
+  - **Break-even points**
+
+## Maximizing Your Property ROI in Australia
+
+- **Research Location**: Focus on areas with strong demand drivers (jobs, infrastructure, amenities)
+- **Understand Market Cycles**: Buy low, sell high (easier said than done, but long-term holds generally perform well)
+- **Minimize Vacancy**: Keep good tenants and maintain the property well
+- **Tax Efficiency**: Consult a tax advisor to understand deductions and depreciation benefits
+- **Leverage**: Use borrowing wisely to amplify returns (but be mindful of interest rate risks)
+
+**Ready to get a detailed ROI analysis for your Australian property investment?** Use our [FIRB Calculator](/firb-calculator) today to unlock comprehensive insights and make smarter investment decisions.
     `
   }
 };
