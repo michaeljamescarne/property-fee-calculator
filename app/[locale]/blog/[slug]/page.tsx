@@ -1,12 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, Clock, ArrowLeft, ArrowRight, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 // Mock blog post data - will be replaced with dynamic content from markdown files
 interface BlogPost {
@@ -371,9 +372,20 @@ interface BlogPostPageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { locale, slug } = await params;
+export default function BlogPostPage({ params }: BlogPostPageProps) {
+  const [resolvedParams, setResolvedParams] = React.useState<{ locale: string; slug: string } | null>(null);
+  
+  React.useEffect(() => {
+    params.then(setResolvedParams);
+  }, [params]);
+  
   const t = useTranslations('Blog');
+  
+  if (!resolvedParams) {
+    return <div>Loading...</div>;
+  }
+  
+  const { slug } = resolvedParams;
   
   const post = blogPosts[slug];
   
