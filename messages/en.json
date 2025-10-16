@@ -149,6 +149,7 @@
   "Nav": {
     "home": "Home",
     "calculator": "FIRB Calculator",
+    "blog": "Blog",
     "faq": "FAQ",
     "about": "About",
     "contact": "Contact"
@@ -850,6 +851,22 @@
       "deleteSuccess": "Calculation deleted successfully",
       "renamePrompt": "Enter new name for calculation:",
       "renameSuccess": "Calculation renamed successfully"
+    }
+  },
+  "Blog": {
+    "title": "Property Investment Blog",
+    "subtitle": "Expert insights, guides, and analysis for foreign investors in Australian property",
+    "featured": "Featured Articles",
+    "allPosts": "All Articles",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog",
+    "share": "Share",
+    "tags": "Tags",
+    "relatedPosts": "Related Articles",
+    "cta": {
+      "title": "Ready to Calculate Your Investment Costs?",
+      "description": "Get instant FIRB eligibility checks and detailed cost breakdowns for your Australian property investment.",
+      "button": "Start Free Calculation"
     }
   }
 }

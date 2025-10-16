@@ -149,6 +149,7 @@
   "Nav": {
     "home": "首页",
     "calculator": "FIRB计算器",
+    "blog": "博客",
     "faq": "常见问题",
     "about": "关于",
     "contact": "联系"
@@ -804,6 +805,22 @@
       "deleteSuccess": "计算已成功删除",
       "renamePrompt": "输入计算的新名称：",
       "renameSuccess": "计算已成功重命名"
+    }
+  },
+  "Blog": {
+    "title": "房产投资博客",
+    "subtitle": "为澳大利亚房产外国投资者提供的专家洞察、指南和分析",
+    "featured": "精选文章",
+    "allPosts": "所有文章",
+    "readMore": "阅读更多",
+    "backToBlog": "返回博客",
+    "share": "分享",
+    "tags": "标签",
+    "relatedPosts": "相关文章",
+    "cta": {
+      "title": "准备好计算您的投资成本了吗？",
+      "description": "获得即时FIRB资格检查和详细的澳大利亚房产投资成本明细。",
+      "button": "开始免费计算"
     }
   }
 }

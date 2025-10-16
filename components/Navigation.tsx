@@ -45,6 +45,9 @@ export default function Navigation() {
           <Link href={`/${locale}/firb-calculator`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
             {t('calculator')}
           </Link>
+          <Link href={`/${locale}/blog`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
+            {t('blog')}
+          </Link>
           <Link href={`/${locale}/faq`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
             {t('faq')}
           </Link>
