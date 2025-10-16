@@ -368,11 +368,11 @@ Stamp duty costs vary significantly between states, with foreign buyer surcharge
 };
 
 interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = params;
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { locale, slug } = await params;
   const t = useTranslations('Blog');
   
   const post = blogPosts[slug];
