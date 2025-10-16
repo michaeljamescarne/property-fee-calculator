@@ -25,219 +25,406 @@ interface BlogPost {
 const blogPosts: Record<string, BlogPost> = {
   'ultimate-firb-guide-2025': {
     slug: 'ultimate-firb-guide-2025',
-    title: 'Ultimate FIRB Guide 2025: Complete Foreign Investment Rules',
-    excerpt: 'Everything foreign investors need to know about FIRB approval, fees, and requirements for Australian property investment.',
+    title: 'Complete FIRB Guide 2025: Everything You Need to Know About Foreign Investment in Australian Property',
+    excerpt: 'Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn\'t just recommended—it\'s mandatory. This comprehensive guide breaks down everything you need to know about FIRB approval, fees, and compliance in 2025.',
     date: '2025-01-15',
     readTime: '12 min read',
     category: 'FIRB Guide',
     featured: true,
     tags: ['FIRB', 'Foreign Investment', 'Property Rules'],
     content: `
-# Ultimate FIRB Guide 2025: Complete Foreign Investment Rules
+# Complete FIRB Guide 2025: Everything You Need to Know About Foreign Investment in Australian Property
 
-The Foreign Investment Review Board (FIRB) is Australia's regulatory body that examines foreign investment proposals. For property investors, understanding FIRB requirements is crucial for successful Australian real estate investments.
+*Last updated: 15 January 2025 | 12 min read*
 
-## What is FIRB?
+*This article has been updated with the latest FIRB regulations and policy changes.*
 
-The Foreign Investment Review Board (FIRB) is an Australian government body that examines proposals by foreign persons to invest in Australia and makes recommendations to the Treasurer on those proposals.
+Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn't just recommended—it's mandatory. This comprehensive guide breaks down everything you need to know about FIRB approval, fees, and compliance in 2025.
 
-### Key Responsibilities:
-- Reviewing foreign investment proposals
-- Providing advice to the Treasurer
-- Ensuring compliance with foreign investment rules
-- Protecting Australia's national interests
+## What is FIRB and Why Does It Matter?
 
-## Who Needs FIRB Approval?
+The Foreign Investment Review Board (FIRB) examines foreign investment proposals in Australia and advises the Treasurer on whether they align with Australia's national interest. For property investors, FIRB approval is the gateway to legally purchasing Australian real estate.
 
-### Foreign Persons Requiring Approval:
-- **Foreign nationals** (non-Australian citizens)
-- **Temporary residents** (457, 482, student visa holders)
-- **Foreign companies** and trusts
-- **Foreign governments** and their agencies
+Think of FIRB as the gatekeeper ensuring that foreign investment benefits Australia while protecting domestic housing availability and national interests.
 
-### Australian Citizens/Residents:
-- **Australian citizens** - No FIRB approval required
-- **Permanent residents** - No FIRB approval required
-- **New Zealand citizens** - No FIRB approval required
+### FIRB's Key Responsibilities
 
-## Property Types and FIRB Rules
+- Reviewing and assessing foreign investment applications
+- Advising the Treasurer on national interest concerns
+- Monitoring compliance with approval conditions
+- Protecting Australia's strategic and economic interests
 
-### New Dwellings
-- **Approval Required**: Yes, for foreign persons
-- **Conditions**: Can be purchased as investment or primary residence
-- **No restrictions** on number of properties
-- **Must be sold** to Australian citizens/residents if used as investment
+## Do You Need FIRB Approval? Quick Check
 
-### Established Dwellings
-- ⚠️ **TEMPORARY BAN IN EFFECT** (April 1, 2025 - March 31, 2027)
-- **FIRB applications for established dwellings are NOT being approved** for foreign persons (including temporary residents) during this period
-- **Limited Exceptions**: Redevelopment projects (20+ dwellings), commercial-scale housing, build-to-rent developments
-- **Historical Rules** (prior to ban and after March 31, 2027):
-  - **Approval Required**: Yes, for foreign persons
-  - **Conditions**: Can only be purchased as primary residence
-  - **Must be sold** when no longer primary residence
-  - **Cannot be rented out** while owned
+### Foreign Persons Who Need Approval
+
+You'll need FIRB approval if you're:
+
+- A **foreign national** (non-Australian citizen)
+- A **temporary resident** (including 457, 482, or student visa holders)
+- A **foreign company** or trust
+- Representing a **foreign government** or its agencies
+
+### Who Doesn't Need FIRB Approval?
+
+You're exempt from FIRB requirements if you're:
+
+- An Australian citizen
+- An Australian permanent resident
+- A New Zealand citizen with a Special Category Visa (subclass 444)
+
+## Understanding Property Types and Current Rules
+
+### New Dwellings (Off-the-Plan and New Homes)
+
+**Approval Status:** Required for foreign persons  
+**Purpose:** Investment or primary residence  
+**Restrictions:** None on the number of properties you can buy
+
+New dwellings include properties that have never been occupied or sold as a place of residence. This category encompasses off-the-plan apartments, newly constructed houses, and substantially renovated properties that meet the "new dwelling" definition.
+
+### Established Dwellings (Existing Homes)
+
+**⚠️ IMPORTANT: TEMPORARY BAN IN EFFECT**
+
+From **April 1, 2025** to **March 31, 2027**, foreign persons (including temporary residents) **cannot** purchase established dwellings in Australia. This ban aims to ease housing pressure and increase availability for local buyers.
+
+#### Limited Exceptions to the Ban
+
+The ban doesn't apply if you're:
+
+- **Redeveloping property** that will create at least 20 additional dwellings
+- Investing in **commercial-scale housing developments** (build-to-rent with specific criteria)
+- Purchasing under the **Pacific Australia Labour Mobility scheme**
+
+#### What This Means for Temporary Residents
+
+Previously, temporary residents could buy one established dwelling to live in while in Australia. This is no longer possible during the ban period. If you're on a temporary visa and want to buy property, you'll need to focus on new developments or vacant land.
+
+**After the Ban Ends (Post-March 2027)**
+
+Historical rules will likely resume:
+- Established dwellings can only be purchased as your primary residence
+- The property must be sold when it's no longer your main home
+- You cannot rent the property to others while you own it
 
 ### Vacant Land
-- **Approval Required**: Yes, for foreign persons
-- **Conditions**: Must commence construction within 24 months
-- **Completion deadline**: 4 years from purchase
-- **Cannot be sold** until construction completed
+
+**Approval Status:** Required for foreign persons  
+**Key Conditions:** 
+- Construction must begin within **24 months** of purchase
+- All construction must be completed within **4 years** of approval
+- The land cannot be sold until construction is finished
+
+These timelines are strictly enforced, with the government cracking down on "land banking" practices.
 
 ## FIRB Application Fees 2025/26
 
-**Source**: Australian Taxation Office - Foreign Investment Fees (1 July 2025 – 30 June 2026)
+Application fees are indexed annually and vary significantly based on property type and value. Here's what you'll pay for applications from July 1, 2025 to June 30, 2026:
 
 ### New Dwellings & Vacant Land Fees
 
 | Property Value | Application Fee |
 |----------------|-----------------|
 | Under $75,000 | $4,500 |
-| $1M or less | $15,100 |
-| $2M or less | $30,300 |
-| $3M or less | $60,600 |
-| $4M or less | $90,900 |
-| $5M or less | $121,200 |
-| $6M or less | $151,500 |
-| $7M or less | $181,800 |
-| $8M or less | $212,100 |
-| $9M or less | $242,400 |
-| $10M or less | $272,700 |
+| Up to $1M | $15,100 |
+| Up to $2M | $30,300 |
+| Up to $3M | $60,600 |
+| Up to $4M | $90,900 |
+| Up to $5M | $121,200 |
+| Up to $10M | $272,700 |
+| Up to $20M | $575,700 |
+| Up to $30M | $878,700 |
+| Up to $40M | $1,181,700 |
 | Over $40M | $1,205,200 |
+
+*For the complete fee schedule including all price points, visit the [ATO website](https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors).*
 
 ### Established Dwellings Fees (Tripled Rates)
 
-⚠️ **Note**: While established dwellings are currently banned for foreign persons (April 1, 2025 - March 31, 2027), these fees apply to exceptional circumstances and post-ban period:
+⚠️ **Note:** While established dwellings are banned during April 2025–March 2027, these tripled fees apply to exceptional circumstances and will apply again after the ban ends:
 
 | Property Value | Application Fee |
 |----------------|-----------------|
 | Under $75,000 | $13,500 |
-| $1M or less | $45,300 |
-| $2M or less | $90,900 |
-| $3M or less | $181,800 |
-| $4M or less | $272,700 |
-| $5M or less | $363,600 |
-| $6M or less | $454,500 |
-| $7M or less | $545,400 |
-| $8M or less | $636,300 |
-| $9M or less | $727,200 |
-| $10M or less | $818,100 |
-| Over $40M | $3,357,300 |
+| Up to $1M | $45,300 |
+| Up to $2M | $90,900 |
+| Up to $3M | $181,800 |
+| Up to $5M | $363,600 |
+| Up to $10M | $818,100 |
+| Up to $20M | $1,727,100 |
+| Up to $30M | $2,636,100 |
+| Up to $40M | $3,545,100 |
+| Over $40M | $3,615,600 |
 
-### Expedited Processing:
-- **Additional Cost**: Double the standard fee for 10-day processing
+The tripling of established dwelling fees reflects the government's policy to encourage foreign investment in new housing stock rather than existing homes.
 
-## Application Process
+### Additional Fee Information
 
-### Step 1: Determine Eligibility
-Use our [FIRB Calculator](/firb-calculator) to determine if you need approval and calculate associated costs.
+**Expedited Processing:** You can pay double the standard fee for 10-day priority processing (subject to approval).
+
+**Variation Fees:** If you need to modify an existing approval:
+- Simple variation: $4,500
+- Complex variation: $30,300
+
+**Developer Certificates:** Property developers pay a flat $65,200 initial fee for New or near-new dwelling exemption certificates, plus per-sale fees for each dwelling sold to foreign persons.
+
+## The FIRB Application Process: Step by Step
+
+### Step 1: Determine Your Eligibility
+
+Start by using the [FIRB Calculator on PropertyCosts.com.au](https://www.propertycosts.com.au/en/firb-calculator) to:
+- Confirm whether you need approval
+- Calculate your exact application fee
+- Understand applicable conditions
 
 ### Step 2: Gather Required Documents
-- Passport copy
-- Visa documentation
-- Property details
-- Financial statements
-- Proof of funds
 
-### Step 3: Submit Application
-- Complete online application
-- Pay application fee
-- Wait for approval (typically 30 days)
+Before applying, prepare:
 
-### Step 4: Receive Approval
-- Approval letter with conditions
-- Proceed with property purchase
-- Comply with ongoing requirements
+- **Passport copy** (certified if required)
+- **Current visa documentation** (if applicable)
+- **Property details** (address, purchase price, property type)
+- **Financial statements** demonstrating capacity to purchase
+- **Proof of funds** or financing pre-approval
+- **Company documents** (if purchasing through a corporate entity)
 
-## Common Conditions
+### Step 3: Submit Your Application
 
-### For New Dwellings:
-- Must be sold to Australian citizens/residents if used as investment
-- Cannot be rented to foreign persons
-- Must notify FIRB of any changes
+Applications for residential property are submitted through the [ATO's online portal](https://www.ato.gov.au/). The process includes:
 
-### For Established Dwellings:
-- ⚠️ **TEMPORARY BAN**: Currently NOT permitted for foreign persons (April 1, 2025 - March 31, 2027)
-- **Historical Compliance Requirements** (applicable after ban ends):
-  - Must be used as primary residence
-  - Cannot be rented out
-  - Must be sold when no longer primary residence
+1. Creating an account or logging in
+2. Completing the online application form
+3. Uploading supporting documents
+4. Paying the application fee
+5. Receiving acknowledgment of submission
 
-### For Vacant Land:
-- Must commence construction within 24 months
-- Must complete construction within 4 years
-- Cannot be sold until construction completed
+**Important:** The 30-day assessment period only begins once the correct fee is paid.
 
-## Penalties for Non-Compliance
+### Step 4: Assessment and Approval
 
-**Source**: Foreign Acquisitions and Takeovers Act 1975, Treasury announcements (penalties doubled effective January 1, 2023)
+The Treasury and FIRB typically assess applications within **30 days**, though this can be extended if additional information is needed or if the application raises national interest concerns.
 
-Breaching FIRB regulations can lead to severe penalties, including:
+You'll receive either:
+- A **no objection notification** with conditions
+- A request for more information
+- In rare cases, a rejection
 
-### Civil Penalties (Significantly Increased as of January 1, 2023)
+### Step 5: Compliance and Ongoing Obligations
 
-- **Individuals**: Up to **$6,660,000** (30,000 penalty units × $222 per unit)
-- **Corporations**: Up to **$66,600,000** (300,000 penalty units × $222 per unit)
-- **Offenses**: Failure to advertise dwellings, unauthorized acquisitions, holding multiple established dwellings
+Once approved, you must:
+
+- **Purchase within the specified timeframe** (usually 12 months)
+- **Comply with all conditions** attached to your approval
+- **Report to FIRB** as required (e.g., when construction is completed)
+- **Lodge annual vacancy fee returns** if applicable
+
+## Understanding FIRB Conditions
+
+Every FIRB approval comes with conditions you must follow. Here are the most common:
+
+### For New Dwellings
+
+- If purchasing as an investment, the property must eventually be sold to Australian citizens or permanent residents
+- The property cannot be rented to foreign persons
+- You must notify FIRB of any material changes to your circumstances
+
+### For Vacant Land
+
+- Construction must commence within **24 months**
+- All dwellings must be completed within **4 years**
+- Regular progress reports may be required
+- The land cannot be sold until development is complete (with limited exceptions)
+- Land banking is strictly prohibited
+
+### For All Property Types
+
+- The property must be used in accordance with the stated purpose in your application
+- You must comply with all Australian laws and regulations
+- You may be required to submit annual compliance reports
+
+## The Cost of Non-Compliance: Penalties and Enforcement
+
+The Australian government takes FIRB compliance seriously. In recent years, penalties have significantly increased, and enforcement has become more aggressive.
+
+### Civil Penalties (Updated 2023–2025)
+
+As of 2025, civil penalties for breaching FIRB regulations can include:
+
+- **Individuals:** Up to $1.65 million (5,000 penalty units)
+- **Corporations:** Up to $16.5 million (50,000 penalty units)
+
+Common civil penalty offenses include:
+- Failing to obtain FIRB approval before purchasing
+- Breaching conditions of your approval
+- Making false or misleading statements in your application
+- Failing to advertise new dwellings to Australian buyers
 
 ### Criminal Penalties
 
-- **Imprisonment**: Up to **10 years** for serious breaches of foreign investment laws
-- **Applies to**: Willful violations, fraud, or repeated non-compliance
+Serious breaches can result in criminal prosecution:
+
+- **Imprisonment:** Up to **10 years** for severe violations
+- **Criminal fines:** In addition to or instead of imprisonment
+- **Criminal record:** Affecting future visa applications and business opportunities
+
+Criminal charges typically apply to:
+- Willful violations of FIRB requirements
+- Fraud or deliberate misrepresentation
+- Repeated non-compliance after warnings
+- Schemes designed to circumvent FIRB rules
 
 ### Unauthorized Acquisition Penalties
 
-For foreign persons acquiring property without FIRB approval, penalties are calculated as the **greater of**:
-- Double the capital gain on disposal
-- 50% of the acquisition consideration  
-- 50% of the property's market value
+If you acquire property without proper FIRB approval, penalties are calculated as the **greater of**:
 
-### Vacancy Fee Non-Compliance
+- **Double the capital gain** when you sell the property
+- **50% of what you paid** for the property
+- **50% of the property's current market value**
 
-- **Penalty**: Up to **$111,000** (500 penalty units × $222 per unit)
-- **Offense**: Failure to comply with notice or vacancy fee return requirements
-- **Note**: Vacancy fees were **doubled** as of April 9, 2024
+This means a $1 million property purchased without approval could result in a $500,000 penalty, plus you may be forced to sell.
+
+### Vacancy Fee Penalties
+
+Failing to comply with vacancy fee requirements can cost:
+
+- Up to $165,000 for failing to lodge returns or pay fees
+- From April 9, 2024, vacancy fees are **double the original application fee**
+- Additional penalties for false declarations
 
 ### Forced Divestment
 
-- **Risk**: Foreign persons may be forced to sell property, often at a loss
-- **No guarantee** of recovering all costs, including legal fees and transaction costs
-- **Example**: In April 2022, a foreign investor was fined $250,000 for purchasing multiple properties without FIRB approval
+Beyond financial penalties, you may be ordered to **sell the property**:
 
-### Real-World Enforcement
+- Often under unfavorable market conditions
+- With no guarantee of recovering your investment
+- Including all associated costs (legal fees, agent fees, stamp duty losses)
 
-The Australian Taxation Office (ATO) actively monitors compliance:
-- **2015-2021**: 434 properties were disposed of due to non-compliance
-- **April 2022**: First Federal Court penalty of $250,000 issued for multiple unauthorized purchases
-- **Ongoing**: Regular audits and enforcement actions continue
+### Real Enforcement Examples
 
-## Compliance Requirements
+The government actively pursues non-compliance:
 
-## Tips for Success
+- **2015-2021:** 434 properties were forcibly disposed of
+- **April 2022:** Federal Court imposed a $250,000 fine on a foreign investor for unauthorized purchases
+- **Ongoing:** Enhanced audit programs targeting land banking and non-compliance
+- **2024-2025:** Increased ATO enforcement with dedicated funding for residential property compliance
 
-### Before Applying:
-1. **Use our calculator** to understand costs
-2. **Review all conditions** carefully
-3. **Ensure compliance** with ongoing requirements
-4. **Seek professional advice** if unsure
+## Annual Vacancy Fees: What You Need to Know
 
-### During Application:
-1. **Provide complete information**
-2. **Respond promptly** to requests
-3. **Maintain accurate records**
-4. **Follow up** if needed
+If you purchased a residential property after May 9, 2017 with FIRB approval, you may need to pay an annual vacancy fee.
 
-### After Approval:
-1. **Comply with all conditions**
-2. **Notify FIRB** of changes
-3. **Keep records** of compliance
-4. **Seek advice** for any questions
+### When the Vacancy Fee Applies
 
-## Conclusion
+You'll pay this fee if your property is:
 
-Understanding FIRB requirements is essential for successful Australian property investment. Use our comprehensive calculator to determine your eligibility and costs, then follow the application process carefully to ensure compliance.
+- Not occupied for at least **183 days** (6 months) during the "vacancy year"
+- Not available for rent for at least 183 days during the vacancy year
+- Available for rent but at an unrealistic price that prevents renting
 
-**Ready to calculate your FIRB costs?** [Use our free calculator](/firb-calculator) to get instant results and detailed breakdowns.
+### How Much You'll Pay
+
+The vacancy fee equals **double your original FIRB application fee** (for properties purchased after April 9, 2024).
+
+**Example:** If you paid $30,300 for FIRB approval to purchase a $2 million new apartment, your annual vacancy fee would be $60,600 if the property remains vacant for more than 6 months.
+
+### How to Comply
+
+Each year you must:
+
+1. Lodge a **vacancy fee return** by the due date (usually within 30 days after your "vacancy year" ends)
+2. Pay any fees owing
+3. Keep records proving occupancy or rental availability
+
+## Tips for Successful FIRB Applications
+
+### Before Applying
+
+- **Start early:** FIRB approval takes at least 30 days, often longer
+- **Get professional advice:** Consider engaging a lawyer or specialist consultant
+- **Check the ban:** Ensure your intended purchase isn't affected by the established dwelling ban
+- **Calculate all costs:** Use the PropertyCosts calculator to understand total expenses
+- **Arrange finance:** Get pre-approval before applying to FIRB
+
+### During the Application
+
+- **Be thorough:** Incomplete applications cause delays
+- **Be honest:** False information can lead to criminal charges
+- **Respond quickly:** If FIRB requests more information, provide it promptly
+- **Keep records:** Save all correspondence and documents
+- **Check your timeline:** Don't sign purchase contracts before receiving FIRB approval
+
+### After Approval
+
+- **Read your conditions carefully:** Understand exactly what you must do
+- **Set reminders:** For construction deadlines, vacancy returns, and reporting requirements
+- **Maintain records:** Keep proof of compliance (rental agreements, construction invoices, etc.)
+- **Seek clarification:** Contact FIRB or the ATO if you're unsure about anything
+- **Report changes:** Notify FIRB if your circumstances change materially
+
+## Frequently Asked Questions
+
+**Q: Can I buy property with my Australian citizen spouse?**  
+A: Yes, but the structure matters. If you're purchasing as joint tenants or tenants in common, you'll typically need FIRB approval for your share. If your spouse is purchasing alone and you're not on the title, FIRB approval isn't required. Be cautious: arrangements designed to circumvent FIRB can be illegal.
+
+**Q: What happens if the ban extends beyond March 2027?**  
+A: The government will review the ban before it expires and announce any extension. If it's extended, existing approvals remain valid, but new applications for established dwellings will continue to be rejected (except for exempted categories).
+
+**Q: Can I buy multiple new properties?**  
+A: Yes. Foreign persons can purchase unlimited new dwellings and vacant land, subject to obtaining FIRB approval and paying the fee for each property.
+
+**Q: How long does FIRB approval last?**  
+A: Typically 12 months from approval date. If you don't complete the purchase within this period, you may need to reapply and pay a new fee.
+
+**Q: Can I rent out my property while I'm overseas?**  
+A: For new dwellings purchased as investments, yes—this is expected. For established dwellings purchased as your primary residence (after the ban ends), no—you must sell when you leave Australia permanently or it's no longer your main residence.
+
+**Q: What if I purchased property without FIRB approval?**  
+A: Contact a lawyer immediately. You may be able to apply for retrospective approval, but expect significant penalties regardless. During the current ban period, retrospective approval for established dwellings is generally not being granted.
+
+## Looking Ahead: FIRB Policy Changes
+
+Australia's foreign investment policy evolves in response to housing market conditions and national interest considerations. Recent changes include:
+
+- **2023-2024:** Tripling of established dwelling fees and doubling of vacancy fees
+- **April 2025:** Implementation of the two-year established dwelling ban
+- **2025:** Enhanced compliance measures and increased audit activity
+- **2025-2026:** Streamlined processing for "low-risk" investments in new housing
+
+The government has signaled that FIRB policy will continue adapting to support housing affordability for Australians while still welcoming beneficial foreign investment.
+
+## How PropertyCosts Can Help
+
+Understanding FIRB is complex, but getting started doesn't have to be. The [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb-calculator) provides:
+
+- **Instant eligibility assessment** – Find out if you need FIRB approval
+- **Accurate fee calculation** – Know exactly what you'll pay
+- **Condition breakdown** – Understand your obligations
+- **Timeline estimates** – Plan your purchase properly
+- **Comprehensive cost analysis** – See all property acquisition costs in one place
+
+[Calculate your FIRB costs now →](https://www.propertycosts.com.au/en/firb-calculator)
+
+---
+
+## Key Takeaways
+
+1. **FIRB approval is mandatory** for most foreign property purchases in Australia
+2. **Established dwellings are banned** for foreign persons until March 31, 2027 (limited exceptions apply)
+3. **Application fees vary significantly** based on property type and value—new dwellings use standard rates while established dwellings (when permitted) incur triple fees
+4. **Penalties are severe**—up to $16.5 million for corporations, 10 years imprisonment, and forced property sale
+5. **Compliance is ongoing**—annual vacancy returns, development deadlines, and condition adherence are required
+6. **Professional advice matters**—FIRB rules are complex and continuously evolving
+
+Understanding FIRB requirements is your first step toward successful property investment in Australia. With proper planning, professional guidance, and the right tools, navigating the FIRB process becomes manageable—setting you up for a compliant and rewarding investment experience.
+
+*This guide is for informational purposes only and does not constitute legal or financial advice. FIRB regulations are complex and change frequently. Always seek professional advice for your specific situation.*
+
+---
+
+**Related Resources:**
+- [FIRB Official Website](https://foreigninvestment.gov.au/)
+- [ATO Foreign Investment Portal](https://www.ato.gov.au/)
+- [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb-calculator)
     `
   },
   'stamp-duty-calculator-by-state': {
