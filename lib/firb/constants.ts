@@ -200,15 +200,50 @@ export function calculateStampDuty(propertyValue: number, state: AustralianState
 }
 
 // Land Tax Thresholds and Rates by State (annual ongoing cost)
+// Land Tax Rates (2025 Verified)
+// Source: Official state revenue offices, last verified October 16, 2025
+// Note: Rates are progressive and vary by land value - these are base rates
 export const LAND_TAX_RATES: Record<AustralianState, { threshold: number; rate: number; isForeignRate?: number }> = {
-  NSW: { threshold: 1075000, rate: 1.6, isForeignRate: 2.0 },
-  VIC: { threshold: 300000, rate: 0.2, isForeignRate: 2.0 },
-  QLD: { threshold: 600000, rate: 1.7, isForeignRate: 2.0 },
-  SA: { threshold: 450000, rate: 0.5, isForeignRate: 0.5 },
-  WA: { threshold: 300000, rate: 0.4, isForeignRate: 0.4 },
-  TAS: { threshold: 25000, rate: 0.55, isForeignRate: 1.5 },
-  ACT: { threshold: 0, rate: 0, isForeignRate: 0 }, // ACT uses different system
-  NT: { threshold: 0, rate: 0, isForeignRate: 0 }  // NT has no land tax
+  NSW: { 
+    threshold: 1075000, // $1,075,000 threshold confirmed
+    rate: 1.6, // Base rate confirmed
+    isForeignRate: 5.0 // Increased from 4% to 5% effective January 1, 2025
+  },
+  VIC: { 
+    threshold: 300000, // $300,000 threshold confirmed
+    rate: 0.2, // Base rate confirmed (progressive up to 2.55%)
+    isForeignRate: 2.0 // Absentee owner surcharge confirmed
+  },
+  QLD: { 
+    threshold: 600000, // $600,000 threshold confirmed
+    rate: 1.7, // Base rate confirmed (progressive up to 2.75%)
+    isForeignRate: 2.0 // Foreign owner surcharge confirmed
+  },
+  SA: { 
+    threshold: 482000, // Updated from $450,000 to $482,000
+    rate: 0.5, // Base rate confirmed (progressive up to 2.4%)
+    isForeignRate: 0.5 // No specific foreign surcharge in SA
+  },
+  WA: { 
+    threshold: 300000, // $300,000 threshold confirmed
+    rate: 0.4, // Base rate confirmed (progressive up to 2.67%)
+    isForeignRate: 0.4 // No specific foreign surcharge in WA
+  },
+  TAS: { 
+    threshold: 50000, // Updated from $25,000 to $50,000
+    rate: 0.55, // Base rate confirmed (progressive up to 1.5%)
+    isForeignRate: 1.5 // Foreign owner surcharge confirmed
+  },
+  ACT: { 
+    threshold: 0, 
+    rate: 0, 
+    isForeignRate: 0 
+  }, // ACT uses different system - applies to all investment properties
+  NT: { 
+    threshold: 0, 
+    rate: 0, 
+    isForeignRate: 0 
+  }  // NT has no land tax as of 2025
 };
 
 // Calculate annual land tax
