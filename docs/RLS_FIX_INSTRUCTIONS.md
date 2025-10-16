@@ -76,3 +76,6 @@ Once this is fixed, the following will work:
 - ✅ Dashboard will populate with saved calculations
 - ✅ No more RLS policy errors in logs
 
+
+
+

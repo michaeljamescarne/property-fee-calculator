@@ -43,9 +43,7 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-primary" />
-          {t('projections.title') === 'FIRBCalculator.investmentAnalytics.projections.title' 
-            ? `10-Year Investment Projections` 
-            : t('projections.title', { years: analytics.yearByYear.length })}
+          {t('projections.title', { years: analytics.yearByYear.length })}
         </CardTitle>
         <CardDescription>
           {t('projections.description') === 'FIRBCalculator.investmentAnalytics.projections.description'

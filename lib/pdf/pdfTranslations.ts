@@ -11,7 +11,6 @@ export interface PDFTranslations {
   subtitle: string;
   generatedOn: string;
   page: string;
-  disclaimer: string;
   sections: {
     executiveSummary: string;
     propertyDetails: string;
@@ -36,6 +35,57 @@ export interface PDFTranslations {
     recommendations: string;
     overallScore: string;
     recommendation: string;
+  };
+  glossary?: {
+    title: string;
+    description: string;
+    terms: Record<string, {
+      term: string;
+      fullName: string;
+      definition: string;
+    }>;
+  };
+  disclaimer?: {
+    title: string;
+    sections: Record<string, {
+      title: string;
+      content: string;
+    }>;
+    footer: string;
+  };
+  propertyDetails?: {
+    title: string;
+    cards: {
+      propertyInformation: string;
+      buyerInformation: string;
+      financialStructure: string;
+    };
+    labels: {
+      propertyAddress: string;
+      propertyType: string;
+      propertyValue: string;
+      stateTerritory: string;
+      citizenshipStatus: string;
+      visaType: string;
+      entityType: string;
+      firstHomeBuyer: string;
+      ordinarilyResident: string;
+      depositPercentage: string;
+      depositAmount: string;
+      loanAmount: string;
+      loanToValueRatio: string;
+      estimatedInterestRate: string;
+    };
+  };
+  upgradePrompt?: {
+    title: string;
+    description: string;
+    upgradeButton: string;
+    visitWebsite: string;
+    features: Record<string, {
+      title: string;
+      description: string;
+    }>;
   };
   labels: {
     address: string;
@@ -133,5 +183,8 @@ export function getPDFTranslations(allTranslations: Record<string, unknown>): PD
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (allTranslations as any).FIRBCalculator.pdf as PDFTranslations;
 }
+
+
+
 
 

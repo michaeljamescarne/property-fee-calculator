@@ -132,3 +132,6 @@ This PR implements a series of major improvements to the FIRB fee calculator app
 18. Revert hero image changes - restore original placeholder design
 19. Update hero section with analytics dashboard image
 20. Fix build errors: ESLint warnings and Next.js Image optimization
+
+
+

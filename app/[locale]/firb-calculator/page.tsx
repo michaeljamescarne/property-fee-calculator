@@ -122,7 +122,6 @@ export default function FIRBCalculatorPage() {
     subtitle: tPdf('subtitle'),
     generatedOn: tPdf('generatedOn'),
     page: tPdf('page'),
-    disclaimer: tPdf('disclaimer'),
     sections: {
       executiveSummary: tPdf('sections.executiveSummary'),
       propertyDetails: tPdf('sections.propertyDetails'),
@@ -322,22 +321,24 @@ export default function FIRBCalculatorPage() {
   };
 
   // Handle download PDF
-  const handleDownloadPDF = (analytics?: InvestmentAnalytics) => {
+  const handleDownloadPDF = async (analytics?: InvestmentAnalytics) => {
     if (!eligibility || !costs) return;
 
     try {
       // Use enhanced PDF if analytics are provided, otherwise basic PDF
       const pdfBlob = analytics 
-        ? generateEnhancedPDF(formData, eligibility, costs, analytics, locale, pdfTranslations)
+        ? await generateEnhancedPDF(formData, eligibility, costs, analytics, locale, pdfTranslations)
         : generateFIRBPDF(formData, eligibility, costs);
         
       const url = URL.createObjectURL(pdfBlob);
       const link = document.createElement('a');
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
       const filename = analytics 
-        ? `FIRB-Investment-Analysis-${locale}-${new Date().toISOString().split('T')[0]}.pdf`
-        : `FIRB-Analysis-${new Date().toISOString().split('T')[0]}.pdf`;
+        ? `FIRB-Investment-Analysis-${locale}-${timestamp}.pdf`
+        : `FIRB-Analysis-${timestamp}.pdf`;
       link.href = url;
       link.download = filename;
+      link.style.display = 'none';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

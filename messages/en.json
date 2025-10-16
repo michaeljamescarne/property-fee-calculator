@@ -780,13 +780,238 @@
         "regulationsChange": "FIRB regulations and tax laws are subject to change. Please verify current requirements.",
         "assumptionsBased": "Projections are based on your assumptions and historical averages. Actual returns may vary.",
         "pastPerformance": "Past performance is not indicative of future results."
+      },
+      "glossary": {
+        "title": "Glossary of Terms",
+        "description": "Definitions of technical terms and abbreviations used in this report",
+        "terms": {
+          "firb": {
+            "term": "FIRB",
+            "fullName": "Foreign Investment Review Board",
+            "definition": "Australian government body that reviews foreign investment proposals to ensure they are not contrary to the national interest."
+          },
+          "ato": {
+            "term": "ATO",
+            "fullName": "Australian Taxation Office",
+            "definition": "The principal revenue collection agency of the Australian government responsible for administering tax laws."
+          },
+          "roi": {
+            "term": "ROI",
+            "fullName": "Return on Investment",
+            "definition": "A performance measure used to evaluate the efficiency of an investment, calculated as (gain - cost) / cost."
+          },
+          "lvr": {
+            "term": "LVR",
+            "fullName": "Loan-to-Value Ratio",
+            "definition": "The ratio of the loan amount to the appraised value of the property, expressed as a percentage."
+          },
+          "cgt": {
+            "term": "CGT",
+            "fullName": "Capital Gains Tax",
+            "definition": "Tax on the profit made from the sale of an asset, including investment properties."
+          },
+          "gst": {
+            "term": "GST",
+            "fullName": "Goods and Services Tax",
+            "definition": "A 10% broad-based tax on most goods and services sold in Australia."
+          },
+          "stampDuty": {
+            "term": "Stamp Duty",
+            "fullName": "Transfer Duty",
+            "definition": "State government tax payable on the transfer of property ownership, calculated as a percentage of the property value."
+          },
+          "landTax": {
+            "term": "Land Tax",
+            "fullName": "Annual Land Tax",
+            "definition": "Annual tax levied by state governments on the unimproved value of land holdings above certain thresholds."
+          },
+          "foreignSurcharge": {
+            "term": "Foreign Surcharge",
+            "fullName": "Foreign Investor Duty Surcharge",
+            "definition": "Additional stamp duty payable by foreign investors, typically 7-8% of the property value."
+          },
+          "firbFee": {
+            "term": "FIRB Fee",
+            "fullName": "Foreign Investment Application Fee",
+            "definition": "Fee payable to FIRB for processing foreign investment applications, tiered based on property value."
+          },
+          "principalPlace": {
+            "term": "PPOR",
+            "fullName": "Principal Place of Residence",
+            "definition": "The main home where a person ordinarily resides, eligible for certain tax concessions and exemptions."
+          },
+          "negativeGearing": {
+            "term": "Negative Gearing",
+            "fullName": "Negative Gearing",
+            "definition": "When the cost of owning an investment property exceeds the rental income, creating a tax deduction."
+          },
+          "positiveGearing": {
+            "term": "Positive Gearing",
+            "fullName": "Positive Gearing",
+            "definition": "When rental income exceeds the costs of owning an investment property, generating positive cash flow."
+          },
+          "depreciation": {
+            "term": "Depreciation",
+            "fullName": "Capital Works Depreciation",
+            "definition": "Tax deduction for the decline in value of building structures and fixtures over time."
+          },
+          "capitalWorks": {
+            "term": "Capital Works",
+            "fullName": "Capital Works Deduction",
+            "definition": "Tax deduction for the construction costs of buildings, typically 2.5% per year for 40 years."
+          },
+          "plantEquipment": {
+            "term": "Plant & Equipment",
+            "fullName": "Plant and Equipment Depreciation",
+            "definition": "Tax deduction for the decline in value of removable assets like appliances, carpets, and fixtures."
+          },
+          "rentalYield": {
+            "term": "Rental Yield",
+            "fullName": "Gross Rental Yield",
+            "definition": "Annual rental income expressed as a percentage of the property value, before expenses."
+          },
+          "netYield": {
+            "term": "Net Yield",
+            "fullName": "Net Rental Yield",
+            "definition": "Annual rental income minus expenses, expressed as a percentage of the property value."
+          },
+          "cashFlow": {
+            "term": "Cash Flow",
+            "fullName": "Investment Cash Flow",
+            "definition": "The net amount of cash generated or consumed by an investment property over a given period."
+          },
+          "equity": {
+            "term": "Equity",
+            "fullName": "Property Equity",
+            "definition": "The difference between the property value and the outstanding loan balance."
+          },
+          "capitalGrowth": {
+            "term": "Capital Growth",
+            "fullName": "Capital Appreciation",
+            "definition": "The increase in property value over time, a key component of property investment returns."
+          },
+          "interestOnly": {
+            "term": "IO Loan",
+            "fullName": "Interest Only Loan",
+            "definition": "A loan where only interest payments are made for a specified period, with principal repaid later."
+          },
+          "principalInterest": {
+            "term": "P&I Loan",
+            "fullName": "Principal and Interest Loan",
+            "definition": "A loan where both principal and interest are repaid over the loan term."
+          },
+          "offsetAccount": {
+            "term": "Offset Account",
+            "fullName": "Mortgage Offset Account",
+            "definition": "A savings account linked to a home loan where the balance reduces the interest payable."
+          },
+          "redraw": {
+            "term": "Redraw",
+            "fullName": "Loan Redraw Facility",
+            "definition": "Ability to withdraw extra repayments made on a home loan for other purposes."
+          },
+          "refinancing": {
+            "term": "Refinancing",
+            "fullName": "Loan Refinancing",
+            "definition": "Replacing an existing loan with a new loan, often to secure better terms or rates."
+          }
+        }
+      },
+      "disclaimer": {
+        "title": "IMPORTANT LEGAL DISCLAIMER",
+        "sections": {
+          "notFinancialAdvice": {
+            "title": "Not Financial Advice",
+            "content": "This report is provided for informational purposes only and does NOT constitute financial, investment, legal, or tax advice. The calculations and projections are estimates based on the information provided and current regulations."
+          },
+          "noGuarantee": {
+            "title": "No Guarantee of Accuracy",
+            "content": "While we strive for accuracy, we make no warranties or representations regarding the completeness, accuracy, or reliability of the information contained in this report. FIRB regulations, tax laws, and property market conditions are subject to change without notice."
+          },
+          "professionalAdvice": {
+            "title": "Professional Advice Required",
+            "content": "You MUST seek independent professional advice before making any property investment decisions. This includes consulting with: (1) Licensed financial advisors, (2) Qualified tax accountants, (3) Immigration lawyers (for visa matters), (4) Conveyancers or property lawyers, (5) FIRB specialists."
+          },
+          "marketPerformance": {
+            "title": "Market Performance Disclaimer",
+            "content": "Past performance is not indicative of future results. Property values can go down as well as up. Rental income projections are estimates and may vary significantly based on market conditions, property condition, tenant quality, and vacancy rates."
+          },
+          "firbCompliance": {
+            "title": "FIRB Compliance Responsibility",
+            "content": "You are solely responsible for ensuring compliance with all FIRB regulations and Australian foreign investment laws. Penalties for non-compliance can be severe, including fines up to $6.66M for individuals or $66.6M for corporations, imprisonment, and forced divestment."
+          },
+          "currencyRisk": {
+            "title": "Currency and Interest Rate Risk",
+            "content": "Foreign investors face additional risks including currency fluctuation, changes in interest rates, and political/regulatory changes that may affect property ownership rights or taxation."
+          },
+          "limitationOfLiability": {
+            "title": "Limitation of Liability",
+            "content": "To the maximum extent permitted by law, we exclude all liability for any loss or damage arising from reliance on this report or any actions taken based on its contents. Your use of this report is entirely at your own risk."
+          },
+          "dataSources": {
+            "title": "Data Sources & Updates",
+            "content": "This report uses data current as of the generation date. Tax rates, FIRB fees, and regulations are subject to change. Always verify current rates with official government sources before proceeding with any transaction."
+          }
+        },
+        "footer": "For the most current information, please consult: (1) FIRB website: https://firb.gov.au, (2) ATO Foreign Investment: https://ato.gov.au/foreign-investment, (3) State Revenue Offices for stamp duty rates, (4) Licensed professionals for personalized advice."
+      },
+      "propertyDetails": {
+        "title": "Property Investment Details",
+        "cards": {
+          "propertyInformation": "Property Information",
+          "buyerInformation": "Buyer Information",
+          "financialStructure": "Financial Structure"
+        },
+        "labels": {
+          "propertyAddress": "Property Address",
+          "propertyType": "Property Type",
+          "propertyValue": "Property Value",
+          "stateTerritory": "State/Territory",
+          "citizenshipStatus": "Citizenship Status",
+          "visaType": "Visa Type",
+          "entityType": "Entity Type",
+          "firstHomeBuyer": "First Home Buyer",
+          "ordinarilyResident": "Ordinarily Resident",
+          "depositPercentage": "Deposit Percentage",
+          "depositAmount": "Deposit Amount",
+          "loanAmount": "Loan Amount",
+          "loanToValueRatio": "Loan-to-Value Ratio (LVR)",
+          "estimatedInterestRate": "Estimated Interest Rate"
+        }
+      },
+      "upgradePrompt": {
+        "title": "Premium Feature",
+        "description": "This section contains advanced analysis and insights available to premium subscribers.",
+        "upgradeButton": "Upgrade to Access Full Report",
+        "visitWebsite": "Visit propertycosts.com.au to upgrade your account",
+        "features": {
+          "costBreakdown": {
+            "title": "Cost Breakdown",
+            "description": "Get detailed cost analysis including FIRB fees, stamp duty, foreign surcharges, legal fees, and all ongoing costs with itemized breakdowns."
+          },
+          "investmentAnalysis": {
+            "title": "Investment Analysis",
+            "description": "Get detailed investment performance analysis including rental yields, ROI metrics, capital growth projections, and comprehensive financial modeling."
+          },
+          "cashFlowAnalysis": {
+            "title": "Cash Flow Analysis",
+            "description": "Get detailed cash flow analysis including monthly and annual projections, tax benefits, and comprehensive income vs expense breakdowns."
+          },
+          "projections": {
+            "title": "10-Year Projections",
+            "description": "Get detailed 10-year projections including property value growth, loan balance reduction, equity building, and break-even analysis."
+          },
+          "comparisons": {
+            "title": "Investment Comparisons & Sensitivity Analysis",
+            "description": "Get comprehensive investment comparisons against other asset classes and detailed sensitivity analysis showing how changes in key variables affect your returns."
+          },
+          "taxAnalysis": {
+            "title": "Tax Analysis & Recommendations",
+            "description": "Get comprehensive tax analysis including annual deductions, CGT projections, and personalized investment recommendations with detailed scoring breakdown."
+          }
+        }
       }
     }
-  },
-  "Nav": {
-    "home": "Home",
-    "calculator": "Calculator",
-    "faq": "FAQ"
   },
   "Auth": {
     "loginTitle": "Login to Your Account",

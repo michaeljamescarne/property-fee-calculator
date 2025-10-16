@@ -356,3 +356,6 @@ The choice between new and established properties for foreign buyers depends on 
 5. **FIRB rules** apply to both property types
 
 **Next Steps**: Use our comprehensive calculator to determine your exact costs and requirements, then consult with qualified professionals to ensure the right choice for your situation.
+
+
+

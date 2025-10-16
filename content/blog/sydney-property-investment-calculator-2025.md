@@ -387,3 +387,6 @@ Sydney offers excellent opportunities for foreign property investors, with stron
 5. **Compliance** with ongoing requirements is critical
 
 **Next Steps**: Use our comprehensive calculator to determine your exact costs and requirements, then consult with qualified professionals to ensure a successful Sydney property investment.
+
+
+

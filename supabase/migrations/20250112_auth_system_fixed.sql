@@ -188,3 +188,6 @@ COMMENT ON TABLE magic_codes IS 'Temporary authentication codes for passwordless
 COMMENT ON TABLE saved_calculations IS 'User saved FIRB calculator results';
 COMMENT ON COLUMN magic_codes.code IS 'Hashed 6-digit authentication code';
 COMMENT ON COLUMN saved_calculations.calculation_data IS 'Full JSON of form state and results';
+
+
+

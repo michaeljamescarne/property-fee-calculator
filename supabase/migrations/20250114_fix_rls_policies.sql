@@ -68,3 +68,6 @@ COMMENT ON POLICY "Allow service role full access" ON saved_calculations IS
 COMMENT ON POLICY "Users can manage own calculations" ON saved_calculations IS 
     'Authenticated users can only access their own calculations via auth.uid().';
 
+
+
+

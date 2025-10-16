@@ -147,9 +147,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
             </div>
             <div className="pt-3 border-t border-border/40">
               <p className="text-muted-foreground mb-1">
-                {t('taxAnalysis.negativeGearing.taxBenefit') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.negativeGearing.taxBenefit' 
-                  ? 'Tax Benefit (37% rate)' 
-                  : t('taxAnalysis.negativeGearing.taxBenefit', { rate: '37' })}:
+                {t('taxAnalysis.negativeGearing.taxBenefit', { rate: '37' })}:
               </p>
               <p className="font-semibold text-green-600 text-lg">
                 {currency(analytics.taxAnalysis.annualTaxSaving)}
@@ -169,9 +167,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  {t('taxAnalysis.cgtItems.salePrice') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.cgtItems.salePrice' 
-                    ? `Sale Price (Year ${analytics.yearByYear.length})` 
-                    : t('taxAnalysis.cgtItems.salePrice', { year: analytics.yearByYear.length })}:
+                  {t('taxAnalysis.cgtItems.salePrice', { year: analytics.yearByYear.length })}:
                 </span>
                 <span className="font-semibold">{currency(cgt.salePrice)}</span>
               </div>

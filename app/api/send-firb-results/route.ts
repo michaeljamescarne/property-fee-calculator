@@ -94,13 +94,18 @@ export async function POST(request: NextRequest) {
     let pdfBase64: string | undefined;
     try {
       console.log('Email API: Generating PDF');
-      const pdfBlob = generateEnhancedPDF(
+      // TODO: Get user's content tier from database when payment system is implemented
+      // For now, all users get premium tier
+      const contentTier = 'premium'; // await getUserContentTier(userId);
+      
+      const pdfBlob = await generateEnhancedPDF(
         formData,
         eligibility,
         costs,
         analytics,
         locale || 'en',
-        pdfTranslations
+        pdfTranslations,
+        contentTier
       );
       console.log('Email API: PDF generated successfully');
 

@@ -344,3 +344,6 @@ Investing in Australian property as a Chinese national requires careful planning
 5. **Compliance** with ongoing requirements is mandatory
 
 **Next Steps**: Use our comprehensive calculator to determine your exact costs and requirements, then consult with qualified professionals to ensure a successful investment.
+
+
+

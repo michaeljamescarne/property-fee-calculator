@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { formatCurrency, formatPercent, formatNumber, formatYears } from '@/lib/utils/format';
 
 export function useInvestmentTranslations() {
-  const t = useTranslations('FIRBCalculator.investmentAnalytics');
+  const t = useTranslations('FIRBCalculator.results.investmentAnalytics');
   const locale = useLocale();
 
   // Helper functions that combine translations with formatting

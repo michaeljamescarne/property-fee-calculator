@@ -173,3 +173,6 @@ Our [FIRB Calculator](/firb-calculator) automatically calculates stamp duty for 
 Stamp duty costs vary significantly between states, with foreign buyer surcharges adding substantial additional costs. Use our comprehensive calculator to determine your exact costs and plan your property investment accordingly.
 
 **Ready to calculate your stamp duty?** [Use our free calculator](/firb-calculator) to get instant results for any Australian state.
+
+
+

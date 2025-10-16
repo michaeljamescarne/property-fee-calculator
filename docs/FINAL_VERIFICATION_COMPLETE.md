@@ -142,3 +142,6 @@ All 7 bug fixes and UI enhancements have been successfully implemented, tested, 
 **Production URL**: https://aupropertyinvestmentmc.vercel.app/en  
 **Local URL**: http://localhost:3000/en
 
+
+
+

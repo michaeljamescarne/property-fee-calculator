@@ -89,9 +89,7 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
             : t('comparison.title')}
         </CardTitle>
         <CardDescription>
-          {t('comparison.description') === 'FIRBCalculator.investmentAnalytics.comparison.description'
-            ? 'Compare your property investment returns against other asset classes'
-            : t('comparison.description', { years: holdPeriod })}
+          {t('comparison.description', { years: holdPeriod })}
         </CardDescription>
       </CardHeader>
       
@@ -127,9 +125,7 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
               </h4>
             </div>
             <p className="text-sm text-amber-700">
-              {t('comparison.comparisonDesc') === 'FIRBCalculator.investmentAnalytics.comparison.comparisonDesc'
-                ? `${bestInvestment.name} performed best with ${currency(bestInvestment.return)} return. Property investment returned ${currency(analytics.comparisons.propertyInvestment.totalReturn)}.`
-                : t('comparison.comparisonDesc', {
+              {t('comparison.comparisonDesc', {
                     best: bestInvestment.name,
                     return: currency(bestInvestment.return),
                     propertyReturn: currency(analytics.comparisons.propertyInvestment.totalReturn)
@@ -189,9 +185,7 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
                       : t('comparison.annualRate')}
                   </th>
                   <th className="text-right p-3 font-semibold">
-                    {t('comparison.yearReturn') === 'FIRBCalculator.investmentAnalytics.comparison.yearReturn' 
-                      ? `${holdPeriod}-Year Return` 
-                      : t('comparison.yearReturn', { years: holdPeriod })}
+                    {t('comparison.yearReturn', { years: holdPeriod })}
                   </th>
                   <th className="text-center p-3 font-semibold">
                     {t('comparison.riskLevel') === 'FIRBCalculator.investmentAnalytics.comparison.riskLevel' 
@@ -240,9 +234,7 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
         {/* Assumptions Note */}
         <div className="p-4 bg-muted/50 rounded-lg border border-border/40 text-sm text-muted-foreground">
           <p>
-            {t('comparison.assumptions') === 'FIRBCalculator.investmentAnalytics.comparison.assumptions' 
-              ? `Assumptions: Property growth rate of ${analytics.capitalGrowth.annualGrowthRate.toFixed(1)}% p.a., based on historical averages. Returns are estimates and may vary.`
-              : t('comparison.assumptions', { growth: analytics.capitalGrowth.annualGrowthRate.toFixed(1) })}
+            {t('comparison.assumptions', { growth: analytics.capitalGrowth.annualGrowthRate.toFixed(1) })}
           </p>
         </div>
       </CardContent>

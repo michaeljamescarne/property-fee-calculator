@@ -124,9 +124,7 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
             </table>
           </div>
           <p className="text-xs text-muted-foreground mt-3 italic">
-            {t('sensitivity.vacancyNote') === 'FIRBCalculator.investmentAnalytics.sensitivity.vacancyNote'
-              ? `Note: A 5% increase in vacancy rate reduces annual cash flow by approximately ${Math.abs(analytics.sensitivity.vacancyImpact[2].impact - analytics.sensitivity.vacancyImpact[1].impact).toFixed(0)}.`
-              : t('sensitivity.vacancyNote', { amount: Math.abs(analytics.sensitivity.vacancyImpact[2].impact - analytics.sensitivity.vacancyImpact[1].impact).toFixed(0) })}
+            {t('sensitivity.vacancyNote', { amount: Math.abs(analytics.sensitivity.vacancyImpact[2].impact - analytics.sensitivity.vacancyImpact[1].impact).toFixed(0) })}
           </p>
         </div>
 

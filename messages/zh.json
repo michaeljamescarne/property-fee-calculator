@@ -734,6 +734,236 @@
         "regulationsChange": "FIRB法规和税法可能会发生变化。请核实当前要求。",
         "assumptionsBased": "预测基于您的假设和历史平均值。实际回报可能会有所不同。",
         "pastPerformance": "过往表现不代表未来结果。"
+      },
+      "glossary": {
+        "title": "术语表",
+        "description": "本报告中使用的技术术语和缩写定义",
+        "terms": {
+          "firb": {
+            "term": "FIRB",
+            "fullName": "外国投资审查委员会",
+            "definition": "澳大利亚政府机构，负责审查外国投资提案，确保其不违反国家利益。"
+          },
+          "ato": {
+            "term": "ATO",
+            "fullName": "澳大利亚税务局",
+            "definition": "澳大利亚政府的主要收入征收机构，负责执行税法。"
+          },
+          "roi": {
+            "term": "ROI",
+            "fullName": "投资回报率",
+            "definition": "用于评估投资效率的绩效指标，计算公式为（收益-成本）/成本。"
+          },
+          "lvr": {
+            "term": "LVR",
+            "fullName": "贷款价值比",
+            "definition": "贷款金额与房产评估价值的比率，以百分比表示。"
+          },
+          "cgt": {
+            "term": "CGT",
+            "fullName": "资本利得税",
+            "definition": "对资产出售所得利润征收的税款，包括投资房产。"
+          },
+          "gst": {
+            "term": "GST",
+            "fullName": "商品及服务税",
+            "definition": "对澳大利亚销售的大部分商品和服务征收的10%广义税。"
+          },
+          "stampDuty": {
+            "term": "印花税",
+            "fullName": "转让税",
+            "definition": "州政府对房产所有权转让征收的税款，按房产价值的百分比计算。"
+          },
+          "landTax": {
+            "term": "土地税",
+            "fullName": "年度土地税",
+            "definition": "州政府对超过特定门槛的土地持有未改良价值征收的年度税款。"
+          },
+          "foreignSurcharge": {
+            "term": "外国附加费",
+            "fullName": "外国投资者附加税",
+            "definition": "外国投资者需要额外支付的印花税，通常为房产价值的7-8%。"
+          },
+          "firbFee": {
+            "term": "FIRB费用",
+            "fullName": "外国投资申请费",
+            "definition": "向FIRB支付的处理外国投资申请的费用，根据房产价值分级。"
+          },
+          "principalPlace": {
+            "term": "PPOR",
+            "fullName": "主要居住地",
+            "definition": "个人通常居住的主要住所，有资格获得某些税收优惠和豁免。"
+          },
+          "negativeGearing": {
+            "term": "负杠杆",
+            "fullName": "负杠杆",
+            "definition": "当拥有投资房产的成本超过租金收入时，产生税收抵扣。"
+          },
+          "positiveGearing": {
+            "term": "正杠杆",
+            "fullName": "正杠杆",
+            "definition": "当租金收入超过拥有投资房产的成本时，产生正现金流。"
+          },
+          "depreciation": {
+            "term": "折旧",
+            "fullName": "资本工程折旧",
+            "definition": "建筑物结构和固定装置随时间的价值下降的税收抵扣。"
+          },
+          "capitalWorks": {
+            "term": "资本工程",
+            "fullName": "资本工程抵扣",
+            "definition": "建筑物建设成本的税收抵扣，通常每年2.5%，持续40年。"
+          },
+          "plantEquipment": {
+            "term": "厂房设备",
+            "fullName": "厂房设备折旧",
+            "definition": "可移动资产（如电器、地毯和固定装置）价值下降的税收抵扣。"
+          },
+          "rentalYield": {
+            "term": "租金收益率",
+            "fullName": "毛租金收益率",
+            "definition": "年度租金收入占房产价值的百分比，扣除费用前。"
+          },
+          "netYield": {
+            "term": "净收益率",
+            "fullName": "净租金收益率",
+            "definition": "年度租金收入减去费用后占房产价值的百分比。"
+          },
+          "cashFlow": {
+            "term": "现金流",
+            "fullName": "投资现金流",
+            "definition": "投资房产在特定时期内产生或消耗的净现金金额。"
+          },
+          "equity": {
+            "term": "净资产",
+            "fullName": "房产净资产",
+            "definition": "房产价值与未偿贷款余额之间的差额。"
+          },
+          "capitalGrowth": {
+            "term": "资本增长",
+            "fullName": "资本增值",
+            "definition": "房产价值随时间的增长，是房产投资回报的关键组成部分。"
+          },
+          "interestOnly": {
+            "term": "IO贷款",
+            "fullName": "只付利息贷款",
+            "definition": "在指定期间只支付利息的贷款，本金稍后偿还。"
+          },
+          "principalInterest": {
+            "term": "P&I贷款",
+            "fullName": "本金和利息贷款",
+            "definition": "在贷款期限内同时偿还本金和利息的贷款。"
+          },
+          "offsetAccount": {
+            "term": "对冲账户",
+            "fullName": "房贷对冲账户",
+            "definition": "与房屋贷款关联的储蓄账户，其余额可减少应付利息。"
+          },
+          "redraw": {
+            "term": "重提",
+            "fullName": "贷款重提功能",
+            "definition": "能够提取房屋贷款额外还款用于其他目的的能力。"
+          },
+          "refinancing": {
+            "term": "再融资",
+            "fullName": "贷款再融资",
+            "definition": "用新贷款替换现有贷款，通常是为了获得更好的条款或利率。"
+          }
+        }
+      },
+      "disclaimer": {
+        "title": "重要法律免责声明",
+        "sections": {
+          "notFinancialAdvice": {
+            "title": "非财务建议",
+            "content": "本报告仅供参考，不构成财务、投资、法律或税务建议。计算和预测是基于提供的信息和当前法规的估算。"
+          },
+          "noGuarantee": {
+            "title": "不保证准确性",
+            "content": "虽然我们努力确保准确性，但我们不保证本报告所含信息的完整性、准确性或可靠性。FIRB法规、税法和房产市场条件可能会在未经通知的情况下发生变化。"
+          },
+          "professionalAdvice": {
+            "title": "需要专业建议",
+            "content": "在做出任何房产投资决定之前，您必须寻求独立的专业建议。这包括咨询：(1) 持牌财务顾问，(2) 合格税务会计师，(3) 移民律师（签证事务），(4) 产权转让师或房产律师，(5) FIRB专家。"
+          },
+          "marketPerformance": {
+            "title": "市场表现免责声明",
+            "content": "过往表现不代表未来结果。房产价值可能上涨也可能下跌。租金收入预测是估算值，可能因市场条件、房产状况、租户质量和空置率而有显著差异。"
+          },
+          "firbCompliance": {
+            "title": "FIRB合规责任",
+            "content": "您全权负责确保遵守所有FIRB法规和澳大利亚外国投资法律。不合规的处罚可能很严厉，包括个人最高666万澳元或公司最高6660万澳元的罚款、监禁和强制出售。"
+          },
+          "currencyRisk": {
+            "title": "货币和利率风险",
+            "content": "外国投资者面临额外风险，包括货币波动、利率变化以及可能影响房产所有权或税收的政治/监管变化。"
+          },
+          "limitationOfLiability": {
+            "title": "责任限制",
+            "content": "在法律允许的最大范围内，我们排除因依赖本报告或基于其内容采取的任何行动而产生的任何损失或损害的所有责任。您使用本报告的风险完全由您自己承担。"
+          },
+          "dataSources": {
+            "title": "数据来源和更新",
+            "content": "本报告使用生成日期当前的数据。税率、FIRB费用和法规可能会发生变化。在进行任何交易之前，请始终向官方政府来源核实当前费率。"
+          }
+        },
+        "footer": "有关最新信息，请咨询：(1) FIRB网站：https://firb.gov.au，(2) ATO外国投资：https://ato.gov.au/foreign-investment，(3) 州税务局了解印花税税率，(4) 持牌专业人士获取个性化建议。"
+      },
+      "propertyDetails": {
+        "title": "房产投资详情",
+        "cards": {
+          "propertyInformation": "房产信息",
+          "buyerInformation": "买家信息",
+          "financialStructure": "财务结构"
+        },
+        "labels": {
+          "propertyAddress": "房产地址",
+          "propertyType": "房产类型",
+          "propertyValue": "房产价值",
+          "stateTerritory": "州/领地",
+          "citizenshipStatus": "公民身份",
+          "visaType": "签证类型",
+          "entityType": "实体类型",
+          "firstHomeBuyer": "首次购房者",
+          "ordinarilyResident": "通常居民",
+          "depositPercentage": "首付百分比",
+          "depositAmount": "首付金额",
+          "loanAmount": "贷款金额",
+          "loanToValueRatio": "贷款价值比（LVR）",
+          "estimatedInterestRate": "预估利率"
+        }
+      },
+      "upgradePrompt": {
+        "title": "高级功能",
+        "description": "此部分包含高级订阅者可用的高级分析和见解。",
+        "upgradeButton": "升级以访问完整报告",
+        "visitWebsite": "访问propertycosts.com.au升级您的账户",
+        "features": {
+          "costBreakdown": {
+            "title": "成本明细",
+            "description": "获取详细的成本分析，包括FIRB费用、印花税、外国附加费、法律费用以及所有持续费用的详细明细。"
+          },
+          "investmentAnalysis": {
+            "title": "投资分析",
+            "description": "获取详细的投资绩效分析，包括租金收益率、ROI指标、资本增长预测和综合财务建模。"
+          },
+          "cashFlowAnalysis": {
+            "title": "现金流分析",
+            "description": "获取详细的现金流分析，包括月度和年度预测、税收优惠以及收入和支出的综合对比。"
+          },
+          "projections": {
+            "title": "10年预测",
+            "description": "获取详细的10年预测，包括房产价值增长、贷款余额减少、净资产建设和盈亏平衡分析。"
+          },
+          "comparisons": {
+            "title": "投资比较和敏感性分析",
+            "description": "获取与其他资产类别的综合投资比较和详细的敏感性分析，显示关键变量变化如何影响您的回报。"
+          },
+          "taxAnalysis": {
+            "title": "税务分析和建议",
+            "description": "获取综合税务分析，包括年度抵扣、CGT预测和带有详细评分明细的个性化投资建议。"
+          }
+        }
       }
     }
   },

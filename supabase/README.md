@@ -79,3 +79,6 @@ The migration creates:
 See detailed setup guide: `../docs/DATABASE_SETUP.md`
 
 
+
+
+

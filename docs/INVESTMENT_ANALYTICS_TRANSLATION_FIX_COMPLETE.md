@@ -202,3 +202,6 @@ The Investment Analytics input fields were displaying raw translation keys (e.g.
 
 **The Investment Analytics form is now fully functional and user-friendly!** 🎉
 
+
+
+

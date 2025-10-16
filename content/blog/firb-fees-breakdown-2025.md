@@ -325,3 +325,6 @@ FIRB fees are a significant cost component of foreign property investment in Aus
 5. **Planning** for all costs is crucial for investment success
 
 **Next Steps**: Use our comprehensive calculator to determine your exact FIRB costs and requirements, then consult with qualified professionals to ensure a successful application.
+
+
+
