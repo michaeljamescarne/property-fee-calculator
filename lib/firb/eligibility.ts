@@ -234,22 +234,41 @@ export function getFIRBRequirements(
     };
   }
 
-  // Calculate FIRB fee based on property value (from constants)
+  // Calculate FIRB fee based on property value and type (2025/26 rates)
   let fee = 0;
-  if (propertyValue <= 1000000) fee = 13200;
-  else if (propertyValue <= 2000000) fee = 26400;
-  else if (propertyValue <= 3000000) fee = 39600;
-  else if (propertyValue <= 4000000) fee = 52800;
-  else if (propertyValue <= 5000000) fee = 66000;
-  else if (propertyValue <= 6000000) fee = 79200;
-  else if (propertyValue <= 7000000) fee = 92400;
-  else if (propertyValue <= 8000000) fee = 105600;
-  else if (propertyValue <= 9000000) fee = 118800;
-  else if (propertyValue <= 10000000) fee = 132000;
-  else {
-    // Above $10M: $132,000 + $13,200 per additional million
-    const additionalMillions = Math.ceil((propertyValue - 10000000) / 1000000);
-    fee = 132000 + (additionalMillions * 13200);
+  if (propertyValue <= 10000000) {
+    // Use new fee structure based on property type
+    const feeTiers = propertyType === 'established' ? [
+      { max: 75000, fee: 13500 },
+      { max: 1000000, fee: 45300 },
+      { max: 2000000, fee: 90900 },
+      { max: 3000000, fee: 181800 },
+      { max: 4000000, fee: 272700 },
+      { max: 5000000, fee: 363600 },
+      { max: 6000000, fee: 454500 },
+      { max: 7000000, fee: 545400 },
+      { max: 8000000, fee: 636300 },
+      { max: 9000000, fee: 727200 },
+      { max: 10000000, fee: 818100 }
+    ] : [
+      { max: 75000, fee: 4500 },
+      { max: 1000000, fee: 15100 },
+      { max: 2000000, fee: 30300 },
+      { max: 3000000, fee: 60600 },
+      { max: 4000000, fee: 90900 },
+      { max: 5000000, fee: 121200 },
+      { max: 6000000, fee: 151500 },
+      { max: 7000000, fee: 181800 },
+      { max: 8000000, fee: 212100 },
+      { max: 9000000, fee: 242400 },
+      { max: 10000000, fee: 272700 }
+    ];
+    
+    const tier = feeTiers.find(t => propertyValue <= t.max);
+    fee = tier?.fee || 0;
+  } else {
+    // For properties over $10M: use maximum fee
+    fee = propertyType === 'established' ? 3357300 : 1205200;
   }
 
   const requirements: string[] = [

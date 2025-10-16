@@ -84,22 +84,48 @@ The Foreign Investment Review Board (FIRB) is an Australian government body that
 - **Completion deadline**: 4 years from purchase
 - **Cannot be sold** until construction completed
 
-## FIRB Application Fees 2025
+## FIRB Application Fees 2025/26
 
-| Property Value | FIRB Application Fee |
-|----------------|---------------------|
-| Under $1M | $13,200 |
-| $1M - $1.999M | $26,400 |
-| $2M - $2.999M | $39,600 |
-| $3M - $3.999M | $52,800 |
-| $4M - $4.999M | $66,000 |
-| Each additional $1M | +$13,200 |
+**Source**: Australian Taxation Office - Foreign Investment Fees (1 July 2025 – 30 June 2026)
 
-### Vacant Land Fees:
-- Under $1.5M: $5,500
+### New Dwellings & Vacant Land Fees
+
+| Property Value | Application Fee |
+|----------------|-----------------|
+| Under $75,000 | $4,500 |
+| $1M or less | $15,100 |
+| $2M or less | $30,300 |
+| $3M or less | $60,600 |
+| $4M or less | $90,900 |
+| $5M or less | $121,200 |
+| $6M or less | $151,500 |
+| $7M or less | $181,800 |
+| $8M or less | $212,100 |
+| $9M or less | $242,400 |
+| $10M or less | $272,700 |
+| Over $40M | $1,205,200 |
+
+### Established Dwellings Fees (Tripled Rates)
+
+⚠️ **Note**: While established dwellings are currently banned for foreign persons (April 1, 2025 - March 31, 2027), these fees apply to exceptional circumstances and post-ban period:
+
+| Property Value | Application Fee |
+|----------------|-----------------|
+| Under $75,000 | $13,500 |
+| $1M or less | $45,300 |
+| $2M or less | $90,900 |
+| $3M or less | $181,800 |
+| $4M or less | $272,700 |
+| $5M or less | $363,600 |
+| $6M or less | $454,500 |
+| $7M or less | $545,400 |
+| $8M or less | $636,300 |
+| $9M or less | $727,200 |
+| $10M or less | $818,100 |
+| Over $40M | $3,357,300 |
 
 ### Expedited Processing:
-- Additional $10,000+ for 10-day processing
+- **Additional Cost**: Double the standard fee for 10-day processing
 
 ## Application Process
 

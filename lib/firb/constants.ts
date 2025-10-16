@@ -10,7 +10,40 @@ export type PropertyType = 'newDwelling' | 'established' | 'vacantLand' | 'comme
 export type AustralianState = 'NSW' | 'VIC' | 'QLD' | 'SA' | 'WA' | 'TAS' | 'ACT' | 'NT';
 export type EntityType = 'individual' | 'company' | 'trust';
 
-// FIRB Application Fee Tiers (2024/25)
+// FIRB Application Fee Tiers (2025/26) - Updated from ATO Official Source
+// Source: Australian Taxation Office - Foreign Investment Fees (1 July 2025 – 30 June 2026)
+// Last Verified: October 16, 2025
+export const FIRB_FEE_TIERS_NEW_DWELLINGS = [
+  { max: 75000, fee: 4500 },
+  { max: 1000000, fee: 15100 },
+  { max: 2000000, fee: 30300 },
+  { max: 3000000, fee: 60600 },
+  { max: 4000000, fee: 90900 },
+  { max: 5000000, fee: 121200 },
+  { max: 6000000, fee: 151500 },
+  { max: 7000000, fee: 181800 },
+  { max: 8000000, fee: 212100 },
+  { max: 9000000, fee: 242400 },
+  { max: 10000000, fee: 272700 },
+  { max: Infinity, fee: 1205200 } // For properties over $40M
+];
+
+export const FIRB_FEE_TIERS_ESTABLISHED_DWELLINGS = [
+  { max: 75000, fee: 13500 },
+  { max: 1000000, fee: 45300 },
+  { max: 2000000, fee: 90900 },
+  { max: 3000000, fee: 181800 },
+  { max: 4000000, fee: 272700 },
+  { max: 5000000, fee: 363600 },
+  { max: 6000000, fee: 454500 },
+  { max: 7000000, fee: 545400 },
+  { max: 8000000, fee: 636300 },
+  { max: 9000000, fee: 727200 },
+  { max: 10000000, fee: 818100 },
+  { max: Infinity, fee: 3357300 } // For properties over $40M
+];
+
+// Legacy fee tiers (kept for reference and gradual migration)
 export const FIRB_FEE_TIERS = [
   { max: 1000000, fee: 13200 },
   { max: 2000000, fee: 26400 },
@@ -25,8 +58,18 @@ export const FIRB_FEE_TIERS = [
   { max: Infinity, fee: 0 } // Above $10M: $13,200 per additional million
 ];
 
-// Calculate FIRB fee for properties over $10M
-export function calculateFIRBFee(propertyValue: number): number {
+// Calculate FIRB fee based on property value and type (2025/26 rates)
+export function calculateFIRBFee(propertyValue: number, propertyType: PropertyType = 'newDwelling'): number {
+  // Use appropriate fee tier based on property type
+  const feeTiers = propertyType === 'established' ? FIRB_FEE_TIERS_ESTABLISHED_DWELLINGS : FIRB_FEE_TIERS_NEW_DWELLINGS;
+  
+  // Find the applicable tier
+  const tier = feeTiers.find(t => propertyValue <= t.max);
+  return tier?.fee || 0;
+}
+
+// Legacy function (kept for backward compatibility)
+export function calculateFIRBFeeLegacy(propertyValue: number): number {
   if (propertyValue <= 10000000) {
     const tier = FIRB_FEE_TIERS.find(t => propertyValue <= t.max);
     return tier?.fee || 0;

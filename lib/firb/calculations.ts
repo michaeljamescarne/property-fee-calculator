@@ -60,6 +60,7 @@ export interface CalculationInput {
 export function calculateFIRBFees(
   propertyValue: number,
   citizenshipStatus: CitizenshipStatus,
+  propertyType: PropertyType,
   isOrdinarilyResident?: boolean,
   expedited: boolean = false
 ): number {
@@ -73,7 +74,8 @@ export function calculateFIRBFees(
     return 0;
   }
 
-  const baseFee = calculateFIRBFee(propertyValue);
+  // Use new fee structure based on property type (2025/26 rates)
+  const baseFee = calculateFIRBFee(propertyValue, propertyType);
   return expedited ? baseFee * FIRB_EXPEDITED_FEE_MULTIPLIER : baseFee;
 }
 
@@ -239,7 +241,7 @@ export function calculateTotalUpfrontCosts(input: CalculationInput): CostBreakdo
 
   const loanAmount = propertyValue * (1 - depositPercent / 100);
 
-  const firbFee = calculateFIRBFees(propertyValue, citizenshipStatus, isOrdinarilyResident, expeditedFIRB);
+  const firbFee = calculateFIRBFees(propertyValue, citizenshipStatus, propertyType, isOrdinarilyResident, expeditedFIRB);
   const stampDuty = calculateStateDuties(propertyValue, state, isFirstHome);
   const foreignSurcharge = calculateForeignSurcharge(propertyValue, state, citizenshipStatus, isOrdinarilyResident);
   const legalFees = estimateLegalFees(propertyValue, state);
