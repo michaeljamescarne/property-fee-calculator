@@ -4,7 +4,7 @@
  * Ported from eligibilityWizard.js
  */
 
-import { CitizenshipStatus, PropertyType, PROPERTY_ELIGIBILITY, FIRB_PROCESSING_TIMES } from './constants';
+import { CitizenshipStatus, PropertyType, PROPERTY_ELIGIBILITY, FIRB_PROCESSING_TIMES, TEMPORARY_BAN, isAffectedByTemporaryBan } from './constants';
 
 export interface EligibilityResult {
   isEligible: boolean;
@@ -70,8 +70,12 @@ export function checkCitizenshipEligibility(
       expedited: FIRB_PROCESSING_TIMES.expedited
     };
     
-    // Consolidated restrictions
-    baseResult.restrictions.push('Property types permitted: new dwellings or off-the-plan properties only. Established dwellings and vacant land are prohibited.');
+    // Consolidated restrictions - including temporary ban warning
+    if (isAffectedByTemporaryBan('established', 'temporary')) {
+      baseResult.restrictions.push(`⚠️ TEMPORARY BAN (${TEMPORARY_BAN.startDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })} - ${TEMPORARY_BAN.endDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}): Purchase of established dwellings is currently prohibited for temporary residents. Only new dwellings and off-the-plan properties are permitted.`);
+    } else {
+      baseResult.restrictions.push('Property types permitted: new dwellings or off-the-plan properties only. Established dwellings and vacant land are prohibited.');
+    }
     baseResult.restrictions.push('Must occupy as principal place of residence and sell within 6 months of no longer being your residence or visa ceasing');
     
     baseResult.recommendations.push('Apply for FIRB approval before signing any contract');
@@ -92,16 +96,20 @@ export function checkCitizenshipEligibility(
       complex: FIRB_PROCESSING_TIMES.complex
     };
     
-    // Consolidated restrictions - 2 clear points only
-    baseResult.restrictions.push('Established dwellings prohibited except in exceptional FIRB-approved circumstances');
-    baseResult.restrictions.push('Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development');
-    baseResult.restrictions.push('Annual vacancy fee applies if property is not occupied or genuinely available for rent (minimum 183 days per year)');
+    // Consolidated restrictions - including temporary ban warning
+    if (isAffectedByTemporaryBan('established', 'foreign')) {
+      baseResult.restrictions.push(`⚠️ TEMPORARY BAN (${TEMPORARY_BAN.startDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })} - ${TEMPORARY_BAN.endDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}): Purchase of established dwellings is currently prohibited for foreign persons. Only new dwellings, off-the-plan properties, and vacant land for development are permitted.`);
+    } else {
+      baseResult.restrictions.push('Established dwellings prohibited except in exceptional FIRB-approved circumstances');
+      baseResult.restrictions.push('Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development');
+    }
+    baseResult.restrictions.push('Annual vacancy fee applies if property is not occupied or genuinely available for rent (minimum 183 days per year). Vacancy fees have been doubled as of April 1, 2025.');
     baseResult.restrictions.push('You must notify the ATO within 30 days of settlement');
     
     // More precise recommendations
     baseResult.recommendations.push('FIRB approval is mandatory - do not sign any contract before obtaining approval');
     baseResult.recommendations.push('Budget for foreign buyer stamp duty surcharges - see exact costs in the breakdown below');
-    baseResult.recommendations.push('Ensure property is genuinely available for rent or occupied to avoid vacancy fees');
+    baseResult.recommendations.push('Ensure property is genuinely available for rent or occupied to avoid doubled vacancy fees');
     baseResult.recommendations.push('Consider engaging a lawyer or conveyancer experienced in foreign property purchases');
   }
 
@@ -120,6 +128,14 @@ export function checkPropertyEligibility(
   let effectiveStatus = citizenshipStatus;
   if (citizenshipStatus === 'australian' && isOrdinarilyResident === false) {
     effectiveStatus = 'foreign';
+  }
+
+  // Check if affected by temporary ban (April 1, 2025 - March 31, 2027)
+  if (isAffectedByTemporaryBan(propertyType, effectiveStatus)) {
+    return {
+      eligible: false,
+      reason: `TEMPORARY BAN IN EFFECT (April 1, 2025 - March 31, 2027): Foreign persons and temporary residents are prohibited from purchasing established dwellings during this period. FIRB applications for established dwellings will not be approved. Exceptions may apply for redevelopment projects (20+ dwellings), commercial-scale housing, or build-to-rent developments.`
+    };
   }
 
   const eligibilityRules = PROPERTY_ELIGIBILITY[effectiveStatus];

@@ -230,3 +230,45 @@ export const FIRB_PROCESSING_TIMES = {
 // Annual Vacancy Fee (for foreign owners)
 export const ANNUAL_VACANCY_FEE_RATE = 0; // Varies by state and property value
 
+// Temporary Ban on Established Dwellings (April 1, 2025 - March 31, 2027)
+// Source: FIRB Residential Land Guidance Note (Version 6, March 14, 2025)
+// Last Verified: October 16, 2025
+export const TEMPORARY_BAN = {
+  startDate: new Date('2025-04-01'),
+  endDate: new Date('2027-03-31'),
+  affectedPropertyTypes: ['established'] as PropertyType[],
+  affectedCitizenshipStatuses: ['temporary', 'foreign'] as CitizenshipStatus[],
+  description: 'Temporary ban on foreign persons (including temporary residents) purchasing established dwellings',
+  exceptions: [
+    'Redevelopment projects resulting in at least 20 additional dwellings',
+    'Commercial-scale housing (retirement villages, aged care facilities, student accommodation)',
+    'Existing build-to-rent developments',
+    'Housing for workers from Pacific island countries and Timor-Leste under specific schemes'
+  ]
+};
+
+/**
+ * Check if the temporary ban on established dwellings is currently active
+ */
+export function isTemporaryBanActive(checkDate: Date = new Date()): boolean {
+  return checkDate >= TEMPORARY_BAN.startDate && checkDate <= TEMPORARY_BAN.endDate;
+}
+
+/**
+ * Check if a property purchase is affected by the temporary ban
+ */
+export function isAffectedByTemporaryBan(
+  propertyType: PropertyType,
+  citizenshipStatus: CitizenshipStatus,
+  checkDate: Date = new Date()
+): boolean {
+  if (!isTemporaryBanActive(checkDate)) {
+    return false;
+  }
+  
+  const isAffectedProperty = TEMPORARY_BAN.affectedPropertyTypes.includes(propertyType);
+  const isAffectedCitizenship = TEMPORARY_BAN.affectedCitizenshipStatuses.includes(citizenshipStatus);
+  
+  return isAffectedProperty && isAffectedCitizenship;
+}
+

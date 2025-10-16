@@ -69,10 +69,14 @@ The Foreign Investment Review Board (FIRB) is an Australian government body that
 - **Must be sold** to Australian citizens/residents if used as investment
 
 ### Established Dwellings
-- **Approval Required**: Yes, for foreign persons
-- **Conditions**: Can only be purchased as primary residence
-- **Must be sold** when no longer primary residence
-- **Cannot be rented out** while owned
+- ⚠️ **TEMPORARY BAN IN EFFECT** (April 1, 2025 - March 31, 2027)
+- **FIRB applications for established dwellings are NOT being approved** for foreign persons (including temporary residents) during this period
+- **Limited Exceptions**: Redevelopment projects (20+ dwellings), commercial-scale housing, build-to-rent developments
+- **Historical Rules** (prior to ban and after March 31, 2027):
+  - **Approval Required**: Yes, for foreign persons
+  - **Conditions**: Can only be purchased as primary residence
+  - **Must be sold** when no longer primary residence
+  - **Cannot be rented out** while owned
 
 ### Vacant Land
 - **Approval Required**: Yes, for foreign persons
@@ -127,9 +131,11 @@ Use our [FIRB Calculator](/firb-calculator) to determine if you need approval an
 - Must notify FIRB of any changes
 
 ### For Established Dwellings:
-- Must be used as primary residence
-- Cannot be rented out
-- Must be sold when no longer primary residence
+- ⚠️ **TEMPORARY BAN**: Currently NOT permitted for foreign persons (April 1, 2025 - March 31, 2027)
+- **Historical Compliance Requirements** (applicable after ban ends):
+  - Must be used as primary residence
+  - Cannot be rented out
+  - Must be sold when no longer primary residence
 
 ### For Vacant Land:
 - Must commence construction within 24 months
