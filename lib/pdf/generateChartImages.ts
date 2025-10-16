@@ -36,7 +36,7 @@ async function svgToPngDataUrl(svgString: string): Promise<string> {
     const ctx = canvas.getContext('2d');
     
     // Use canvg to render SVG to canvas
-    const canvg = Canvg.fromString(ctx, svgString);
+    const canvg = Canvg.fromString(ctx as unknown as CanvasRenderingContext2D, svgString);
     await canvg.render();
     
     // Convert to PNG data URL

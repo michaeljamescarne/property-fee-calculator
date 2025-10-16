@@ -139,7 +139,6 @@ export async function generateEnhancedPDF(
   
   // Colors - Updated to match website branding
   const primaryColor = PDF_COLORS.primary;
-  const accentColor = PDF_COLORS.accent;
   const greenColor = PDF_COLORS.success;
   const redColor = PDF_COLORS.danger;
   const amberColor = PDF_COLORS.warning;
@@ -1552,19 +1551,19 @@ export async function generateEnhancedPDF(
     
     // Insert the TOC page after the executive summary (page 1)
     // We need to get all pages, insert the TOC, and reorder
-    const totalPages = (doc as any).internal.getNumberOfPages();
+    const totalPages = (doc as unknown as { internal: { getNumberOfPages(): number; getPage(pageNumber: number): unknown; deletePage(pageNumber: number): void; insertPage(pageNumber: number, page: unknown): void } }).internal.getNumberOfPages();
     console.log('📄 Total pages before TOC insertion:', totalPages);
     
     // The TOC page was just added as the last page, we need to move it to position 2
     if (totalPages > 1) {
       // Get the TOC page content (last page)
-      const tocPage = (doc as any).internal.getPage(totalPages);
+      const tocPage = (doc as unknown as { internal: { getNumberOfPages(): number; getPage(pageNumber: number): unknown; deletePage(pageNumber: number): void; insertPage(pageNumber: number, page: unknown): void } }).internal.getPage(totalPages);
       
       // Remove the TOC page from the end
-      (doc as any).deletePage(totalPages);
+      (doc as unknown as { internal: { getNumberOfPages(): number; getPage(pageNumber: number): unknown; deletePage(pageNumber: number): void; insertPage(pageNumber: number, page: unknown): void } }).internal.deletePage(totalPages);
       
       // Insert it as page 2
-      (doc as any).insertPage(2, tocPage);
+      (doc as unknown as { internal: { getNumberOfPages(): number; getPage(pageNumber: number): unknown; deletePage(pageNumber: number): void; insertPage(pageNumber: number, page: unknown): void } }).internal.insertPage(2, tocPage);
       
       console.log('📋 Table of Contents inserted at page 2');
     }
