@@ -33,24 +33,22 @@ const blogPosts: Record<string, BlogPost> = {
     featured: true,
     tags: ['FIRB', 'Foreign Investment', 'Property Rules'],
     content: `
-# Complete FIRB Guide 2025: Everything You Need to Know About Foreign Investment in Australian Property
-
 Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn't just recommended—it's mandatory. This comprehensive guide breaks down everything you need to know about FIRB approval, fees, and compliance in 2025.
 
-## What is FIRB and Why Does It Matter?
+## **What is FIRB and Why Does It Matter?**
 
 The Foreign Investment Review Board (FIRB) examines foreign investment proposals in Australia and advises the Treasurer on whether they align with Australia's national interest. For property investors, FIRB approval is the gateway to legally purchasing Australian real estate.
 
 Think of FIRB as the gatekeeper ensuring that foreign investment benefits Australia while protecting domestic housing availability and national interests.
 
-### FIRB's Key Responsibilities
+### **FIRB's Key Responsibilities**
 
 - Reviewing and assessing foreign investment applications
 - Advising the Treasurer on national interest concerns
 - Monitoring compliance with approval conditions
 - Protecting Australia's strategic and economic interests
 
-## Do You Need FIRB Approval? Quick Check
+## **Do You Need FIRB Approval?**
 
 ### Foreign Persons Who Need Approval
 
@@ -61,7 +59,7 @@ You'll need FIRB approval if you're:
 - A foreign company or trust
 - Representing a foreign government or its agencies
 
-### Who Doesn't Need FIRB Approval?
+### **Who Doesn't Need FIRB Approval?**
 
 You're exempt from FIRB requirements if you're:
 
@@ -69,7 +67,7 @@ You're exempt from FIRB requirements if you're:
 - An Australian permanent resident
 - A New Zealand citizen with a Special Category Visa (subclass 444)
 
-## Understanding Property Types and Current Rules
+## **Understanding Property Types and Current Rules**
 
 ### New Dwellings (Off-the-Plan and New Homes)
 
@@ -114,7 +112,7 @@ Key Conditions:
 
 These timelines are strictly enforced, with the government cracking down on "land banking" practices.
 
-## FIRB Application Fees 2025/26
+## **FIRB Application Fees 2025/26**
 
 Application fees are indexed annually and vary significantly based on property type and value. Here's what you'll pay for applications from July 1, 2025 to June 30, 2026:
 
@@ -234,7 +232,7 @@ For the complete fee schedule including all price points, visit the <a href="htt
 
 The tripling of established dwelling fees reflects the government's policy to encourage foreign investment in new housing stock rather than existing homes.
 
-### Additional Fee Information
+### **Additional Fee Information**
 
 Expedited Processing: You can pay double the standard fee for 10-day priority processing (subject to approval).
 
@@ -244,7 +242,7 @@ Variation Fees: If you need to modify an existing approval:
 
 Developer Certificates: Property developers pay a flat $65,200 initial fee for New or near-new dwelling exemption certificates, plus per-sale fees for each dwelling sold to foreign persons.
 
-## The FIRB Application Process: Step by Step
+## **The FIRB Application Process: Step by Step**
 
 ### Step 1: Determine Your Eligibility
 
@@ -294,7 +292,7 @@ Once approved, you must:
 - Report to FIRB as required (e.g., when construction is completed)
 - Lodge annual vacancy fee returns if applicable
 
-## Understanding FIRB Conditions
+## **Understanding FIRB Conditions**
 
 Every FIRB approval comes with conditions you must follow. Here are the most common:
 
@@ -322,7 +320,7 @@ Every FIRB approval comes with conditions you must follow. Here are the most com
 
 The Australian government takes FIRB compliance seriously. In recent years, penalties have significantly increased, and enforcement has become more aggressive.
 
-### Civil Penalties (Updated 2023–2025)
+### **Civil Penalties (Updated 2023–2025)**
 
 As of 2025, civil penalties for breaching FIRB regulations can include:
 
@@ -384,7 +382,7 @@ The government actively pursues non-compliance:
 - Ongoing: Enhanced audit programs targeting land banking and non-compliance
 - 2024-2025: Increased ATO enforcement with dedicated funding for residential property compliance
 
-## Annual Vacancy Fees: What You Need to Know
+## **Annual Vacancy Fees: What You Need to Know**
 
 If you purchased a residential property after May 9, 2017 with FIRB approval, you may need to pay an annual vacancy fee.
 
@@ -410,7 +408,7 @@ Each year you must:
 2. Pay any fees owing
 3. Keep records proving occupancy or rental availability
 
-## Tips for Successful FIRB Applications
+## **Tips for Successful FIRB Applications**
 
 ### Before Applying
 
@@ -436,7 +434,7 @@ Each year you must:
 - Seek clarification: Contact FIRB or the ATO if you're unsure about anything
 - Report changes: Notify FIRB if your circumstances change materially
 
-## Frequently Asked Questions
+## **Frequently Asked Questions**
 
 Q: Can I buy property with my Australian citizen spouse?  
 A: Yes, but the structure matters. If you're purchasing as joint tenants or tenants in common, you'll typically need FIRB approval for your share. If your spouse is purchasing alone and you're not on the title, FIRB approval isn't required. Be cautious: arrangements designed to circumvent FIRB can be illegal.
