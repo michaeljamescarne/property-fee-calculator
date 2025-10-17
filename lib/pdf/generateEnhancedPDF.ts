@@ -81,30 +81,55 @@ function generateCoverPage(doc: jsPDF, data: PDFReportData): number {
 function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: number): number {
   const currentY = addSectionHeader(doc, 'Executive Summary', 'Investment Overview & Key Metrics', startY);
   
-  // Investment overview table
-  const overviewRows = [
-    ['Property Type', data.property.type],
-    ['Purchase Price', formatCurrency(data.property.purchasePrice)],
-    ['Total Investment Required', formatCurrency(data.costs.totalInvestment)],
-    ['Gross Rental Yield', formatPercentage(data.performance.grossYield)],
-    ['Net Rental Yield', formatPercentage(data.performance.netYield)],
-    ['Annualized ROI', formatPercentage(data.performance.annualizedROI)],
-    ['Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow)],
-    ['Investment Verdict', data.score.verdict]
-  ];
+  // Investment overview metric cards (2x4 grid)
+  const cardStartY = currentY + 20;
+  const cardWidth = 80;
+  const cardHeight = 40;
+  const cardSpacing = 10;
+  const leftColumnX = SPACING.margin;
+  const rightColumnX = SPACING.margin + cardWidth + cardSpacing;
   
-  addDataTable(doc, ['Metric', 'Value'], overviewRows, currentY, {
-    title: 'Investment Overview',
-    widths: [80, 60],
-    align: ['left', 'right']
-  });
+  // Row 1
+  addMetricCard(doc, 'Property Type', data.property.type, 'Property category', COLORS.gray[800], cardStartY, leftColumnX);
+  addMetricCard(doc, 'Purchase Price', formatCurrency(data.property.purchasePrice), 'Initial property cost', COLORS.gray[800], cardStartY, rightColumnX);
+  
+  // Row 2
+  addMetricCard(doc, 'Total Investment', formatCurrency(data.costs.totalInvestment), 'Including all costs', COLORS.gray[800], cardStartY + cardHeight + cardSpacing, leftColumnX);
+  addMetricCard(doc, 'Gross Yield', formatPercentage(data.performance.grossYield), 'Annual rental income', COLORS.gray[800], cardStartY + cardHeight + cardSpacing, rightColumnX);
+  
+  // Row 3
+  addMetricCard(doc, 'Net Yield', formatPercentage(data.performance.netYield), 'After expenses', COLORS.gray[800], cardStartY + 2 * (cardHeight + cardSpacing), leftColumnX);
+  addMetricCard(doc, 'Annualized ROI', formatPercentage(data.performance.annualizedROI), 'Total return', COLORS.gray[800], cardStartY + 2 * (cardHeight + cardSpacing), rightColumnX);
+  
+  // Row 4
+  addMetricCard(doc, 'Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), 'After tax', COLORS.gray[800], cardStartY + 3 * (cardHeight + cardSpacing), leftColumnX);
+  addMetricCard(doc, 'Investment Verdict', data.score.verdict, 'Overall assessment', COLORS.primary, cardStartY + 3 * (cardHeight + cardSpacing), rightColumnX);
+
+  // Key Strengths section
+  const strengthsY = cardStartY + 4 * (cardHeight + cardSpacing) + 20;
+  const strengthsCurrentY = addSectionHeader(doc, 'Key Strengths', '', strengthsY);
+  
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'normal');
+  doc.text('• Good capital growth potential', SPACING.margin, strengthsCurrentY + 10);
+  doc.text('• Significant tax benefits', SPACING.margin, strengthsCurrentY + 25);
+
+  // Key Weaknesses section
+  const weaknessesY = strengthsCurrentY + 50;
+  const weaknessesCurrentY = addSectionHeader(doc, 'Key Weaknesses', '', weaknessesY);
+  
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'normal');
+  doc.text('• Below average rental yield', SPACING.margin, weaknessesCurrentY + 10);
+  doc.text('• Negative cash flow', SPACING.margin, weaknessesCurrentY + 25);
 
   // FIRB restrictions box
+  const alertY = weaknessesCurrentY + 50;
   addAlertBox(doc, 
     'This property requires FIRB approval. Foreign buyers can only purchase new dwellings, vacant land for development, or off-the-plan properties. Established dwellings are prohibited for foreign buyers.',
-    'info',
+    'warning',
     'FIRB Restrictions',
-    currentY + 100
+    alertY
   );
 
   return addPageBreak(doc);
