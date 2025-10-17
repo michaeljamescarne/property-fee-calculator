@@ -173,7 +173,6 @@ Application fees are indexed annually and vary significantly based on property t
 </table>
 
 *For the complete fee schedule including all price points, visit the <a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATO website</a>.*
-
 ### Established Dwellings Fees (Tripled Rates)
 ⚠️ **Note:** While established dwellings are banned during April 2025–March 2027, these tripled fees apply to exceptional circumstances and will apply again after the ban ends:
 <table class="w-full border-collapse border border-gray-300 mb-6">
