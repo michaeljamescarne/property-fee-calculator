@@ -506,9 +506,13 @@ Understanding FIRB requirements is your first step toward successful property in
     featured: true,
     tags: ['Stamp Duty', 'State Comparison', 'Foreign Buyer Surcharge'],
     content: `
-# Stamp Duty Calculator by State: Complete 2025 Comparison
+# Australian Stamp Duty Guide 2025: Complete State-by-State Comparison for Property Buyers
 
-Stamp duty is one of the largest upfront costs when purchasing property in Australia. For foreign buyers, additional surcharges can significantly increase these costs. This comprehensive guide breaks down stamp duty rates across all Australian states and territories.
+*Last updated: 12 January 2025 | 8 min read*
+
+Buying property in Australia means facing one of the largest upfront costs you'll encounter: stamp duty. For foreign buyers, additional surcharges can push these costs even higher. Whether you're purchasing in Sydney, Melbourne, or regional Queensland, understanding how stamp duty varies across states is crucial for smart property investment.
+
+This comprehensive guide breaks down stamp duty rates across all Australian states and territories, explains foreign buyer surcharges, and helps you calculate your true property costs.
 
 ## What is Stamp Duty?
 
