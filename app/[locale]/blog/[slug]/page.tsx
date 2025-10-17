@@ -731,17 +731,21 @@ Stamp duty costs vary significantly between states, with foreign buyer surcharge
   },
   'chinese-buyers-guide-australian-property': {
     slug: 'chinese-buyers-guide-australian-property',
-    title: 'Chinese Investor\'s Guide to Australian Property Investment',
-    excerpt: 'A comprehensive guide for Chinese nationals investing in Australian real estate, including cultural considerations and banking requirements.',
+    title: 'Complete Guide for Chinese Investors: Buying Australian Property in 2025',
+    excerpt: 'Navigate Australia\'s evolving property market as a Chinese investor. This comprehensive guide covers FIRB regulations, capital controls, banking requirements, and cultural considerations for successful property investment.',
     date: '2025-01-10',
     readTime: '15 min read',
     category: 'Investment Guide',
     featured: false,
     tags: ['Chinese Investors', 'Property Investment', 'Cultural Guide'],
     content: `
-# Chinese Investor's Guide to Australian Property Investment
+# Complete Guide for Chinese Investors: Buying Australian Property in 2025
 
-Australia has long been a favoured destination for Chinese property investors, drawn by its stable economy, high-quality education, clean environment, and strong capital growth prospects. This guide provides essential insights for Chinese nationals looking to invest in Australian real estate.
+*Last updated: 10 January 2025 | 15 min read*
+
+Australia has remained one of the most sought-after destinations for Chinese property investors, despite evolving regulations and capital control challenges. With its stable economy, world-class education system, and strong long-term property growth, Australia continues to attract savvy investors from mainland China.
+
+This comprehensive guide provides everything Chinese nationals need to know about investing in Australian real estate in 2025—from navigating FIRB regulations to managing capital controls and understanding cultural considerations.
 
 ## Why Australia?
 
