@@ -32,7 +32,7 @@ const blogPosts: Record<string, BlogPost> = {
     category: 'FIRB Guide',
     featured: true,
     tags: ['FIRB', 'Foreign Investment', 'Property Rules'],
-    content: `
+    content: `<!-- Updated spacing fix -->
 Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn't just recommended—it's mandatory. This comprehensive guide breaks down everything you need to know about FIRB approval, fees, and compliance in 2025.
 
 ## **What is FIRB and Why Does It Matter?**
