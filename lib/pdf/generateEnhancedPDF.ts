@@ -68,8 +68,12 @@ export async function generateEnhancedPDF(
 }
 
 function generateCoverPage(doc: jsPDF, data: PDFReportData): number {
-  const title = 'Australian Property Investment Analysis Report';
-  const generationDate = new Date().toLocaleDateString('en-AU');
+  const title = 'Property Investment Analysis Report';
+  const generationDate = new Date().toLocaleDateString('en-AU', { 
+    day: 'numeric', 
+    month: 'long', 
+    year: 'numeric' 
+  });
   
   return addCoverPage(doc, title, data.property.address, data.property.purchasePrice, generationDate);
 }
@@ -314,7 +318,7 @@ function generateGlossary(doc: jsPDF, startY: number): number {
   // Simple glossary display
   glossaryTerms.forEach((term, index) => {
     doc.setFontSize(FONTS.body);
-    doc.setFont('helvetica', 'bold');
+  doc.setFont('helvetica', 'bold');
     doc.text(term[0], SPACING.margin, currentY + (index * 15));
     
     doc.setFont('helvetica', 'normal');
@@ -356,7 +360,7 @@ This report does not guarantee investment performance or returns. Past performan
   `.trim();
   
   doc.setFontSize(FONTS.small);
-  doc.setFont('helvetica', 'normal');
+        doc.setFont('helvetica', 'normal');
   doc.text(disclaimerText, SPACING.margin, startY + 40, {
     maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
     align: 'justify'

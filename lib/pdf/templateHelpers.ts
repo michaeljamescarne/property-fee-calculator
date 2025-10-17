@@ -56,31 +56,32 @@ export function addCoverPage(
   generationDate: string
 ): number {
   const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
 
-  // Blue header bar
-  doc.setFillColor(COLORS.primary);
-  doc.rect(0, 0, pageWidth, 60, 'F');
-
-  // White title text
-  doc.setTextColor(255, 255, 255);
+  // Title - centered at top
+  doc.setTextColor(COLORS.gray[800]);
   doc.setFontSize(FONTS.title);
   doc.setFont('helvetica', 'bold');
-  doc.text(title, pageWidth / 2, 35, { align: 'center' });
+  doc.text(title, pageWidth / 2, 80, { align: 'center' });
 
-  // Property details section
-  doc.setTextColor(COLORS.gray[800]);
+  // Blue horizontal line separator
+  doc.setDrawColor(COLORS.primary);
+  doc.setLineWidth(2);
+  const lineWidth = 60; // 60mm wide line
+  const lineX = (pageWidth - lineWidth) / 2;
+  doc.line(lineX, 95, lineX + lineWidth, 95);
+
+  // Property address - centered
   doc.setFontSize(FONTS.body);
   doc.setFont('helvetica', 'normal');
-  
-  const startY = 100;
-  doc.text('Property Details', SPACING.margin, startY);
-  
-  doc.setFont('helvetica', 'bold');
-  doc.text(propertyAddress, SPACING.margin, startY + 15);
-  
-  doc.setFont('helvetica', 'normal');
-  doc.text(`Purchase Price: $${purchasePrice.toLocaleString()}`, SPACING.margin, startY + 30);
-  doc.text(`Report Generated: ${generationDate}`, SPACING.margin, startY + 45);
+  doc.text(propertyAddress, pageWidth / 2, 130, { align: 'center' });
+
+  // Purchase price - centered
+  doc.text(`Purchase Price: $${purchasePrice.toLocaleString()}`, pageWidth / 2, 150, { align: 'center' });
+
+  // Report generation date - centered at bottom
+  doc.setFontSize(FONTS.small);
+  doc.text(`Report Generated: ${generationDate}`, pageWidth / 2, pageHeight - 30, { align: 'center' });
 
   // Add new page for content
   doc.addPage();
