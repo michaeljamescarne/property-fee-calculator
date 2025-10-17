@@ -118,38 +118,117 @@ Application fees are indexed annually and vary significantly based on property t
 
 ### New Dwellings & Vacant Land Fees
 
-| Property Value | Application Fee |
-|----------------|-----------------|
-| Under $75,000 | $4,500 |
-| Up to $1M | $15,100 |
-| Up to $2M | $30,300 |
-| Up to $3M | $60,600 |
-| Up to $4M | $90,900 |
-| Up to $5M | $121,200 |
-| Up to $10M | $272,700 |
-| Up to $20M | $575,700 |
-| Up to $30M | $878,700 |
-| Up to $40M | $1,181,700 |
-| Over $40M | $1,205,200 |
+<table class="w-full border-collapse border border-gray-300 mb-6">
+  <thead>
+    <tr class="bg-gray-50">
+      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Property Value</th>
+      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Application Fee</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Under $75,000</td>
+      <td class="border border-gray-300 px-4 py-3">$4,500</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $1M</td>
+      <td class="border border-gray-300 px-4 py-3">$15,100</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $2M</td>
+      <td class="border border-gray-300 px-4 py-3">$30,300</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $3M</td>
+      <td class="border border-gray-300 px-4 py-3">$60,600</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $4M</td>
+      <td class="border border-gray-300 px-4 py-3">$90,900</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $5M</td>
+      <td class="border border-gray-300 px-4 py-3">$121,200</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $10M</td>
+      <td class="border border-gray-300 px-4 py-3">$272,700</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $20M</td>
+      <td class="border border-gray-300 px-4 py-3">$575,700</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $30M</td>
+      <td class="border border-gray-300 px-4 py-3">$878,700</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $40M</td>
+      <td class="border border-gray-300 px-4 py-3">$1,181,700</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Over $40M</td>
+      <td class="border border-gray-300 px-4 py-3">$1,205,200</td>
+    </tr>
+  </tbody>
+</table>
 
-*For the complete fee schedule including all price points, visit the [ATO website](https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors).*
+*For the complete fee schedule including all price points, visit the <a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATO website</a>.*
 
 ### Established Dwellings Fees (Tripled Rates)
 
 ⚠️ **Note:** While established dwellings are banned during April 2025–March 2027, these tripled fees apply to exceptional circumstances and will apply again after the ban ends:
 
-| Property Value | Application Fee |
-|----------------|-----------------|
-| Under $75,000 | $13,500 |
-| Up to $1M | $45,300 |
-| Up to $2M | $90,900 |
-| Up to $3M | $181,800 |
-| Up to $5M | $363,600 |
-| Up to $10M | $818,100 |
-| Up to $20M | $1,727,100 |
-| Up to $30M | $2,636,100 |
-| Up to $40M | $3,545,100 |
-| Over $40M | $3,615,600 |
+<table class="w-full border-collapse border border-gray-300 mb-6">
+  <thead>
+    <tr class="bg-gray-50">
+      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Property Value</th>
+      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Application Fee</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Under $75,000</td>
+      <td class="border border-gray-300 px-4 py-3">$13,500</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $1M</td>
+      <td class="border border-gray-300 px-4 py-3">$45,300</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $2M</td>
+      <td class="border border-gray-300 px-4 py-3">$90,900</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $3M</td>
+      <td class="border border-gray-300 px-4 py-3">$181,800</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $5M</td>
+      <td class="border border-gray-300 px-4 py-3">$363,600</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $10M</td>
+      <td class="border border-gray-300 px-4 py-3">$818,100</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $20M</td>
+      <td class="border border-gray-300 px-4 py-3">$1,727,100</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $30M</td>
+      <td class="border border-gray-300 px-4 py-3">$2,636,100</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Up to $40M</td>
+      <td class="border border-gray-300 px-4 py-3">$3,545,100</td>
+    </tr>
+    <tr class="hover:bg-gray-50">
+      <td class="border border-gray-300 px-4 py-3">Over $40M</td>
+      <td class="border border-gray-300 px-4 py-3">$3,615,600</td>
+    </tr>
+  </tbody>
+</table>
 
 The tripling of established dwelling fees reflects the government's policy to encourage foreign investment in new housing stock rather than existing homes.
 
@@ -167,7 +246,7 @@ The tripling of established dwelling fees reflects the government's policy to en
 
 ### Step 1: Determine Your Eligibility
 
-Start by using the [FIRB Calculator on PropertyCosts.com.au](https://www.propertycosts.com.au/en/firb-calculator) to:
+Start by using the <a href="https://www.propertycosts.com.au/en/firb-calculator" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">FIRB Calculator on PropertyCosts.com.au</a> to:
 - Confirm whether you need approval
 - Calculate your exact application fee
 - Understand applicable conditions
@@ -185,7 +264,7 @@ Before applying, prepare:
 
 ### Step 3: Submit Your Application
 
-Applications for residential property are submitted through the [ATO's online portal](https://www.ato.gov.au/). The process includes:
+Applications for residential property are submitted through the <a href="https://www.ato.gov.au/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATO's online portal</a>. The process includes:
 
 1. Creating an account or logging in
 2. Completing the online application form
@@ -388,7 +467,7 @@ The government has signaled that FIRB policy will continue adapting to support h
 
 ## How PropertyCosts Can Help
 
-Understanding FIRB is complex, but getting started doesn't have to be. The [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb-calculator) provides:
+Understanding FIRB is complex, but getting started doesn't have to be. The <a href="https://www.propertycosts.com.au/en/firb-calculator" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">PropertyCosts FIRB Calculator</a> provides:
 
 - **Instant eligibility assessment** – Find out if you need FIRB approval
 - **Accurate fee calculation** – Know exactly what you'll pay
@@ -396,7 +475,7 @@ Understanding FIRB is complex, but getting started doesn't have to be. The [Prop
 - **Timeline estimates** – Plan your purchase properly
 - **Comprehensive cost analysis** – See all property acquisition costs in one place
 
-[Calculate your FIRB costs now →](https://www.propertycosts.com.au/en/firb-calculator)
+<a href="https://www.propertycosts.com.au/en/firb-calculator" class="inline-flex items-center text-blue-600 hover:text-blue-800 underline font-medium" target="_blank" rel="noopener noreferrer">Calculate your FIRB costs now →</a>
 
 ---
 
@@ -416,9 +495,9 @@ Understanding FIRB requirements is your first step toward successful property in
 ---
 
 **Related Resources:**
-- [FIRB Official Website](https://foreigninvestment.gov.au/)
-- [ATO Foreign Investment Portal](https://www.ato.gov.au/)
-- [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb-calculator)
+- <a href="https://foreigninvestment.gov.au/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">FIRB Official Website</a>
+- <a href="https://www.ato.gov.au/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATO Foreign Investment Portal</a>
+- <a href="https://www.propertycosts.com.au/en/firb-calculator" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">PropertyCosts FIRB Calculator</a>
     `
   },
   'stamp-duty-calculator-by-state': {
