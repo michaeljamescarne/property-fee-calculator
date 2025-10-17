@@ -317,9 +317,7 @@ export function addAlertBox(
 
   // Background
   doc.setFillColor(bgColor);
-  (doc as unknown as { setAlpha(alpha: number): void }).setAlpha(0.1);
   doc.rect(SPACING.margin, startY, boxWidth, boxHeight, 'F');
-  (doc as unknown as { setAlpha(alpha: number): void }).setAlpha(1);
 
   // Border
   doc.setDrawColor(bgColor);
