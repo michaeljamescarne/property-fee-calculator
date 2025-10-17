@@ -498,10 +498,10 @@ Understanding FIRB requirements is your first step toward successful property in
   },
   'stamp-duty-calculator-by-state': {
     slug: 'stamp-duty-calculator-by-state',
-    title: 'Stamp Duty Calculator by State: Complete 2025 Comparison',
-    excerpt: 'Compare stamp duty rates and foreign buyer surcharges across all Australian states and territories.',
+    title: 'Australian Stamp Duty Guide 2025: Complete State-by-State Comparison for Property Buyers',
+    excerpt: 'Navigate Australia\'s complex stamp duty landscape with our comprehensive state-by-state guide. Compare rates, calculate costs, and understand foreign buyer surcharges across all states and territories.',
     date: '2025-01-12',
-    readTime: '8 min read',
+    readTime: '15 min read',
     category: 'Costs & Fees',
     featured: true,
     tags: ['Stamp Duty', 'State Comparison', 'Foreign Buyer Surcharge'],

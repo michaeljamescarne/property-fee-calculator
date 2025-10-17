@@ -1,414 +1,184 @@
-# Brisbane Foreign Investment Property: Complete 2025 Guide
-
-Comprehensive guide to Brisbane property investment for foreign buyers, including costs, FIRB requirements, and investment opportunities.
-
-## Brisbane Property Market Overview 2025
-
-### Market Performance
-- **Median house price**: $750,000 AUD (December 2024)
-- **Median unit price**: $500,000 AUD (December 2024)
-- **Annual growth**: 8.5% (2024)
-- **Rental yield**: 4.2% (houses), 5.1% (units)
-- **Vacancy rate**: 1.5% (tight rental market)
-
-### Foreign Investment Trends
-- **Foreign buyer activity**: 18% of total sales (2024)
-- **Primary markets**: Chinese (35%), Indian (20%), Singaporean (15%), Malaysian (10%)
-- **Popular suburbs**: Fortitude Valley, South Brisbane, New Farm, Teneriffe
-- **Investment focus**: New developments, inner-city apartments
-
-## Why Foreign Investors Choose Brisbane
-
-### Lifestyle Advantages
-- **Climate**: Subtropical weather year-round
-- **Affordability**: Lower costs than Sydney/Melbourne
-- **Lifestyle**: Outdoor activities, beaches nearby
-- **Transport**: Growing public transport network
-- **Culture**: Vibrant arts and dining scene
-
-### Investment Benefits
-- **Entry costs**: Most affordable major city
-- **Growth potential**: Strong population growth
-- **Rental demand**: High demand from students and professionals
-- **Infrastructure**: Major projects underway
-- **Development**: New projects constantly emerging
-
-## FIRB Requirements for Brisbane Property
-
-### Who Needs FIRB Approval?
-- **Foreign nationals** (any visa status)
-- **Temporary residents** (all visa types)
-- **Foreign companies** and trusts
-- **Chinese citizens** (regardless of residency status)
-
-### Property Types Available
-
-#### New Dwellings (Recommended)
-- **No restrictions** on number of properties
-- Can be used as **investment or primary residence**
-- **Must be sold** to Australian citizens/residents if used as investment
-- **Cannot be rented** to foreign persons
-
-#### Established Dwellings (Restricted)
-- Can **only be purchased** as primary residence
-- **Cannot be rented out** while owned
-- **Must be sold** when no longer primary residence
-- **Strict compliance** required
-
-#### Vacant Land (Development Required)
-- **Must commence construction** within 24 months
-- **Completion deadline**: 4 years from purchase
-- **Cannot be sold** until construction completed
-- **Development conditions** apply
-
-## Brisbane Property Costs Breakdown
-
-### Upfront Costs
-
-#### Property Purchase Price
-- **Houses**: $500,000 - $2,000,000+ AUD
-- **Units**: $350,000 - $1,000,000+ AUD
-- **New developments**: Premium of 5-10% over established
-
-#### FIRB Application Fee
-| Property Value | FIRB Fee |
-|----------------|----------|
-| Under $1M | $13,200 |
-| $1M - $1.999M | $26,400 |
-| $2M - $2.999M | $39,600 |
-| $3M - $3.999M | $52,800 |
-| $4M - $4.999M | $66,000 |
-| Each additional $1M | +$13,200 |
-
-#### Stamp Duty (QLD)
-| Property Value | Stamp Duty Rate | Foreign Surcharge |
-|----------------|-----------------|-------------------|
-| $0 - $5,000 | 0% | 7% |
-| $5,001 - $75,000 | $0 + 1.75% | 7% |
-| $75,001 - $540,000 | $1,225 + 3.5% | 7% |
-| $540,001+ | $17,500 + 4.5% | 7% |
-
-#### Example: $600,000 Property
-- **Property price**: $600,000 AUD
-- **FIRB fee**: $13,200 AUD
-- **Stamp duty**: $20,500 AUD
-- **Foreign surcharge**: $42,000 AUD
-- **Legal fees**: $2,500 AUD
-- **Total upfront**: $678,200 AUD
-
-### Ongoing Costs
-
-#### Annual Expenses
-- **Council rates**: $1,800 - $3,000 AUD
-- **Land tax**: $0 - $8,000+ AUD (if applicable)
-- **Insurance**: $1,000 - $2,000 AUD
-- **Maintenance**: $2,000 - $5,000 AUD
-- **Property management**: 7-9% of rent
-- **Total annual**: $6,000 - $20,000 AUD
-
-#### Investment Property Additional Costs
-- **Rental income tax**: 32.5% (foreign residents)
-- **Capital gains tax**: On eventual sale
-- **Withholding tax**: On rental income
-- **Tax return preparation**: $300 - $1,000 AUD
-
-## Popular Brisbane Suburbs for Foreign Buyers
-
-### Inner City (High Growth)
-
-#### Fortitude Valley
-- **Median house price**: $1,200,000 AUD
-- **Median unit price**: $650,000 AUD
-- **Rental yield**: 3.5% (houses), 4.8% (units)
-- **Foreign buyer appeal**: Entertainment district, transport hub
-- **Growth potential**: High (urban renewal)
-
-#### South Brisbane
-- **Median house price**: $1,100,000 AUD
-- **Median unit price**: $600,000 AUD
-- **Rental yield**: 3.8% (houses), 5.0% (units)
-- **Foreign buyer appeal**: Close to CBD, cultural precinct
-- **Growth potential**: High (infrastructure development)
-
-#### New Farm
-- **Median house price**: $1,500,000 AUD
-- **Median unit price**: $750,000 AUD
-- **Rental yield**: 3.2% (houses), 4.5% (units)
-- **Foreign buyer appeal**: Riverside location, trendy area
-- **Growth potential**: Medium-High (established area)
-
-### Eastern Suburbs (Family-Friendly)
-
-#### Teneriffe
-- **Median house price**: $1,800,000 AUD
-- **Median unit price**: $850,000 AUD
-- **Rental yield**: 3.0% (houses), 4.2% (units)
-- **Foreign buyer appeal**: Luxury properties, riverside
-- **Growth potential**: Medium (premium market)
-
-#### Bulimba
-- **Median house price**: $1,300,000 AUD
-- **Median unit price**: $650,000 AUD
-- **Rental yield**: 3.4% (houses), 4.6% (units)
-- **Foreign buyer appeal**: Family-friendly, good schools
-- **Growth potential**: Medium-High (gentrification)
-
-### Northern Suburbs (Value)
-
-#### Chermside
-- **Median house price**: $800,000 AUD
-- **Median unit price**: $450,000 AUD
-- **Rental yield**: 4.5% (houses), 5.5% (units)
-- **Foreign buyer appeal**: Shopping center, transport links
-- **Growth potential**: High (infrastructure development)
-
-#### Aspley
-- **Median house price**: $750,000 AUD
-- **Median unit price**: $400,000 AUD
-- **Rental yield**: 4.8% (houses), 5.8% (units)
-- **Foreign buyer appeal**: Affordable, good transport
-- **Growth potential**: Medium-High (development pipeline)
-
-## Investment Analysis by Property Type
-
-### Houses vs Units
-
-#### Houses
-- **Higher capital growth**: 7-11% annually
-- **Lower rental yield**: 4-5%
-- **Higher maintenance costs**: $3,000-6,000/year
-- **Land component**: Appreciates over time
-- **Best for**: Long-term capital growth
-
-#### Units
-- **Moderate capital growth**: 6-8% annually
-- **Higher rental yield**: 5-6%
-- **Lower maintenance costs**: $1,500-3,000/year
-- **Body corporate fees**: $1,200-3,000/year
-- **Best for**: Rental income generation
-
-### New vs Established Properties
-
-#### New Properties
-- **Premium pricing**: 5-10% above established
-- **Depreciation benefits**: Available for tax deductions
-- **Modern features**: Attract tenants and buyers
-- **Warranty protection**: Builder warranties apply
-- **Best for**: Foreign buyers (no restrictions)
-
-#### Established Properties
-- **Lower entry cost**: More affordable
-- **Character features**: May attract premium buyers
-- **Established communities**: Mature infrastructure
-- **No depreciation benefits**: Limited tax advantages
-- **Best for**: Primary residence only (foreign buyers)
-
-## Financing Options for Foreign Buyers
-
-### Local Australian Banks
-- **Limited options**: Most banks restrict foreign lending
-- **Requirements**: 30-40% deposit, income verification
-- **Interest rates**: 6.5-8.5% (higher than locals)
-- **Processing time**: 4-8 weeks
-
-### Chinese Banks with Australian Operations
-- **Bank of China**: Growing presence in Brisbane
-- **ICBC**: Limited but expanding
-- **Requirements**: Chinese income verification
-- **Interest rates**: Competitive with local banks
-- **Processing time**: 2-4 weeks
-
-### Private Financing
-- **Higher interest rates**: 8-12%
-- **Flexible terms**: Can be negotiated
-- **Faster approval**: 1-2 weeks
-- **Higher fees**: 2-4% of loan amount
-
-### Cash Purchase
-- **Most common**: For Chinese investors
-- **No financing costs**: Saves on interest
-- **Faster settlement**: 2-4 weeks
-- **Currency risk**: AUD/CNY fluctuations
-
-## Tax Implications for Foreign Buyers
-
-### Foreign Resident Tax Status
-- **Tax rate**: 32.5% on Australian income
-- **No tax-free threshold**: Unlike Australian residents
-- **Capital gains tax**: On property sales
-- **Withholding tax**: On rental income
-
-### Tax Optimization Strategies
-- **Family trust structures**: For multiple properties
-- **Company ownership**: For business purposes
-- **Timing of income**: Optimize tax year
-- **Professional advice**: Essential for compliance
-
-### Double Taxation Treaties
-- **China-Australia treaty**: Reduces double taxation
-- **Tax credits**: Available for foreign taxes paid
-- **Professional advice**: Required for optimization
-
-## Market Trends and Forecasts
-
-### 2025 Market Outlook
-- **Price growth**: 6-9% expected
-- **Interest rates**: Stable to slightly higher
-- **Foreign investment**: Continued strong demand
-- **Supply constraints**: Limited new development
-
-### Long-term Trends (5-10 years)
-- **Population growth**: Strong immigration
-- **Infrastructure**: Major projects underway
-- **Foreign investment**: Regulatory stability
-- **Technology**: PropTech adoption
-
-### Risk Factors
-- **Interest rate changes**: Impact on affordability
-- **Regulatory changes**: FIRB policy updates
-- **Economic conditions**: Global and local factors
-- **Currency fluctuations**: AUD/CNY rates
-
-## Step-by-Step Investment Process
-
-### Phase 1: Pre-Purchase Planning (1-2 months)
-
-#### Financial Preparation
-- **Currency conversion**: Plan AUD/CNY timing
-- **Bank account setup**: Australian banking
-- **Credit assessment**: For financing options
-- **Tax planning**: Consult professionals
-
-#### Legal Requirements
-- **FIRB application**: Prepare documentation
-- **Legal representation**: Chinese-speaking lawyer
-- **Property inspection**: Arrange inspections
-- **Insurance**: Research options
-
-### Phase 2: Property Search (2-3 months)
-
-#### Location Research
-- **Suburb analysis**: Growth potential, amenities
-- **Transport links**: Access to CBD, universities
-- **School zones**: For family buyers
-- **Community features**: Cultural amenities
-
-#### Property Selection
-- **Budget planning**: Include all costs
-- **Property type**: House vs unit decision
-- **New vs established**: Based on restrictions
-- **Investment goals**: Growth vs income
-
-### Phase 3: Purchase Execution (1-2 months)
-
-#### FIRB Application
-- **Submit application**: Online portal
-- **Pay fees**: Based on property value
-- **Provide documents**: Financial, legal
-- **Wait for approval**: 30 days standard
-
-#### Legal Process
-- **Contract review**: By qualified lawyer
-- **Property inspection**: Building and pest
-- **Settlement arrangements**: With conveyancer
-- **Title transfer**: Complete ownership
-
-### Phase 4: Post-Purchase Management
-
-#### Ongoing Compliance
-- **FIRB conditions**: Maintain compliance
-- **Tax obligations**: Annual returns
-- **Insurance**: Maintain coverage
-- **Maintenance**: Regular upkeep
-
-#### Investment Management
-- **Rental management**: Professional service
-- **Tenant selection**: Quality tenants
-- **Rent reviews**: Annual increases
-- **Property improvements**: Value enhancement
-
-## Common Mistakes to Avoid
-
-### Legal Compliance Issues
-- **FIRB approval**: Must be obtained before purchase
-- **Condition compliance**: Ongoing requirements
-- **Tax reporting**: Annual obligations
-- **Documentation**: Maintain records
-
-### Financial Planning Errors
-- **Currency risk**: Underestimate fluctuations
-- **Tax implications**: Overlook obligations
-- **Insurance**: Inadequate coverage
-- **Liquidity**: Plan for unexpected costs
-
-### Property Selection Mistakes
-- **Location**: Poor growth potential
-- **Property type**: Wrong choice for goals
-- **Condition**: Hidden defects
-- **Legal issues**: Title problems
-
-## Success Strategies
-
-### Investment Approach
-1. **Long-term perspective**: 5-10 year horizon
-2. **Diversification**: Multiple properties
-3. **Professional management**: Use experts
-4. **Regular reviews**: Annual assessments
-
-### Risk Management
-1. **Insurance**: Comprehensive coverage
-2. **Cash reserves**: Emergency funds
-3. **Currency hedging**: For large amounts
-4. **Legal compliance**: Stay updated
-
-### Tax Optimization
-1. **Professional advice**: Regular consultations
-2. **Record keeping**: Detailed documentation
-3. **Timing**: Optimize transactions
-4. **Structures**: Appropriate ownership
-
-## Case Studies
-
-### Case Study 1: Chinese Investor - Fortitude Valley Unit
-- **Property**: 2-bedroom unit in Fortitude Valley
-- **Purchase price**: $650,000 AUD
-- **FIRB fee**: $13,200 AUD
-- **Total costs**: $730,000 AUD
-- **Rental yield**: 4.8% annually
-- **Capital growth**: 9% over 2 years
-- **Total return**: 13.8% annually
-
-### Case Study 2: Indian Investor - South Brisbane House
-- **Property**: 3-bedroom house in South Brisbane
-- **Purchase price**: $1,100,000 AUD
-- **FIRB fee**: $13,200 AUD
-- **Total costs**: $1,240,000 AUD
-- **Rental yield**: 3.8% annually
-- **Capital growth**: 10% over 18 months
-- **Total return**: 13.8% annually
-
-### Case Study 3: Singaporean Investor - Chermside Development
-- **Property**: Vacant land in Chermside
-- **Purchase price**: $400,000 AUD
-- **FIRB fee**: $13,200 AUD
-- **Development cost**: $350,000 AUD
-- **Final value**: $950,000 AUD
-- **Profit**: $200,000 AUD after costs
-
-## Conclusion
-
-Brisbane offers excellent opportunities for foreign property investors, with strong growth potential, affordable entry costs, and comprehensive infrastructure. Success requires careful planning, compliance with FIRB requirements, and professional guidance.
-
-**Ready to calculate your Brisbane investment costs?** [Use our free FIRB calculator](/firb-calculator) to get instant results and detailed breakdowns for your Brisbane property investment.
-
-### Key Takeaways
-1. **FIRB approval** is mandatory for foreign buyers
-2. **New properties** offer the most flexibility
-3. **Professional advice** is essential for success
-4. **Long-term perspective** maximizes returns
-5. **Compliance** with ongoing requirements is critical
-
-**Next Steps**: Use our comprehensive calculator to determine your exact costs and requirements, then consult with qualified professionals to ensure a successful Brisbane property investment.
+# Brisbane Property Investment Guide for Foreign Buyers (2025)
 
+*Last updated: 28 December 2024 • 10 min read*
 
+Brisbane is having a moment. With the 2032 Olympics on the horizon, billions being poured into infrastructure, and property prices still sitting well below Sydney and Melbourne, Queensland's capital has become one of Australia's hottest investment destinations. But for foreign buyers, navigating the costs, regulations, and opportunities requires careful planning.
 
+This guide breaks down everything you need to know about investing in Brisbane property as a foreign buyer in 2025.
+
+## Why Foreign Investors Are Choosing Brisbane
+
+Brisbane's appeal isn't just about being more affordable than Australia's southern capitals—though that certainly helps. The city is undergoing a transformation that's reshaping its investment landscape.
+
+**Major infrastructure projects** like the $5.4 billion Cross River Rail, Brisbane Metro, and the $3.6 billion Queen's Wharf precinct are redefining connectivity and lifestyle. These aren't just construction projects; they're catalysts for long-term property value growth in surrounding suburbs.
+
+The **2032 Olympic Games** will bring unprecedented global attention and investment. History shows that Olympic host cities typically see significant property value increases in the lead-up years, and Brisbane is already experiencing this effect.
+
+From an investment perspective, Brisbane offers **higher rental yields** than Sydney or Melbourne (often 4-5% compared to 2-3%), while still providing strong capital growth potential. The city's population is growing rapidly—projected to reach 3.6 million by 2031—creating sustained demand for housing.
+
+And let's not forget lifestyle. Brisbane's subtropical climate, proximity to beaches, and more relaxed pace of life make it highly attractive to renters and future residents.
+
+## Understanding the Full Cost Picture
+
+Foreign property investment in Brisbane involves multiple layers of costs beyond the purchase price. Here's what you'll actually pay:
+
+### FIRB Application Fees
+
+Before you can buy any Australian property, you need approval from the Foreign Investment Review Board (FIRB). This isn't optional—it's a legal requirement.
+
+Application fees are tiered based on property value. For a property valued up to $1 million, you'll pay $15,100. The fee increases progressively for more expensive properties. Budget for this as part of your initial investment capital, as you'll need to pay it before settlement.
+
+### Stamp Duty: The Biggest Upfront Cost
+
+Queensland's stamp duty structure includes two components for foreign buyers:
+
+**Standard transfer duty** is calculated on a sliding scale. For a typical investment property, you're looking at rates between 3.5% and 5.75% depending on the purchase price.
+
+**Foreign acquirer duty** adds an additional 7% to the total property value. This is a flat rate surcharge specifically for foreign purchasers.
+
+Let's look at a real example: On a $700,000 Brisbane apartment, you would pay approximately $24,350 in standard stamp duty plus $49,000 in foreign acquirer duty—a total of $73,350 just in transfer taxes.
+
+This makes stamp duty often the second-largest cost after your deposit, so it's crucial to factor it into your budget from day one.
+
+### Ongoing Land Tax
+
+Queensland levies annual land tax on investment properties above certain value thresholds. As a foreign owner, you'll pay the standard land tax rate plus an **absentee owner surcharge of 2%** of your land's taxable value.
+
+This applies every year you own the property, not just once. For a $700,000 property where the land value is $300,000, this surcharge alone would be $6,000 annually, on top of any regular land tax owed.
+
+### Professional Fees and Other Costs
+
+- **Conveyancing and legal fees**: $1,500–$3,000 for handling the property transfer and legal documentation
+- **Building and pest inspections**: $400–$600 (highly recommended before purchase)
+- **Loan application and establishment fees**: $600–$1,200 if financing through an Australian lender
+- **Lenders Mortgage Insurance**: Often required for foreign buyers, potentially $10,000+ depending on your deposit size
+- **Property management fees**: 7–9% of rental income plus leasing fees if you're renting out the property
+
+## FIRB Regulations: What You Can Actually Buy
+
+Understanding what you're permitted to purchase is crucial to avoid wasting time and application fees on ineligible properties.
+
+### New vs. Established Properties
+
+**New dwellings** (never been lived in or substantially renovated) are generally approved for foreign investors. This includes off-the-plan apartments, newly built houses, and house-and-land packages.
+
+**Established properties** (existing homes) are typically off-limits to non-resident foreign buyers. There are limited exceptions for temporary residents who need a primary residence, but these come with strict conditions including a requirement to sell when you leave Australia.
+
+### Critical: The Temporary Prohibition (2025-2027)
+
+This is important: **From April 1, 2025, to March 31, 2027, the Australian government has implemented a temporary ban** on foreign persons purchasing established dwellings. This includes temporary residents who previously could buy one established home.
+
+During this two-year period, FIRB will generally not approve applications for established residential property purchases by foreign investors. This policy aims to improve housing availability for Australian residents during a period of housing shortage.
+
+**What this means for you**: Focus exclusively on new developments, off-the-plan purchases, or vacant land. Established properties are effectively off the table until at least April 2027.
+
+## Where to Invest: Brisbane's Opportunity Zones
+
+Location strategy matters enormously for foreign investors, especially when you can't inspect properties in person regularly.
+
+### Inner-City Apartments
+
+Suburbs like **South Brisbane, West End, Fortitude Valley**, and **Newstead** offer strong rental demand from young professionals and students. These areas benefit from proximity to the CBD, universities, and entertainment precincts.
+
+Expect yields around 4.5-5.5% but focus on developments near the new Cross River Rail stations, as these will see the biggest connectivity improvements.
+
+### Growth Corridors
+
+The **northern corridor** (Moreton Bay region including North Lakes, Mango Hill) and **southern corridor** (Logan area) offer more affordable house-and-land packages with strong population growth.
+
+These areas typically offer better land-to-total-value ratios, which is important for long-term capital growth. They're also where many new dwelling approvals are concentrated—meaning plenty of FIRB-eligible options.
+
+### Olympic Precinct Opportunities
+
+Properties near future Olympic venues—particularly around **Brisbane Arena (South Brisbane)**, **Gabba redevelopment**, and **Chandler** in the eastern suburbs—are likely to benefit from infrastructure investment and increased global exposure.
+
+These areas may offer a sweet spot: established infrastructure meeting new development opportunities.
+
+## Making the Numbers Work
+
+Successful foreign property investment requires understanding your complete financial picture over time, not just the purchase price.
+
+Consider a typical $650,000 Brisbane apartment purchase:
+
+**Upfront investment:**
+- Deposit (typically 20% for foreign buyers): $130,000
+- FIRB application fee: $15,100
+- Stamp duty (standard + foreign surcharge): $68,500
+- Legal and conveyancing: $2,500
+- Total cash needed at purchase: ~$216,100
+
+**Annual ongoing costs:**
+- Land tax and surcharge: ~$4,800
+- Council rates: ~$1,600
+- Strata fees: ~$4,500
+- Insurance: ~$1,200
+- Property management (7% of $32,500 rent): ~$2,275
+- Maintenance (1% of value): ~$6,500
+- Total annual costs: ~$20,875
+
+**Annual income:**
+- Rental income (5% yield): $32,500
+- Net cash flow: ~$11,625 positive
+
+This is simplified, but it shows why doing detailed calculations for your specific situation is essential before committing.
+
+## Tax Implications to Consider
+
+Foreign property investors in Australia face several tax obligations:
+
+- **Rental income** is taxable in Australia (you'll need an Australian tax file number)
+- **Capital gains tax** applies when you sell (currently 30% for foreign residents, with no 50% discount)
+- **Withholding tax** on rental income may apply depending on your residency status
+- **Departure prohibition** may require you to obtain a clearance certificate when selling
+
+Work with an accountant experienced in cross-border property taxation—the rules are complex and mistakes can be expensive.
+
+## Financing as a Foreign Buyer
+
+Securing finance as a non-resident is more challenging than for Australian citizens or permanent residents. Most banks require:
+
+- **Larger deposits**: 30-40% is common (vs. 20% for residents)
+- **Higher interest rates**: Often 0.5-1% above standard rates
+- **Stricter serviceability tests**: Your income and expenses will be scrutinized closely
+- **Limited lender options**: Not all Australian banks lend to foreign buyers
+
+Some foreign investors choose to fund purchases through equity in their home country or via specialized foreign buyer mortgage brokers who work with the limited lender panel that accepts non-resident applications.
+
+## Your Investment Checklist
+
+Before committing to a Brisbane property investment:
+
+✅ Verify you can obtain FIRB approval for your chosen property type  
+✅ Calculate total upfront costs including foreign surcharges  
+✅ Project 10-year cash flow including all ongoing costs  
+✅ Research the specific suburb's growth drivers and risks  
+✅ Engage a buyer's agent if you can't inspect personally  
+✅ Arrange pre-approval for finance if borrowing  
+✅ Consult a tax advisor on Australian property tax obligations  
+✅ Set up property management before settlement  
+✅ Understand your exit strategy and potential CGT implications  
+
+## Calculate Your Specific Investment
+
+Every property investment is different. Your actual costs will depend on the purchase price, property type, location, financing structure, and your individual tax situation.
+
+Our **FIRB Calculator** provides customized analysis including:
+
+- Complete upfront cost breakdown with all surcharges
+- 10-year cash flow projections with rental income
+- Land tax calculations including absentee surcharges
+- Estimated capital growth based on suburb data
+- Rental yield comparisons
+- Net annual return calculations
+
+**[Calculate your Brisbane investment →](/firb-calculator)**
+
+## Final Thoughts
+
+Brisbane offers compelling opportunities for foreign property investors who understand the regulatory landscape and cost structure. The combination of major infrastructure investment, Olympic momentum, and relative affordability creates a favorable environment for long-term capital growth.
+
+However, success requires careful financial planning. The upfront costs—particularly the 7% foreign acquirer duty—mean you need significant capital beyond the deposit. And the temporary ban on established properties limits your options until 2027.
+
+Do your due diligence, run the numbers thoroughly, and seek professional advice from Australian property tax specialists and qualified financial advisors. With the right property in the right location at the right price, Brisbane can deliver strong returns for patient, well-prepared investors.
+
+*Disclaimer: This guide provides general information only and should not be considered financial or legal advice. Fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions.*
