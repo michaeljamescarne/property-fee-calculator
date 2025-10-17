@@ -117,7 +117,6 @@ These timelines are strictly enforced, with the government cracking down on "lan
 Application fees are indexed annually and vary significantly based on property type and value. Here's what you'll pay for applications from July 1, 2025 to June 30, 2026:
 
 ### New Dwellings & Vacant Land Fees
-
 <table class="w-full border-collapse border border-gray-300 mb-6">
   <thead>
     <tr class="bg-gray-50">
@@ -178,7 +177,6 @@ For the complete fee schedule including all price points, visit the <a href="htt
 ### Established Dwellings Fees (Tripled Rates)
 
 ⚠️ Note: While established dwellings are banned during April 2025–March 2027, these tripled fees apply to exceptional circumstances and will apply again after the ban ends:
-
 <table class="w-full border-collapse border border-gray-300 mb-6">
   <thead>
     <tr class="bg-gray-50">
