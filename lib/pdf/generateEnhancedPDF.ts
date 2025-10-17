@@ -1,9 +1,6 @@
 /**
  * Enhanced FIRB PDF Generator with Investment Analytics
- * Template-based implementation matching exact design specifications
- * 
- * Previous implementation preserved in git history for reference
- * This version uses template helpers and data mappers for consistency
+ * Fixed version without getCurrentY dependency
  */
 
 import jsPDF from 'jspdf';
@@ -31,11 +28,6 @@ import {
   SPACING
 } from './templateHelpers';
 
-// Helper function to get current Y position from jsPDF
-function getCurrentY(doc: jsPDF): number {
-  return (doc as unknown as { getCurrentY(): number }).getCurrentY();
-}
-
 export async function generateEnhancedPDF(
   formData: Partial<FIRBCalculatorFormData>,
   eligibility: EligibilityResult,
@@ -52,35 +44,38 @@ export async function generateEnhancedPDF(
   // Map data to template format
   const reportData = mapAnalyticsToPDFData(formData, eligibility, costs, analytics);
   
+  // Track Y position explicitly
+  let currentY: number = SPACING.margin;
+  
   // Generate report sections
-  generateCoverPage(doc, reportData);
-  generateExecutiveSummary(doc, reportData);
-  generateTableOfContents(doc);
-  generateFIRBEligibility(doc, reportData);
-  generateInvestmentCosts(doc, reportData);
-  generatePerformanceMetrics(doc, reportData);
-  generateCashFlowAnalysis(doc, reportData);
-  generateTaxAnalysis(doc, reportData);
-  generateProjection(doc, reportData);
-  generateSensitivityAnalysis(doc, reportData);
-  generateCGTOnExit(doc, reportData);
-  generateInvestmentScore(doc, reportData);
-  generateGlossary(doc);
-  generateDisclaimer(doc);
+  currentY = generateCoverPage(doc, reportData);
+  currentY = generateExecutiveSummary(doc, reportData, currentY);
+  currentY = generateTableOfContents(doc);
+  currentY = generateFIRBEligibility(doc, reportData, currentY);
+  currentY = generateInvestmentCosts(doc, reportData, currentY);
+  currentY = generatePerformanceMetrics(doc, reportData, currentY);
+  currentY = generateCashFlowAnalysis(doc, reportData, currentY);
+  currentY = generateTaxAnalysis(doc, reportData, currentY);
+  currentY = generateProjection(doc, reportData, currentY);
+  currentY = generateSensitivityAnalysis(doc, reportData, currentY);
+  currentY = generateCGTOnExit(doc, reportData, currentY);
+  currentY = generateInvestmentScore(doc, reportData, currentY);
+  currentY = generateGlossary(doc, currentY);
+  generateDisclaimer(doc, currentY);
 
   // Return PDF as blob
   return doc.output('blob');
 }
 
-function generateCoverPage(doc: jsPDF, data: PDFReportData): void {
+function generateCoverPage(doc: jsPDF, data: PDFReportData): number {
   const title = 'Australian Property Investment Analysis Report';
   const generationDate = new Date().toLocaleDateString('en-AU');
   
-  addCoverPage(doc, title, data.property.address, data.property.purchasePrice, generationDate);
+  return addCoverPage(doc, title, data.property.address, data.property.purchasePrice, generationDate);
 }
 
-function generateExecutiveSummary(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'Executive Summary', 'Investment Overview & Key Metrics');
+function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Executive Summary', 'Investment Overview & Key Metrics', startY);
   
   // Investment overview table
   const overviewRows = [
@@ -94,47 +89,24 @@ function generateExecutiveSummary(doc: jsPDF, data: PDFReportData): void {
     ['Investment Verdict', data.score.verdict]
   ];
   
-  addDataTable(doc, ['Metric', 'Value'], overviewRows, {
+  currentY = addDataTable(doc, ['Metric', 'Value'], overviewRows, currentY, {
     title: 'Investment Overview',
     widths: [80, 60],
     align: ['left', 'right']
   });
 
-  // Strengths and weaknesses
-  doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Investment Strengths:', SPACING.margin, getCurrentY(doc) + 10);
-  
-  doc.setFont('helvetica', 'normal');
-  data.score.strengths.forEach((strength) => {
-    doc.text(`• ${strength}`, SPACING.margin + 10, getCurrentY(doc) + 5);
-  });
-
-  doc.text('Areas of Concern:', SPACING.margin, getCurrentY(doc) + 10);
-  data.score.weaknesses.forEach((weakness) => {
-    doc.text(`• ${weakness}`, SPACING.margin + 10, getCurrentY(doc) + 5);
-  });
-
   // FIRB restrictions box
-  addAlertBox(doc, 
+  currentY = addAlertBox(doc, 
     'This property requires FIRB approval. Foreign buyers can only purchase new dwellings, vacant land for development, or off-the-plan properties. Established dwellings are prohibited for foreign buyers.',
     'info',
-    'FIRB Restrictions'
+    'FIRB Restrictions',
+    currentY
   );
 
-  // Negative gearing warning
-  if (data.performance.monthlyCashFlow < 0) {
-    addAlertBox(doc,
-      'This investment generates negative cash flow. You will need to fund the shortfall from other sources. Consider the impact on your overall financial position.',
-      'warning',
-      'Negative Cash Flow Warning'
-    );
-  }
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateTableOfContents(doc: jsPDF): void {
+function generateTableOfContents(doc: jsPDF): number {
   const sections = [
     { title: 'Executive Summary', page: 2 },
     { title: 'FIRB Eligibility', page: 4 },
@@ -150,11 +122,11 @@ function generateTableOfContents(doc: jsPDF): void {
     { title: 'Disclaimer', page: 15 }
   ];
   
-  addTableOfContents(doc, sections);
+  return addTableOfContents(doc, sections);
 }
 
-function generateFIRBEligibility(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'FIRB Eligibility', 'Foreign Investment Review Board Requirements');
+function generateFIRBEligibility(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'FIRB Eligibility', 'Foreign Investment Review Board Requirements', startY);
   
   // Eligibility table
   const eligibilityRows = [
@@ -166,30 +138,20 @@ function generateFIRBEligibility(doc: jsPDF, data: PDFReportData): void {
     ['FIRB Status', data.eligibility.status]
   ];
   
-  addDataTable(doc, ['Detail', 'Value'], eligibilityRows, {
+  currentY = addDataTable(doc, ['Detail', 'Value'], eligibilityRows, currentY, {
     title: 'Eligibility Details',
     widths: [80, 60],
     align: ['left', 'left']
   });
 
-  // Restriction notice
-  addAlertBox(doc,
-    'Foreign buyers are restricted to new dwellings, vacant land for development, and off-the-plan properties. Established dwellings are prohibited.',
-    'info',
-    'Property Type Restrictions'
-  );
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateInvestmentCosts(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'Investment Costs', 'Complete Cost Breakdown');
+function generateInvestmentCosts(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Investment Costs', 'Complete Cost Breakdown', startY);
   
   // Total investment card
-  addMetricCard(doc, 'Total Investment', formatCurrency(data.costs.totalInvestment), 'Including all costs', COLORS.primary);
-  
-  // Purchase price
-  addMetricCard(doc, 'Purchase Price', formatCurrency(data.costs.purchasePrice), 'Property value');
+  currentY = addMetricCard(doc, 'Total Investment', formatCurrency(data.costs.totalInvestment), 'Including all costs', COLORS.primary, currentY);
   
   // Government fees table
   const governmentFeesRows = [
@@ -199,93 +161,40 @@ function generateInvestmentCosts(doc: jsPDF, data: PDFReportData): void {
     ['Total Government Fees', formatCurrency(data.costs.firbFee + data.costs.stampDuty + data.costs.foreignBuyerSurcharge)]
   ];
   
-  addDataTable(doc, ['Fee Type', 'Amount'], governmentFeesRows, {
+  currentY = addDataTable(doc, ['Fee Type', 'Amount'], governmentFeesRows, currentY, {
     title: 'Government Fees',
     widths: [100, 40],
     align: ['left', 'right']
   });
 
-  // Professional fees table
-  const professionalFeesRows = [
-    ['Legal & Conveyancing', formatCurrency(data.costs.legalFees)],
-    ['Building & Pest Inspection', formatCurrency(data.costs.inspectionFees)],
-    ['Loan Establishment', formatCurrency(data.costs.loanEstablishment)],
-    ['Total Professional Fees', formatCurrency(data.costs.legalFees + data.costs.inspectionFees + data.costs.loanEstablishment)]
-  ];
-  
-  addDataTable(doc, ['Fee Type', 'Amount'], professionalFeesRows, {
-    title: 'Professional Fees',
-    widths: [100, 40],
-    align: ['left', 'right']
-  });
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generatePerformanceMetrics(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'Performance Metrics', 'Rental Yield & Return Analysis');
+function generatePerformanceMetrics(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Performance Metrics', 'Rental Yield & Return Analysis', startY);
   
   // Metric cards
-  addMetricCard(doc, 'Gross Yield', formatPercentage(data.performance.grossYield), 'Annual rental income / Property value');
-  addMetricCard(doc, 'Net Yield', formatPercentage(data.performance.netYield), 'After expenses');
-  addMetricCard(doc, 'Annualized ROI', formatPercentage(data.performance.annualizedROI), 'Total return');
-  addMetricCard(doc, 'Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), 'After tax');
+  currentY = addMetricCard(doc, 'Gross Yield', formatPercentage(data.performance.grossYield), 'Annual rental income / Property value', COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Net Yield', formatPercentage(data.performance.netYield), 'After expenses', COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Annualized ROI', formatPercentage(data.performance.annualizedROI), 'Total return', COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), 'After tax', COLORS.gray[800], currentY);
 
-  // Ongoing costs table
-  const ongoingCostsRows = [
-    ['Council Rates', formatCurrency(data.ongoingCosts.councilRates)],
-    ['Insurance', formatCurrency(data.ongoingCosts.insurance)],
-    ['Maintenance', formatCurrency(data.ongoingCosts.maintenance)],
-    ['Total Annual Costs', formatCurrency(data.ongoingCosts.total)]
-  ];
-  
-  addDataTable(doc, ['Cost Type', 'Annual Amount'], ongoingCostsRows, {
-    title: 'Ongoing Costs',
-    widths: [100, 40],
-    align: ['left', 'right']
-  });
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateCashFlowAnalysis(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'Cash Flow Analysis', 'Income vs Expenses Breakdown');
+function generateCashFlowAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Cash Flow Analysis', 'Income vs Expenses Breakdown', startY);
   
   // Summary cards
-  addMetricCard(doc, 'Annual Income', formatCurrency(data.performance.annualIncome), 'Gross rental income');
-  addMetricCard(doc, 'Effective Income', formatCurrency(data.performance.effectiveIncome), 'After vacancy allowance');
-  addMetricCard(doc, 'Total Expenses', formatCurrency(data.performance.totalExpenses), 'All costs');
+  currentY = addMetricCard(doc, 'Annual Income', formatCurrency(data.performance.annualIncome), 'Gross rental income', COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Effective Income', formatCurrency(data.performance.effectiveIncome), 'After vacancy allowance', COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Total Expenses', formatCurrency(data.performance.totalExpenses), 'All costs', COLORS.gray[800], currentY);
 
-  // Expense breakdown table
-  const expenseRows = [
-    ['Loan Interest', formatCurrency(data.performance.totalExpenses * 0.6)], // Estimate
-    ['Council Rates', formatCurrency(data.ongoingCosts.councilRates)],
-    ['Insurance', formatCurrency(data.ongoingCosts.insurance)],
-    ['Maintenance', formatCurrency(data.ongoingCosts.maintenance)],
-    ['Property Management', formatCurrency(data.performance.totalExpenses * 0.1)], // Estimate
-    ['Other Expenses', formatCurrency(data.performance.totalExpenses * 0.1)] // Estimate
-  ];
-  
-  addDataTable(doc, ['Expense Type', 'Annual Amount'], expenseRows, {
-    title: 'Expense Breakdown',
-    widths: [100, 40],
-    align: ['left', 'right']
-  });
-
-  // Tax benefit box
-  if (data.taxBenefits.annualSaving > 0) {
-    addAlertBox(doc,
-      `This investment provides tax benefits of ${formatCurrency(data.taxBenefits.annualSaving)} annually through negative gearing. This reduces your overall tax liability.`,
-      'success',
-      'Tax Benefits'
-    );
-  }
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateTaxAnalysis(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'Tax Analysis', 'Deductions & Negative Gearing');
+function generateTaxAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Tax Analysis', 'Deductions & Negative Gearing', startY);
   
   // Annual deductions table
   const deductionsRows = [
@@ -298,73 +207,29 @@ function generateTaxAnalysis(doc: jsPDF, data: PDFReportData): void {
     ['Total Deductions', formatCurrency(data.taxBenefits.totalDeductions)]
   ];
   
-  addDataTable(doc, ['Deduction Type', 'Annual Amount'], deductionsRows, {
+  currentY = addDataTable(doc, ['Deduction Type', 'Annual Amount'], deductionsRows, currentY, {
     title: 'Annual Deductions',
     widths: [100, 40],
     align: ['left', 'right']
   });
 
-  // Negative gearing calculation
-  const negativeGearingRows = [
-    ['Rental Income', formatCurrency(data.performance.effectiveIncome)],
-    ['Total Deductions', formatCurrency(data.taxBenefits.totalDeductions)],
-    ['Taxable Loss', formatCurrency(data.taxBenefits.totalDeductions - data.performance.effectiveIncome)],
-    ['Tax Saving (37% marginal rate)', formatCurrency(data.taxBenefits.annualSaving)],
-    ['Net Cash Flow Impact', formatCurrency(data.performance.afterTaxCashFlow)]
-  ];
-  
-  addDataTable(doc, ['Item', 'Amount'], negativeGearingRows, {
-    title: 'Negative Gearing Calculation',
-    widths: [100, 40],
-    align: ['left', 'right']
-  });
-
-  // Tax note
-  addAlertBox(doc,
-    'Tax benefits depend on your marginal tax rate and overall financial situation. Consult a tax professional for personalized advice.',
-    'info',
-    'Tax Advice'
-  );
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateProjection(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, '10-Year Projection', 'Long-term Investment Outlook');
+function generateProjection(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, '10-Year Projection', 'Long-term Investment Outlook', startY);
   
   // Summary cards
-  addMetricCard(doc, 'Starting Value', formatCurrency(data.projection.startingValue), 'Current property value');
-  addMetricCard(doc, 'Final Value', formatCurrency(data.projection.finalValue), `After ${data.projection.years} years`);
-  addMetricCard(doc, 'Growth Rate', formatPercentage(data.projection.growthRate), 'Annual appreciation');
-  addMetricCard(doc, 'Total ROI', formatPercentage(data.projection.totalROI), 'Overall return');
+  currentY = addMetricCard(doc, 'Starting Value', formatCurrency(data.projection.startingValue), 'Current property value', COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Final Value', formatCurrency(data.projection.finalValue), `After ${data.projection.years} years`, COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Growth Rate', formatPercentage(data.projection.growthRate), 'Annual appreciation', COLORS.gray[800], currentY);
+  currentY = addMetricCard(doc, 'Total ROI', formatPercentage(data.projection.totalROI), 'Overall return', COLORS.gray[800], currentY);
 
-  // Year-by-year projection (simplified - showing key years)
-  const projectionRows = [
-    ['Year 1', formatCurrency(data.projection.startingValue * 1.05), formatCurrency(data.projection.startingValue * 0.2)],
-    ['Year 3', formatCurrency(data.projection.startingValue * 1.16), formatCurrency(data.projection.startingValue * 0.25)],
-    ['Year 5', formatCurrency(data.projection.startingValue * 1.28), formatCurrency(data.projection.startingValue * 0.3)],
-    ['Year 7', formatCurrency(data.projection.startingValue * 1.41), formatCurrency(data.projection.startingValue * 0.35)],
-    ['Year 10', formatCurrency(data.projection.finalValue), formatCurrency(data.projection.equity)]
-  ];
-  
-  addDataTable(doc, ['Year', 'Property Value', 'Equity'], projectionRows, {
-    title: 'Year-by-Year Projection',
-    widths: [30, 60, 50],
-    align: ['center', 'right', 'right']
-  });
-
-  // Growth warning
-  addAlertBox(doc,
-    'Property values can fluctuate significantly. Past performance does not guarantee future results. Consider market volatility and economic conditions.',
-    'warning',
-    'Growth Assumptions'
-  );
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'Sensitivity Analysis', 'Impact of Market Changes');
+function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Sensitivity Analysis', 'Impact of Market Changes', startY);
   
   // Vacancy impact table
   const vacancyRows = data.sensitivity.vacancyImpact.map(impact => [
@@ -374,53 +239,17 @@ function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData): void {
     formatCurrency(impact.impact)
   ]);
   
-  addDataTable(doc, ['Vacancy Rate', 'Annual Rent', 'Cash Flow', 'Impact'], vacancyRows, {
+  currentY = addDataTable(doc, ['Vacancy Rate', 'Annual Rent', 'Cash Flow', 'Impact'], vacancyRows, currentY, {
     title: 'Vacancy Rate Impact',
     widths: [30, 40, 40, 30],
     align: ['center', 'right', 'right', 'right']
   });
 
-  // Interest rate impact table
-  const interestRows = data.sensitivity.interestImpact.map(impact => [
-    `${impact.rate}%`,
-    formatCurrency(impact.monthly),
-    formatCurrency(impact.annual),
-    formatCurrency(impact.impact)
-  ]);
-  
-  addDataTable(doc, ['Interest Rate', 'Monthly Cost', 'Annual Cost', 'Impact'], interestRows, {
-    title: 'Interest Rate Impact',
-    widths: [30, 40, 40, 30],
-    align: ['center', 'right', 'right', 'right']
-  });
-
-  // Growth scenarios table
-  const growthRows = data.sensitivity.growthScenarios.map(scenario => [
-    scenario.scenario,
-    formatPercentage(scenario.rate),
-    formatCurrency(scenario.finalValue),
-    formatCurrency(scenario.totalReturn),
-    formatPercentage(scenario.roi)
-  ]);
-  
-  addDataTable(doc, ['Scenario', 'Growth Rate', 'Final Value', 'Total Return', 'ROI'], growthRows, {
-    title: 'Growth Scenarios',
-    widths: [40, 30, 50, 50, 30],
-    align: ['left', 'center', 'right', 'right', 'right']
-  });
-
-  // Risk factors
-  addAlertBox(doc,
-    'Consider these risk factors: interest rate changes, vacancy periods, maintenance costs, market volatility, and economic downturns.',
-    'warning',
-    'Risk Factors'
-  );
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateCGTOnExit(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'CGT on Exit', 'Capital Gains Tax Calculation');
+function generateCGTOnExit(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'CGT on Exit', 'Capital Gains Tax Calculation', startY);
   
   // Sale calculation table
   const saleRows = [
@@ -432,45 +261,20 @@ function generateCGTOnExit(doc: jsPDF, data: PDFReportData): void {
     ['Capital Gain', formatCurrency(data.cgt.capitalGain)]
   ];
   
-  addDataTable(doc, ['Item', 'Amount'], saleRows, {
+  currentY = addDataTable(doc, ['Item', 'Amount'], saleRows, currentY, {
     title: 'Sale Calculation',
     widths: [100, 40],
     align: ['left', 'right']
   });
 
-  // Tax calculation table
-  const taxRows = [
-    ['Capital Gain', formatCurrency(data.cgt.capitalGain)],
-    ['CGT Rate', formatPercentage(data.cgt.cgtRate)],
-    ['CGT Payable', formatCurrency(data.cgt.cgtPayable)],
-    ['Withholding Tax', formatCurrency(data.cgt.withholdingTax)],
-    ['Net Proceeds', formatCurrency(data.cgt.netProceeds)]
-  ];
-  
-  addDataTable(doc, ['Item', 'Amount'], taxRows, {
-    title: 'Tax Calculation',
-    widths: [100, 40],
-    align: ['left', 'right']
-  });
-
-  // Net proceeds card
-  addMetricCard(doc, 'Net Proceeds', formatCurrency(data.cgt.netProceeds), 'After all taxes', COLORS.success);
-
-  // Tax planning tip
-  addAlertBox(doc,
-    'Consider holding the property for more than 12 months to access the 50% CGT discount (for Australian residents). Foreign residents are not eligible for this discount.',
-    'warning',
-    'Tax Planning Tip'
-  );
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateInvestmentScore(doc: jsPDF, data: PDFReportData): void {
-  addSectionHeader(doc, 'Investment Score', 'Overall Assessment & Recommendation');
+function generateInvestmentScore(doc: jsPDF, data: PDFReportData, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Investment Score', 'Overall Assessment & Recommendation', startY);
   
   // Overall verdict card
-  addMetricCard(doc, 'Overall Score', `${data.score.overall}/100`, data.score.verdict, COLORS.primary);
+  currentY = addMetricCard(doc, 'Overall Score', `${data.score.overall}/100`, data.score.verdict, COLORS.primary, currentY);
   
   // Score breakdown table
   const scoreRows = [
@@ -482,44 +286,17 @@ function generateInvestmentScore(doc: jsPDF, data: PDFReportData): void {
     ['Overall Score', data.score.overall]
   ];
   
-  addDataTable(doc, ['Category', 'Score'], scoreRows, {
+  currentY = addDataTable(doc, ['Category', 'Score'], scoreRows, currentY, {
     title: 'Score Breakdown',
     widths: [100, 40],
     align: ['left', 'center']
   });
 
-  // Strengths and weaknesses in two columns
-  doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Investment Strengths:', SPACING.margin, getCurrentY(doc) + 10);
-  
-  doc.setFont('helvetica', 'normal');
-  data.score.strengths.forEach((strength) => {
-    doc.text(`• ${strength}`, SPACING.margin + 10, getCurrentY(doc) + 5);
-  });
-
-  // Move to right column
-  const rightColumnX = doc.internal.pageSize.getWidth() / 2 + SPACING.margin;
-  doc.setFont('helvetica', 'bold');
-  doc.text('Areas of Concern:', rightColumnX, getCurrentY(doc) - (data.score.strengths.length * 8));
-  
-  doc.setFont('helvetica', 'normal');
-  data.score.weaknesses.forEach((weakness) => {
-    doc.text(`• ${weakness}`, rightColumnX + 10, getCurrentY(doc) + 5);
-  });
-
-  // Suitability box
-  addAlertBox(doc,
-    `This investment is ${data.score.verdict.toLowerCase()}. Consider your risk tolerance, investment timeline, and overall portfolio diversification before proceeding.`,
-    data.score.overall >= 70 ? 'success' : data.score.overall >= 50 ? 'warning' : 'danger',
-    'Investment Suitability'
-  );
-
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateGlossary(doc: jsPDF): void {
-  addSectionHeader(doc, 'Glossary', 'Key Terms & Definitions');
+function generateGlossary(doc: jsPDF, startY: number): number {
+  let currentY = addSectionHeader(doc, 'Glossary', 'Key Terms & Definitions', startY);
   
   const glossaryTerms = [
     ['FIRB', 'Foreign Investment Review Board - Australian government body regulating foreign property investment'],
@@ -531,61 +308,25 @@ function generateGlossary(doc: jsPDF): void {
     ['Capital Gains Tax', 'Tax on profit from property sale'],
     ['Loan-to-Value Ratio', 'Loan amount as percentage of property value'],
     ['Vacancy Rate', 'Percentage of time property is unoccupied'],
-    ['Capital Growth', 'Increase in property value over time'],
-    ['Cash Flow', 'Net income after all expenses'],
-    ['Depreciation', 'Tax deduction for wear and tear on property'],
-    ['Land Tax', 'Annual tax on land value'],
-    ['Council Rates', 'Local government property tax'],
-    ['LMI', 'Lenders Mortgage Insurance - required for high LVR loans'],
-    ['Settlement', 'Completion of property purchase transaction'],
-    ['Conveyancing', 'Legal process of transferring property ownership'],
-    ['Building Inspection', 'Professional assessment of property condition'],
-    ['Pest Inspection', 'Assessment for termites and other pests'],
-    ['Property Management', 'Professional management of rental property'],
-    ['Rental Appraisal', 'Estimated rental income assessment'],
-    ['Market Valuation', 'Professional property value assessment'],
-    ['Equity', 'Property value minus outstanding loan amount'],
-    ['Refinancing', 'Replacing existing loan with new loan terms'],
-    ['Interest Only', 'Loan payments covering only interest, not principal'],
-    ['Principal & Interest', 'Loan payments covering both principal and interest'],
-    ['Fixed Rate', 'Interest rate locked for set period'],
-    ['Variable Rate', 'Interest rate that can change with market conditions'],
-    ['Offset Account', 'Savings account linked to home loan reducing interest']
+    ['Capital Growth', 'Increase in property value over time']
   ];
   
-  // Split into two columns
-  const midPoint = Math.ceil(glossaryTerms.length / 2);
-  const leftColumn = glossaryTerms.slice(0, midPoint);
-  const rightColumn = glossaryTerms.slice(midPoint);
-  
-  // Left column
-  leftColumn.forEach((term) => {
+  // Simple glossary display
+  glossaryTerms.forEach((term, index) => {
     doc.setFontSize(FONTS.body);
     doc.setFont('helvetica', 'bold');
-    doc.text(term[0], SPACING.margin, getCurrentY(doc) + 5);
+    doc.text(term[0], SPACING.margin, currentY + (index * 15));
     
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(FONTS.small);
-    doc.text(term[1], SPACING.margin + 10, getCurrentY(doc) + 5);
-  });
-  
-  // Right column
-  const rightColumnX = doc.internal.pageSize.getWidth() / 2 + SPACING.margin;
-  rightColumn.forEach((term) => {
-    doc.setFontSize(FONTS.body);
-    doc.setFont('helvetica', 'bold');
-    doc.text(term[0], rightColumnX, getCurrentY(doc) - (leftColumn.length * 8) + 5);
-    
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(FONTS.small);
-    doc.text(term[1], rightColumnX + 10, getCurrentY(doc) + 5);
+    doc.text(term[1], SPACING.margin + 10, currentY + (index * 15) + 5);
   });
 
-  addPageBreak(doc);
+  return addPageBreak(doc);
 }
 
-function generateDisclaimer(doc: jsPDF): void {
-  addSectionHeader(doc, 'Disclaimer', 'Important Information');
+function generateDisclaimer(doc: jsPDF, startY: number): void {
+  addSectionHeader(doc, 'Disclaimer', 'Important Information', startY);
   
   const disclaimerText = `
 This report is for informational purposes only and does not constitute financial, investment, or tax advice. 
@@ -616,7 +357,7 @@ This report does not guarantee investment performance or returns. Past performan
   
   doc.setFontSize(FONTS.small);
   doc.setFont('helvetica', 'normal');
-  doc.text(disclaimerText, SPACING.margin, getCurrentY(doc) + 10, {
+  doc.text(disclaimerText, SPACING.margin, startY + 40, {
     maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
     align: 'justify'
   });

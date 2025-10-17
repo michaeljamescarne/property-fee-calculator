@@ -42,22 +42,11 @@ export const SPACING = {
   lineHeight: 1.2
 } as const;
 
-/**
- * Helper function to get current Y position from jsPDF
- */
-function getCurrentY(doc: jsPDF): number {
-  return (doc as unknown as { getCurrentY(): number }).getCurrentY();
-}
-
-/**
- * Helper function to get current X position from jsPDF
- */
-function getCurrentX(doc: jsPDF): number {
-  return (doc as unknown as { getCurrentX(): number }).getCurrentX();
-}
+// Removed getCurrentY and getCurrentX helper functions as they don't exist in production jsPDF
 
 /**
  * Adds a cover page with blue header, centered title, and property details
+ * Returns the final Y position after adding all elements
  */
 export function addCoverPage(
   doc: jsPDF,
@@ -65,7 +54,7 @@ export function addCoverPage(
   propertyAddress: string,
   purchasePrice: number,
   generationDate: string
-): void {
+): number {
   const pageWidth = doc.internal.pageSize.getWidth();
 
   // Blue header bar
@@ -95,15 +84,19 @@ export function addCoverPage(
 
   // Add new page for content
   doc.addPage();
+  
+  // Return the starting Y position for the new page
+  return SPACING.margin;
 }
 
 /**
  * Adds a table of contents with two-column layout and dot leaders
+ * Returns the final Y position after adding all elements
  */
 export function addTableOfContents(
   doc: jsPDF,
   sections: Array<{ title: string; page: number }>
-): void {
+): number {
   const pageWidth = doc.internal.pageSize.getWidth();
   const leftColumnX = SPACING.margin;
   const rightColumnX = pageWidth / 2 + SPACING.margin;
@@ -147,34 +140,38 @@ export function addTableOfContents(
 
   // Add new page
   doc.addPage();
+  
+  // Return the starting Y position for the new page
+  return SPACING.margin;
 }
 
 /**
  * Adds a section header with blue bar and white text
+ * Returns the final Y position after adding the header
  */
 export function addSectionHeader(
   doc: jsPDF,
   title: string,
-  subtitle?: string
-): void {
+  subtitle?: string,
+  startY: number = SPACING.margin
+): number {
   const pageWidth = doc.internal.pageSize.getWidth();
-  const currentY = getCurrentY(doc);
 
   // Blue header bar
   doc.setFillColor(COLORS.primary);
-  doc.rect(0, currentY - 5, pageWidth, 25, 'F');
+  doc.rect(0, startY - 5, pageWidth, 25, 'F');
 
   // White title text
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(FONTS.title);
   doc.setFont('helvetica', 'bold');
-  doc.text(title, SPACING.margin, currentY + 8);
+  doc.text(title, SPACING.margin, startY + 8);
 
   // White subtitle text (if provided)
   if (subtitle) {
     doc.setFontSize(FONTS.subtitle);
     doc.setFont('helvetica', 'normal');
-    doc.text(subtitle, SPACING.margin, currentY + 18);
+    doc.text(subtitle, SPACING.margin, startY + 18);
   }
 
   // Reset text color and position
@@ -182,36 +179,38 @@ export function addSectionHeader(
   doc.setFontSize(FONTS.body);
   doc.setFont('helvetica', 'normal');
   
-  // Move cursor below header
-  (doc as unknown as { setCursor(x: number, y: number): void }).setCursor(SPACING.margin, currentY + 35);
+  // Return the Y position below the header
+  return startY + 35;
 }
 
 /**
  * Adds a styled data table with gray headers and striped rows
+ * Returns the final Y position after adding the table
  */
 export function addDataTable(
   doc: jsPDF,
   headers: string[],
   rows: (string | number)[][],
+  startY: number,
   options?: {
     title?: string;
     widths?: number[];
     align?: ('left' | 'center' | 'right')[];
   }
-): void {
-  const currentY = getCurrentY(doc);
+): number {
+  let currentY = startY;
 
   // Add title if provided
   if (options?.title) {
     doc.setFontSize(FONTS.body);
     doc.setFont('helvetica', 'bold');
     doc.text(options.title, SPACING.margin, currentY);
-    (doc as unknown as { setCursor(x: number, y: number): void }).setCursor(SPACING.margin, currentY + 15);
+    currentY += 15;
   }
 
   // Generate table using autoTable
   (doc as unknown as { autoTable: (options: unknown) => void }).autoTable({
-    startY: getCurrentY(doc),
+    startY: currentY,
     head: [headers],
     body: rows,
     theme: 'grid',
@@ -239,65 +238,67 @@ export function addDataTable(
     }
   });
 
-  // Move cursor below table
-  (doc as unknown as { setCursor(x: number, y: number): void }).setCursor(SPACING.margin, (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 10);
+  // Return the final Y position below the table
+  return (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 10;
 }
 
 /**
  * Adds a metric card with border, label, value, and optional subtext
+ * Returns the final Y position after adding the card
  */
 export function addMetricCard(
   doc: jsPDF,
   label: string,
   value: string | number,
   subtext?: string,
-  color: string = COLORS.gray[800]
-): void {
+  color: string = COLORS.gray[800],
+  startY: number = SPACING.margin,
+  startX: number = SPACING.margin
+): number {
   const cardWidth = 80;
   const cardHeight = 40;
-  const currentX = getCurrentX(doc);
-  const currentY = getCurrentY(doc);
 
   // Card border
   doc.setDrawColor(COLORS.gray[300]);
   doc.setLineWidth(0.5);
-  doc.rect(currentX, currentY, cardWidth, cardHeight);
+  doc.rect(startX, startY, cardWidth, cardHeight);
 
   // Label
   doc.setTextColor(COLORS.gray[600]);
   doc.setFontSize(FONTS.small);
   doc.setFont('helvetica', 'normal');
-  doc.text(label, currentX + 5, currentY + 8);
+  doc.text(label, startX + 5, startY + 8);
 
   // Value
   doc.setTextColor(color);
   doc.setFontSize(FONTS.body);
   doc.setFont('helvetica', 'bold');
-  doc.text(value.toString(), currentX + 5, currentY + 20);
+  doc.text(value.toString(), startX + 5, startY + 20);
 
   // Subtext (if provided)
   if (subtext) {
     doc.setTextColor(COLORS.gray[500]);
     doc.setFontSize(FONTS.small);
     doc.setFont('helvetica', 'normal');
-    doc.text(subtext, currentX + 5, currentY + 32);
+    doc.text(subtext, startX + 5, startY + 32);
   }
 
-  // Move cursor to next position
-  (doc as unknown as { setCursor(x: number, y: number): void }).setCursor(currentX + cardWidth + 10, currentY);
+  // Return the Y position below the card
+  return startY + cardHeight + 10;
 }
 
 /**
  * Adds an alert box with color-coded background
+ * Returns the final Y position after adding the alert box
  */
 export function addAlertBox(
   doc: jsPDF,
   message: string,
   type: 'info' | 'warning' | 'success' | 'danger' = 'info',
-  title?: string
-): void {
+  title?: string,
+  startY: number = SPACING.margin
+): number {
   const pageWidth = doc.internal.pageSize.getWidth();
-  const currentY = getCurrentY(doc);
   const boxWidth = pageWidth - (SPACING.margin * 2);
   const boxHeight = title ? 50 : 35;
 
@@ -314,31 +315,31 @@ export function addAlertBox(
   // Background
   doc.setFillColor(bgColor);
   (doc as unknown as { setAlpha(alpha: number): void }).setAlpha(0.1);
-  doc.rect(SPACING.margin, currentY, boxWidth, boxHeight, 'F');
+  doc.rect(SPACING.margin, startY, boxWidth, boxHeight, 'F');
   (doc as unknown as { setAlpha(alpha: number): void }).setAlpha(1);
 
   // Border
   doc.setDrawColor(bgColor);
   doc.setLineWidth(1);
-  doc.rect(SPACING.margin, currentY, boxWidth, boxHeight);
+  doc.rect(SPACING.margin, startY, boxWidth, boxHeight);
 
   // Title (if provided)
   if (title) {
     doc.setTextColor(bgColor);
     doc.setFontSize(FONTS.body);
     doc.setFont('helvetica', 'bold');
-    doc.text(title, SPACING.margin + 10, currentY + 12);
+    doc.text(title, SPACING.margin + 10, startY + 12);
   }
 
   // Message
   doc.setTextColor(COLORS.gray[800]);
   doc.setFontSize(FONTS.body);
   doc.setFont('helvetica', 'normal');
-  const messageY = title ? currentY + 25 : currentY + 15;
+  const messageY = title ? startY + 25 : startY + 15;
   doc.text(message, SPACING.margin + 10, messageY);
 
-  // Move cursor below box
-  (doc as unknown as { setCursor(x: number, y: number): void }).setCursor(SPACING.margin, currentY + boxHeight + 10);
+  // Return the Y position below the box
+  return startY + boxHeight + 10;
 }
 
 /**
@@ -373,10 +374,12 @@ export function addFooter(doc: jsPDF): void {
 
 /**
  * Adds a page break and ensures footer is added
+ * Returns the starting Y position for the new page
  */
-export function addPageBreak(doc: jsPDF): void {
+export function addPageBreak(doc: jsPDF): number {
   addFooter(doc);
   doc.addPage();
+  return SPACING.margin;
 }
 
 /**
