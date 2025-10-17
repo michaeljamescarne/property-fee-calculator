@@ -3453,7 +3453,7 @@ Week 3-4: Financial Planning
 Many foreign investors miscalculate returns by ignoring crucial factors. Here's the complete framework:
 
 **Total Capital Invested:**
-```
+\`\`\`
 Purchase price
 + Stamp duty (base + foreign surcharge)
 + FIRB fees
@@ -3461,10 +3461,10 @@ Purchase price
 + Inspections (if applicable)
 + Any renovation costs
 = Total Capital Invested
-```
+\`\`\`
 
 **Annual Cash Flow:**
-```
+\`\`\`
 Rental income (gross)
 - Property management fees
 - Vacancy allowance
@@ -3476,34 +3476,34 @@ Rental income (gross)
 - Maintenance/repairs
 - Mortgage interest (if applicable)
 = Annual Cash Flow (usually negative early years)
-```
+\`\`\`
 
 **Tax Benefits (if applicable):**
-```
+\`\`\`
 + Depreciation deductions (buildings + fixtures)
 + Interest deductions (if loan)
 + Other deductible expenses
 × Your marginal tax rate
 = Tax Savings
-```
+\`\`\`
 
 **Capital Growth:**
-```
+\`\`\`
 Final property value
 - Purchase price
 - Selling costs (agent ~2%, legal ~$2K)
 - Capital Gains Tax (~47% for foreign residents on gain)
 = Net Capital Gain
-```
+\`\`\`
 
 **True ROI Calculation:**
-```
+\`\`\`
 (Net Capital Gain + Cumulative Cash Flow + Tax Savings - All Costs)
 ÷ Total Capital Invested
 = Total Return %
 
 Then ÷ Number of Years = Average Annual Return %
-```
+\`\`\`
 
 ### Sample 10-Year ROI Calculation
 
@@ -3523,18 +3523,18 @@ Then ÷ Number of Years = Average Annual Return %
 - **Net capital gain:** $315,000
 
 **Total Return:**
-```
+\`\`\`
 $315,000 (capital gain)
 - $25,000 (negative cash flow)
 + $55,000 (tax savings)
 = $345,000 total return
-```
+\`\`\`
 
 **ROI:**
-```
+\`\`\`
 $345,000 ÷ $1,149,440 = 30.0% total return
 30.0% ÷ 10 years = 3.0% average annual return
-```
+\`\`\`
 
 **This is the TRUE return** - not the property growth rate (5%), but your actual return on capital invested (3%).
 
