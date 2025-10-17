@@ -32,7 +32,7 @@ export function convertMarkdownTableToHTML(markdownTable: string): string {
   const headers = headerLine.split('|').map(h => h.trim()).filter(h => h);
   
   // Extract separator row (skip it)
-  const separatorLine = lines[2];
+  // const separatorLine = lines[2];
   
   // Extract data rows
   const dataRows = lines.slice(3).map(line => {
