@@ -4,7 +4,7 @@
  */
 
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 
 // Color constants matching template design
 export const COLORS = {
@@ -209,15 +209,15 @@ export function addDataTable(
   }
 
   // Generate table using autoTable
-  (doc as unknown as { autoTable: (options: unknown) => void }).autoTable({
+  const autoTableOptions = {
     startY: currentY,
     head: [headers],
     body: rows,
-    theme: 'grid',
+    theme: 'grid' as const,
     headStyles: {
       fillColor: COLORS.gray[200],
       textColor: COLORS.gray[800],
-      fontStyle: 'bold',
+      fontStyle: 'bold' as const,
       fontSize: FONTS.body
     },
     bodyStyles: {
@@ -236,7 +236,10 @@ export function addDataTable(
       // Add footer to each page
       addFooter(doc);
     }
-  });
+  };
+
+  // Use the autoTable method directly
+  autoTable(doc, autoTableOptions);
 
   // Return the final Y position below the table
   return (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 10;
