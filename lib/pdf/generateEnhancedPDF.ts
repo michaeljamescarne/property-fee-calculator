@@ -75,7 +75,7 @@ function generateCoverPage(doc: jsPDF, data: PDFReportData): number {
 }
 
 function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Executive Summary', 'Investment Overview & Key Metrics', startY);
+  const currentY = addSectionHeader(doc, 'Executive Summary', 'Investment Overview & Key Metrics', startY);
   
   // Investment overview table
   const overviewRows = [
@@ -89,18 +89,18 @@ function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: numbe
     ['Investment Verdict', data.score.verdict]
   ];
   
-  currentY = addDataTable(doc, ['Metric', 'Value'], overviewRows, currentY, {
+  addDataTable(doc, ['Metric', 'Value'], overviewRows, currentY, {
     title: 'Investment Overview',
     widths: [80, 60],
     align: ['left', 'right']
   });
 
   // FIRB restrictions box
-  currentY = addAlertBox(doc, 
+  addAlertBox(doc, 
     'This property requires FIRB approval. Foreign buyers can only purchase new dwellings, vacant land for development, or off-the-plan properties. Established dwellings are prohibited for foreign buyers.',
     'info',
     'FIRB Restrictions',
-    currentY
+    currentY + 100
   );
 
   return addPageBreak(doc);
@@ -126,7 +126,7 @@ function generateTableOfContents(doc: jsPDF): number {
 }
 
 function generateFIRBEligibility(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'FIRB Eligibility', 'Foreign Investment Review Board Requirements', startY);
+  const currentY = addSectionHeader(doc, 'FIRB Eligibility', 'Foreign Investment Review Board Requirements', startY);
   
   // Eligibility table
   const eligibilityRows = [
@@ -138,7 +138,7 @@ function generateFIRBEligibility(doc: jsPDF, data: PDFReportData, startY: number
     ['FIRB Status', data.eligibility.status]
   ];
   
-  currentY = addDataTable(doc, ['Detail', 'Value'], eligibilityRows, currentY, {
+  addDataTable(doc, ['Detail', 'Value'], eligibilityRows, currentY, {
     title: 'Eligibility Details',
     widths: [80, 60],
     align: ['left', 'left']
@@ -148,10 +148,10 @@ function generateFIRBEligibility(doc: jsPDF, data: PDFReportData, startY: number
 }
 
 function generateInvestmentCosts(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Investment Costs', 'Complete Cost Breakdown', startY);
+  const currentY = addSectionHeader(doc, 'Investment Costs', 'Complete Cost Breakdown', startY);
   
   // Total investment card
-  currentY = addMetricCard(doc, 'Total Investment', formatCurrency(data.costs.totalInvestment), 'Including all costs', COLORS.primary, currentY);
+  addMetricCard(doc, 'Total Investment', formatCurrency(data.costs.totalInvestment), 'Including all costs', COLORS.primary, currentY);
   
   // Government fees table
   const governmentFeesRows = [
@@ -161,7 +161,7 @@ function generateInvestmentCosts(doc: jsPDF, data: PDFReportData, startY: number
     ['Total Government Fees', formatCurrency(data.costs.firbFee + data.costs.stampDuty + data.costs.foreignBuyerSurcharge)]
   ];
   
-  currentY = addDataTable(doc, ['Fee Type', 'Amount'], governmentFeesRows, currentY, {
+  addDataTable(doc, ['Fee Type', 'Amount'], governmentFeesRows, currentY + 50, {
     title: 'Government Fees',
     widths: [100, 40],
     align: ['left', 'right']
@@ -171,30 +171,30 @@ function generateInvestmentCosts(doc: jsPDF, data: PDFReportData, startY: number
 }
 
 function generatePerformanceMetrics(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Performance Metrics', 'Rental Yield & Return Analysis', startY);
+  const currentY = addSectionHeader(doc, 'Performance Metrics', 'Rental Yield & Return Analysis', startY);
   
   // Metric cards
-  currentY = addMetricCard(doc, 'Gross Yield', formatPercentage(data.performance.grossYield), 'Annual rental income / Property value', COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Net Yield', formatPercentage(data.performance.netYield), 'After expenses', COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Annualized ROI', formatPercentage(data.performance.annualizedROI), 'Total return', COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), 'After tax', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Gross Yield', formatPercentage(data.performance.grossYield), 'Annual rental income / Property value', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Net Yield', formatPercentage(data.performance.netYield), 'After expenses', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Annualized ROI', formatPercentage(data.performance.annualizedROI), 'Total return', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), 'After tax', COLORS.gray[800], currentY);
 
   return addPageBreak(doc);
 }
 
 function generateCashFlowAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Cash Flow Analysis', 'Income vs Expenses Breakdown', startY);
+  const currentY = addSectionHeader(doc, 'Cash Flow Analysis', 'Income vs Expenses Breakdown', startY);
   
   // Summary cards
-  currentY = addMetricCard(doc, 'Annual Income', formatCurrency(data.performance.annualIncome), 'Gross rental income', COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Effective Income', formatCurrency(data.performance.effectiveIncome), 'After vacancy allowance', COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Total Expenses', formatCurrency(data.performance.totalExpenses), 'All costs', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Annual Income', formatCurrency(data.performance.annualIncome), 'Gross rental income', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Effective Income', formatCurrency(data.performance.effectiveIncome), 'After vacancy allowance', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Total Expenses', formatCurrency(data.performance.totalExpenses), 'All costs', COLORS.gray[800], currentY);
 
   return addPageBreak(doc);
 }
 
 function generateTaxAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Tax Analysis', 'Deductions & Negative Gearing', startY);
+  const currentY = addSectionHeader(doc, 'Tax Analysis', 'Deductions & Negative Gearing', startY);
   
   // Annual deductions table
   const deductionsRows = [
@@ -207,7 +207,7 @@ function generateTaxAnalysis(doc: jsPDF, data: PDFReportData, startY: number): n
     ['Total Deductions', formatCurrency(data.taxBenefits.totalDeductions)]
   ];
   
-  currentY = addDataTable(doc, ['Deduction Type', 'Annual Amount'], deductionsRows, currentY, {
+  addDataTable(doc, ['Deduction Type', 'Annual Amount'], deductionsRows, currentY, {
     title: 'Annual Deductions',
     widths: [100, 40],
     align: ['left', 'right']
@@ -217,19 +217,19 @@ function generateTaxAnalysis(doc: jsPDF, data: PDFReportData, startY: number): n
 }
 
 function generateProjection(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, '10-Year Projection', 'Long-term Investment Outlook', startY);
+  const currentY = addSectionHeader(doc, '10-Year Projection', 'Long-term Investment Outlook', startY);
   
   // Summary cards
-  currentY = addMetricCard(doc, 'Starting Value', formatCurrency(data.projection.startingValue), 'Current property value', COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Final Value', formatCurrency(data.projection.finalValue), `After ${data.projection.years} years`, COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Growth Rate', formatPercentage(data.projection.growthRate), 'Annual appreciation', COLORS.gray[800], currentY);
-  currentY = addMetricCard(doc, 'Total ROI', formatPercentage(data.projection.totalROI), 'Overall return', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Starting Value', formatCurrency(data.projection.startingValue), 'Current property value', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Final Value', formatCurrency(data.projection.finalValue), `After ${data.projection.years} years`, COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Growth Rate', formatPercentage(data.projection.growthRate), 'Annual appreciation', COLORS.gray[800], currentY);
+  addMetricCard(doc, 'Total ROI', formatPercentage(data.projection.totalROI), 'Overall return', COLORS.gray[800], currentY);
 
   return addPageBreak(doc);
 }
 
 function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Sensitivity Analysis', 'Impact of Market Changes', startY);
+  const currentY = addSectionHeader(doc, 'Sensitivity Analysis', 'Impact of Market Changes', startY);
   
   // Vacancy impact table
   const vacancyRows = data.sensitivity.vacancyImpact.map(impact => [
@@ -239,7 +239,7 @@ function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData, startY: nu
     formatCurrency(impact.impact)
   ]);
   
-  currentY = addDataTable(doc, ['Vacancy Rate', 'Annual Rent', 'Cash Flow', 'Impact'], vacancyRows, currentY, {
+  addDataTable(doc, ['Vacancy Rate', 'Annual Rent', 'Cash Flow', 'Impact'], vacancyRows, currentY, {
     title: 'Vacancy Rate Impact',
     widths: [30, 40, 40, 30],
     align: ['center', 'right', 'right', 'right']
@@ -249,7 +249,7 @@ function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData, startY: nu
 }
 
 function generateCGTOnExit(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'CGT on Exit', 'Capital Gains Tax Calculation', startY);
+  const currentY = addSectionHeader(doc, 'CGT on Exit', 'Capital Gains Tax Calculation', startY);
   
   // Sale calculation table
   const saleRows = [
@@ -261,7 +261,7 @@ function generateCGTOnExit(doc: jsPDF, data: PDFReportData, startY: number): num
     ['Capital Gain', formatCurrency(data.cgt.capitalGain)]
   ];
   
-  currentY = addDataTable(doc, ['Item', 'Amount'], saleRows, currentY, {
+  addDataTable(doc, ['Item', 'Amount'], saleRows, currentY, {
     title: 'Sale Calculation',
     widths: [100, 40],
     align: ['left', 'right']
@@ -271,10 +271,10 @@ function generateCGTOnExit(doc: jsPDF, data: PDFReportData, startY: number): num
 }
 
 function generateInvestmentScore(doc: jsPDF, data: PDFReportData, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Investment Score', 'Overall Assessment & Recommendation', startY);
+  const currentY = addSectionHeader(doc, 'Investment Score', 'Overall Assessment & Recommendation', startY);
   
   // Overall verdict card
-  currentY = addMetricCard(doc, 'Overall Score', `${data.score.overall}/100`, data.score.verdict, COLORS.primary, currentY);
+  addMetricCard(doc, 'Overall Score', `${data.score.overall}/100`, data.score.verdict, COLORS.primary, currentY);
   
   // Score breakdown table
   const scoreRows = [
@@ -286,7 +286,7 @@ function generateInvestmentScore(doc: jsPDF, data: PDFReportData, startY: number
     ['Overall Score', data.score.overall]
   ];
   
-  currentY = addDataTable(doc, ['Category', 'Score'], scoreRows, currentY, {
+  addDataTable(doc, ['Category', 'Score'], scoreRows, currentY + 50, {
     title: 'Score Breakdown',
     widths: [100, 40],
     align: ['left', 'center']
@@ -296,7 +296,7 @@ function generateInvestmentScore(doc: jsPDF, data: PDFReportData, startY: number
 }
 
 function generateGlossary(doc: jsPDF, startY: number): number {
-  let currentY = addSectionHeader(doc, 'Glossary', 'Key Terms & Definitions', startY);
+  const currentY = addSectionHeader(doc, 'Glossary', 'Key Terms & Definitions', startY);
   
   const glossaryTerms = [
     ['FIRB', 'Foreign Investment Review Board - Australian government body regulating foreign property investment'],

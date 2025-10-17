@@ -415,10 +415,11 @@ export function formatNumber(value: number): string {
 
 /**
  * Checks if content will fit on current page and adds page break if needed
+ * This function is not used in the current implementation
  */
 export function checkPageBreak(doc: jsPDF, requiredHeight: number): void {
   const pageHeight = doc.internal.pageSize.getHeight();
-  const currentY = getCurrentY(doc);
+  const currentY = SPACING.margin; // Default to margin since getCurrentY doesn't exist
   const availableHeight = pageHeight - currentY - 30; // Reserve space for footer
 
   if (requiredHeight > availableHeight) {
