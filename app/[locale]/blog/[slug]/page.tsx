@@ -810,8 +810,8 @@ Australia offers a secure and prosperous environment for property investment. Wi
   },
   'visa-types-firb-requirements': {
     slug: 'visa-types-firb-requirements',
-    title: 'Visa Types & FIRB Requirements: Complete Breakdown',
-    excerpt: 'Detailed breakdown of FIRB requirements by visa category, including temporary residents, students, and permanent residents.',
+    title: 'Complete Guide: Australian Visa Types and FIRB Property Requirements 2025',
+    excerpt: 'Your visa status determines FIRB requirements for Australian property purchase. This comprehensive guide covers all visa categories, the critical 2025 established dwelling ban, and step-by-step application process.',
     date: '2025-01-08',
     readTime: '10 min read',
     category: 'Visa & Residency',
