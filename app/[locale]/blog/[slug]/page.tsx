@@ -514,24 +514,64 @@ Buying property in Australia means facing one of the largest upfront costs you'l
 
 This comprehensive guide breaks down stamp duty rates across all Australian states and territories, explains foreign buyer surcharges, and helps you calculate your true property costs.
 
-## What is Stamp Duty?
+## What is Stamp Duty and Why Does It Matter?
 
-Stamp duty (also called transfer duty) is a state government tax levied on property transactions. It's calculated based on the property's purchase price and varies significantly between states.
+Stamp duty (officially called transfer duty in most states) is a state government tax you pay when you buy property. Think of it as the price of admission to property ownership—except this admission fee can easily run into tens of thousands of dollars.
+
+The amount you pay depends on three key factors:
+
+1. **Property value** – Higher-priced properties attract progressively higher rates
+2. **Location** – Each state sets its own rates and thresholds
+3. **Buyer status** – Foreign buyers pay significant additional surcharges in most states
+
+Unlike ongoing costs like council rates or land tax, stamp duty is a one-time payment due shortly after you sign the purchase contract (typically within 30–90 days depending on the state).
+
+## Understanding the Foreign Buyer Surcharge
+
+If you're not an Australian citizen or permanent resident, you'll face an additional stamp duty surcharge in most states. These surcharges were introduced from 2015 onwards to moderate foreign investment in residential property and ensure foreign buyers contribute to local infrastructure.
+
+**Who qualifies as a foreign buyer?**
+
+You're generally considered a foreign buyer if you're:
+- A foreign national (not an Australian citizen)
+- A temporary resident (including 457, 482, or student visa holders)
+- A foreign company or trust
+- A foreign government entity
+
+**Who's exempt?**
+
+You won't pay the foreign buyer surcharge if you're:
+- An Australian citizen (even if living overseas)
+- An Australian permanent resident
+- A New Zealand citizen holding a special category visa (subclass 444) who meets residency requirements
 
 ## Stamp Duty Rates by State (2025 Verified)
 
 **Source**: Official state revenue offices, last verified October 16, 2025
 
 ### New South Wales (NSW)
-**Base Stamp Duty Rates:**
-- $0 - $14,000: 1.25%
-- $14,001 - $32,000: $175 + 1.5% of excess over $14,000
-- $32,001 - $85,000: $445 + 1.75% of excess over $32,000
-- $85,001 - $319,000: $1,372.50 + 3.5% of excess over $85,000
-- $319,001 - $1,064,000: $9,562.50 + 4.5% of excess over $319,000
-- Over $1,064,000: $43,087.50 + 5.5% of excess over $1,064,000
 
-**Foreign Buyer Surcharge:** 8% ✅ (verified)
+NSW has some of the highest property prices and stamp duty costs in Australia.
+
+**Base Stamp Duty Rates:**
+
+| Property Value | Calculation |
+|----------------|-------------|
+| $0 - $14,000 | 1.25% |
+| $14,001 - $32,000 | $175 + 1.5% of excess over $14,000 |
+| $32,001 - $85,000 | $445 + 1.75% of excess over $32,000 |
+| $85,001 - $319,000 | $1,372.50 + 3.5% of excess over $85,000 |
+| $319,001 - $1,064,000 | $9,562.50 + 4.5% of excess over $319,000 |
+| Over $1,064,000 | $43,087.50 + 5.5% of excess over $1,064,000 |
+
+**Premium Property Duty:** Properties over $3,721,000 (as of July 2025) attract a premium rate of 7% on the amount exceeding this threshold.
+
+**Foreign Buyer Surcharge: 9%** (increased from 8% on January 1, 2025)
+
+**Example:** For an $800,000 property:
+- Standard stamp duty: ~$31,090
+- Foreign buyer surcharge: $72,000 (9% of $800,000)
+- **Total for foreign buyer: $103,090**
 
 ### Victoria (VIC)
 **Base Stamp Duty Rates:**
