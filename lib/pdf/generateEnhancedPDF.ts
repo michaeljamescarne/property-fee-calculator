@@ -136,22 +136,66 @@ function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: numbe
 }
 
 function generateTableOfContents(doc: jsPDF): number {
+  const currentY = addSectionHeader(doc, 'Table of Contents', 'Report Sections & Page Numbers', SPACING.margin);
+  
   const sections = [
     { title: 'Executive Summary', page: 2 },
-    { title: 'FIRB Eligibility', page: 4 },
-    { title: 'Investment Costs', page: 5 },
+    { title: 'FIRB Eligibility Assessment', page: 4 },
+    { title: 'Investment Cost Breakdown', page: 5 },
     { title: 'Performance Metrics', page: 6 },
     { title: 'Cash Flow Analysis', page: 7 },
     { title: 'Tax Analysis', page: 8 },
     { title: '10-Year Projection', page: 9 },
     { title: 'Sensitivity Analysis', page: 10 },
-    { title: 'CGT on Exit', page: 11 },
-    { title: 'Investment Score', page: 12 },
-    { title: 'Glossary', page: 13 },
-    { title: 'Disclaimer', page: 15 }
+    { title: 'Capital Gains Tax (CGT) on Exit', page: 11 },
+    { title: 'Investment Score Breakdown', page: 12 },
+    { title: 'Glossary of Terms', page: 13 },
+    { title: 'Disclaimer & Important Information', page: 15 }
   ];
   
-  return addTableOfContents(doc, sections);
+  let yPosition = currentY + 20;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const textMargin = SPACING.margin;
+  const pageNumberWidth = 15;
+  const leaderLineEnd = pageWidth - SPACING.margin - pageNumberWidth;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(FONTS.body);
+  doc.setTextColor(COLORS.gray[800]);
+
+  sections.forEach((section, index) => {
+    if (yPosition > doc.internal.pageSize.getHeight() - SPACING.margin - 30) {
+      doc.addPage();
+      addFooter(doc);
+      yPosition = SPACING.margin + 20;
+    }
+
+    const entryText = `${index + 1}. ${section.title}`;
+    const pageNumText = `${section.page}`;
+
+    // Calculate text width to determine leader line start
+    const textWidth = doc.getTextWidth(entryText);
+    const leaderLineStart = textMargin + textWidth + 2; // 2mm space after text
+
+    // Draw the entry text
+    doc.text(entryText, textMargin, yPosition);
+    
+    // Draw the page number (right-aligned)
+    doc.text(pageNumText, pageWidth - SPACING.margin, yPosition, { align: 'right' });
+
+    // Draw dotted leader line using small circles
+    doc.setDrawColor(COLORS.gray[400]);
+    doc.setLineWidth(0.5);
+    
+    // Draw dots along the line
+    for (let x = leaderLineStart; x < leaderLineEnd; x += 2) {
+      doc.circle(x, yPosition - 0.5, 0.3, 'F');
+    }
+
+    yPosition += 12; // Space for next entry
+  });
+
+  return addPageBreak(doc);
 }
 
 function generateFIRBEligibility(doc: jsPDF, data: PDFReportData, startY: number): number {
