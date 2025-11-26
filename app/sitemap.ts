@@ -1,100 +1,119 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
+import { getAllBlogPosts } from "@/lib/blog/posts";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://propertycosts.com.au'; // Update with actual domain
-  const lastModified = new Date();
-  
-  return [
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://yourdomain.com";
+  const posts = await getAllBlogPosts();
+
+  // Static pages
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified,
-      changeFrequency: 'weekly',
+      lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${baseUrl}/en`,
-      lastModified,
-      changeFrequency: 'weekly',
+      lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${baseUrl}/zh`,
-      lastModified,
-      changeFrequency: 'weekly',
+      lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${baseUrl}/en/firb-calculator`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.9,
+      url: `${baseUrl}/en/blog`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
     },
     {
-      url: `${baseUrl}/zh/firb-calculator`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/en/dashboard`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/zh/dashboard`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
+      url: `${baseUrl}/zh/blog`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/en/faq`,
-      lastModified,
-      changeFrequency: 'monthly',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/zh/faq`,
-      lastModified,
-      changeFrequency: 'monthly',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/en/firb-calculator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/zh/firb-calculator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/en/privacy`,
-      lastModified,
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/zh/privacy`,
-      lastModified,
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/en/terms`,
-      lastModified,
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/zh/terms`,
-      lastModified,
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/en/disclaimer`,
-      lastModified,
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/zh/disclaimer`,
-      lastModified,
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
   ];
-}
 
+  // Blog posts
+  const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/en/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  // Chinese blog posts (if translated)
+  const blogPagesZh: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/zh/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...blogPages, ...blogPagesZh];
+}

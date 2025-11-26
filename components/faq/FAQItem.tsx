@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ChevronDown, ExternalLink, Calculator } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import type { FAQQuestion } from '@/types/faq';
-import { useLocale } from 'next-intl';
+import { useState } from "react";
+import { ChevronDown, ExternalLink, Calculator, ThumbsUp, ThumbsDown } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import type { FAQQuestion } from "@/types/faq";
+import { useLocale } from "next-intl";
 
 interface FAQItemProps {
   question: FAQQuestion;
@@ -15,8 +15,9 @@ interface FAQItemProps {
 
 export default function FAQItem({ question, isOpen: controlledIsOpen, onToggle }: FAQItemProps) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const [feedback, setFeedback] = useState<"helpful" | "not-helpful" | null>(null);
   const locale = useLocale();
-  
+
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
 
   const handleToggle = () => {
@@ -28,10 +29,7 @@ export default function FAQItem({ question, isOpen: controlledIsOpen, onToggle }
   };
 
   return (
-    <div
-      id={question.id}
-      className="border-b border-border/40 last:border-b-0 scroll-mt-24"
-    >
+    <div id={question.id} className="border-b border-border/40 last:border-b-0 scroll-mt-24">
       <button
         onClick={handleToggle}
         className="w-full text-left px-6 py-5 hover:bg-muted/30 transition-colors flex items-start justify-between gap-4 group"
@@ -50,7 +48,7 @@ export default function FAQItem({ question, isOpen: controlledIsOpen, onToggle }
         </div>
         <ChevronDown
           className={`h-5 w-5 text-muted-foreground transition-transform flex-shrink-0 mt-1 ${
-            isOpen ? 'transform rotate-180' : ''
+            isOpen ? "transform rotate-180" : ""
           }`}
         />
       </button>
@@ -81,9 +79,7 @@ export default function FAQItem({ question, isOpen: controlledIsOpen, onToggle }
           {/* Official Sources */}
           {question.officialSources && question.officialSources.length > 0 && (
             <div className="mt-6 pt-4 border-t border-border/40">
-              <h4 className="text-sm font-semibold text-foreground/70 mb-3">
-                Official Sources:
-              </h4>
+              <h4 className="text-sm font-semibold text-foreground/70 mb-3">Official Sources:</h4>
               <div className="space-y-2">
                 {question.officialSources.map((source, index) => (
                   <a
@@ -108,9 +104,62 @@ export default function FAQItem({ question, isOpen: controlledIsOpen, onToggle }
               <span className="text-primary">{question.relatedQuestions.length} more</span>
             </div>
           )}
+
+          {/* Feedback Section */}
+          <div className="mt-6 pt-4 border-t border-border/40">
+            <p className="text-sm font-medium text-foreground/70 mb-3">Was this helpful?</p>
+            <div className="flex items-center gap-3">
+              <Button
+                variant={feedback === "helpful" ? "default" : "outline"}
+                size="sm"
+                onClick={() => {
+                  setFeedback("helpful");
+                  // Track feedback (can be sent to analytics or API)
+                  if (typeof window !== "undefined" && "gtag" in window) {
+                    const gtag = (window as { gtag?: (...args: unknown[]) => void }).gtag;
+                    if (gtag) {
+                      gtag("event", "faq_feedback", {
+                        question_id: question.id,
+                        helpful: true,
+                      });
+                    }
+                  }
+                }}
+                className="rounded"
+                disabled={feedback !== null}
+              >
+                <ThumbsUp className="h-4 w-4 mr-2" />
+                Yes
+              </Button>
+              <Button
+                variant={feedback === "not-helpful" ? "default" : "outline"}
+                size="sm"
+                onClick={() => {
+                  setFeedback("not-helpful");
+                  // Track feedback
+                  if (typeof window !== "undefined" && "gtag" in window) {
+                    const gtag = (window as { gtag?: (...args: unknown[]) => void }).gtag;
+                    if (gtag) {
+                      gtag("event", "faq_feedback", {
+                        question_id: question.id,
+                        helpful: false,
+                      });
+                    }
+                  }
+                }}
+                className="rounded"
+                disabled={feedback !== null}
+              >
+                <ThumbsDown className="h-4 w-4 mr-2" />
+                No
+              </Button>
+              {feedback && (
+                <span className="text-sm text-muted-foreground">Thank you for your feedback!</span>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 }
-
