@@ -37,14 +37,15 @@ export async function isAdmin(): Promise<AdminUser | null> {
     return null;
   }
 
-  if (profile.role !== "admin") {
+  const profileData = profile as { id: string; email: string; role: string } | null;
+  if (!profileData || profileData.role !== "admin") {
     return null;
   }
 
   return {
-    id: profile.id,
-    email: profile.email,
-    role: profile.role as "admin" | "user",
+    id: profileData.id,
+    email: profileData.email,
+    role: profileData.role as "admin" | "user",
   };
 }
 
@@ -75,15 +76,17 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
     redirect(`/${locale}/dashboard`);
   }
 
+  const profileData = profile as { id: string; email: string; role: string };
+
   // Check if admin
-  if (profile.role !== "admin") {
-    console.log("Admin check failed - user is not admin. Role:", profile.role);
+  if (profileData.role !== "admin") {
+    console.log("Admin check failed - user is not admin. Role:", profileData.role);
     redirect(`/${locale}/dashboard`);
   }
 
   return {
-    id: profile.id,
-    email: profile.email,
-    role: profile.role as "admin" | "user",
+    id: profileData.id,
+    email: profileData.email,
+    role: profileData.role as "admin" | "user",
   };
 }
