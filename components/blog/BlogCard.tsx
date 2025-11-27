@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Calendar, Clock, Star } from "lucide-react";
 import type { BlogPost } from "@/lib/blogContentProcessor";
-import { formatBlogDate, getCategoryColor, generateBlogUrl } from "@/lib/blog/blog-utils";
+import { formatBlogDate, getCategoryColor, generateBlogUrl } from "@/lib/blog/blog-utils-client";
 
 interface BlogCardProps {
   post: BlogPost;
