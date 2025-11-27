@@ -59,6 +59,18 @@ function ScoreGauge({ score, label }: { score: number; label: string }) {
 export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
   const { t, verdict: getTranslatedVerdict } = useInvestmentTranslations();
   
+  // Safety checks for missing analytics data
+  if (!analytics || !analytics.score || !analytics.recommendation) {
+    return (
+      <div className="p-8 border rounded-lg bg-muted/30">
+        <h3 className="text-lg font-semibold mb-4">Investment Score & Recommendation</h3>
+        <p className="text-muted-foreground">
+          Investment scoring data is not available. This section requires investment analytics to be enabled.
+        </p>
+      </div>
+    );
+  }
+  
   const getVerdictColor = () => {
     switch (analytics.recommendation.verdict) {
       case 'Excellent':

@@ -157,10 +157,10 @@ export default function CitizenshipStep({
               />
               <div className="flex-1">
                 <Label htmlFor="ordinarily-resident" className="font-medium cursor-pointer">
-                  {t('ordinaril yResident.label')}
+                  {t('ordinarilyResident.label')}
                 </Label>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {t('ordinaril yResident.description')}
+                  {t('ordinarilyResident.description')}
                 </p>
               </div>
             </div>

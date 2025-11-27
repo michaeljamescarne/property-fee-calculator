@@ -50,3 +50,12 @@ echo "- Accessibility: 95+"
 echo "- Best Practices: 95+"
 echo "- SEO: 95+"
 
+
+
+
+
+
+
+
+
+

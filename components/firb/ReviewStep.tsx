@@ -9,20 +9,23 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Edit, User, Home, MapPin, Building, DollarSign, Percent } from 'lucide-react';
+import { Edit, User, Home, MapPin, Building, DollarSign, Percent, Calculator, TrendingUp } from 'lucide-react';
 import { FIRBCalculatorFormData } from '@/lib/validations/firb';
+import type { InvestmentInputs } from '@/types/investment';
 
 interface ReviewStepProps {
   formData: Partial<FIRBCalculatorFormData>;
-  onEdit: (step: 'citizenship' | 'property') => void;
+  investmentInputs?: Partial<InvestmentInputs>;
+  onEdit: (step: 'citizenship' | 'property' | 'financial') => void;
   onCalculate: () => void;
   isCalculating?: boolean;
 }
 
-export default function ReviewStep({ formData, onEdit, onCalculate, isCalculating }: ReviewStepProps) {
+export default function ReviewStep({ formData, investmentInputs, onEdit, onCalculate, isCalculating }: ReviewStepProps) {
   const t = useTranslations('FIRBCalculator.review');
   const tCitizenship = useTranslations('FIRBCalculator.citizenship');
   const tProperty = useTranslations('FIRBCalculator.property');
+  const tFinancial = useTranslations('FIRBCalculator.financialDetails');
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-AU', {
@@ -95,7 +98,7 @@ export default function ReviewStep({ formData, onEdit, onCalculate, isCalculatin
 
             {formData.citizenshipStatus === 'australian' && (
               <div>
-                <p className="text-sm text-muted-foreground">{tCitizenship('ordinaril yResident.label')}</p>
+                <p className="text-sm text-muted-foreground">{tCitizenship('ordinarilyResident.label')}</p>
                 <Badge variant={formData.isOrdinarilyResident !== false ? 'default' : 'secondary'}>
                   {formData.isOrdinarilyResident !== false ? t('yes') : t('no')}
                 </Badge>
@@ -185,6 +188,83 @@ export default function ReviewStep({ formData, onEdit, onCalculate, isCalculatin
         </CardContent>
       </Card>
 
+      {/* Financial Details Information */}
+      {investmentInputs && investmentInputs.estimatedWeeklyRent && (
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+            <div className="flex items-center gap-2">
+              <Calculator className="h-5 w-5 text-muted-foreground" />
+              <CardTitle className="text-lg">{t('financialTitle') || 'Financial Details'}</CardTitle>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onEdit('financial')}
+              className="gap-2"
+            >
+              <Edit className="h-4 w-4" />
+              {t('edit')}
+            </Button>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-muted-foreground">{tFinancial('rental.weeklyRent') || 'Weekly Rent'}</p>
+                <p className="font-medium mt-1 flex items-center gap-1">
+                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+                  ${investmentInputs.estimatedWeeklyRent?.toLocaleString('en-AU')}/week
+                  <span className="text-sm text-muted-foreground ml-2">
+                    (${((investmentInputs.estimatedWeeklyRent || 0) * 52).toLocaleString('en-AU')}/year)
+                  </span>
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm text-muted-foreground">{tFinancial('growth.rate') || 'Capital Growth Rate'}</p>
+                <p className="font-medium mt-1 flex items-center gap-1">
+                  <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                  {investmentInputs.capitalGrowthRate || 6}%
+                </p>
+              </div>
+
+              {investmentInputs.loanAmount && investmentInputs.loanAmount > 0 && (
+                <>
+                  <div>
+                    <p className="text-sm text-muted-foreground">{tFinancial('loan.interestRate') || 'Interest Rate'}</p>
+                    <p className="font-medium mt-1">
+                      {investmentInputs.interestRate || 6.5}%
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-sm text-muted-foreground">{tFinancial('loan.term') || 'Loan Term'}</p>
+                    <p className="font-medium mt-1">
+                      {investmentInputs.loanTerm || 30} years
+                    </p>
+                  </div>
+                </>
+              )}
+
+              <div>
+                <p className="text-sm text-muted-foreground">{tFinancial('rental.vacancyRate') || 'Vacancy Rate'}</p>
+                <p className="font-medium mt-1">
+                  {investmentInputs.vacancyRate || 5}%
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm text-muted-foreground">{tFinancial('managementFee') || 'Property Management'}</p>
+                <p className="font-medium mt-1">
+                  {investmentInputs.selfManaged 
+                    ? tFinancial('selfManaged') || 'Self-Managed'
+                    : `${investmentInputs.propertyManagementFee || 8}%`}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Calculate Button */}
       <div className="flex justify-center pt-4">
         <Button
@@ -199,6 +279,15 @@ export default function ReviewStep({ formData, onEdit, onCalculate, isCalculatin
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -33,16 +33,16 @@ import { useTranslations } from 'next-intl';
 
 interface EligibilityResultCardProps {
   eligibility: EligibilityResult;
-  formData: {
-    citizenshipStatus: CitizenshipStatus;
+  formData?: {
+    citizenshipStatus?: CitizenshipStatus;
     visaType?: string;
     isOrdinarilyResident?: boolean;
-    propertyType: PropertyType;
-    propertyValue: number;
-    state: AustralianState;
+    propertyType?: PropertyType;
+    propertyValue?: number;
+    state?: AustralianState;
     propertyAddress?: string;
-    isFirstHome: boolean;
-    entityType: EntityType;
+    isFirstHome?: boolean;
+    entityType?: EntityType;
     depositPercent?: number;
   };
 }
@@ -129,8 +129,8 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
               <Globe className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm text-blue-600 font-medium">{t('summary.citizenshipStatus')}</p>
-                <p className="font-semibold">{formatCitizenshipStatus(formData.citizenshipStatus)}</p>
-                {formData.visaType && (
+                <p className="font-semibold">{formData?.citizenshipStatus ? formatCitizenshipStatus(formData.citizenshipStatus) : 'Not specified'}</p>
+                {formData?.visaType && (
                   <p className="text-xs text-muted-foreground">Visa: {formData.visaType}</p>
                 )}
               </div>
@@ -141,7 +141,7 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
               <Home className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm text-blue-600 font-medium">{t('summary.propertyType')}</p>
-                <p className="font-semibold">{formatPropertyType(formData.propertyType)}</p>
+                <p className="font-semibold">{formData?.propertyType ? formatPropertyType(formData.propertyType) : 'Not specified'}</p>
               </div>
             </div>
 
@@ -150,7 +150,7 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
               <Building className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm text-blue-600 font-medium">{t('summary.investmentProperty')}</p>
-                <p className="font-semibold">{getInvestmentPropertyLabel(formData.isFirstHome)}</p>
+                <p className="font-semibold">{formData?.isFirstHome !== undefined ? getInvestmentPropertyLabel(formData.isFirstHome) : 'Not specified'}</p>
               </div>
             </div>
 
@@ -159,7 +159,7 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
               <Building className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm text-blue-600 font-medium">{t('summary.entityType')}</p>
-                <p className="font-semibold">{formatEntityType(formData.entityType)}</p>
+                <p className="font-semibold">{formData?.entityType ? formatEntityType(formData.entityType) : 'Not specified'}</p>
               </div>
             </div>
 
@@ -168,7 +168,7 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
               <DollarSign className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm text-blue-600 font-medium">{t('summary.propertyValue')}</p>
-                <p className="font-semibold">{formatCurrency(formData.propertyValue)}</p>
+                <p className="font-semibold">{formData?.propertyValue ? formatCurrency(formData.propertyValue) : 'Not specified'}</p>
               </div>
             </div>
 
@@ -177,7 +177,7 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
               <MapPin className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm text-blue-600 font-medium">{t('summary.state')}</p>
-                <p className="font-semibold">{formatState(formData.state)}</p>
+                <p className="font-semibold">{formData?.state ? formatState(formData.state) : 'Not specified'}</p>
               </div>
             </div>
           </div>
@@ -254,30 +254,6 @@ export default function EligibilityResultCard({ eligibility, formData }: Eligibi
           </div>
         )}
 
-        {/* What's Next Section */}
-        {eligibility.canPurchase && (
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-lg text-white">
-            <h3 className="text-lg font-semibold mb-4">{t('whatNext.title')}</h3>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button 
-                variant="secondary" 
-                className="flex-1 bg-white text-blue-600 hover:bg-blue-50"
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                {t('whatNext.viewCostBreakdown')}
-              </Button>
-              {eligibility.requiresFIRB && (
-                <Button 
-                  variant="outline" 
-                  className="flex-1 border-white/30 bg-white/10 text-white hover:bg-white/20 hover:text-white"
-                >
-                  <FileText className="w-4 h-4 mr-2" />
-                  {t('whatNext.downloadGuide')}
-                </Button>
-              )}
-            </div>
-          </div>
-        )}
       </CardContent>
     </Card>
   );

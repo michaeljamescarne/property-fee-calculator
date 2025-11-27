@@ -2,22 +2,23 @@
 
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Globe, User, LayoutDashboard, LogOut, LogIn } from 'lucide-react';
+import { Globe, LogIn, LogOut, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '@/components/auth/AuthProvider';
 import LoginModal from '@/components/auth/LoginModal';
 
 export default function Navigation() {
   const t = useTranslations('Nav');
   const locale = useLocale();
+  const pathname = usePathname();
   const { isAuthenticated, user, logout } = useAuth();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -31,94 +32,101 @@ export default function Navigation() {
     window.location.href = `/${locale}`;
   };
 
+  const isActive = (path: string) => {
+    return pathname === `/${locale}${path}` || pathname === path;
+  };
+
+  const navLinks = [
+    { href: '', label: t('home') },
+    { href: '/firb-calculator', label: t('calculator') },
+    { href: '/blog', label: t('blog') },
+    { href: '/faq', label: t('faq') },
+  ];
+
   return (
-    <nav className="border-b border-blue-100/50 backdrop-blur-sm bg-white/95 sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-4 py-5 flex justify-between items-center">
-        <Link href={`/${locale}`} className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity">
-          Property Fee Calculator
-        </Link>
-        
-        <div className="flex gap-8 items-center">
-          <Link href={`/${locale}`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
-            {t('home')}
-          </Link>
-          <Link href={`/${locale}/firb-calculator`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
-            {t('calculator')}
-          </Link>
-          <Link href={`/${locale}/blog`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
-            {t('blog')}
-          </Link>
-          <Link href={`/${locale}/faq`} className="text-foreground/70 hover:text-primary transition-colors font-medium">
-            {t('faq')}
+    <>
+      <nav className="border-b border-blue-100/50 backdrop-blur-sm bg-white/95 sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-5 flex justify-between items-center">
+          <Link href={`/${locale}`} className="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors">
+            Property Costs
           </Link>
           
-          {/* Language Selector */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="rounded-lg font-medium">
-                <Globe className="h-4 w-4 mr-2" />
-                {locale === 'en' ? 'English' : '中文'}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => switchLocale('en')}>
-                English
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => switchLocale('zh')}>
-                中文
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Auth Section */}
-          {isAuthenticated && user ? (
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex gap-8 items-center">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={`/${locale}${link.href}`}
+                className={`transition-colors font-medium ${
+                  isActive(link.href)
+                    ? 'text-primary font-semibold'
+                    : 'text-foreground/70 hover:text-primary'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            
+            {/* Language Selector */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="rounded-lg font-medium">
-                  <User className="h-4 w-4 mr-2" />
-                  Account
+                <Button variant="outline" size="sm" className="rounded font-medium">
+                  <Globe className="h-4 w-4 mr-2" />
+                  {locale === 'en' ? 'English' : '中文'}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <div className="px-2 py-1.5">
-                  <p className="text-sm font-medium">{user.email}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {user.calculations_count} calculation{user.calculations_count !== 1 ? 's' : ''}
-                  </p>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href={`/${locale}/dashboard`}>
-                    <LayoutDashboard className="h-4 w-4 mr-2" />
-                    Dashboard
-                  </Link>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => switchLocale('en')}>
+                  English
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout
+                <DropdownMenuItem onClick={() => switchLocale('zh')}>
+                  中文
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
-            <Button
-              variant="default"
-              size="sm"
-              className="rounded-lg font-medium"
-              onClick={() => setShowLoginModal(true)}
-            >
-              <LogIn className="h-4 w-4 mr-2" />
-              Login
-            </Button>
-          )}
+
+            {/* Auth Section */}
+            {isAuthenticated && user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="rounded font-medium">
+                    <LayoutDashboard className="h-4 w-4 mr-2" />
+                    {user.email}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link href={`/${locale}/dashboard`}>
+                      <LayoutDashboard className="h-4 w-4 mr-2" />
+                      {t('dashboard')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    {t('logout')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                variant="default"
+                size="sm"
+                className="rounded font-medium"
+                onClick={() => setShowLoginModal(true)}
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                {t('login')}
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
+      </nav>
 
       {/* Login Modal */}
       <LoginModal
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
       />
-    </nav>
+    </>
   );
 }

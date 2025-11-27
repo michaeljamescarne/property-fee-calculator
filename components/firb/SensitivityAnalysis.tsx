@@ -17,6 +17,20 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
     return `${sign}${currency(value)}`;
   };
 
+  // Safety checks for missing analytics data
+  if (!analytics || !analytics.sensitivity) {
+    return (
+      <div className="p-8 border rounded-lg bg-muted/30">
+        <h3 className="text-lg font-semibold mb-4">Sensitivity Analysis</h3>
+        <p className="text-muted-foreground">
+          Sensitivity analysis data is not available. This section requires investment analytics to be enabled.
+        </p>
+      </div>
+    );
+  }
+
+  const { sensitivity } = analytics;
+
   return (
     <Card className="border-none shadow-md rounded-2xl bg-white">
       <CardHeader>
@@ -90,7 +104,7 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
-                {analytics.sensitivity.vacancyImpact.map((scenario, index) => (
+                {sensitivity.vacancyImpact?.map((scenario, index) => (
                   <tr 
                     key={index}
                     className={`hover:bg-muted/30 transition-colors ${
@@ -124,7 +138,10 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
             </table>
           </div>
           <p className="text-xs text-muted-foreground mt-3 italic">
-            {t('sensitivity.vacancyNote', { amount: Math.abs(analytics.sensitivity.vacancyImpact[2].impact - analytics.sensitivity.vacancyImpact[1].impact).toFixed(0) })}
+            {sensitivity.vacancyImpact && sensitivity.vacancyImpact.length >= 3 
+              ? t('sensitivity.vacancyNote', { amount: Math.abs(sensitivity.vacancyImpact[2].impact - sensitivity.vacancyImpact[1].impact).toFixed(0) })
+              : 'Note: Vacancy rates significantly impact rental income and cash flow.'
+            }
           </p>
         </div>
 
@@ -167,7 +184,7 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
-                {analytics.sensitivity.interestRateImpact.map((scenario, index) => (
+                {sensitivity.interestRateImpact?.map((scenario, index) => (
                   <tr 
                     key={index}
                     className={`hover:bg-muted/30 transition-colors ${
@@ -197,9 +214,10 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
             </table>
           </div>
           <p className="text-xs text-muted-foreground mt-3 italic">
-            {t('sensitivity.interestNote', { amount: Math.abs((analytics.sensitivity.interestRateImpact[2].impact - analytics.sensitivity.interestRateImpact[1].impact) / 12).toFixed(0) }) === 'FIRBCalculator.investmentAnalytics.sensitivity.interestNote' 
-              ? `Note: A 1% interest rate increase reduces monthly cash flow by approximately $${Math.abs((analytics.sensitivity.interestRateImpact[2].impact - analytics.sensitivity.interestRateImpact[1].impact) / 12).toFixed(0)}`
-              : t('sensitivity.interestNote', { amount: Math.abs((analytics.sensitivity.interestRateImpact[2].impact - analytics.sensitivity.interestRateImpact[1].impact) / 12).toFixed(0) })}
+            {sensitivity.interestRateImpact && sensitivity.interestRateImpact.length >= 3 
+              ? `Note: A 1% interest rate increase reduces monthly cash flow by approximately $${Math.abs((sensitivity.interestRateImpact[2].impact - sensitivity.interestRateImpact[1].impact) / 12).toFixed(0)}`
+              : 'Note: Interest rate changes significantly impact loan repayments and cash flow.'
+            }
           </p>
         </div>
 
@@ -216,7 +234,7 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
             </span>
           </h4>
           <div className="grid md:grid-cols-3 gap-4">
-            {analytics.sensitivity.growthScenarios.map((scenario, index) => (
+            {sensitivity.growthScenarios?.map((scenario, index) => (
               <div 
                 key={index}
                 className={`p-5 rounded-xl border ${

@@ -5,8 +5,9 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { useReactToPrint } from 'react-to-print';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -32,9 +33,13 @@ import InvestmentComparison from './InvestmentComparison';
 import SensitivityAnalysis from './SensitivityAnalysis';
 import TaxAnalysis from './TaxAnalysis';
 import InvestmentScore from './InvestmentScore';
+import OptimalUseCaseSection from './OptimalUseCaseSection';
 import SaveCalculationButton from './SaveCalculationButton';
 import LoginModal from '@/components/auth/LoginModal';
 import EligibilityResultCard from './EligibilityResultCard';
+import PrintableReport from './PrintableReport';
+import { calculateOptimalUseCase, getDefaultOccupancyRate } from '@/lib/firb/optimal-use-case';
+import type { ShortStayRegulation } from '@/lib/firb/optimal-use-case';
 
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
@@ -69,17 +74,78 @@ export default function ResultsPanel({
   // Auth state
   const [showLoginModal, setShowLoginModal] = useState(false);
   
+  // Print ref for browser-based PDF generation
+  const printRef = useRef<HTMLDivElement>(null);
+  
+  // Setup print handler
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: `FIRB-Investment-Analysis-${new Date().toISOString().split('T')[0]}`,
+  });
+  
   // Investment Analytics State
   const [showInvestmentAnalysis, setShowInvestmentAnalysis] = useState(false);
   const [investmentInputs, setInvestmentInputs] = useState<InvestmentInputs>(() =>
     generateDefaultInputs(propertyValue, state, propertyType, depositPercent, costs)
   );
   
+  // Short-stay regulations state
+  const [shortStayRegulations, setShortStayRegulations] = useState<ShortStayRegulation | null>(null);
+  const [isLoadingRegulations, setIsLoadingRegulations] = useState(false);
+  
   // Calculate investment analytics
   const investmentAnalytics = useMemo(() => 
     calculateInvestmentAnalytics(investmentInputs, propertyValue, state, propertyType, costs),
     [investmentInputs, propertyValue, state, propertyType, costs]
   );
+  
+  // Calculate optimal use case
+  const optimalUseCase = useMemo(() => {
+    if (!investmentInputs.estimatedWeeklyRent) return null;
+    return calculateOptimalUseCase(
+      investmentInputs,
+      propertyValue,
+      state,
+      propertyType,
+      costs,
+      shortStayRegulations
+    );
+  }, [investmentInputs, propertyValue, state, propertyType, costs, shortStayRegulations]);
+  
+  // Fetch short-stay regulations on mount
+  useEffect(() => {
+    const fetchRegulations = async () => {
+      setIsLoadingRegulations(true);
+      try {
+        const params = new URLSearchParams({
+          state: state,
+        });
+        
+        // Add address details if available
+        if (formData.propertyAddress) {
+          // Try to extract postcode from address
+          const postcodeMatch = formData.propertyAddress.match(/\b\d{4}\b/);
+          if (postcodeMatch) {
+            params.append('postcode', postcodeMatch[0]);
+          }
+        }
+        
+        const response = await fetch(`/api/short-stay-regulations?${params.toString()}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.regulation) {
+            setShortStayRegulations(data.regulation);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch short-stay regulations:', error);
+      } finally {
+        setIsLoadingRegulations(false);
+      }
+    };
+    
+    fetchRegulations();
+  }, [state, formData.propertyAddress]);
   
   // Handle investment input changes
   const handleInvestmentInputChange = (updates: Partial<InvestmentInputs>) => {
@@ -266,13 +332,21 @@ export default function ResultsPanel({
 
           {/* Investment Score & Recommendation */}
           <InvestmentScore analytics={investmentAnalytics} />
+
+          {/* Optimal Use Case Analysis */}
+          {optimalUseCase && (
+            <OptimalUseCaseSection 
+              comparison={optimalUseCase}
+              propertyValue={propertyValue}
+            />
+          )}
         </div>
       )}
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
         <Button
-          onClick={() => onDownloadPDF(showInvestmentAnalysis ? investmentAnalytics : undefined)}
+          onClick={handlePrint}
           variant="default"
           size="lg"
           className="gap-2"
@@ -334,6 +408,16 @@ export default function ResultsPanel({
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
       />
+
+      {/* Hidden Printable Report for Browser-Based PDF Generation */}
+      <div ref={printRef}>
+        <PrintableReport
+          eligibility={eligibility}
+          costs={costs}
+          formData={formData}
+          analytics={showInvestmentAnalysis ? investmentAnalytics : undefined}
+        />
+      </div>
     </div>
   );
 }

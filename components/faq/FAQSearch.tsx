@@ -62,3 +62,12 @@ export default function FAQSearch({ onSearch, placeholder = 'Search FAQs...' }: 
 
 
 
+
+
+
+
+
+
+
+
+

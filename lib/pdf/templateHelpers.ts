@@ -257,34 +257,55 @@ export function addMetricCard(
   subtext?: string,
   color: string = COLORS.gray[800],
   startY: number = SPACING.margin,
-  startX: number = SPACING.margin
+  startX: number = SPACING.margin,
+  backgroundColor?: string
 ): number {
   const cardWidth = 80;
   const cardHeight = 40;
+  const cornerRadius = 2;
 
-  // Card border
-  doc.setDrawColor(COLORS.gray[300]);
+  // Subtle shadow effect (gray rectangle offset)
+  doc.setFillColor(220, 220, 220);
+  doc.roundedRect(startX + 1, startY + 1, cardWidth, cardHeight, cornerRadius, cornerRadius, 'F');
+
+  // Card background (white or custom color)
+  if (backgroundColor) {
+    doc.setFillColor(backgroundColor);
+    doc.roundedRect(startX, startY, cardWidth, cardHeight, cornerRadius, cornerRadius, 'F');
+  }
+
+  // Card border with lighter gray
+  doc.setDrawColor(229, 231, 235); // #E5E7EB
   doc.setLineWidth(0.5);
-  doc.rect(startX, startY, cardWidth, cardHeight);
+  doc.roundedRect(startX, startY, cardWidth, cardHeight, cornerRadius, cornerRadius, 'S');
+
+  // Colored left accent border (3px width)
+  doc.setFillColor(color);
+  doc.roundedRect(startX, startY, 3, cardHeight, cornerRadius, cornerRadius, 'F');
+
+  // Info icon in top-right corner
+  doc.setTextColor(COLORS.gray[400]);
+  doc.setFontSize(8);
+  doc.text('ⓘ', startX + cardWidth - 8, startY + 8);
 
   // Label
   doc.setTextColor(COLORS.gray[600]);
   doc.setFontSize(FONTS.small);
   doc.setFont('helvetica', 'normal');
-  doc.text(label, startX + 5, startY + 8);
+  doc.text(label, startX + 8, startY + 8);
 
   // Value
   doc.setTextColor(color);
   doc.setFontSize(FONTS.body);
   doc.setFont('helvetica', 'bold');
-  doc.text(value.toString(), startX + 5, startY + 20);
+  doc.text(value.toString(), startX + 8, startY + 20);
 
   // Subtext (if provided)
   if (subtext) {
     doc.setTextColor(COLORS.gray[500]);
     doc.setFontSize(FONTS.small);
     doc.setFont('helvetica', 'normal');
-    doc.text(subtext, startX + 5, startY + 32);
+    doc.text(subtext, startX + 8, startY + 32);
   }
 
   // Return the Y position below the card

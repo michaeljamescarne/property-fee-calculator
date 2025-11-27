@@ -1,204 +1,53 @@
 {
-  "HomePage": {
-    "title": "海外投资房产费用计算器",
-    "subtitle": "自信地计算您的房产投资成本",
-    "description": "我们的高级计算器帮助国际投资者了解在海外购买房产时的所有相关费用和成本。",
-    "cta": "立即计算费用",
-    "learnMore": "了解更多",
-    "hero": {
-      "trustedBy": "受到10,000+海外投资者的信赖",
-      "title": "计算您的澳大利亚房产投资成本",
-      "description": "获得即时FIRB资格检查、全面的成本明细和详细的投资分析，包括投资回报率预测和现金流分析。",
-      "startCalculation": "开始免费计算",
-      "viewSampleReport": "查看示例报告",
-      "freeToUse": "免费使用",
-      "resultsIn30Seconds": "30秒内获得结果",
-      "noSignupRequired": "无需注册"
-    },
-    "featuresIntro": {
-      "title": "投资所需的一切，让您充满信心",
-      "description": "为海外房产投资者提供的全面工具和洞察"
-    },
-    "features": {
-      "title": "为什么选择我们的计算器",
-      "accurate": "精确计算",
-      "accurateDesc": "基于当前费率和法规获得精确的费用估算",
-      "fast": "即时结果",
-      "fastDesc": "使用我们的智能算法在几秒钟内计算费用",
-      "transparent": "透明定价",
-      "transparentDesc": "没有隐藏成本 - 查看所有费用的完整明细",
-      "feature1": {
-        "badge": "功能 01",
-        "title": "即时了解您的资格",
-        "description": "根据您的公民身份、签证类型和房产详情，立即获得是否需要FIRB批准的反馈。无需猜测，只有明确的答案。",
-        "point1": "即时资格判定",
-        "point2": "所有要求的清晰说明",
-        "point3": "识别潜在限制"
-      },
-      "feature2": {
-        "badge": "功能 02",
-        "title": "完全成本透明",
-        "description": "查看与您的房产购买相关的每项费用、税费和成本。从FIRB申请费到印花税、持续成本等。",
-        "point1": "按房产价值计算FIRB费用",
-        "point2": "各州特定的印花税和附加费",
-        "point3": "持续成本如土地税和保险"
-      },
-      "feature3": {
-        "badge": "功能 03",
-        "title": "智能投资分析",
-        "description": "通过详细的投资回报率预测、现金流分析和10年以上的资产增长预测，了解您的投资潜力。",
-        "point1": "10年投资回报率和现金流预测",
-        "point2": "资产增长和升值分析",
-        "point3": "风险评估和敏感性分析"
-      }
-    },
-    "howItWorks": {
-      "title": "工作原理",
-      "step1": "输入房产详情",
-      "step1Desc": "提供购买价格和房产位置",
-      "step2": "查看计算结果",
-      "step2Desc": "查看所有适用费用的详细明细",
-      "step3": "做出明智决策",
-      "step3Desc": "在承诺之前了解您的总投资成本"
-    },
-    "feesRequired": {
-      "title": "何时需要这些费用？",
-      "subtitle": "在购买澳大利亚住宅房产的特定情况下需要支付海外投资费用：",
-      "required": {
-        "title": "需要支付FIRB费用",
-        "items": [
-          "外国公民购买任何澳大利亚住宅房产",
-          "临时居民购买现房或空地",
-          "非居民进行任何住宅房产投资",
-          "有外资持股的公司/信托购买住宅房产"
-        ]
-      },
-      "notRequired": {
-        "title": "如果您符合以下条件则无需支付费用：",
-        "items": [
-          "澳大利亚公民或永久居民",
-          "持有特殊类别签证（444子类）的新西兰公民",
-          "购买新住宅自住的临时居民"
-        ]
-      }
-    },
-    "firbApproval": {
-      "title": "何时需要FIRB批准？",
-      "subtitle": "了解外国投资审查委员会（FIRB）批准流程和要求",
-      "whatIs": {
-        "title": "什么是FIRB？",
-        "content": "外国投资审查委员会（FIRB）是澳大利亚政府机构，负责审查外国投资提案。根据1975年《外国收购和接管法》，外国人士在购买澳大利亚住宅房产前必须获得FIRB批准。"
-      },
-      "timeline": {
-        "title": "处理时间",
-        "standard": "标准申请自收到完整申请之日起需要30天",
-        "expedited": "可付费加急处理（10天）",
-        "complex": "复杂申请可能需要90天以上"
-      },
-      "process": {
-        "title": "FIRB流程",
-        "steps": [
-          {
-            "step": "1",
-            "title": "在线申请",
-            "description": "通过FIRB门户网站提交申请，包括房产详情和支持文件"
-          },
-          {
-            "step": "2", 
-            "title": "支付申请费",
-            "description": "申请费根据房产价值从13,200澳元到100,000澳元以上不等"
-          },
-          {
-            "step": "3",
-            "title": "等待决定",
-            "description": "标准处理需要30天。如果批准，您将收到'无异议'通知"
-          },
-          {
-            "step": "4",
-            "title": "完成房产交易",
-            "description": "在批准后12个月内完成购买并遵守所有条件"
-          }
-        ]
-      },
-      "requirements": {
-        "title": "关键要求",
-        "items": [
-          "针对特定房产的申请（无法获得预批准）",
-          "完整的文件包括护照、签证和房产详情",
-          "不可退还的申请费",
-          "遵守批准条件（如临时居民的主要居住地要求）"
-        ]
-      },
-      "penalties": {
-        "title": "重要提示：违规处罚",
-        "warning": "在需要时未经FIRB批准购买房产是严重违法行为，处罚严厉：",
-        "items": [
-          "个人罚款高达330万澳元",
-          "刑事起诉，最高可判10年监禁",
-          "强制出售（必须出售房产）",
-          "失去资本收益和未来批准困难"
-        ]
-      }
-    },
-    "cta": {
-      "title": "准备好验证您的投资了吗？",
-      "subtitle": "即时计算与您的澳大利亚房产投资相关的所有费用和成本。",
-      "button": "立即计算费用"
-    }
-  },
   "Nav": {
     "home": "首页",
-    "calculator": "FIRB计算器",
+    "calculator": "计算器",
     "blog": "博客",
     "faq": "常见问题",
-    "about": "关于",
-    "contact": "联系"
+    "login": "登录",
+    "logout": "登出",
+    "dashboard": "仪表板"
   },
-  "Footer": {
-    "company": {
-      "name": "房产费用计算器",
-      "description": "帮助国际投资者通过准确、透明的计算了解澳大利亚房产投资成本。",
-      "rights": "版权所有"
-    },
-    "quickLinks": {
-      "title": "快速链接",
-      "home": "首页",
-      "calculator": "计算器",
-      "features": "功能",
-      "howItWorks": "工作原理",
-      "faq": "常见问题"
-    },
-    "resources": {
-      "title": "官方资源",
-      "firb": "FIRB（外国投资审查委员会）",
-      "ato": "澳大利亚税务局",
-      "homeAffairs": "内政部",
-      "legislation": "澳大利亚立法"
-    },
-    "contact": {
-      "title": "联系我们",
-      "email": "info@propertyfeecalculator.com",
-      "phone": "+61 1 2345 6789",
-      "address": "澳大利亚新南威尔士州悉尼"
-    },
-    "legal": {
-      "privacy": "隐私政策",
-      "terms": "服务条款",
-      "disclaimer": "免责声明"
-    },
-    "disclaimer": {
-      "text": "免责声明：本计算器仅提供估算，不应被视为财务或法律建议。费用、法规和要求可能会发生变化。在做出房产投资决策之前，请务必咨询合格的专业人士，包括移民律师、税务顾问和持牌产权转让师。我们与FIRB或任何澳大利亚政府机构无关联。"
-    }
+  "Auth": {
+    "loginTitle": "登录您的账户",
+    "loginDescription": "我们将向您发送登录代码",
+    "emailLabel": "电子邮件地址",
+    "emailPlaceholder": "your@email.com",
+    "sendCodeButton": "发送验证码",
+    "sendingCode": "发送中...",
+    "noPasswordNeeded": "无需密码。我们将通过电子邮件向您发送安全代码。",
+    "successTitle": "成功！",
+    "successDescription": "您已成功登录"
+  },
+  "Dashboard": {
+    "title": "仪表板",
+    "welcomeBack": "欢迎回来，{email}！",
+    "newCalculation": "新计算",
+    "searchPlaceholder": "搜索计算...",
+    "sortBy": "排序方式",
+    "sortDateDesc": "日期（最新）",
+    "sortDateAsc": "日期（最旧）",
+    "sortValueDesc": "价值（高到低）",
+    "sortValueAsc": "价值（低到高）",
+    "sortName": "名称",
+    "allCalculations": "所有计算",
+    "firbNotRequired": "不需要FIRB",
+    "firbRequired": "需要FIRB",
+    "favorites": "收藏",
+    "noResultsTitle": "未找到计算",
+    "clearFilters": "清除筛选"
   },
   "FIRBCalculator": {
     "title": "FIRB计算器",
-    "description": "计算包括FIRB费用、印花税和持续费用在内的完整房产投资成本",
+    "subtitle": "计算您的完整房产投资成本，包括FIRB费用、印花税和持续费用",
+    "description": "计算您的完整房产投资成本，包括FIRB费用、印花税和持续费用",
     "next": "下一步",
     "back": "返回",
     "progress": {
       "citizenship": "公民身份",
       "property": "房产",
-      "review": "审核",
+      "financial": "财务",
+      "review": "审查",
       "results": "结果"
     },
     "citizenship": {
@@ -211,847 +60,236 @@
       },
       "permanent": {
         "title": "永久居民",
-        "description": "持有永久居留签证（100、189、190等子类）"
+        "description": "持有永久居留签证（100、189、190等子类别）"
       },
       "temporary": {
         "title": "临时居民",
-        "description": "持有临时签证（学生签证、工作签证、伴侣签证）"
+        "description": "持有临时签证（学生、工作、伴侣签证）"
       },
       "foreign": {
-        "title": "外国人",
+        "title": "外国人士",
         "description": "不持有澳大利亚公民身份或居留权"
       },
       "visaType": {
-        "label": "您持有什么类型的签证？",
-        "description": "选择您当前的签证子类",
+        "label": "您的签证类型是什么？",
+        "description": "请选择您的临时签证类型",
         "placeholder": "选择签证类型"
       },
-      "ordinaril yResident": {
-        "label": "我通常居住在澳大利亚",
-        "description": "您居住在澳大利亚，这是您的永久家园（即使暂时在海外）"
+      "ordinarilyResident": {
+        "label": "您通常居住在澳大利亚吗？",
+        "description": "如果您不是通常居民，即使您是澳大利亚公民，也可能需要FIRB批准"
       },
       "info": {
-        "australian": "作为通常居住在澳大利亚的澳大利亚公民，您通常对房产购买没有限制，也不需要FIRB批准。",
-        "permanent": "作为永久居民，您拥有与澳大利亚公民相同的房产权利，不需要FIRB批准。",
-        "temporary": "作为临时居民，您可以购买新住宅作为您的主要居所。需要FIRB批准。",
-        "foreign": "作为外国人，您可以购买新住宅或空地用于开发。所有购买都必须获得FIRB批准。"
+        "australian": "澳大利亚公民通常不需要FIRB批准，除非他们不是通常居住在澳大利亚。",
+        "permanent": "永久居民通常不需要FIRB批准购买住宅房产。",
+        "temporary": "临时居民需要FIRB批准，并且可能对他们可以购买的房产类型有限制。",
+        "foreign": "外国人士需要FIRB批准才能在澳大利亚购买所有住宅房产。"
       }
     },
     "property": {
       "title": "房产详情",
-      "description": "提供您正在考虑的房产信息",
-      "typeLabel": "房产类型",
+      "description": "输入您感兴趣的房产详情",
+      "typeLabel": "这是什么类型的房产？",
       "types": {
         "newDwelling": {
           "title": "新住宅",
-          "description": "全新房产或期房购买"
+          "description": "新建或期房房产"
         },
         "established": {
-          "title": "现房",
-          "description": "有过前业主的现有房产"
+          "title": "现有住宅",
+          "description": "现有住宅房产"
         },
         "vacantLand": {
           "title": "空地",
           "description": "用于开发的空地"
         },
         "commercial": {
-          "title": "商业房产",
-          "description": "商业或投资房产"
+          "title": "商业地产",
+          "description": "办公、零售或工业地产"
         }
       },
-      "valueLabel": "房产购买价格",
-      "stateLabel": "州或地区",
+      "valueLabel": "购买价格（澳元）",
+      "stateLabel": "房产位于哪个澳大利亚州？",
       "statePlaceholder": "选择州",
-      "addressLabel": "房产地址",
-      "addressPlaceholder": "123 Example Street, Suburb, State",
+      "addressLabel": "房产地址（可选）",
+      "addressPlaceholder": "开始输入地址...",
       "optional": "可选",
       "firstHome": {
-        "label": "我是首次购房者",
-        "description": "您可能有资格获得印花税优惠"
+        "label": "您是首次购房者吗？",
+        "description": "首次购房者可能有资格获得优惠"
       },
-      "depositLabel": "首付款百分比",
-      "depositAmount": "首付款金额",
-      "entityLabel": "购买实体",
+      "depositLabel": "首付百分比",
+      "depositAmount": "首付金额",
+      "entityLabel": "谁在购买房产？",
       "entityPlaceholder": "选择实体类型",
+      "entityDescription": "实体类型可能影响FIRB要求和税务影响",
       "entities": {
         "individual": "个人",
         "company": "公司",
         "trust": "信托"
+      }
+    },
+    "financialDetails": {
+      "title": "财务详情",
+      "description": "输入财务详情以进行投资分析",
+      "rental": {
+        "title": "租金收入",
+        "weeklyRent": "估计周租金",
+        "vacancyRate": "空置率",
+        "vacancyHelp": "典型：好地段3-5%，高风险地区7-10%",
+        "rentGrowth": "年租金增长",
+        "rentGrowthHelp": "历史平均：每年2-4%",
+        "help": "基于该地区类似房产。您可以稍后调整。"
       },
-      "entityDescription": "将拥有该房产的法律实体"
+      "growth": {
+        "title": "资本增长预测",
+        "rate": "预期年资本增长",
+        "conservative": "保守（4%）",
+        "moderate": "中等（6%）",
+        "optimistic": "乐观（8%）",
+        "help": "历史平均：每年6%。根据您的预期进行调整。"
+      },
+      "loan": {
+        "title": "贷款详情",
+        "amount": "贷款金额",
+        "deposit": "首付",
+        "interestRate": "利率",
+        "interestHelp": "当前市场利率：5.5-7.5%",
+        "term": "贷款期限",
+        "interestOnly": "仅利息贷款（前5年）"
+      },
+      "councilRates": "年度市政费（可选）",
+      "councilRatesHelp": "典型：每年$1,500-$3,000。留空以使用估算值。",
+      "selfManaged": "我将自行管理此房产（无管理费）",
+      "managementFee": "物业管理费",
+      "managementFeeHelp": "典型：租金收入的7-9%"
     },
     "review": {
-      "title": "审核您的信息",
-      "description": "请在计算前审核您的详细信息",
+      "title": "审查您的详情",
+      "description": "在生成报告之前，请审查您输入的信息。",
       "citizenshipTitle": "公民身份信息",
       "propertyTitle": "房产信息",
+      "financialTitle": "财务详情",
       "edit": "编辑",
-      "calculateButton": "计算费用",
-      "calculating": "计算中...",
       "yes": "是",
-      "no": "否"
+      "no": "否",
+      "calculateButton": "生成报告",
+      "calculating": "正在计算..."
     },
     "results": {
-      "eligible": {
-        "title": "符合购买资格",
-        "firbRequired": "在继续购买之前需要获得FIRB批准",
-        "noFirbRequired": "您可以在没有FIRB批准的情况下继续"
-      },
-      "notEligible": {
-        "title": "适用购买限制",
-        "description": "根据您的公民身份状态，您可能没有资格购买此类房产"
-      },
-      "processingTime": {
-        "title": "FIRB处理时间",
-        "standard": "标准处理",
-        "expedited": "加急处理",
-        "expeditedNote": "申请费加倍"
-      },
-      "restrictions": {
-        "title": "限制和要求",
-        "description": "适用于您购买的重要条件"
-      },
-      "recommendations": {
-        "title": "建议"
+      "eligibility": {
+        "header": "资格评估",
+        "approval": {
+          "notRequired": "不需要FIRB",
+          "notRequiredDesc": "您可以在没有FIRB批准的情况下继续购买房产。",
+          "required": "需要FIRB",
+          "requiredDesc": "您必须在购买此房产之前获得FIRB批准。",
+          "prohibited": "禁止购买",
+          "prohibitedDesc": "您没有资格购买此类型的房产。"
+        },
+        "summary": {
+          "title": "资格摘要",
+          "description": "您的资格状态和房产详情概览",
+          "citizenshipStatus": "公民身份状态",
+          "propertyType": "房产类型",
+          "investmentProperty": "投资房产",
+          "entityType": "实体类型",
+          "propertyValue": "房产价值",
+          "state": "州"
+        },
+        "requirements": {
+          "title": "FIRB要求",
+          "firbApplication": "需要FIRB申请",
+          "processingTime": "处理时间",
+          "documentation": "所需文件"
+        },
+        "restrictions": {
+          "title": "限制"
+        },
+        "recommendations": {
+          "title": "建议"
+        }
       },
       "costs": {
-        "title": "投资成本明细",
-        "description": "与您的房产购买相关的所有费用的详细明细",
-        "totalInvestment": "所需总投资",
+        "title": "成本明细",
+        "description": "所有前期和持续成本的完整明细",
+        "totalInvestment": "总投资成本",
         "propertyPrice": "房产价格",
-        "upfrontCosts": "额外前期费用",
+        "upfrontCosts": "前期成本",
         "subtotal": "小计",
-        "annualOngoing": "年度持续费用",
-        "annualOngoingNote": "估计的年度经常性费用"
+        "annualOngoing": "年度持续成本",
+        "annualOngoingNote": "这些成本每年都会产生"
       },
       "actions": {
         "downloadPDF": "下载PDF报告",
-        "emailResults": "通过电子邮件发送结果",
+        "emailResults": "发送结果",
         "editCalculation": "编辑计算",
-        "startAgain": "重新开始"
+        "startAgain": "开始新计算"
       },
       "disclaimer": {
         "title": "重要免责声明",
-        "content": "此计算器仅提供估算，不应被视为财务或法律建议。实际费用可能会有所不同。FIRB法规可能会发生变化。我们强烈建议在做出任何房产投资决策之前咨询合格的专业人士，包括律师、会计师和FIRB专家。"
+        "content": "此计算仅为估算，不应视为财务或法律建议。法规和费用可能会发生变化。在做出投资决策之前，请务必咨询合格的专业人士。"
       },
-      "investmentAnalytics": {
-        "toggle": {
-          "title": "投资分析与预测",
-          "description": "查看租金收益率、投资回报率、10年预测、现金流分析，以及与其他投资的比较",
-          "show": "显示投资分析",
-          "hide": "隐藏分析"
+      "optimalUseCase": {
+        "title": "最佳使用案例分析",
+        "description": "比较长期租赁与短期住宿，以最大化您的回报",
+        "recommendation": "建议",
+        "recommendLongTerm": "建议此房产采用长期租赁。",
+        "recommendShortStay": "建议此房产采用短期住宿。",
+        "recommendMixed": "混合策略可能最适合此房产。",
+        "longTerm": {
+          "title": "长期租赁",
+          "annualIncome": "年收入",
+          "annualExpenses": "年支出",
+          "netIncome": "净收入",
+          "management": "管理复杂性",
+          "compliance": "法规遵从",
+          "risk": "风险水平"
         },
-        "summary": {
-          "title": "投资表现摘要",
-          "description": "基于您的投资假设的关键指标一览",
-          "grossYield": "毛租金收益率",
-          "netYield": "净租金收益率",
-          "annualizedROI": "年化投资回报率",
-          "monthlyCashFlow": "月度现金流",
-          "afterExpenses": "扣除费用和空置期后",
-          "totalReturn": "总回报",
-          "positivelyGeared": "正杠杆",
-          "negativelyGeared": "负杠杆",
-          "taxBenefit": "税收优惠",
-          "propertyValueGrowth": "房产增值",
-          "afterYears": "持有",
-          "years": "年后",
-          "yourEquity": "您的净资产",
-          "equityGain": "资产增值",
-          "taxSavings": "税收节省（年度）",
-          "fromNegativeGearing": "来自负杠杆优势"
-        },
-        "inputs": {
-          "title": "投资分析参数",
-          "description": "调整这些数值以查看不同场景如何影响您的投资回报",
-          "note": "这些是基于当前市场条件和您的假设的估算。实际回报可能会有所不同。计算会随着您调整数值而实时更新。",
-          "rental": {
-            "title": "租金收入详情",
-            "weeklyRent": "预估周租金",
-            "perYear": "每年",
-            "vacancyRate": "空置率",
-            "vacancyHelp": "典型值：好地段3-5%，高风险地区7-10%",
-            "rentGrowth": "年度租金增长率",
-            "rentGrowthHelp": "历史平均值：每年2-4%"
-          },
-          "management": {
-            "title": "物业管理",
-            "selfManaged": "我将自己管理此物业（无管理费）",
-            "managementFee": "物业管理费",
-            "managementHelp": "典型值：租金收入的7-9%。预估",
-            "lettingFee": "租赁费（寻找新租户时）",
-            "weeksRent": "周租金"
-          },
-          "financing": {
-            "title": "融资详情",
-            "loanAmount": "贷款金额",
-            "interestRate": "利率",
-            "interestHelp": "当前市场：投资贷款6.0-6.8%",
-            "loanTerm": "贷款期限",
-            "loanType": "贷款类型",
-            "principalAndInterest": "本息同还",
-            "interestOnly": "只还利息",
-            "interestOnlyPeriod": "只还利息期限"
-          },
-          "assumptions": {
-            "title": "投资假设",
-            "holdPeriod": "持有期",
-            "holdPeriodHelp": "您计划持有此投资多长时间？",
-            "capitalGrowth": "资本增长率",
-            "capitalGrowthHelp": "澳洲房产：历史平均6-7%（长期）",
-            "taxRate": "您的边际税率",
-            "taxRateHelp": "外国居民通常：32.5%或37%或45%",
-            "sellingCosts": "销售成本",
-            "sellingCostsHelp": "中介费(2-3%) + 法律费(0.5-1%) + 营销费(0.5-1%)"
-          },
-          "currency": {
-            "title": "货币转换（可选）",
-            "homeCurrency": "您的本国货币",
-            "aud": "AUD（澳元）",
-            "usd": "USD（美元）",
-            "cny": "CNY（人民币）",
-            "eur": "EUR（欧元）",
-            "gbp": "GBP（英镑）",
-            "jpy": "JPY（日元）",
-            "sgd": "SGD（新加坡元）",
-            "exchangeRate": "汇率（1澳元 = ? {currency}）",
-            "exchangeHelp": "请从您的银行或xe.com更新当前汇率"
-          }
-        },
-        "cashFlow": {
-          "title": "现金流分析",
-          "description": "年度租金收入与费用和贷款还款对比",
-          "annualIncome": "年度收入",
-          "annualExpenses": "年度支出",
-          "afterTaxCashFlow": "税后现金流",
-          "perMonth": "每月",
-          "effectiveAfterVacancy": "扣除空置期后",
-          "includingLoanRepayments": "包括贷款还款",
-          "chartTitle": "年度现金流可视化",
-          "income": "收入",
-          "expenses": "支出",
-          "netCashFlow": "净现金流",
-          "expenseBreakdown": "费用明细",
-          "totalAnnualExpenses": "年度总支出",
-          "negativeGearingBenefit": "负杠杆税收优惠",
-          "savedPerMonth": "每月节省税款",
-          "deductibleExpenses": "可抵扣费用",
-          "monthlySummary": "月度摘要",
-          "beforeTax": "月度现金流（税前）",
-          "afterTax": "月度现金流（税后）"
-        },
-        "projections": {
-          "title": "{years}年预测",
-          "description": "房产价值、贷款余额和净资产随时间增长",
-          "startingValue": "起始价值",
-          "finalValue": "最终价值",
-          "yourEquity": "您的净资产",
-          "from": "从",
-          "totalROI": "总投资回报率",
-          "perAnnum": "每年",
-          "breakEven": {
-            "title": "盈亏平衡分析",
-            "cumulativeBreakEven": "累计盈亏平衡",
-            "year": "年份",
-            "positiveCashFlow": "正现金流",
-            "cashRequired": "所需现金"
-          },
-          "yearByYear": "逐年摘要",
-          "tableHeaders": {
-            "year": "年份",
-            "propertyValue": "房产价值",
-            "equity": "净资产",
-            "cashFlow": "现金流",
-            "cumulativeReturn": "累计回报"
-          }
+        "shortStay": {
+          "title": "短期住宿",
+          "notPermitted": "不允许",
+          "prohibited": "此区域不允许短期住宿。",
+          "annualIncome": "年收入",
+          "annualExpenses": "年支出",
+          "netIncome": "净收入",
+          "management": "管理复杂性",
+          "compliance": "法规遵从",
+          "risk": "风险水平",
+          "maxDays": "最大天数/年",
+          "licensingRequired": "需要许可证",
+          "complianceCost": "年度合规成本"
         },
         "comparison": {
-          "title": "投资比较",
-          "description": "将房产投资回报与其他资产类别在{years}年内进行比较",
-          "propertyLeads": "房产投资领先",
-          "propertyLeadsDesc": "根据您的假设，房产投资优于所有其他选择，总回报为{return}（年化{rate}）。",
-          "comparisonResults": "比较结果",
-          "comparisonDesc": "在这些假设下，{best}显示更高的回报（{return}）。房产投资回报{propertyReturn}。",
-          "chartTitle": "投资类型",
-          "detailedComparison": "详细比较",
-          "annualRate": "年化率",
-          "yearReturn": "{years}年回报",
-          "riskLevel": "风险等级",
-          "yourInvestment": "您的投资",
-          "investmentTypes": {
-            "property": "房产投资",
-            "stocks": "ASX 200股票",
-            "bonds": "政府债券",
-            "termDeposit": "定期存款",
-            "savings": "高息储蓄"
-          },
-          "riskLevels": {
-            "veryLow": "极低",
-            "low": "低",
-            "medium": "中高",
-            "high": "高"
-          },
-          "assumptions": "假设：房产增长率{growth}%，ASX 200为7.2%，债券/存款为4-4.5%。房产包括租金收入和税收优惠。过往表现不保证未来回报。"
+          "title": "收入比较",
+          "incomeDifference": "收入差异",
+          "netDifference": "净差异",
+          "yield": "净收益率"
         },
-        "sensitivity": {
-          "title": "敏感性分析",
-          "description": "不同场景如何影响您的投资回报",
-          "warning": "投资风险",
-          "warningDesc": "这些场景显示了关键变量变化如何影响您的回报。在做出投资决策时请考虑这些风险。",
-          "vacancyImpact": "空置率影响",
-          "vacancyDesc": "对年度现金流的影响",
-          "vacancyRate": "空置率",
-          "annualRent": "年租金",
-          "impact": "影响",
-          "baseCase": "基准情况",
-          "vacancyNote": "空置率每增加5%，现金流减少约${amount}/年",
-          "interestImpact": "利率影响",
-          "interestDesc": "对贷款还款的影响",
-          "interestRate": "利率",
-          "monthlyRepayment": "月度还款",
-          "annualCost": "年度成本",
-          "cashFlowImpact": "现金流影响",
-          "interestNote": "利率每增加1%，每月多支付约${amount}",
-          "growthScenarios": "资本增长情景",
-          "growthDesc": "不同市场条件",
-          "conservative": "保守",
-          "moderate": "适中",
-          "optimistic": "乐观",
-          "base": "基准",
-          "growthRate": "增长率",
-          "finalValue": "最终价值",
-          "totalReturn": "总回报",
-          "riskFactors": "关键风险因素",
-          "mostSensitive": "最敏感于：",
-          "riskMitigation": "风险缓解：",
-          "sensitivityItems": {
-            "capitalGrowth": "资本增长率（对回报影响最大）",
-            "interestRate": "利率变化（影响月度现金流）",
-            "vacancy": "空置率（减少租金收入）",
-            "highDemand": "选择高需求地区的物业",
-            "fixRate": "锁定利率（降低利率风险）",
-            "cashReserves": "保持现金储备以应对空置期"
-          }
-        },
-        "taxAnalysis": {
-          "title": "税务分析",
-          "description": "税收抵扣、负杠杆优势和退出时的资本利得税",
-          "annualTaxSaving": "年度税收节省",
-          "fromNegativeGearing": "来自负杠杆",
-          "totalDeductions": "总抵扣额",
-          "deductionsDesc": "可抵扣租金收入的年度费用",
-          "breakdownTitle": "年度税收抵扣明细",
-          "deductionItems": {
-            "loanInterest": "贷款利息",
-            "propertyManagement": "物业管理",
-            "maintenance": "维护与修理",
-            "landTax": "土地税",
-            "councilRates": "市政费",
-            "insurance": "保险",
-            "strataFees": "物业管理费",
-            "depreciation": "折旧",
-            "other": "其他"
-          },
-          "negativeGearing": {
-            "title": "负杠杆的运作方式",
-            "rentalIncome": "租金收入",
-            "deductibleExpenses": "可抵扣费用",
-            "netRentalLoss": "净租金损失",
-            "taxBenefit": "税收优惠（按{rate}%边际税率计算）"
-          },
-          "cgtTitle": "退出时的资本利得税（估算）",
-          "cgtItems": {
-            "salePrice": "售价（第{year}年）",
-            "originalPrice": "原始购买价格",
-            "purchaseCosts": "购买成本（FIRB、印花税等）",
-            "sellingCosts": "销售成本（中介、法律）",
-            "costBase": "成本基础",
-            "capitalGain": "资本利得",
-            "cgtRate": "资本利得税率（外国居民 - 无折扣）",
-            "cgtPayable": "应付资本利得税",
-            "withholdingTax": "预扣税",
-            "netProceeds": "税后净收益"
-          },
-          "taxPlanningTip": "税务规划提示：外国居民不享受50%的资本利得税折扣。考虑在出售前获得永久居留权，以显著降低资本利得税负担。请咨询税务专业人士获取个性化建议。"
-        },
-        "score": {
-          "title": "投资评分与建议",
-          "description": "基于综合分析的AI生成评估",
-          "overallVerdict": "总体评价",
-          "investment": "投资",
-          "scoreBreakdown": "评分明细",
-          "dimensions": {
-            "rentalYield": "租金收益率",
-            "capitalGrowth": "资本增长",
-            "cashFlow": "现金流",
-            "taxEfficiency": "税收效率",
-            "riskProfile": "风险概况"
-          },
-          "verdicts": {
-            "excellent": "优秀",
-            "good": "良好",
-            "moderate": "中等",
-            "poor": "较差",
-            "notRecommended": "不推荐"
-          },
-          "strengths": "优势",
-          "weaknesses": "劣势",
-          "suitableFor": "此投资适合：",
-          "risksToConsider": "需要考虑的风险",
-          "keyTakeaways": "关键要点"
-        }
-      }
-    },
-    "emailModal": {
-      "title": "通过电子邮件发送您的结果",
-      "description": "输入您的电子邮件地址以接收您的FIRB计算结果副本",
-      "emailLabel": "电子邮件地址",
-      "emailPlaceholder": "your@email.com",
-      "nameLabel": "您的姓名",
-      "namePlaceholder": "张三",
-      "optional": "可选",
-      "consentLabel": "我同意通过电子邮件接收我的计算结果",
-      "consentDescription": "我们只会使用您的电子邮件向您发送请求的结果。我们不会与第三方共享您的信息。",
-      "info": "您将收到一份详细的PDF报告，其中包含您的完整费用明细和资格信息。",
-      "send": "发送结果",
-      "sending": "发送中...",
-      "cancel": "取消",
-      "success": {
-        "title": "电子邮件发送成功！",
-        "description": "请查看您的收件箱以获取您的FIRB计算结果。"
-      },
-      "errors": {
-        "required": "请填写所有必填字段",
-        "invalidEmail": "请输入有效的电子邮件地址",
-        "sendFailed": "发送电子邮件失败。请重试。",
-        "general": "发生错误。请重试。"
-      }
-    },
-    "pdf": {
-      "title": "FIRB投资分析报告",
-      "subtitle": "外国投资者综合房产投资分析",
-      "generatedOn": "生成日期",
-      "page": "第",
-      "disclaimer": "本报告仅提供估算，不应被视为财务或法律建议。在做出投资决策之前，请咨询合格的专业人士。",
-      "sections": {
-        "executiveSummary": "执行摘要",
-        "propertyDetails": "房产详情",
-        "keyMetrics": "关键投资指标",
-        "firbRequirements": "FIRB要求与资格",
-        "eligibilityStatus": "资格状态",
-        "propertyType": "房产类型",
-        "costBreakdown": "费用明细",
-        "investmentPerformance": "投资表现分析",
-        "rentalYield": "租金收益率分析",
-        "cashFlow": "现金流分析",
-        "projections": "10年预测",
-        "equityGrowth": "随时间增长的净资产",
-        "breakEven": "盈亏平衡分析",
-        "comparison": "投资比较",
-        "assetComparison": "资产类别比较",
-        "sensitivity": "敏感性与风险分析",
-        "riskScenarios": "风险情景",
-        "taxAnalysis": "税务分析与规划",
-        "deductions": "年度税收抵扣",
-        "cgtProjection": "资本利得税预测",
-        "recommendations": "投资评分与建议",
-        "overallScore": "总体投资评分",
-        "recommendation": "投资建议"
-      },
-      "labels": {
-        "address": "地址",
-        "state": "州/地区",
-        "value": "房产价值",
-        "deposit": "定金",
-        "citizenshipStatus": "公民身份状态",
-        "entityType": "实体类型",
-        "eligible": "符合资格",
-        "notEligible": "不符合资格",
-        "firbRequired": "需要FIRB批准",
-        "noFirbRequired": "无需FIRB批准",
-        "firbFee": "FIRB申请费",
-        "stampDuty": "印花税",
-        "foreignSurcharge": "外国投资者附加费",
-        "legalFees": "法律与专业费用",
-        "totalUpfront": "总预付费用",
-        "annualLandTax": "年度土地税",
-        "grossYield": "毛租金收益率",
-        "netYield": "净租金收益率",
-        "annualizedROI": "年化投资回报率",
-        "monthlyCashFlow": "月度现金流",
-        "annualIncome": "年度租金收入",
-        "annualExpenses": "年度支出",
-        "afterTaxCashFlow": "税后现金流",
-        "taxBenefit": "税收优惠",
-        "propertyValue": "房产价值",
-        "equity": "您的净资产",
-        "loanBalance": "贷款余额",
-        "year": "年份",
-        "cumulativeReturn": "累计回报",
-        "breakEvenYear": "盈亏平衡年份",
-        "cashRequired": "所需总现金",
-        "investmentType": "投资类型",
-        "annualReturn": "年度回报",
-        "yearReturn": "{years}年回报",
-        "riskLevel": "风险等级",
-        "vacancyImpact": "空置率影响",
-        "interestImpact": "利率影响",
-        "growthScenarios": "资本增长情景",
-        "conservative": "保守",
-        "moderate": "适中",
-        "optimistic": "乐观",
-        "deductibleExpenses": "可抵扣费用",
-        "loanInterest": "贷款利息",
-        "propertyManagement": "物业管理",
-        "maintenance": "维护与修理",
-        "landTax": "土地税",
-        "councilRates": "市政费",
-        "insurance": "保险",
-        "strataFees": "物业管理费",
-        "depreciation": "折旧",
-        "other": "其他费用",
-        "totalDeductions": "总抵扣额",
-        "salePrice": "售价",
-        "costBase": "成本基础",
-        "capitalGain": "资本利得",
-        "cgtPayable": "应付资本利得税",
-        "withholdingTax": "预扣税",
-        "netProceeds": "税后净收益",
-        "overallVerdict": "总体评价",
-        "scoreBreakdown": "评分明细",
-        "rentalYieldScore": "租金收益率",
-        "capitalGrowthScore": "资本增长",
-        "cashFlowScore": "现金流",
-        "taxEfficiencyScore": "税收效率",
-        "riskProfileScore": "风险概况",
-        "strengths": "优势",
-        "weaknesses": "劣势",
-        "keyTakeaways": "关键要点"
-      },
-      "notes": {
-        "estimatesOnly": "所有数据均为基于提供的信息和当前市场条件的估算。",
-        "professionalAdvice": "我们强烈建议咨询合格的专业人士，包括律师、会计师和FIRB专家。",
-        "regulationsChange": "FIRB法规和税法可能会发生变化。请核实当前要求。",
-        "assumptionsBased": "预测基于您的假设和历史平均值。实际回报可能会有所不同。",
-        "pastPerformance": "过往表现不代表未来结果。"
-      },
-      "glossary": {
-        "title": "术语表",
-        "description": "本报告中使用的技术术语和缩写定义",
-        "terms": {
-          "firb": {
-            "term": "FIRB",
-            "fullName": "外国投资审查委员会",
-            "definition": "澳大利亚政府机构，负责审查外国投资提案，确保其不违反国家利益。"
-          },
-          "ato": {
-            "term": "ATO",
-            "fullName": "澳大利亚税务局",
-            "definition": "澳大利亚政府的主要收入征收机构，负责执行税法。"
-          },
-          "roi": {
-            "term": "ROI",
-            "fullName": "投资回报率",
-            "definition": "用于评估投资效率的绩效指标，计算公式为（收益-成本）/成本。"
-          },
-          "lvr": {
-            "term": "LVR",
-            "fullName": "贷款价值比",
-            "definition": "贷款金额与房产评估价值的比率，以百分比表示。"
-          },
-          "cgt": {
-            "term": "CGT",
-            "fullName": "资本利得税",
-            "definition": "对资产出售所得利润征收的税款，包括投资房产。"
-          },
-          "gst": {
-            "term": "GST",
-            "fullName": "商品及服务税",
-            "definition": "对澳大利亚销售的大部分商品和服务征收的10%广义税。"
-          },
-          "stampDuty": {
-            "term": "印花税",
-            "fullName": "转让税",
-            "definition": "州政府对房产所有权转让征收的税款，按房产价值的百分比计算。"
-          },
-          "landTax": {
-            "term": "土地税",
-            "fullName": "年度土地税",
-            "definition": "州政府对超过特定门槛的土地持有未改良价值征收的年度税款。"
-          },
-          "foreignSurcharge": {
-            "term": "外国附加费",
-            "fullName": "外国投资者附加税",
-            "definition": "外国投资者需要额外支付的印花税，通常为房产价值的7-8%。"
-          },
-          "firbFee": {
-            "term": "FIRB费用",
-            "fullName": "外国投资申请费",
-            "definition": "向FIRB支付的处理外国投资申请的费用，根据房产价值分级。"
-          },
-          "principalPlace": {
-            "term": "PPOR",
-            "fullName": "主要居住地",
-            "definition": "个人通常居住的主要住所，有资格获得某些税收优惠和豁免。"
-          },
-          "negativeGearing": {
-            "term": "负杠杆",
-            "fullName": "负杠杆",
-            "definition": "当拥有投资房产的成本超过租金收入时，产生税收抵扣。"
-          },
-          "positiveGearing": {
-            "term": "正杠杆",
-            "fullName": "正杠杆",
-            "definition": "当租金收入超过拥有投资房产的成本时，产生正现金流。"
-          },
-          "depreciation": {
-            "term": "折旧",
-            "fullName": "资本工程折旧",
-            "definition": "建筑物结构和固定装置随时间的价值下降的税收抵扣。"
-          },
-          "capitalWorks": {
-            "term": "资本工程",
-            "fullName": "资本工程抵扣",
-            "definition": "建筑物建设成本的税收抵扣，通常每年2.5%，持续40年。"
-          },
-          "plantEquipment": {
-            "term": "厂房设备",
-            "fullName": "厂房设备折旧",
-            "definition": "可移动资产（如电器、地毯和固定装置）价值下降的税收抵扣。"
-          },
-          "rentalYield": {
-            "term": "租金收益率",
-            "fullName": "毛租金收益率",
-            "definition": "年度租金收入占房产价值的百分比，扣除费用前。"
-          },
-          "netYield": {
-            "term": "净收益率",
-            "fullName": "净租金收益率",
-            "definition": "年度租金收入减去费用后占房产价值的百分比。"
-          },
-          "cashFlow": {
-            "term": "现金流",
-            "fullName": "投资现金流",
-            "definition": "投资房产在特定时期内产生或消耗的净现金金额。"
-          },
-          "equity": {
-            "term": "净资产",
-            "fullName": "房产净资产",
-            "definition": "房产价值与未偿贷款余额之间的差额。"
-          },
-          "capitalGrowth": {
-            "term": "资本增长",
-            "fullName": "资本增值",
-            "definition": "房产价值随时间的增长，是房产投资回报的关键组成部分。"
-          },
-          "interestOnly": {
-            "term": "IO贷款",
-            "fullName": "只付利息贷款",
-            "definition": "在指定期间只支付利息的贷款，本金稍后偿还。"
-          },
-          "principalInterest": {
-            "term": "P&I贷款",
-            "fullName": "本金和利息贷款",
-            "definition": "在贷款期限内同时偿还本金和利息的贷款。"
-          },
-          "offsetAccount": {
-            "term": "对冲账户",
-            "fullName": "房贷对冲账户",
-            "definition": "与房屋贷款关联的储蓄账户，其余额可减少应付利息。"
-          },
-          "redraw": {
-            "term": "重提",
-            "fullName": "贷款重提功能",
-            "definition": "能够提取房屋贷款额外还款用于其他目的的能力。"
-          },
-          "refinancing": {
-            "term": "再融资",
-            "fullName": "贷款再融资",
-            "definition": "用新贷款替换现有贷款，通常是为了获得更好的条款或利率。"
-          }
-        }
-      },
-      "disclaimer": {
-        "title": "重要法律免责声明",
-        "sections": {
-          "notFinancialAdvice": {
-            "title": "非财务建议",
-            "content": "本报告仅供参考，不构成财务、投资、法律或税务建议。计算和预测是基于提供的信息和当前法规的估算。"
-          },
-          "noGuarantee": {
-            "title": "不保证准确性",
-            "content": "虽然我们努力确保准确性，但我们不保证本报告所含信息的完整性、准确性或可靠性。FIRB法规、税法和房产市场条件可能会在未经通知的情况下发生变化。"
-          },
-          "professionalAdvice": {
-            "title": "需要专业建议",
-            "content": "在做出任何房产投资决定之前，您必须寻求独立的专业建议。这包括咨询：(1) 持牌财务顾问，(2) 合格税务会计师，(3) 移民律师（签证事务），(4) 产权转让师或房产律师，(5) FIRB专家。"
-          },
-          "marketPerformance": {
-            "title": "市场表现免责声明",
-            "content": "过往表现不代表未来结果。房产价值可能上涨也可能下跌。租金收入预测是估算值，可能因市场条件、房产状况、租户质量和空置率而有显著差异。"
-          },
-          "firbCompliance": {
-            "title": "FIRB合规责任",
-            "content": "您全权负责确保遵守所有FIRB法规和澳大利亚外国投资法律。不合规的处罚可能很严厉，包括个人最高666万澳元或公司最高6660万澳元的罚款、监禁和强制出售。"
-          },
-          "currencyRisk": {
-            "title": "货币和利率风险",
-            "content": "外国投资者面临额外风险，包括货币波动、利率变化以及可能影响房产所有权或税收的政治/监管变化。"
-          },
-          "limitationOfLiability": {
-            "title": "责任限制",
-            "content": "在法律允许的最大范围内，我们排除因依赖本报告或基于其内容采取的任何行动而产生的任何损失或损害的所有责任。您使用本报告的风险完全由您自己承担。"
-          },
-          "dataSources": {
-            "title": "数据来源和更新",
-            "content": "本报告使用生成日期当前的数据。税率、FIRB费用和法规可能会发生变化。在进行任何交易之前，请始终向官方政府来源核实当前费率。"
-          }
-        },
-        "footer": "有关最新信息，请咨询：(1) FIRB网站：https://firb.gov.au，(2) ATO外国投资：https://ato.gov.au/foreign-investment，(3) 州税务局了解印花税税率，(4) 持牌专业人士获取个性化建议。"
-      },
-      "propertyDetails": {
-        "title": "房产投资详情",
-        "cards": {
-          "propertyInformation": "房产信息",
-          "buyerInformation": "买家信息",
-          "financialStructure": "财务结构"
-        },
-        "labels": {
-          "propertyAddress": "房产地址",
-          "propertyType": "房产类型",
-          "propertyValue": "房产价值",
-          "stateTerritory": "州/领地",
-          "citizenshipStatus": "公民身份",
-          "visaType": "签证类型",
-          "entityType": "实体类型",
-          "firstHomeBuyer": "首次购房者",
-          "ordinarilyResident": "通常居民",
-          "depositPercentage": "首付百分比",
-          "depositAmount": "首付金额",
-          "loanAmount": "贷款金额",
-          "loanToValueRatio": "贷款价值比（LVR）",
-          "estimatedInterestRate": "预估利率"
-        }
-      },
-      "upgradePrompt": {
-        "title": "高级功能",
-        "description": "此部分包含高级订阅者可用的高级分析和见解。",
-        "upgradeButton": "升级以访问完整报告",
-        "visitWebsite": "访问propertycosts.com.au升级您的账户",
-        "features": {
-          "costBreakdown": {
-            "title": "成本明细",
-            "description": "获取详细的成本分析，包括FIRB费用、印花税、外国附加费、法律费用以及所有持续费用的详细明细。"
-          },
-          "investmentAnalysis": {
-            "title": "投资分析",
-            "description": "获取详细的投资绩效分析，包括租金收益率、ROI指标、资本增长预测和综合财务建模。"
-          },
-          "cashFlowAnalysis": {
-            "title": "现金流分析",
-            "description": "获取详细的现金流分析，包括月度和年度预测、税收优惠以及收入和支出的综合对比。"
-          },
-          "projections": {
-            "title": "10年预测",
-            "description": "获取详细的10年预测，包括房产价值增长、贷款余额减少、净资产建设和盈亏平衡分析。"
-          },
-          "comparisons": {
-            "title": "投资比较和敏感性分析",
-            "description": "获取与其他资产类别的综合投资比较和详细的敏感性分析，显示关键变量变化如何影响您的回报。"
-          },
-          "taxAnalysis": {
-            "title": "税务分析和建议",
-            "description": "获取综合税务分析，包括年度抵扣、CGT预测和带有详细评分明细的个性化投资建议。"
-          }
+        "reasoning": {
+          "title": "分析理由"
         }
       }
     }
   },
-  "Nav": {
-    "home": "首页",
+  "HomePage": {
+    "title": "房产投资分析平台",
+    "subtitle": "澳大利亚房产投资综合分析"
+  },
+  "Footer": {
+    "companyName": "房产费用计算器",
+    "companyDescription": "澳大利亚房产投资综合分析",
+    "quickLinks": "快速链接",
+    "legal": "法律",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "disclaimer": "免责声明",
+    "resources": "资源",
+    "blog": "博客",
+    "faq": "常见问题",
     "calculator": "计算器",
-    "faq": "常见问题"
-  },
-  "Auth": {
-    "loginTitle": "登录您的账户",
-    "loginDescription": "我们将向您发送验证码以登录",
-    "emailLabel": "电子邮件地址",
-    "emailPlaceholder": "your@email.com",
-    "sendCodeButton": "发送验证码",
-    "sendingCode": "发送中...",
-    "codeLabel": "6位验证码",
-    "codePlaceholder": "000000",
-    "codeDescription": "请查看您的电子邮件获取6位验证码",
-    "verifyCodeButton": "验证码",
-    "verifying": "验证中...",
-    "changeEmail": "更改电子邮件",
-    "resendCode": "重新发送验证码",
-    "resendCooldown": "重新发送 ({seconds}秒)",
-    "codeExpires": "验证码将在10分钟后过期",
-    "successTitle": "欢迎回来！",
-    "successDescription": "认证成功",
-    "redirecting": "正在跳转到您的仪表板...",
-    "noPasswordNeeded": "无需密码。我们将通过电子邮件向您发送安全验证码。",
-    "freeSignup": "免费注册 • 无需信用卡",
-    "loginToUnlock": "登录以解锁",
-    "upgradeToUnlock": "升级以解锁"
-  },
-  "Dashboard": {
-    "title": "我的计算",
-    "welcomeBack": "欢迎回来，{email}",
-    "newCalculation": "新建计算",
-    "searchPlaceholder": "按名称或地址搜索...",
-    "sortBy": "排序方式...",
-    "sortDateDesc": "最新优先",
-    "sortDateAsc": "最旧优先",
-    "sortValueDesc": "最高价值",
-    "sortValueAsc": "最低价值",
-    "sortName": "名称 (A-Z)",
-    "filterBy": "筛选...",
-    "allCalculations": "所有计算",
-    "firbRequired": "需要FIRB批准",
-    "firbNotRequired": "无需FIRB批准",
-    "prohibited": "禁止购买",
-    "favorites": "收藏夹",
-    "noResultsTitle": "未找到符合筛选条件的计算。",
-    "noResultsAction": "清除筛选以查看所有计算",
-    "clearFilters": "清除筛选",
-    "loading": "正在加载您的计算...",
-    "emptyState": {
-      "title": "尚无保存的计算",
-      "description": "从运行FIRB计算开始。您的计算将自动保存在此处，以便日后轻松访问。",
-      "cta": "开始新计算"
-    },
-    "calculationCard": {
-      "favorite": "收藏",
-      "unfavorite": "取消收藏",
-      "rename": "重命名",
-      "delete": "删除",
-      "open": "打开",
-      "firbRequired": "需要FIRB批准",
-      "firbNotRequired": "无需FIRB批准",
-      "prohibited": "禁止购买",
-      "confirmDelete": "您确定要删除此计算吗？",
-      "deleteSuccess": "计算已成功删除",
-      "renamePrompt": "输入计算的新名称：",
-      "renameSuccess": "计算已成功重命名"
-    }
-  },
-  "Blog": {
-    "title": "房产投资博客",
-    "subtitle": "为澳大利亚房产外国投资者提供的专家洞察、指南和分析",
-    "featured": "精选文章",
-    "allPosts": "所有文章",
-    "readMore": "阅读更多",
-    "backToBlog": "返回博客",
-    "share": "分享",
-    "tags": "标签",
-    "relatedPosts": "相关文章",
-    "cta": {
-      "title": "准备好计算您的投资成本了吗？",
-      "description": "获得即时FIRB资格检查和详细的澳大利亚房产投资成本明细。",
-      "button": "开始免费计算"
-    }
+    "contact": "联系我们",
+    "copyright": "© 2025 房产费用计算器。保留所有权利。",
+    "disclaimerText": "此计算器仅提供估算。请咨询合格的专业人士获取财务和法律建议。"
   }
 }
-
