@@ -14,6 +14,7 @@ import {
 import { Globe, LogIn, LogOut, LayoutDashboard, Menu, X } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import LoginModal from "@/components/auth/LoginModal";
+import Image from "next/image";
 
 export default function Navigation() {
   const t = useTranslations("Nav");
@@ -50,9 +51,18 @@ export default function Navigation() {
         <div className="container mx-auto px-4 py-5 flex justify-between items-center">
           <Link
             href={`/${locale}`}
-            className="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors"
+            className="flex items-center gap-2.5 text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors"
           >
-            Property Costs
+            <Image
+              src="/logo.svg"
+              alt="Property Costs Logo"
+              width={32}
+              height={32}
+              className="flex-shrink-0"
+              priority
+            />
+            <span className="hidden sm:inline">Property Costs</span>
+            <span className="sm:hidden">PC</span>
           </Link>
 
           {/* Mobile Menu Button */}
