@@ -1,6 +1,6 @@
 ---
 title: "Brisbane Property Investment Guide for Foreign Buyers (2025)"
-excerpt: "Brisbane is having a moment. With the 2032 Olympics on the horizon, billions being poured into infrastructure, and property prices still sitting well below Sydney and Melbourne, Queensland\\"
+excerpt: "Brisbane is having a moment. With the 2032 Olympics on the horizon, billions being poured into infrastructure, and property prices still sitting well below Sydney and Melbourne, Queensland's capital has become one of Australia's hottest investment destinations. But for foreign buyers, navigating the costs, regulations, and opportunities requires careful planning."
 date: 2024-12-28
 readTime: 10 min read
 category: City Guides

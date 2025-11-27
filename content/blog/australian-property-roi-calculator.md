@@ -1,6 +1,6 @@
 ---
 title: "How to Calculate Property Investment Returns in Australia (2025 Guide)"
-excerpt: "Here\\"
+excerpt: "Here's a sobering truth: most property investors dramatically overestimate their returns. They focus on the purchase price and rental income, forgetting about the dozens of other costs that erode profits. For foreign investors in Australia, this problem is even worse—additional surcharges, taxes, and exit costs can turn what looks like a 6% return into a 2% return (or worse)."
 date: 2024-12-22
 readTime: 13 min read
 category: Investment Analysis

@@ -1,6 +1,6 @@
 ---
 title: "Australian Stamp Duty Guide 2025: Complete State-by-State Comparison for Property Buyers"
-excerpt: "Navigate Australia\\"
+excerpt: "Buying property in Australia means facing one of the largest upfront costs you'll encounter: stamp duty. For foreign buyers, additional surcharges can push these costs even higher. Whether you're purchasing in Sydney, Melbourne, or regional Queensland, understanding how stamp duty varies across states is crucial for smart property investment."
 date: 2025-01-12
 readTime: 15 min read
 category: Costs & Fees

@@ -1,6 +1,6 @@
 ---
 title: "Complete Guide for Chinese Investors: Buying Australian Property in 2025"
-excerpt: "Navigate Australia\\"
+excerpt: "Australia has remained one of the most sought-after destinations for Chinese property investors, despite evolving regulations and capital control challenges. With its stable economy, world-class education system, and strong long-term property growth, Australia continues to attract savvy investors from mainland China."
 date: 2025-01-10
 readTime: 15 min read
 category: Investment Guide

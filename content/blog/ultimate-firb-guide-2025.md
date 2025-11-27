@@ -1,6 +1,6 @@
 ---
 title: "Complete FIRB Guide 2025: Everything You Need to Know About Foreign Investment in Australian Property"
-excerpt: "Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn\\"
+excerpt: "Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn't just recommended—it's mandatory. This comprehensive guide breaks down everything you need to know about FIRB approval, fees, and compliance in 2025."
 date: 2025-01-15
 readTime: 12 min read
 category: FIRB Guide

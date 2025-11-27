@@ -205,6 +205,8 @@
       "calculating": "Calculating..."
     },
     "results": {
+      "heroTitle": "Investment Analysis",
+      "heroSubtitleFallback": "Review your investment assumptions, risks, and next steps.",
       "eligibility": {
         "header": "Eligibility Assessment",
         "approval": {
@@ -253,6 +255,15 @@
         "emailResults": "Email Results",
         "editCalculation": "Edit Calculation",
         "startAgain": "Start New Calculation"
+      },
+      "analysisParams": {
+        "description": "These inputs were captured during the wizard. Adjust them in the financial step to refine your analysis.",
+        "cta": "Adjust inputs in wizard",
+        "note": "You'll return to the Financial step to edit rent, vacancy, growth, or rate assumptions."
+      },
+      "sections": {
+        "expand": "Expand section",
+        "collapse": "Collapse section"
       },
       "disclaimer": {
         "title": "Important Disclaimer",
