@@ -130,19 +130,36 @@ function normalizeDate(date: unknown): string {
 
 /**
  * Converts markdown links to styled HTML links
+ * Ensures link text is not split across elements
  */
 export function convertMarkdownLinksToHTML(content: string): string {
   // Pattern to match markdown links: [text](url)
-  const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+  // More robust pattern that handles nested brackets and parentheses
+  const linkPattern = /\[((?:[^\]]|\[[^\]]*\])*)\]\(([^)]+)\)/g;
 
   return content.replace(linkPattern, (match, text, url) => {
+    // Trim whitespace from text and URL
+    const cleanText = text.trim();
+    const cleanUrl = url.trim();
+
+    // Skip if text or URL is empty
+    if (!cleanText || !cleanUrl) {
+      return match;
+    }
+
     // Determine if it's an external link
-    const isExternal = url.startsWith("http") && !url.includes("propertycosts.com.au");
+    const isExternal = cleanUrl.startsWith("http") && !cleanUrl.includes("propertycosts.com.au");
+
+    // Escape HTML in text to prevent issues
+    const escapedText = cleanText
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
 
     if (isExternal) {
-      return `<a href="${url}" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
+      return `<a href="${cleanUrl}" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">${escapedText}</a>`;
     } else {
-      return `<a href="${url}" class="text-blue-600 hover:text-blue-800 underline">${text}</a>`;
+      return `<a href="${cleanUrl}" class="text-blue-600 hover:text-blue-800 underline">${escapedText}</a>`;
     }
   });
 }
@@ -193,10 +210,21 @@ export function processMarkdownContent(content: string): string {
     htmlContent = htmlContent.replace(/<li>/g, '<li class="mb-1">');
 
     // Add Tailwind classes to links (if not already styled)
+    // Use a more robust pattern that checks if class attribute already exists
     htmlContent = htmlContent.replace(
-      /<a href="/g,
-      '<a class="text-blue-600 hover:text-blue-800 underline" href="'
+      /<a(?![^>]*\bclass=)([^>]*href=)/g,
+      '<a class="text-blue-600 hover:text-blue-800 underline"$1'
     );
+
+    // Also handle links that already have attributes but no class
+    htmlContent = htmlContent.replace(/<a([^>]*\s+)(href=)/g, (match, attrs, hrefAttr) => {
+      // Check if class is already in attributes
+      if (attrs.includes("class=")) {
+        return match;
+      }
+      // Insert class before href
+      return `<a${attrs}class="text-blue-600 hover:text-blue-800 underline" ${hrefAttr}`;
+    });
 
     // Add Tailwind classes to blockquotes
     htmlContent = htmlContent.replace(
@@ -299,7 +327,7 @@ export function createBlogPost(
  * Reads markdown files from content/blog directory
  * Server-side only function
  */
-export function getAllBlogPosts(locale: string): BlogPost[] {
+export function getAllBlogPosts(_locale: string): BlogPost[] {
   // Only load Node.js modules on the server
   if (typeof window !== "undefined") {
     return [] as BlogPost[];
@@ -377,7 +405,7 @@ export function getAllBlogPosts(locale: string): BlogPost[] {
  * Returns null if not found
  * Server-side only function
  */
-export function getBlogPost(slug: string, locale: string): BlogPost | null {
+export function getBlogPost(slug: string, _locale: string): BlogPost | null {
   // Only load Node.js modules on the server
   if (typeof window !== "undefined") {
     return null;

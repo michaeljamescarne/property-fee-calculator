@@ -1,6 +1,6 @@
 ---
 title: "Sydney Property Investment Guide 2025: Complete Analysis for Foreign Buyers"
-excerpt: "Sydney stands as Australia\\"
+excerpt: "Sydney stands as Australia's undisputed property investment capital—commanding the highest prices, delivering the strongest long-term growth, and attracting the most international capital. For foreign investors, Sydney represents both exceptional opportunity and significant complexity."
 date: 2025-01-03
 readTime: 18 min read
 category: City Guides

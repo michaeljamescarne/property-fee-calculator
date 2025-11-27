@@ -1,6 +1,6 @@
 ---
 title: "What Are FIRB Fees? Complete Guide to Foreign Property Investment Costs (2025)"
-excerpt: "If you\\"
+excerpt: "If you're a foreign investor looking to buy Australian property, there's one cost you'll encounter before anything else: the FIRB application fee. This mandatory government charge often comes as a surprise—especially when you discover it starts at $15,100 and increases with your property's value."
 date: 2024-12-25
 readTime: 9 min read
 category: Costs & Fees
