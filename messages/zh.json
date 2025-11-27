@@ -205,6 +205,8 @@
       "calculating": "正在计算..."
     },
     "results": {
+      "heroTitle": "投资分析",
+      "heroSubtitleFallback": "回顾您的投资假设、风险与下一步计划。",
       "eligibility": {
         "header": "资格评估",
         "approval": {
@@ -253,6 +255,15 @@
         "emailResults": "发送结果",
         "editCalculation": "编辑计算",
         "startAgain": "开始新计算"
+      },
+      "analysisParams": {
+        "description": "这些输入已在向导中填写，可在财务步骤中调整以优化分析。",
+        "cta": "返回向导调整输入",
+        "note": "您将回到“财务”步骤来修改租金、空置率、增长或利率等假设。"
+      },
+      "sections": {
+        "expand": "展开此区块",
+        "collapse": "收起此区块"
       },
       "disclaimer": {
         "title": "重要免责声明",

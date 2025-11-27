@@ -37,6 +37,8 @@ export default function FIRBCalculatorPage() {
   const [currentStep, setCurrentStep] = useState<Step>("citizenship");
   const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
 
+  const isResults = currentStep === "results";
+
   // Form data
   const [formData, setFormData] = useState<Partial<FIRBCalculatorFormData>>({
     citizenshipStatus: "" as CitizenshipStatus,
@@ -67,6 +69,51 @@ export default function FIRBCalculatorPage() {
 
   // Loading state for saved calculations
   const [isLoadingSavedCalculation, setIsLoadingSavedCalculation] = useState(false);
+
+  // Format helpers
+  const formatCurrencyValue = (value?: number | null) => {
+    if (!value) return null;
+    return new Intl.NumberFormat("en-AU", {
+      style: "currency",
+      currency: "AUD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  const propertySubtitle = useMemo(() => {
+    if (!isResults) return null;
+    if (formData.propertyAddress && formData.propertyAddress.trim().length > 0) {
+      return formData.propertyAddress.trim();
+    }
+
+    const segments: string[] = [];
+    const propertyValueLabel = formatCurrencyValue(formData.propertyValue);
+    if (propertyValueLabel) segments.push(propertyValueLabel);
+    if (formData.state) segments.push(formData.state);
+    if (formData.propertyType) segments.push(formData.propertyType);
+
+    return segments.length > 0 ? segments.join(" • ") : null;
+  }, [
+    isResults,
+    formData.propertyAddress,
+    formData.propertyValue,
+    formData.state,
+    formData.propertyType,
+  ]);
+
+  const heroTitle = isResults
+    ? t("results.heroTitle") === "FIRBCalculator.results.heroTitle"
+      ? "Investment Analysis"
+      : t("results.heroTitle")
+    : t("title");
+
+  const heroSubtitle = isResults
+    ? propertySubtitle ||
+      (t("results.heroSubtitleFallback") === "FIRBCalculator.results.heroSubtitleFallback"
+        ? "Review your investment assumptions, risks, and next steps."
+        : t("results.heroSubtitleFallback"))
+    : t("description");
 
   // Get URL search parameters
   const searchParams = useSearchParams();
@@ -465,6 +512,10 @@ export default function FIRBCalculatorPage() {
     setCurrentStep("review");
   };
 
+  const handleEditInvestmentInputs = () => {
+    setCurrentStep("financial");
+  };
+
   // Handle start again - reset everything
   const handleStartAgain = () => {
     // Reset all form data
@@ -496,16 +547,18 @@ export default function FIRBCalculatorPage() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 leading-tight">
-              {t("title")}
+            <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900 leading-tight">
+              {heroTitle}
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {t("description")}
+              {heroSubtitle}
             </p>
           </div>
 
           {/* Progress Indicator */}
-          <ProgressIndicator currentStep={currentStep} completedSteps={completedSteps} />
+          {!isResults && (
+            <ProgressIndicator currentStep={currentStep} completedSteps={completedSteps} />
+          )}
 
           {/* Step Content */}
           <div className="mt-8">
@@ -663,6 +716,7 @@ export default function FIRBCalculatorPage() {
                   onDownloadPDF={handleDownloadPDF}
                   onEmailResults={handleEmailResults}
                   onEditCalculation={handleEditCalculation}
+                  onEditInvestmentInputs={handleEditInvestmentInputs}
                   onStartAgain={handleStartAgain}
                   propertyValue={formData.propertyValue}
                   propertyType={formData.propertyType}
