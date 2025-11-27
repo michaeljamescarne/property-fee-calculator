@@ -711,11 +711,79 @@
     }
   },
   "HomePage": {
-    "title": "房产投资分析平台",
+    "title": "澳大利亚房产投资分析",
     "subtitle": "澳大利亚房产投资综合分析",
+    "features": {
+      "sectionTitle": "做出明智决策所需的一切",
+      "learnMore": "了解更多",
+      "costCalculator": {
+        "title": "成本计算器",
+        "description": "计算澳洲买房的全部前期与长期成本。"
+      },
+      "investmentAnalysis": {
+        "title": "投资分析",
+        "description": "结合基准数据预测租金、现金流与回报率。"
+      },
+      "firbEligibility": {
+        "title": "FIRB 资格",
+        "description": "了解 FIRB 规则、签证要求与合规时间线。"
+      },
+      "detailedReports": {
+        "title": "详细报告",
+        "description": "导出可直接分享的投资洞察报告。"
+      }
+    },
+    "sections": {
+      "badge": "平台能力",
+      "costCalculator": {
+        "heading": "购买房产有哪些成本？",
+        "body": "在出价前先模拟印花税、FIRB 费用、律师费与验房成本，明确所需资金。",
+        "points": {
+          "one": "自动计算各州印花税、FIRB 费用与海外买家附加税",
+          "two": "拆分贷款、管理、保险、维护等前期与长期支出",
+          "three": "按房产类型、价格与首付做情景比较，检验预算"
+        },
+        "imageAlt": "成本计算器界面预览",
+        "cta": "启动计算器"
+      },
+      "investmentAnalysis": {
+        "heading": "我的投资将如何表现？",
+        "body": "结合市场基准与自定义假设，预测租金收益、现金流与资本增值。",
+        "points": {
+          "one": "针对租金、空置率与利率变化的动态 ROI 与敏感度分析",
+          "two": "展示税前/税后现金流、正负齿轮效应与税务影响",
+          "three": "与澳股、债券、存款等资产做收益对比"
+        },
+        "imageAlt": "投资分析仪表板",
+        "cta": "查看投资分析"
+      },
+      "firbEligibility": {
+        "heading": "外国投资者需要承担哪些额外费用与规定？",
+        "body": "明确是否需要 FIRB 批准、费用多少，以及不同签证主体适用的规则与豁免。",
+        "points": {
+          "one": "为临居、公司与信托结构提供专门指引",
+          "two": "讲解时间线、所需文件以及违规后果",
+          "three": "提醒空置税、申报等持续义务"
+        },
+        "imageAlt": "FIRB 审批流程界面",
+        "cta": "查看 FIRB 要求"
+      },
+      "detailedReports": {
+        "heading": "在投资前我必须了解什么？",
+        "body": "生成详细报告，清楚说明假设、风险与下一步行动，让您更有信心投资。",
+        "points": {
+          "one": "包含成本、资格与核心指标的执行摘要",
+          "two": "提供情景对比、现金流表与敏感度分析",
+          "three": "附上海外投资者需要的免责声明与操作清单"
+        },
+        "imageAlt": "投资分析报告示例",
+        "cta": "下载示例报告"
+      }
+    },
     "leadCapture": {
       "title": "获取房产投资洞察更新",
-      "description": "了解新功能、投资技巧和市场更新。"
+      "description": "了解新功能、投资技巧和市场更新。",
+      "helper": "第一时间掌握 FIRB 新规、利率变动与最新分析工具。"
     }
   },
   "Footer": {
