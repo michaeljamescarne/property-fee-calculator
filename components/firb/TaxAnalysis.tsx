@@ -12,6 +12,18 @@ interface TaxAnalysisProps {
 export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
   const { t, currency } = useInvestmentTranslations();
 
+  // Safety checks for missing analytics data
+  if (!analytics || !analytics.taxAnalysis) {
+    return (
+      <div className="p-8 border rounded-lg bg-muted/30">
+        <h3 className="text-lg font-semibold mb-4">Tax Analysis & Benefits</h3>
+        <p className="text-muted-foreground">
+          Tax analysis data is not available. This section requires investment analytics to be enabled.
+        </p>
+      </div>
+    );
+  }
+
   const deductions = analytics.taxAnalysis.annualDeductions;
   const cgt = analytics.taxAnalysis.cgtOnExit;
 

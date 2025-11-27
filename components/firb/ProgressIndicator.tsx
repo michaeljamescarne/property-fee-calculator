@@ -8,14 +8,14 @@
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export type Step = 'citizenship' | 'property' | 'review' | 'results';
+export type Step = 'citizenship' | 'property' | 'financial' | 'review' | 'results';
 
 interface ProgressIndicatorProps {
   currentStep: Step;
   completedSteps: Step[];
 }
 
-const steps: Step[] = ['citizenship', 'property', 'review', 'results'];
+const steps: Step[] = ['citizenship', 'property', 'financial', 'review', 'results'];
 
 export default function ProgressIndicator({ currentStep, completedSteps }: ProgressIndicatorProps) {
   const t = useTranslations('FIRBCalculator.progress');
@@ -39,7 +39,7 @@ export default function ProgressIndicator({ currentStep, completedSteps }: Progr
                   <div
                     className={`
                       flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all shadow-sm
-                      ${isCurrent ? 'border-primary bg-gradient-to-br from-primary to-accent text-primary-foreground scale-110' : ''}
+                      ${isCurrent ? 'border-primary bg-primary text-primary-foreground scale-110' : ''}
                       ${isPast || isCompleted ? 'border-primary bg-primary text-primary-foreground' : ''}
                       ${!isCurrent && !isPast && !isCompleted ? 'border-border bg-muted text-muted-foreground' : ''}
                     `}

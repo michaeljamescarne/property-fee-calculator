@@ -55,11 +55,10 @@ export async function generateEnhancedPDF(
   currentY = generateInvestmentCosts(doc, reportData, currentY);
   currentY = generatePerformanceMetrics(doc, reportData, currentY);
   currentY = generateCashFlowAnalysis(doc, reportData, currentY);
-  currentY = generateTaxAnalysis(doc, reportData, currentY);
+  currentY = generateTaxAnalysisAndCGT(doc, reportData, currentY);
   currentY = generateProjection(doc, reportData, currentY);
   currentY = generateSensitivityAnalysis(doc, reportData, currentY);
-  currentY = generateCGTOnExit(doc, reportData, currentY);
-  currentY = generateInvestmentScore(doc, reportData, currentY);
+  currentY = generateInvestmentComparison(doc, reportData, currentY);
   currentY = generateGlossary(doc, currentY);
   generateDisclaimer(doc, currentY);
 
@@ -105,12 +104,19 @@ function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: numbe
   addMetricCard(doc, 'Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), 'After tax', COLORS.gray[800], cardStartY + 3 * (cardHeight + cardSpacing), leftColumnX);
   addMetricCard(doc, 'Investment Verdict', data.score.verdict, 'Overall assessment', COLORS.primary, cardStartY + 3 * (cardHeight + cardSpacing), rightColumnX);
 
+  // Row 5 - FIRB Status Box
+  const firbStatusColor = data.eligibility.status === 'Eligible' ? COLORS.success : 
+                         data.eligibility.status === 'Review Required' ? COLORS.warning : COLORS.danger;
+  const firbBackgroundColor = data.eligibility.status === 'Eligible' ? '#F0FDF4' : 
+                              data.eligibility.status === 'Review Required' ? '#FFFBEB' : '#FEF2F2';
+  addMetricCard(doc, 'FIRB Status', data.eligibility.status, 'Foreign investment approval', firbStatusColor, cardStartY + 4 * (cardHeight + cardSpacing), leftColumnX, firbBackgroundColor);
+
   // Key Strengths section
-  const strengthsY = cardStartY + 4 * (cardHeight + cardSpacing) + 20;
+  const strengthsY = cardStartY + 5 * (cardHeight + cardSpacing) + 20;
   const strengthsCurrentY = addSectionHeader(doc, 'Key Strengths', '', strengthsY);
   
   doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'normal');
+    doc.setFont('helvetica', 'normal');
   doc.text('• Good capital growth potential', SPACING.margin, strengthsCurrentY + 10);
   doc.text('• Significant tax benefits', SPACING.margin, strengthsCurrentY + 25);
 
@@ -119,7 +125,7 @@ function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: numbe
   const weaknessesCurrentY = addSectionHeader(doc, 'Key Weaknesses', '', weaknessesY);
   
   doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'normal');
+    doc.setFont('helvetica', 'normal');
   doc.text('• Below average rental yield', SPACING.margin, weaknessesCurrentY + 10);
   doc.text('• Negative cash flow', SPACING.margin, weaknessesCurrentY + 25);
 
@@ -136,7 +142,7 @@ function generateExecutiveSummary(doc: jsPDF, data: PDFReportData, startY: numbe
 }
 
 function generateTableOfContents(doc: jsPDF): number {
-  const currentY = addSectionHeader(doc, 'Table of Contents', 'Report Sections & Page Numbers', SPACING.margin);
+  const currentY = addSectionHeader(doc, 'Table of Contents', '', SPACING.margin);
   
   const sections = [
     { title: 'Executive Summary', page: 2 },
@@ -144,13 +150,12 @@ function generateTableOfContents(doc: jsPDF): number {
     { title: 'Investment Cost Breakdown', page: 5 },
     { title: 'Performance Metrics', page: 6 },
     { title: 'Cash Flow Analysis', page: 7 },
-    { title: 'Tax Analysis', page: 8 },
+    { title: 'Tax Analysis & Planning', page: 8 },
     { title: '10-Year Projection', page: 9 },
     { title: 'Sensitivity Analysis', page: 10 },
-    { title: 'Capital Gains Tax (CGT) on Exit', page: 11 },
-    { title: 'Investment Score Breakdown', page: 12 },
-    { title: 'Glossary of Terms', page: 13 },
-    { title: 'Disclaimer & Important Information', page: 15 }
+    { title: 'Investment Comparison', page: 11 },
+    { title: 'Glossary of Terms', page: 12 },
+    { title: 'Disclaimer & Important Information', page: 13 }
   ];
   
   let yPosition = currentY + 20;
@@ -211,10 +216,55 @@ function generateFIRBEligibility(doc: jsPDF, data: PDFReportData, startY: number
     ['FIRB Status', data.eligibility.status]
   ];
   
-  addDataTable(doc, ['Detail', 'Value'], eligibilityRows, currentY, {
+  const tableEndY = addDataTable(doc, ['Detail', 'Value'], eligibilityRows, currentY, {
     title: 'Eligibility Details',
     widths: [80, 60],
     align: ['left', 'left']
+  });
+
+  // Recommendations section
+  const recommendationsY = tableEndY + 20;
+  doc.setFontSize(FONTS.title);
+    doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Recommendations', SPACING.margin, recommendationsY);
+
+  // Sample recommendations (in real implementation, these would come from data.eligibility.recommendations)
+  const recommendations = [
+    'Ensure all required documentation is prepared before FIRB application',
+    'Consider engaging a FIRB specialist for complex cases',
+    'Review property type restrictions for your visa category',
+    'Verify compliance with state-specific foreign buyer requirements'
+  ];
+
+  let currentRecY = recommendationsY + 20;
+  recommendations.forEach((recommendation, index) => {
+    // Recommendation box with light blue background
+    const boxWidth = doc.internal.pageSize.getWidth() - (SPACING.margin * 2);
+    const boxHeight = 25;
+    
+    // Light blue background
+    doc.setFillColor(239, 246, 255); // #EFF6FF
+    doc.roundedRect(SPACING.margin, currentRecY, boxWidth, boxHeight, 3, 3, 'F');
+    
+    // Blue border
+    doc.setDrawColor(59, 130, 246); // #3B82F6
+    doc.setLineWidth(1);
+    doc.roundedRect(SPACING.margin, currentRecY, boxWidth, boxHeight, 3, 3, 'S');
+    
+    // Checkmark icon
+    doc.setTextColor(59, 130, 246);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+    doc.text('✓', SPACING.margin + 8, currentRecY + 15);
+      
+    // Recommendation text
+    doc.setTextColor(COLORS.gray[800]);
+    doc.setFontSize(FONTS.body);
+      doc.setFont('helvetica', 'normal');
+    doc.text(recommendation, SPACING.margin + 20, currentRecY + 15);
+    
+    currentRecY += boxHeight + 10;
   });
 
   return addPageBreak(doc);
@@ -223,20 +273,68 @@ function generateFIRBEligibility(doc: jsPDF, data: PDFReportData, startY: number
 function generateInvestmentCosts(doc: jsPDF, data: PDFReportData, startY: number): number {
   const currentY = addSectionHeader(doc, 'Investment Costs', 'Complete Cost Breakdown', startY);
   
-  // Total investment card
-  addMetricCard(doc, 'Total Investment', formatCurrency(data.costs.totalInvestment), 'Including all costs', COLORS.primary, currentY);
+  // Purchase Price section
+  const purchasePriceRows = [
+    ['Property Purchase Price', formatCurrency(data.property.purchasePrice)]
+  ];
   
-  // Government fees table
+  addDataTable(doc, ['Item', 'Amount'], purchasePriceRows, currentY, {
+    title: 'Purchase Price',
+    widths: [120, 40],
+    align: ['left', 'right']
+  });
+
+  // Government Fees & Taxes section
   const governmentFeesRows = [
     ['FIRB Application Fee', formatCurrency(data.costs.firbFee)],
     ['Stamp Duty', formatCurrency(data.costs.stampDuty)],
     ['Foreign Buyer Surcharge', formatCurrency(data.costs.foreignBuyerSurcharge)],
-    ['Total Government Fees', formatCurrency(data.costs.firbFee + data.costs.stampDuty + data.costs.foreignBuyerSurcharge)]
+    ['**Subtotal - Government Fees**', formatCurrency(data.costs.firbFee + data.costs.stampDuty + data.costs.foreignBuyerSurcharge)]
   ];
   
-  addDataTable(doc, ['Fee Type', 'Amount'], governmentFeesRows, currentY + 50, {
-    title: 'Government Fees',
-    widths: [100, 40],
+  const govTableEndY = addDataTable(doc, ['Fee Type', 'Amount'], governmentFeesRows, currentY + 80, {
+    title: 'Government Fees & Taxes',
+    widths: [120, 40],
+    align: ['left', 'right']
+  });
+
+  // Professional Fees section
+  const professionalFeesRows = [
+    ['Legal/Conveyancing Fees', formatCurrency(data.costs.legalFees || 2500)],
+    ['Building & Pest Inspection', formatCurrency(data.costs.inspectionFees || 800)],
+    ['**Subtotal - Professional Fees**', formatCurrency((data.costs.legalFees || 2500) + (data.costs.inspectionFees || 800))]
+  ];
+  
+  const profTableEndY = addDataTable(doc, ['Fee Type', 'Amount'], professionalFeesRows, govTableEndY + 20, {
+    title: 'Professional Fees',
+    widths: [120, 40],
+    align: ['left', 'right']
+  });
+
+  // Loan Costs section
+  const loanCostsRows = [
+    ['Loan Establishment Fee', formatCurrency(data.costs.loanEstablishmentFee || 1000)],
+    ['Lenders Mortgage Insurance', formatCurrency(data.costs.lmiFee || 0)]
+  ];
+  
+  const loanTableEndY = addDataTable(doc, ['Fee Type', 'Amount'], loanCostsRows, profTableEndY + 20, {
+    title: 'Loan Costs',
+    widths: [120, 40],
+    align: ['left', 'right']
+  });
+
+  // Annual Ongoing Costs section
+  const ongoingCostsRows = [
+    ['Council Rates', formatCurrency(data.costs.annualCouncilRates || 2000)],
+    ['Insurance', formatCurrency(data.costs.annualInsurance || 1200)],
+    ['Maintenance & Repairs', formatCurrency(data.costs.annualMaintenance || 3000)],
+    ['Property Management', formatCurrency(data.costs.annualPropertyManagement || 2400)],
+    ['**Total Annual Ongoing Costs**', formatCurrency((data.costs.annualCouncilRates || 2000) + (data.costs.annualInsurance || 1200) + (data.costs.annualMaintenance || 3000) + (data.costs.annualPropertyManagement || 2400))]
+  ];
+  
+  addDataTable(doc, ['Cost Item', 'Annual Amount'], ongoingCostsRows, loanTableEndY + 20, {
+    title: 'Annual Ongoing Costs',
+    widths: [120, 40],
     align: ['left', 'right']
   });
 
@@ -246,11 +344,40 @@ function generateInvestmentCosts(doc: jsPDF, data: PDFReportData, startY: number
 function generatePerformanceMetrics(doc: jsPDF, data: PDFReportData, startY: number): number {
   const currentY = addSectionHeader(doc, 'Performance Metrics', 'Rental Yield & Return Analysis', startY);
   
-  // Metric cards
-  addMetricCard(doc, 'Gross Yield', formatPercentage(data.performance.grossYield), 'Annual rental income / Property value', COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Net Yield', formatPercentage(data.performance.netYield), 'After expenses', COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Annualized ROI', formatPercentage(data.performance.annualizedROI), 'Total return', COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), 'After tax', COLORS.gray[800], currentY);
+  // Comprehensive metrics table
+  const metricsRows = [
+    ['Gross Rental Yield', formatPercentage(data.performance.grossYield), 'Industry average: 3.5-4.5%'],
+    ['Net Rental Yield', formatPercentage(data.performance.netYield), 'After all expenses'],
+    ['Annualized ROI', formatPercentage(data.performance.annualizedROI), 'Total return including capital growth'],
+    ['Monthly Cash Flow', formatCurrency(data.performance.monthlyCashFlow), data.performance.monthlyCashFlow >= 0 ? 'Positive cash flow' : 'Negative cash flow']
+  ];
+  
+  const tableEndY = addDataTable(doc, ['Metric', 'Value', 'Description'], metricsRows, currentY, {
+    title: 'Performance Metrics Summary',
+    widths: [60, 40, 80],
+    align: ['left', 'right', 'left']
+  });
+
+  // Input Assumptions section
+  const assumptionsY = tableEndY + 20;
+  doc.setFontSize(FONTS.title);
+        doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Input Assumptions', SPACING.margin, assumptionsY);
+
+  const assumptionsRows = [
+    ['Rental Income', formatCurrency(data.performance.annualIncome), 'Annual gross rental income'],
+    ['Vacancy Rate', '5%', 'Expected vacancy allowance'],
+    ['Capital Growth Rate', '5%', 'Annual property value appreciation'],
+    ['Interest Rate', '6.5%', 'Current mortgage interest rate'],
+    ['Management Fees', '8%', 'Property management commission']
+  ];
+
+  addDataTable(doc, ['Assumption', 'Value', 'Description'], assumptionsRows, assumptionsY + 20, {
+    title: 'Key Assumptions',
+    widths: [60, 40, 80],
+    align: ['left', 'right', 'left']
+  });
 
   return addPageBreak(doc);
 }
@@ -258,18 +385,82 @@ function generatePerformanceMetrics(doc: jsPDF, data: PDFReportData, startY: num
 function generateCashFlowAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
   const currentY = addSectionHeader(doc, 'Cash Flow Analysis', 'Income vs Expenses Breakdown', startY);
   
-  // Summary cards
-  addMetricCard(doc, 'Annual Income', formatCurrency(data.performance.annualIncome), 'Gross rental income', COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Effective Income', formatCurrency(data.performance.effectiveIncome), 'After vacancy allowance', COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Total Expenses', formatCurrency(data.performance.totalExpenses), 'All costs', COLORS.gray[800], currentY);
+  // Three summary boxes at top
+  const cardStartY = currentY + 20;
+  const cardWidth = 50;
+  const cardHeight = 35;
+  const cardSpacing = 10;
+  
+  addMetricCard(doc, 'Annual Income', formatCurrency(data.performance.annualIncome), 'Gross rental income', COLORS.success, cardStartY, SPACING.margin);
+  addMetricCard(doc, 'Annual Expenses', formatCurrency(data.performance.totalExpenses), 'All costs', COLORS.danger, cardStartY, SPACING.margin + cardWidth + cardSpacing);
+  addMetricCard(doc, 'After-Tax Cash Flow', formatCurrency(data.performance.monthlyCashFlow * 12), 'Annual net cash flow', data.performance.monthlyCashFlow >= 0 ? COLORS.success : COLORS.danger, cardStartY, SPACING.margin + 2 * (cardWidth + cardSpacing));
+
+  // Expense Breakdown table
+  const expenseBreakdownY = cardStartY + cardHeight + 30;
+  const expenseRows = [
+    ['Loan Interest', formatCurrency(data.performance.totalExpenses * 0.7)], // Estimate
+    ['Property Management', formatCurrency(data.performance.totalExpenses * 0.15)], // Estimate
+    ['Maintenance & Repairs', formatCurrency(data.performance.totalExpenses * 0.08)], // Estimate
+    ['Council Rates', formatCurrency(data.performance.totalExpenses * 0.04)], // Estimate
+    ['Insurance', formatCurrency(data.performance.totalExpenses * 0.03)], // Estimate
+    ['**Total Annual Expenses**', formatCurrency(data.performance.totalExpenses)]
+  ];
+  
+  const expenseTableEndY = addDataTable(doc, ['Expense Item', 'Annual Amount'], expenseRows, expenseBreakdownY, {
+    title: 'Expense Breakdown',
+    widths: [100, 40],
+    align: ['left', 'right']
+  });
+
+  // Negative Gearing Tax Benefit box
+  const taxBenefitY = expenseTableEndY + 20;
+  const taxBenefitBoxWidth = doc.internal.pageSize.getWidth() - (SPACING.margin * 2);
+  const taxBenefitBoxHeight = 30;
+  
+  // Green background for tax benefit
+  doc.setFillColor(240, 253, 244); // #F0FDF4
+  doc.roundedRect(SPACING.margin, taxBenefitY, taxBenefitBoxWidth, taxBenefitBoxHeight, 3, 3, 'F');
+  
+  // Green border
+  doc.setDrawColor(34, 197, 94); // #22C55E
+  doc.setLineWidth(1);
+  doc.roundedRect(SPACING.margin, taxBenefitY, taxBenefitBoxWidth, taxBenefitBoxHeight, 3, 3, 'S');
+  
+  // Tax benefit text
+  doc.setTextColor(COLORS.gray[800]);
+  doc.setFontSize(FONTS.body);
+    doc.setFont('helvetica', 'bold');
+  doc.text('Negative Gearing Tax Benefit', SPACING.margin + 10, taxBenefitY + 12);
+  
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(FONTS.small);
+  doc.text(`Annual tax savings: ${formatCurrency(data.taxBenefits.totalDeductions * 0.37)}`, SPACING.margin + 10, taxBenefitY + 22);
+
+  // Monthly Cash Flow figures
+  const monthlyCashFlowY = taxBenefitY + taxBenefitBoxHeight + 20;
+  doc.setFontSize(FONTS.title);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Monthly Cash Flow', SPACING.margin, monthlyCashFlowY);
+
+  const monthlyRows = [
+    ['Before Tax', formatCurrency(data.performance.monthlyCashFlow + (data.taxBenefits.totalDeductions * 0.37 / 12))],
+    ['After Tax', formatCurrency(data.performance.monthlyCashFlow)]
+  ];
+
+  addDataTable(doc, ['Cash Flow Type', 'Monthly Amount'], monthlyRows, monthlyCashFlowY + 20, {
+    title: 'Monthly Cash Flow Breakdown',
+    widths: [80, 40],
+    align: ['left', 'right']
+  });
 
   return addPageBreak(doc);
 }
 
-function generateTaxAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
-  const currentY = addSectionHeader(doc, 'Tax Analysis', 'Deductions & Negative Gearing', startY);
+function generateTaxAnalysisAndCGT(doc: jsPDF, data: PDFReportData, startY: number): number {
+  const currentY = addSectionHeader(doc, 'Tax Analysis & Planning', 'Deductions, Negative Gearing & CGT', startY);
   
-  // Annual deductions table
+  // Tax Deductions section
   const deductionsRows = [
     ['Loan Interest', formatCurrency(data.taxBenefits.totalDeductions * 0.7)], // Estimate
     ['Council Rates', formatCurrency(data.ongoingCosts.councilRates)],
@@ -277,11 +468,54 @@ function generateTaxAnalysis(doc: jsPDF, data: PDFReportData, startY: number): n
     ['Maintenance', formatCurrency(data.ongoingCosts.maintenance)],
     ['Depreciation', formatCurrency(data.taxBenefits.totalDeductions * 0.1)], // Estimate
     ['Other Deductions', formatCurrency(data.taxBenefits.totalDeductions * 0.1)], // Estimate
-    ['Total Deductions', formatCurrency(data.taxBenefits.totalDeductions)]
+    ['**Total Deductions**', formatCurrency(data.taxBenefits.totalDeductions)]
   ];
   
-  addDataTable(doc, ['Deduction Type', 'Annual Amount'], deductionsRows, currentY, {
-    title: 'Annual Deductions',
+  const deductionsTableEndY = addDataTable(doc, ['Deduction Type', 'Annual Amount'], deductionsRows, currentY, {
+    title: 'Annual Tax Deductions',
+    widths: [100, 40],
+    align: ['left', 'right']
+  });
+
+  // Negative Gearing Benefits section
+  const negativeGearingY = deductionsTableEndY + 20;
+  doc.setFontSize(FONTS.title);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Negative Gearing Benefits', SPACING.margin, negativeGearingY);
+
+  const negativeGearingRows = [
+    ['Annual Tax Savings (37% bracket)', formatCurrency(data.taxBenefits.totalDeductions * 0.37)],
+    ['Monthly Tax Benefit', formatCurrency(data.taxBenefits.totalDeductions * 0.37 / 12)],
+    ['Effective Cash Flow Improvement', formatCurrency(data.taxBenefits.totalDeductions * 0.37)]
+  ];
+
+  const negativeGearingTableEndY = addDataTable(doc, ['Benefit Type', 'Amount'], negativeGearingRows, negativeGearingY + 20, {
+    title: 'Tax Benefits Summary',
+    widths: [100, 40],
+    align: ['left', 'right']
+  });
+
+  // CGT on Exit section
+  const cgtY = negativeGearingTableEndY + 20;
+  doc.setFontSize(FONTS.title);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Capital Gains Tax on Exit', SPACING.margin, cgtY);
+
+  const cgtRows = [
+    ['Sale Price (10 years)', formatCurrency(data.cgt.salePrice)],
+    ['Original Purchase Price', formatCurrency(data.cgt.purchasePrice)],
+    ['Purchase Costs', formatCurrency(data.cgt.purchaseCosts)],
+    ['Selling Costs', formatCurrency(data.cgt.sellingCosts)],
+    ['Cost Base', formatCurrency(data.cgt.costBase)],
+    ['Capital Gain', formatCurrency(data.cgt.capitalGain)],
+    ['CGT Payable (50% discount)', formatCurrency(data.cgt.capitalGain * 0.5 * 0.37)],
+    ['Net Proceeds After CGT', formatCurrency(data.cgt.salePrice - (data.cgt.capitalGain * 0.5 * 0.37))]
+  ];
+
+  addDataTable(doc, ['Item', 'Amount'], cgtRows, cgtY + 20, {
+    title: 'CGT Calculation',
     widths: [100, 40],
     align: ['left', 'right']
   });
@@ -292,11 +526,49 @@ function generateTaxAnalysis(doc: jsPDF, data: PDFReportData, startY: number): n
 function generateProjection(doc: jsPDF, data: PDFReportData, startY: number): number {
   const currentY = addSectionHeader(doc, '10-Year Projection', 'Long-term Investment Outlook', startY);
   
-  // Summary cards
-  addMetricCard(doc, 'Starting Value', formatCurrency(data.projection.startingValue), 'Current property value', COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Final Value', formatCurrency(data.projection.finalValue), `After ${data.projection.years} years`, COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Growth Rate', formatPercentage(data.projection.growthRate), 'Annual appreciation', COLORS.gray[800], currentY);
-  addMetricCard(doc, 'Total ROI', formatPercentage(data.projection.totalROI), 'Overall return', COLORS.gray[800], currentY);
+  // Summary boxes at top
+  const cardStartY = currentY + 20;
+  const cardWidth = 50;
+  const cardHeight = 35;
+  const cardSpacing = 10;
+  
+  addMetricCard(doc, 'Starting Value', formatCurrency(data.projection.startingValue), 'Current property value', COLORS.gray[800], cardStartY, SPACING.margin);
+  addMetricCard(doc, 'Final Value', formatCurrency(data.projection.finalValue), `After ${data.projection.years} years`, COLORS.success, cardStartY, SPACING.margin + cardWidth + cardSpacing);
+  addMetricCard(doc, 'Your Equity', formatCurrency(data.projection.finalValue * 0.8), 'Estimated equity at sale', COLORS.primary, cardStartY, SPACING.margin + 2 * (cardWidth + cardSpacing));
+  addMetricCard(doc, 'Total ROI', formatPercentage(data.projection.totalROI), 'Overall return', COLORS.success, cardStartY, SPACING.margin + 3 * (cardWidth + cardSpacing));
+
+  // Year-by-Year Summary table
+  const tableY = cardStartY + cardHeight + 30;
+  doc.setFontSize(FONTS.title);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Year-by-Year Summary', SPACING.margin, tableY);
+
+  // Generate year-by-year data
+  const yearByYearRows = [];
+  let currentValue = data.projection.startingValue;
+  let cumulativeReturn = 0;
+  
+  for (let year = 1; year <= 10; year++) {
+    currentValue = currentValue * (1 + data.projection.growthRate);
+    const equity = currentValue * 0.8; // Assuming 80% LVR
+    const annualCashFlow = data.performance.monthlyCashFlow * 12;
+    cumulativeReturn += annualCashFlow;
+    
+    yearByYearRows.push([
+      `Year ${year}`,
+      formatCurrency(currentValue),
+      formatCurrency(equity),
+      formatCurrency(annualCashFlow),
+      formatCurrency(cumulativeReturn)
+    ]);
+  }
+
+  addDataTable(doc, ['Year', 'Property Value', 'Equity', 'Cash Flow', 'Cumulative Return'], yearByYearRows, tableY + 20, {
+    title: '10-Year Projection Details',
+    widths: [20, 40, 40, 40, 40],
+    align: ['left', 'right', 'right', 'right', 'right']
+  });
 
   return addPageBreak(doc);
 }
@@ -321,116 +593,247 @@ function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData, startY: nu
   return addPageBreak(doc);
 }
 
-function generateCGTOnExit(doc: jsPDF, data: PDFReportData, startY: number): number {
-  const currentY = addSectionHeader(doc, 'CGT on Exit', 'Capital Gains Tax Calculation', startY);
+function generateInvestmentComparison(doc: jsPDF, data: PDFReportData, startY: number): number {
+  const currentY = addSectionHeader(doc, 'Investment Comparison', 'Property vs Other Investment Options', startY);
   
-  // Sale calculation table
-  const saleRows = [
-    ['Sale Price', formatCurrency(data.cgt.salePrice)],
-    ['Original Purchase Price', formatCurrency(data.cgt.purchasePrice)],
-    ['Purchase Costs', formatCurrency(data.cgt.purchaseCosts)],
-    ['Selling Costs', formatCurrency(data.cgt.sellingCosts)],
-    ['Cost Base', formatCurrency(data.cgt.costBase)],
-    ['Capital Gain', formatCurrency(data.cgt.capitalGain)]
+  // Investment comparison table
+  const comparisonRows = [
+    ['Property Investment', '8.5%', '125%', '█ █ █ █ █ █ █ █ ░ ░'],
+    ['ASX 200 Stocks', '7.2%', '100%', '█ █ █ █ █ █ █ ░ ░ ░'],
+    ['Term Deposit', '4.5%', '55%', '█ █ █ █ ░ ░ ░ ░ ░ ░'],
+    ['Government Bonds', '3.8%', '45%', '█ █ █ ░ ░ ░ ░ ░ ░ ░'],
+    ['High-Interest Savings', '3.2%', '38%', '█ █ ░ ░ ░ ░ ░ ░ ░ ░']
   ];
   
-  addDataTable(doc, ['Item', 'Amount'], saleRows, currentY, {
-    title: 'Sale Calculation',
-    widths: [100, 40],
-    align: ['left', 'right']
+  addDataTable(doc, ['Investment Type', 'Annual Rate', '10-Year Return', 'Visual Comparison'], comparisonRows, currentY, {
+    title: 'Investment Performance Comparison',
+    widths: [60, 30, 30, 60],
+    align: ['left', 'right', 'right', 'left']
   });
+
+  // Disclaimer box
+  const disclaimerY = currentY + 120;
+  const disclaimerBoxWidth = doc.internal.pageSize.getWidth() - (SPACING.margin * 2);
+  const disclaimerBoxHeight = 40;
+  
+  // Light gray background
+  doc.setFillColor(249, 250, 251); // #F9FAFB
+  doc.roundedRect(SPACING.margin, disclaimerY, disclaimerBoxWidth, disclaimerBoxHeight, 3, 3, 'F');
+  
+  // Gray border
+  doc.setDrawColor(209, 213, 219); // #D1D5DB
+  doc.setLineWidth(1);
+  doc.roundedRect(SPACING.margin, disclaimerY, disclaimerBoxWidth, disclaimerBoxHeight, 3, 3, 'S');
+  
+  // Disclaimer text
+  doc.setTextColor(COLORS.gray[600]);
+  doc.setFontSize(FONTS.small);
+    doc.setFont('helvetica', 'normal');
+  doc.text('Disclaimer: Comparison assumes historical averages and does not account for individual risk tolerance,', SPACING.margin + 10, disclaimerY + 12);
+  doc.text('tax implications, or market volatility. Past performance does not guarantee future results.', SPACING.margin + 10, disclaimerY + 22);
 
   return addPageBreak(doc);
 }
 
-function generateInvestmentScore(doc: jsPDF, data: PDFReportData, startY: number): number {
-  const currentY = addSectionHeader(doc, 'Investment Score', 'Overall Assessment & Recommendation', startY);
-  
-  // Overall verdict card
-  addMetricCard(doc, 'Overall Score', `${data.score.overall}/100`, data.score.verdict, COLORS.primary, currentY);
-  
-  // Score breakdown table
-  const scoreRows = [
-    ['Rental Yield', data.score.rentalYield],
-    ['Capital Growth', data.score.capitalGrowth],
-    ['Cash Flow', data.score.cashFlow],
-    ['Tax Efficiency', data.score.taxEfficiency],
-    ['Risk Profile', data.score.riskProfile],
-    ['Overall Score', data.score.overall]
-  ];
-  
-  addDataTable(doc, ['Category', 'Score'], scoreRows, currentY + 50, {
-    title: 'Score Breakdown',
-    widths: [100, 40],
-    align: ['left', 'center']
-  });
-
-  return addPageBreak(doc);
-}
 
 function generateGlossary(doc: jsPDF, startY: number): number {
   const currentY = addSectionHeader(doc, 'Glossary', 'Key Terms & Definitions', startY);
   
   const glossaryTerms = [
-    ['FIRB', 'Foreign Investment Review Board - Australian government body regulating foreign property investment'],
-    ['Stamp Duty', 'State government tax on property purchases'],
-    ['Foreign Buyer Surcharge', 'Additional stamp duty for non-resident buyers'],
-    ['Gross Yield', 'Annual rental income divided by property value'],
-    ['Net Yield', 'Annual rental income minus expenses, divided by property value'],
-    ['Negative Gearing', 'When rental income is less than expenses, creating tax deductions'],
-    ['Capital Gains Tax', 'Tax on profit from property sale'],
-    ['Loan-to-Value Ratio', 'Loan amount as percentage of property value'],
-    ['Vacancy Rate', 'Percentage of time property is unoccupied'],
-    ['Capital Growth', 'Increase in property value over time']
+    ['FIRB', 'Foreign Investment Review Board', 'Australian government body regulating foreign property investment'],
+    ['ATO', 'Australian Taxation Office', 'Government agency responsible for tax collection and administration'],
+    ['ROI', 'Return on Investment', 'Percentage return on invested capital over time'],
+    ['LVR', 'Loan-to-Value Ratio', 'Loan amount as percentage of property value'],
+    ['CGT', 'Capital Gains Tax', 'Tax on profit from property sale'],
+    ['GST', 'Goods and Services Tax', '10% tax on most goods and services in Australia'],
+    ['Stamp Duty', 'Transfer Duty', 'State government tax on property purchases'],
+    ['Foreign Purchaser Surcharge', 'Foreign Buyer Surcharge', 'Additional stamp duty for non-resident buyers'],
+    ['Land Tax', 'Annual Land Tax', 'Annual tax on land ownership in some states'],
+    ['Absentee Owner Surcharge', 'Absentee Surcharge', 'Additional land tax for non-resident owners'],
+    ['Vacancy Fee', 'Foreign Owner Vacancy Fee', 'Annual fee for foreign owners of vacant land'],
+    ['Negative Gearing', 'Negative Gearing', 'When rental income is less than expenses, creating tax deductions'],
+    ['Depreciation', 'Property Depreciation', 'Tax deduction for wear and tear on property'],
+    ['Gross Rental Yield', 'Gross Yield', 'Annual rental income divided by property value'],
+    ['Net Rental Yield', 'Net Yield', 'Annual rental income minus expenses, divided by property value'],
+    ['Cash-on-Cash Return', 'Cash Return', 'Annual cash flow divided by initial cash investment'],
+    ['Strata Fees', 'Strata Levies', 'Monthly fees for apartment/unit maintenance and management'],
+    ['Council Rates', 'Council Rates', 'Annual local government property tax'],
+    ['Settlement', 'Property Settlement', 'Legal process of transferring property ownership'],
+    ['Conveyancing', 'Conveyancing', 'Legal process of property transfer'],
+    ['New Dwelling', 'New Dwelling', 'Recently built property eligible for foreign purchase'],
+    ['Established Dwelling', 'Established Dwelling', 'Existing property restricted for foreign buyers'],
+    ['Vacant Land', 'Vacant Land', 'Empty land requiring development approval'],
+    ['Temporary Resident', 'Temporary Resident', 'Non-citizen with temporary visa status'],
+    ['Ordinarily Resident', 'Ordinarily Resident', 'Person living in Australia with permanent residency'],
+    ['Equity', 'Property Equity', 'Difference between property value and outstanding loan'],
+    ['Capital Growth', 'Capital Growth', 'Increase in property value over time'],
+    ['Cash Flow', 'Cash Flow', 'Net income after all expenses']
   ];
   
-  // Simple glossary display
-  glossaryTerms.forEach((term, index) => {
-    doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'bold');
-    doc.text(term[0], SPACING.margin, currentY + (index * 15));
+  // Two-column layout for glossary
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const leftColumnX = SPACING.margin;
+  const rightColumnX = pageWidth / 2 + SPACING.margin;
+  const lineHeight = 12;
+  let currentTermY = currentY + 20;
+
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+
+  const midPoint = Math.ceil(glossaryTerms.length / 2);
+  
+  for (let i = 0; i < glossaryTerms.length; i++) {
+    const term = glossaryTerms[i];
+    const isLeftColumn = i < midPoint;
+    const x = isLeftColumn ? leftColumnX : rightColumnX;
+    const y = isLeftColumn ? currentTermY + (i * lineHeight) : currentTermY + ((i - midPoint) * lineHeight);
+
+    // Term in bold
+    doc.setFont('helvetica', 'bold');
+    doc.text(term[0], x, y);
     
-    doc.setFont('helvetica', 'normal');
+    // Full name in italics
+    doc.setFont('helvetica', 'italic');
     doc.setFontSize(FONTS.small);
-    doc.text(term[1], SPACING.margin + 10, currentY + (index * 15) + 5);
-  });
+    doc.text(` (${term[1]})`, x + doc.getTextWidth(term[0]) + 2, y);
+    
+    // Definition on next line
+    doc.setFont('helvetica', 'normal');
+    doc.text(term[2], x, y + 6);
+  }
 
   return addPageBreak(doc);
 }
 
 function generateDisclaimer(doc: jsPDF, startY: number): void {
-  addSectionHeader(doc, 'Disclaimer', 'Important Information', startY);
+  addSectionHeader(doc, 'IMPORTANT LEGAL DISCLAIMER', 'Comprehensive Legal Information', startY);
   
-  const disclaimerText = `
-This report is for informational purposes only and does not constitute financial, investment, or tax advice. 
-
-Property investment involves significant risks including but not limited to:
-• Market volatility and economic downturns
-• Interest rate changes affecting loan costs
-• Vacancy periods reducing rental income
-• Unexpected maintenance and repair costs
-• Changes in government policy and taxation
-• Currency fluctuations for foreign investors
-
-All calculations are estimates based on current market conditions and assumptions. Actual results may vary significantly. 
-
-Before making any investment decisions, you should:
-• Consult with qualified financial advisors
-• Obtain professional property valuations
-• Review all legal and tax implications
-• Consider your personal financial situation
-• Understand all costs and risks involved
-
-The information in this report is current as of the generation date but may become outdated. Always verify current regulations, rates, and market conditions.
-
-Foreign investment in Australian property is subject to FIRB regulations which may change. Ensure compliance with all applicable laws and regulations.
-
-This report does not guarantee investment performance or returns. Past performance is not indicative of future results.
-  `.trim();
+  let currentY = startY + 40;
+  
+  // Not Financial Advice section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Not Financial Advice', SPACING.margin, currentY);
+  currentY += 15;
   
   doc.setFontSize(FONTS.small);
-        doc.setFont('helvetica', 'normal');
-  doc.text(disclaimerText, SPACING.margin, startY + 40, {
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('This report is provided for informational purposes only and does NOT constitute financial, investment, legal, or tax advice. The calculations and projections are estimates based on the information provided and current regulations.', SPACING.margin, currentY, {
+    maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
+    align: 'justify'
+  });
+  currentY += 25;
+
+  // Professional Advice Required section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Professional Advice Required', SPACING.margin, currentY);
+  currentY += 15;
+  
+  doc.setFontSize(FONTS.small);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Before making any investment decisions, you must consult with qualified professionals including financial advisors, accountants, lawyers, and FIRB specialists. This report cannot replace personalized professional advice.', SPACING.margin, currentY, {
+    maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
+    align: 'justify'
+  });
+  currentY += 25;
+
+  // Information Accuracy section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Information Accuracy', SPACING.margin, currentY);
+  currentY += 15;
+  
+  doc.setFontSize(FONTS.small);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('All calculations are estimates based on current market conditions, interest rates, and tax laws. Actual costs, returns, and outcomes may vary significantly from these projections.', SPACING.margin, currentY, {
+    maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
+    align: 'justify'
+  });
+  currentY += 25;
+
+  // Regulation Changes section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Regulation Changes', SPACING.margin, currentY);
+  currentY += 15;
+  
+  doc.setFontSize(FONTS.small);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('FIRB regulations, tax laws, and property investment rules are subject to change. Always verify current regulations and requirements before proceeding with any investment.', SPACING.margin, currentY, {
+    maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
+    align: 'justify'
+  });
+  currentY += 25;
+
+  // Past Performance section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Past Performance', SPACING.margin, currentY);
+  currentY += 15;
+  
+  doc.setFontSize(FONTS.small);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Past performance does not guarantee future results. Property values can go down as well as up, and rental income is not guaranteed.', SPACING.margin, currentY, {
+    maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
+    align: 'justify'
+  });
+  currentY += 25;
+
+  // Currency and Interest Rate Risk section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Currency and Interest Rate Risk', SPACING.margin, currentY);
+  currentY += 15;
+  
+  doc.setFontSize(FONTS.small);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('Foreign investors face currency exchange rate risks. Interest rate changes can significantly impact loan costs and property affordability.', SPACING.margin, currentY, {
+    maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
+    align: 'justify'
+  });
+  currentY += 25;
+
+  // Limitation of Liability section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Limitation of Liability', SPACING.margin, currentY);
+  currentY += 15;
+  
+  doc.setFontSize(FONTS.small);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('The creators of this report accept no liability for any losses, damages, or consequences arising from the use of this information or any investment decisions made based on this report.', SPACING.margin, currentY, {
+    maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
+    align: 'justify'
+  });
+  currentY += 25;
+
+  // Data Sources & Updates section
+  doc.setFontSize(FONTS.body);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(COLORS.danger);
+  doc.text('Data Sources & Updates', SPACING.margin, currentY);
+  currentY += 15;
+  
+  doc.setFontSize(FONTS.small);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(COLORS.gray[800]);
+  doc.text('This report uses publicly available data and estimates. For the most current information, please consult: (1) FIRB website: https://firb.gov.au, (2) ATO Foreign Investment: https://ato.gov.au/foreign-investment, (3) State Revenue Offices for stamp duty rates, (4) Licensed professionals for personalized advice.', SPACING.margin, currentY, {
     maxWidth: doc.internal.pageSize.getWidth() - (SPACING.margin * 2),
     align: 'justify'
   });

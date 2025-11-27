@@ -161,6 +161,24 @@ export function createBlogPost(
 }
 
 /**
+ * Get all blog posts for a locale
+ * Returns empty array for now - blog posts will be added later
+ */
+export function getAllBlogPosts(locale: string): BlogPost[] {
+  // Return empty array for now
+  return [];
+}
+
+/**
+ * Get a single blog post by slug and locale
+ * Returns null if not found
+ */
+export function getBlogPost(slug: string, locale: string): BlogPost | null {
+  // Return null for now - blog posts will be added later
+  return null;
+}
+
+/**
  * Instructions for using this utility:
  * 
  * 1. Create your blog content in markdown format

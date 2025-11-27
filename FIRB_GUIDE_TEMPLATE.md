@@ -390,3 +390,12 @@ Related Resources:
 - [FIRB Official Website](https://foreigninvestment.gov.au/)
 - [ATO Foreign Investment Portal](https://www.ato.gov.au/)
 - [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb-calculator)
+
+
+
+
+
+
+
+
+

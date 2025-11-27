@@ -12,6 +12,18 @@ interface InvestmentSummaryProps {
 export default function InvestmentSummary({ analytics }: InvestmentSummaryProps) {
   const { t, currency, percent } = useInvestmentTranslations();
 
+  // Safety checks for missing analytics data
+  if (!analytics || !analytics.rentalYield || !analytics.cashFlow || !analytics.roi) {
+    return (
+      <div className="p-8 border rounded-lg bg-muted/30">
+        <h3 className="text-lg font-semibold mb-4">Investment Performance Summary</h3>
+        <p className="text-muted-foreground">
+          Investment performance data is not available. This section requires investment analytics to be enabled.
+        </p>
+      </div>
+    );
+  }
+
   const getYieldTrend = (yieldValue: number, benchmark: number): 'good' | 'neutral' | 'warning' | 'poor' => {
     if (yieldValue >= benchmark * 1.2) return 'good';
     if (yieldValue >= benchmark * 0.9) return 'neutral';

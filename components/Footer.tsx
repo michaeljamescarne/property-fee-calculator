@@ -1,219 +1,97 @@
 'use client';
 
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
-import { Separator } from '@/components/ui/separator';
-import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
-  const t = useTranslations('Footer');
   const locale = useLocale();
-  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-t from-muted/30 to-background border-t border-border/40 mt-auto">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-4 gap-8">
+    <footer className="bg-muted/50 border-t border-border/40 mt-auto">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold">{t('company.name')}</h3>
+          <div>
+            <h3 className="font-semibold mb-4">Property Costs</h3>
             <p className="text-sm text-muted-foreground">
-              {t('company.description')}
+              Comprehensive property investment analysis for Australia
             </p>
-            <div className="flex gap-4">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold">{t('quickLinks.title')}</h3>
+          <div>
+            <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link
-                  href={`/${locale}`}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('quickLinks.home')}
+                <Link href={`/${locale}`} className="text-muted-foreground hover:text-primary transition-colors">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link
-                  href={`/${locale}/firb-calculator`}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('quickLinks.calculator')}
+                <Link href={`/${locale}/firb-calculator`} className="text-muted-foreground hover:text-primary transition-colors">
+                  FIRB Calculator
                 </Link>
               </li>
               <li>
-                <Link
-                  href={`/${locale}#features`}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('quickLinks.features')}
+                <Link href={`/${locale}/blog`} className="text-muted-foreground hover:text-primary transition-colors">
+                  Blog
                 </Link>
               </li>
               <li>
-                <Link
-                  href={`/${locale}#how-it-works`}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('quickLinks.howItWorks')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`/${locale}/faq`}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('quickLinks.faq')}
+                <Link href={`/${locale}/faq`} className="text-muted-foreground hover:text-primary transition-colors">
+                  FAQ
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* Resources */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold">{t('resources.title')}</h3>
+          <div>
+            <h3 className="font-semibold mb-4">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="https://firb.gov.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('resources.firb')}
+                <a href="https://firb.gov.au" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                  FIRB Website
                 </a>
               </li>
               <li>
-                <a
-                  href="https://www.ato.gov.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('resources.ato')}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.homeaffairs.gov.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('resources.homeAffairs')}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.legislation.gov.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('resources.legislation')}
+                <a href="https://www.ato.gov.au" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                  Australian Taxation Office
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold">{t('contact.title')}</h3>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-2">
-                <Mail className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                <a
-                  href="mailto:info@propertyfeecalculator.com"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('contact.email')}
-                </a>
+          {/* Legal */}
+          <div>
+            <h3 className="font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href={`/${locale}/privacy`} className="text-muted-foreground hover:text-primary transition-colors">
+                  Privacy Policy
+                </Link>
               </li>
-              <li className="flex items-start gap-2">
-                <Phone className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                <a
-                  href="tel:+61123456789"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t('contact.phone')}
-                </a>
+              <li>
+                <Link href={`/${locale}/terms`} className="text-muted-foreground hover:text-primary transition-colors">
+                  Terms of Service
+                </Link>
               </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                <span className="text-muted-foreground">
-                  {t('contact.address')}
-                </span>
+              <li>
+                <Link href={`/${locale}/disclaimer`} className="text-muted-foreground hover:text-primary transition-colors">
+                  Disclaimer
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <Separator className="my-8" />
-
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-          <p>
-            © {currentYear} {t('company.name')}. {t('company.rights')}
-          </p>
-          <div className="flex gap-6">
-            <Link
-              href={`/${locale}/privacy`}
-              className="hover:text-primary transition-colors"
-            >
-              {t('legal.privacy')}
-            </Link>
-            <Link
-              href={`/${locale}/terms`}
-              className="hover:text-primary transition-colors"
-            >
-              {t('legal.terms')}
-            </Link>
-            <Link
-              href={`/${locale}/disclaimer`}
-              className="hover:text-primary transition-colors"
-            >
-              {t('legal.disclaimer')}
-            </Link>
-          </div>
-        </div>
-
-        {/* Disclaimer */}
-        <div className="mt-8 p-4 bg-muted/50 rounded-lg">
-          <p className="text-xs text-muted-foreground text-center">
-            {t('disclaimer.text')}
+        <div className="mt-8 pt-8 border-t border-border/40 text-center text-sm text-muted-foreground">
+          <p>&copy; {new Date().getFullYear()} Property Costs. All rights reserved.</p>
+          <p className="mt-2 text-xs">
+            This tool provides estimates only. Always consult with a qualified professional for financial and legal advice.
           </p>
         </div>
       </div>
     </footer>
   );
 }
-

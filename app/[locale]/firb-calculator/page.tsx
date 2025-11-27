@@ -13,6 +13,7 @@ import { ArrowRight, ArrowLeft } from 'lucide-react';
 import ProgressIndicator, { Step } from '@/components/firb/ProgressIndicator';
 import CitizenshipStep from '@/components/firb/CitizenshipStep';
 import PropertyDetailsStep from '@/components/firb/PropertyDetailsStep';
+import FinancialDetailsStep from '@/components/firb/FinancialDetailsStep';
 import ReviewStep from '@/components/firb/ReviewStep';
 import ResultsPanel from '@/components/firb/ResultsPanel';
 import EmailResultsModal from '@/components/firb/EmailResultsModal';
@@ -22,7 +23,7 @@ import { EligibilityResult } from '@/lib/firb/eligibility';
 import { CostBreakdown } from '@/lib/firb/calculations';
 import { generateFIRBPDF } from '@/lib/pdf/generateFIRBPDF';
 import { generateEnhancedPDF } from '@/lib/pdf/generateEnhancedPDF';
-import type { InvestmentAnalytics } from '@/types/investment';
+import type { InvestmentAnalytics, InvestmentInputs } from '@/types/investment';
 
 export default function FIRBCalculatorPage() {
   const t = useTranslations('FIRBCalculator');
@@ -46,6 +47,9 @@ export default function FIRBCalculatorPage() {
     expeditedFIRB: false
   });
 
+  // Investment inputs state
+  const [investmentInputs, setInvestmentInputs] = useState<Partial<InvestmentInputs>>({});
+
   // Results state
   const [eligibility, setEligibility] = useState<EligibilityResult | null>(null);
   const [costs, setCosts] = useState<CostBreakdown | null>(null);
@@ -67,6 +71,51 @@ export default function FIRBCalculatorPage() {
       loadSavedCalculation(loadId);
     }
   }, [searchParams, isLoadingSavedCalculation, eligibility, costs]);
+
+  // Initialize investment inputs when property details are available
+  useEffect(() => {
+    if (formData.propertyValue && formData.state && formData.propertyType && Object.keys(investmentInputs).length === 0) {
+      // Generate default investment inputs (without costs, will be updated after calculation)
+      const depositAmount = (formData.propertyValue || 0) * ((formData.depositPercent || 20) / 100);
+      const loanAmount = (formData.propertyValue || 0) - depositAmount;
+      
+      // Estimate weekly rent based on state
+      const yieldRates: Record<AustralianState, number> = {
+        NSW: 0.032,
+        VIC: 0.034,
+        QLD: 0.045,
+        WA: 0.042,
+        SA: 0.041,
+        TAS: 0.048,
+        ACT: 0.038,
+        NT: 0.055,
+      };
+      const grossYield = yieldRates[formData.state] || 0.04;
+      const annualRent = (formData.propertyValue || 0) * grossYield;
+      const weeklyRent = Math.round(annualRent / 52);
+
+      setInvestmentInputs({
+        estimatedWeeklyRent: weeklyRent,
+        vacancyRate: 5,
+        rentGrowthRate: 3,
+        propertyManagementFee: 8,
+        lettingFee: 2,
+        selfManaged: false,
+        loanAmount,
+        interestRate: 6.5,
+        loanTerm: 30,
+        loanType: 'principalAndInterest',
+        interestOnlyPeriod: 0,
+        holdPeriod: 10,
+        capitalGrowthRate: 6,
+        marginalTaxRate: 37,
+        currencyExchangeRate: 1,
+        homeCurrency: 'AUD',
+        sellingCosts: 4,
+        cgtWithholdingRate: 12.5,
+      });
+    }
+  }, [formData.propertyValue, formData.state, formData.propertyType, formData.depositPercent]);
 
   // Function to load saved calculation
   const loadSavedCalculation = async (calculationId: string) => {
@@ -105,7 +154,7 @@ export default function FIRBCalculatorPage() {
         setCosts(calculationData.costs);
         
         // Mark all steps as completed and jump to results
-        setCompletedSteps(['citizenship', 'property', 'review']);
+        setCompletedSteps(['citizenship', 'property', 'financial', 'review']);
         setCurrentStep('results');
       }
     } catch (error) {
@@ -248,6 +297,11 @@ export default function FIRBCalculatorPage() {
       );
     }
 
+    if (step === 'financial') {
+      // Financial step is optional but we should have at least weekly rent
+      return !!(investmentInputs.estimatedWeeklyRent && investmentInputs.estimatedWeeklyRent > 0);
+    }
+
     return true;
   };
 
@@ -264,6 +318,8 @@ export default function FIRBCalculatorPage() {
     if (currentStep === 'citizenship') {
       setCurrentStep('property');
     } else if (currentStep === 'property') {
+      setCurrentStep('financial');
+    } else if (currentStep === 'financial') {
       setCurrentStep('review');
     }
   };
@@ -272,15 +328,17 @@ export default function FIRBCalculatorPage() {
   const handleBack = () => {
     if (currentStep === 'property') {
       setCurrentStep('citizenship');
-    } else if (currentStep === 'review') {
+    } else if (currentStep === 'financial') {
       setCurrentStep('property');
+    } else if (currentStep === 'review') {
+      setCurrentStep('financial');
     } else if (currentStep === 'results') {
       setCurrentStep('review');
     }
   };
 
   // Handle edit from review
-  const handleEdit = (step: 'citizenship' | 'property') => {
+  const handleEdit = (step: 'citizenship' | 'property' | 'financial') => {
     setCurrentStep(step);
   };
 
@@ -390,7 +448,7 @@ export default function FIRBCalculatorPage() {
         <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{t('title')}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">{t('title')}</h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {t('description')}
           </p>
@@ -488,11 +546,43 @@ export default function FIRBCalculatorPage() {
             </div>
           )}
 
+          {/* Financial Details Step */}
+          {!isLoadingSavedCalculation && currentStep === 'financial' && formData.propertyValue && formData.state && formData.propertyType && (
+            <div className="space-y-6">
+              <FinancialDetailsStep
+                investmentInputs={investmentInputs}
+                onInvestmentInputsChange={(updates) => {
+                  setInvestmentInputs(prev => ({ ...prev, ...updates }));
+                }}
+                propertyValue={formData.propertyValue}
+                depositPercent={formData.depositPercent || 20}
+              />
+
+              {/* Navigation */}
+              <div className="flex justify-between">
+                <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
+                  <ArrowLeft className="h-5 w-5" />
+                  {t('back')}
+                </Button>
+                <Button
+                  size="lg"
+                  onClick={handleNext}
+                  disabled={!validateStep('financial')}
+                  className="gap-2"
+                >
+                  {t('next')}
+                  <ArrowRight className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+          )}
+
           {/* Review Step */}
           {!isLoadingSavedCalculation && currentStep === 'review' && (
             <div className="space-y-6">
               <ReviewStep
                 formData={formData}
+                investmentInputs={investmentInputs}
                 onEdit={handleEdit}
                 onCalculate={handleCalculate}
                 isCalculating={isCalculating}

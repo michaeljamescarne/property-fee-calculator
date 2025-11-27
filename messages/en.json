@@ -1,203 +1,52 @@
 {
-  "HomePage": {
-    "title": "Foreign Investment Property Fee Calculator",
-    "subtitle": "Calculate your property investment costs with confidence",
-    "description": "Our advanced calculator helps international investors understand all associated fees and costs when purchasing property abroad.",
-    "cta": "Calculate Fees Now",
-    "learnMore": "Learn More",
-    "hero": {
-      "trustedBy": "Trusted by 10,000+ foreign investors",
-      "title": "Calculate Your Australian Property Investment Costs",
-      "description": "Get instant FIRB eligibility checks, comprehensive cost breakdowns, and detailed investment analytics with ROI projections and cash flow analysis.",
-      "startCalculation": "Start Free Calculation",
-      "viewSampleReport": "View Sample Report",
-      "freeToUse": "Free to use",
-      "resultsIn30Seconds": "Results in 30 seconds",
-      "noSignupRequired": "No signup required"
-    },
-    "featuresIntro": {
-      "title": "Everything You Need to Invest with Confidence",
-      "description": "Comprehensive tools and insights for foreign property investors in Australia"
-    },
-    "features": {
-      "title": "Why Choose Our Calculator",
-      "accurate": "Accurate Calculations",
-      "accurateDesc": "Get precise fee estimates based on current rates and regulations",
-      "fast": "Instant Results",
-      "fastDesc": "Calculate fees in seconds with our intelligent algorithm",
-      "transparent": "Transparent Pricing",
-      "transparentDesc": "No hidden costs - see a complete breakdown of all fees",
-      "feature1": {
-        "badge": "Feature 01",
-        "title": "Know Your Eligibility Instantly",
-        "description": "Get immediate feedback on whether FIRB approval is required based on your citizenship status, visa type, and property details. No guesswork, just clear answers.",
-        "point1": "Instant eligibility determination",
-        "point2": "Clear explanations for all requirements",
-        "point3": "Identifies potential restrictions"
-      },
-      "feature2": {
-        "badge": "Feature 02",
-        "title": "Complete Cost Transparency",
-        "description": "See every fee, tax, and cost associated with your property purchase. From FIRB application fees to stamp duty, ongoing costs, and more.",
-        "point1": "FIRB fees calculated by property value",
-        "point2": "State-specific stamp duty & surcharges",
-        "point3": "Ongoing costs like land tax & insurance"
-      },
-      "feature3": {
-        "badge": "Feature 03",
-        "title": "Smart Investment Analytics",
-        "description": "Understand your investment potential with detailed ROI projections, cash flow analysis, and equity growth forecasts over 10+ years.",
-        "point1": "10-year ROI & cash flow projections",
-        "point2": "Equity growth & appreciation analysis",
-        "point3": "Risk assessment & sensitivity analysis"
-      }
-    },
-    "howItWorks": {
-      "title": "How It Works",
-      "step1": "Enter Property Details",
-      "step1Desc": "Provide the purchase price and property location",
-      "step2": "Review Calculations",
-      "step2Desc": "See a detailed breakdown of all applicable fees",
-      "step3": "Make Informed Decisions",
-      "step3Desc": "Understand your total investment cost before committing"
-    },
-    "feesRequired": {
-      "title": "When Are These Fees Required?",
-      "subtitle": "Foreign investment fees are required in specific circumstances when purchasing Australian residential property:",
-      "required": {
-        "title": "FIRB Fees Required",
-        "items": [
-          "Foreign citizens purchasing any Australian residential property",
-          "Temporary residents buying established dwellings or vacant land",
-          "Non-residents making any residential property investment",
-          "Companies/trusts with foreign ownership purchasing residential property"
-        ]
-      },
-      "notRequired": {
-        "title": "Fees NOT required if you are:",
-        "items": [
-          "An Australian citizen or permanent resident",
-          "A New Zealand citizen with Special Category Visa (subclass 444)",
-          "A temporary resident buying a new dwelling to live in"
-        ]
-      }
-    },
-    "firbApproval": {
-      "title": "When is FIRB Approval Required?",
-      "subtitle": "Understanding the Foreign Investment Review Board (FIRB) approval process and requirements",
-      "whatIs": {
-        "title": "What is FIRB?",
-        "content": "The Foreign Investment Review Board (FIRB) is an Australian government body that reviews foreign investment proposals. Under the Foreign Acquisitions and Takeovers Act 1975, foreign persons must obtain FIRB approval before purchasing residential property in Australia."
-      },
-      "timeline": {
-        "title": "Processing Timeline",
-        "standard": "Standard applications take 30 days from receipt of complete application",
-        "expedited": "Expedited processing available for additional fee (10 days)",
-        "complex": "Complex applications may take 90+ days"
-      },
-      "process": {
-        "title": "The FIRB Process",
-        "steps": [
-          {
-            "step": "1",
-            "title": "Apply Online",
-            "description": "Submit your application through the FIRB portal with property details and supporting documents"
-          },
-          {
-            "step": "2", 
-            "title": "Pay Application Fee",
-            "description": "Application fees range from $13,200 to $100,000+ based on property value"
-          },
-          {
-            "step": "3",
-            "title": "Wait for Decision",
-            "description": "Standard processing takes 30 days. You'll receive a 'no objection' notification if approved"
-          },
-          {
-            "step": "4",
-            "title": "Settle Property",
-            "description": "Complete your purchase within 12 months of approval and comply with all conditions"
-          }
-        ]
-      },
-      "requirements": {
-        "title": "Key Requirements",
-        "items": [
-          "Property-specific application (cannot get pre-approval)",
-          "Complete documentation including passport, visa, and property details",
-          "Non-refundable application fee",
-          "Compliance with approval conditions (e.g., primary residence for temporary residents)"
-        ]
-      },
-      "penalties": {
-        "title": "Important: Penalties for Non-Compliance",
-        "warning": "Purchasing without FIRB approval when required is a serious offence with severe penalties:",
-        "items": [
-          "Fines up to $3.3 million for individuals",
-          "Criminal prosecution with up to 10 years imprisonment", 
-          "Forced divestment (must sell the property)",
-          "Loss of capital gains and future approval difficulties"
-        ]
-      }
-    },
-    "cta": {
-      "title": "Ready to Verify Your Investment?",
-      "subtitle": "Get instant calculations of all fees and costs associated with your Australian property investment.",
-      "button": "Calculate Fees Now"
-    }
-  },
   "Nav": {
     "home": "Home",
-    "calculator": "FIRB Calculator",
+    "calculator": "Calculator",
     "blog": "Blog",
     "faq": "FAQ",
-    "about": "About",
-    "contact": "Contact"
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "Dashboard"
   },
-  "Footer": {
-    "company": {
-      "name": "Property Fee Calculator",
-      "description": "Helping international investors understand Australian property investment costs with accurate, transparent calculations.",
-      "rights": "All rights reserved"
-    },
-    "quickLinks": {
-      "title": "Quick Links",
-      "home": "Home",
-      "calculator": "Calculator",
-      "features": "Features",
-      "howItWorks": "How It Works",
-      "faq": "FAQ"
-    },
-    "resources": {
-      "title": "Official Resources",
-      "firb": "FIRB (Foreign Investment Review Board)",
-      "ato": "Australian Taxation Office",
-      "homeAffairs": "Department of Home Affairs",
-      "legislation": "Australian Legislation"
-    },
-    "contact": {
-      "title": "Contact Us",
-      "email": "info@propertyfeecalculator.com",
-      "phone": "+61 1 2345 6789",
-      "address": "Sydney, NSW, Australia"
-    },
-    "legal": {
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "disclaimer": "Disclaimer"
-    },
-    "disclaimer": {
-      "text": "Disclaimer: This calculator provides estimates only and should not be considered financial or legal advice. Fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions. We are not affiliated with FIRB or any Australian government agency."
-    }
+  "Auth": {
+    "loginTitle": "Login to Your Account",
+    "loginDescription": "We'll send you a code to log in",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your@email.com",
+    "sendCodeButton": "Send Magic Code",
+    "sendingCode": "Sending...",
+    "noPasswordNeeded": "No password needed. We'll email you a secure code.",
+    "successTitle": "Success!",
+    "successDescription": "You're logged in successfully"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "welcomeBack": "Welcome back, {email}!",
+    "newCalculation": "New Calculation",
+    "searchPlaceholder": "Search calculations...",
+    "sortBy": "Sort by",
+    "sortDateDesc": "Date (Newest)",
+    "sortDateAsc": "Date (Oldest)",
+    "sortValueDesc": "Value (High to Low)",
+    "sortValueAsc": "Value (Low to High)",
+    "sortName": "Name",
+    "allCalculations": "All Calculations",
+    "firbNotRequired": "FIRB Not Required",
+    "firbRequired": "FIRB Required",
+    "favorites": "Favorites",
+    "noResultsTitle": "No calculations found",
+    "clearFilters": "Clear filters"
   },
   "FIRBCalculator": {
     "title": "FIRB Calculator",
+    "subtitle": "Calculate your complete property investment costs including FIRB fees, stamp duty, and ongoing expenses",
     "description": "Calculate your complete property investment costs including FIRB fees, stamp duty, and ongoing expenses",
     "next": "Next",
     "back": "Back",
     "progress": {
       "citizenship": "Citizenship",
       "property": "Property",
+      "financial": "Financial",
       "review": "Review",
       "results": "Results"
     },
@@ -222,33 +71,33 @@
         "description": "Do not hold Australian citizenship or residency"
       },
       "visaType": {
-        "label": "What type of visa do you hold?",
-        "description": "Select your current visa subclass",
+        "label": "What is your visa type?",
+        "description": "Please select your temporary visa type",
         "placeholder": "Select visa type"
       },
-      "ordinaril yResident": {
-        "label": "I am ordinarily resident in Australia",
-        "description": "You live in Australia and it is your permanent home (even if temporarily overseas)"
+      "ordinarilyResident": {
+        "label": "Are you ordinarily resident in Australia?",
+        "description": "If you are not ordinarily resident, you may need FIRB approval even as an Australian citizen"
       },
       "info": {
-        "australian": "As an Australian citizen ordinarily resident, you generally have no restrictions on property purchases and no FIRB approval required.",
-        "permanent": "As a permanent resident, you have the same property rights as Australian citizens with no FIRB approval required.",
-        "temporary": "As a temporary resident, you can purchase new dwellings for use as your principal place of residence. FIRB approval is required.",
-        "foreign": "As a foreign person, you can purchase new dwellings or vacant land for development. FIRB approval is mandatory for all purchases."
+        "australian": "Australian citizens generally do not need FIRB approval unless they are not ordinarily resident in Australia.",
+        "permanent": "Permanent residents generally do not need FIRB approval for residential property purchases.",
+        "temporary": "Temporary residents require FIRB approval and may have restrictions on property types they can purchase.",
+        "foreign": "Foreign persons require FIRB approval for all residential property purchases in Australia."
       }
     },
     "property": {
       "title": "Property Details",
-      "description": "Provide information about the property you're considering",
-      "typeLabel": "Property Type",
+      "description": "Enter the details of the property you are interested in",
+      "typeLabel": "What type of property is it?",
       "types": {
         "newDwelling": {
           "title": "New Dwelling",
-          "description": "Brand new property or off-the-plan purchase"
+          "description": "Newly built or off-the-plan property"
         },
         "established": {
           "title": "Established Dwelling",
-          "description": "Existing property with previous owners"
+          "description": "Existing residential property"
         },
         "vacantLand": {
           "title": "Vacant Land",
@@ -256,842 +105,191 @@
         },
         "commercial": {
           "title": "Commercial Property",
-          "description": "Commercial or investment property"
+          "description": "Office, retail, or industrial property"
         }
       },
-      "valueLabel": "Property Purchase Price",
-      "stateLabel": "State or Territory",
+      "valueLabel": "Purchase Price (AUD)",
+      "stateLabel": "Which Australian state is the property in?",
       "statePlaceholder": "Select state",
-      "addressLabel": "Property Address",
-      "addressPlaceholder": "123 Example Street, Suburb, State",
+      "addressLabel": "Property Address (Optional)",
+      "addressPlaceholder": "Start typing an address...",
       "optional": "Optional",
       "firstHome": {
-        "label": "I am a first home buyer",
-        "description": "You may be eligible for stamp duty concessions"
+        "label": "Are you a first home buyer?",
+        "description": "First home buyers may be eligible for concessions"
       },
       "depositLabel": "Deposit Percentage",
-      "depositAmount": "Deposit amount",
-      "entityLabel": "Purchasing Entity",
+      "depositAmount": "Deposit Amount",
+      "entityLabel": "Who is purchasing the property?",
       "entityPlaceholder": "Select entity type",
+      "entityDescription": "The entity type may affect FIRB requirements and tax implications",
       "entities": {
         "individual": "Individual",
         "company": "Company",
         "trust": "Trust"
+      }
+    },
+    "financialDetails": {
+      "title": "Financial Details",
+      "description": "Enter financial details for investment analysis",
+      "rental": {
+        "title": "Rental Income",
+        "weeklyRent": "Estimated Weekly Rent",
+        "vacancyRate": "Vacancy Rate",
+        "vacancyHelp": "Typical: 3-5% for good locations, 7-10% for high-risk areas",
+        "rentGrowth": "Annual Rent Growth",
+        "rentGrowthHelp": "Historical average: 2-4% per year",
+        "help": "Based on similar properties in the area. You can adjust this later."
       },
-      "entityDescription": "The legal entity that will own the property"
+      "growth": {
+        "title": "Capital Growth Projections",
+        "rate": "Expected Annual Capital Growth",
+        "conservative": "Conservative (4%)",
+        "moderate": "Moderate (6%)",
+        "optimistic": "Optimistic (8%)",
+        "help": "Historical average: 6% per year. Adjust based on your expectations."
+      },
+      "loan": {
+        "title": "Loan Details",
+        "amount": "Loan Amount",
+        "deposit": "Deposit",
+        "interestRate": "Interest Rate",
+        "interestHelp": "Current market rates: 5.5-7.5%",
+        "term": "Loan Term",
+        "interestOnly": "Interest-only loan (for first 5 years)"
+      },
+      "councilRates": "Annual Council Rates (Optional)",
+      "councilRatesHelp": "Typical: $1,500-$3,000 per year. Leave blank to use estimate.",
+      "selfManaged": "I will self-manage this property (no management fees)",
+      "managementFee": "Property Management Fee",
+      "managementFeeHelp": "Typical: 7-9% of rental income"
     },
     "review": {
-      "title": "Review Your Information",
-      "description": "Please review your details before calculating",
+      "title": "Review Your Details",
+      "description": "Please review the information you have entered before generating your report.",
       "citizenshipTitle": "Citizenship Information",
       "propertyTitle": "Property Information",
+      "financialTitle": "Financial Details",
       "edit": "Edit",
-      "calculateButton": "Calculate Costs",
-      "calculating": "Calculating...",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "calculateButton": "Generate Report",
+      "calculating": "Calculating..."
     },
     "results": {
-      "eligible": {
-        "title": "Eligible to Purchase",
-        "firbRequired": "FIRB approval is required before you can proceed with the purchase",
-        "noFirbRequired": "You can proceed without FIRB approval"
-      },
-      "notEligible": {
-        "title": "Purchase Restrictions Apply",
-        "description": "Based on your citizenship status, you may not be eligible to purchase this type of property"
-      },
       "eligibility": {
-        "header": "FIRB Eligibility Assessment",
+        "header": "Eligibility Assessment",
+        "approval": {
+          "notRequired": "FIRB Not Required",
+          "notRequiredDesc": "You can proceed with your property purchase without FIRB approval.",
+          "required": "FIRB Required",
+          "requiredDesc": "You must obtain FIRB approval before purchasing this property.",
+          "prohibited": "Purchase Prohibited",
+          "prohibitedDesc": "You are not eligible to purchase this property type."
+        },
         "summary": {
-          "title": "Summary",
-          "description": "A technical assessment of your eligibility based on citizenship status and property type",
+          "title": "Eligibility Summary",
+          "description": "Overview of your eligibility status and property details",
           "citizenshipStatus": "Citizenship Status",
           "propertyType": "Property Type",
-          "residencyType": "Residency Type",
-          "investmentProperty": "Property Use",
+          "investmentProperty": "Investment Property",
+          "entityType": "Entity Type",
           "propertyValue": "Property Value",
-          "state": "State/Territory",
-          "entityType": "Purchasing Entity",
-          "firstHome": "First Home Buyer"
-        },
-        "approval": {
-          "required": "FIRB Approval Required",
-          "notRequired": "FIRB Approval Not Required",
-          "prohibited": "Purchase Prohibited",
-          "requiredDesc": "You are eligible to apply for foreign investment approval",
-          "notRequiredDesc": "You can proceed with your property purchase without FIRB approval",
-          "prohibitedDesc": "You are not eligible to purchase this property type"
+          "state": "State"
         },
         "requirements": {
-          "title": "Requirements",
-          "firbApplication": "FIRB Application Fee",
+          "title": "FIRB Requirements",
+          "firbApplication": "FIRB Application Required",
           "processingTime": "Processing Time",
-          "documentation": "Documentation Required",
-          "propertyInspection": "Property Inspection Required"
+          "documentation": "Required Documentation"
         },
         "restrictions": {
           "title": "Restrictions"
         },
         "recommendations": {
           "title": "Recommendations"
-        },
-        "processingTimeline": {
-          "title": "Processing Timeline",
-          "standard": "Standard Processing",
-          "expedited": "Expedited Processing"
-        },
-        "whatNext": {
-          "title": "What's Next",
-          "viewCostBreakdown": "View Cost Breakdown",
-          "downloadGuide": "Download Application Guide"
         }
       },
-      "processingTime": {
-        "title": "FIRB Processing Timeline",
-        "standard": "Standard Processing",
-        "expedited": "Expedited Processing",
-        "expeditedNote": "Double the application fee"
-      },
-      "restrictions": {
-        "title": "Restrictions & Requirements",
-        "description": "Important conditions that apply to your purchase"
-      },
-      "recommendations": {
-        "title": "Recommendations"
-      },
       "costs": {
-        "title": "Investment Cost Breakdown",
-        "description": "Detailed breakdown of all costs associated with your property purchase",
-        "totalInvestment": "Total Investment Required",
+        "title": "Cost Breakdown",
+        "description": "Complete breakdown of all upfront and ongoing costs",
+        "totalInvestment": "Total Investment Cost",
         "propertyPrice": "Property Price",
-        "upfrontCosts": "Additional Upfront Costs",
+        "upfrontCosts": "Upfront Costs",
         "subtotal": "Subtotal",
         "annualOngoing": "Annual Ongoing Costs",
-        "annualOngoingNote": "Estimated annual recurring expenses"
+        "annualOngoingNote": "These costs recur every year"
       },
       "actions": {
         "downloadPDF": "Download PDF Report",
         "emailResults": "Email Results",
         "editCalculation": "Edit Calculation",
-        "startAgain": "Start Again"
+        "startAgain": "Start New Calculation"
       },
       "disclaimer": {
         "title": "Important Disclaimer",
-        "content": "This calculator provides estimates only and should not be considered financial or legal advice. Actual costs may vary. FIRB regulations are subject to change. We strongly recommend consulting with qualified professionals including lawyers, accountants, and FIRB specialists before making any property investment decisions."
+        "content": "This calculation is an estimate only and should not be considered financial or legal advice. Regulations and fees can change. Always consult with a qualified professional before making investment decisions."
       },
-      "investmentAnalytics": {
-        "toggle": {
-          "title": "Investment Analysis & Projections",
-          "description": "See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments",
-          "show": "Show Investment Analysis",
-          "hide": "Hide Analysis"
-        },
-        "summary": {
-          "title": "Investment Performance Summary",
-          "description": "Key metrics at a glance based on your investment assumptions",
-          "grossYield": "Gross Rental Yield",
-          "netYield": "Net Rental Yield",
-          "annualizedROI": "Annualized ROI",
-          "monthlyCashFlow": "Monthly Cash Flow",
-          "afterExpenses": "After expenses & vacancy",
-          "totalReturn": "total return",
-          "positivelyGeared": "Positively geared",
-          "negativelyGeared": "Negatively geared",
-          "taxBenefit": "Tax benefit",
-          "propertyValueGrowth": "Property Value Growth",
-          "afterYears": "After",
-          "years": "years",
-          "yourEquity": "Your Equity",
-          "equityGain": "Equity gain",
-          "taxSavings": "Tax Savings (Annual)",
-          "fromNegativeGearing": "From negative gearing benefits"
-        },
-        "inputs": {
-          "title": "Investment Analysis Parameters",
-          "description": "Adjust these values to see how different scenarios affect your investment returns",
-          "note": "These are estimates based on current market conditions and your assumptions. Actual returns may vary. Calculations update in real-time as you adjust values.",
-          "rental": {
-            "title": "Rental Income Details",
-            "weeklyRent": "Estimated Weekly Rent",
-            "perYear": "per year",
-            "vacancyRate": "Vacancy Rate",
-            "vacancyHelp": "Typical: 3-5% for good locations, 7-10% for high-risk areas",
-            "rentGrowth": "Annual Rent Growth",
-            "rentGrowthHelp": "Historical average: 2-4% per year"
-          },
-          "management": {
-            "title": "Property Management",
-            "selfManaged": "I will self-manage this property (no management fees)",
-            "managementFee": "Property Management Fee",
-            "managementHelp": "Typical: 7-9% of rental income. Estimated",
-            "lettingFee": "Letting Fee (when finding new tenant)",
-            "weeksRent": "weeks of rent"
-          },
-          "financing": {
-            "title": "Financing Details",
-            "loanAmount": "Loan Amount",
-            "interestRate": "Interest Rate",
-            "interestHelp": "Current market: 6.0-6.8% for investment loans",
-            "loanTerm": "Loan Term",
-            "loanType": "Loan Type",
-            "principalAndInterest": "Principal & Interest",
-            "interestOnly": "Interest Only",
-            "interestOnlyPeriod": "Interest Only Period"
-          },
-          "assumptions": {
-            "title": "Investment Assumptions",
-            "holdPeriod": "Hold Period",
-            "holdPeriodHelp": "How long do you plan to hold this investment?",
-            "capitalGrowth": "Capital Growth Rate",
-            "capitalGrowthHelp": "Australian property: 6-7% historical average (long-term)",
-            "taxRate": "Your Marginal Tax Rate",
-            "taxRateHelp": "Foreign residents typically: 32.5% or 37% or 45%",
-            "sellingCosts": "Selling Costs",
-            "sellingCostsHelp": "Agent (2-3%) + Legal (0.5-1%) + Marketing (0.5-1%)"
-          },
-          "currency": {
-            "title": "Currency Conversion (Optional)",
-            "homeCurrency": "Your Home Currency",
-            "aud": "AUD (Australian Dollar)",
-            "usd": "USD (US Dollar)",
-            "cny": "CNY (Chinese Yuan)",
-            "eur": "EUR (Euro)",
-            "gbp": "GBP (British Pound)",
-            "jpy": "JPY (Japanese Yen)",
-            "sgd": "SGD (Singapore Dollar)",
-            "exchangeRate": "Exchange Rate (1 AUD = ? {currency})",
-            "exchangeHelp": "Update with current exchange rate from your bank or xe.com"
-          }
-        },
-        "cashFlow": {
-          "title": "Cash Flow Analysis",
-          "description": "Annual rental income vs expenses and loan repayments",
+      "optimalUseCase": {
+        "title": "Optimal Use Case Analysis",
+        "description": "Compare long-term rental vs short-stay accommodation to maximize your returns",
+        "recommendation": "Recommendation",
+        "recommendLongTerm": "Long-term rental is recommended for this property.",
+        "recommendShortStay": "Short-stay accommodation is recommended for this property.",
+        "recommendMixed": "A mixed strategy may be optimal for this property.",
+        "longTerm": {
+          "title": "Long-Term Rental",
           "annualIncome": "Annual Income",
           "annualExpenses": "Annual Expenses",
-          "afterTaxCashFlow": "After-Tax Cash Flow",
-          "perMonth": "per month",
-          "effectiveAfterVacancy": "after vacancy",
-          "includingLoanRepayments": "Including loan repayments",
-          "chartTitle": "Annual Cash Flow Visualization",
-          "income": "Income",
-          "expenses": "Expenses",
-          "netCashFlow": "Net Cash Flow",
-          "expenseBreakdown": "Expense Breakdown",
-          "totalAnnualExpenses": "Total Annual Expenses",
-          "negativeGearingBenefit": "Negative Gearing Tax Benefit",
-          "savedPerMonth": "saved per month in taxes",
-          "deductibleExpenses": "Deductible Expenses",
-          "monthlySummary": "Monthly Summary",
-          "beforeTax": "Monthly Cash Flow (Before Tax)",
-          "afterTax": "Monthly Cash Flow (After Tax)"
+          "netIncome": "Net Income",
+          "management": "Management Complexity",
+          "compliance": "Regulatory Compliance",
+          "risk": "Risk Level"
         },
-        "projections": {
-          "title": "{years}-Year Projection",
-          "description": "Property value, loan balance, and equity growth over time",
-          "startingValue": "Starting Value",
-          "finalValue": "Final Value",
-          "yourEquity": "Your Equity",
-          "from": "from",
-          "totalROI": "Total ROI",
-          "perAnnum": "p.a.",
-          "breakEven": {
-            "title": "Break-Even Analysis",
-            "cumulativeBreakEven": "Cumulative Break-Even",
-            "year": "Year",
-            "positiveCashFlow": "Positive Cash Flow",
-            "cashRequired": "Cash Required"
-          },
-          "yearByYear": "Year-by-Year Summary",
-          "tableHeaders": {
-            "year": "Year",
-            "propertyValue": "Property Value",
-            "equity": "Equity",
-            "cashFlow": "Cash Flow",
-            "cumulativeReturn": "Cumulative Return"
-          }
+        "shortStay": {
+          "title": "Short-Stay Accommodation",
+          "notPermitted": "Not Permitted",
+          "prohibited": "Short-stay accommodation is not permitted in this area.",
+          "annualIncome": "Annual Income",
+          "annualExpenses": "Annual Expenses",
+          "netIncome": "Net Income",
+          "management": "Management Complexity",
+          "compliance": "Regulatory Compliance",
+          "risk": "Risk Level",
+          "maxDays": "Max Days/Year",
+          "licensingRequired": "Licensing Required",
+          "complianceCost": "Annual Compliance Cost"
         },
         "comparison": {
-          "title": "Investment Comparison",
-          "description": "Compare property investment returns vs other asset classes over {years} years",
-          "propertyLeads": "Property Investment Leads",
-          "propertyLeadsDesc": "Based on your assumptions, property investment outperforms all other options with a {return} total return ({rate} annualized).",
-          "comparisonResults": "Comparison Results",
-          "comparisonDesc": "{best} shows higher returns ({return}) under these assumptions. Property investment returns {propertyReturn}.",
-          "chartTitle": "Investment Type",
-          "detailedComparison": "Detailed Comparison",
-          "annualRate": "Annual Rate",
-          "yearReturn": "{years}-Year Return",
-          "riskLevel": "Risk Level",
-          "yourInvestment": "Your Investment",
-          "investmentTypes": {
-            "property": "Property Investment",
-            "stocks": "ASX 200 Stocks",
-            "bonds": "Government Bonds",
-            "termDeposit": "Term Deposit",
-            "savings": "High-Int. Savings"
-          },
-          "riskLevels": {
-            "veryLow": "Very Low",
-            "low": "Low",
-            "medium": "Medium-High",
-            "high": "High"
-          },
-          "assumptions": "Assumptions: Property at {growth}% growth, ASX 200 at 7.2%, bonds/deposits at 4-4.5%. Property includes rental income and tax benefits. Past performance doesn't guarantee future returns."
+          "title": "Income Comparison",
+          "incomeDifference": "Income Difference",
+          "netDifference": "Net Difference",
+          "yield": "Net Yield"
         },
-        "sensitivity": {
-          "title": "Sensitivity Analysis",
-          "description": "How different scenarios impact your investment returns",
-          "warning": "Investment Risks",
-          "warningDesc": "These scenarios show how changes in key variables affect your returns. Consider these risks when making your investment decision.",
-          "vacancyImpact": "Vacancy Rate Impact",
-          "vacancyDesc": "on annual cash flow",
-          "vacancyRate": "Vacancy Rate",
-          "annualRent": "Annual Rent",
-          "impact": "Impact",
-          "baseCase": "Base Case",
-          "vacancyNote": "Each 5% increase in vacancy reduces cash flow by ~${amount}/year",
-          "interestImpact": "Interest Rate Impact",
-          "interestDesc": "on loan repayments",
-          "interestRate": "Interest Rate",
-          "monthlyRepayment": "Monthly Repayment",
-          "annualCost": "Annual Cost",
-          "cashFlowImpact": "Cash Flow Impact",
-          "interestNote": "Each 1% interest rate increase costs ~${amount}/month more",
-          "growthScenarios": "Capital Growth Scenarios",
-          "growthDesc": "different market conditions",
-          "conservative": "Conservative",
-          "moderate": "Moderate",
-          "optimistic": "Optimistic",
-          "base": "Base",
-          "growthRate": "Growth Rate",
-          "finalValue": "Final Value",
-          "totalReturn": "Total Return",
-          "riskFactors": "Key Risk Factors",
-          "mostSensitive": "Most Sensitive To:",
-          "riskMitigation": "Risk Mitigation:",
-          "sensitivityItems": {
-            "capitalGrowth": "Capital growth rate (biggest impact on returns)",
-            "interestRate": "Interest rate changes (affects monthly cash flow)",
-            "vacancy": "Vacancy rates (reduces rental income)",
-            "highDemand": "Choose properties in high-demand areas",
-            "fixRate": "Fix interest rate (reduce rate risk)",
-            "cashReserves": "Maintain cash reserves for vacancies"
-          }
-        },
-        "taxAnalysis": {
-          "title": "Tax Analysis",
-          "description": "Tax deductions, negative gearing benefits, and CGT on exit",
-          "annualTaxSaving": "Annual Tax Saving",
-          "fromNegativeGearing": "from negative gearing",
-          "totalDeductions": "Total Deductions",
-          "deductionsDesc": "Annual deductible expenses against rental income",
-          "breakdownTitle": "Annual Tax Deductions Breakdown",
-          "deductionItems": {
-            "loanInterest": "Loan Interest",
-            "propertyManagement": "Property Management",
-            "maintenance": "Maintenance & Repairs",
-            "landTax": "Land Tax",
-            "councilRates": "Council Rates",
-            "insurance": "Insurance",
-            "strataFees": "Strata Fees",
-            "depreciation": "Depreciation",
-            "other": "Other"
-          },
-          "negativeGearing": {
-            "title": "How Negative Gearing Works",
-            "rentalIncome": "Rental Income",
-            "deductibleExpenses": "Deductible Expenses",
-            "netRentalLoss": "Net Rental Loss",
-            "taxBenefit": "Tax Benefit (at {rate}% marginal rate)"
-          },
-          "cgtTitle": "Capital Gains Tax on Exit (Estimated)",
-          "cgtItems": {
-            "salePrice": "Sale Price (Year {year})",
-            "originalPrice": "Original Purchase Price",
-            "purchaseCosts": "Purchase Costs (FIRB, stamp duty, etc.)",
-            "sellingCosts": "Selling Costs (agent, legal)",
-            "costBase": "Cost Base",
-            "capitalGain": "Capital Gain",
-            "cgtRate": "CGT Rate (foreign resident - no discount)",
-            "cgtPayable": "CGT Payable",
-            "withholdingTax": "Withholding Tax",
-            "netProceeds": "Net Proceeds After Tax"
-          },
-          "taxPlanningTip": "Tax Planning Tip: Foreign residents don't receive the 50% CGT discount. Consider obtaining permanent residency before selling to significantly reduce CGT liability. Consult a tax professional for personalized advice."
-        },
-        "score": {
-          "title": "Investment Score & Recommendation",
-          "description": "AI-generated assessment based on comprehensive analysis",
-          "overallVerdict": "Overall Verdict",
-          "investment": "Investment",
-          "scoreBreakdown": "Score Breakdown",
-          "dimensions": {
-            "rentalYield": "Rental Yield",
-            "capitalGrowth": "Capital Growth",
-            "cashFlow": "Cash Flow",
-            "taxEfficiency": "Tax Efficiency",
-            "riskProfile": "Risk Profile"
-          },
-          "verdicts": {
-            "excellent": "Excellent",
-            "good": "Good",
-            "moderate": "Moderate",
-            "poor": "Poor",
-            "notRecommended": "Not Recommended"
-          },
-          "strengths": "Strengths",
-          "weaknesses": "Weaknesses",
-          "suitableFor": "This Investment is Suitable For:",
-          "risksToConsider": "Risks to Consider",
-          "keyTakeaways": "Key Takeaways"
-        }
-      }
-    },
-    "emailModal": {
-      "title": "Email Your Results",
-      "description": "Enter your email address to receive a copy of your FIRB calculation results",
-      "emailLabel": "Email Address",
-      "emailPlaceholder": "your@email.com",
-      "nameLabel": "Your Name",
-      "namePlaceholder": "John Smith",
-      "optional": "Optional",
-      "consentLabel": "I consent to receive my calculation results via email",
-      "consentDescription": "We will only use your email to send you the requested results. We do not share your information with third parties.",
-      "info": "You will receive a detailed PDF report with your complete cost breakdown and eligibility information.",
-      "send": "Send Results",
-      "sending": "Sending...",
-      "cancel": "Cancel",
-      "success": {
-        "title": "Email Sent Successfully!",
-        "description": "Check your inbox for your FIRB calculation results."
-      },
-      "errors": {
-        "required": "Please fill in all required fields",
-        "invalidEmail": "Please enter a valid email address",
-        "sendFailed": "Failed to send email. Please try again.",
-        "general": "An error occurred. Please try again."
-      }
-    },
-    "pdf": {
-      "title": "FIRB Investment Analysis Report",
-      "subtitle": "Comprehensive Property Investment Analysis for Foreign Investors",
-      "generatedOn": "Generated on",
-      "page": "Page",
-      "disclaimer": "This report provides estimates only and should not be considered financial or legal advice. Consult with qualified professionals before making investment decisions.",
-      "sections": {
-        "executiveSummary": "EXECUTIVE SUMMARY",
-        "propertyDetails": "Property Details",
-        "keyMetrics": "Key Investment Metrics",
-        "firbRequirements": "FIRB REQUIREMENTS & ELIGIBILITY",
-        "eligibilityStatus": "Eligibility Status",
-        "propertyType": "Property Type",
-        "costBreakdown": "Cost Breakdown",
-        "investmentPerformance": "INVESTMENT PERFORMANCE ANALYSIS",
-        "rentalYield": "Rental Yield Analysis",
-        "cashFlow": "Cash Flow Analysis",
-        "projections": "10-YEAR PROJECTIONS",
-        "equityGrowth": "Equity Growth Over Time",
-        "breakEven": "Break-Even Analysis",
-        "comparison": "INVESTMENT COMPARISON",
-        "assetComparison": "Asset Class Comparison",
-        "sensitivity": "SENSITIVITY & RISK ANALYSIS",
-        "riskScenarios": "Risk Scenarios",
-        "taxAnalysis": "TAX ANALYSIS & PLANNING",
-        "deductions": "Annual Tax Deductions",
-        "cgtProjection": "Capital Gains Tax Projection",
-        "recommendations": "INVESTMENT SCORE & RECOMMENDATIONS",
-        "overallScore": "Overall Investment Score",
-        "recommendation": "Investment Recommendation"
-      },
-      "labels": {
-        "address": "Address",
-        "state": "State/Territory",
-        "value": "Property Value",
-        "deposit": "Deposit",
-        "citizenshipStatus": "Citizenship Status",
-        "entityType": "Entity Type",
-        "eligible": "Eligible",
-        "notEligible": "Not Eligible",
-        "firbRequired": "FIRB Approval Required",
-        "noFirbRequired": "No FIRB Approval Required",
-        "firbFee": "FIRB Application Fee",
-        "stampDuty": "Stamp Duty",
-        "foreignSurcharge": "Foreign Investor Surcharge",
-        "legalFees": "Legal & Professional Fees",
-        "totalUpfront": "Total Upfront Costs",
-        "annualLandTax": "Annual Land Tax",
-        "grossYield": "Gross Rental Yield",
-        "netYield": "Net Rental Yield",
-        "annualizedROI": "Annualized ROI",
-        "monthlyCashFlow": "Monthly Cash Flow",
-        "annualIncome": "Annual Rental Income",
-        "annualExpenses": "Annual Expenses",
-        "afterTaxCashFlow": "After-Tax Cash Flow",
-        "taxBenefit": "Tax Benefit",
-        "propertyValue": "Property Value",
-        "equity": "Your Equity",
-        "loanBalance": "Loan Balance",
-        "year": "Year",
-        "cumulativeReturn": "Cumulative Return",
-        "breakEvenYear": "Break-Even Year",
-        "cashRequired": "Total Cash Required",
-        "investmentType": "Investment Type",
-        "annualReturn": "Annual Return",
-        "yearReturn": "{years}-Year Return",
-        "riskLevel": "Risk Level",
-        "vacancyImpact": "Vacancy Rate Impact",
-        "interestImpact": "Interest Rate Impact",
-        "growthScenarios": "Capital Growth Scenarios",
-        "conservative": "Conservative",
-        "moderate": "Moderate",
-        "optimistic": "Optimistic",
-        "deductibleExpenses": "Deductible Expenses",
-        "loanInterest": "Loan Interest",
-        "propertyManagement": "Property Management",
-        "maintenance": "Maintenance & Repairs",
-        "landTax": "Land Tax",
-        "councilRates": "Council Rates",
-        "insurance": "Insurance",
-        "strataFees": "Strata Fees",
-        "depreciation": "Depreciation",
-        "other": "Other Expenses",
-        "totalDeductions": "Total Deductions",
-        "salePrice": "Sale Price",
-        "costBase": "Cost Base",
-        "capitalGain": "Capital Gain",
-        "cgtPayable": "CGT Payable",
-        "withholdingTax": "Withholding Tax",
-        "netProceeds": "Net Proceeds After Tax",
-        "overallVerdict": "Overall Verdict",
-        "scoreBreakdown": "Score Breakdown",
-        "rentalYieldScore": "Rental Yield",
-        "capitalGrowthScore": "Capital Growth",
-        "cashFlowScore": "Cash Flow",
-        "taxEfficiencyScore": "Tax Efficiency",
-        "riskProfileScore": "Risk Profile",
-        "strengths": "Strengths",
-        "weaknesses": "Weaknesses",
-        "keyTakeaways": "Key Takeaways"
-      },
-      "notes": {
-        "estimatesOnly": "All figures are estimates based on the information provided and current market conditions.",
-        "professionalAdvice": "We strongly recommend consulting with qualified professionals including lawyers, accountants, and FIRB specialists.",
-        "regulationsChange": "FIRB regulations and tax laws are subject to change. Please verify current requirements.",
-        "assumptionsBased": "Projections are based on your assumptions and historical averages. Actual returns may vary.",
-        "pastPerformance": "Past performance is not indicative of future results."
-      },
-      "glossary": {
-        "title": "Glossary of Terms",
-        "description": "Definitions of technical terms and abbreviations used in this report",
-        "terms": {
-          "firb": {
-            "term": "FIRB",
-            "fullName": "Foreign Investment Review Board",
-            "definition": "Australian government body that reviews foreign investment proposals to ensure they are not contrary to the national interest."
-          },
-          "ato": {
-            "term": "ATO",
-            "fullName": "Australian Taxation Office",
-            "definition": "The principal revenue collection agency of the Australian government responsible for administering tax laws."
-          },
-          "roi": {
-            "term": "ROI",
-            "fullName": "Return on Investment",
-            "definition": "A performance measure used to evaluate the efficiency of an investment, calculated as (gain - cost) / cost."
-          },
-          "lvr": {
-            "term": "LVR",
-            "fullName": "Loan-to-Value Ratio",
-            "definition": "The ratio of the loan amount to the appraised value of the property, expressed as a percentage."
-          },
-          "cgt": {
-            "term": "CGT",
-            "fullName": "Capital Gains Tax",
-            "definition": "Tax on the profit made from the sale of an asset, including investment properties."
-          },
-          "gst": {
-            "term": "GST",
-            "fullName": "Goods and Services Tax",
-            "definition": "A 10% broad-based tax on most goods and services sold in Australia."
-          },
-          "stampDuty": {
-            "term": "Stamp Duty",
-            "fullName": "Transfer Duty",
-            "definition": "State government tax payable on the transfer of property ownership, calculated as a percentage of the property value."
-          },
-          "landTax": {
-            "term": "Land Tax",
-            "fullName": "Annual Land Tax",
-            "definition": "Annual tax levied by state governments on the unimproved value of land holdings above certain thresholds."
-          },
-          "foreignSurcharge": {
-            "term": "Foreign Surcharge",
-            "fullName": "Foreign Investor Duty Surcharge",
-            "definition": "Additional stamp duty payable by foreign investors, typically 7-8% of the property value."
-          },
-          "firbFee": {
-            "term": "FIRB Fee",
-            "fullName": "Foreign Investment Application Fee",
-            "definition": "Fee payable to FIRB for processing foreign investment applications, tiered based on property value."
-          },
-          "principalPlace": {
-            "term": "PPOR",
-            "fullName": "Principal Place of Residence",
-            "definition": "The main home where a person ordinarily resides, eligible for certain tax concessions and exemptions."
-          },
-          "negativeGearing": {
-            "term": "Negative Gearing",
-            "fullName": "Negative Gearing",
-            "definition": "When the cost of owning an investment property exceeds the rental income, creating a tax deduction."
-          },
-          "positiveGearing": {
-            "term": "Positive Gearing",
-            "fullName": "Positive Gearing",
-            "definition": "When rental income exceeds the costs of owning an investment property, generating positive cash flow."
-          },
-          "depreciation": {
-            "term": "Depreciation",
-            "fullName": "Capital Works Depreciation",
-            "definition": "Tax deduction for the decline in value of building structures and fixtures over time."
-          },
-          "capitalWorks": {
-            "term": "Capital Works",
-            "fullName": "Capital Works Deduction",
-            "definition": "Tax deduction for the construction costs of buildings, typically 2.5% per year for 40 years."
-          },
-          "plantEquipment": {
-            "term": "Plant & Equipment",
-            "fullName": "Plant and Equipment Depreciation",
-            "definition": "Tax deduction for the decline in value of removable assets like appliances, carpets, and fixtures."
-          },
-          "rentalYield": {
-            "term": "Rental Yield",
-            "fullName": "Gross Rental Yield",
-            "definition": "Annual rental income expressed as a percentage of the property value, before expenses."
-          },
-          "netYield": {
-            "term": "Net Yield",
-            "fullName": "Net Rental Yield",
-            "definition": "Annual rental income minus expenses, expressed as a percentage of the property value."
-          },
-          "cashFlow": {
-            "term": "Cash Flow",
-            "fullName": "Investment Cash Flow",
-            "definition": "The net amount of cash generated or consumed by an investment property over a given period."
-          },
-          "equity": {
-            "term": "Equity",
-            "fullName": "Property Equity",
-            "definition": "The difference between the property value and the outstanding loan balance."
-          },
-          "capitalGrowth": {
-            "term": "Capital Growth",
-            "fullName": "Capital Appreciation",
-            "definition": "The increase in property value over time, a key component of property investment returns."
-          },
-          "interestOnly": {
-            "term": "IO Loan",
-            "fullName": "Interest Only Loan",
-            "definition": "A loan where only interest payments are made for a specified period, with principal repaid later."
-          },
-          "principalInterest": {
-            "term": "P&I Loan",
-            "fullName": "Principal and Interest Loan",
-            "definition": "A loan where both principal and interest are repaid over the loan term."
-          },
-          "offsetAccount": {
-            "term": "Offset Account",
-            "fullName": "Mortgage Offset Account",
-            "definition": "A savings account linked to a home loan where the balance reduces the interest payable."
-          },
-          "redraw": {
-            "term": "Redraw",
-            "fullName": "Loan Redraw Facility",
-            "definition": "Ability to withdraw extra repayments made on a home loan for other purposes."
-          },
-          "refinancing": {
-            "term": "Refinancing",
-            "fullName": "Loan Refinancing",
-            "definition": "Replacing an existing loan with a new loan, often to secure better terms or rates."
-          }
-        }
-      },
-      "disclaimer": {
-        "title": "IMPORTANT LEGAL DISCLAIMER",
-        "sections": {
-          "notFinancialAdvice": {
-            "title": "Not Financial Advice",
-            "content": "This report is provided for informational purposes only and does NOT constitute financial, investment, legal, or tax advice. The calculations and projections are estimates based on the information provided and current regulations."
-          },
-          "noGuarantee": {
-            "title": "No Guarantee of Accuracy",
-            "content": "While we strive for accuracy, we make no warranties or representations regarding the completeness, accuracy, or reliability of the information contained in this report. FIRB regulations, tax laws, and property market conditions are subject to change without notice."
-          },
-          "professionalAdvice": {
-            "title": "Professional Advice Required",
-            "content": "You MUST seek independent professional advice before making any property investment decisions. This includes consulting with: (1) Licensed financial advisors, (2) Qualified tax accountants, (3) Immigration lawyers (for visa matters), (4) Conveyancers or property lawyers, (5) FIRB specialists."
-          },
-          "marketPerformance": {
-            "title": "Market Performance Disclaimer",
-            "content": "Past performance is not indicative of future results. Property values can go down as well as up. Rental income projections are estimates and may vary significantly based on market conditions, property condition, tenant quality, and vacancy rates."
-          },
-          "firbCompliance": {
-            "title": "FIRB Compliance Responsibility",
-            "content": "You are solely responsible for ensuring compliance with all FIRB regulations and Australian foreign investment laws. Penalties for non-compliance can be severe, including fines up to $6.66M for individuals or $66.6M for corporations, imprisonment, and forced divestment."
-          },
-          "currencyRisk": {
-            "title": "Currency and Interest Rate Risk",
-            "content": "Foreign investors face additional risks including currency fluctuation, changes in interest rates, and political/regulatory changes that may affect property ownership rights or taxation."
-          },
-          "limitationOfLiability": {
-            "title": "Limitation of Liability",
-            "content": "To the maximum extent permitted by law, we exclude all liability for any loss or damage arising from reliance on this report or any actions taken based on its contents. Your use of this report is entirely at your own risk."
-          },
-          "dataSources": {
-            "title": "Data Sources & Updates",
-            "content": "This report uses data current as of the generation date. Tax rates, FIRB fees, and regulations are subject to change. Always verify current rates with official government sources before proceeding with any transaction."
-          }
-        },
-        "footer": "For the most current information, please consult: (1) FIRB website: https://firb.gov.au, (2) ATO Foreign Investment: https://ato.gov.au/foreign-investment, (3) State Revenue Offices for stamp duty rates, (4) Licensed professionals for personalized advice."
-      },
-      "propertyDetails": {
-        "title": "Property Investment Details",
-        "cards": {
-          "propertyInformation": "Property Information",
-          "buyerInformation": "Buyer Information",
-          "financialStructure": "Financial Structure"
-        },
-        "labels": {
-          "propertyAddress": "Property Address",
-          "propertyType": "Property Type",
-          "propertyValue": "Property Value",
-          "stateTerritory": "State/Territory",
-          "citizenshipStatus": "Citizenship Status",
-          "visaType": "Visa Type",
-          "entityType": "Entity Type",
-          "firstHomeBuyer": "First Home Buyer",
-          "ordinarilyResident": "Ordinarily Resident",
-          "depositPercentage": "Deposit Percentage",
-          "depositAmount": "Deposit Amount",
-          "loanAmount": "Loan Amount",
-          "loanToValueRatio": "Loan-to-Value Ratio (LVR)",
-          "estimatedInterestRate": "Estimated Interest Rate"
-        }
-      },
-      "upgradePrompt": {
-        "title": "Premium Feature",
-        "description": "This section contains advanced analysis and insights available to premium subscribers.",
-        "upgradeButton": "Upgrade to Access Full Report",
-        "visitWebsite": "Visit propertycosts.com.au to upgrade your account",
-        "features": {
-          "costBreakdown": {
-            "title": "Cost Breakdown",
-            "description": "Get detailed cost analysis including FIRB fees, stamp duty, foreign surcharges, legal fees, and all ongoing costs with itemized breakdowns."
-          },
-          "investmentAnalysis": {
-            "title": "Investment Analysis",
-            "description": "Get detailed investment performance analysis including rental yields, ROI metrics, capital growth projections, and comprehensive financial modeling."
-          },
-          "cashFlowAnalysis": {
-            "title": "Cash Flow Analysis",
-            "description": "Get detailed cash flow analysis including monthly and annual projections, tax benefits, and comprehensive income vs expense breakdowns."
-          },
-          "projections": {
-            "title": "10-Year Projections",
-            "description": "Get detailed 10-year projections including property value growth, loan balance reduction, equity building, and break-even analysis."
-          },
-          "comparisons": {
-            "title": "Investment Comparisons & Sensitivity Analysis",
-            "description": "Get comprehensive investment comparisons against other asset classes and detailed sensitivity analysis showing how changes in key variables affect your returns."
-          },
-          "taxAnalysis": {
-            "title": "Tax Analysis & Recommendations",
-            "description": "Get comprehensive tax analysis including annual deductions, CGT projections, and personalized investment recommendations with detailed scoring breakdown."
-          }
+        "reasoning": {
+          "title": "Analysis Reasoning"
         }
       }
     }
   },
-  "Auth": {
-    "loginTitle": "Login to Your Account",
-    "loginDescription": "We'll send you a code to log in",
-    "emailLabel": "Email Address",
-    "emailPlaceholder": "your@email.com",
-    "sendCodeButton": "Send Magic Code",
-    "sendingCode": "Sending code...",
-    "codeLabel": "6-Digit Code",
-    "codePlaceholder": "000000",
-    "codeDescription": "Check your email for the 6-digit code",
-    "verifyCodeButton": "Verify Code",
-    "verifying": "Verifying...",
-    "changeEmail": "Change email",
-    "resendCode": "Resend code",
-    "resendCooldown": "Resend ({seconds}s)",
-    "codeExpires": "Code expires in 10 minutes",
-    "successTitle": "Welcome Back!",
-    "successDescription": "Successfully authenticated",
-    "redirecting": "Redirecting to your dashboard...",
-    "noPasswordNeeded": "No password needed. We'll email you a secure code.",
-    "freeSignup": "Free to sign up • No credit card required",
-    "loginToUnlock": "Login to unlock",
-    "upgradeToUnlock": "Upgrade to unlock"
+  "HomePage": {
+    "title": "Property Investment Analysis Platform",
+    "subtitle": "Comprehensive analysis for Australian property investments"
   },
-  "Dashboard": {
-    "title": "My Calculations",
-    "welcomeBack": "Welcome back, {email}",
-    "newCalculation": "New Calculation",
-    "searchPlaceholder": "Search by name or address...",
-    "sortBy": "Sort by...",
-    "sortDateDesc": "Newest First",
-    "sortDateAsc": "Oldest First",
-    "sortValueDesc": "Highest Value",
-    "sortValueAsc": "Lowest Value",
-    "sortName": "Name (A-Z)",
-    "filterBy": "Filter by...",
-    "allCalculations": "All Calculations",
-    "firbRequired": "FIRB Required",
-    "firbNotRequired": "No FIRB Required",
-    "prohibited": "Prohibited",
-    "favorites": "Favorites",
-    "noResultsTitle": "No calculations found matching your filters.",
-    "noResultsAction": "Clear filters to see all calculations",
-    "clearFilters": "Clear Filters",
-    "loading": "Loading your calculations...",
-    "emptyState": {
-      "title": "No Saved Calculations Yet",
-      "description": "Start by running a FIRB calculation. Your calculations will be automatically saved here for easy access later.",
-      "cta": "Start New Calculation"
-    },
-    "calculationCard": {
-      "favorite": "Favorite",
-      "unfavorite": "Unfavorite",
-      "rename": "Rename",
-      "delete": "Delete",
-      "open": "Open",
-      "firbRequired": "FIRB Required",
-      "firbNotRequired": "No FIRB Required",
-      "prohibited": "Prohibited",
-      "confirmDelete": "Are you sure you want to delete this calculation?",
-      "deleteSuccess": "Calculation deleted successfully",
-      "renamePrompt": "Enter new name for calculation:",
-      "renameSuccess": "Calculation renamed successfully"
-    }
-  },
-  "Blog": {
-    "title": "Property Investment Blog",
-    "subtitle": "Expert insights, guides, and analysis for foreign investors in Australian property",
-    "featured": "Featured Articles",
-    "allPosts": "All Articles",
-    "readMore": "Read More",
-    "backToBlog": "Back to Blog",
-    "share": "Share",
-    "tags": "Tags",
-    "relatedPosts": "Related Articles",
-    "cta": {
-      "title": "Ready to Calculate Your Investment Costs?",
-      "description": "Get instant FIRB eligibility checks and detailed cost breakdowns for your Australian property investment.",
-      "button": "Start Free Calculation"
-    }
+  "Footer": {
+    "companyName": "Property Fee Calculator",
+    "companyDescription": "Comprehensive property investment analysis for Australia",
+    "quickLinks": "Quick Links",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "resources": "Resources",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "calculator": "Calculator",
+    "contact": "Contact",
+    "copyright": "© 2025 Property Fee Calculator. All rights reserved.",
+    "disclaimerText": "This calculator provides estimates only. Please consult with qualified professionals for financial and legal advice."
   }
 }
