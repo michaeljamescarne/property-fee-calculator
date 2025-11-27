@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceRoleClient } from "@/lib/supabase/server";
+import type { ShortStayRegulation } from "@/lib/firb/optimal-use-case";
 
 export async function GET(request: NextRequest) {
   try {
@@ -113,23 +114,12 @@ export async function GET(request: NextRequest) {
  */
 function formatRegulation(dbRegulation: Record<string, unknown>): ShortStayRegulation {
   return {
-    councilName: dbRegulation.council_name as string | undefined,
-    state: dbRegulation.state as string,
-    postcodeRange: dbRegulation.postcode_range as string | undefined,
-    suburbName: dbRegulation.suburb_name as string | undefined,
     shortStayPermitted: dbRegulation.short_stay_permitted as boolean,
-    maxDaysPerYear: dbRegulation.max_days_per_year as number | undefined,
+    maxDaysPerYear: (dbRegulation.max_days_per_year as number) ?? null,
     licensingRequired: dbRegulation.licensing_required as boolean,
-    licensingDescription: dbRegulation.licensing_description as string | undefined,
+    licensingDescription: (dbRegulation.licensing_description as string) ?? null,
     complianceCostAnnual: (dbRegulation.compliance_cost_annual as number) || 0,
     complianceCostOneTime: (dbRegulation.compliance_cost_one_time as number) || 0,
-    zoningRestrictions: dbRegulation.zoning_restrictions as string | undefined,
-    effectiveDate: dbRegulation.effective_date as string,
-    lastVerifiedDate: dbRegulation.last_verified_date as string | undefined,
-    sourceUrl: dbRegulation.source_url as string | undefined,
-    sourceDocument: dbRegulation.source_document as string | undefined,
-    notes: dbRegulation.notes as string | undefined,
-    isActive: dbRegulation.is_active as boolean,
-    version: dbRegulation.version as number | undefined,
+    zoningRestrictions: (dbRegulation.zoning_restrictions as string) ?? null,
   };
 }
