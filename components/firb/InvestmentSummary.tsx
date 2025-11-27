@@ -15,9 +15,9 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
   // Safety checks for missing analytics data
   if (!analytics || !analytics.rentalYield || !analytics.cashFlow || !analytics.roi) {
     return (
-      <div className="p-8 border rounded-lg bg-muted/30">
-        <h3 className="text-lg font-semibold mb-4">Investment Performance Summary</h3>
-        <p className="text-muted-foreground">
+      <div className="p-8 border border-gray-200 rounded bg-gray-50">
+        <h3 className="text-lg font-semibold mb-4 text-gray-900">Investment Performance Summary</h3>
+        <p className="text-gray-600">
           Investment performance data is not available. This section requires investment analytics to be enabled.
         </p>
       </div>
@@ -48,12 +48,12 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-2xl font-bold mb-2">
+        <h3 className="text-3xl font-semibold mb-2 text-gray-900">
           {t('summary.title') === 'FIRBCalculator.investmentAnalytics.summary.title' 
             ? 'Investment Performance Summary' 
             : t('summary.title')}
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600">
           {t('summary.description') === 'FIRBCalculator.investmentAnalytics.summary.description'
             ? 'Key metrics at a glance based on your investment assumptions'
             : t('summary.description')}

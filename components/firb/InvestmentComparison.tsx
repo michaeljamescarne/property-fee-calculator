@@ -80,7 +80,7 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
   const isPropertyBest = bestInvestment.name === t('comparison.investmentTypes.property');
 
   return (
-    <Card className="border-none shadow-md rounded-2xl bg-white">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-primary" />
@@ -106,10 +106,9 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
               </h4>
             </div>
             <p className="text-sm text-green-700">
-              {t('comparison.propertyLeadsDesc') === 'FIRBCalculator.investmentAnalytics.comparison.propertyLeadsDesc'
-                ? `Your property investment returned ${currency(bestInvestment.return)} over ${holdPeriod} years`
-                : t('comparison.propertyLeadsDesc', {
-                    return: currency(bestInvestment.return),
+              {t('comparison.propertyLeadsDesc', {
+                return: currency(bestInvestment.return),
+                years: holdPeriod,
                 rate: bestInvestment.rate.toFixed(1)
               })}
             </p>
@@ -126,10 +125,11 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
             </div>
             <p className="text-sm text-amber-700">
               {t('comparison.comparisonDesc', {
-                    best: bestInvestment.name,
-                    return: currency(bestInvestment.return),
-                    propertyReturn: currency(analytics.comparisons.propertyInvestment.totalReturn)
-                  })}
+                best: bestInvestment.name,
+                return: currency(bestInvestment.return),
+                years: holdPeriod,
+                propertyReturn: currency(analytics.comparisons.propertyInvestment.totalReturn)
+              })}
             </p>
           </div>
         )}

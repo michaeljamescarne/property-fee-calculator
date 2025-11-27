@@ -45,13 +45,13 @@ export default function MetricCard({
   const getTrendColor = () => {
     switch (trend) {
       case 'good':
-        return 'border-green-200 bg-green-50/50';
+        return 'border-green-200 bg-green-50';
       case 'warning':
-        return 'border-amber-200 bg-amber-50/50';
+        return 'border-amber-200 bg-amber-50';
       case 'poor':
-        return 'border-red-200 bg-red-50/50';
+        return 'border-red-200 bg-red-50';
       default:
-        return 'border-border/40 bg-white';
+        return 'border-gray-200 bg-white';
     }
   };
 
@@ -64,17 +64,17 @@ export default function MetricCard({
       case 'poor':
         return 'text-red-700';
       default:
-        return 'text-foreground';
+        return 'text-gray-900';
     }
   };
 
   return (
-    <Card className={`border ${getTrendColor()} shadow-sm hover:shadow-md transition-shadow rounded-xl min-w-0`}>
+    <Card className={`border ${getTrendColor()} shadow-sm hover:shadow-md transition-shadow rounded min-w-0`}>
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-3 gap-2">
           <div className="flex items-center gap-2 min-w-0 flex-1">
-            {icon && <div className="text-primary flex-shrink-0">{icon}</div>}
-            <h3 className="text-sm font-semibold text-foreground/70 uppercase tracking-wide break-words leading-tight min-w-0 flex-1">
+            {icon && <div className="text-blue-600 flex-shrink-0">{icon}</div>}
+            <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide break-words leading-tight min-w-0 flex-1">
               {title}
             </h3>
           </div>
@@ -83,7 +83,7 @@ export default function MetricCard({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="flex-shrink-0">
-                    <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                    <Info className="h-4 w-4 text-gray-500 cursor-help" />
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="top" className="max-w-xs">
@@ -99,7 +99,7 @@ export default function MetricCard({
         </div>
 
         {subtitle && (
-          <p className="text-sm text-muted-foreground mb-2 break-words leading-relaxed">{subtitle}</p>
+          <p className="text-sm text-gray-600 mb-2 break-words leading-relaxed">{subtitle}</p>
         )}
 
         {change !== undefined && changeLabel && (
@@ -108,13 +108,13 @@ export default function MetricCard({
             <span className={change >= 0 ? 'text-green-600' : 'text-red-600'}>
               {change >= 0 ? '+' : ''}{change.toFixed(1)}%
             </span>
-            <span className="text-muted-foreground text-xs">{changeLabel}</span>
+            <span className="text-gray-500 text-xs">{changeLabel}</span>
           </div>
         )}
 
         {benchmark && (
-          <div className="mt-2 pt-2 border-t border-border/40">
-            <p className="text-xs text-muted-foreground break-words leading-relaxed">{benchmark}</p>
+          <div className="mt-2 pt-2 border-t border-gray-200">
+            <p className="text-xs text-gray-600 break-words leading-relaxed">{benchmark}</p>
           </div>
         )}
       </CardContent>

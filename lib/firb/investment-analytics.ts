@@ -20,15 +20,21 @@ import {
 
 /**
  * Generate smart default investment inputs based on property details
+ * Uses benchmark data when available, falls back to state defaults
  */
 export function generateDefaultInputs(
   propertyValue: number,
   state: AustralianState,
   propertyType: PropertyType,
   depositPercent: number,
-  existingCosts: CostBreakdown
+  existingCosts: CostBreakdown,
+  benchmarkData?: {
+    grossRentalYield?: number;
+    capitalGrowth5yr?: number;
+    capitalGrowth10yr?: number;
+  } | null
 ): InvestmentInputs {
-  // Estimate weekly rent based on gross yield by state
+  // Use benchmark data if available, otherwise fall back to state defaults
   const yieldRates: Record<AustralianState, number> = {
     NSW: 0.032, // 3.2%
     VIC: 0.034, // 3.4%
@@ -40,9 +46,16 @@ export function generateDefaultInputs(
     NT: 0.055, // 5.5%
   };
   
-  const grossYield = yieldRates[state] || 0.04;
+  const grossYield = benchmarkData?.grossRentalYield 
+    ? benchmarkData.grossRentalYield / 100 // Convert percentage to decimal
+    : (yieldRates[state] || 0.04);
   const annualRent = propertyValue * grossYield;
   const weeklyRent = Math.round(annualRent / 52);
+  
+  // Use benchmark capital growth if available
+  const capitalGrowth = benchmarkData?.capitalGrowth5yr 
+    ? benchmarkData.capitalGrowth5yr / 100 // Convert percentage to decimal
+    : 0.06; // Default 6%
   
   // Loan amount
   const depositAmount = propertyValue * (depositPercent / 100);
@@ -73,7 +86,7 @@ export function generateDefaultInputs(
     
     // Strategy
     holdPeriod: 10,
-    capitalGrowthRate: 6,
+    capitalGrowthRate: capitalGrowth * 100, // Convert back to percentage for display
     
     // Tax
     marginalTaxRate: 37, // Foreign resident rate

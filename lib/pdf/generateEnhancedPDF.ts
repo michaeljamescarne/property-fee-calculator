@@ -13,6 +13,11 @@ import type { PDFTranslations } from './pdfTranslations';
 import { ContentTier } from './contentAccess';
 import { mapAnalyticsToPDFData, type PDFReportData } from './dataMappers';
 import {
+  generateProjectionChart,
+  generateCashFlowChart,
+  generateROIComparisonChart
+} from './generateChartImages';
+import {
   addCoverPage,
   addTableOfContents,
   addSectionHeader,
@@ -44,6 +49,45 @@ export async function generateEnhancedPDF(
   // Map data to template format
   const reportData = mapAnalyticsToPDFData(formData, eligibility, costs, analytics);
   
+  // Generate chart images asynchronously (with error handling)
+  console.log('📊 Generating chart images...');
+  let chartImages: {
+    projectionChart: string | null;
+    cashFlowChart: string | null;
+    roiComparisonChart: string | null;
+  } = {
+    projectionChart: null,
+    cashFlowChart: null,
+    roiComparisonChart: null
+  };
+
+  try {
+    const [projectionChart, cashFlowChart, roiComparisonChart] = await Promise.all([
+      generateProjectionChart(analytics).catch(err => {
+        console.warn('Failed to generate projection chart:', err);
+        return '';
+      }),
+      generateCashFlowChart(analytics).catch(err => {
+        console.warn('Failed to generate cash flow chart:', err);
+        return '';
+      }),
+      generateROIComparisonChart(analytics).catch(err => {
+        console.warn('Failed to generate ROI comparison chart:', err);
+        return '';
+      })
+    ]);
+
+    chartImages = {
+      projectionChart: projectionChart || null,
+      cashFlowChart: cashFlowChart || null,
+      roiComparisonChart: roiComparisonChart || null
+    };
+    console.log('✅ Chart generation complete');
+  } catch (error) {
+    console.error('Chart generation error (continuing without charts):', error);
+    // Continue without charts - tables will still be shown
+  }
+  
   // Track Y position explicitly
   let currentY: number = SPACING.margin;
   
@@ -54,11 +98,11 @@ export async function generateEnhancedPDF(
   currentY = generateFIRBEligibility(doc, reportData, currentY);
   currentY = generateInvestmentCosts(doc, reportData, currentY);
   currentY = generatePerformanceMetrics(doc, reportData, currentY);
-  currentY = generateCashFlowAnalysis(doc, reportData, currentY);
+  currentY = generateCashFlowAnalysis(doc, reportData, currentY, chartImages.cashFlowChart);
   currentY = generateTaxAnalysisAndCGT(doc, reportData, currentY);
-  currentY = generateProjection(doc, reportData, currentY);
+  currentY = generateProjection(doc, reportData, currentY, chartImages.projectionChart);
   currentY = generateSensitivityAnalysis(doc, reportData, currentY);
-  currentY = generateInvestmentComparison(doc, reportData, currentY);
+  currentY = generateInvestmentComparison(doc, reportData, currentY, chartImages.roiComparisonChart);
   currentY = generateGlossary(doc, currentY);
   generateDisclaimer(doc, currentY);
 
@@ -382,7 +426,7 @@ function generatePerformanceMetrics(doc: jsPDF, data: PDFReportData, startY: num
   return addPageBreak(doc);
 }
 
-function generateCashFlowAnalysis(doc: jsPDF, data: PDFReportData, startY: number): number {
+function generateCashFlowAnalysis(doc: jsPDF, data: PDFReportData, startY: number, chartImageDataUrl?: string | null): number {
   const currentY = addSectionHeader(doc, 'Cash Flow Analysis', 'Income vs Expenses Breakdown', startY);
   
   // Three summary boxes at top
@@ -395,8 +439,22 @@ function generateCashFlowAnalysis(doc: jsPDF, data: PDFReportData, startY: numbe
   addMetricCard(doc, 'Annual Expenses', formatCurrency(data.performance.totalExpenses), 'All costs', COLORS.danger, cardStartY, SPACING.margin + cardWidth + cardSpacing);
   addMetricCard(doc, 'After-Tax Cash Flow', formatCurrency(data.performance.monthlyCashFlow * 12), 'Annual net cash flow', data.performance.monthlyCashFlow >= 0 ? COLORS.success : COLORS.danger, cardStartY, SPACING.margin + 2 * (cardWidth + cardSpacing));
 
+  // Add cash flow chart if available
+  let expenseBreakdownY = cardStartY + cardHeight + 30;
+  if (chartImageDataUrl) {
+    try {
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const chartWidth = pageWidth - (SPACING.margin * 2);
+      const chartHeight = 60; // 60mm height for chart
+      
+      doc.addImage(chartImageDataUrl, 'PNG', SPACING.margin, expenseBreakdownY, chartWidth, chartHeight);
+      expenseBreakdownY += chartHeight + 20;
+    } catch (error) {
+      console.warn('Failed to add cash flow chart to PDF:', error);
+    }
+  }
+
   // Expense Breakdown table
-  const expenseBreakdownY = cardStartY + cardHeight + 30;
   const expenseRows = [
     ['Loan Interest', formatCurrency(data.performance.totalExpenses * 0.7)], // Estimate
     ['Property Management', formatCurrency(data.performance.totalExpenses * 0.15)], // Estimate
@@ -523,7 +581,7 @@ function generateTaxAnalysisAndCGT(doc: jsPDF, data: PDFReportData, startY: numb
   return addPageBreak(doc);
 }
 
-function generateProjection(doc: jsPDF, data: PDFReportData, startY: number): number {
+function generateProjection(doc: jsPDF, data: PDFReportData, startY: number, chartImageDataUrl?: string | null): number {
   const currentY = addSectionHeader(doc, '10-Year Projection', 'Long-term Investment Outlook', startY);
   
   // Summary boxes at top
@@ -537,8 +595,22 @@ function generateProjection(doc: jsPDF, data: PDFReportData, startY: number): nu
   addMetricCard(doc, 'Your Equity', formatCurrency(data.projection.finalValue * 0.8), 'Estimated equity at sale', COLORS.primary, cardStartY, SPACING.margin + 2 * (cardWidth + cardSpacing));
   addMetricCard(doc, 'Total ROI', formatPercentage(data.projection.totalROI), 'Overall return', COLORS.success, cardStartY, SPACING.margin + 3 * (cardWidth + cardSpacing));
 
+  // Add projection chart if available
+  let tableY = cardStartY + cardHeight + 30;
+  if (chartImageDataUrl) {
+    try {
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const chartWidth = pageWidth - (SPACING.margin * 2);
+      const chartHeight = 60; // 60mm height for chart
+      
+      doc.addImage(chartImageDataUrl, 'PNG', SPACING.margin, tableY, chartWidth, chartHeight);
+      tableY += chartHeight + 20;
+    } catch (error) {
+      console.warn('Failed to add projection chart to PDF:', error);
+    }
+  }
+
   // Year-by-Year Summary table
-  const tableY = cardStartY + cardHeight + 30;
   doc.setFontSize(FONTS.title);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(COLORS.gray[800]);
@@ -593,8 +665,23 @@ function generateSensitivityAnalysis(doc: jsPDF, data: PDFReportData, startY: nu
   return addPageBreak(doc);
 }
 
-function generateInvestmentComparison(doc: jsPDF, data: PDFReportData, startY: number): number {
+function generateInvestmentComparison(doc: jsPDF, data: PDFReportData, startY: number, chartImageDataUrl?: string | null): number {
   const currentY = addSectionHeader(doc, 'Investment Comparison', 'Property vs Other Investment Options', startY);
+  
+  // Add ROI comparison chart if available
+  let tableStartY = currentY + 20;
+  if (chartImageDataUrl) {
+    try {
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const chartWidth = pageWidth - (SPACING.margin * 2);
+      const chartHeight = 60; // 60mm height for chart
+      
+      doc.addImage(chartImageDataUrl, 'PNG', SPACING.margin, tableStartY, chartWidth, chartHeight);
+      tableStartY += chartHeight + 20;
+    } catch (error) {
+      console.warn('Failed to add ROI comparison chart to PDF:', error);
+    }
+  }
   
   // Investment comparison table
   const comparisonRows = [
@@ -605,14 +692,16 @@ function generateInvestmentComparison(doc: jsPDF, data: PDFReportData, startY: n
     ['High-Interest Savings', '3.2%', '38%', '█ █ ░ ░ ░ ░ ░ ░ ░ ░']
   ];
   
-  addDataTable(doc, ['Investment Type', 'Annual Rate', '10-Year Return', 'Visual Comparison'], comparisonRows, currentY, {
+  addDataTable(doc, ['Investment Type', 'Annual Rate', '10-Year Return', 'Visual Comparison'], comparisonRows, tableStartY, {
     title: 'Investment Performance Comparison',
     widths: [60, 30, 30, 60],
     align: ['left', 'right', 'right', 'left']
   });
 
-  // Disclaimer box
-  const disclaimerY = currentY + 120;
+  // Disclaimer box - need to get final Y position from table
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const tableEndY = tableStartY + 80; // Approximate table height
+  const disclaimerY = tableEndY + 20;
   const disclaimerBoxWidth = doc.internal.pageSize.getWidth() - (SPACING.margin * 2);
   const disclaimerBoxHeight = 40;
   

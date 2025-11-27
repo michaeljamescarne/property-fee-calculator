@@ -11,21 +11,28 @@ import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { DollarSign, TrendingUp, Home, Calculator } from 'lucide-react';
+import { DollarSign, TrendingUp, Home, Calculator, Sparkles, Loader2, TrendingDown, TrendingUp as TrendingUpIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import type { InvestmentInputs } from '@/types/investment';
+import type { BenchmarkData } from '@/app/api/benchmarks/route';
 
 interface FinancialDetailsStepProps {
   investmentInputs: Partial<InvestmentInputs>;
   onInvestmentInputsChange: (updates: Partial<InvestmentInputs>) => void;
   propertyValue: number;
   depositPercent: number;
+  benchmarkData?: BenchmarkData | null;
+  isLoadingBenchmarks?: boolean;
 }
 
 export default function FinancialDetailsStep({
   investmentInputs,
   onInvestmentInputsChange,
   propertyValue,
-  depositPercent
+  depositPercent,
+  benchmarkData,
+  isLoadingBenchmarks = false
 }: FinancialDetailsStepProps) {
   const t = useTranslations('FIRBCalculator.financialDetails');
 
@@ -40,32 +47,32 @@ export default function FinancialDetailsStep({
   const councilRates = investmentInputs.annualMaintenanceCost || 0; // This will be updated to use council rates
 
   return (
-    <Card className="border-none shadow-lg rounded-2xl">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader className="pb-6">
-        <CardTitle className="text-2xl flex items-center gap-2">
-          <Calculator className="h-6 w-6 text-primary" />
+        <CardTitle className="text-2xl font-semibold flex items-center gap-2 text-gray-900">
+          <Calculator className="h-6 w-6 text-blue-600" />
           {t('title') || 'Financial Details'}
         </CardTitle>
-        <CardDescription className="text-base mt-2">
+        <CardDescription className="text-base mt-2 text-gray-600">
           {t('description') || 'Enter financial details for investment analysis'}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Rental Income */}
-        <div className="space-y-4 p-4 rounded-lg border-2 border-primary/20 bg-primary/5">
+        <div className="space-y-4 p-4 rounded border-2 border-blue-200 bg-blue-50">
           <div className="flex items-center gap-2">
-            <Home className="h-5 w-5 text-primary" />
-            <Label className="text-base font-semibold">
+            <Home className="h-5 w-5 text-blue-600" />
+            <Label className="text-base font-semibold text-gray-900">
               {t('rental.title') || 'Rental Income'}
             </Label>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="weekly-rent" className="text-sm">
+            <Label htmlFor="weekly-rent" className="text-sm text-gray-900">
               {t('rental.weeklyRent') || 'Estimated Weekly Rent'}
             </Label>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground font-medium">$</span>
+              <span className="text-gray-500 font-medium">$</span>
               <Input
                 id="weekly-rent"
                 type="number"
@@ -73,14 +80,91 @@ export default function FinancialDetailsStep({
                 onChange={(e) => onInvestmentInputsChange({ 
                   estimatedWeeklyRent: Number(e.target.value) || 0 
                 })}
-                className="flex-1"
+                className="flex-1 rounded"
                 placeholder="e.g., 500"
               />
-              <span className="text-sm text-muted-foreground whitespace-nowrap">
+              <span className="text-sm text-gray-600 whitespace-nowrap">
                 (${(weeklyRent * 52).toLocaleString('en-AU')} per year)
               </span>
             </div>
-            <p className="text-xs text-muted-foreground">
+            
+            {/* Benchmark Suggestion for Rental Yield */}
+            {isLoadingBenchmarks && (
+              <div className="flex items-center gap-2 p-3 rounded bg-gray-50 border border-gray-200">
+                <Loader2 className="h-4 w-4 animate-spin text-gray-500" />
+                <span className="text-sm text-gray-600">
+                  {t('rental.benchmark.loading') || 'Loading benchmark data...'}
+                </span>
+              </div>
+            )}
+            
+            {!isLoadingBenchmarks && benchmarkData?.grossRentalYield !== undefined && benchmarkData.grossRentalYield !== null && (
+              <div className="p-3 rounded bg-blue-600/10 border-2 border-blue-600/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-blue-600" />
+                    <span className="text-sm font-medium text-blue-600">
+                      {benchmarkData.level === 'suburb' 
+                        ? (t('rental.benchmark.suburb') || 'Suburb')
+                        : (t('rental.benchmark.state') || 'State')} {t('rental.benchmark.available') || 'Benchmark Available'}
+                    </span>
+                  </div>
+                  {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) === weeklyRent && (
+                    <Badge variant="default" className="text-xs">
+                      {t('rental.benchmark.using') || 'Using benchmark'}
+                    </Badge>
+                  )}
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="p-2 rounded bg-background border">
+                    <p className="text-xs text-gray-600 mb-1">
+                      {t('rental.benchmark.marketBenchmark') || 'Market Benchmark'}
+                    </p>
+                    <p className="font-semibold text-sm">
+                      ${Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52)}/week
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      ({benchmarkData.grossRentalYield.toFixed(2)}% {t('rental.benchmark.yield') || 'yield'})
+                    </p>
+                  </div>
+                  
+                  <div className="p-2 rounded bg-background border">
+                    <p className="text-xs text-gray-600 mb-1">
+                      {t('rental.benchmark.yourInput') || 'Your Input'}
+                    </p>
+                    <p className="font-semibold text-sm">${weeklyRent}/week</p>
+                    <p className="text-xs text-gray-600">
+                      ({((weeklyRent * 52) / propertyValue * 100).toFixed(2)}% {t('rental.benchmark.yield') || 'yield'})
+                    </p>
+                  </div>
+                </div>
+                
+                {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) !== weeklyRent && (
+                  <Button
+                    size="sm"
+                    variant="default"
+                    className="w-full mt-2"
+                    onClick={() => {
+                      const benchmarkWeeklyRent = Math.round((propertyValue * (benchmarkData.grossRentalYield! / 100)) / 52);
+                      onInvestmentInputsChange({ estimatedWeeklyRent: benchmarkWeeklyRent });
+                    }}
+                  >
+                    <Sparkles className="h-3 w-3 mr-2" />
+                    {t('rental.benchmark.useBenchmark') || 'Use Market Benchmark'}
+                  </Button>
+                )}
+              </div>
+            )}
+            
+            {!isLoadingBenchmarks && (!benchmarkData || (benchmarkData?.grossRentalYield === undefined || benchmarkData?.grossRentalYield === null)) && (
+              <div className="p-2 rounded bg-gray-50/30 border border-gray-200">
+                <p className="text-xs text-gray-600">
+                  {t('rental.benchmark.noData') || 'No benchmark data available for this location. Enter your estimated weekly rent above.'}
+                </p>
+              </div>
+            )}
+            <p className="text-xs text-gray-600">
               {t('rental.help') || 'Based on similar properties in the area. You can adjust this later.'}
             </p>
           </div>
@@ -97,14 +181,14 @@ export default function FinancialDetailsStep({
               step={1}
               className="w-full"
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600">
               {t('rental.vacancyHelp') || 'Typical: 3-5% for good locations, 7-10% for high-risk areas'}
             </p>
           </div>
         </div>
 
         {/* Capital Growth */}
-        <div className="space-y-4 p-4 rounded-lg border-2 border-accent/20 bg-accent/5">
+        <div className="space-y-4 p-4 rounded border-2 border-accent/20 bg-accent/5">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-accent" />
             <Label className="text-base font-semibold">
@@ -124,12 +208,100 @@ export default function FinancialDetailsStep({
               step={0.5}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="flex justify-between text-xs text-gray-600">
               <span>{t('growth.conservative') || 'Conservative (4%)'}</span>
               <span>{t('growth.moderate') || 'Moderate (6%)'}</span>
               <span>{t('growth.optimistic') || 'Optimistic (8%)'}</span>
             </div>
-            <p className="text-xs text-muted-foreground">
+            
+            {/* Benchmark Suggestion for Capital Growth */}
+            {isLoadingBenchmarks && (
+              <div className="flex items-center gap-2 p-3 rounded bg-gray-50/50 border border-gray-200">
+                <Loader2 className="h-4 w-4 animate-spin text-gray-600" />
+                <span className="text-sm text-gray-600">
+                  {t('growth.benchmark.loading') || 'Loading benchmark data...'}
+                </span>
+              </div>
+            )}
+            
+            {!isLoadingBenchmarks && benchmarkData?.capitalGrowth5yr !== undefined && benchmarkData.capitalGrowth5yr !== null && (
+              <div className="p-3 rounded bg-accent/10 border-2 border-accent/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-accent" />
+                    <span className="text-sm font-medium text-accent-foreground">
+                      {benchmarkData.level === 'suburb' 
+                        ? (t('growth.benchmark.suburb') || 'Suburb')
+                        : (t('growth.benchmark.state') || 'State')} {t('growth.benchmark.available') || 'Benchmark Available'}
+                    </span>
+                  </div>
+                  {Math.abs(benchmarkData.capitalGrowth5yr - capitalGrowthRate) < 0.1 && (
+                    <Badge variant="default" className="text-xs">
+                      {t('growth.benchmark.using') || 'Using benchmark'}
+                    </Badge>
+                  )}
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="p-2 rounded bg-background border">
+                    <p className="text-xs text-gray-600 mb-1">
+                      {t('growth.benchmark.marketBenchmark') || 'Market Benchmark'}
+                    </p>
+                    <p className="font-semibold text-sm">
+                      {benchmarkData.capitalGrowth5yr}% {t('growth.benchmark.perYear') || 'per year'}
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      ({t('growth.benchmark.fiveYearAverage') || '5-year average'})
+                    </p>
+                  </div>
+                  
+                  <div className="p-2 rounded bg-background border">
+                    <p className="text-xs text-gray-600 mb-1">
+                      {t('growth.benchmark.yourInput') || 'Your Input'}
+                    </p>
+                    <p className="font-semibold text-sm">{capitalGrowthRate}% {t('growth.benchmark.perYear') || 'per year'}</p>
+                    <p className="text-xs text-gray-600 flex items-center gap-1">
+                      {capitalGrowthRate > benchmarkData.capitalGrowth5yr ? (
+                        <>
+                          <TrendingUpIcon className="h-3 w-3 text-green-600" />
+                          {t('growth.benchmark.aboveBenchmark') || 'Above benchmark'}
+                        </>
+                      ) : capitalGrowthRate < benchmarkData.capitalGrowth5yr ? (
+                        <>
+                          <TrendingDown className="h-3 w-3 text-orange-600" />
+                          {t('growth.benchmark.belowBenchmark') || 'Below benchmark'}
+                        </>
+                      ) : (
+                        t('growth.benchmark.matchesBenchmark') || 'Matches benchmark'
+                      )}
+                    </p>
+                  </div>
+                </div>
+                
+                {Math.abs(benchmarkData.capitalGrowth5yr - capitalGrowthRate) >= 0.1 && (
+                  <Button
+                    size="sm"
+                    variant="default"
+                    className="w-full mt-2"
+                    onClick={() => {
+                      onInvestmentInputsChange({ capitalGrowthRate: benchmarkData.capitalGrowth5yr! });
+                    }}
+                  >
+                    <Sparkles className="h-3 w-3 mr-2" />
+                    {t('growth.benchmark.useBenchmark') || 'Use Market Benchmark'}
+                  </Button>
+                )}
+              </div>
+            )}
+            
+            {!isLoadingBenchmarks && (!benchmarkData || (benchmarkData?.capitalGrowth5yr === undefined || benchmarkData?.capitalGrowth5yr === null)) && (
+              <div className="p-2 rounded bg-gray-50/30 border border-gray-200">
+                <p className="text-xs text-gray-600">
+                  {t('growth.benchmark.noData') || 'No benchmark data available for this location. Adjust the slider above based on your expectations.'}
+                </p>
+              </div>
+            )}
+            <p className="text-xs text-gray-600">
               {t('growth.help') || 'Historical average: 6% per year. Adjust based on your expectations.'}
             </p>
           </div>
@@ -137,7 +309,7 @@ export default function FinancialDetailsStep({
 
         {/* Loan Details */}
         {loanAmount > 0 && (
-          <div className="space-y-4 p-4 rounded-lg border-2 border-blue-200 bg-blue-50">
+          <div className="space-y-4 p-4 rounded border-2 border-blue-200 bg-blue-50">
             <div className="flex items-center gap-2">
               <DollarSign className="h-5 w-5 text-blue-600" />
               <Label className="text-base font-semibold">
@@ -146,9 +318,9 @@ export default function FinancialDetailsStep({
             </div>
             
             <div className="space-y-4">
-              <div className="p-3 rounded-lg bg-white border">
+              <div className="p-3 rounded bg-white border">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     {t('loan.amount') || 'Loan Amount'}
                   </span>
                   <span className="font-semibold">
@@ -156,7 +328,7 @@ export default function FinancialDetailsStep({
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     {t('loan.deposit') || 'Deposit'}
                   </span>
                   <span className="font-semibold">
@@ -177,7 +349,7 @@ export default function FinancialDetailsStep({
                   step={0.1}
                   className="w-full"
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-gray-600">
                   {t('loan.interestHelp') || 'Current market rates: 5.5-7.5%'}
                 </p>
               </div>
@@ -196,7 +368,7 @@ export default function FinancialDetailsStep({
                 />
               </div>
 
-              <div className="flex items-center space-x-2 p-3 rounded-lg border bg-white">
+              <div className="flex items-center space-x-2 p-3 rounded border bg-white">
                 <Checkbox
                   id="interest-only"
                   checked={investmentInputs.loanType === 'interestOnly'}
@@ -221,7 +393,7 @@ export default function FinancialDetailsStep({
             {t('councilRates') || 'Annual Council Rates (Optional)'}
           </Label>
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground font-medium">$</span>
+            <span className="text-gray-600 font-medium">$</span>
             <Input
               id="council-rates"
               type="number"
@@ -233,14 +405,14 @@ export default function FinancialDetailsStep({
               placeholder="e.g., 2000"
             />
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-gray-600">
             {t('councilRatesHelp') || 'Typical: $1,500-$3,000 per year. Leave blank to use estimate.'}
           </p>
         </div>
 
         {/* Property Management */}
         <div className="space-y-2">
-          <div className="flex items-center space-x-2 p-3 rounded-lg border bg-white">
+          <div className="flex items-center space-x-2 p-3 rounded border bg-white">
             <Checkbox
               id="self-managed"
               checked={investmentInputs.selfManaged || false}
@@ -269,7 +441,7 @@ export default function FinancialDetailsStep({
                 step={0.5}
                 className="w-full"
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-gray-600">
                 {t('managementFeeHelp') || 'Typical: 7-9% of rental income'}
               </p>
             </div>

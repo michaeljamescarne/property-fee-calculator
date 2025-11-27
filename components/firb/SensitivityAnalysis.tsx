@@ -32,7 +32,7 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
   const { sensitivity } = analytics;
 
   return (
-    <Card className="border-none shadow-md rounded-2xl bg-white">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="h-5 w-5 text-primary" />

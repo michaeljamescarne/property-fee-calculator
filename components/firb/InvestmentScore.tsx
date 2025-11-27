@@ -51,7 +51,7 @@ function ScoreGauge({ score, label }: { score: number; label: string }) {
           </span>
         </div>
       </div>
-      <p className="text-xs text-center font-medium text-muted-foreground">{label}</p>
+      <p className="text-xs text-center font-medium text-gray-600">{label}</p>
     </div>
   );
 }
@@ -62,9 +62,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
   // Safety checks for missing analytics data
   if (!analytics || !analytics.score || !analytics.recommendation) {
     return (
-      <div className="p-8 border rounded-lg bg-muted/30">
-        <h3 className="text-lg font-semibold mb-4">Investment Score & Recommendation</h3>
-        <p className="text-muted-foreground">
+      <div className="p-8 border border-gray-200 rounded bg-gray-50">
+        <h3 className="text-lg font-semibold mb-4 text-gray-900">Investment Score & Recommendation</h3>
+        <p className="text-gray-600">
           Investment scoring data is not available. This section requires investment analytics to be enabled.
         </p>
       </div>
@@ -74,15 +74,15 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
   const getVerdictColor = () => {
     switch (analytics.recommendation.verdict) {
       case 'Excellent':
-        return 'from-green-500 to-emerald-500';
+        return 'bg-green-600';
       case 'Good':
-        return 'from-blue-500 to-indigo-500';
+        return 'bg-blue-600';
       case 'Moderate':
-        return 'from-amber-500 to-orange-500';
+        return 'bg-amber-500';
       case 'Poor':
-        return 'from-red-500 to-rose-500';
+        return 'bg-red-600';
       default:
-        return 'from-gray-500 to-slate-500';
+        return 'bg-gray-600';
     }
   };
 
@@ -99,15 +99,15 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
   };
 
   return (
-    <Card className="border-none shadow-md rounded-2xl bg-white">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Award className="h-5 w-5 text-primary" />
+        <CardTitle className="flex items-center gap-2 text-2xl font-semibold text-gray-900">
+          <Award className="h-5 w-5 text-blue-600" />
           {t('score.title') === 'FIRBCalculator.investmentAnalytics.score.title' 
             ? 'Investment Score' 
             : t('score.title')}
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-600">
           {t('score.description') === 'FIRBCalculator.investmentAnalytics.score.description'
             ? 'Comprehensive analysis of your investment opportunity'
             : t('score.description')}
@@ -116,7 +116,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
       
       <CardContent className="space-y-8">
         {/* Overall Verdict Banner */}
-        <div className={`p-6 bg-gradient-to-r ${getVerdictColor()} text-white rounded-2xl`}>
+        <div className={`p-6 ${getVerdictColor()} text-white rounded`}>
           <div className="flex items-center gap-4 mb-4">
             {getVerdictIcon()}
             <div>
@@ -138,7 +138,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
 
         {/* Score Breakdown */}
         <div>
-          <h4 className="text-base font-semibold text-foreground mb-5">
+          <h4 className="text-base font-semibold text-gray-900 mb-5">
             {t('score.scoreBreakdown') === 'FIRBCalculator.investmentAnalytics.score.scoreBreakdown' 
               ? 'Score Breakdown' 
               : t('score.scoreBreakdown')}
@@ -179,7 +179,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
 
         {/* Recommendation Description */}
         <div className="prose prose-sm max-w-none">
-          <p className="text-foreground/80 leading-relaxed whitespace-pre-line">
+          <p className="text-gray-600 leading-relaxed whitespace-pre-line">
             {analytics.recommendation.description}
           </p>
         </div>
@@ -199,7 +199,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
                 {analytics.recommendation.strengths.map((strength, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm">
                     <span className="text-green-600 font-bold mt-0.5">✓</span>
-                    <span className="text-foreground/80">{strength}</span>
+                    <span className="text-gray-600">{strength}</span>
                   </li>
                 ))}
               </ul>
@@ -219,7 +219,7 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
                 {analytics.recommendation.weaknesses.map((weakness, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm">
                     <span className="text-red-600 font-bold mt-0.5">✗</span>
-                    <span className="text-foreground/80">{weakness}</span>
+                    <span className="text-gray-600">{weakness}</span>
                   </li>
                 ))}
               </ul>
@@ -229,9 +229,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
 
         {/* Suitable For */}
         {analytics.recommendation.suitableFor.length > 0 && (
-          <div className="p-5 bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 rounded-xl">
-            <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-              <Users className="h-4 w-4 text-primary" />
+          <div className="p-5 bg-blue-50 border border-blue-200 rounded">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <Users className="h-4 w-4 text-blue-600" />
               {t('score.suitableFor') === 'FIRBCalculator.investmentAnalytics.score.suitableFor' 
                 ? 'Suitable For' 
                 : t('score.suitableFor')}
@@ -239,8 +239,8 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
             <ul className="space-y-2">
               {analytics.recommendation.suitableFor.map((profile, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm">
-                  <span className="text-primary font-bold mt-0.5">•</span>
-                  <span className="text-foreground/80">{profile}</span>
+                  <span className="text-blue-600 font-bold mt-0.5">•</span>
+                  <span className="text-gray-600">{profile}</span>
                 </li>
               ))}
             </ul>
@@ -249,9 +249,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
 
         {/* Risks to Consider */}
         {analytics.recommendation.risksToConsider.length > 0 && (
-          <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl">
+          <div className="p-5 bg-amber-50 border border-amber-200 rounded">
             <h4 className="text-sm font-semibold text-amber-900 mb-3 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
+              <AlertTriangle className="h-4 w-4 text-amber-600" />
               {t('score.risksToConsider') === 'FIRBCalculator.investmentAnalytics.score.risksToConsider' 
                 ? 'Risks to Consider' 
                 : t('score.risksToConsider')}
@@ -269,9 +269,9 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
 
         {/* Key Takeaways */}
         {analytics.recommendation.keyTakeaways.length > 0 && (
-          <div className="p-5 bg-gradient-to-r from-muted/50 to-background border border-border/40 rounded-xl">
-            <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-primary" />
+          <div className="p-5 bg-gray-50 border border-gray-200 rounded">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-blue-600" />
               {t('score.keyTakeaways') === 'FIRBCalculator.investmentAnalytics.score.keyTakeaways' 
                 ? 'Key Takeaways' 
                 : t('score.keyTakeaways')}
@@ -279,8 +279,8 @@ export default function InvestmentScore({ analytics }: InvestmentScoreProps) {
             <ul className="space-y-2">
               {analytics.recommendation.keyTakeaways.map((takeaway, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm">
-                  <span className="text-primary font-bold mt-0.5">→</span>
-                  <span className="text-foreground/80 font-medium">{takeaway}</span>
+                  <span className="text-blue-600 font-bold mt-0.5">→</span>
+                  <span className="text-gray-600 font-medium">{takeaway}</span>
                 </li>
               ))}
             </ul>

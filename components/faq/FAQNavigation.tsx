@@ -49,7 +49,7 @@ export default function FAQNavigation({ categories, activeCategory, onCategoryCl
 
   return (
     <nav
-      className={`bg-white border-y border-border/40 transition-all duration-200 ${
+      className={`bg-white border-y border-gray-200 transition-all duration-200 ${
         isSticky ? 'sticky top-0 z-40 shadow-sm' : ''
       }`}
     >
@@ -63,10 +63,10 @@ export default function FAQNavigation({ categories, activeCategory, onCategoryCl
               <button
                 key={category.id}
                 onClick={() => handleClick(category.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg whitespace-nowrap transition-all font-medium text-sm ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded whitespace-nowrap transition-all font-medium text-sm ${
                   isActive
-                    ? 'bg-primary text-primary-foreground shadow-sm'
-                    : 'bg-muted/50 text-foreground/70 hover:bg-muted hover:text-foreground'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
                 }`}
               >
                 <Icon className="h-4 w-4" />

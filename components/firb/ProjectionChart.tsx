@@ -14,12 +14,16 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
   const { t, currency } = useInvestmentTranslations();
 
   // Prepare data for chart
+  const propertyValueKey = t('projections.tableHeaders.propertyValue') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.propertyValue' ? 'Property Value' : t('projections.tableHeaders.propertyValue');
+  const equityKey = t('projections.tableHeaders.equity') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.equity' ? 'Your Equity' : t('projections.tableHeaders.equity');
+  const cumulativeReturnKey = t('projections.tableHeaders.cumulativeReturn') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.cumulativeReturn' ? 'Cumulative Return' : t('projections.tableHeaders.cumulativeReturn');
+  
   const chartData = analytics.yearByYear.map((year) => ({
-    year: `${t('projections.yearByYear') === 'FIRBCalculator.investmentAnalytics.projections.yearByYear' ? 'Year' : t('projections.yearByYear')} ${year.year}`,
-    [t('projections.tableHeaders.propertyValue') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.propertyValue' ? 'Property Value' : t('projections.tableHeaders.propertyValue')]: year.propertyValue,
+    year: `Year ${year.year}`,
+    [propertyValueKey]: year.propertyValue,
     'Loan Balance': year.loanBalance,
-    [t('projections.tableHeaders.equity') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.equity' ? 'Your Equity' : t('projections.tableHeaders.equity')]: year.equity,
-    [t('projections.tableHeaders.cumulativeReturn') === 'FIRBCalculator.investmentAnalytics.projections.tableHeaders.cumulativeReturn' ? 'Cumulative Return' : t('projections.tableHeaders.cumulativeReturn')]: year.cumulativeReturn,
+    [equityKey]: year.equity,
+    [cumulativeReturnKey]: year.cumulativeReturn,
   }));
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { year: string }; name: string; value: number; color: string }> }) => {
@@ -39,11 +43,13 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
   };
 
   return (
-    <Card className="border-none shadow-md rounded-2xl bg-white">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-primary" />
-          {t('projections.title', { years: analytics.yearByYear.length })}
+          {t('projections.title', { years: analytics.yearByYear.length }) === `FIRBCalculator.investmentAnalytics.projections.title` 
+            ? `${analytics.yearByYear.length}-Year Investment Projections` 
+            : t('projections.title', { years: analytics.yearByYear.length })}
         </CardTitle>
         <CardDescription>
           {t('projections.description') === 'FIRBCalculator.investmentAnalytics.projections.description'
@@ -74,7 +80,7 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
             />
             <Line 
               type="monotone" 
-              dataKey="Property Value" 
+              dataKey={propertyValueKey} 
               stroke="#8B5CF6" 
               strokeWidth={3}
               dot={{ fill: '#8B5CF6', r: 4 }}
@@ -90,7 +96,7 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
             />
             <Line 
               type="monotone" 
-              dataKey="Your Equity" 
+              dataKey={equityKey} 
               stroke="#10B981" 
               strokeWidth={3}
               dot={{ fill: '#10B981', r: 4 }}

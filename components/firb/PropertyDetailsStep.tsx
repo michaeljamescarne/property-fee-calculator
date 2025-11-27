@@ -67,16 +67,16 @@ export default function PropertyDetailsStep({
   };
 
   return (
-    <Card className="border-none shadow-lg rounded-2xl">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader className="pb-6">
-        <CardTitle className="text-2xl">{t('title')}</CardTitle>
-        <CardDescription className="text-base mt-2">{t('description')}</CardDescription>
+        <CardTitle className="text-2xl font-semibold text-gray-900">{t('title')}</CardTitle>
+        <CardDescription className="text-base mt-2 text-gray-600">{t('description')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Property Type */}
         <div className="space-y-4">
-          <Label className="text-base font-semibold flex items-center gap-2">
-            <Home className="h-5 w-5" />
+          <Label className="text-base font-semibold flex items-center gap-2 text-gray-900">
+            <Home className="h-5 w-5 text-gray-600" />
             {t('typeLabel')}
           </Label>
           <RadioGroup
@@ -85,13 +85,13 @@ export default function PropertyDetailsStep({
             className="grid grid-cols-1 md:grid-cols-2 gap-3"
           >
             <Label htmlFor="newDwelling" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="newDwelling" id="newDwelling" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm">
+                  <div className="font-semibold text-sm text-gray-900">
                     {t('types.newDwelling.title')}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                  <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
                     {t('types.newDwelling.description')}
                   </p>
                 </div>
@@ -99,13 +99,13 @@ export default function PropertyDetailsStep({
             </Label>
 
             <Label htmlFor="established" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="established" id="established" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm">
+                  <div className="font-semibold text-sm text-gray-900">
                     {t('types.established.title')}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                  <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
                     {t('types.established.description')}
                   </p>
                 </div>
@@ -113,13 +113,13 @@ export default function PropertyDetailsStep({
             </Label>
 
             <Label htmlFor="vacantLand" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="vacantLand" id="vacantLand" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm">
+                  <div className="font-semibold text-sm text-gray-900">
                     {t('types.vacantLand.title')}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                  <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
                     {t('types.vacantLand.description')}
                   </p>
                 </div>
@@ -127,13 +127,13 @@ export default function PropertyDetailsStep({
             </Label>
 
             <Label htmlFor="commercial" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded-xl border-2 border-border/50 p-4 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm transition-all h-20">
+              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="commercial" id="commercial" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm">
+                  <div className="font-semibold text-sm text-gray-900">
                     {t('types.commercial.title')}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                  <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
                     {t('types.commercial.description')}
                   </p>
                 </div>
@@ -144,23 +144,23 @@ export default function PropertyDetailsStep({
 
         {/* Property Value */}
         <div className="space-y-3">
-          <Label htmlFor="property-value" className="text-base font-semibold flex items-center gap-2">
-            <DollarSign className="h-5 w-5" />
+          <Label htmlFor="property-value" className="text-base font-semibold flex items-center gap-2 text-gray-900">
+            <DollarSign className="h-5 w-5 text-gray-600" />
             {t('valueLabel')}
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <Input
               id="property-value"
               type="number"
               value={propertyValue || ''}
               onChange={(e) => onPropertyValueChange(Number(e.target.value))}
               placeholder="1000000"
-              className="pl-8"
+              className="pl-8 rounded"
             />
           </div>
           {propertyValue > 0 && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               {formatCurrency(propertyValue)}
             </p>
           )}
@@ -168,8 +168,8 @@ export default function PropertyDetailsStep({
 
         {/* State/Territory */}
         <div className="space-y-3">
-          <Label htmlFor="state" className="text-base font-semibold flex items-center gap-2">
-            <MapPin className="h-5 w-5" />
+          <Label htmlFor="state" className="text-base font-semibold flex items-center gap-2 text-gray-900">
+            <MapPin className="h-5 w-5 text-gray-600" />
             {t('stateLabel')}
           </Label>
           <Select value={state} onValueChange={(value) => onStateChange(value as AustralianState)}>
@@ -191,10 +191,10 @@ export default function PropertyDetailsStep({
 
         {/* Property Address (Optional) */}
         <div className="space-y-3">
-          <Label htmlFor="property-address" className="text-base font-semibold flex items-center gap-2">
-            <Building className="h-5 w-5" />
+          <Label htmlFor="property-address" className="text-base font-semibold flex items-center gap-2 text-gray-900">
+            <Building className="h-5 w-5 text-gray-600" />
             {t('addressLabel')}
-            <span className="text-sm font-normal text-muted-foreground">({t('optional')})</span>
+            <span className="text-sm font-normal text-gray-500">({t('optional')})</span>
           </Label>
           <AddressAutocomplete
             value={propertyAddress || ''}
@@ -202,13 +202,13 @@ export default function PropertyDetailsStep({
             onStateChange={onStateChange}
             placeholder={t('addressPlaceholder')}
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-gray-500">
             Start typing to see address suggestions. Selecting an address will auto-fill the state.
           </p>
         </div>
 
         {/* First Home Buyer */}
-        <div className="flex items-start gap-3 p-4 bg-muted rounded-lg">
+        <div className="flex items-start gap-3 p-4 bg-gray-50 rounded border border-gray-200">
           <Checkbox
             id="first-home"
             checked={isFirstHome}
@@ -216,10 +216,10 @@ export default function PropertyDetailsStep({
             className="mt-1"
           />
           <div className="flex-1">
-            <Label htmlFor="first-home" className="font-medium cursor-pointer">
+            <Label htmlFor="first-home" className="font-medium cursor-pointer text-gray-900">
               {t('firstHome.label')}
             </Label>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               {t('firstHome.description')}
             </p>
           </div>
@@ -227,8 +227,8 @@ export default function PropertyDetailsStep({
 
         {/* Deposit Percentage */}
         <div className="space-y-3">
-          <Label htmlFor="deposit-percent" className="text-base font-semibold flex items-center gap-2">
-            <Percent className="h-5 w-5" />
+          <Label htmlFor="deposit-percent" className="text-base font-semibold flex items-center gap-2 text-gray-900">
+            <Percent className="h-5 w-5 text-gray-600" />
             {t('depositLabel')}
           </Label>
           <Select value={depositPercent.toString()} onValueChange={(value) => onDepositPercentChange(Number(value))}>
@@ -253,7 +253,7 @@ export default function PropertyDetailsStep({
             </SelectContent>
           </Select>
           {propertyValue > 0 && depositPercent > 0 && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               {t('depositAmount')}: {formatCurrency((propertyValue * depositPercent) / 100)}
             </p>
           )}
@@ -261,11 +261,11 @@ export default function PropertyDetailsStep({
 
         {/* Entity Type */}
         <div className="space-y-3">
-          <Label htmlFor="entity-type" className="text-base font-semibold">
+          <Label htmlFor="entity-type" className="text-base font-semibold text-gray-900">
             {t('entityLabel')}
           </Label>
           <Select value={entityType} onValueChange={(value) => onEntityTypeChange(value as EntityType)}>
-            <SelectTrigger id="entity-type" className="w-full">
+            <SelectTrigger id="entity-type" className="w-full rounded">
               <SelectValue placeholder={t('entityPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
@@ -274,7 +274,7 @@ export default function PropertyDetailsStep({
               <SelectItem value="trust">{t('entities.trust')}</SelectItem>
             </SelectContent>
           </Select>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-600">
             {t('entityDescription')}
           </p>
         </div>
