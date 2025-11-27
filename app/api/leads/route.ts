@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createServiceRoleClient } from "@/lib/supabase/server";
 import { z } from "zod";
 
 // Validation schema for lead capture
@@ -10,20 +10,21 @@ const leadSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Validate input
     const validationResult = leadSchema.safeParse(body);
     if (!validationResult.success) {
       return NextResponse.json(
-        { error: "Invalid email address", details: validationResult.error.errors },
+        { error: "Invalid email address", details: validationResult.error.issues },
         { status: 400 }
       );
     }
 
     const { email } = validationResult.data;
 
-    // Create Supabase client
-    const supabase = await createClient();
+    // Create Supabase service role client for public lead capture
+    // This bypasses RLS and ensures reliable inserts for public forms
+    const supabase = createServiceRoleClient();
 
     // Insert lead
     const { data, error } = await supabase
@@ -35,16 +36,26 @@ export async function POST(request: NextRequest) {
     if (error) {
       // Handle duplicate email error gracefully
       if (error.code === "23505") {
-        // Unique constraint violation
+        // Unique constraint violation - email already exists
         return NextResponse.json(
           { message: "Email already registered", success: true },
           { status: 200 }
         );
       }
 
-      console.error("Error inserting lead:", error);
+      // Log the full error for debugging
+      console.error("Error inserting lead:", {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      });
+
       return NextResponse.json(
-        { error: "Failed to save email. Please try again." },
+        {
+          error: "Failed to save email. Please try again.",
+          details: process.env.NODE_ENV === "development" ? error.message : undefined,
+        },
         { status: 500 }
       );
     }
@@ -55,10 +66,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error("Unexpected error in leads API:", error);
-    return NextResponse.json(
-      { error: "An unexpected error occurred" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
   }
 }
 
@@ -66,7 +74,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
-    
+
     // Check if user is authenticated and is admin
     const {
       data: { user },
@@ -101,16 +109,11 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error("Error fetching leads:", error);
-      return NextResponse.json(
-        { error: "Failed to fetch leads" },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "Failed to fetch leads" }, { status: 500 });
     }
 
     // Get total count
-    const { count } = await supabase
-      .from("leads")
-      .select("*", { count: "exact", head: true });
+    const { count } = await supabase.from("leads").select("*", { count: "exact", head: true });
 
     return NextResponse.json({
       data,
@@ -122,10 +125,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Unexpected error in leads GET API:", error);
-    return NextResponse.json(
-      { error: "An unexpected error occurred" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
   }
 }
-
