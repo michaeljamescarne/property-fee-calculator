@@ -6,8 +6,8 @@ Run this query in Supabase SQL Editor (replace `your@email.com` with your actual
 
 ```sql
 -- Find your user ID
-SELECT id, email, role 
-FROM user_profiles 
+SELECT id, email, role
+FROM user_profiles
 WHERE email = 'your@email.com';
 ```
 
@@ -15,8 +15,8 @@ WHERE email = 'your@email.com';
 
 ```sql
 -- Find from auth.users
-SELECT id, email 
-FROM auth.users 
+SELECT id, email
+FROM auth.users
 WHERE email = 'your@email.com';
 ```
 
@@ -39,15 +39,15 @@ Replace both `YOUR_ACTUAL_USER_ID_HERE` and `your@email.com`:
 ```sql
 INSERT INTO user_profiles (id, email, role)
 VALUES ('YOUR_ACTUAL_USER_ID_HERE', 'your@email.com', 'admin')
-ON CONFLICT (id) 
+ON CONFLICT (id)
 DO UPDATE SET role = 'admin';
 ```
 
 ## Step 3: Verify
 
 ```sql
-SELECT id, email, role 
-FROM user_profiles 
+SELECT id, email, role
+FROM user_profiles
 WHERE email = 'your@email.com';
 ```
 
@@ -81,4 +81,3 @@ WHERE email = 'your@email.com';
 ```
 
 This is the easiest way - just replace `your@email.com` with your actual email address!
-

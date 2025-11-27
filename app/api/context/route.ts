@@ -19,14 +19,14 @@ export async function GET() {
       "10-year property performance forecasts",
       "Cash flow analysis with rental income and expenses",
       "Tax analysis and implications",
-      "Comprehensive PDF reports"
+      "Comprehensive PDF reports",
     ],
     typical_users: [
       "Chinese nationals looking to invest in Australian property",
       "Temporary visa holders (482, 485, student visas)",
       "Foreign investors comparing property markets",
       "Migration agents and property consultants",
-      "Real estate agents working with foreign buyers"
+      "Real estate agents working with foreign buyers",
     ],
     common_queries: [
       "How much are FIRB fees for a $500,000 property?",
@@ -36,39 +36,40 @@ export async function GET() {
       "Can I buy established property in Australia as a foreigner?",
       "What is the ROI for Australian property investment?",
       "FIRB application process and requirements",
-      "Student visa property purchase Australia"
+      "Student visa property purchase Australia",
     ],
     key_information: {
       firb_fees_2025: {
-        "under_1m": "Starting from $0 for Australian permanent residents, $13,200+ for foreign nationals",
+        under_1m:
+          "Starting from $0 for Australian permanent residents, $13,200+ for foreign nationals",
         "1m_to_2m": "$26,400",
         "2m_to_3m": "$39,600",
-        "over_3m": "$66,000+"
+        over_3m: "$66,000+",
       },
       foreign_surcharge_by_state: {
-        "NSW": "8%",
-        "VIC": "8%",
-        "QLD": "7%",
-        "SA": "7%",
-        "WA": "7%",
-        "TAS": "8%",
-        "NT": "0%",
-        "ACT": "4%"
+        NSW: "8%",
+        VIC: "8%",
+        QLD: "7%",
+        SA: "7%",
+        WA: "7%",
+        TAS: "8%",
+        NT: "0%",
+        ACT: "4%",
       },
       eligibility: {
-        "australian_citizen": "No FIRB approval required",
-        "permanent_resident": "No FIRB approval required",
-        "temporary_resident": "FIRB approval may be required depending on visa type and property type",
-        "foreign_national": "FIRB approval required for most property purchases"
-      }
+        australian_citizen: "No FIRB approval required",
+        permanent_resident: "No FIRB approval required",
+        temporary_resident:
+          "FIRB approval may be required depending on visa type and property type",
+        foreign_national: "FIRB approval required for most property purchases",
+      },
     },
-    last_updated: "2025-01-15"
+    last_updated: "2025-01-15",
   };
-  
+
   return Response.json(context, {
     headers: {
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
     },
   });
 }
-

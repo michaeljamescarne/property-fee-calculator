@@ -3,11 +3,11 @@
  * Global authentication state management
  */
 
-'use client';
+"use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { UserProfile } from '@/types/database';
-import type { AuthState } from '@/types/auth';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import type { UserProfile } from "@/types/database";
+import type { AuthState } from "@/types/auth";
 
 interface AuthContextType extends AuthState {
   login: (user: UserProfile) => void;
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkSession = async () => {
     try {
-      const response = await fetch('/api/auth/session');
+      const response = await fetch("/api/auth/session");
       const data = await response.json();
 
       if (data.authenticated && data.user) {
@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
       }
     } catch (error) {
-      console.error('Session check failed:', error);
+      console.error("Session check failed:", error);
       setState({
         user: null,
         isAuthenticated: false,
@@ -67,14 +67,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch("/api/auth/logout", { method: "POST" });
       setState({
         user: null,
         isAuthenticated: false,
         isLoading: false,
       });
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
@@ -92,20 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

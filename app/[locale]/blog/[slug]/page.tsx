@@ -23,10 +23,10 @@ export default async function BlogPostPage({
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-AU', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+      return date.toLocaleDateString("en-AU", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       });
     } catch {
       return dateString;
@@ -38,7 +38,9 @@ export default async function BlogPostPage({
       <article className="max-w-4xl mx-auto">
         {/* Header */}
         <header className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 leading-tight">{post.title}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 leading-tight">
+            {post.title}
+          </h1>
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
             {post.date && (
               <>
@@ -58,9 +60,7 @@ export default async function BlogPostPage({
               </span>
             )}
           </div>
-          {post.excerpt && (
-            <p className="text-lg text-gray-600 leading-relaxed">{post.excerpt}</p>
-          )}
+          {post.excerpt && <p className="text-lg text-gray-600 leading-relaxed">{post.excerpt}</p>}
         </header>
 
         {/* Content */}

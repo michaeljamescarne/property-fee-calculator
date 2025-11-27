@@ -5,33 +5,33 @@ export interface InvestmentInputs {
   estimatedWeeklyRent: number;
   vacancyRate: number; // %
   rentGrowthRate: number; // % per annum
-  
+
   // Property Management
   propertyManagementFee: number; // % of rent
   lettingFee: number; // Weeks of rent
   selfManaged: boolean;
-  
+
   // Ongoing Costs (overrides/supplements existing)
   annualMaintenanceCost?: number; // Optional override
   annualInsurance?: number; // Optional override
   annualStrataFees?: number; // Optional override
-  
+
   // Financing
   loanAmount: number;
   interestRate: number; // % per annum
   loanTerm: number; // Years
-  loanType: 'principalAndInterest' | 'interestOnly';
+  loanType: "principalAndInterest" | "interestOnly";
   interestOnlyPeriod: number; // Years (for IO loans)
-  
+
   // Investment Strategy
   holdPeriod: number; // Years
   capitalGrowthRate: number; // % per annum
-  
+
   // Tax & Currency
   marginalTaxRate: number; // %
   currencyExchangeRate: number; // AUD to home currency
   homeCurrency: string; // 'AUD', 'USD', 'CNY', etc.
-  
+
   // Exit Strategy
   sellingCosts: number; // % of sale price
   cgtWithholdingRate: number; // %
@@ -63,7 +63,7 @@ export interface InvestmentAnalytics {
     comparison: string;
     benchmark: number;
   };
-  
+
   // Cash Flow
   cashFlow: {
     annual: {
@@ -89,7 +89,7 @@ export interface InvestmentAnalytics {
       afterTaxCashFlow: number;
     };
   };
-  
+
   // ROI Metrics
   roi: {
     totalROI: number; // Over hold period
@@ -97,7 +97,7 @@ export interface InvestmentAnalytics {
     cashOnCashReturn: number;
     totalReturn: number; // Dollar amount
   };
-  
+
   // Capital Growth
   capitalGrowth: {
     initialValue: number;
@@ -106,7 +106,7 @@ export interface InvestmentAnalytics {
     annualGrowthRate: number;
     totalPercentageGain: number;
   };
-  
+
   // Loan Metrics
   loanMetrics: {
     lvr: number;
@@ -120,10 +120,10 @@ export interface InvestmentAnalytics {
     equityAtEnd: number;
     equityGain: number;
   };
-  
+
   // Year-by-Year Projections
   yearByYear: YearlyProjection[];
-  
+
   // Investment Comparisons
   comparisons: {
     propertyInvestment: {
@@ -151,7 +151,7 @@ export interface InvestmentAnalytics {
       rate: number;
     };
   };
-  
+
   // Sensitivity Analysis
   sensitivity: {
     vacancyImpact: Array<{
@@ -175,7 +175,7 @@ export interface InvestmentAnalytics {
       annualizedROI: number;
     }>;
   };
-  
+
   // Tax Analysis
   taxAnalysis: {
     annualDeductions: {
@@ -206,7 +206,7 @@ export interface InvestmentAnalytics {
       netProceedsAfterTax: number;
     };
   };
-  
+
   // Investment Score
   score: {
     overall: number; // 0-10
@@ -216,10 +216,10 @@ export interface InvestmentAnalytics {
     taxEfficiency: number; // 0-10
     riskProfile: number; // 0-10
   };
-  
+
   // Recommendation
   recommendation: {
-    verdict: 'Excellent' | 'Good' | 'Moderate' | 'Poor' | 'Not Recommended';
+    verdict: "Excellent" | "Good" | "Moderate" | "Poor" | "Not Recommended";
     rating: number; // Same as overall score
     description: string;
     strengths: string[];
@@ -228,7 +228,7 @@ export interface InvestmentAnalytics {
     risksToConsider: string[];
     keyTakeaways: string[];
   };
-  
+
   // Break-even Analysis
   breakEven: {
     yearsToPositiveCashFlow: number | null;
@@ -251,4 +251,3 @@ export interface MarketBenchmarks {
     medianPrice: number;
   };
 }
-

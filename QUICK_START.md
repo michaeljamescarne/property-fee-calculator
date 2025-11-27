@@ -15,6 +15,7 @@ cp env.example.txt .env.local
 ```
 
 Edit `.env.local` and add your actual values:
+
 - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Your Supabase anon key
 - `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key
@@ -44,11 +45,13 @@ Visit `http://localhost:3000`
 ## 📋 Available Scripts
 
 ### Development
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 
 ### Code Quality
+
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Fix ESLint issues automatically
 - `npm run format` - Format code with Prettier
@@ -56,6 +59,7 @@ Visit `http://localhost:3000`
 - `npm run type-check` - Run TypeScript type checking
 
 ### Testing
+
 - `npm run test` - Run tests in watch mode
 - `npm run test:unit` - Run unit tests once
 - `npm run test:watch` - Run tests in watch mode
@@ -91,6 +95,7 @@ property-fee-calculator/
 ## 🧪 Testing
 
 ### Unit Tests
+
 Unit tests are located in `tests/unit/` and use Vitest.
 
 ```bash
@@ -98,6 +103,7 @@ npm run test:unit
 ```
 
 ### E2E Tests
+
 E2E tests are located in `tests/e2e/` and use Playwright.
 
 ```bash
@@ -109,12 +115,16 @@ npm run test:e2e
 ## 🔧 Code Quality
 
 ### Pre-commit Hooks
+
 Husky automatically runs lint-staged on commit:
+
 - ESLint checks
 - Prettier formatting
 
 ### CI/CD
+
 GitHub Actions runs on every push/PR:
+
 - Lint and type check
 - Unit tests
 - Build verification
@@ -136,16 +146,19 @@ GitHub Actions runs on every push/PR:
 ## 🐛 Troubleshooting
 
 ### Dependencies Issues
+
 ```bash
 npm install --legacy-peer-deps
 ```
 
 ### TypeScript Errors
+
 ```bash
 npm run type-check
 ```
 
 ### Linting Errors
+
 ```bash
 npm run lint:fix
 npm run format
@@ -158,6 +171,3 @@ npm run format
 Foundation setup is complete! Ready for Phase 1: Public Website & Lead Capture.
 
 See `docs/PHASE_0_SETUP_COMPLETE.md` for details.
-
-
-

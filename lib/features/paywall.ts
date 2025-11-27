@@ -1,7 +1,7 @@
 /**
  * Paywall Feature Flags
  * Configuration for future pricing/paywall implementation
- * 
+ *
  * NOTE: Paywall is NOT active yet. Set enabled: true when ready to launch.
  */
 
@@ -11,19 +11,19 @@ export const PAYWALL_CONFIG = {
 
   // Sections available to anonymous/free users
   freeSections: [
-    'summary',              // Investment Performance Summary
-    'basic-projections',    // Basic 10-year projections overview
-    'inputs',               // Investment parameters
+    "summary", // Investment Performance Summary
+    "basic-projections", // Basic 10-year projections overview
+    "inputs", // Investment parameters
   ],
 
   // Sections that require authentication/payment
   lockedSections: [
-    'tax-analysis',         // Tax Analysis & Deductions
-    'sensitivity',          // Sensitivity Analysis
-    'comparison',           // Investment Comparison
-    'detailed-projections', // Detailed year-by-year breakdown
-    'cash-flow',           // Cash Flow Analysis
-    'investment-score',    // Investment Score & Verdict
+    "tax-analysis", // Tax Analysis & Deductions
+    "sensitivity", // Sensitivity Analysis
+    "comparison", // Investment Comparison
+    "detailed-projections", // Detailed year-by-year breakdown
+    "cash-flow", // Cash Flow Analysis
+    "investment-score", // Investment Score & Verdict
   ],
 
   // Usage limits
@@ -35,8 +35,8 @@ export const PAYWALL_CONFIG = {
       advancedAnalytics: false,
     },
     paid: {
-      calculationsPerMonth: 'unlimited' as const,
-      savedCalculations: 'unlimited' as const,
+      calculationsPerMonth: "unlimited" as const,
+      savedCalculations: "unlimited" as const,
       pdfExports: true,
       advancedAnalytics: true,
     },
@@ -75,36 +75,20 @@ export function isSectionAccessible(
  */
 export function getPaywallMessage(sectionId: string, isAuthenticated: boolean): string {
   if (!isAuthenticated) {
-    return 'Login to unlock advanced analytics and save your calculations';
+    return "Login to unlock advanced analytics and save your calculations";
   }
 
   // Future: return payment message when pricing is enabled
-  return 'Upgrade to unlock this feature';
+  return "Upgrade to unlock this feature";
 }
 
 /**
  * Check if user has reached their usage limits
  */
-export function hasReachedLimit(
-  usageCount: number,
-  limit: number | 'unlimited'
-): boolean {
-  if (!PAYWALL_CONFIG.enabled || limit === 'unlimited') {
+export function hasReachedLimit(usageCount: number, limit: number | "unlimited"): boolean {
+  if (!PAYWALL_CONFIG.enabled || limit === "unlimited") {
     return false;
   }
 
   return usageCount >= limit;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 // FAQ Utility Functions
 
-import type { FAQCategory } from '@/types/faq';
-import faqData from './faq-data.json';
+import type { FAQCategory } from "@/types/faq";
+import faqData from "./faq-data.json";
 
 export function getFAQData(): FAQCategory[] {
   return (faqData as { categories: FAQCategory[] }).categories;
@@ -10,15 +10,15 @@ export function getFAQData(): FAQCategory[] {
 export function getCategoryIcon(iconName: string) {
   // Map icon names to lucide-react icons
   const iconMap: Record<string, string> = {
-    FileText: 'FileText',
-    UserCheck: 'UserCheck',
-    DollarSign: 'DollarSign',
-    AlertTriangle: 'AlertTriangle',
-    Home: 'Home',
-    HelpCircle: 'HelpCircle',
+    FileText: "FileText",
+    UserCheck: "UserCheck",
+    DollarSign: "DollarSign",
+    AlertTriangle: "AlertTriangle",
+    Home: "Home",
+    HelpCircle: "HelpCircle",
   };
 
-  return iconMap[iconName] || 'HelpCircle';
+  return iconMap[iconName] || "HelpCircle";
 }
 
 export function getCategoryById(
@@ -28,10 +28,7 @@ export function getCategoryById(
   return categories.find((cat) => cat.id === categoryId);
 }
 
-export function getQuestionById(
-  categories: FAQCategory[],
-  questionId: string
-) {
+export function getQuestionById(categories: FAQCategory[], questionId: string) {
   for (const category of categories) {
     const question = category.questions.find((q) => q.id === questionId);
     if (question) {
@@ -47,10 +44,10 @@ export function getTotalQuestionsCount(categories: FAQCategory[]): number {
 
 export function formatLastUpdated(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 }
 
@@ -62,25 +59,11 @@ export function generateFAQUrl(locale: string, questionId?: string): string {
 export function scrollToQuestion(questionId: string) {
   const element = document.getElementById(questionId);
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
     // Optionally highlight the question
-    element.classList.add('highlight-question');
+    element.classList.add("highlight-question");
     setTimeout(() => {
-      element.classList.remove('highlight-question');
+      element.classList.remove("highlight-question");
     }, 2000);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

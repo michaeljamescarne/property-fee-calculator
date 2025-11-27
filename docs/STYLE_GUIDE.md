@@ -9,6 +9,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 ## Design Principles
 
 ### Core Philosophy
+
 1. **Modern & Professional**: Clean, uncluttered interfaces that convey expertise
 2. **Trustworthy**: Design that instills confidence in financial calculations
 3. **Approachable**: Accessible to both first-time and experienced investors
@@ -22,6 +23,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 ### Primary Colors
 
 #### Primary Blue (Attio-inspired)
+
 - **Main**: `#2563EB` (Blue-600) - Primary CTA buttons
 - **Dark**: `#1D4ED8` (Blue-700) - Hover states
 - **Light**: `#3B82F6` (Blue-500) - Active links
@@ -33,6 +35,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 **Note**: Attio uses a distinct blue for CTAs. Alternative: `#215EAC` (closer to Attio's blue) can be used as primary if preferred.
 
 #### Primary Accent (Optional)
+
 - **Main**: `#7C3AED` (Violet-600)
 - **Dark**: `#6D28D9` (Violet-700)
 - **Light**: `#8B5CF6` (Violet-500)
@@ -42,6 +45,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 ### Neutral Colors (Attio Monochromatic Approach)
 
 #### Grays
+
 - **White**: `#FFFFFF` - Primary backgrounds
 - **Gray-50**: `#F9FAFB` - Subtle backgrounds
 - **Gray-100**: `#F3F4F6` - Card backgrounds, hover states
@@ -60,6 +64,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 ### Semantic Colors
 
 #### Success
+
 - **Main**: `#10B981` (Green-500)
 - **Light**: `#D1FAE5` (Green-100)
 - **Dark**: `#059669` (Green-600)
@@ -67,6 +72,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 **Usage**: Success messages, positive indicators, completion states
 
 #### Warning
+
 - **Main**: `#F59E0B` (Amber-500)
 - **Light**: `#FEF3C7` (Amber-100)
 - **Dark**: `#D97706` (Amber-600)
@@ -74,6 +80,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 **Usage**: Warnings, cautionary information, pending states
 
 #### Error
+
 - **Main**: `#EF4444` (Red-500)
 - **Light**: `#FEE2E2` (Red-100)
 - **Dark**: `#DC2626` (Red-600)
@@ -81,6 +88,7 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 **Usage**: Errors, destructive actions, negative indicators
 
 #### Info
+
 - **Main**: `#3B82F6` (Blue-500)
 - **Light**: `#DBEAFE` (Blue-100)
 - **Dark**: `#2563EB` (Blue-600)
@@ -90,12 +98,14 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 ### Background Colors
 
 #### Page Backgrounds
+
 - **Primary**: `#FFFFFF` (White)
 - **Secondary**: `#F9FAFB` (Gray-50)
 - **Tertiary**: `#F3F4F6` (Gray-100)
 - **Alternate**: `#FFFFFF` with subtle gradient overlay
 
 #### Card/Surface Backgrounds
+
 - **Default**: `#FFFFFF` (White)
 - **Hover**: `#F9FAFB` (Gray-50)
 - **Selected**: `#EDE9FE` (Violet-100)
@@ -119,22 +129,26 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 ### Font Family
 
 #### Primary Font: Inter
+
 - **Font Stack**: `'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`
 - **Source**: Google Fonts or self-hosted
 - **Character**: Modern, clean, highly readable, professional
 
 #### Monospace Font (for numbers/data)
+
 - **Font Stack**: `'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace`
 - **Usage**: Financial figures, calculations, code snippets
 
 ### Font Sizes
 
 #### Display (Hero Headlines)
+
 - **XL**: `72px` / `4.5rem` (line-height: 1.1)
 - **Large**: `60px` / `3.75rem` (line-height: 1.1)
 - **Medium**: `48px` / `3rem` (line-height: 1.2)
 
 #### Headings
+
 - **H1**: `36px` / `2.25rem` (line-height: 1.2, font-weight: 700)
 - **H2**: `30px` / `1.875rem` (line-height: 1.3, font-weight: 600)
 - **H3**: `24px` / `1.5rem` (line-height: 1.4, font-weight: 600)
@@ -143,12 +157,14 @@ This style guide is based on the design aesthetic of [Attio.com](https://attio.c
 - **H6**: `16px` / `1rem` (line-height: 1.5, font-weight: 600)
 
 #### Body Text
+
 - **Large**: `18px` / `1.125rem` (line-height: 1.6, font-weight: 400)
 - **Base**: `16px` / `1rem` (line-height: 1.6, font-weight: 400)
 - **Small**: `14px` / `0.875rem` (line-height: 1.5, font-weight: 400)
 - **XSmall**: `12px` / `0.75rem` (line-height: 1.4, font-weight: 400)
 
 #### UI Elements
+
 - **Button Large**: `16px` / `1rem` (line-height: 1.5, font-weight: 500)
 - **Button Base**: `14px` / `0.875rem` (line-height: 1.5, font-weight: 500)
 - **Button Small**: `14px` / `0.875rem` (line-height: 1.4, font-weight: 500)
@@ -222,6 +238,7 @@ Based on 8px base unit:
 ### Buttons
 
 #### Primary Button (Attio Style)
+
 - **Background**: `#2563EB` (Blue-600) or `#215EAC` (Attio blue)
 - **Text**: `#FFFFFF` (White)
 - **Hover**: `#1D4ED8` (Blue-700) or darker shade
@@ -232,6 +249,7 @@ Based on 8px base unit:
 - **Shadow**: Subtle or none (Attio uses minimal shadows)
 
 #### Secondary Button (Attio Style)
+
 - **Background**: `#FFFFFF` (White)
 - **Text**: `#2563EB` (Blue-600) or `#215EAC` (Attio blue)
 - **Border**: `1px solid #2563EB` (Blue-600) or `#215EAC`
@@ -240,6 +258,7 @@ Based on 8px base unit:
 - **Border Radius**: `4px` (Attio uses 4px)
 
 #### Ghost Button
+
 - **Background**: Transparent
 - **Text**: `#4B5563` (Gray-600)
 - **Hover**: `#F3F4F6` (Gray-100) background
@@ -247,6 +266,7 @@ Based on 8px base unit:
 - **Border Radius**: `8px`
 
 #### Button Sizes
+
 - **Large**: `16px 32px` padding, `18px` font
 - **Base**: `12px 24px` padding, `16px` font
 - **Small**: `8px 16px` padding, `14px` font
@@ -254,6 +274,7 @@ Based on 8px base unit:
 ### Input Fields
 
 #### Text Input (Attio Style)
+
 - **Background**: `#FFFFFF` (White)
 - **Border**: `1px solid #CCCCCC` (Light Gray) or `#E5E7EB` (Gray-200)
 - **Border Radius**: `4px` (Attio uses 4px)
@@ -264,17 +285,20 @@ Based on 8px base unit:
 - **Disabled**: Background `#F9FAFB` (Gray-50), text `#9CA3AF` (Gray-400)
 
 #### Textarea
+
 - Same styling as text input
 - **Min Height**: `120px`
 - **Resize**: Vertical only
 
 #### Select/Dropdown
+
 - Same base styling as text input
 - **Dropdown Arrow**: `#6B7280` (Gray-500)
 
 ### Cards
 
 #### Default Card
+
 - **Background**: `#FFFFFF` (White)
 - **Border**: `1px solid #E5E7EB` (Gray-200)
 - **Border Radius**: `12px`
@@ -283,10 +307,12 @@ Based on 8px base unit:
 - **Hover**: Medium shadow (optional)
 
 #### Elevated Card
+
 - Same as default
 - **Shadow**: Medium shadow
 
 #### Interactive Card
+
 - Same as default
 - **Hover**: Background `#F9FAFB` (Gray-50), border `#2563EB` (Blue-600)
 - **Cursor**: Pointer
@@ -294,6 +320,7 @@ Based on 8px base unit:
 ### Navigation
 
 #### Header/Navbar
+
 - **Background**: `#FFFFFF` (White) with `#F9FAFB` (Gray-50) subtle background
 - **Border**: `1px solid #E5E7EB` (Gray-200) bottom border
 - **Height**: `64px`
@@ -301,6 +328,7 @@ Based on 8px base unit:
 - **Sticky**: Yes, with backdrop blur
 
 #### Navigation Links (Attio Style)
+
 - **Default**: `#000000` (Black) - Attio uses black for navigation
 - **Hover**: `#666666` (Gray) with underline effect
 - **Active**: `#2563EB` (Blue-600) or `#215EAC`, font-weight: 500
@@ -310,6 +338,7 @@ Based on 8px base unit:
 ### Badges
 
 #### Default Badge
+
 - **Background**: `#F3F4F6` (Gray-100)
 - **Text**: `#374151` (Gray-700)
 - **Padding**: `4px 12px`
@@ -317,11 +346,13 @@ Based on 8px base unit:
 - **Font**: 12px, Medium (500)
 
 #### Primary Badge
+
 - **Background**: `#DBEAFE` (Blue-100)
 - **Text**: `#1E40AF` (Blue-800)
 - Same padding and radius
 
 #### Success Badge
+
 - **Background**: `#D1FAE5` (Green-100)
 - **Text**: `#059669` (Green-600)
 - Same padding and radius
@@ -329,6 +360,7 @@ Based on 8px base unit:
 ### Alerts
 
 #### Info Alert
+
 - **Background**: `#DBEAFE` (Blue-100)
 - **Border**: `1px solid #60A5FA` (Blue-400)
 - **Text**: `#1E40AF` (Blue-800)
@@ -337,16 +369,19 @@ Based on 8px base unit:
 - **Border Radius**: `8px`
 
 #### Success Alert
+
 - **Background**: `#D1FAE5` (Green-100)
 - **Border**: `1px solid #10B981` (Green-500)
 - **Text**: `#059669` (Green-600)
 
 #### Warning Alert
+
 - **Background**: `#FEF3C7` (Amber-100)
 - **Border**: `1px solid #F59E0B` (Amber-500)
 - **Text**: `#D97706` (Amber-600)
 
 #### Error Alert
+
 - **Background**: `#FEE2E2` (Red-100)
 - **Border**: `1px solid #EF4444` (Red-500)
 - **Text**: `#DC2626` (Red-600)
@@ -358,6 +393,7 @@ Based on 8px base unit:
 ### Charts & Graphs
 
 #### Color Palette for Charts
+
 1. **Primary**: `#2563EB` (Blue-600)
 2. **Secondary**: `#7C3AED` (Violet-600)
 3. **Success**: `#10B981` (Green-500)
@@ -368,6 +404,7 @@ Based on 8px base unit:
 8. **Accent 2**: `#14B8A6` (Teal-500)
 
 #### Chart Backgrounds
+
 - **Background**: `#FFFFFF` (White)
 - **Grid Lines**: `#E5E7EB` (Gray-200)
 - **Axis Labels**: `#6B7280` (Gray-500)
@@ -376,6 +413,7 @@ Based on 8px base unit:
 ### Tables
 
 #### Table Header
+
 - **Background**: `#F9FAFB` (Gray-50)
 - **Text**: `#374151` (Gray-700)
 - **Font**: 14px, Semibold (600)
@@ -383,12 +421,14 @@ Based on 8px base unit:
 - **Border**: `1px solid #E5E7EB` (Gray-200) bottom
 
 #### Table Row
+
 - **Background**: `#FFFFFF` (White)
 - **Hover**: `#F9FAFB` (Gray-50)
 - **Padding**: `12px 16px`
 - **Border**: `1px solid #E5E7EB` (Gray-200) bottom
 
 #### Table Cell
+
 - **Text**: `#111827` (Gray-900)
 - **Font**: 14px, Regular (400)
 
@@ -469,36 +509,36 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          50: '#DBEAFE',
-          100: '#DBEAFE',
-          400: '#60A5FA',
-          500: '#3B82F6',
-          600: '#2563EB',
-          700: '#1D4ED8',
-          800: '#1E40AF',
+          50: "#DBEAFE",
+          100: "#DBEAFE",
+          400: "#60A5FA",
+          500: "#3B82F6",
+          600: "#2563EB",
+          700: "#1D4ED8",
+          800: "#1E40AF",
         },
         accent: {
-          100: '#EDE9FE',
-          400: '#A78BFA',
-          500: '#8B5CF6',
-          600: '#7C3AED',
-          700: '#6D28D9',
+          100: "#EDE9FE",
+          400: "#A78BFA",
+          500: "#8B5CF6",
+          600: "#7C3AED",
+          700: "#6D28D9",
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
       spacing: {
         // 8px base unit
       },
       borderRadius: {
-        'base': '8px',
-        'medium': '12px',
+        base: "8px",
+        medium: "12px",
       },
     },
   },
-}
+};
 ```
 
 ### CSS Variables
@@ -506,34 +546,34 @@ module.exports = {
 ```css
 :root {
   /* Primary Colors */
-  --color-primary: #2563EB;
-  --color-primary-dark: #1D4ED8;
-  --color-primary-light: #3B82F6;
-  
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #3b82f6;
+
   /* Accent Colors */
-  --color-accent: #7C3AED;
-  --color-accent-dark: #6D28D9;
-  
+  --color-accent: #7c3aed;
+  --color-accent-dark: #6d28d9;
+
   /* Neutral Colors */
-  --color-gray-50: #F9FAFB;
-  --color-gray-100: #F3F4F6;
-  --color-gray-200: #E5E7EB;
-  --color-gray-500: #6B7280;
-  --color-gray-600: #4B5563;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
   --color-gray-900: #111827;
-  
+
   /* Semantic Colors */
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-error: #EF4444;
-  
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
   /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
   /* Spacing */
   --spacing-base: 8px;
-  
+
   /* Shadows */
   --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -545,18 +585,21 @@ module.exports = {
 ## Brand Guidelines
 
 ### Logo Usage
+
 - **Primary**: Full color logo on light backgrounds
 - **Secondary**: Monochrome logo on colored backgrounds
 - **Minimum Size**: 120px width for main logo
 - **Clear Space**: 2x logo height around logo
 
 ### Imagery
+
 - **Style**: Professional, modern, clean
 - **Photography**: High-quality, natural lighting
 - **Illustrations**: Minimal, geometric, modern
 - **Icons**: Consistent line style, 24px default size
 
 ### Voice & Tone
+
 - **Professional**: Authoritative but approachable
 - **Clear**: Simple, jargon-free language
 - **Helpful**: User-focused, supportive
@@ -567,6 +610,7 @@ module.exports = {
 ## Examples
 
 ### Hero Section
+
 - **Background**: White with subtle gradient (`#F9FAFB` to `#FFFFFF`)
 - **Headline**: 72px, Bold, Gray-900
 - **Subheadline**: 24px, Regular, Gray-600
@@ -574,6 +618,7 @@ module.exports = {
 - **Spacing**: 96px vertical spacing between elements
 
 ### Calculator Form
+
 - **Card**: White background, 12px border radius, base shadow
 - **Input Fields**: 16px padding, 8px border radius
 - **Labels**: 14px, Semibold, Gray-700
@@ -581,6 +626,7 @@ module.exports = {
 - **Error Messages**: Red-500, 14px, with icon
 
 ### Results Dashboard
+
 - **Section Headers**: 24px, Semibold, Gray-900
 - **Metric Cards**: White background, subtle border, medium shadow
 - **Charts**: Clean, minimal, primary blue accent
@@ -603,4 +649,3 @@ module.exports = {
 **Created**: January 2025  
 **Status**: Ready for Implementation  
 **Owner**: Design & Development Team
-

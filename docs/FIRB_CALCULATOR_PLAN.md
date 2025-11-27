@@ -1,6 +1,7 @@
 # FIRB Calculator Implementation Plan
 
 ## Overview
+
 This document outlines the plan for implementing a comprehensive FIRB (Foreign Investment Review Board) fee calculator that integrates seamlessly with the existing Property Fee Calculator application.
 
 ---
@@ -34,6 +35,7 @@ app/api/
 ```
 
 ### URL Examples
+
 - `/en/firb-calculator` - English FIRB calculator
 - `/zh/firb-calculator` - Chinese FIRB calculator
 - `/en/privacy` - Privacy policy
@@ -45,18 +47,22 @@ app/api/
 ## 2. Database Requirements
 
 ### Current State
+
 **No database currently exists** - all calculations are stateless.
 
 ### Recommended Approach: Supabase (or alternative)
 
 #### Option A: No Database (Recommended for MVP)
+
 **Pros:**
+
 - Simpler deployment
 - No ongoing database costs
 - Faster development
 - All calculations are deterministic
 
 **Cons:**
+
 - No saved calculations
 - No user accounts
 - No calculation history
@@ -66,24 +72,25 @@ app/api/
 **If Database is Needed:**
 
 ##### Table: `firb_calculations`
+
 ```sql
 CREATE TABLE firb_calculations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  
+
   -- User info (optional - for anonymous tracking)
   session_id TEXT,
   user_email TEXT,
-  
+
   -- Property details
   property_price DECIMAL(12, 2) NOT NULL,
   property_type TEXT NOT NULL, -- 'established', 'new', 'vacant'
   state TEXT NOT NULL, -- 'NSW', 'VIC', 'QLD', etc.
-  
+
   -- Buyer details
   entity_type TEXT NOT NULL, -- 'individual', 'company', 'trust'
   residency_status TEXT NOT NULL, -- 'foreign', 'temporary', 'permanent'
-  
+
   -- Calculated results
   firb_application_fee DECIMAL(10, 2),
   stamp_duty DECIMAL(12, 2),
@@ -91,7 +98,7 @@ CREATE TABLE firb_calculations (
   land_tax_surcharge DECIMAL(12, 2),
   total_upfront_costs DECIMAL(12, 2),
   annual_costs DECIMAL(12, 2),
-  
+
   -- Metadata
   locale TEXT DEFAULT 'en',
   calculation_version TEXT DEFAULT '1.0'
@@ -103,6 +110,7 @@ CREATE INDEX idx_session_id ON firb_calculations(session_id);
 ```
 
 ##### Table: `fee_schedules` (for admin updates)
+
 ```sql
 CREATE TABLE fee_schedules (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -118,6 +126,7 @@ CREATE TABLE fee_schedules (
 ```
 
 ##### Table: `saved_calculations` (for user accounts)
+
 ```sql
 CREATE TABLE saved_calculations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -130,6 +139,7 @@ CREATE TABLE saved_calculations (
 ```
 
 ### Environment Variables (if using database)
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
@@ -143,11 +153,13 @@ SUPABASE_SERVICE_ROLE_KEY=
 ### Navigation Component (`components/Navigation.tsx`)
 
 **Current Navigation:**
+
 - Home
 - Calculator
 - Language Switcher
 
 **Updated Navigation:**
+
 ```typescript
 // Add new nav item
 <Link href={`/${locale}/firb-calculator`}>
@@ -158,12 +170,14 @@ SUPABASE_SERVICE_ROLE_KEY=
 ### Footer Component (`components/Footer.tsx`)
 
 **Already includes:**
+
 - Quick Links section
 - Resources section
 - Legal links (Privacy, Terms, Disclaimer)
 
 **Update Required:**
 Add FIRB Calculator to Quick Links:
+
 ```typescript
 <li>
   <Link href={`/${locale}/firb-calculator`}>
@@ -175,6 +189,7 @@ Add FIRB Calculator to Quick Links:
 ### Layout Integration (`app/[locale]/layout.tsx`)
 
 **Current Structure:**
+
 ```typescript
 <div className="flex flex-col min-h-screen">
   <Navigation />
@@ -194,6 +209,7 @@ Add FIRB Calculator to Quick Links:
 ### Matching Existing Patterns
 
 #### Pattern 1: Client Component with Translations
+
 ```typescript
 'use client';
 
@@ -205,7 +221,7 @@ export default function FIRBCalculatorPage() {
   const t = useTranslations('FIRBCalculator');
   const locale = useLocale();
   const [formData, setFormData] = useState({});
-  
+
   return (
     <main className="container mx-auto px-4 py-12">
       {/* Content */}
@@ -215,27 +231,28 @@ export default function FIRBCalculatorPage() {
 ```
 
 #### Pattern 2: Form State Management
+
 ```typescript
 // Follow calculator/page.tsx pattern
-const [propertyPrice, setPropertyPrice] = useState('');
-const [propertyType, setPropertyType] = useState('');
-const [state, setState] = useState('');
-const [entityType, setEntityType] = useState('');
+const [propertyPrice, setPropertyPrice] = useState("");
+const [propertyType, setPropertyType] = useState("");
+const [state, setState] = useState("");
+const [entityType, setEntityType] = useState("");
 const [result, setResult] = useState<FIRBResult | null>(null);
 const [loading, setLoading] = useState(false);
 
 const handleCalculate = async () => {
   setLoading(true);
   try {
-    const response = await fetch('/api/calculate-firb', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+    const response = await fetch("/api/calculate-firb", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
     });
     const data = await response.json();
     setResult(data);
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   } finally {
     setLoading(false);
   }
@@ -243,6 +260,7 @@ const handleCalculate = async () => {
 ```
 
 #### Pattern 3: Card-Based Layout
+
 ```typescript
 // Use existing Card component pattern
 <div className="grid md:grid-cols-2 gap-8">
@@ -255,7 +273,7 @@ const handleCalculate = async () => {
       {/* Form fields */}
     </CardContent>
   </Card>
-  
+
   {result && (
     <Card>
       <CardHeader>
@@ -270,6 +288,7 @@ const handleCalculate = async () => {
 ```
 
 #### Pattern 4: Styling Conventions
+
 ```typescript
 // Color coding (match existing patterns)
 const colorSchemes = {
@@ -289,6 +308,7 @@ const colorSchemes = {
 ## 5. All New Files to Create
 
 ### Components
+
 ```
 components/
 ├── FIRBCalculatorForm.tsx       # Main calculator form
@@ -300,6 +320,7 @@ components/
 ```
 
 ### Pages
+
 ```
 app/[locale]/
 ├── firb-calculator/
@@ -313,6 +334,7 @@ app/[locale]/
 ```
 
 ### API Routes
+
 ```
 app/api/
 └── calculate-firb/
@@ -320,6 +342,7 @@ app/api/
 ```
 
 ### Types
+
 ```
 types/
 ├── firb.ts                      # TypeScript interfaces for FIRB
@@ -327,6 +350,7 @@ types/
 ```
 
 ### Utilities (if needed)
+
 ```
 lib/
 ├── firb-calculations.ts         # FIRB fee calculation logic
@@ -335,6 +359,7 @@ lib/
 ```
 
 ### Translation Updates
+
 ```
 messages/
 ├── en.json                      # Add 'FIRBCalculator' namespace
@@ -342,6 +367,7 @@ messages/
 ```
 
 ### Documentation
+
 ```
 docs/
 ├── FIRB_CALCULATOR_PLAN.md     # This file
@@ -353,6 +379,7 @@ docs/
 ## 6. Data Flow Architecture
 
 ### Calculator Flow
+
 ```
 1. User Input (Form)
    └─> FIRBCalculatorForm Component
@@ -386,10 +413,10 @@ docs/
 ```typescript
 // types/firb.ts
 
-export type PropertyType = 'established' | 'new' | 'vacant';
-export type EntityType = 'individual' | 'company' | 'trust';
-export type ResidencyStatus = 'foreign' | 'temporary' | 'permanent';
-export type AustralianState = 'NSW' | 'VIC' | 'QLD' | 'SA' | 'WA' | 'TAS' | 'NT' | 'ACT';
+export type PropertyType = "established" | "new" | "vacant";
+export type EntityType = "individual" | "company" | "trust";
+export type ResidencyStatus = "foreign" | "temporary" | "permanent";
+export type AustralianState = "NSW" | "VIC" | "QLD" | "SA" | "WA" | "TAS" | "NT" | "ACT";
 
 export interface FIRBCalculationInput {
   propertyPrice: number;
@@ -403,28 +430,28 @@ export interface FIRBCalculationInput {
 export interface FIRBCalculationResult {
   // Input echo
   input: FIRBCalculationInput;
-  
+
   // FIRB fees
   firbApplicationFee: number;
   expeditedFee?: number;
-  
+
   // Stamp duty
   standardStampDuty: number;
   foreignerSurcharge: number;
   totalStampDuty: number;
-  
+
   // Land tax
   landValue: number;
   annualLandTaxSurcharge: number;
-  
+
   // Vacancy fee
   annualVacancyFee: number;
-  
+
   // Totals
   totalUpfrontCosts: number;
   totalAnnualCosts: number;
   totalFirstYearCost: number;
-  
+
   // Breakdown
   breakdown: FeeBreakdownItem[];
 }
@@ -433,7 +460,7 @@ export interface FeeBreakdownItem {
   category: string;
   description: string;
   amount: number;
-  frequency: 'one-time' | 'annual';
+  frequency: "one-time" | "annual";
   optional: boolean;
 }
 ```
@@ -444,46 +471,48 @@ export interface FeeBreakdownItem {
 
 ### Application Fees by Property Value
 
-| Property Value | FIRB Application Fee |
-|----------------|---------------------|
-| Under $1M | $13,200 |
-| $1M - $1.999M | $26,400 |
-| $2M - $2.999M | $39,600 |
-| $3M - $3.999M | $52,800 |
-| $4M - $4.999M | $66,000 |
-| Each additional $1M | +$13,200 |
+| Property Value      | FIRB Application Fee |
+| ------------------- | -------------------- |
+| Under $1M           | $13,200              |
+| $1M - $1.999M       | $26,400              |
+| $2M - $2.999M       | $39,600              |
+| $3M - $3.999M       | $52,800              |
+| $4M - $4.999M       | $66,000              |
+| Each additional $1M | +$13,200             |
 
 **Vacant Land:**
+
 - Under $1.5M: $5,500
 
 **Expedited Processing:**
+
 - Additional $10,000+ (10-day processing)
 
 ### State Stamp Duty Surcharges
 
 | State | Foreign Buyer Surcharge |
-|-------|------------------------|
-| NSW | 8% |
-| VIC | 8% |
-| QLD | 7% |
-| SA | 7% |
-| WA | 7% |
-| TAS | 8% |
-| NT | 0% |
-| ACT | 0% |
+| ----- | ----------------------- |
+| NSW   | 8%                      |
+| VIC   | 8%                      |
+| QLD   | 7%                      |
+| SA    | 7%                      |
+| WA    | 7%                      |
+| TAS   | 8%                      |
+| NT    | 0%                      |
+| ACT   | 0%                      |
 
 ### Land Tax Surcharges (Annual)
 
 | State | Annual Surcharge |
-|-------|-----------------|
-| NSW | 2% |
-| VIC | 1.5% |
-| QLD | 2% |
-| SA | 0.5% |
-| WA | 4% |
-| TAS | 1.5% |
-| NT | 0% |
-| ACT | 0.75% |
+| ----- | ---------------- |
+| NSW   | 2%               |
+| VIC   | 1.5%             |
+| QLD   | 2%               |
+| SA    | 0.5%             |
+| WA    | 4%               |
+| TAS   | 1.5%             |
+| NT    | 0%               |
+| ACT   | 0.75%            |
 
 ---
 
@@ -492,6 +521,7 @@ export interface FeeBreakdownItem {
 ### Page Components
 
 #### `app/[locale]/firb-calculator/page.tsx`
+
 ```typescript
 'use client';
 
@@ -511,7 +541,7 @@ export default function FIRBCalculatorPage() {
       <h1 className="text-4xl font-bold mb-8 text-center">
         {t('title')}
       </h1>
-      
+
       <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
         <FIRBCalculatorForm onCalculate={setResult} />
         {result && <FIRBResults result={result} />}
@@ -524,6 +554,7 @@ export default function FIRBCalculatorPage() {
 ### Form Components
 
 #### `components/FIRBCalculatorForm.tsx`
+
 ```typescript
 'use client';
 
@@ -545,18 +576,18 @@ interface Props {
 export default function FIRBCalculatorForm({ onCalculate }: Props) {
   const t = useTranslations('FIRBCalculator');
   const [loading, setLoading] = useState(false);
-  
+
   // Form state
   const [propertyPrice, setPropertyPrice] = useState('');
   const [propertyType, setPropertyType] = useState<PropertyType>('new');
   const [state, setState] = useState<AustralianState>('NSW');
   const [entityType, setEntityType] = useState<EntityType>('individual');
   const [landValue, setLandValue] = useState('');
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const response = await fetch('/api/calculate-firb', {
         method: 'POST',
@@ -570,7 +601,7 @@ export default function FIRBCalculatorForm({ onCalculate }: Props) {
           landValue: landValue ? parseFloat(landValue) : undefined
         } as FIRBCalculationInput)
       });
-      
+
       const data = await response.json();
       onCalculate(data);
     } catch (error) {
@@ -579,7 +610,7 @@ export default function FIRBCalculatorForm({ onCalculate }: Props) {
       setLoading(false);
     }
   };
-  
+
   return (
     <Card>
       <CardHeader>
@@ -599,25 +630,25 @@ export default function FIRBCalculatorForm({ onCalculate }: Props) {
               required
             />
           </div>
-          
+
           {/* Property Type */}
           <PropertyTypeSelector
             value={propertyType}
             onChange={setPropertyType}
           />
-          
+
           {/* State */}
           <StateSelector
             value={state}
             onChange={setState}
           />
-          
+
           {/* Entity Type */}
           <EntityTypeSelector
             value={entityType}
             onChange={setEntityType}
           />
-          
+
           {/* Optional: Land Value */}
           <div className="space-y-2">
             <Label htmlFor="landValue">
@@ -631,9 +662,9 @@ export default function FIRBCalculatorForm({ onCalculate }: Props) {
               onChange={(e) => setLandValue(e.target.value)}
             />
           </div>
-          
-          <Button 
-            type="submit" 
+
+          <Button
+            type="submit"
             className="w-full"
             disabled={!propertyPrice || loading}
           >
@@ -647,6 +678,7 @@ export default function FIRBCalculatorForm({ onCalculate }: Props) {
 ```
 
 #### `components/PropertyTypeSelector.tsx`
+
 ```typescript
 'use client';
 
@@ -662,7 +694,7 @@ interface Props {
 
 export default function PropertyTypeSelector({ value, onChange }: Props) {
   const t = useTranslations('FIRBCalculator.form');
-  
+
   return (
     <div className="space-y-3">
       <Label>{t('propertyType')}</Label>
@@ -692,6 +724,7 @@ export default function PropertyTypeSelector({ value, onChange }: Props) {
 ```
 
 #### `components/StateSelector.tsx`
+
 ```typescript
 'use client';
 
@@ -713,9 +746,9 @@ interface Props {
 
 export default function StateSelector({ value, onChange }: Props) {
   const t = useTranslations('FIRBCalculator.form');
-  
+
   const states: AustralianState[] = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT'];
-  
+
   return (
     <div className="space-y-2">
       <Label>{t('state')}</Label>
@@ -737,6 +770,7 @@ export default function StateSelector({ value, onChange }: Props) {
 ```
 
 #### `components/FIRBResults.tsx`
+
 ```typescript
 'use client';
 
@@ -753,7 +787,7 @@ interface Props {
 
 export default function FIRBResults({ result }: Props) {
   const t = useTranslations('FIRBCalculator.results');
-  
+
   return (
     <Card>
       <CardHeader>
@@ -770,7 +804,7 @@ export default function FIRBResults({ result }: Props) {
             ${result.firbApplicationFee.toLocaleString()}
           </p>
         </div>
-        
+
         {/* Stamp Duty */}
         <div className="space-y-2">
           <div className="flex justify-between">
@@ -791,7 +825,7 @@ export default function FIRBResults({ result }: Props) {
             <Badge>${result.totalStampDuty.toLocaleString()}</Badge>
           </div>
         </div>
-        
+
         {/* Annual Costs */}
         <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
           <h3 className="font-semibold text-orange-800 mb-2">
@@ -808,7 +842,7 @@ export default function FIRBResults({ result }: Props) {
             </div>
           </div>
         </div>
-        
+
         {/* Grand Totals */}
         <div className="space-y-3">
           <div className="flex justify-between items-center p-4 bg-primary text-primary-foreground rounded-lg">
@@ -817,7 +851,7 @@ export default function FIRBResults({ result }: Props) {
               ${result.totalUpfrontCosts.toLocaleString()}
             </span>
           </div>
-          
+
           <div className="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
             <AlertCircle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-yellow-800">
@@ -834,42 +868,33 @@ export default function FIRBResults({ result }: Props) {
 ### API Route
 
 #### `app/api/calculate-firb/route.ts`
+
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
-import { FIRBCalculationInput, FIRBCalculationResult } from '@/types/firb';
-import { calculateFIRBFee } from '@/lib/firb-calculations';
+import { NextRequest, NextResponse } from "next/server";
+import { FIRBCalculationInput, FIRBCalculationResult } from "@/types/firb";
+import { calculateFIRBFee } from "@/lib/firb-calculations";
 
 export async function POST(request: NextRequest) {
   try {
     const input: FIRBCalculationInput = await request.json();
-    
+
     // Validate required fields
     if (!input.propertyPrice || !input.propertyType || !input.state || !input.entityType) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    
+
     // Validate property price
     if (input.propertyPrice <= 0) {
-      return NextResponse.json(
-        { error: 'Property price must be greater than 0' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Property price must be greater than 0" }, { status: 400 });
     }
-    
+
     // Perform calculations
     const result = calculateFIRBFee(input);
-    
+
     return NextResponse.json(result);
-    
   } catch (error) {
-    console.error('FIRB calculation error:', error);
-    return NextResponse.json(
-      { error: 'Calculation failed' },
-      { status: 500 }
-    );
+    console.error("FIRB calculation error:", error);
+    return NextResponse.json({ error: "Calculation failed" }, { status: 500 });
   }
 }
 ```
@@ -879,6 +904,7 @@ export async function POST(request: NextRequest) {
 ## 9. Translation Structure
 
 ### messages/en.json
+
 ```json
 {
   "FIRBCalculator": {
@@ -936,6 +962,7 @@ export async function POST(request: NextRequest) {
 ## 10. Implementation Phases
 
 ### Phase 1: Basic Calculator (MVP)
+
 - ✅ Create route structure
 - ✅ Build form components
 - ✅ Implement FIRB fee calculation logic
@@ -945,6 +972,7 @@ export async function POST(request: NextRequest) {
 - ⏸️ No database needed
 
 ### Phase 2: Enhanced Features
+
 - Add fee schedule documentation
 - Add explanatory tooltips
 - Add comparison charts
@@ -952,6 +980,7 @@ export async function POST(request: NextRequest) {
 - Add export to PDF
 
 ### Phase 3: User Features (Optional)
+
 - Add Supabase database
 - User authentication
 - Save calculations
@@ -959,6 +988,7 @@ export async function POST(request: NextRequest) {
 - Email results
 
 ### Phase 4: Advanced Features (Future)
+
 - Admin panel for fee updates
 - Real-time fee schedule updates
 - Integration with property APIs
@@ -970,6 +1000,7 @@ export async function POST(request: NextRequest) {
 ## 11. Required shadcn/ui Components
 
 ### Already Installed
+
 - ✅ Button
 - ✅ Card
 - ✅ Input
@@ -980,6 +1011,7 @@ export async function POST(request: NextRequest) {
 - ✅ Separator
 
 ### Need to Add
+
 ```bash
 npx shadcn@latest add radio-group
 npx shadcn@latest add tabs
@@ -993,74 +1025,75 @@ npx shadcn@latest add progress
 ## 12. Calculation Logic Location
 
 ### `lib/firb-calculations.ts`
+
 ```typescript
-import { FIRBCalculationInput, FIRBCalculationResult } from '@/types/firb';
-import { getFIRBFeeSchedule, getStampDutySurcharge, getLandTaxSurcharge } from './fee-schedules';
+import { FIRBCalculationInput, FIRBCalculationResult } from "@/types/firb";
+import { getFIRBFeeSchedule, getStampDutySurcharge, getLandTaxSurcharge } from "./fee-schedules";
 
 export function calculateFIRBFee(input: FIRBCalculationInput): FIRBCalculationResult {
   const { propertyPrice, propertyType, state, entityType, landValue } = input;
-  
+
   // FIRB Application Fee
   const firbApplicationFee = getFIRBFeeSchedule(propertyPrice, propertyType);
-  
+
   // Stamp Duty Calculation
   const standardStampDuty = calculateStandardStampDuty(propertyPrice, state);
   const surchargeRate = getStampDutySurcharge(state);
   const foreignerSurcharge = propertyPrice * surchargeRate;
   const totalStampDuty = standardStampDuty + foreignerSurcharge;
-  
+
   // Land Tax (Annual)
-  const estimatedLandValue = landValue || (propertyPrice * 0.6); // Default: 60% of property value
+  const estimatedLandValue = landValue || propertyPrice * 0.6; // Default: 60% of property value
   const landTaxRate = getLandTaxSurcharge(state);
   const annualLandTaxSurcharge = estimatedLandValue * landTaxRate;
-  
+
   // Vacancy Fee (equal to FIRB fee if property left vacant)
   const annualVacancyFee = firbApplicationFee;
-  
+
   // Totals
   const totalUpfrontCosts = firbApplicationFee + totalStampDuty;
   const totalAnnualCosts = annualLandTaxSurcharge + annualVacancyFee;
   const totalFirstYearCost = totalUpfrontCosts + totalAnnualCosts;
-  
+
   // Breakdown
   const breakdown = [
     {
-      category: 'FIRB',
-      description: 'Application Fee',
+      category: "FIRB",
+      description: "Application Fee",
       amount: firbApplicationFee,
-      frequency: 'one-time' as const,
-      optional: false
+      frequency: "one-time" as const,
+      optional: false,
     },
     {
-      category: 'Stamp Duty',
-      description: 'Standard Stamp Duty',
+      category: "Stamp Duty",
+      description: "Standard Stamp Duty",
       amount: standardStampDuty,
-      frequency: 'one-time' as const,
-      optional: false
+      frequency: "one-time" as const,
+      optional: false,
     },
     {
-      category: 'Stamp Duty',
-      description: 'Foreign Buyer Surcharge',
+      category: "Stamp Duty",
+      description: "Foreign Buyer Surcharge",
       amount: foreignerSurcharge,
-      frequency: 'one-time' as const,
-      optional: false
+      frequency: "one-time" as const,
+      optional: false,
     },
     {
-      category: 'Land Tax',
-      description: 'Annual Surcharge',
+      category: "Land Tax",
+      description: "Annual Surcharge",
       amount: annualLandTaxSurcharge,
-      frequency: 'annual' as const,
-      optional: false
+      frequency: "annual" as const,
+      optional: false,
     },
     {
-      category: 'Vacancy',
-      description: 'Annual Vacancy Fee (if vacant >183 days)',
+      category: "Vacancy",
+      description: "Annual Vacancy Fee (if vacant >183 days)",
       amount: annualVacancyFee,
-      frequency: 'annual' as const,
-      optional: true
-    }
+      frequency: "annual" as const,
+      optional: true,
+    },
   ];
-  
+
   return {
     input,
     firbApplicationFee,
@@ -1073,71 +1106,72 @@ export function calculateFIRBFee(input: FIRBCalculationInput): FIRBCalculationRe
     totalUpfrontCosts,
     totalAnnualCosts,
     totalFirstYearCost,
-    breakdown
+    breakdown,
   };
 }
 
 function calculateStandardStampDuty(price: number, state: string): number {
   // Simplified - would need actual state-specific stamp duty schedules
   // NSW example (progressive rates)
-  if (state === 'NSW') {
-    if (price <= 14000) return 1.25 * price / 100;
-    if (price <= 32000) return 175 + 1.50 * (price - 14000) / 100;
-    if (price <= 85000) return 445 + 1.75 * (price - 32000) / 100;
-    if (price <= 319000) return 1372.50 + 3.50 * (price - 85000) / 100;
-    if (price <= 1064000) return 9562.50 + 4.50 * (price - 319000) / 100;
-    return 43087.50 + 5.50 * (price - 1064000) / 100;
+  if (state === "NSW") {
+    if (price <= 14000) return (1.25 * price) / 100;
+    if (price <= 32000) return 175 + (1.5 * (price - 14000)) / 100;
+    if (price <= 85000) return 445 + (1.75 * (price - 32000)) / 100;
+    if (price <= 319000) return 1372.5 + (3.5 * (price - 85000)) / 100;
+    if (price <= 1064000) return 9562.5 + (4.5 * (price - 319000)) / 100;
+    return 43087.5 + (5.5 * (price - 1064000)) / 100;
   }
-  
+
   // Default rough estimate for other states
   return price * 0.04;
 }
 ```
 
 ### `lib/fee-schedules.ts`
+
 ```typescript
-import { PropertyType, AustralianState } from '@/types/firb';
+import { PropertyType, AustralianState } from "@/types/firb";
 
 export function getFIRBFeeSchedule(price: number, type: PropertyType): number {
-  if (type === 'vacant' && price < 1500000) {
+  if (type === "vacant" && price < 1500000) {
     return 5500;
   }
-  
+
   if (price < 1000000) return 13200;
   if (price < 2000000) return 26400;
   if (price < 3000000) return 39600;
   if (price < 4000000) return 52800;
   if (price < 5000000) return 66000;
-  
+
   // Each additional $1M adds $13,200
   const millionsOver5 = Math.ceil((price - 5000000) / 1000000);
-  return 66000 + (millionsOver5 * 13200);
+  return 66000 + millionsOver5 * 13200;
 }
 
 export function getStampDutySurcharge(state: AustralianState): number {
   const rates: Record<AustralianState, number> = {
-    'NSW': 0.08,
-    'VIC': 0.08,
-    'QLD': 0.07,
-    'SA': 0.07,
-    'WA': 0.07,
-    'TAS': 0.08,
-    'NT': 0,
-    'ACT': 0
+    NSW: 0.08,
+    VIC: 0.08,
+    QLD: 0.07,
+    SA: 0.07,
+    WA: 0.07,
+    TAS: 0.08,
+    NT: 0,
+    ACT: 0,
   };
   return rates[state];
 }
 
 export function getLandTaxSurcharge(state: AustralianState): number {
   const rates: Record<AustralianState, number> = {
-    'NSW': 0.02,
-    'VIC': 0.015,
-    'QLD': 0.02,
-    'SA': 0.005,
-    'WA': 0.04,
-    'TAS': 0.015,
-    'NT': 0,
-    'ACT': 0.0075
+    NSW: 0.02,
+    VIC: 0.015,
+    QLD: 0.02,
+    SA: 0.005,
+    WA: 0.04,
+    TAS: 0.015,
+    NT: 0,
+    ACT: 0.0075,
   };
   return rates[state];
 }
@@ -1148,12 +1182,13 @@ export function getLandTaxSurcharge(state: AustralianState): number {
 ## 13. Additional Files Needed
 
 ### Types Definition
+
 ```typescript
 // types/firb.ts
-export type PropertyType = 'established' | 'new' | 'vacant';
-export type EntityType = 'individual' | 'company' | 'trust';
-export type ResidencyStatus = 'foreign' | 'temporary' | 'permanent';
-export type AustralianState = 'NSW' | 'VIC' | 'QLD' | 'SA' | 'WA' | 'TAS' | 'NT' | 'ACT';
+export type PropertyType = "established" | "new" | "vacant";
+export type EntityType = "individual" | "company" | "trust";
+export type ResidencyStatus = "foreign" | "temporary" | "permanent";
+export type AustralianState = "NSW" | "VIC" | "QLD" | "SA" | "WA" | "TAS" | "NT" | "ACT";
 
 export interface FIRBCalculationInput {
   propertyPrice: number;
@@ -1168,7 +1203,7 @@ export interface FeeBreakdownItem {
   category: string;
   description: string;
   amount: number;
-  frequency: 'one-time' | 'annual';
+  frequency: "one-time" | "annual";
   optional: boolean;
 }
 
@@ -1190,9 +1225,10 @@ export interface FIRBCalculationResult {
 ```
 
 ### Legal Pages Template
+
 ```typescript
 // app/[locale]/privacy/page.tsx
-// app/[locale]/terms/page.tsx  
+// app/[locale]/terms/page.tsx
 // app/[locale]/disclaimer/page.tsx
 
 'use client';
@@ -1202,7 +1238,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function PrivacyPage() {
   const t = useTranslations('Privacy');
-  
+
   return (
     <main className="container mx-auto px-4 py-12">
       <Card className="max-w-4xl mx-auto">
@@ -1223,16 +1259,19 @@ export default function PrivacyPage() {
 ## 14. Integration Checklist
 
 ### Navigation Updates
+
 - [ ] Add "FIRB Calculator" link to `Navigation.tsx`
 - [ ] Add to mobile menu (if exists)
 - [ ] Update `messages/en.json` and `messages/zh.json` Nav section
 
 ### Footer Updates
+
 - [ ] Add FIRB Calculator to Quick Links
 - [ ] Ensure legal page links work
 - [ ] Test all footer links
 
 ### Homepage Updates (Optional)
+
 - [ ] Add FIRB calculator card/section
 - [ ] Update CTA to include FIRB calculator option
 - [ ] Add comparison between simple and FIRB calculators
@@ -1244,6 +1283,7 @@ export default function PrivacyPage() {
 ### New Files to Create (17 total)
 
 **Components (7):**
+
 1. `components/FIRBCalculatorForm.tsx`
 2. `components/FIRBResults.tsx`
 3. `components/PropertyTypeSelector.tsx`
@@ -1253,23 +1293,28 @@ export default function PrivacyPage() {
 7. `components/ui/radio-group.tsx` (via shadcn)
 
 **Pages (4):**
+
 1. `app/[locale]/firb-calculator/page.tsx`
 2. `app/[locale]/privacy/page.tsx`
 3. `app/[locale]/terms/page.tsx`
 4. `app/[locale]/disclaimer/page.tsx`
 
 **API Routes (1):**
+
 1. `app/api/calculate-firb/route.ts`
 
 **Types (1):**
+
 1. `types/firb.ts`
 
 **Utilities (3):**
+
 1. `lib/firb-calculations.ts`
 2. `lib/fee-schedules.ts`
 3. `lib/state-fees.ts`
 
 **Documentation (1):**
+
 1. `docs/FEE_SCHEDULES.md`
 
 ### Files to Update (4)
@@ -1286,36 +1331,40 @@ export default function PrivacyPage() {
 ### Follow Existing Patterns
 
 **Color Coding:**
+
 - Blue: Information, FIRB fees
 - Green: Positive, benefits, exemptions
 - Orange: Warnings, surcharges
 - Red: Penalties, important notices
 
 **Card Styling:**
+
 ```typescript
-className="border-blue-200 bg-blue-50/50"  // Info
-className="border-green-200 bg-green-50/50" // Positive
-className="border-orange-200 bg-orange-50/50" // Warning
-className="border-red-200 bg-red-50/50" // Danger
+className = "border-blue-200 bg-blue-50/50"; // Info
+className = "border-green-200 bg-green-50/50"; // Positive
+className = "border-orange-200 bg-orange-50/50"; // Warning
+className = "border-red-200 bg-red-50/50"; // Danger
 ```
 
 **Responsive Grid:**
+
 ```typescript
-className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+className = "grid md:grid-cols-2 lg:grid-cols-3 gap-8";
 ```
 
 **Text Sizing:**
+
 ```typescript
 // Headings
-className="text-4xl font-bold"  // Page title
-className="text-3xl font-bold"  // Section title
-className="text-2xl font-bold"  // Subsection title
-className="text-lg font-semibold" // Card title
+className = "text-4xl font-bold"; // Page title
+className = "text-3xl font-bold"; // Section title
+className = "text-2xl font-bold"; // Subsection title
+className = "text-lg font-semibold"; // Card title
 
 // Body
-className="text-base"  // Normal text
-className="text-sm"    // Small text
-className="text-xs"    // Fine print
+className = "text-base"; // Normal text
+className = "text-sm"; // Small text
+className = "text-xs"; // Fine print
 ```
 
 ---
@@ -1323,6 +1372,7 @@ className="text-xs"    // Fine print
 ## 17. Testing Strategy
 
 ### Local Testing
+
 ```bash
 # On feature branch
 npm run dev
@@ -1337,12 +1387,14 @@ http://localhost:3000/zh/firb-calculator
 ```
 
 ### Build Testing
+
 ```bash
 npm run build
 npm start
 ```
 
 ### Test Cases
+
 1. **Low value property** (<$1M) - Verify $13,200 FIRB fee
 2. **High value property** ($5M+) - Verify progressive fee calculation
 3. **Different states** - Verify surcharge variations
@@ -1355,6 +1407,7 @@ npm start
 ## 18. Next Steps
 
 ### Immediate Actions
+
 1. ✅ Create feature branch `feature/add-firb-calculator`
 2. Create type definitions
 3. Create calculation logic
@@ -1369,6 +1422,7 @@ npm start
 12. Deploy to production after approval
 
 ### Future Enhancements
+
 - Add comparison tool (simple vs FIRB calculator)
 - Add fee schedule documentation
 - Add state comparison charts
@@ -1380,6 +1434,7 @@ npm start
 ## 19. Links to Existing Patterns
 
 ### Reference Files
+
 - **Form pattern**: `app/[locale]/calculator/page.tsx`
 - **API pattern**: `app/api/calculate-fees/route.ts`
 - **Card layout**: `app/[locale]/page.tsx` (FIRB Approval section)
@@ -1388,6 +1443,7 @@ npm start
 - **Server component**: `app/[locale]/layout.tsx`
 
 ### Styling References
+
 - **Gradient backgrounds**: Hero section, CTA section
 - **Color-coded cards**: Fees Required section, FIRB Approval section
 - **Icon usage**: Throughout homepage
@@ -1408,17 +1464,3 @@ This FIRB calculator will seamlessly integrate with the existing application by:
 7. ✅ Providing comprehensive, accurate FIRB fee calculations
 
 **Ready to implement!** 🚀
-
-
-
-
-
-
-
-
-
-
-
-
-
-

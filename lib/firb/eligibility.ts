@@ -4,12 +4,19 @@
  * Ported from eligibilityWizard.js
  */
 
-import { CitizenshipStatus, PropertyType, PROPERTY_ELIGIBILITY, FIRB_PROCESSING_TIMES, TEMPORARY_BAN, isAffectedByTemporaryBan } from './constants';
+import {
+  CitizenshipStatus,
+  PropertyType,
+  PROPERTY_ELIGIBILITY,
+  FIRB_PROCESSING_TIMES,
+  TEMPORARY_BAN,
+  isAffectedByTemporaryBan,
+} from "./constants";
 
 export interface EligibilityResult {
   isEligible: boolean;
   requiresFIRB: boolean;
-  firbApprovalType: 'required' | 'exempt' | 'notAllowed';
+  firbApprovalType: "required" | "exempt" | "notAllowed";
   canPurchase: boolean;
   restrictions: string[];
   recommendations: string[];
@@ -30,87 +37,125 @@ export function checkCitizenshipEligibility(
   isOrdinarilyResident?: boolean
 ): EligibilityResult {
   const eligibilityRules = PROPERTY_ELIGIBILITY[status];
-  
+
   const baseResult: EligibilityResult = {
     isEligible: true,
     requiresFIRB: eligibilityRules.requiresFIRB,
-    firbApprovalType: eligibilityRules.requiresFIRB ? 'required' : 'exempt',
+    firbApprovalType: eligibilityRules.requiresFIRB ? "required" : "exempt",
     canPurchase: true,
     restrictions: [...eligibilityRules.restrictions],
     recommendations: [],
-    allowedPropertyTypes: eligibilityRules.canBuy as PropertyType[]
+    allowedPropertyTypes: eligibilityRules.canBuy as PropertyType[],
   };
 
   // Australian Citizens
-  if (status === 'australian') {
+  if (status === "australian") {
     if (isOrdinarilyResident === false) {
       // Australian citizens not ordinarily resident are treated as foreign
       baseResult.requiresFIRB = true;
-      baseResult.firbApprovalType = 'required';
-      baseResult.restrictions.push('As you are not ordinarily resident in Australia, FIRB approval is required');
-      baseResult.recommendations.push('Ensure you apply for FIRB approval before signing any contract');
+      baseResult.firbApprovalType = "required";
+      baseResult.restrictions.push(
+        "As you are not ordinarily resident in Australia, FIRB approval is required"
+      );
+      baseResult.recommendations.push(
+        "Ensure you apply for FIRB approval before signing any contract"
+      );
     } else {
-      baseResult.recommendations.push('As an Australian citizen, you have no restrictions on property purchases');
-      baseResult.recommendations.push('No FIRB approval required - you can purchase immediately');
+      baseResult.recommendations.push(
+        "As an Australian citizen, you have no restrictions on property purchases"
+      );
+      baseResult.recommendations.push("No FIRB approval required - you can purchase immediately");
     }
   }
 
   // Permanent Residents
-  if (status === 'permanent') {
-    baseResult.recommendations.push('As a permanent resident, you have the same rights as Australian citizens');
-    baseResult.recommendations.push('No FIRB approval required for any residential property type');
-    baseResult.recommendations.push('You can purchase established dwellings, new dwellings, or vacant land');
+  if (status === "permanent") {
+    baseResult.recommendations.push(
+      "As a permanent resident, you have the same rights as Australian citizens"
+    );
+    baseResult.recommendations.push("No FIRB approval required for any residential property type");
+    baseResult.recommendations.push(
+      "You can purchase established dwellings, new dwellings, or vacant land"
+    );
   }
 
   // Temporary Residents
-  if (status === 'temporary') {
-    baseResult.allowedPropertyTypes = ['newDwelling'];
+  if (status === "temporary") {
+    baseResult.allowedPropertyTypes = ["newDwelling"];
     baseResult.processingTimeline = {
       standard: FIRB_PROCESSING_TIMES.standard,
-      expedited: FIRB_PROCESSING_TIMES.expedited
+      expedited: FIRB_PROCESSING_TIMES.expedited,
     };
-    
+
     // Consolidated restrictions - including temporary ban warning
-    if (isAffectedByTemporaryBan('established', 'temporary')) {
-      baseResult.restrictions.push(`⚠️ TEMPORARY BAN (${TEMPORARY_BAN.startDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })} - ${TEMPORARY_BAN.endDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}): Purchase of established dwellings is currently prohibited for temporary residents. Only new dwellings and off-the-plan properties are permitted.`);
+    if (isAffectedByTemporaryBan("established", "temporary")) {
+      baseResult.restrictions.push(
+        `⚠️ TEMPORARY BAN (${TEMPORARY_BAN.startDate.toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" })} - ${TEMPORARY_BAN.endDate.toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" })}): Purchase of established dwellings is currently prohibited for temporary residents. Only new dwellings and off-the-plan properties are permitted.`
+      );
     } else {
-      baseResult.restrictions.push('Property types permitted: new dwellings or off-the-plan properties only. Established dwellings and vacant land are prohibited.');
+      baseResult.restrictions.push(
+        "Property types permitted: new dwellings or off-the-plan properties only. Established dwellings and vacant land are prohibited."
+      );
     }
-    baseResult.restrictions.push('Must occupy as principal place of residence and sell within 6 months of no longer being your residence or visa ceasing');
-    
-    baseResult.recommendations.push('Apply for FIRB approval before signing any contract');
-    baseResult.recommendations.push('Budget for FIRB application fees - see exact cost in the breakdown below');
-    baseResult.recommendations.push('Consider expedited processing if you need faster approval (double the fee)');
-    
-    if (visaType === '500') {
-      baseResult.recommendations.push('As a student visa holder, ensure your property can serve as your primary residence');
+    baseResult.restrictions.push(
+      "Must occupy as principal place of residence and sell within 6 months of no longer being your residence or visa ceasing"
+    );
+
+    baseResult.recommendations.push("Apply for FIRB approval before signing any contract");
+    baseResult.recommendations.push(
+      "Budget for FIRB application fees - see exact cost in the breakdown below"
+    );
+    baseResult.recommendations.push(
+      "Consider expedited processing if you need faster approval (double the fee)"
+    );
+
+    if (visaType === "500") {
+      baseResult.recommendations.push(
+        "As a student visa holder, ensure your property can serve as your primary residence"
+      );
     }
   }
 
   // Foreign Persons
-  if (status === 'foreign') {
-    baseResult.allowedPropertyTypes = ['newDwelling', 'vacantLand'];
+  if (status === "foreign") {
+    baseResult.allowedPropertyTypes = ["newDwelling", "vacantLand"];
     baseResult.processingTimeline = {
       standard: FIRB_PROCESSING_TIMES.standard,
       expedited: FIRB_PROCESSING_TIMES.expedited,
-      complex: FIRB_PROCESSING_TIMES.complex
+      complex: FIRB_PROCESSING_TIMES.complex,
     };
-    
+
     // Consolidated restrictions - including temporary ban warning
-    if (isAffectedByTemporaryBan('established', 'foreign')) {
-      baseResult.restrictions.push(`⚠️ TEMPORARY BAN (${TEMPORARY_BAN.startDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })} - ${TEMPORARY_BAN.endDate.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}): Purchase of established dwellings is currently prohibited for foreign persons. Only new dwellings, off-the-plan properties, and vacant land for development are permitted.`);
+    if (isAffectedByTemporaryBan("established", "foreign")) {
+      baseResult.restrictions.push(
+        `⚠️ TEMPORARY BAN (${TEMPORARY_BAN.startDate.toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" })} - ${TEMPORARY_BAN.endDate.toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" })}): Purchase of established dwellings is currently prohibited for foreign persons. Only new dwellings, off-the-plan properties, and vacant land for development are permitted.`
+      );
     } else {
-      baseResult.restrictions.push('Established dwellings prohibited except in exceptional FIRB-approved circumstances');
-      baseResult.restrictions.push('Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development');
+      baseResult.restrictions.push(
+        "Established dwellings prohibited except in exceptional FIRB-approved circumstances"
+      );
+      baseResult.restrictions.push(
+        "Foreign persons can only purchase new dwellings, off-the-plan properties, or vacant land for development"
+      );
     }
-    baseResult.restrictions.push('Annual vacancy fee applies if property is not occupied or genuinely available for rent (minimum 183 days per year). Vacancy fees have been doubled as of April 1, 2025.');
-    baseResult.restrictions.push('You must notify the ATO within 30 days of settlement');
-    
+    baseResult.restrictions.push(
+      "Annual vacancy fee applies if property is not occupied or genuinely available for rent (minimum 183 days per year). Vacancy fees have been doubled as of April 1, 2025."
+    );
+    baseResult.restrictions.push("You must notify the ATO within 30 days of settlement");
+
     // More precise recommendations
-    baseResult.recommendations.push('FIRB approval is mandatory - do not sign any contract before obtaining approval');
-    baseResult.recommendations.push('Budget for foreign buyer stamp duty surcharges - see exact costs in the breakdown below');
-    baseResult.recommendations.push('Ensure property is genuinely available for rent or occupied to avoid doubled vacancy fees');
-    baseResult.recommendations.push('Consider engaging a lawyer or conveyancer experienced in foreign property purchases');
+    baseResult.recommendations.push(
+      "FIRB approval is mandatory - do not sign any contract before obtaining approval"
+    );
+    baseResult.recommendations.push(
+      "Budget for foreign buyer stamp duty surcharges - see exact costs in the breakdown below"
+    );
+    baseResult.recommendations.push(
+      "Ensure property is genuinely available for rent or occupied to avoid doubled vacancy fees"
+    );
+    baseResult.recommendations.push(
+      "Consider engaging a lawyer or conveyancer experienced in foreign property purchases"
+    );
   }
 
   return baseResult;
@@ -126,15 +171,15 @@ export function checkPropertyEligibility(
 ): { eligible: boolean; reason?: string } {
   // Australian citizens who are not ordinarily resident are treated as foreign
   let effectiveStatus = citizenshipStatus;
-  if (citizenshipStatus === 'australian' && isOrdinarilyResident === false) {
-    effectiveStatus = 'foreign';
+  if (citizenshipStatus === "australian" && isOrdinarilyResident === false) {
+    effectiveStatus = "foreign";
   }
 
   // Check if affected by temporary ban (April 1, 2025 - March 31, 2027)
   if (isAffectedByTemporaryBan(propertyType, effectiveStatus)) {
     return {
       eligible: false,
-      reason: `TEMPORARY BAN IN EFFECT (April 1, 2025 - March 31, 2027): Foreign persons and temporary residents are prohibited from purchasing established dwellings during this period. FIRB applications for established dwellings will not be approved. Exceptions may apply for redevelopment projects (20+ dwellings), commercial-scale housing, or build-to-rent developments.`
+      reason: `TEMPORARY BAN IN EFFECT (April 1, 2025 - March 31, 2027): Foreign persons and temporary residents are prohibited from purchasing established dwellings during this period. FIRB applications for established dwellings will not be approved. Exceptions may apply for redevelopment projects (20+ dwellings), commercial-scale housing, or build-to-rent developments.`,
     };
   }
 
@@ -142,23 +187,26 @@ export function checkPropertyEligibility(
   const canBuy = eligibilityRules.canBuy.includes(propertyType);
 
   if (!canBuy) {
-    let reason = '';
-    
-    if (effectiveStatus === 'temporary') {
-      if (propertyType === 'established') {
-        reason = 'Temporary residents can only purchase new dwellings or off-the-plan properties.';
-      } else if (propertyType === 'vacantLand') {
-        reason = 'Temporary residents can only purchase new dwellings or off-the-plan properties.';
-      } else if (propertyType === 'commercial') {
-        reason = 'Different rules apply for commercial property purchases. Please consult with FIRB directly.';
+    let reason = "";
+
+    if (effectiveStatus === "temporary") {
+      if (propertyType === "established") {
+        reason = "Temporary residents can only purchase new dwellings or off-the-plan properties.";
+      } else if (propertyType === "vacantLand") {
+        reason = "Temporary residents can only purchase new dwellings or off-the-plan properties.";
+      } else if (propertyType === "commercial") {
+        reason =
+          "Different rules apply for commercial property purchases. Please consult with FIRB directly.";
       }
     }
-    
-    if (effectiveStatus === 'foreign') {
-      if (propertyType === 'established') {
-        reason = 'Established dwellings prohibited except in exceptional FIRB-approved circumstances.';
-      } else if (propertyType === 'commercial') {
-        reason = 'Commercial property purchases by foreign persons require separate FIRB approval and have different thresholds.';
+
+    if (effectiveStatus === "foreign") {
+      if (propertyType === "established") {
+        reason =
+          "Established dwellings prohibited except in exceptional FIRB-approved circumstances.";
+      } else if (propertyType === "commercial") {
+        reason =
+          "Commercial property purchases by foreign persons require separate FIRB approval and have different thresholds.";
       }
     }
 
@@ -176,34 +224,47 @@ export function getPropertyRestrictions(
   citizenshipStatus: CitizenshipStatus,
   isOrdinarilyResident?: boolean
 ): string[] {
-  const propertyCheck = checkPropertyEligibility(propertyType, citizenshipStatus, isOrdinarilyResident);
+  const propertyCheck = checkPropertyEligibility(
+    propertyType,
+    citizenshipStatus,
+    isOrdinarilyResident
+  );
 
   const restrictions: string[] = [];
 
   // Only add property-specific restrictions that are NOT already covered by base restrictions
   if (!propertyCheck.eligible && propertyCheck.reason) {
     // Check if this reason is already covered by base restrictions to avoid duplication
-    const baseEligibility = checkCitizenshipEligibility(citizenshipStatus, undefined, isOrdinarilyResident);
-    const isAlreadyCovered = baseEligibility.restrictions.some(baseRestriction => 
-      baseRestriction.includes('Established dwellings prohibited') || 
-      baseRestriction.includes(propertyCheck.reason!)
+    const baseEligibility = checkCitizenshipEligibility(
+      citizenshipStatus,
+      undefined,
+      isOrdinarilyResident
     );
-    
+    const isAlreadyCovered = baseEligibility.restrictions.some(
+      (baseRestriction) =>
+        baseRestriction.includes("Established dwellings prohibited") ||
+        baseRestriction.includes(propertyCheck.reason!)
+    );
+
     if (!isAlreadyCovered) {
       restrictions.push(propertyCheck.reason);
     }
   }
 
   // Add property-type specific restrictions
-  if (propertyType === 'newDwelling') {
-    if (citizenshipStatus === 'temporary' || citizenshipStatus === 'foreign') {
-      restrictions.push('Must be purchased from developer or builder; off-the-plan purchases must result in new dwelling upon completion');
+  if (propertyType === "newDwelling") {
+    if (citizenshipStatus === "temporary" || citizenshipStatus === "foreign") {
+      restrictions.push(
+        "Must be purchased from developer or builder; off-the-plan purchases must result in new dwelling upon completion"
+      );
     }
   }
 
-  if (propertyType === 'vacantLand') {
-    if (citizenshipStatus === 'foreign') {
-      restrictions.push('Must commence construction within 4 years and complete within reasonable timeframe or face penalties');
+  if (propertyType === "vacantLand") {
+    if (citizenshipStatus === "foreign") {
+      restrictions.push(
+        "Must commence construction within 4 years and complete within reasonable timeframe or face penalties"
+      );
     }
   }
 
@@ -229,8 +290,8 @@ export function getFIRBRequirements(
     return {
       required: false,
       fee: 0,
-      processingTime: 'N/A',
-      requirements: ['No FIRB approval required for your citizenship status']
+      processingTime: "N/A",
+      requirements: ["No FIRB approval required for your citizenship status"],
     };
   }
 
@@ -238,62 +299,65 @@ export function getFIRBRequirements(
   let fee = 0;
   if (propertyValue <= 10000000) {
     // Use new fee structure based on property type
-    const feeTiers = propertyType === 'established' ? [
-      { max: 75000, fee: 13500 },
-      { max: 1000000, fee: 45300 },
-      { max: 2000000, fee: 90900 },
-      { max: 3000000, fee: 181800 },
-      { max: 4000000, fee: 272700 },
-      { max: 5000000, fee: 363600 },
-      { max: 6000000, fee: 454500 },
-      { max: 7000000, fee: 545400 },
-      { max: 8000000, fee: 636300 },
-      { max: 9000000, fee: 727200 },
-      { max: 10000000, fee: 818100 }
-    ] : [
-      { max: 75000, fee: 4500 },
-      { max: 1000000, fee: 15100 },
-      { max: 2000000, fee: 30300 },
-      { max: 3000000, fee: 60600 },
-      { max: 4000000, fee: 90900 },
-      { max: 5000000, fee: 121200 },
-      { max: 6000000, fee: 151500 },
-      { max: 7000000, fee: 181800 },
-      { max: 8000000, fee: 212100 },
-      { max: 9000000, fee: 242400 },
-      { max: 10000000, fee: 272700 }
-    ];
-    
-    const tier = feeTiers.find(t => propertyValue <= t.max);
+    const feeTiers =
+      propertyType === "established"
+        ? [
+            { max: 75000, fee: 13500 },
+            { max: 1000000, fee: 45300 },
+            { max: 2000000, fee: 90900 },
+            { max: 3000000, fee: 181800 },
+            { max: 4000000, fee: 272700 },
+            { max: 5000000, fee: 363600 },
+            { max: 6000000, fee: 454500 },
+            { max: 7000000, fee: 545400 },
+            { max: 8000000, fee: 636300 },
+            { max: 9000000, fee: 727200 },
+            { max: 10000000, fee: 818100 },
+          ]
+        : [
+            { max: 75000, fee: 4500 },
+            { max: 1000000, fee: 15100 },
+            { max: 2000000, fee: 30300 },
+            { max: 3000000, fee: 60600 },
+            { max: 4000000, fee: 90900 },
+            { max: 5000000, fee: 121200 },
+            { max: 6000000, fee: 151500 },
+            { max: 7000000, fee: 181800 },
+            { max: 8000000, fee: 212100 },
+            { max: 9000000, fee: 242400 },
+            { max: 10000000, fee: 272700 },
+          ];
+
+    const tier = feeTiers.find((t) => propertyValue <= t.max);
     fee = tier?.fee || 0;
   } else {
     // For properties over $10M: use maximum fee
-    fee = propertyType === 'established' ? 3357300 : 1205200;
+    fee = propertyType === "established" ? 3357300 : 1205200;
   }
 
   const requirements: string[] = [
-    'Complete FIRB online application form',
-    'Provide proof of identity (passport, visa documents)',
-    'Provide evidence of funds for purchase',
-    'Pay application fee (non-refundable)',
-    'Provide property details and contract information',
+    "Complete FIRB online application form",
+    "Provide proof of identity (passport, visa documents)",
+    "Provide evidence of funds for purchase",
+    "Pay application fee (non-refundable)",
+    "Provide property details and contract information",
   ];
 
-  if (citizenshipStatus === 'temporary') {
-    requirements.push('Provide current visa documentation');
-    requirements.push('Confirm property will be your principal place of residence');
+  if (citizenshipStatus === "temporary") {
+    requirements.push("Provide current visa documentation");
+    requirements.push("Confirm property will be your principal place of residence");
   }
 
-  if (propertyType === 'vacantLand') {
-    requirements.push('Provide development plans and timeline');
-    requirements.push('Commit to commencing construction within 4 years');
+  if (propertyType === "vacantLand") {
+    requirements.push("Provide development plans and timeline");
+    requirements.push("Commit to commencing construction within 4 years");
   }
 
   return {
     required: true,
     fee,
     processingTime: FIRB_PROCESSING_TIMES.standard,
-    requirements
+    requirements,
   };
 }
 
@@ -307,9 +371,21 @@ export function performFullEligibilityCheck(
   visaType?: string,
   isOrdinarilyResident?: boolean
 ): EligibilityResult {
-  const baseEligibility = checkCitizenshipEligibility(citizenshipStatus, visaType, isOrdinarilyResident);
-  const propertyCheck = checkPropertyEligibility(propertyType, citizenshipStatus, isOrdinarilyResident);
-  const propertySpecificRestrictions = getPropertyRestrictions(propertyType, citizenshipStatus, isOrdinarilyResident);
+  const baseEligibility = checkCitizenshipEligibility(
+    citizenshipStatus,
+    visaType,
+    isOrdinarilyResident
+  );
+  const propertyCheck = checkPropertyEligibility(
+    propertyType,
+    citizenshipStatus,
+    isOrdinarilyResident
+  );
+  const propertySpecificRestrictions = getPropertyRestrictions(
+    propertyType,
+    citizenshipStatus,
+    isOrdinarilyResident
+  );
   const firbReqs = getFIRBRequirements(citizenshipStatus, propertyType, propertyValue);
 
   // Combine base restrictions with property-specific restrictions (avoiding duplicates)
@@ -320,11 +396,11 @@ export function performFullEligibilityCheck(
     isEligible: propertyCheck.eligible,
     canPurchase: propertyCheck.eligible,
     restrictions: allRestrictions,
-    processingTimeline: baseEligibility.requiresFIRB ? {
-      standard: firbReqs.processingTime,
-      expedited: FIRB_PROCESSING_TIMES.expedited
-    } : undefined
+    processingTimeline: baseEligibility.requiresFIRB
+      ? {
+          standard: firbReqs.processingTime,
+          expedited: FIRB_PROCESSING_TIMES.expedited,
+        }
+      : undefined,
   };
 }
-
-

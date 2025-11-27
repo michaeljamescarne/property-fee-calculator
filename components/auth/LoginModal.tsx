@@ -3,24 +3,24 @@
  * Passwordless authentication flow: email → code entry
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Mail, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
-import { useAuth } from './AuthProvider';
-import type { SendCodeResponse, VerifyCodeResponse, AuthErrorResponse } from '@/types/auth';
+} from "@/components/ui/dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Mail, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
+import { useAuth } from "./AuthProvider";
+import type { SendCodeResponse, VerifyCodeResponse, AuthErrorResponse } from "@/types/auth";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -28,29 +28,29 @@ interface LoginModalProps {
   onSuccess?: () => void;
 }
 
-type Step = 'email' | 'code' | 'success';
+type Step = "email" | "code" | "success";
 
 export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
-  const t = useTranslations('Auth');
+  const t = useTranslations("Auth");
   const { login } = useAuth();
 
-  const [step, setStep] = useState<Step>('email');
-  const [email, setEmail] = useState('');
-  const [code, setCode] = useState('');
+  const [step, setStep] = useState<Step>("email");
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [expiresAt, setExpiresAt] = useState<string>('');
+  const [error, setError] = useState("");
+  const [expiresAt, setExpiresAt] = useState<string>("");
   const [resendCooldown, setResendCooldown] = useState(0);
 
   // Reset state when modal closes
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
-        setStep('email');
-        setEmail('');
-        setCode('');
-        setError('');
-        setExpiresAt('');
+        setStep("email");
+        setEmail("");
+        setCode("");
+        setError("");
+        setExpiresAt("");
         setResendCooldown(0);
       }, 300);
     }
@@ -66,13 +66,13 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
 
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/send-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/send-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
@@ -86,11 +86,11 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
       }
 
       const successData = data as SendCodeResponse;
-      setExpiresAt(successData.expiresAt || '');
-      setStep('code');
+      setExpiresAt(successData.expiresAt || "");
+      setStep("code");
       setResendCooldown(60); // 60 second cooldown
     } catch {
-      setError('Failed to send code. Please try again.');
+      setError("Failed to send code. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -98,13 +98,13 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
 
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/verify-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/verify-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
       });
 
@@ -120,8 +120,8 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
       const successData = data as VerifyCodeResponse;
       if (successData.user) {
         login(successData.user);
-        setStep('success');
-        
+        setStep("success");
+
         // Close modal and trigger success callback after animation
         setTimeout(() => {
           onClose();
@@ -129,41 +129,41 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         }, 1500);
       }
     } catch {
-      setError('Failed to verify code. Please try again.');
+      setError("Failed to verify code. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleResendCode = async () => {
-    setCode('');
-    setError('');
+    setCode("");
+    setError("");
     setIsLoading(true);
     try {
-      const response = await fetch('/api/auth/send-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/send-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        setError(data.message || 'Failed to resend code');
+        setError(data.message || "Failed to resend code");
       } else {
         setResendCooldown(60);
       }
     } catch {
-      setError('Failed to resend code. Please try again.');
+      setError("Failed to resend code. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleChangeEmail = () => {
-    setStep('email');
-    setCode('');
-    setError('');
+    setStep("email");
+    setCode("");
+    setError("");
   };
 
   return (
@@ -172,26 +172,26 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5 text-primary" />
-            {step === 'email' && t('loginTitle')}
-            {step === 'code' && 'Enter Verification Code'}
-            {step === 'success' && t('successTitle')}
+            {step === "email" && t("loginTitle")}
+            {step === "code" && "Enter Verification Code"}
+            {step === "success" && t("successTitle")}
           </DialogTitle>
           <DialogDescription>
-            {step === 'email' && t('loginDescription')}
-            {step === 'code' && `Code sent to ${email}`}
-            {step === 'success' && t('successDescription')}
+            {step === "email" && t("loginDescription")}
+            {step === "code" && `Code sent to ${email}`}
+            {step === "success" && t("successDescription")}
           </DialogDescription>
         </DialogHeader>
 
         {/* Email Step */}
-        {step === 'email' && (
+        {step === "email" && (
           <form onSubmit={handleSendCode} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">{t('emailLabel')}</Label>
+              <Label htmlFor="email">{t("emailLabel")}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder={t('emailPlaceholder')}
+                placeholder={t("emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -210,21 +210,19 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t('sendingCode')}
+                  {t("sendingCode")}
                 </>
               ) : (
-                t('sendCodeButton')
+                t("sendCodeButton")
               )}
             </Button>
 
-            <p className="text-sm text-muted-foreground text-center">
-              {t('noPasswordNeeded')}
-            </p>
+            <p className="text-sm text-muted-foreground text-center">{t("noPasswordNeeded")}</p>
           </form>
         )}
 
         {/* Code Entry Step */}
-        {step === 'code' && (
+        {step === "code" && (
           <form onSubmit={handleVerifyCode} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="code">6-Digit Code</Label>
@@ -233,7 +231,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
                 type="text"
                 placeholder="000000"
                 value={code}
-                onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
                 maxLength={6}
                 required
                 autoFocus
@@ -258,7 +256,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
                   Verifying...
                 </>
               ) : (
-                'Verify Code'
+                "Verify Code"
               )}
             </Button>
 
@@ -281,7 +279,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
                 onClick={handleResendCode}
                 disabled={isLoading || resendCooldown > 0}
               >
-                {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : 'Resend code'}
+                {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : "Resend code"}
               </Button>
             </div>
 
@@ -294,19 +292,16 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         )}
 
         {/* Success Step */}
-        {step === 'success' && (
+        {step === "success" && (
           <div className="py-8 text-center space-y-4">
             <div className="mx-auto w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
               <CheckCircle className="h-8 w-8 text-green-600" />
             </div>
             <p className="text-lg font-semibold">You&apos;re all set!</p>
-            <p className="text-sm text-muted-foreground">
-              Redirecting to your dashboard...
-            </p>
+            <p className="text-sm text-muted-foreground">Redirecting to your dashboard...</p>
           </div>
         )}
       </DialogContent>
     </Dialog>
   );
 }
-

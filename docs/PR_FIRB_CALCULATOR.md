@@ -53,21 +53,26 @@ This PR adds a complete FIRB (Foreign Investment Review Board) Calculator with a
 ## 📦 Files Created (25 new files)
 
 ### Routes (1)
+
 - `app/[locale]/firb-calculator/page.tsx` - Main calculator page with wizard logic
 
 ### API Routes (2)
+
 - `app/api/firb-calculate/route.ts` - Server-side calculation endpoint
 - `app/api/send-firb-results/route.ts` - Email sending endpoint
 
 ### Core Logic (3)
+
 - `lib/firb/constants.ts` - FIRB fees, stamp duty rates, surcharges
 - `lib/firb/eligibility.ts` - Eligibility checking logic (from eligibilityWizard.js)
 - `lib/firb/calculations.ts` - Cost calculations (from calculations (1).js)
 
 ### Validation (1)
+
 - `lib/validations/firb.ts` - Zod schemas for form validation
 
 ### Components (6)
+
 - `components/firb/ProgressIndicator.tsx` - Step progress visualization
 - `components/firb/CitizenshipStep.tsx` - Citizenship form
 - `components/firb/PropertyDetailsStep.tsx` - Property details form
@@ -76,6 +81,7 @@ This PR adds a complete FIRB (Foreign Investment Review Board) Calculator with a
 - `components/firb/EmailResultsModal.tsx` - Email modal
 
 ### UI Components (6) - shadcn/ui
+
 - `components/ui/accordion.tsx`
 - `components/ui/alert.tsx`
 - `components/ui/checkbox.tsx`
@@ -84,15 +90,18 @@ This PR adds a complete FIRB (Foreign Investment Review Board) Calculator with a
 - `components/ui/slider.tsx`
 
 ### PDF & Email (3)
+
 - `lib/pdf/generateFIRBPDF.ts` - PDF generation utility
 - `lib/resend.ts` - Resend client configuration
 - `emails/FIRBResultsEmail.tsx` - React Email template
 
 ### Reference Files (2)
+
 - `docs/eligibilityWizard.js` - Source eligibility logic
 - `docs/calculations (1).js` - Source calculation logic
 
 ### Documentation (1)
+
 - `docs/PR_FIRB_CALCULATOR.md` - This file
 
 ---
@@ -136,6 +145,7 @@ echo "RESEND_API_KEY=your_resend_api_key_here" > .env.local
 ```
 
 **To get a Resend API key:**
+
 1. Sign up at https://resend.com (free tier: 3,000 emails/month)
 2. Verify your email
 3. Create an API key
@@ -165,6 +175,7 @@ npm run dev
 #### Test Scenarios:
 
 **Scenario 1: Australian Citizen (No FIRB)**
+
 - Citizenship: Australian Citizen
 - Ordinarily Resident: Yes
 - Property: Established Dwelling
@@ -173,6 +184,7 @@ npm run dev
 - Expected: No FIRB fee, normal stamp duty
 
 **Scenario 2: Temporary Resident (FIRB Required)**
+
 - Citizenship: Temporary Resident
 - Visa: Student Visa (500)
 - Property: New Dwelling
@@ -181,6 +193,7 @@ npm run dev
 - Expected: $13,200 FIRB fee + foreign surcharge
 
 **Scenario 3: Foreign Person (FIRB + High Surcharge)**
+
 - Citizenship: Foreign Person
 - Property: New Dwelling
 - Value: $2,500,000
@@ -213,10 +226,11 @@ RESEND_API_KEY=re_your_actual_key
 ### Domain Configuration for Resend
 
 After deployment, you'll need to:
+
 1. Verify your sending domain in Resend dashboard
 2. Update `lib/resend.ts` with your verified domain:
    ```ts
-   from: 'FIRB Calculator <noreply@yourdomain.com>'
+   from: "FIRB Calculator <noreply@yourdomain.com>";
    ```
 
 ---
@@ -259,17 +273,3 @@ Route (app)                         Size  First Load JS
 This PR is complete and ready for testing. All features are implemented according to the plan. Please test locally using the scenarios above before merging.
 
 **PR Link**: https://github.com/michaeljamescarne/property-fee-calculator/pull/new/feature/firb-calculator
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -4,9 +4,9 @@
  * Uses canvas to convert SVG to PNG for jsPDF compatibility
  */
 
-import { InvestmentAnalytics } from '@/types/investment';
-import { createCanvas } from 'canvas';
-import { Canvg } from 'canvg';
+import { InvestmentAnalytics } from "@/types/investment";
+import { createCanvas } from "canvas";
+import { Canvg } from "canvg";
 
 interface ChartDimensions {
   width: number;
@@ -22,7 +22,7 @@ interface ChartDimensions {
 const DEFAULT_CHART_DIMS: ChartDimensions = {
   width: 400,
   height: 200,
-  margin: { top: 20, right: 20, bottom: 40, left: 60 }
+  margin: { top: 20, right: 20, bottom: 40, left: 60 },
 };
 
 /**
@@ -33,18 +33,18 @@ async function svgToPngDataUrl(svgString: string): Promise<string> {
   try {
     // Create canvas
     const canvas = createCanvas(DEFAULT_CHART_DIMS.width, DEFAULT_CHART_DIMS.height);
-    const ctx = canvas.getContext('2d');
-    
+    const ctx = canvas.getContext("2d");
+
     // Use canvg to render SVG to canvas
     const canvg = Canvg.fromString(ctx as unknown as CanvasRenderingContext2D, svgString);
     await canvg.render();
-    
+
     // Convert to PNG data URL
-    return canvas.toDataURL('image/png');
+    return canvas.toDataURL("image/png");
   } catch (error) {
-    console.error('Error converting SVG to PNG:', error);
+    console.error("Error converting SVG to PNG:", error);
     // Return empty string to skip chart rendering
-    return '';
+    return "";
   }
 }
 
@@ -59,16 +59,19 @@ export async function generateProjectionChart(analytics: InvestmentAnalytics): P
 
   // Get data points (first 10 years)
   const dataPoints = analytics.yearByYear.slice(0, 10);
-  if (dataPoints.length === 0) return '';
+  if (dataPoints.length === 0) return "";
 
   // Calculate scales
-  const maxValue = Math.max(...dataPoints.map(d => d.propertyValue));
-  const minValue = Math.min(...dataPoints.map(d => d.propertyValue));
+  const maxValue = Math.max(...dataPoints.map((d) => d.propertyValue));
+  const minValue = Math.min(...dataPoints.map((d) => d.propertyValue));
   const valueRange = maxValue - minValue;
   const padding = valueRange * 0.1;
 
   const xScale = (year: number) => dims.margin.left + (year / 9) * chartWidth;
-  const yScale = (value: number) => dims.margin.top + chartHeight - ((value - minValue + padding) / (valueRange + padding * 2)) * chartHeight;
+  const yScale = (value: number) =>
+    dims.margin.top +
+    chartHeight -
+    ((value - minValue + padding) / (valueRange + padding * 2)) * chartHeight;
 
   // Generate SVG
   const svg = `
@@ -81,7 +84,7 @@ export async function generateProjectionChart(analytics: InvestmentAnalytics): P
       
       <!-- Property Value Line -->
       <polyline
-        points="${dataPoints.map(d => `${xScale(d.year - dataPoints[0].year)},${yScale(d.propertyValue)}`).join(' ')}"
+        points="${dataPoints.map((d) => `${xScale(d.year - dataPoints[0].year)},${yScale(d.propertyValue)}`).join(" ")}"
         fill="none"
         stroke="#3b82f6"
         stroke-width="2"
@@ -89,7 +92,7 @@ export async function generateProjectionChart(analytics: InvestmentAnalytics): P
       
       <!-- Loan Balance Line -->
       <polyline
-        points="${dataPoints.map(d => `${xScale(d.year - dataPoints[0].year)},${yScale(d.loanBalance)}`).join(' ')}"
+        points="${dataPoints.map((d) => `${xScale(d.year - dataPoints[0].year)},${yScale(d.loanBalance)}`).join(" ")}"
         fill="none"
         stroke="#ef4444"
         stroke-width="2"
@@ -97,18 +100,22 @@ export async function generateProjectionChart(analytics: InvestmentAnalytics): P
       
       <!-- Equity Line -->
       <polyline
-        points="${dataPoints.map(d => `${xScale(d.year - dataPoints[0].year)},${yScale(d.equity)}`).join(' ')}"
+        points="${dataPoints.map((d) => `${xScale(d.year - dataPoints[0].year)},${yScale(d.equity)}`).join(" ")}"
         fill="none"
         stroke="#10b981"
         stroke-width="2"
       />
       
       <!-- Data points -->
-      ${dataPoints.map(d => `
+      ${dataPoints
+        .map(
+          (d) => `
         <circle cx="${xScale(d.year - dataPoints[0].year)}" cy="${yScale(d.propertyValue)}" r="3" fill="#3b82f6"/>
         <circle cx="${xScale(d.year - dataPoints[0].year)}" cy="${yScale(d.loanBalance)}" r="3" fill="#ef4444"/>
         <circle cx="${xScale(d.year - dataPoints[0].year)}" cy="${yScale(d.equity)}" r="3" fill="#10b981"/>
-      `).join('')}
+      `
+        )
+        .join("")}
       
       <!-- Axes -->
       <line x1="${dims.margin.left}" y1="${dims.margin.top}" x2="${dims.margin.left}" y2="${dims.margin.top + chartHeight}" stroke="#374151" stroke-width="1"/>
@@ -143,18 +150,19 @@ export async function generateCashFlowChart(analytics: InvestmentAnalytics): Pro
 
   // Prepare data
   const monthlyData = [
-    { label: 'Rent', value: analytics.cashFlow.annual.rentalIncome / 12, color: '#10b981' },
-    { label: 'Expenses', value: -analytics.cashFlow.annual.totalExpenses / 12, color: '#ef4444' },
-    { label: 'Net', value: analytics.cashFlow.monthly.afterTaxCashFlow, color: '#3b82f6' }
+    { label: "Rent", value: analytics.cashFlow.annual.rentalIncome / 12, color: "#10b981" },
+    { label: "Expenses", value: -analytics.cashFlow.annual.totalExpenses / 12, color: "#ef4444" },
+    { label: "Net", value: analytics.cashFlow.monthly.afterTaxCashFlow, color: "#3b82f6" },
   ];
 
-  const maxValue = Math.max(...monthlyData.map(d => Math.abs(d.value)));
-  const minValue = Math.min(...monthlyData.map(d => d.value));
+  const maxValue = Math.max(...monthlyData.map((d) => Math.abs(d.value)));
+  const minValue = Math.min(...monthlyData.map((d) => d.value));
   const valueRange = maxValue - minValue;
   const padding = valueRange * 0.2;
 
-  const barWidth = chartWidth / monthlyData.length * 0.6;
-  const xScale = (index: number) => dims.margin.left + (index + 0.2) * (chartWidth / monthlyData.length);
+  const barWidth = (chartWidth / monthlyData.length) * 0.6;
+  const xScale = (index: number) =>
+    dims.margin.left + (index + 0.2) * (chartWidth / monthlyData.length);
   const yScale = (value: number) => {
     const normalizedValue = (value - minValue + padding) / (valueRange + padding * 2);
     return dims.margin.top + chartHeight - normalizedValue * chartHeight;
@@ -169,7 +177,9 @@ export async function generateCashFlowChart(analytics: InvestmentAnalytics): Pro
       <line x1="${dims.margin.left}" y1="${yScale(0)}" x2="${dims.margin.left + chartWidth}" y2="${yScale(0)}" stroke="#9ca3af" stroke-width="1" stroke-dasharray="2,2"/>
       
       <!-- Bars -->
-      ${monthlyData.map((item, index) => `
+      ${monthlyData
+        .map(
+          (item, index) => `
         <rect
           x="${xScale(index)}"
           y="${Math.min(yScale(0), yScale(item.value))}"
@@ -181,18 +191,24 @@ export async function generateCashFlowChart(analytics: InvestmentAnalytics): Pro
         <text x="${xScale(index) + barWidth / 2}" y="${yScale(item.value) - 5}" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#374151">
           ${formatCurrencyCompact(item.value)}
         </text>
-      `).join('')}
+      `
+        )
+        .join("")}
       
       <!-- Axes -->
       <line x1="${dims.margin.left}" y1="${dims.margin.top}" x2="${dims.margin.left}" y2="${dims.margin.top + chartHeight}" stroke="#374151" stroke-width="1"/>
       <line x1="${dims.margin.left}" y1="${dims.margin.top + chartHeight}" x2="${dims.margin.left + chartWidth}" y2="${dims.margin.top + chartHeight}" stroke="#374151" stroke-width="1"/>
       
       <!-- Labels -->
-      ${monthlyData.map((item, index) => `
+      ${monthlyData
+        .map(
+          (item, index) => `
         <text x="${xScale(index) + barWidth / 2}" y="${dims.height - 10}" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#374151">
           ${item.label}
         </text>
-      `).join('')}
+      `
+        )
+        .join("")}
       
       <!-- Title -->
       <text x="${dims.width / 2}" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">Monthly Cash Flow</text>
@@ -213,18 +229,27 @@ export async function generateROIComparisonChart(analytics: InvestmentAnalytics)
 
   // Prepare comparison data
   const comparisonData = [
-    { label: 'Property', value: analytics.comparisons.propertyInvestment.annualizedReturn * 100, color: '#3b82f6' },
-    { label: 'ASX 200', value: analytics.comparisons.asxStocks.rate * 100, color: '#10b981' },
-    { label: 'Term Deposit', value: analytics.comparisons.termDeposit.rate * 100, color: '#f59e0b' },
-    { label: 'Bonds', value: analytics.comparisons.governmentBonds.rate * 100, color: '#ef4444' }
+    {
+      label: "Property",
+      value: analytics.comparisons.propertyInvestment.annualizedReturn * 100,
+      color: "#3b82f6",
+    },
+    { label: "ASX 200", value: analytics.comparisons.asxStocks.rate * 100, color: "#10b981" },
+    {
+      label: "Term Deposit",
+      value: analytics.comparisons.termDeposit.rate * 100,
+      color: "#f59e0b",
+    },
+    { label: "Bonds", value: analytics.comparisons.governmentBonds.rate * 100, color: "#ef4444" },
   ];
 
-  const maxValue = Math.max(...comparisonData.map(d => d.value));
+  const maxValue = Math.max(...comparisonData.map((d) => d.value));
   const valueRange = maxValue;
   const padding = valueRange * 0.1;
 
-  const barWidth = chartWidth / comparisonData.length * 0.7;
-  const xScale = (index: number) => dims.margin.left + (index + 0.15) * (chartWidth / comparisonData.length);
+  const barWidth = (chartWidth / comparisonData.length) * 0.7;
+  const xScale = (index: number) =>
+    dims.margin.left + (index + 0.15) * (chartWidth / comparisonData.length);
   const yScale = (value: number) => {
     const normalizedValue = value / (valueRange + padding);
     return dims.margin.top + chartHeight - normalizedValue * chartHeight;
@@ -239,7 +264,9 @@ export async function generateROIComparisonChart(analytics: InvestmentAnalytics)
       ${generateComparisonGridLines(comparisonData, xScale, yScale, dims)}
       
       <!-- Bars -->
-      ${comparisonData.map((item, index) => `
+      ${comparisonData
+        .map(
+          (item, index) => `
         <rect
           x="${xScale(index)}"
           y="${yScale(item.value)}"
@@ -251,18 +278,24 @@ export async function generateROIComparisonChart(analytics: InvestmentAnalytics)
         <text x="${xScale(index) + barWidth / 2}" y="${yScale(item.value) - 5}" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#374151">
           ${item.value.toFixed(1)}%
         </text>
-      `).join('')}
+      `
+        )
+        .join("")}
       
       <!-- Axes -->
       <line x1="${dims.margin.left}" y1="${dims.margin.top}" x2="${dims.margin.left}" y2="${dims.margin.top + chartHeight}" stroke="#374151" stroke-width="1"/>
       <line x1="${dims.margin.left}" y1="${dims.margin.top + chartHeight}" x2="${dims.margin.left + chartWidth}" y2="${dims.margin.top + chartHeight}" stroke="#374151" stroke-width="1"/>
       
       <!-- Labels -->
-      ${comparisonData.map((item, index) => `
+      ${comparisonData
+        .map(
+          (item, index) => `
         <text x="${xScale(index) + barWidth / 2}" y="${dims.height - 10}" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#374151">
           ${item.label}
         </text>
-      `).join('')}
+      `
+        )
+        .join("")}
       
       <!-- Y-axis labels -->
       <text x="${dims.margin.left - 5}" y="${dims.margin.top + 5}" text-anchor="end" font-family="Arial, sans-serif" font-size="8" fill="#374151">${maxValue.toFixed(1)}%</text>
@@ -278,45 +311,55 @@ export async function generateROIComparisonChart(analytics: InvestmentAnalytics)
 }
 
 // Helper functions
-function generateGridLines(dataPoints: Array<{ year: number; propertyValue: number }>, xScale: (value: number) => number, yScale: (value: number) => number, dims: ChartDimensions): string {
+function generateGridLines(
+  dataPoints: Array<{ year: number; propertyValue: number }>,
+  xScale: (value: number) => number,
+  yScale: (value: number) => number,
+  dims: ChartDimensions
+): string {
   const chartWidth = dims.width - dims.margin.left - dims.margin.right;
   const chartHeight = dims.height - dims.margin.top - dims.margin.bottom;
-  
-  let gridLines = '';
-  
+
+  let gridLines = "";
+
   // Vertical grid lines
   for (let i = 0; i <= 9; i++) {
     const x = xScale(i);
     gridLines += `<line x1="${x}" y1="${dims.margin.top}" x2="${x}" y2="${dims.margin.top + chartHeight}" stroke="#e5e7eb" stroke-width="0.5"/>`;
   }
-  
+
   // Horizontal grid lines
-  const maxValue = Math.max(...dataPoints.map(d => d.propertyValue));
-  const minValue = Math.min(...dataPoints.map(d => d.propertyValue));
+  const maxValue = Math.max(...dataPoints.map((d) => d.propertyValue));
+  const minValue = Math.min(...dataPoints.map((d) => d.propertyValue));
   const valueRange = maxValue - minValue;
   const padding = valueRange * 0.1;
-  
+
   for (let i = 0; i <= 5; i++) {
     const value = minValue - padding + (valueRange + padding * 2) * (i / 5);
     const y = yScale(value);
     gridLines += `<line x1="${dims.margin.left}" y1="${y}" x2="${dims.margin.left + chartWidth}" y2="${y}" stroke="#e5e7eb" stroke-width="0.5"/>`;
   }
-  
+
   return gridLines;
 }
 
-function generateComparisonGridLines(comparisonData: Array<{ value: number }>, xScale: (index: number) => number, yScale: (value: number) => number, dims: ChartDimensions): string {
+function generateComparisonGridLines(
+  comparisonData: Array<{ value: number }>,
+  xScale: (index: number) => number,
+  yScale: (value: number) => number,
+  dims: ChartDimensions
+): string {
   const chartWidth = dims.width - dims.margin.left - dims.margin.right;
-  
-  let gridLines = '';
-  
+
+  let gridLines = "";
+
   // Horizontal grid lines
   for (let i = 0; i <= 5; i++) {
-    const value = (Math.max(...comparisonData.map(d => d.value)) * 1.1) * (i / 5);
+    const value = Math.max(...comparisonData.map((d) => d.value)) * 1.1 * (i / 5);
     const y = yScale(value);
     gridLines += `<line x1="${dims.margin.left}" y1="${y}" x2="${dims.margin.left + chartWidth}" y2="${y}" stroke="#e5e7eb" stroke-width="0.5"/>`;
   }
-  
+
   return gridLines;
 }
 

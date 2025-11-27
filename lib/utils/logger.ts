@@ -19,7 +19,12 @@ interface LogEntry {
 class Logger {
   private isDevelopment = process.env.NODE_ENV === "development";
 
-  private formatLog(level: LogLevel, message: string, context?: Record<string, unknown>, error?: Error): LogEntry {
+  private formatLog(
+    level: LogLevel,
+    message: string,
+    context?: Record<string, unknown>,
+    error?: Error
+  ): LogEntry {
     return {
       timestamp: new Date().toISOString(),
       level,
@@ -86,6 +91,3 @@ export const log = {
   error: (message: string, error?: Error, context?: Record<string, unknown>) =>
     logger.error(message, error, context),
 };
-
-
-

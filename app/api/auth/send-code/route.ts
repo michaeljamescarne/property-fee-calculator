@@ -3,17 +3,12 @@
  * Generates and emails a 6-digit authentication code
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createServiceRoleClient } from '@/lib/supabase/server';
-import { resend, EMAIL_CONFIG } from '@/lib/resend';
-import {
-  generateCode,
-  hashCode,
-  getExpiryTime,
-  isValidEmail,
-} from '@/lib/auth/magic-code';
-import type { SendCodeRequest, SendCodeResponse, AuthErrorResponse } from '@/types/auth';
-import type { Database } from '@/types/database';
+import { NextRequest, NextResponse } from "next/server";
+import { createServiceRoleClient } from "@/lib/supabase/server";
+import { resend, EMAIL_CONFIG } from "@/lib/resend";
+import { generateCode, hashCode, getExpiryTime, isValidEmail } from "@/lib/auth/magic-code";
+import type { SendCodeRequest, SendCodeResponse, AuthErrorResponse } from "@/types/auth";
+import type { Database } from "@/types/database";
 
 // Rate limiting store (in production, use Redis or Supabase)
 const rateLimitStore = new Map<string, number[]>();
@@ -26,8 +21,8 @@ export async function POST(request: NextRequest) {
     // Validate email
     if (!email || !isValidEmail(email)) {
       const error: AuthErrorResponse = {
-        error: 'INVALID_EMAIL',
-        message: 'Please provide a valid email address',
+        error: "INVALID_EMAIL",
+        message: "Please provide a valid email address",
       };
       return NextResponse.json(error, { status: 400 });
     }
@@ -35,12 +30,12 @@ export async function POST(request: NextRequest) {
     // Check rate limiting (3 requests per 10 minutes)
     const now = Date.now();
     const attempts = rateLimitStore.get(email) || [];
-    const recentAttempts = attempts.filter(time => time > now - 10 * 60 * 1000);
-    
+    const recentAttempts = attempts.filter((time) => time > now - 10 * 60 * 1000);
+
     if (recentAttempts.length >= 3) {
       const error: AuthErrorResponse = {
-        error: 'RATE_LIMITED',
-        message: 'Too many requests. Please wait 10 minutes before trying again.',
+        error: "RATE_LIMITED",
+        message: "Too many requests. Please wait 10 minutes before trying again.",
       };
       return NextResponse.json(error, { status: 429 });
     }
@@ -52,16 +47,16 @@ export async function POST(request: NextRequest) {
 
     // Store in database
     const supabase = createServiceRoleClient();
-    
+
     // Clean up old codes for this email
     await supabase
-      .from('magic_codes')
+      .from("magic_codes")
       .delete()
-      .eq('email', email)
-      .lt('expires_at', new Date().toISOString());
+      .eq("email", email)
+      .lt("expires_at", new Date().toISOString());
 
     // Insert new code
-    type MagicCodeInsert = Database['public']['Tables']['magic_codes']['Insert'];
+    type MagicCodeInsert = Database["public"]["Tables"]["magic_codes"]["Insert"];
     const magicCodeData: MagicCodeInsert = {
       email,
       code: hashedCode,
@@ -69,16 +64,14 @@ export async function POST(request: NextRequest) {
       attempts: 0,
       used: false,
     };
-    
-    const { error: dbError } = await supabase
-      .from('magic_codes')
-      .insert(magicCodeData as never);
+
+    const { error: dbError } = await supabase.from("magic_codes").insert(magicCodeData as never);
 
     if (dbError) {
-      console.error('Database error:', dbError);
+      console.error("Database error:", dbError);
       const error: AuthErrorResponse = {
-        error: 'SERVER_ERROR',
-        message: 'Failed to generate authentication code. Please try again.',
+        error: "SERVER_ERROR",
+        message: "Failed to generate authentication code. Please try again.",
       };
       return NextResponse.json(error, { status: 500 });
     }
@@ -88,7 +81,7 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: EMAIL_CONFIG.from,
         to: [email],
-        subject: 'Your Login Code - FIRB Calculator',
+        subject: "Your Login Code - FIRB Calculator",
         html: `
           <!DOCTYPE html>
           <html>
@@ -124,7 +117,7 @@ export async function POST(request: NextRequest) {
         `,
       });
     } catch (emailError) {
-      console.error('Email error:', emailError);
+      console.error("Email error:", emailError);
       // Code is stored, so we can still return success
       // User can request a new code if needed
     }
@@ -134,17 +127,16 @@ export async function POST(request: NextRequest) {
 
     const response: SendCodeResponse = {
       success: true,
-      message: 'Authentication code sent to your email',
+      message: "Authentication code sent to your email",
       expiresAt: expiresAt.toISOString(),
     };
 
     return NextResponse.json(response);
-
   } catch (error) {
-    console.error('Send code error:', error);
+    console.error("Send code error:", error);
     const errorResponse: AuthErrorResponse = {
-      error: 'SERVER_ERROR',
-      message: 'An unexpected error occurred. Please try again.',
+      error: "SERVER_ERROR",
+      message: "An unexpected error occurred. Please try again.",
     };
     return NextResponse.json(errorResponse, { status: 500 });
   }
@@ -152,9 +144,5 @@ export async function POST(request: NextRequest) {
 
 // Handle GET requests (not allowed)
 export async function GET() {
-  return NextResponse.json(
-    { error: 'Method not allowed. Use POST.' },
-    { status: 405 }
-  );
+  return NextResponse.json({ error: "Method not allowed. Use POST." }, { status: 405 });
 }
-

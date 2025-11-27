@@ -47,17 +47,3 @@ export interface FAQFilterOptions {
   popular?: boolean;
   searchTerm?: string;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

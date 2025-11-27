@@ -4,17 +4,17 @@
  */
 
 // Enum types matching database
-export type CitizenshipStatus = 'australian' | 'permanent' | 'temporary' | 'foreign';
-export type PropertyType = 'newDwelling' | 'established' | 'vacantLand' | 'commercial';
-export type AustralianState = 'NSW' | 'VIC' | 'QLD' | 'SA' | 'WA' | 'TAS' | 'ACT' | 'NT';
-export type EntityType = 'individual' | 'company' | 'trust';
-export type SubscriptionStatus = 'free' | 'trial' | 'paid';
+export type CitizenshipStatus = "australian" | "permanent" | "temporary" | "foreign";
+export type PropertyType = "newDwelling" | "established" | "vacantLand" | "commercial";
+export type AustralianState = "NSW" | "VIC" | "QLD" | "SA" | "WA" | "TAS" | "ACT" | "NT";
+export type EntityType = "individual" | "company" | "trust";
+export type SubscriptionStatus = "free" | "trial" | "paid";
 
 // Eligibility Result structure (stored as JSON)
 export interface EligibilityResult {
   isEligible: boolean;
   requiresFIRB: boolean;
-  firbApprovalType: 'required' | 'exempt' | 'notAllowed';
+  firbApprovalType: "required" | "exempt" | "notAllowed";
   restrictions: string[];
   recommendations: string[];
   approvalTimeline?: {
@@ -59,12 +59,12 @@ export interface FIRBCalculation {
   created_at: string;
   updated_at: string;
   share_url_slug: string;
-  
+
   // Citizenship data
   citizenship_status: CitizenshipStatus;
   visa_type: string | null;
   is_ordinarily_resident: boolean | null;
-  
+
   // Property data
   property_type: PropertyType;
   property_value: number;
@@ -73,11 +73,11 @@ export interface FIRBCalculation {
   is_first_home: boolean;
   deposit_percent: number | null;
   entity_type: EntityType;
-  
+
   // Calculated results
   eligibility_result: EligibilityResult;
   cost_breakdown: CostBreakdown;
-  
+
   // Metadata
   user_email: string | null;
   locale: string;
@@ -87,18 +87,18 @@ export interface FIRBCalculation {
 // Insert type (omits auto-generated fields)
 export type FIRBCalculationInsert = Omit<
   FIRBCalculation,
-  'id' | 'created_at' | 'updated_at' | 'deleted_at'
+  "id" | "created_at" | "updated_at" | "deleted_at"
 > & {
   share_url_slug?: string; // Auto-generated if not provided
 };
 
 // Update type (all fields optional except id)
-export type FIRBCalculationUpdate = Partial<Omit<FIRBCalculation, 'id' | 'created_at'>> & {
+export type FIRBCalculationUpdate = Partial<Omit<FIRBCalculation, "id" | "created_at">> & {
   id: string;
 };
 
 // Public view type (excludes sensitive data)
-export type FIRBCalculationPublic = Omit<FIRBCalculation, 'user_email' | 'deleted_at'>;
+export type FIRBCalculationPublic = Omit<FIRBCalculation, "user_email" | "deleted_at">;
 
 // Query filters
 export interface FIRBCalculationFilters {
@@ -173,7 +173,7 @@ export interface CalculationData {
   isFirstHome: boolean;
   depositPercent?: number;
   entityType: EntityType;
-  
+
   // Investment analytics inputs (optional)
   weeklyRent?: number;
   managementFee?: number;
@@ -183,22 +183,19 @@ export interface CalculationData {
   annualGrowthRate?: number;
   marginalTaxRate?: number;
   capitalGainsDiscount?: number;
-  
+
   // Results
   eligibility: EligibilityResult;
   costs: CostBreakdown;
-  analytics?: any; // Investment analytics results if calculated
+  analytics?: unknown; // Investment analytics results if calculated
 }
 
 // Insert types
-export type SavedCalculationInsert = Omit<
-  SavedCalculation,
-  'id' | 'created_at' | 'updated_at'
->;
+export type SavedCalculationInsert = Omit<SavedCalculation, "id" | "created_at" | "updated_at">;
 
 // Update types
 export type SavedCalculationUpdate = Partial<
-  Omit<SavedCalculation, 'id' | 'user_id' | 'created_at' | 'updated_at'>
+  Omit<SavedCalculation, "id" | "user_id" | "created_at" | "updated_at">
 >;
 
 // Supabase Database type
@@ -207,13 +204,13 @@ export interface Database {
     Tables: {
       user_profiles: {
         Row: UserProfile;
-        Insert: Omit<UserProfile, 'created_at' | 'updated_at'>;
-        Update: Partial<Omit<UserProfile, 'id' | 'created_at'>>;
+        Insert: Omit<UserProfile, "created_at" | "updated_at">;
+        Update: Partial<Omit<UserProfile, "id" | "created_at">>;
       };
       magic_codes: {
         Row: MagicCode;
-        Insert: Omit<MagicCode, 'id' | 'created_at'>;
-        Update: Partial<Omit<MagicCode, 'id' | 'created_at'>>;
+        Insert: Omit<MagicCode, "id" | "created_at">;
+        Update: Partial<Omit<MagicCode, "id" | "created_at">>;
       };
       saved_calculations: {
         Row: SavedCalculation;
@@ -221,12 +218,10 @@ export interface Database {
         Update: SavedCalculationUpdate;
       };
     };
-    Views: {};
-    Functions: {};
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
     Enums: {
       subscription_status: SubscriptionStatus;
     };
   };
 }
-
-

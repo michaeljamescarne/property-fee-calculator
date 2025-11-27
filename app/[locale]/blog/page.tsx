@@ -1,11 +1,7 @@
 import { getAllBlogPosts } from "@/lib/blogContentProcessor";
 import Link from "next/link";
 
-export default async function BlogPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
 
   const posts = getAllBlogPosts(locale);
@@ -15,9 +11,7 @@ export default async function BlogPage({
       <h1 className="text-4xl font-bold mb-8 text-gray-900">Blog</h1>
       {posts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-600 text-lg mb-4">
-            No blog posts available yet.
-          </p>
+          <p className="text-gray-600 text-lg mb-4">No blog posts available yet.</p>
           <p className="text-sm text-gray-600">
             Blog posts will appear here once they are published.
           </p>
@@ -30,14 +24,7 @@ export default async function BlogPage({
                 <h2 className="text-2xl font-semibold mb-2 text-gray-900">{post.title}</h2>
                 <p className="text-gray-600">{post.excerpt}</p>
                 <div className="flex items-center gap-4 mt-4 text-sm text-gray-500">
-                  <span>
-                    {typeof post.date === 'string' 
-                      ? post.date 
-                      : post.date instanceof Date 
-                        ? post.date.toISOString().split('T')[0]
-                        : String(post.date)
-                    }
-                  </span>
+                  <span>{post.date}</span>
                   <span>•</span>
                   <span>{post.readTime}</span>
                   {post.category && (

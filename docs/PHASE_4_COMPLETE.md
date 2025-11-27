@@ -9,12 +9,14 @@ All components of Phase 4 have been successfully implemented and are ready for u
 ## ✅ Completed Components
 
 ### 1. Database & API ✅
+
 - ✅ Database migration created and ready
 - ✅ API endpoint `/api/benchmarks` with fallback logic
 - ✅ Address parser utility
 - ✅ State → Suburb → Null fallback chain
 
 ### 2. Admin Interface ✅
+
 - ✅ Admin benchmarks page (`/admin/benchmarks`)
 - ✅ Full CRUD operations
 - ✅ CSV bulk import with validation
@@ -23,6 +25,7 @@ All components of Phase 4 have been successfully implemented and are ready for u
 - ✅ Full translation support
 
 ### 3. Calculator Integration ✅
+
 - ✅ Benchmarks fetched when property details entered
 - ✅ **Financial Details Step** shows benchmark suggestions
 - ✅ "Use Market Benchmark" buttons for rental yield & capital growth
@@ -30,12 +33,14 @@ All components of Phase 4 have been successfully implemented and are ready for u
 - ✅ Visual indicators and loading states
 
 ### 4. Results Panel Integration ✅
+
 - ✅ BenchmarkComparison component integrated
 - ✅ Shows after Investment Summary
 - ✅ Compares user inputs vs market benchmarks
 - ✅ Visual indicators (above/below/similar)
 
 ### 5. Seed Data ✅
+
 - ✅ SQL seed file created (`20250117_seed_benchmark_data.sql`)
 - ✅ CSV seed file created (`20250117_seed_benchmark_data.csv`)
 - ✅ All 8 states/territories included
@@ -46,25 +51,30 @@ All components of Phase 4 have been successfully implemented and are ready for u
 ## 📁 Files Created/Modified
 
 ### Database & Migrations
+
 - ✅ `supabase/migrations/20250117_phase4_benchmark_data.sql` - Table schema
 - ✅ `supabase/migrations/20250117_seed_benchmark_data.sql` - Seed data (SQL)
 - ✅ `supabase/migrations/20250117_seed_benchmark_data.csv` - Seed data (CSV)
 
 ### API Routes
+
 - ✅ `app/api/benchmarks/route.ts` - GET endpoint with fallback logic
 - ✅ `app/api/admin/benchmarks/route.ts` - Admin CRUD operations
 - ✅ `app/api/admin/benchmarks/[id]/route.ts` - Individual benchmark operations
 - ✅ `app/api/admin/benchmarks/bulk/route.ts` - CSV bulk import
 
 ### Components
+
 - ✅ `components/firb/BenchmarkComparison.tsx` - Results panel comparison
 - ✅ `components/firb/FinancialDetailsStep.tsx` - Enhanced with benchmark suggestions
 - ✅ `components/admin/BenchmarksAdminClient.tsx` - Full admin interface
 
 ### Utilities
+
 - ✅ `lib/utils/address-parser.ts` - Address parsing utility
 
 ### Documentation
+
 - ✅ `docs/BENCHMARK_DATA_SETUP.md` - Setup guide
 - ✅ `docs/PHASE_4_STATUS.md` - Status tracking
 - ✅ `docs/PHASE_4_COMPLETE.md` - This file
@@ -76,6 +86,7 @@ All components of Phase 4 have been successfully implemented and are ready for u
 ### To Populate Benchmark Data
 
 **Option 1: CSV Import (Recommended)**
+
 1. Log in as admin
 2. Go to `/admin/benchmarks`
 3. Click "Import CSV"
@@ -83,6 +94,7 @@ All components of Phase 4 have been successfully implemented and are ready for u
 5. Done! ✅
 
 **Option 2: SQL Script**
+
 1. Open Supabase SQL Editor
 2. Copy contents of `supabase/migrations/20250117_seed_benchmark_data.sql`
 3. Run the script
@@ -114,16 +126,16 @@ All components of Phase 4 have been successfully implemented and are ready for u
 
 The seed data includes benchmarks for all 8 Australian states/territories:
 
-| State | Gross Yield | Capital Growth (5yr) | Source |
-|-------|-------------|---------------------|--------|
-| NSW | 3.20% | 5.50% | CoreLogic 2024-2025 |
-| VIC | 3.40% | 5.20% | CoreLogic 2024-2025 |
-| QLD | 4.50% | 4.80% | CoreLogic 2024-2025 |
-| WA | 4.20% | 3.50% | CoreLogic 2024-2025 |
-| SA | 4.10% | 4.50% | CoreLogic 2024-2025 |
-| TAS | 4.80% | 5.20% | CoreLogic 2024-2025 |
-| ACT | 3.80% | 5.00% | CoreLogic 2024-2025 |
-| NT | 5.50% | 2.50% | CoreLogic 2024-2025 |
+| State | Gross Yield | Capital Growth (5yr) | Source              |
+| ----- | ----------- | -------------------- | ------------------- |
+| NSW   | 3.20%       | 5.50%                | CoreLogic 2024-2025 |
+| VIC   | 3.40%       | 5.20%                | CoreLogic 2024-2025 |
+| QLD   | 4.50%       | 4.80%                | CoreLogic 2024-2025 |
+| WA    | 4.20%       | 3.50%                | CoreLogic 2024-2025 |
+| SA    | 4.10%       | 4.50%                | CoreLogic 2024-2025 |
+| TAS   | 4.80%       | 5.20%                | CoreLogic 2024-2025 |
+| ACT   | 3.80%       | 5.00%                | CoreLogic 2024-2025 |
+| NT    | 5.50%       | 2.50%                | CoreLogic 2024-2025 |
 
 **Note**: All values are state-level averages. Suburb-level data can be added via the admin interface or CSV import.
 
@@ -132,6 +144,7 @@ The seed data includes benchmarks for all 8 Australian states/territories:
 ## ✨ Key Features
 
 ### Financial Details Step
+
 - **Loading State**: Shows spinner while fetching benchmarks
 - **Benchmark Cards**: Side-by-side comparison of Market Benchmark vs Your Input
 - **One-Click Fill**: "Use Market Benchmark" buttons
@@ -139,12 +152,14 @@ The seed data includes benchmarks for all 8 Australian states/territories:
 - **No Data Handling**: Helpful messages when benchmarks aren't available
 
 ### Results Panel
+
 - **Benchmark Comparison**: Complete comparison section
 - **Visual Indicators**: Above/below/similar to benchmark
 - **Rental Yield**: Weekly rent and yield percentage comparison
 - **Capital Growth**: 5-year average comparison with trend indicators
 
 ### Admin Interface
+
 - **Full CRUD**: Add, edit, delete benchmarks
 - **CSV Import**: Bulk import with validation
 - **Template Download**: CSV template with example data
@@ -170,12 +185,14 @@ The seed data includes benchmarks for all 8 Australian states/territories:
 ## 📝 Next Steps (Optional Enhancements)
 
 ### Immediate
+
 1. **Populate Seed Data**
    - Import CSV file via admin interface
    - Or run SQL script in Supabase
    - Verify data appears correctly
 
 ### Short Term
+
 2. **Add Suburb-Level Data**
    - Add benchmarks for major cities/suburbs
    - Improve accuracy for specific locations
@@ -187,6 +204,7 @@ The seed data includes benchmarks for all 8 Australian states/territories:
    - Set up reminders for data refresh
 
 ### Future Enhancements
+
 4. **Advanced Features**
    - Benchmark data export functionality
    - Benchmark usage analytics
@@ -198,25 +216,31 @@ The seed data includes benchmarks for all 8 Australian states/territories:
 ## 🔧 Technical Notes
 
 ### Unique Index Handling
+
 The benchmark_data table uses a unique index with COALESCE:
+
 ```sql
-CREATE UNIQUE INDEX idx_benchmark_data_unique_location 
+CREATE UNIQUE INDEX idx_benchmark_data_unique_location
 ON benchmark_data(state, COALESCE(suburb_name, ''), COALESCE(postcode, ''));
 ```
 
 This allows state-level records (NULL suburb/postcode) and suburb-level records to coexist.
 
 ### CSV Import
+
 The CSV bulk import handles:
+
 - Row-by-row validation
 - Duplicate detection (upsert logic)
 - Error reporting with row numbers
 - Field validation (ranges, formats)
 
 ### Fallback Logic
+
 When fetching benchmarks:
+
 1. Try suburb + state match
-2. Try postcode match  
+2. Try postcode match
 3. Try state-level match
 4. Return null (calculator uses defaults)
 
@@ -233,6 +257,7 @@ When fetching benchmarks:
 ## 🎊 Phase 4 Complete!
 
 All planned features for Phase 4 have been implemented:
+
 - ✅ Database schema
 - ✅ API endpoints
 - ✅ Admin interface
@@ -242,4 +267,3 @@ All planned features for Phase 4 have been implemented:
 - ✅ Documentation
 
 **The benchmark data system is fully functional and ready for production use!** 🚀
-

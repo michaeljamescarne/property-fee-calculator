@@ -3,7 +3,7 @@
  * Calculates tax deductions, negative gearing benefits, and CGT
  */
 
-import { PropertyType } from './constants';
+import { PropertyType } from "./constants";
 
 export interface TaxDeductions {
   loanInterest: number;
@@ -49,26 +49,26 @@ export function calculateTaxDeductions(
 ): TaxDeductions {
   // Calculate depreciation (if applicable)
   let depreciation = 0;
-  
+
   // Building depreciation: 2.5% per year for 40 years (if built after 1985)
   // Plant & equipment: Various rates (average ~20%)
-  if (propertyType === 'newDwelling') {
+  if (propertyType === "newDwelling") {
     const buildingValue = propertyValue * 0.7; // Approx 70% building, 30% land
     const plantValue = propertyValue * 0.1; // Approx 10% fixtures
-    
+
     // Building: 2.5% for up to 40 years
     if (buildingAge < 40) {
       depreciation += buildingValue * 0.025;
     }
-    
+
     // Plant & equipment: 20% diminishing for 5 years
     if (buildingAge < 5) {
-      depreciation += plantValue * 0.20 * (1 - buildingAge * 0.2);
+      depreciation += plantValue * 0.2 * (1 - buildingAge * 0.2);
     }
   }
-  
+
   const other = 0; // Repairs, pest control, etc.
-  
+
   const total =
     loanInterest +
     councilRates +
@@ -79,7 +79,7 @@ export function calculateTaxDeductions(
     depreciation +
     strataFees +
     other;
-  
+
   return {
     loanInterest,
     councilRates,
@@ -104,7 +104,7 @@ export function calculateTaxBenefit(
 ): number {
   // Net rental loss (if negative)
   const netRentalLoss = Math.max(0, totalDeductions - rentalIncome);
-  
+
   // Tax benefit = Loss × Marginal Tax Rate
   return netRentalLoss * (marginalTaxRate / 100);
 }
@@ -123,23 +123,23 @@ export function calculateCGT(
 ): CGTCalculation {
   // Cost base = Purchase price + purchase costs + improvements + selling costs
   const costBase = originalPurchasePrice + purchaseCosts + sellingCosts;
-  
+
   // Capital gain
   const capitalGain = Math.max(0, salePrice - costBase);
-  
+
   // CGT calculation
   // Foreign residents: No 50% discount (full marginal rate)
   // Australian residents: 50% discount if held > 12 months
   const discountFactor = isForeignResident ? 1.0 : 0.5;
   const cgtAmount = capitalGain * discountFactor * (marginalTaxRate / 100);
-  
+
   // Withholding tax (12.5% for properties > $750k, 10% for < $750k)
-  const withholdingRate = salePrice >= 750000 ? 0.125 : 0.10;
+  const withholdingRate = salePrice >= 750000 ? 0.125 : 0.1;
   const withholdingTax = salePrice * withholdingRate;
-  
+
   // Net proceeds
   const netProceedsAfterTax = salePrice - sellingCosts - cgtAmount;
-  
+
   return {
     salePrice,
     originalPurchasePrice,
@@ -158,10 +158,7 @@ export function calculateCGT(
 /**
  * Calculate after-tax cash flow
  */
-export function calculateAfterTaxCashFlow(
-  netCashFlow: number,
-  taxBenefit: number
-): number {
+export function calculateAfterTaxCashFlow(netCashFlow: number, taxBenefit: number): number {
   // If positive cash flow, tax reduces it
   // If negative cash flow, tax benefit improves it
   return netCashFlow + taxBenefit;
@@ -176,25 +173,25 @@ export function estimateDepreciation(
   propertyType: PropertyType,
   buildingAge: number = 0
 ): number {
-  if (propertyType !== 'newDwelling' || buildingAge > 40) {
+  if (propertyType !== "newDwelling" || buildingAge > 40) {
     return 0;
   }
-  
+
   const buildingValue = propertyValue * 0.7;
   const plantValue = propertyValue * 0.1;
-  
+
   let total = 0;
-  
+
   // Building: 2.5% per year (40-year write-off)
   if (buildingAge < 40) {
     total += buildingValue * 0.025;
   }
-  
+
   // Plant & equipment: 20% diminishing value
   if (buildingAge < 5) {
-    total += plantValue * 0.20 * Math.max(0, 1 - buildingAge * 0.2);
+    total += plantValue * 0.2 * Math.max(0, 1 - buildingAge * 0.2);
   }
-  
+
   return total;
 }
 
@@ -207,23 +204,9 @@ export function calculateEffectiveTaxRate(
   marginalTaxRate: number
 ): number {
   if (grossIncome === 0) return 0;
-  
+
   const taxableIncome = Math.max(0, grossIncome - deductions);
   const taxPaid = taxableIncome * (marginalTaxRate / 100);
-  
+
   return (taxPaid / grossIncome) * 100;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

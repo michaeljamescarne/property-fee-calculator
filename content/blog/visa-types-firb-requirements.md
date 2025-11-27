@@ -13,7 +13,7 @@ tags:
 
 # Complete Guide: Australian Visa Types and FIRB Property Requirements 2025
 
-*Last updated: 8 January 2025 | 10 min read*
+_Last updated: 8 January 2025 | 10 min read_
 
 Your visa status is the single most important factor determining whether you need FIRB approval to buy Australian property—and what type of property you can purchase. Get this wrong, and you could face penalties ranging from forced property sales to criminal charges.
 
@@ -28,12 +28,14 @@ Before diving into visa-specific requirements, you need to understand how FIRB c
 Under Australian foreign investment law, you're generally considered a "foreign person" if you are:
 
 **An individual who is:**
+
 - NOT an Australian citizen
 - NOT an Australian permanent resident
 - NOT a New Zealand citizen (with subclass 444 visa)
 - NOT "ordinarily resident" in Australia
 
 **OR a corporation/trust where:**
+
 - Foreign person(s) hold 20% or more interest (substantial interest)
 - Two or more foreign persons together hold 40% or more interest (aggregate substantial interest)
 
@@ -58,6 +60,7 @@ These visa holders are treated the same as Australian citizens for property purc
 **FIRB Status:** Exempt from all FIRB requirements
 
 **What you can buy:**
+
 - ✅ Established dwellings (existing homes)
 - ✅ New dwellings
 - ✅ Vacant land
@@ -65,6 +68,7 @@ These visa holders are treated the same as Australian citizens for property purc
 - ✅ No restrictions on number of properties
 
 **Additional considerations:**
+
 - Still subject to state-based stamp duty (but no foreign buyer surcharge)
 - No foreign buyer land tax surcharges
 - **Important:** Living overseas doesn't change this—Australian citizens living abroad remain exempt from FIRB
@@ -74,6 +78,7 @@ These visa holders are treated the same as Australian citizens for property purc
 **FIRB Status:** Exempt from all FIRB requirements
 
 **What you can buy:**
+
 - ✅ Established dwellings (existing homes)
 - ✅ New dwellings
 - ✅ Vacant land
@@ -81,6 +86,7 @@ These visa holders are treated the same as Australian citizens for property purc
 - ✅ No restrictions on number of properties
 
 **Conditions for exemption:**
+
 - Must meet the "ordinarily resident" test (200 days in Australia in past 12 months)
 - If you fail the 200-day test, you may be treated as a foreign buyer for stamp duty purposes in some states
 
@@ -91,6 +97,7 @@ These visa holders are treated the same as Australian citizens for property purc
 **FIRB Status:** Exempt from all FIRB requirements
 
 **What you can buy:**
+
 - ✅ Established dwellings (existing homes)
 - ✅ New dwellings
 - ✅ Vacant land
@@ -98,6 +105,7 @@ These visa holders are treated the same as Australian citizens for property purc
 - ✅ No restrictions on number of properties
 
 **Special provisions:**
+
 - Automatically granted subclass 444 visa upon entry to Australia
 - Treated identically to Australian citizens for FIRB purposes
 - Generally exempt from foreign buyer stamp duty surcharges (if meeting residency requirements)
@@ -113,10 +121,12 @@ This is the largest category affected by the April 2025 changes.
 You're classified as a temporary resident if you:
 
 **Option 1: Hold an eligible temporary visa:**
+
 - Your temporary visa permits you to remain in Australia for a continuous period of **more than 12 months**
 - AND you must actually be residing in Australia
 
 **Option 2: On a bridging visa:**
+
 - You're residing in Australia
 - You've submitted an application for a permanent visa
 - You hold a bridging visa that permits you to stay in Australia until the permanent visa application is finalized
@@ -124,35 +134,42 @@ You're classified as a temporary resident if you:
 #### Common Temporary Visa Categories
 
 **Temporary Skill Shortage (TSS) Visa (Subclass 482)**
+
 - 2-4 year visa for skilled workers
 - Qualifies as temporary resident
 - Subject to FIRB requirements
 
 **Employer Sponsored Visas:**
+
 - Subclass 494 (Skilled Employer Sponsored Regional Provisional)
 - Subclass 491 (Skilled Work Regional Provisional)
 - Both qualify as temporary residents
 
 **Student Visas (Subclass 500)**
+
 - Duration typically exceeds 12 months
 - Qualifies as temporary resident
 - Very common visa category for property buyers
 
 **Graduate Visa (Subclass 485)**
+
 - Temporary Graduate visa (18 months to 4 years)
 - Qualifies as temporary resident
 
 **Partner Visas (Provisional):**
+
 - Subclass 309/100 (Partner - offshore)
 - Subclass 820/801 (Partner - onshore)
 - Provisional stage qualifies as temporary resident
 - Changes to permanent resident upon grant of subclass 100 or 801
 
 **Business Innovation and Investment Visas:**
+
 - Subclass 188 (Business Innovation and Investment Provisional)
 - Qualifies as temporary resident
 
 **Bridging Visas:**
+
 - If awaiting permanent visa decision
 - Must be residing in Australia
 - Qualifies as temporary resident
@@ -164,6 +181,7 @@ You're classified as a temporary resident if you:
 Before April 1, 2025, temporary residents could purchase **one established dwelling** to use as their primary residence.
 
 **From April 1, 2025:**
+
 - Temporary residents **CANNOT** purchase established dwellings
 - The ban applies even if you want to live in the property as your primary residence
 - Very limited exceptions apply (redevelopment creating 20+ dwellings, certain build-to-rent projects)
@@ -171,6 +189,7 @@ Before April 1, 2025, temporary residents could purchase **one established dwell
 **What temporary residents CAN still buy:**
 
 **✅ New Dwellings:**
+
 - Off-the-plan apartments
 - House-and-land packages
 - Newly constructed properties not previously occupied
@@ -179,6 +198,7 @@ Before April 1, 2025, temporary residents could purchase **one established dwell
 - FIRB approval required for each purchase
 
 **✅ Vacant Land:**
+
 - For residential development
 - Must commence construction within 24 months
 - Must complete all construction within 4 years
@@ -187,6 +207,7 @@ Before April 1, 2025, temporary residents could purchase **one established dwell
 - Development conditions will be imposed
 
 **❌ Established Dwellings (BANNED until March 31, 2027):**
+
 - Cannot buy existing houses
 - Cannot buy existing apartments
 - Cannot buy any previously occupied residential property
@@ -198,12 +219,13 @@ Before April 1, 2025, temporary residents could purchase **one established dwell
 For context and future planning, here were the previous rules:
 
 **Established Dwellings (Historical):**
+
 - Could purchase ONE established dwelling only
 - Must be used as primary residence
 - Cannot rent out while you own it
 - Must sell within 3 months of:
   - Moving out of the dwelling, OR
-  - Your temporary visa expiring, OR  
+  - Your temporary visa expiring, OR
   - Leaving Australia permanently
 - **Whichever comes first**
 
@@ -228,6 +250,7 @@ James held a student visa and bought an established apartment in 2023 to live in
 **Exemption Certificates for Temporary Residents:**
 
 If buying a new dwelling from a developer with an existing exemption certificate:
+
 - You don't need individual FIRB approval
 - Developer's certificate covers your purchase
 - Still need to notify ATO within 30 days of purchase
@@ -250,6 +273,7 @@ If you're not an Australian citizen, permanent resident, NZ citizen, or temporar
 **What you CAN buy:**
 
 **✅ New Dwellings:**
+
 - FIRB approval required for each purchase
 - No restrictions on number
 - Can be for investment (common for overseas investors)
@@ -257,6 +281,7 @@ If you're not an Australian citizen, permanent resident, NZ citizen, or temporar
 - Must pay FIRB application fees
 
 **✅ Vacant Land:**
+
 - FIRB approval required
 - Must be for residential development
 - Strict development conditions:
@@ -267,6 +292,7 @@ If you're not an Australian citizen, permanent resident, NZ citizen, or temporar
 - Must demonstrate capability to complete development
 
 **❌ Established Dwellings:**
+
 - Generally NOT permitted
 - Temporary ban from April 1, 2025 - March 31, 2027 reinforces this
 - Very limited exceptions:
@@ -277,6 +303,7 @@ If you're not an Australian citizen, permanent resident, NZ citizen, or temporar
 #### Special Considerations for Overseas Buyers
 
 **Challenges:**
+
 - More difficult to obtain Australian mortgages
 - Typically need 40-60% deposit
 - Higher interest rates (if financing available)
@@ -284,6 +311,7 @@ If you're not an Australian citizen, permanent resident, NZ citizen, or temporar
 - Currency exchange risks
 
 **Common approach:**
+
 - Many non-resident foreign persons buy with cash
 - Or use financing from their home country
 - Property managers essential for overseas investors
@@ -296,16 +324,19 @@ If you're not an Australian citizen, permanent resident, NZ citizen, or temporar
 **If you're purchasing with an Australian citizen or permanent resident spouse:**
 
 **Requirements for exemption:**
+
 - Must be in a genuine spousal or de facto relationship
 - Must purchase as **joint tenants** (equal 50/50 ownership)
 - Both parties must intend to occupy as primary residence
 
 **What this means:**
+
 - No FIRB approval required (if all conditions met)
 - Foreign partner doesn't need separate application
 - Both treated as non-foreign for this purchase
 
 **Does NOT apply to:**
+
 - Tenants in common (unequal ownership)
 - Business partners
 - Parent and child
@@ -328,17 +359,20 @@ Sarah (Australian citizen) and Tom (UK citizen on 482 visa) are married. They bu
 You're on a bridging visa while your permanent visa application is being processed.
 
 **FIRB Status:**
+
 - Treated as temporary resident
 - Subject to temporary resident rules
 - Cannot buy established dwellings (during ban period)
 - Can buy new dwellings and vacant land with FIRB approval
 
 **What happens when permanent visa is granted?**
+
 - Immediately become exempt from FIRB requirements
 - No longer subject to any FIRB conditions on future purchases
 - Existing properties: Any FIRB conditions attached to previous purchases (e.g., must sell established dwelling when leaving) no longer apply once you become permanent resident
 
 **Strategic timing:**
+
 - Some buyers wait for permanent visa grant before purchasing
 - Avoids FIRB fees and conditions
 - But may miss property opportunities
@@ -348,6 +382,7 @@ You're on a bridging visa while your permanent visa application is being process
 **Scenario 1: Temporary Resident Becomes Permanent Resident**
 
 If you bought as a temporary resident and later become a permanent resident:
+
 - Previous FIRB conditions no longer apply
 - Don't need to sell if moving out (under old rules)
 - Can convert to investment property if desired
@@ -356,6 +391,7 @@ If you bought as a temporary resident and later become a permanent resident:
 **Scenario 2: Temporary Visa Expires**
 
 Under historical rules (pre-ban), if your visa expired:
+
 - Must sell established dwelling within 3 months
 - May be able to apply for extension in exceptional circumstances
 - New dwellings: Can retain as long as meet other visa requirements
@@ -364,6 +400,7 @@ Under historical rules (pre-ban), if your visa expired:
 **Scenario 3: Leave Australia Permanently**
 
 As a temporary resident (historical rules):
+
 - Must sell established dwelling within 3 months of departure
 - Can retain new dwelling/vacant land properties
 - Consider appointing property manager
@@ -377,17 +414,20 @@ Your FIRB requirements also depend on the type of property you're buying.
 
 **Definition:**
 A dwelling that:
+
 - Has been built on residential land and has not previously been sold as a dwelling; OR
 - Has not been previously occupied; OR
 - Has been substantially renovated and has not been occupied for more than 12 months since renovation
 
 **Characteristics:**
+
 - Off-the-plan apartments
 - House-and-land packages from developers
 - Brand new constructions
 - Substantially renovated properties (not occupied 12+ months)
 
 **FIRB Status:**
+
 - Temporary residents: FIRB approval required
 - Foreign nationals: FIRB approval required
 - Can be purchased for investment or owner-occupation
@@ -396,16 +436,19 @@ A dwelling that:
 
 **Definition:**
 A dwelling on residential land that is NOT a new dwelling, including:
+
 - Previously occupied houses
 - Second-hand apartments
 - Any residential property sold on the secondary market
 
 **FIRB Status (April 1, 2025 - March 31, 2027):**
+
 - ❌ Temporary residents: BANNED (limited exceptions)
 - ❌ Foreign nationals: BANNED (limited exceptions)
 - ✅ Citizens/permanent residents: No restrictions
 
 **Historical and Future Status:**
+
 - Previously: Temporary residents could buy one for primary residence
 - Future: Ban may be lifted after March 31, 2027 (subject to review)
 
@@ -413,10 +456,12 @@ A dwelling on residential land that is NOT a new dwelling, including:
 
 **Definition:**
 Land with:
+
 - No permanent building that can be legally occupied; OR
 - Only a building that must be demolished before a dwelling can be built
 
 **FIRB Status:**
+
 - Requires approval for temporary residents
 - Requires approval for foreign nationals
 - Strict development conditions:
@@ -427,6 +472,7 @@ Land with:
 ### Commercial Properties
 
 **Not covered by this guide, but note:**
+
 - Different FIRB rules apply
 - Higher thresholds (often $310M+)
 - Different fee structure
@@ -437,6 +483,7 @@ Land with:
 ### Step 1: Determine Your FIRB Status
 
 Use the [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb-calculator) to:
+
 - Confirm if you need FIRB approval
 - Calculate expected fees
 - Understand conditions that will apply
@@ -444,11 +491,13 @@ Use the [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb
 ### Step 2: Find Your Property
 
 **Before making an offer:**
+
 - Confirm property type (new/established/vacant land)
 - Ensure it's eligible for your visa category
 - Check developer has exemption certificate (if applicable)
 
 **Making the offer:**
+
 - Always include "subject to FIRB approval" condition
 - This protects you if FIRB denies approval
 - Negotiate settlement timeline allowing for FIRB process (30+ days)
@@ -456,11 +505,13 @@ Use the [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb
 ### Step 3: Apply for FIRB Approval
 
 **Application method:**
+
 - Online through ATO's Foreign Investment Portal
 - Must be completed before signing contract (ideally)
 - Or immediately after signing (if contract conditional)
 
 **Required information:**
+
 - Personal identification (passport)
 - Visa details and documentation
 - Property details (address, purchase price, type)
@@ -469,6 +520,7 @@ Use the [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb
 
 **Application fees:**
 Based on property value:
+
 - Less than $75,000: $4,500
 - Up to $1M: $15,100
 - Up to $2M: $30,300
@@ -479,11 +531,13 @@ Based on property value:
 ### Step 4: Wait for Decision
 
 **Processing time:**
+
 - Typically 30 days
 - Can be longer if more information needed
 - Clock starts when application is complete and fee paid
 
 **Possible outcomes:**
+
 - **Approved:** Will include conditions you must follow
 - **More information required:** Must respond promptly
 - **Denied:** Rare for straightforward residential purchases if rules followed
@@ -491,11 +545,13 @@ Based on property value:
 ### Step 5: Proceed with Purchase
 
 **Once approved:**
+
 - Share FIRB approval letter with conveyancer
 - Proceed with settlement as normal
 - Ensure you understand and can meet all conditions
 
 **Common conditions:**
+
 - Must occupy as primary residence (established dwellings, historical)
 - Must commence/complete construction within timeframes (vacant land)
 - Must notify ATO of any changes
@@ -509,6 +565,7 @@ Based on property value:
 Many temporary visa holders assume they have the same property rights as permanent residents.
 
 **Reality:**
+
 - Temporary residents face significant restrictions
 - Currently cannot buy established dwellings
 - Must obtain FIRB approval for new dwellings and vacant land
@@ -523,6 +580,7 @@ Check your exact visa category and current FIRB rules before house hunting.
 Some buyers sign contracts without FIRB approval, assuming they'll get it later.
 
 **Consequences:**
+
 - Criminal and civil penalties
 - Fines up to $1.65M (individuals) or $16.5M (corporations)
 - Forced sale of property
@@ -538,11 +596,13 @@ ALWAYS apply for FIRB approval before or immediately after signing (with appropr
 Foreign nationals assume buying with ANY Australian citizen avoids FIRB.
 
 **Reality:**
+
 - Exemption only applies to genuine spouses/de facto partners
 - Must purchase as joint tenants (equal ownership)
 - Doesn't apply to other relationships
 
 **Example of what DOESN'T work:**
+
 - Adult child (foreign national) buying with parent (Australian citizen)
 - Friends pooling funds
 - Business partners
@@ -557,11 +617,13 @@ Only rely on spousal exemption if genuinely married/de facto AND buying as joint
 Temporary residents buy property without considering what happens when visa expires.
 
 **Consequences (historical rules):**
+
 - Must sell established dwelling within 3 months
 - May be forced to sell at unfavorable time
 - Could face penalties for non-compliance
 
 **Solution:**
+
 - Consider your long-term visa plans before buying
 - Focus on new dwellings if uncertain about permanent residency
 - Plan for potential need to sell
@@ -573,6 +635,7 @@ Temporary residents buy property without considering what happens when visa expi
 Thinking exemption certificate means no FIRB requirements at all.
 
 **Reality:**
+
 - Exemption certificate held by developer
 - You still need to notify ATO within 30 days
 - Still subject to FIRB conditions
@@ -672,6 +735,7 @@ A: No. The ban on established dwellings only applies to NEW purchases from April
 ---
 
 **Ready to understand your complete FIRB obligations?** Use our [comprehensive calculator](https://www.propertycosts.com.au/en/firb-calculator) to get instant clarity on:
+
 - Whether you need FIRB approval
 - Exact application fees for your property
 - All associated costs (stamp duty, legal fees, etc.)
@@ -681,7 +745,7 @@ A: No. The ban on established dwellings only applies to NEW purchases from April
 
 ---
 
-*This guide is for informational purposes only and does not constitute legal, financial, or migration advice. FIRB rules and visa categories are subject to change. Always verify current requirements with official government sources and seek professional advice for your specific situation.*
+_This guide is for informational purposes only and does not constitute legal, financial, or migration advice. FIRB rules and visa categories are subject to change. Always verify current requirements with official government sources and seek professional advice for your specific situation._
 
 **Last verified:** January 8, 2025  
 **Sources:** FIRB Official Guidance, ATO Foreign Investment Portal, Department of Home Affairs

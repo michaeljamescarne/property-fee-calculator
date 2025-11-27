@@ -5,21 +5,25 @@ This directory contains HTML mockups of your FIRB calculator platform that can b
 ## 📁 Available Mockups
 
 ### 1. **eligibility-result-mockup.html**
+
 - **Purpose**: Feature 1 - "Know Your Eligibility Instantly"
 - **Shows**: Comprehensive FIRB eligibility assessment with approval status, summary, requirements, restrictions, and recommendations
 - **Key Elements**: Status badges, detailed breakdown, professional layout
 
 ### 2. **cost-breakdown-mockup.html**
-- **Purpose**: Feature 2 - "Complete Cost Transparency" 
+
+- **Purpose**: Feature 2 - "Complete Cost Transparency"
 - **Shows**: Detailed investment cost breakdown with upfront costs, ongoing costs, and visual charts
 - **Key Elements**: Total investment display, cost categories, progress bars, expense breakdown
 
 ### 3. **analytics-dashboard-mockup.html**
+
 - **Purpose**: Feature 3 - "Smart Investment Analytics"
 - **Shows**: Investment performance dashboard with key metrics, charts, and 10-year projections
 - **Key Elements**: ROI metrics, cash flow analysis, property value growth, key milestones
 
 ### 4. **calculator-interface-mockup.html**
+
 - **Purpose**: Hero section or additional feature showcase
 - **Shows**: Clean calculator interface with form inputs and progress indicators
 - **Key Elements**: Step-by-step form, property type selection, professional UI
@@ -29,6 +33,7 @@ This directory contains HTML mockups of your FIRB calculator platform that can b
 ### Method 1: Browser Screenshots (Recommended)
 
 1. **Open the HTML file** in your browser:
+
    ```bash
    open public/images/mockups/eligibility-result-mockup.html
    ```
@@ -64,18 +69,21 @@ This directory contains HTML mockups of your FIRB calculator platform that can b
 ## 📸 Screenshot Best Practices
 
 ### Quality Guidelines
+
 - **Resolution**: Use high-DPI displays for crisp images
 - **Aspect Ratio**: Maintain consistent aspect ratios across features
 - **File Format**: PNG for transparency, JPG for smaller file sizes
 - **File Size**: Optimize for web (under 500KB per image)
 
 ### Styling Consistency
+
 - **Color Scheme**: All mockups use your blue theme (#3B82F6, #60A5FA)
 - **Typography**: Inter font family for professional look
 - **Spacing**: Consistent padding and margins
 - **Shadows**: Subtle shadows for depth
 
 ### Content Guidelines
+
 - **Realistic Data**: All mockups use realistic property values and scenarios
 - **Professional Tone**: Clean, business-appropriate styling
 - **Clear Hierarchy**: Important information stands out
@@ -84,27 +92,31 @@ This directory contains HTML mockups of your FIRB calculator platform that can b
 ## 🎨 Customization Options
 
 ### Colors
+
 Edit the Tailwind config in each HTML file:
+
 ```javascript
 tailwind.config = {
   theme: {
     extend: {
       colors: {
-        primary: '#3B82F6',    // Your blue
-        accent: '#60A5FA'      // Light blue
-      }
-    }
-  }
-}
+        primary: "#3B82F6", // Your blue
+        accent: "#60A5FA", // Light blue
+      },
+    },
+  },
+};
 ```
 
 ### Content
+
 - **Property Values**: Update dollar amounts to match your target market
 - **States**: Change to focus on your primary markets
 - **Scenarios**: Adjust citizenship statuses and property types
 - **Metrics**: Update ROI percentages and timeframes
 
 ### Layout
+
 - **Grid Layouts**: Adjust `grid-cols-2` to `grid-cols-3` for different arrangements
 - **Card Sizes**: Modify `max-w-4xl` for different container widths
 - **Spacing**: Adjust `gap-6` and `p-6` for different spacing
@@ -112,16 +124,19 @@ tailwind.config = {
 ## 📱 Responsive Screenshots
 
 ### Desktop (1200px+)
+
 - Full layout with sidebars
 - All content visible
 - Professional business appearance
 
 ### Tablet (768px - 1199px)
+
 - Stacked layout
 - Maintained readability
 - Touch-friendly interface
 
 ### Mobile (375px - 767px)
+
 - Single column layout
 - Larger touch targets
 - Essential information prioritized
@@ -159,15 +174,3 @@ Before using screenshots on your homepage:
 ---
 
 **Need help?** The mockups are designed to be easily customizable. You can modify colors, content, and layout to match your exact requirements.
-
-
-
-
-
-
-
-
-
-
-
-

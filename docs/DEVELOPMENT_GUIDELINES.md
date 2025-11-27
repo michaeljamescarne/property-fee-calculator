@@ -39,12 +39,14 @@ Every feature must follow this workflow:
 ### 1.2 Branch Strategy
 
 #### Branch Naming Convention
+
 - **Feature branches**: `feature/feature-name` (e.g., `feature/lead-capture`)
 - **Bug fixes**: `fix/bug-description` (e.g., `fix/email-validation`)
 - **Hotfixes**: `hotfix/issue-description` (e.g., `hotfix/critical-calculation-error`)
 - **Refactoring**: `refactor/component-name` (e.g., `refactor/calculator-wizard`)
 
 #### Branch Structure
+
 ```
 main (production)
   └── develop (integration)
@@ -55,6 +57,7 @@ main (production)
 ```
 
 #### Branch Rules
+
 - **main**: Production-ready code only. Protected branch requiring approval.
 - **develop**: Integration branch for all features. All PRs merge here first.
 - **Feature branches**: Created from `develop`, merged back to `develop`.
@@ -72,6 +75,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/) specificatio
 ```
 
 #### Types
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -82,6 +86,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/) specificatio
 - `perf`: Performance improvements
 
 #### Examples
+
 ```bash
 feat(calculator): add investment quality analysis section
 
@@ -101,6 +106,7 @@ Creates shared Input, Select, and Textarea components to reduce code duplication
 ```
 
 #### Commit Guidelines
+
 - Use present tense ("add" not "added")
 - Use imperative mood ("move" not "moves")
 - First line should be 50 characters or less
@@ -114,6 +120,7 @@ Creates shared Input, Select, and Textarea components to reduce code duplication
 ### 2.1 TypeScript
 
 #### Type Safety
+
 - **Strict Mode**: Always enabled
 - **No `any` types**: Use `unknown` or proper types
 - **Explicit return types**: Required for functions
@@ -137,6 +144,7 @@ function calculateROI(input: any): any {
 ```
 
 #### Naming Conventions
+
 - **Variables**: `camelCase`
 - **Functions**: `camelCase`
 - **Components**: `PascalCase`
@@ -145,6 +153,7 @@ function calculateROI(input: any): any {
 - **Files**: `kebab-case` for components, `camelCase` for utilities
 
 #### File Organization
+
 ```
 components/
   calculator/
@@ -160,6 +169,7 @@ lib/
 ### 2.2 React/Next.js
 
 #### Component Structure
+
 ```typescript
 // 1. Imports (external, then internal)
 import { useState } from 'react';
@@ -177,12 +187,12 @@ export default function Component({ title, onSubmit }: ComponentProps) {
   // 4. Hooks
   const [state, setState] = useState<string>('');
   const t = useTranslations('Component');
-  
+
   // 5. Event Handlers
   const handleSubmit = () => {
     // ...
   };
-  
+
   // 6. Render
   return (
     <div>
@@ -193,6 +203,7 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 ```
 
 #### Component Guidelines
+
 - **Functional components only**: No class components
 - **Hooks**: Use custom hooks for reusable logic
 - **Props destructuring**: In function parameters
@@ -200,6 +211,7 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 - **Error boundaries**: Wrap major sections
 
 #### Next.js App Router
+
 - **Server Components**: Default, use Client Components only when needed
 - **API Routes**: Type-safe with Zod validation
 - **Metadata**: Proper SEO metadata for all pages
@@ -208,6 +220,7 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 ### 2.3 Styling
 
 #### Tailwind CSS
+
 - **Utility-first**: Use Tailwind utilities primarily
 - **Custom classes**: Only for complex, reusable patterns
 - **Responsive**: Mobile-first approach
@@ -226,6 +239,7 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 ```
 
 #### Style Guide Compliance
+
 - Follow `STYLE_GUIDE.md` for all styling
 - Use design tokens (colors, spacing, typography)
 - Maintain consistency with Attio-inspired design
@@ -233,18 +247,21 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 ### 2.4 Code Quality
 
 #### ESLint Rules
+
 - Extend Next.js recommended config
 - Add TypeScript ESLint plugin
 - Enforce React hooks rules
 - Require consistent imports
 
 #### Code Formatting
+
 - **Prettier**: Auto-format on save
 - **Line length**: 100 characters max
 - **Trailing commas**: Yes
 - **Semicolons**: Yes
 
 #### Code Review Checklist
+
 - [ ] Code follows TypeScript best practices
 - [ ] Components are properly typed
 - [ ] No console.logs or debug code
@@ -261,6 +278,7 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 ### 3.1 Testing Strategy
 
 #### Test Pyramid
+
 ```
         /\
        /  \        E2E Tests (few)
@@ -273,11 +291,13 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 ### 3.2 Unit Tests
 
 #### Requirements
+
 - **Coverage**: Minimum 80% for calculation logic, 60% for UI components
 - **Framework**: Vitest or Jest
 - **Location**: `*.test.ts` or `*.test.tsx` files
 
 #### What to Test
+
 - **Calculation functions**: All edge cases
 - **Utility functions**: Input/output validation
 - **Custom hooks**: State changes and side effects
@@ -285,31 +305,31 @@ export default function Component({ title, onSubmit }: ComponentProps) {
 
 ```typescript
 // Example: investment-analytics.test.ts
-import { describe, it, expect } from 'vitest';
-import { calculateROI } from './investment-analytics';
+import { describe, it, expect } from "vitest";
+import { calculateROI } from "./investment-analytics";
 
-describe('calculateROI', () => {
-  it('should calculate ROI correctly for positive cash flow', () => {
+describe("calculateROI", () => {
+  it("should calculate ROI correctly for positive cash flow", () => {
     const input = {
       initialInvestment: 100000,
       annualCashFlow: 5000,
       holdPeriod: 10,
     };
-    
+
     const result = calculateROI(input);
-    
+
     expect(result).toBeCloseTo(0.05, 2);
   });
-  
-  it('should handle zero cash flow', () => {
+
+  it("should handle zero cash flow", () => {
     const input = {
       initialInvestment: 100000,
       annualCashFlow: 0,
       holdPeriod: 10,
     };
-    
+
     const result = calculateROI(input);
-    
+
     expect(result).toBe(0);
   });
 });
@@ -318,11 +338,13 @@ describe('calculateROI', () => {
 ### 3.3 Integration Tests
 
 #### Requirements
+
 - **Framework**: Playwright or Cypress
 - **Coverage**: Critical user flows
 - **Location**: `tests/integration/`
 
 #### What to Test
+
 - **API endpoints**: Request/response validation
 - **Database operations**: CRUD operations
 - **Authentication flows**: Login, signup, password reset
@@ -330,38 +352,40 @@ describe('calculateROI', () => {
 
 ```typescript
 // Example: calculator-flow.test.ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('complete calculator flow', async ({ page }) => {
-  await page.goto('/calculator');
-  
+test("complete calculator flow", async ({ page }) => {
+  await page.goto("/calculator");
+
   // Step 1: Property Input
-  await page.fill('[name="propertyPrice"]', '500000');
-  await page.selectOption('[name="state"]', 'NSW');
+  await page.fill('[name="propertyPrice"]', "500000");
+  await page.selectOption('[name="state"]', "NSW");
   await page.click('button:has-text("Next")');
-  
+
   // Step 2: User Profile
-  await page.selectOption('[name="citizenship"]', 'australian');
+  await page.selectOption('[name="citizenship"]', "australian");
   await page.click('button:has-text("Next")');
-  
+
   // Step 3: Financial Details
-  await page.fill('[name="weeklyRent"]', '500');
+  await page.fill('[name="weeklyRent"]', "500");
   await page.click('button:has-text("Calculate")');
-  
+
   // Verify results
   await expect(page.locator('[data-testid="results-section"]')).toBeVisible();
-  await expect(page.locator('[data-testid="roi-metric"]')).toContainText('5.2%');
+  await expect(page.locator('[data-testid="roi-metric"]')).toContainText("5.2%");
 });
 ```
 
 ### 3.4 E2E Tests
 
 #### Requirements
+
 - **Framework**: Playwright
 - **Coverage**: Key user journeys
 - **Location**: `tests/e2e/`
 
 #### What to Test
+
 - **Complete user flows**: Homepage → Calculator → Results → PDF
 - **Multi-language**: Switching between English and Chinese
 - **Error scenarios**: Invalid inputs, API failures
@@ -370,6 +394,7 @@ test('complete calculator flow', async ({ page }) => {
 ### 3.5 Testing Checklist
 
 Before creating a PR, ensure:
+
 - [ ] All unit tests pass
 - [ ] Integration tests pass
 - [ ] E2E tests pass (if applicable)
@@ -386,7 +411,9 @@ Before creating a PR, ensure:
 ### 4.1 PR Creation
 
 #### PR Title
+
 Follow conventional commits format:
+
 ```
 feat(calculator): add investment quality analysis
 fix(auth): correct email validation
@@ -394,11 +421,14 @@ refactor(components): extract reusable form components
 ```
 
 #### PR Description Template
+
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] New feature
 - [ ] Bug fix
 - [ ] Refactoring
@@ -406,15 +436,18 @@ Brief description of changes
 - [ ] Performance improvement
 
 ## Related Issues
+
 Closes #123
 Relates to #456
 
 ## Changes Made
+
 - Added investment quality analysis section
 - Implemented ROI calculations
 - Added sensitivity analysis
 
 ## Testing
+
 - [ ] Unit tests added/updated
 - [ ] Integration tests added/updated
 - [ ] Manual testing completed
@@ -422,9 +455,11 @@ Relates to #456
 - [ ] Tested in Chrome, Firefox, Safari
 
 ## Screenshots (if applicable)
+
 [Add screenshots or GIFs]
 
 ## Checklist
+
 - [ ] Code follows style guidelines
 - [ ] Self-review completed
 - [ ] Comments added for complex code
@@ -437,6 +472,7 @@ Relates to #456
 ### 4.2 PR Requirements
 
 #### Code Quality
+
 - **Linting**: No ESLint errors or warnings
 - **Type checking**: No TypeScript errors
 - **Formatting**: Prettier formatted
@@ -444,11 +480,13 @@ Relates to #456
 - **Tests**: All tests pass
 
 #### Review Requirements
+
 - **Minimum reviewers**: 1 (can be self-review for small changes)
 - **Approval required**: Yes, from at least 1 reviewer
 - **Status checks**: All CI checks must pass
 
 #### PR Size Guidelines
+
 - **Small PRs preferred**: < 400 lines changed
 - **Large PRs**: Break into smaller PRs when possible
 - **Maximum size**: 1000 lines (exceptional cases)
@@ -456,6 +494,7 @@ Relates to #456
 ### 4.3 Code Review Process
 
 #### Reviewer Responsibilities
+
 1. **Functionality**: Does the code work as intended?
 2. **Code quality**: Follows standards and best practices
 3. **Testing**: Adequate test coverage
@@ -464,12 +503,14 @@ Relates to #456
 6. **Documentation**: Code is well-documented
 
 #### Review Comments
+
 - **Be constructive**: Provide actionable feedback
 - **Explain why**: Help developer understand
 - **Suggest alternatives**: Offer solutions
 - **Be respectful**: Professional and courteous
 
 #### Review Response
+
 - **Address all comments**: Fix or explain
 - **Request changes**: If significant issues
 - **Approve**: If code is ready to merge
@@ -477,17 +518,20 @@ Relates to #456
 ### 4.4 PR Merge Process
 
 #### Before Merging
+
 - [ ] All reviewers approved
 - [ ] All CI checks passed
 - [ ] Conflicts resolved (if any)
 - [ ] Branch is up to date with `develop`
 
 #### Merge Strategy
+
 - **Squash and merge**: Preferred for feature branches
 - **Merge commit**: For important features (preserves history)
 - **Rebase and merge**: Not recommended (can cause issues)
 
 #### After Merging
+
 - **Delete branch**: Clean up merged branches
 - **Update issue**: Close related issues
 - **Deploy to staging**: Automatic deployment
@@ -499,12 +543,14 @@ Relates to #456
 ### 5.1 Environment Strategy
 
 #### Development
+
 - **Branch**: `develop`
 - **Purpose**: Integration testing
 - **Deployment**: Automatic on merge
 - **URL**: `staging.example.com`
 
 #### Production
+
 - **Branch**: `main`
 - **Purpose**: Live application
 - **Deployment**: Manual approval required
@@ -513,6 +559,7 @@ Relates to #456
 ### 5.2 Pre-Deployment Checklist
 
 #### Code Quality
+
 - [ ] All tests pass
 - [ ] No TypeScript errors
 - [ ] No ESLint warnings
@@ -520,6 +567,7 @@ Relates to #456
 - [ ] No security vulnerabilities
 
 #### Functionality
+
 - [ ] Feature tested in staging
 - [ ] Manual QA completed
 - [ ] Performance acceptable
@@ -527,12 +575,14 @@ Relates to #456
 - [ ] Mobile responsive
 
 #### Documentation
+
 - [ ] README updated (if needed)
 - [ ] API documentation updated
 - [ ] User documentation updated
 - [ ] Changelog updated
 
 #### Configuration
+
 - [ ] Environment variables set
 - [ ] Database migrations run (if needed)
 - [ ] Feature flags configured
@@ -541,6 +591,7 @@ Relates to #456
 ### 5.3 Deployment Steps
 
 #### Staging Deployment (Automatic)
+
 1. Merge PR to `develop`
 2. CI/CD pipeline triggers
 3. Run tests
@@ -550,7 +601,9 @@ Relates to #456
 7. Notify team
 
 #### Production Deployment (Manual)
+
 1. **Prepare Release**
+
    ```bash
    git checkout develop
    git pull origin develop
@@ -558,6 +611,7 @@ Relates to #456
    ```
 
 2. **Merge to Main**
+
    ```bash
    git checkout main
    git pull origin main
@@ -583,14 +637,16 @@ Relates to #456
 ### 5.4 Rollback Procedure
 
 #### When to Rollback
+
 - Critical bugs in production
 - Performance degradation
 - Security vulnerabilities
 - Data corruption risks
 
 #### Rollback Steps
+
 1. **Identify Issue**: Confirm problem severity
-2. **Revert Commit**: 
+2. **Revert Commit**:
    ```bash
    git revert <commit-hash>
    git push origin main
@@ -607,6 +663,7 @@ Relates to #456
 ### 6.1 Code Security
 
 #### Input Validation
+
 - **Always validate**: Never trust user input
 - **Use Zod**: For runtime validation
 - **Sanitize**: Clean user inputs
@@ -614,7 +671,7 @@ Relates to #456
 
 ```typescript
 // ✅ Good
-import { z } from 'zod';
+import { z } from "zod";
 
 const emailSchema = z.string().email();
 const validatedEmail = emailSchema.parse(userInput);
@@ -624,12 +681,14 @@ const email = userInput; // No validation
 ```
 
 #### Authentication
+
 - **Secure tokens**: Use HTTP-only cookies
 - **Password hashing**: bcrypt or similar
 - **Rate limiting**: Prevent brute force
 - **Session management**: Secure session handling
 
 #### API Security
+
 - **Authentication**: Verify on all endpoints
 - **Authorization**: Check user permissions
 - **Rate limiting**: Prevent abuse
@@ -639,12 +698,14 @@ const email = userInput; // No validation
 ### 6.2 Dependency Management
 
 #### Regular Updates
+
 - **Check weekly**: For security updates
 - **Update promptly**: Critical vulnerabilities
 - **Test updates**: Before deploying
 - **Pin versions**: Lock dependency versions
 
 #### Security Scanning
+
 - **npm audit**: Run regularly
 - **Dependabot**: Enable automated PRs
 - **Snyk**: Additional scanning
@@ -653,12 +714,14 @@ const email = userInput; // No validation
 ### 6.3 Environment Variables
 
 #### Secrets Management
+
 - **Never commit**: Secrets to repository
 - **Use .env files**: For local development
 - **Use secrets manager**: For production (Vercel, AWS, etc.)
 - **Rotate regularly**: Update secrets periodically
 
 #### Required Variables
+
 - `DATABASE_URL`: Supabase connection
 - `NEXT_PUBLIC_SUPABASE_URL`: Public Supabase URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Public key
@@ -673,12 +736,14 @@ const email = userInput; // No validation
 ### 7.1 Performance Targets
 
 #### Web Vitals
+
 - **LCP (Largest Contentful Paint)**: < 2.5s
 - **FID (First Input Delay)**: < 100ms
 - **CLS (Cumulative Layout Shift)**: < 0.1
 - **TTFB (Time to First Byte)**: < 600ms
 
 #### Page Load
+
 - **Homepage**: < 2s
 - **Calculator**: < 3s
 - **Results**: < 2s
@@ -687,6 +752,7 @@ const email = userInput; // No validation
 ### 7.2 Optimization Techniques
 
 #### Code Splitting
+
 - **Route-based**: Split by pages
 - **Component-based**: Lazy load heavy components
 - **Dynamic imports**: Load on demand
@@ -703,12 +769,14 @@ import HeavyComponent from './HeavyComponent'; // Loads immediately
 ```
 
 #### Image Optimization
+
 - **Next.js Image**: Use `next/image`
 - **Proper sizing**: Set width/height
 - **Lazy loading**: Load below fold
 - **Format**: WebP when possible
 
 #### Caching
+
 - **Static assets**: Long cache headers
 - **API responses**: Cache when appropriate
 - **CDN**: Use for static files
@@ -720,6 +788,7 @@ import HeavyComponent from './HeavyComponent'; // Loads immediately
 ### 8.1 Code Documentation
 
 #### Inline Comments
+
 - **Complex logic**: Explain why, not what
 - **Non-obvious**: Document unusual patterns
 - **TODOs**: Mark with issue numbers
@@ -745,6 +814,7 @@ export function calculateROI(
 ### 8.2 README Files
 
 #### Project README
+
 - Project description
 - Setup instructions
 - Development workflow
@@ -752,6 +822,7 @@ export function calculateROI(
 - Deployment process
 
 #### Component Documentation
+
 - Purpose and usage
 - Props/API
 - Examples
@@ -760,6 +831,7 @@ export function calculateROI(
 ### 8.3 API Documentation
 
 #### Endpoints
+
 - URL and method
 - Request format
 - Response format
@@ -773,6 +845,7 @@ export function calculateROI(
 ### 9.1 Error Tracking
 
 #### Error Monitoring
+
 - **Sentry**: For error tracking
 - **Log levels**: Debug, Info, Warn, Error
 - **Context**: Include relevant data
@@ -783,7 +856,7 @@ export function calculateROI(
 try {
   // operation
 } catch (error) {
-  logger.error('Failed to calculate ROI', {
+  logger.error("Failed to calculate ROI", {
     error,
     userId,
     inputData,
@@ -795,12 +868,14 @@ try {
 ### 9.2 Analytics
 
 #### User Analytics
+
 - **Page views**: Track navigation
 - **User actions**: Button clicks, form submissions
 - **Errors**: Track failed operations
 - **Performance**: Monitor load times
 
 #### Business Metrics
+
 - **Calculations performed**: Track usage
 - **PDF downloads**: Track feature usage
 - **Lead captures**: Track conversions
@@ -811,6 +886,7 @@ try {
 ## 10. Checklist Summary
 
 ### Before Creating PR
+
 - [ ] Code follows style guidelines
 - [ ] All tests pass
 - [ ] TypeScript compiles
@@ -820,6 +896,7 @@ try {
 - [ ] No security issues
 
 ### Before Merging PR
+
 - [ ] Code reviewed and approved
 - [ ] All CI checks pass
 - [ ] Tests pass
@@ -827,6 +904,7 @@ try {
 - [ ] PR description complete
 
 ### Before Production Deployment
+
 - [ ] Staging testing completed
 - [ ] Performance acceptable
 - [ ] Security review passed
@@ -839,6 +917,7 @@ try {
 ## 11. Resources
 
 ### Tools
+
 - **Version Control**: Git, GitHub
 - **CI/CD**: GitHub Actions, Vercel
 - **Testing**: Vitest, Playwright
@@ -846,6 +925,7 @@ try {
 - **Monitoring**: Sentry, Vercel Analytics
 
 ### Documentation
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [React Documentation](https://react.dev/)
@@ -861,4 +941,3 @@ try {
 **Status**: Active  
 **Owner**: Development Team  
 **Last Updated**: January 2025
-

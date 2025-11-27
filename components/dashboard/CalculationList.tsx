@@ -3,36 +3,36 @@
  * Grid display of saved calculations with filters
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { useTranslations } from 'next-intl';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { 
+import { useState, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Search, Filter, Loader2 } from 'lucide-react';
-import CalculationCard from './CalculationCard';
-import EmptyState from './EmptyState';
-import type { SavedCalculation } from '@/types/database';
-import type { SortOption } from '@/lib/calculations/storage';
+} from "@/components/ui/select";
+import { Search, Filter, Loader2 } from "lucide-react";
+import CalculationCard from "./CalculationCard";
+import EmptyState from "./EmptyState";
+import type { SavedCalculation } from "@/types/database";
+import type { SortOption } from "@/lib/calculations/storage";
 
 interface CalculationListProps {
   locale: string;
 }
 
 export default function CalculationList({ locale }: CalculationListProps) {
-  const t = useTranslations('Dashboard');
+  const t = useTranslations("Dashboard");
   const [calculations, setCalculations] = useState<SavedCalculation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('date-desc');
-  const [eligibilityFilter, setEligibilityFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<SortOption>("date-desc");
+  const [eligibilityFilter, setEligibilityFilter] = useState("all");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
   const fetchCalculations = useCallback(async () => {
@@ -41,7 +41,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
       const params = new URLSearchParams({
         sortBy,
         eligibility: eligibilityFilter,
-        ...(showFavoritesOnly && { favorites: 'true' }),
+        ...(showFavoritesOnly && { favorites: "true" }),
         ...(searchTerm && { search: searchTerm }),
       });
 
@@ -52,7 +52,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
         setCalculations(data.calculations);
       }
     } catch (error) {
-      console.error('Failed to fetch calculations:', error);
+      console.error("Failed to fetch calculations:", error);
     } finally {
       setIsLoading(false);
     }
@@ -65,54 +65,50 @@ export default function CalculationList({ locale }: CalculationListProps) {
   const handleDelete = async (id: string) => {
     try {
       const response = await fetch(`/api/calculations/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (response.ok) {
-        setCalculations(prev => prev.filter(calc => calc.id !== id));
+        setCalculations((prev) => prev.filter((calc) => calc.id !== id));
       }
     } catch (error) {
-      console.error('Failed to delete calculation:', error);
+      console.error("Failed to delete calculation:", error);
     }
   };
 
   const handleToggleFavorite = async (id: string, isFavorite: boolean) => {
     try {
       const response = await fetch(`/api/calculations/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ is_favorite: isFavorite }),
       });
 
       if (response.ok) {
-        setCalculations(prev =>
-          prev.map(calc =>
-            calc.id === id ? { ...calc, is_favorite: isFavorite } : calc
-          )
+        setCalculations((prev) =>
+          prev.map((calc) => (calc.id === id ? { ...calc, is_favorite: isFavorite } : calc))
         );
       }
     } catch (error) {
-      console.error('Failed to update favorite status:', error);
+      console.error("Failed to update favorite status:", error);
     }
   };
 
   const handleRename = async (id: string, name: string) => {
     try {
       const response = await fetch(`/api/calculations/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ calculation_name: name }),
       });
 
       if (response.ok) {
-        setCalculations(prev =>
-          prev.map(calc =>
-            calc.id === id ? { ...calc, calculation_name: name } : calc
-          )
+        setCalculations((prev) =>
+          prev.map((calc) => (calc.id === id ? { ...calc, calculation_name: name } : calc))
         );
       }
     } catch (error) {
-      console.error('Failed to rename calculation:', error);
+      console.error("Failed to rename calculation:", error);
     }
   };
 
@@ -124,7 +120,12 @@ export default function CalculationList({ locale }: CalculationListProps) {
     );
   }
 
-  if (calculations.length === 0 && !searchTerm && !showFavoritesOnly && eligibilityFilter === 'all') {
+  if (
+    calculations.length === 0 &&
+    !searchTerm &&
+    !showFavoritesOnly &&
+    eligibilityFilter === "all"
+  ) {
     return <EmptyState locale={locale} />;
   }
 
@@ -135,7 +136,7 @@ export default function CalculationList({ locale }: CalculationListProps) {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder={t('searchPlaceholder')}
+            placeholder={t("searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -145,14 +146,14 @@ export default function CalculationList({ locale }: CalculationListProps) {
         <div className="flex gap-2">
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={t('sortBy')} />
+              <SelectValue placeholder={t("sortBy")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="date-desc">{t('sortDateDesc')}</SelectItem>
-              <SelectItem value="date-asc">{t('sortDateAsc')}</SelectItem>
-              <SelectItem value="value-desc">{t('sortValueDesc')}</SelectItem>
-              <SelectItem value="value-asc">{t('sortValueAsc')}</SelectItem>
-              <SelectItem value="name">{t('sortName')}</SelectItem>
+              <SelectItem value="date-desc">{t("sortDateDesc")}</SelectItem>
+              <SelectItem value="date-asc">{t("sortDateAsc")}</SelectItem>
+              <SelectItem value="value-desc">{t("sortValueDesc")}</SelectItem>
+              <SelectItem value="value-asc">{t("sortValueAsc")}</SelectItem>
+              <SelectItem value="name">{t("sortName")}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -162,17 +163,17 @@ export default function CalculationList({ locale }: CalculationListProps) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{t('allCalculations')}</SelectItem>
-              <SelectItem value="eligible">{t('firbNotRequired')}</SelectItem>
-              <SelectItem value="review-required">{t('firbRequired')}</SelectItem>
+              <SelectItem value="all">{t("allCalculations")}</SelectItem>
+              <SelectItem value="eligible">{t("firbNotRequired")}</SelectItem>
+              <SelectItem value="review-required">{t("firbRequired")}</SelectItem>
             </SelectContent>
           </Select>
 
           <Button
-            variant={showFavoritesOnly ? 'default' : 'outline'}
+            variant={showFavoritesOnly ? "default" : "outline"}
             onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
           >
-            {t('favorites')}
+            {t("favorites")}
           </Button>
         </div>
       </div>
@@ -180,25 +181,23 @@ export default function CalculationList({ locale }: CalculationListProps) {
       {/* Results */}
       {calculations.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-muted-foreground">
-            {t('noResultsTitle')}
-          </p>
+          <p className="text-muted-foreground">{t("noResultsTitle")}</p>
           <Button
             variant="link"
             onClick={() => {
-              setSearchTerm('');
-              setEligibilityFilter('all');
+              setSearchTerm("");
+              setEligibilityFilter("all");
               setShowFavoritesOnly(false);
             }}
           >
-            {t('clearFilters')}
+            {t("clearFilters")}
           </Button>
         </div>
       ) : (
         <>
           <div className="flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              Showing {calculations.length} calculation{calculations.length !== 1 ? 's' : ''}
+              Showing {calculations.length} calculation{calculations.length !== 1 ? "s" : ""}
             </p>
           </div>
 
@@ -219,4 +218,3 @@ export default function CalculationList({ locale }: CalculationListProps) {
     </div>
   );
 }
-

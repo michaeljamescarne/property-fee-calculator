@@ -3,6 +3,7 @@
 ## 🚀 10-Minute Quick Test
 
 ### ✅ Test 1: Basic Flow (2 min)
+
 1. Go to `/en/firb-calculator`
 2. Complete all 5 steps:
    - Citizenship: Australian Citizen ✓ Ordinarily Resident → Next
@@ -16,6 +17,7 @@
 ---
 
 ### ✅ Test 2: Financial Details (2 min)
+
 1. Go back to Step 3
 2. Verify:
    - Weekly rent auto-filled
@@ -29,6 +31,7 @@
 ---
 
 ### ✅ Test 3: Optimal Use Case (3 min)
+
 1. In Results page
 2. Click "Show Investment Analysis"
 3. Scroll to "Optimal Use Case Analysis"
@@ -44,6 +47,7 @@
 ---
 
 ### ✅ Test 4: Edit Functionality (2 min)
+
 1. From Results: Click "Edit Calculation"
 2. Change: Weekly rent to $1,500
 3. Recalculate
@@ -54,6 +58,7 @@
 ---
 
 ### ✅ Test 5: Console Check (1 min)
+
 1. Open Browser DevTools (F12)
 2. Check Console tab
 3. Verify: No red errors
@@ -74,10 +79,11 @@
 
 ## 📝 Report Format
 
-**Test Date:** _______________  
-**Tester:** _______________  
+**Test Date:** **\*\***\_\_\_**\*\***  
+**Tester:** **\*\***\_\_\_**\*\***
 
 **Results:**
+
 - [ ] Test 1: Pass / Fail
 - [ ] Test 2: Pass / Fail
 - [ ] Test 3: Pass / Fail
@@ -85,9 +91,9 @@
 - [ ] Test 5: Pass / Fail
 
 **Issues Found:**
-1. 
-2. 
-3. 
 
-**Overall Status:** ☐ Ready for Phase 4  ☐ Needs Fixes
+1.
+2.
+3.
 
+**Overall Status:** ☐ Ready for Phase 4 ☐ Needs Fixes

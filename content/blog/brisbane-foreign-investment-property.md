@@ -14,7 +14,7 @@ tags:
 
 # Brisbane Property Investment Guide for Foreign Buyers (2025)
 
-*Last updated: 28 December 2024 • 10 min read*
+_Last updated: 28 December 2024 • 10 min read_
 
 Brisbane is having a moment. With the 2032 Olympics on the horizon, billions being poured into infrastructure, and property prices still sitting well below Sydney and Melbourne, Queensland's capital has become one of Australia's hottest investment destinations. But for foreign buyers, navigating the costs, regulations, and opportunities requires careful planning.
 
@@ -115,6 +115,7 @@ Successful foreign property investment requires understanding your complete fina
 Consider a typical $650,000 Brisbane apartment purchase:
 
 **Upfront investment:**
+
 - Deposit (typically 20% for foreign buyers): $130,000
 - FIRB application fee: $15,100
 - Stamp duty (standard + foreign surcharge): $68,500
@@ -122,6 +123,7 @@ Consider a typical $650,000 Brisbane apartment purchase:
 - Total cash needed at purchase: ~$216,100
 
 **Annual ongoing costs:**
+
 - Land tax and surcharge: ~$4,800
 - Council rates: ~$1,600
 - Strata fees: ~$4,500
@@ -131,6 +133,7 @@ Consider a typical $650,000 Brisbane apartment purchase:
 - Total annual costs: ~$20,875
 
 **Annual income:**
+
 - Rental income (5% yield): $32,500
 - Net cash flow: ~$11,625 positive
 
@@ -170,7 +173,7 @@ Before committing to a Brisbane property investment:
 ✅ Arrange pre-approval for finance if borrowing  
 ✅ Consult a tax advisor on Australian property tax obligations  
 ✅ Set up property management before settlement  
-✅ Understand your exit strategy and potential CGT implications  
+✅ Understand your exit strategy and potential CGT implications
 
 ## Calculate Your Specific Investment
 
@@ -195,4 +198,4 @@ However, success requires careful financial planning. The upfront costs—partic
 
 Do your due diligence, run the numbers thoroughly, and seek professional advice from Australian property tax specialists and qualified financial advisors. With the right property in the right location at the right price, Brisbane can deliver strong returns for patient, well-prepared investors.
 
-*Disclaimer: This guide provides general information only and should not be considered financial or legal advice. Fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions.*
+_Disclaimer: This guide provides general information only and should not be considered financial or legal advice. Fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions._

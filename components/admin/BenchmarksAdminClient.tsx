@@ -3,13 +3,13 @@
  * Client-side CRUD interface for managing benchmarks
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -17,7 +17,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,11 +35,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { Plus, Edit, Trash2, Loader2, Upload } from 'lucide-react';
-import type { AustralianState } from '@/lib/firb/constants';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "@/components/ui/alert-dialog";
+import { Plus, Edit, Trash2, Loader2, Upload } from "lucide-react";
+import type { AustralianState } from "@/lib/firb/constants";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface Benchmark {
   id: string;
@@ -63,7 +63,7 @@ interface BenchmarksAdminClientProps {
 }
 
 export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientProps) {
-  const t = useTranslations('Admin.benchmarks');
+  const t = useTranslations("Admin.benchmarks");
   const [benchmarks, setBenchmarks] = useState<Benchmark[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -71,7 +71,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
   const [editingBenchmark, setEditingBenchmark] = useState<Benchmark | null>(null);
   const [deletingBenchmark, setDeletingBenchmark] = useState<Benchmark | null>(null);
   const [saving, setSaving] = useState(false);
-  const [filterState, setFilterState] = useState<string>('');
+  const [filterState, setFilterState] = useState<string>("");
   const [activeOnly, setActiveOnly] = useState(false);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [importFile, setImportFile] = useState<File | null>(null);
@@ -91,7 +91,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
 
   // Form state
   const [formData, setFormData] = useState<Partial<Benchmark>>({
-    state: 'NSW' as AustralianState,
+    state: "NSW" as AustralianState,
     suburb_name: null,
     postcode: null,
     gross_rental_yield: null,
@@ -109,8 +109,8 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
     setLoading(true);
     try {
       const params = new URLSearchParams();
-      if (filterState) params.append('state', filterState);
-      if (activeOnly) params.append('activeOnly', 'true');
+      if (filterState) params.append("state", filterState);
+      if (activeOnly) params.append("activeOnly", "true");
 
       const response = await fetch(`/api/admin/benchmarks?${params.toString()}`);
       const data = await response.json();
@@ -119,7 +119,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
         setBenchmarks(data.benchmarks || []);
       }
     } catch (error) {
-      console.error('Failed to fetch benchmarks:', error);
+      console.error("Failed to fetch benchmarks:", error);
     } finally {
       setLoading(false);
     }
@@ -134,10 +134,10 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
 
     try {
       const formData = new FormData();
-      formData.append('file', importFile);
+      formData.append("file", importFile);
 
-      const response = await fetch('/api/admin/benchmarks/bulk', {
-        method: 'POST',
+      const response = await fetch("/api/admin/benchmarks/bulk", {
+        method: "POST",
         body: formData,
       });
 
@@ -162,7 +162,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
     } catch (error) {
       setImportResults({
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to import CSV',
+        error: error instanceof Error ? error.message : "Failed to import CSV",
       });
     } finally {
       setImporting(false);
@@ -181,7 +181,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
     } else {
       setEditingBenchmark(null);
       setFormData({
-        state: 'NSW' as AustralianState,
+        state: "NSW" as AustralianState,
         suburb_name: null,
         postcode: null,
         gross_rental_yield: null,
@@ -203,12 +203,12 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
     try {
       const url = editingBenchmark
         ? `/api/admin/benchmarks/${editingBenchmark.id}`
-        : '/api/admin/benchmarks';
-      const method = editingBenchmark ? 'PUT' : 'POST';
+        : "/api/admin/benchmarks";
+      const method = editingBenchmark ? "PUT" : "POST";
 
       const response = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -219,11 +219,11 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
         fetchBenchmarks();
         setEditingBenchmark(null);
       } else {
-        alert(data.error || t('error'));
+        alert(data.error || t("error"));
       }
     } catch (error) {
-      console.error('Failed to save benchmark:', error);
-      alert(t('error'));
+      console.error("Failed to save benchmark:", error);
+      alert(t("error"));
     } finally {
       setSaving(false);
     }
@@ -235,7 +235,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
 
     try {
       const response = await fetch(`/api/admin/benchmarks/${deletingBenchmark.id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       const data = await response.json();
@@ -245,15 +245,15 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
         setDeletingBenchmark(null);
         fetchBenchmarks();
       } else {
-        alert(data.error || 'Failed to delete benchmark');
+        alert(data.error || "Failed to delete benchmark");
       }
     } catch (error) {
-      console.error('Failed to delete benchmark:', error);
-      alert('Failed to delete benchmark');
+      console.error("Failed to delete benchmark:", error);
+      alert("Failed to delete benchmark");
     }
   };
 
-  const states: AustralianState[] = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'ACT', 'NT'];
+  const states: AustralianState[] = ["NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"];
 
   return (
     <div className="space-y-6">
@@ -262,7 +262,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
         <div className="flex flex-col sm:flex-row gap-4 flex-1">
           <div className="flex items-center gap-2">
             <Label htmlFor="filter-state" className="whitespace-nowrap">
-              {t('filterByState')}:
+              {t("filterByState")}:
             </Label>
             <select
               id="filter-state"
@@ -285,22 +285,18 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
               onCheckedChange={(checked) => setActiveOnly(checked === true)}
             />
             <Label htmlFor="active-only" className="cursor-pointer">
-              {t('showActiveOnly')}
+              {t("showActiveOnly")}
             </Label>
           </div>
         </div>
         <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            onClick={() => setIsImportDialogOpen(true)} 
-            className="gap-2"
-          >
+          <Button variant="outline" onClick={() => setIsImportDialogOpen(true)} className="gap-2">
             <Upload className="h-4 w-4" />
-            {t('importCSV') || 'Import CSV'}
+            {t("importCSV") || "Import CSV"}
           </Button>
           <Button onClick={() => openDialog()} className="gap-2">
             <Plus className="h-4 w-4" />
-            {t('addNew')}
+            {t("addNew")}
           </Button>
         </div>
       </div>
@@ -311,51 +307,45 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       ) : benchmarks.length === 0 ? (
-        <div className="text-center py-12 text-muted-foreground">
-          {t('noData')}
-        </div>
+        <div className="text-center py-12 text-muted-foreground">{t("noData")}</div>
       ) : (
         <div className="border rounded-lg overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{t('state')}</TableHead>
-                <TableHead>{t('suburb')}</TableHead>
-                <TableHead>{t('postcode')}</TableHead>
-                <TableHead>{t('grossYield')}</TableHead>
-                <TableHead>{t('capitalGrowth5yr')}</TableHead>
-                <TableHead>{t('isActive')}</TableHead>
-                <TableHead>{t('actions')}</TableHead>
+                <TableHead>{t("state")}</TableHead>
+                <TableHead>{t("suburb")}</TableHead>
+                <TableHead>{t("postcode")}</TableHead>
+                <TableHead>{t("grossYield")}</TableHead>
+                <TableHead>{t("capitalGrowth5yr")}</TableHead>
+                <TableHead>{t("isActive")}</TableHead>
+                <TableHead>{t("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {benchmarks.map((benchmark) => (
                 <TableRow key={benchmark.id}>
                   <TableCell>{benchmark.state}</TableCell>
-                  <TableCell>{benchmark.suburb_name || '-'}</TableCell>
-                  <TableCell>{benchmark.postcode || '-'}</TableCell>
+                  <TableCell>{benchmark.suburb_name || "-"}</TableCell>
+                  <TableCell>{benchmark.postcode || "-"}</TableCell>
                   <TableCell>
                     {benchmark.gross_rental_yield
                       ? `${benchmark.gross_rental_yield.toFixed(2)}%`
-                      : '-'}
+                      : "-"}
                   </TableCell>
                   <TableCell>
                     {benchmark.capital_growth_5yr
                       ? `${benchmark.capital_growth_5yr.toFixed(2)}%`
-                      : '-'}
+                      : "-"}
                   </TableCell>
                   <TableCell>
-                    <Badge variant={benchmark.is_active ? 'default' : 'secondary'}>
-                      {benchmark.is_active ? 'Active' : 'Inactive'}
+                    <Badge variant={benchmark.is_active ? "default" : "secondary"}>
+                      {benchmark.is_active ? "Active" : "Inactive"}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => openDialog(benchmark)}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => openDialog(benchmark)}>
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button
@@ -381,19 +371,17 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>
-              {editingBenchmark ? t('edit') : t('addNew')}
-            </DialogTitle>
-            <DialogDescription>{t('description')}</DialogDescription>
+            <DialogTitle>{editingBenchmark ? t("edit") : t("addNew")}</DialogTitle>
+            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="state">{t('state')} *</Label>
+                <Label htmlFor="state">{t("state")} *</Label>
                 <select
                   id="state"
-                  value={formData.state || 'NSW'}
+                  value={formData.state || "NSW"}
                   onChange={(e) =>
                     setFormData({ ...formData, state: e.target.value as AustralianState })
                   }
@@ -408,38 +396,34 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
               </div>
 
               <div>
-                <Label htmlFor="postcode">{t('postcode')}</Label>
+                <Label htmlFor="postcode">{t("postcode")}</Label>
                 <Input
                   id="postcode"
-                  value={formData.postcode || ''}
-                  onChange={(e) =>
-                    setFormData({ ...formData, postcode: e.target.value || null })
-                  }
+                  value={formData.postcode || ""}
+                  onChange={(e) => setFormData({ ...formData, postcode: e.target.value || null })}
                   placeholder="e.g., 2000"
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="suburb">{t('suburb')}</Label>
+              <Label htmlFor="suburb">{t("suburb")}</Label>
               <Input
                 id="suburb"
-                value={formData.suburb_name || ''}
-                onChange={(e) =>
-                  setFormData({ ...formData, suburb_name: e.target.value || null })
-                }
+                value={formData.suburb_name || ""}
+                onChange={(e) => setFormData({ ...formData, suburb_name: e.target.value || null })}
                 placeholder="e.g., Sydney"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="gross-yield">{t('grossYield')}</Label>
+                <Label htmlFor="gross-yield">{t("grossYield")}</Label>
                 <Input
                   id="gross-yield"
                   type="number"
                   step="0.01"
-                  value={formData.gross_rental_yield || ''}
+                  value={formData.gross_rental_yield || ""}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
@@ -451,12 +435,12 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
               </div>
 
               <div>
-                <Label htmlFor="net-yield">{t('netYield')}</Label>
+                <Label htmlFor="net-yield">{t("netYield")}</Label>
                 <Input
                   id="net-yield"
                   type="number"
                   step="0.01"
-                  value={formData.net_rental_yield || ''}
+                  value={formData.net_rental_yield || ""}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
@@ -470,12 +454,12 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="growth-5yr">{t('capitalGrowth5yr')}</Label>
+                <Label htmlFor="growth-5yr">{t("capitalGrowth5yr")}</Label>
                 <Input
                   id="growth-5yr"
                   type="number"
                   step="0.01"
-                  value={formData.capital_growth_5yr || ''}
+                  value={formData.capital_growth_5yr || ""}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
@@ -487,12 +471,12 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
               </div>
 
               <div>
-                <Label htmlFor="growth-10yr">{t('capitalGrowth10yr')}</Label>
+                <Label htmlFor="growth-10yr">{t("capitalGrowth10yr")}</Label>
                 <Input
                   id="growth-10yr"
                   type="number"
                   step="0.01"
-                  value={formData.capital_growth_10yr || ''}
+                  value={formData.capital_growth_10yr || ""}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
@@ -505,25 +489,23 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
             </div>
 
             <div>
-              <Label htmlFor="data-source">{t('dataSource')}</Label>
+              <Label htmlFor="data-source">{t("dataSource")}</Label>
               <Input
                 id="data-source"
-                value={formData.data_source || ''}
-                onChange={(e) =>
-                  setFormData({ ...formData, data_source: e.target.value || null })
-                }
+                value={formData.data_source || ""}
+                onChange={(e) => setFormData({ ...formData, data_source: e.target.value || null })}
                 placeholder="e.g., CoreLogic 2024"
               />
             </div>
 
             <div>
-              <Label htmlFor="quality-score">{t('qualityScore')}</Label>
+              <Label htmlFor="quality-score">{t("qualityScore")}</Label>
               <Input
                 id="quality-score"
                 type="number"
                 min="1"
                 max="10"
-                value={formData.data_quality_score || ''}
+                value={formData.data_quality_score || ""}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
@@ -535,13 +517,11 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
             </div>
 
             <div>
-              <Label htmlFor="notes">{t('notes')}</Label>
+              <Label htmlFor="notes">{t("notes")}</Label>
               <textarea
                 id="notes"
-                value={formData.notes || ''}
-                onChange={(e) =>
-                  setFormData({ ...formData, notes: e.target.value || null })
-                }
+                value={formData.notes || ""}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value || null })}
                 className="w-full px-3 py-2 border rounded-md min-h-[80px]"
                 placeholder="Additional notes..."
               />
@@ -556,14 +536,14 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
                 }
               />
               <Label htmlFor="is-active" className="cursor-pointer">
-                {t('isActive')}
+                {t("isActive")}
               </Label>
             </div>
           </div>
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-              {t('cancel')}
+              {t("cancel")}
             </Button>
             <Button onClick={handleSave} disabled={saving}>
               {saving ? (
@@ -572,7 +552,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
                   Saving...
                 </>
               ) : (
-                t('save')
+                t("save")
               )}
             </Button>
           </DialogFooter>
@@ -583,15 +563,16 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
       <Dialog open={isImportDialogOpen} onOpenChange={setIsImportDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>{t('csvImport.title') || 'Import Benchmarks from CSV'}</DialogTitle>
+            <DialogTitle>{t("csvImport.title") || "Import Benchmarks from CSV"}</DialogTitle>
             <DialogDescription>
-              {t('csvImport.description') || 'Upload a CSV file to bulk import benchmark data. The CSV should have columns: state (required), suburb_name (optional), postcode (optional), gross_rental_yield, net_rental_yield, capital_growth_5yr, capital_growth_10yr, data_source, data_quality_score, notes, is_active, last_updated (optional, defaults to today).'}
+              {t("csvImport.description") ||
+                "Upload a CSV file to bulk import benchmark data. The CSV should have columns: state (required), suburb_name (optional), postcode (optional), gross_rental_yield, net_rental_yield, capital_growth_5yr, capital_growth_10yr, data_source, data_quality_score, notes, is_active, last_updated (optional, defaults to today)."}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             <div>
-              <Label htmlFor="csv-file">{t('csvImport.fileLabel') || 'CSV File'}</Label>
+              <Label htmlFor="csv-file">{t("csvImport.fileLabel") || "CSV File"}</Label>
               <Input
                 id="csv-file"
                 type="file"
@@ -612,106 +593,111 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
                   className="p-0 h-auto"
                   onClick={() => {
                     // Generate and download CSV template
-                    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+                    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
                     const headers = [
-                      'state',
-                      'suburb_name',
-                      'postcode',
-                      'gross_rental_yield',
-                      'net_rental_yield',
-                      'capital_growth_5yr',
-                      'capital_growth_10yr',
-                      'data_source',
-                      'data_quality_score',
-                      'notes',
-                      'is_active',
-                      'last_updated'
+                      "state",
+                      "suburb_name",
+                      "postcode",
+                      "gross_rental_yield",
+                      "net_rental_yield",
+                      "capital_growth_5yr",
+                      "capital_growth_10yr",
+                      "data_source",
+                      "data_quality_score",
+                      "notes",
+                      "is_active",
+                      "last_updated",
                     ];
                     const exampleRow = [
-                      'NSW',
-                      'Sydney',
-                      '2000',
-                      '4.5',
-                      '3.5',
-                      '6.0',
-                      '6.2',
-                      'CoreLogic 2024',
-                      '8',
-                      'Sample data',
-                      'true',
-                      today
+                      "NSW",
+                      "Sydney",
+                      "2000",
+                      "4.5",
+                      "3.5",
+                      "6.0",
+                      "6.2",
+                      "CoreLogic 2024",
+                      "8",
+                      "Sample data",
+                      "true",
+                      today,
                     ];
-                    const csvContent = [headers.join(','), exampleRow.join(',')].join('\n');
-                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const csvContent = [headers.join(","), exampleRow.join(",")].join("\n");
+                    const blob = new Blob([csvContent], { type: "text/csv" });
                     const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
+                    const a = document.createElement("a");
                     a.href = url;
-                    a.download = 'benchmarks_template.csv';
+                    a.download = "benchmarks_template.csv";
                     a.click();
                     window.URL.revokeObjectURL(url);
                   }}
                 >
                   <Upload className="h-3 w-3 mr-1" />
-                  {t('csvImport.downloadTemplate') || 'Download CSV Template'}
+                  {t("csvImport.downloadTemplate") || "Download CSV Template"}
                 </Button>
               </div>
             </div>
 
             {importResults && (
-              <div className={`p-4 rounded-lg ${
-                importResults.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
-              }`}>
+              <div
+                className={`p-4 rounded-lg ${
+                  importResults.success
+                    ? "bg-green-50 border border-green-200"
+                    : "bg-red-50 border border-red-200"
+                }`}
+              >
                 {importResults.success && importResults.results ? (
                   <div>
                     <p className="font-semibold text-green-900 mb-2">
-                      {t('csvImport.success') || 'Import Successful!'}
+                      {t("csvImport.success") || "Import Successful!"}
                     </p>
                     <ul className="text-sm text-green-800 space-y-1">
                       <li>
-                        {t('csvImport.totalRows') || 'Total rows'}: {importResults.results.total}
+                        {t("csvImport.totalRows") || "Total rows"}: {importResults.results.total}
                       </li>
                       <li>
-                        {t('csvImport.inserted') || 'Inserted'}: {importResults.results.inserted}
+                        {t("csvImport.inserted") || "Inserted"}: {importResults.results.inserted}
                       </li>
                       <li>
-                        {t('csvImport.updated') || 'Updated'}: {importResults.results.updated}
+                        {t("csvImport.updated") || "Updated"}: {importResults.results.updated}
                       </li>
                       {importResults.results.errors > 0 && (
                         <li className="text-red-600">
-                          {t('csvImport.errors') || 'Errors'}: {importResults.results.errors}
+                          {t("csvImport.errors") || "Errors"}: {importResults.results.errors}
                         </li>
                       )}
                     </ul>
-                    {importResults.results.errorDetails && importResults.results.errorDetails.length > 0 && (
-                      <div className="mt-2">
-                        <p className="font-semibold text-red-600">
-                          {t('csvImport.errorDetails') || 'Error Details'}:
-                        </p>
-                        <ul className="text-xs text-red-600 list-disc list-inside">
-                          {importResults.results.errorDetails.map((err, idx) => (
-                            <li key={idx}>
-                              {t('csvImport.row') || 'Row'} {err.row}: {err.error}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    {importResults.results.errorDetails &&
+                      importResults.results.errorDetails.length > 0 && (
+                        <div className="mt-2">
+                          <p className="font-semibold text-red-600">
+                            {t("csvImport.errorDetails") || "Error Details"}:
+                          </p>
+                          <ul className="text-xs text-red-600 list-disc list-inside">
+                            {importResults.results.errorDetails.map((err, idx) => (
+                              <li key={idx}>
+                                {t("csvImport.row") || "Row"} {err.row}: {err.error}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                   </div>
                 ) : (
                   <div>
                     <p className="font-semibold text-red-900 mb-2">
-                      {t('csvImport.failed') || 'Import Failed'}
+                      {t("csvImport.failed") || "Import Failed"}
                     </p>
                     <p className="text-sm text-red-800">{importResults.error}</p>
                     {importResults.invalidRows && importResults.invalidRows.length > 0 && (
                       <div className="mt-2">
                         <p className="font-semibold text-red-600">
-                          {t('csvImport.validationErrors') || 'Validation Errors'}:
+                          {t("csvImport.validationErrors") || "Validation Errors"}:
                         </p>
                         <ul className="text-xs text-red-600 list-disc list-inside">
                           {importResults.invalidRows.map((row, idx) => (
                             <li key={idx}>
-                              {t('csvImport.row') || 'Row'} {row.row}: {row.errors.join(', ')}
+                              {t("csvImport.row") || "Row"} {row.row}: {row.errors.join(", ")}
                             </li>
                           ))}
                         </ul>
@@ -732,22 +718,18 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
                 setImportResults(null);
               }}
             >
-              {t('cancel')}
+              {t("cancel")}
             </Button>
-            <Button
-              onClick={handleImport}
-              disabled={!importFile || importing}
-              className="gap-2"
-            >
+            <Button onClick={handleImport} disabled={!importFile || importing} className="gap-2">
               {importing ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  {t('csvImport.importing') || 'Importing...'}
+                  {t("csvImport.importing") || "Importing..."}
                 </>
               ) : (
                 <>
                   <Upload className="h-4 w-4" />
-                  {t('csvImport.import') || 'Import'}
+                  {t("csvImport.import") || "Import"}
                 </>
               )}
             </Button>
@@ -760,9 +742,7 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t('deleteConfirm')}
-            </AlertDialogDescription>
+            <AlertDialogDescription>{t("deleteConfirm")}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -775,4 +755,3 @@ export default function BenchmarksAdminClient({ locale }: BenchmarksAdminClientP
     </div>
   );
 }
-

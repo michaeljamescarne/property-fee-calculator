@@ -5,6 +5,7 @@ This guide will help you populate the `benchmark_data` table with initial state-
 ## What This Does
 
 The seed script adds rental yield and capital growth benchmarks for all 8 Australian states and territories:
+
 - **NSW**: 3.2% gross yield, 5.5% capital growth
 - **VIC**: 3.4% gross yield, 5.2% capital growth
 - **QLD**: 4.5% gross yield, 4.8% capital growth
@@ -40,6 +41,7 @@ The seed script adds rental yield and capital growth benchmarks for all 8 Austra
 ## Expected Results
 
 After running the seed script:
+
 - ✅ 8 state-level benchmark records created
 - ✅ All states/territories covered (NSW, VIC, QLD, WA, SA, TAS, ACT, NT)
 - ✅ Rental yields and capital growth rates populated
@@ -49,6 +51,7 @@ After running the seed script:
 ## Next Steps
 
 Once the seed data is populated:
+
 1. Test the calculator - benchmarks should now appear in the Financial Details step
 2. Add suburb-level data via admin interface (when built)
 3. Update benchmarks periodically as market conditions change
@@ -56,15 +59,17 @@ Once the seed data is populated:
 ## Troubleshooting
 
 **Error: "relation benchmark_data does not exist"**
+
 - Run the main migration first: `20250117_phase4_benchmark_data.sql`
 
 **Error: "duplicate key value violates unique constraint"**
+
 - This is normal if you've already run the seed script
 - The `ON CONFLICT DO NOTHING` clause prevents errors
 - You can safely ignore this or check existing data
 
 **No data appears after running**
+
 - Check that the migration script ran successfully first
 - Verify you're looking at the correct table (`benchmark_data`)
 - Check that `is_active = true` filter is not hiding the data
-

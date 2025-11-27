@@ -1,267 +1,255 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Investment Cost Breakdown - Mockup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        accent: '#60A5FA'
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3B82F6",
+              accent: "#60A5FA",
+            },
+          },
+        },
+      };
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
     </style>
-</head>
-<body class="bg-gray-50">
+  </head>
+  <body class="bg-gray-50">
     <div class="max-w-4xl mx-auto p-8">
-        <!-- Investment Cost Breakdown -->
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-blue-500 to-blue-400 text-white p-6">
-                <h2 class="text-2xl font-bold mb-2">Investment Cost Breakdown</h2>
-                <p class="text-blue-100">Detailed breakdown of all costs associated with your property purchase</p>
-            </div>
-
-            <div class="p-6 space-y-6">
-                <!-- Total Investment Required -->
-                <div class="p-6 rounded-lg bg-gradient-to-r from-blue-500 to-blue-400 text-white">
-                    <p class="text-sm opacity-90">Total Investment Required</p>
-                    <p class="text-4xl font-bold mt-2">$822,350</p>
-                    <p class="text-sm opacity-75 mt-2">
-                        Property Price: $750,000
-                    </p>
-                    <p class="text-sm opacity-75">
-                        Additional Upfront Costs: $72,350
-                    </p>
-                </div>
-
-                <!-- Upfront Costs -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
-                        💰 Upfront Costs
-                    </h3>
-                    <div class="bg-gray-50 rounded-lg p-4 space-y-3">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-blue-600 text-sm">🏠</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Property Price</p>
-                                    <p class="text-sm text-gray-600">Purchase price</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-lg">$750,000</span>
-                        </div>
-                        
-                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-blue-600 text-sm">📋</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">FIRB Application Fee</p>
-                                    <p class="text-sm text-gray-600">Required for foreign investors</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-lg">$6,350</span>
-                        </div>
-
-                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-blue-600 text-sm">📄</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Stamp Duty</p>
-                                    <p class="text-sm text-gray-600">NSW stamp duty</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-lg">$29,500</span>
-                        </div>
-
-                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-blue-600 text-sm">🌍</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Foreign Investor Surcharge</p>
-                                    <p class="text-sm text-gray-600">8% surcharge on property value</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-lg">$60,000</span>
-                        </div>
-
-                        <div class="flex justify-between items-center py-2">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-blue-600 text-sm">⚖️</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Legal & Professional Fees</p>
-                                    <p class="text-sm text-gray-600">Conveyancing and legal costs</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-lg">$2,500</span>
-                        </div>
-
-                        <!-- Subtotal -->
-                        <div class="bg-blue-50 border-t-2 border-blue-200 pt-3 mt-3">
-                            <div class="flex justify-between items-center">
-                                <span class="font-semibold text-blue-800">Subtotal</span>
-                                <span class="font-bold text-blue-800 text-xl">$848,350</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ongoing Costs -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
-                        📅 Annual Ongoing Costs
-                    </h3>
-                    <p class="text-sm text-gray-600 mb-4">Estimated annual recurring expenses</p>
-                    <div class="bg-gray-50 rounded-lg p-4 space-y-3">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-green-600 text-sm">🏛️</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Council Rates</p>
-                                    <p class="text-sm text-gray-600">Local government rates</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold">$3,200</span>
-                        </div>
-
-                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-green-600 text-sm">🛡️</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Insurance</p>
-                                    <p class="text-sm text-gray-600">Building and contents insurance</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold">$1,800</span>
-                        </div>
-
-                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-green-600 text-sm">🔧</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Maintenance</p>
-                                    <p class="text-sm text-gray-600">General property maintenance</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold">$2,500</span>
-                        </div>
-
-                        <div class="flex justify-between items-center py-2">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-green-600 text-sm">💰</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Vacancy Fee</p>
-                                    <p class="text-sm text-gray-600">If property not occupied/rented</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold">$0</span>
-                        </div>
-
-                        <!-- Annual Total -->
-                        <div class="bg-green-50 border-t-2 border-green-200 pt-3 mt-3">
-                            <div class="flex justify-between items-center">
-                                <span class="font-semibold text-green-800">Total Annual Costs</span>
-                                <span class="font-bold text-green-800 text-xl">$7,500</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cost Summary Chart -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
-                        📊 Cost Breakdown Visualization
-                    </h3>
-                    <div class="bg-gray-50 rounded-lg p-6">
-                        <div class="space-y-4">
-                            <!-- Property Price Bar -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium">Property Price</span>
-                                    <span class="text-sm text-gray-600">91%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-3">
-                                    <div class="bg-blue-500 h-3 rounded-full" style="width: 91%"></div>
-                                </div>
-                            </div>
-
-                            <!-- FIRB Fee Bar -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium">FIRB Application Fee</span>
-                                    <span class="text-sm text-gray-600">1%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-3">
-                                    <div class="bg-blue-400 h-3 rounded-full" style="width: 1%"></div>
-                                </div>
-                            </div>
-
-                            <!-- Stamp Duty Bar -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium">Stamp Duty & Surcharges</span>
-                                    <span class="text-sm text-gray-600">11%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-3">
-                                    <div class="bg-blue-600 h-3 rounded-full" style="width: 11%"></div>
-                                </div>
-                            </div>
-
-                            <!-- Other Costs Bar -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium">Legal & Other Fees</span>
-                                    <span class="text-sm text-gray-600">1%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-3">
-                                    <div class="bg-blue-300 h-3 rounded-full" style="width: 1%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Investment Cost Breakdown -->
+      <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-500 to-blue-400 text-white p-6">
+          <h2 class="text-2xl font-bold mb-2">Investment Cost Breakdown</h2>
+          <p class="text-blue-100">
+            Detailed breakdown of all costs associated with your property purchase
+          </p>
         </div>
+
+        <div class="p-6 space-y-6">
+          <!-- Total Investment Required -->
+          <div class="p-6 rounded-lg bg-gradient-to-r from-blue-500 to-blue-400 text-white">
+            <p class="text-sm opacity-90">Total Investment Required</p>
+            <p class="text-4xl font-bold mt-2">$822,350</p>
+            <p class="text-sm opacity-75 mt-2">Property Price: $750,000</p>
+            <p class="text-sm opacity-75">Additional Upfront Costs: $72,350</p>
+          </div>
+
+          <!-- Upfront Costs -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+              💰 Upfront Costs
+            </h3>
+            <div class="bg-gray-50 rounded-lg p-4 space-y-3">
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-600 text-sm">🏠</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Property Price</p>
+                    <p class="text-sm text-gray-600">Purchase price</p>
+                  </div>
+                </div>
+                <span class="font-semibold text-lg">$750,000</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-600 text-sm">📋</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">FIRB Application Fee</p>
+                    <p class="text-sm text-gray-600">Required for foreign investors</p>
+                  </div>
+                </div>
+                <span class="font-semibold text-lg">$6,350</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-600 text-sm">📄</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Stamp Duty</p>
+                    <p class="text-sm text-gray-600">NSW stamp duty</p>
+                  </div>
+                </div>
+                <span class="font-semibold text-lg">$29,500</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-600 text-sm">🌍</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Foreign Investor Surcharge</p>
+                    <p class="text-sm text-gray-600">8% surcharge on property value</p>
+                  </div>
+                </div>
+                <span class="font-semibold text-lg">$60,000</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-600 text-sm">⚖️</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Legal & Professional Fees</p>
+                    <p class="text-sm text-gray-600">Conveyancing and legal costs</p>
+                  </div>
+                </div>
+                <span class="font-semibold text-lg">$2,500</span>
+              </div>
+
+              <!-- Subtotal -->
+              <div class="bg-blue-50 border-t-2 border-blue-200 pt-3 mt-3">
+                <div class="flex justify-between items-center">
+                  <span class="font-semibold text-blue-800">Subtotal</span>
+                  <span class="font-bold text-blue-800 text-xl">$848,350</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ongoing Costs -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+              📅 Annual Ongoing Costs
+            </h3>
+            <p class="text-sm text-gray-600 mb-4">Estimated annual recurring expenses</p>
+            <div class="bg-gray-50 rounded-lg p-4 space-y-3">
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <span class="text-green-600 text-sm">🏛️</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Council Rates</p>
+                    <p class="text-sm text-gray-600">Local government rates</p>
+                  </div>
+                </div>
+                <span class="font-semibold">$3,200</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <span class="text-green-600 text-sm">🛡️</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Insurance</p>
+                    <p class="text-sm text-gray-600">Building and contents insurance</p>
+                  </div>
+                </div>
+                <span class="font-semibold">$1,800</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <span class="text-green-600 text-sm">🔧</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Maintenance</p>
+                    <p class="text-sm text-gray-600">General property maintenance</p>
+                  </div>
+                </div>
+                <span class="font-semibold">$2,500</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <span class="text-green-600 text-sm">💰</span>
+                  </div>
+                  <div>
+                    <p class="font-medium">Vacancy Fee</p>
+                    <p class="text-sm text-gray-600">If property not occupied/rented</p>
+                  </div>
+                </div>
+                <span class="font-semibold">$0</span>
+              </div>
+
+              <!-- Annual Total -->
+              <div class="bg-green-50 border-t-2 border-green-200 pt-3 mt-3">
+                <div class="flex justify-between items-center">
+                  <span class="font-semibold text-green-800">Total Annual Costs</span>
+                  <span class="font-bold text-green-800 text-xl">$7,500</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cost Summary Chart -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-primary">
+              📊 Cost Breakdown Visualization
+            </h3>
+            <div class="bg-gray-50 rounded-lg p-6">
+              <div class="space-y-4">
+                <!-- Property Price Bar -->
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium">Property Price</span>
+                    <span class="text-sm text-gray-600">91%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-blue-500 h-3 rounded-full" style="width: 91%"></div>
+                  </div>
+                </div>
+
+                <!-- FIRB Fee Bar -->
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium">FIRB Application Fee</span>
+                    <span class="text-sm text-gray-600">1%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-blue-400 h-3 rounded-full" style="width: 1%"></div>
+                  </div>
+                </div>
+
+                <!-- Stamp Duty Bar -->
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium">Stamp Duty & Surcharges</span>
+                    <span class="text-sm text-gray-600">11%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-blue-600 h-3 rounded-full" style="width: 11%"></div>
+                  </div>
+                </div>
+
+                <!-- Other Costs Bar -->
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium">Legal & Other Fees</span>
+                    <span class="text-sm text-gray-600">1%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-blue-300 h-3 rounded-full" style="width: 1%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

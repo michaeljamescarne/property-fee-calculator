@@ -14,7 +14,7 @@ tags:
 
 # What Are FIRB Fees? Complete Guide to Foreign Property Investment Costs (2025)
 
-*Last updated: 25 December 2024 • 9 min read*
+_Last updated: 25 December 2024 • 9 min read_
 
 If you're a foreign investor looking to buy Australian property, there's one cost you'll encounter before anything else: the FIRB application fee. This mandatory government charge often comes as a surprise—especially when you discover it starts at $15,100 and increases with your property's value.
 
@@ -50,21 +50,21 @@ FIRB fees follow a tiered system that increases as property values rise. The cur
 
 ### Residential Property Application Fees
 
-| Property Purchase Price | FIRB Application Fee |
-|:------------------------|:---------------------|
-| Up to $1 million | $15,100 |
-| $1 million - $2 million | $30,300 |
-| $2 million - $3 million | $45,500 |
-| $3 million - $4 million | $60,600 |
-| $4 million - $5 million | $75,800 |
-| $5 million - $6 million | $91,000 |
-| $6 million - $7 million | $106,200 |
-| $7 million - $8 million | $121,400 |
-| $8 million - $9 million | $136,600 |
-| $9 million - $10 million | $151,800 |
-| Over $10 million | Add $15,100 for each additional $1 million (or part thereof) |
+| Property Purchase Price  | FIRB Application Fee                                         |
+| :----------------------- | :----------------------------------------------------------- |
+| Up to $1 million         | $15,100                                                      |
+| $1 million - $2 million  | $30,300                                                      |
+| $2 million - $3 million  | $45,500                                                      |
+| $3 million - $4 million  | $60,600                                                      |
+| $4 million - $5 million  | $75,800                                                      |
+| $5 million - $6 million  | $91,000                                                      |
+| $6 million - $7 million  | $106,200                                                     |
+| $7 million - $8 million  | $121,400                                                     |
+| $8 million - $9 million  | $136,600                                                     |
+| $9 million - $10 million | $151,800                                                     |
+| Over $10 million         | Add $15,100 for each additional $1 million (or part thereof) |
 
-*These fees apply to single dwelling applications. Different structures apply for multiple dwellings, commercial property, or large-scale residential developments.*
+_These fees apply to single dwelling applications. Different structures apply for multiple dwellings, commercial property, or large-scale residential developments._
 
 ### Real-World Examples
 
@@ -179,14 +179,17 @@ Australia takes foreign investment compliance seriously. The Foreign Acquisition
 Breaching FIRB requirements can result in:
 
 **Civil penalties**:
+
 - Individuals: Up to $6,660,000 (30,000 penalty units at $222 each)
 - Corporations: Up to $66,600,000 (300,000 penalty units at $222 each)
 
 **Criminal penalties**:
+
 - Imprisonment for up to 10 years for serious breaches
 - Criminal fines on top of civil penalties
 
 **Forced divestment orders**:
+
 - You may be legally required to sell the property
 - Often forced to sell quickly at below-market value
 - All profits from the sale can be forfeited to the government
@@ -266,7 +269,7 @@ Manually calculating all these costs across different states, property types, an
 Our **FIRB Cost Calculator** provides instant, accurate estimates tailored to your specific situation. Simply enter:
 
 - Property purchase price
-- State/territory location  
+- State/territory location
 - Property type (new dwelling, vacant land, etc.)
 - Your residency status
 
@@ -297,7 +300,7 @@ Before submitting your FIRB application:
 ✅ Consider engaging an FIRB specialist if your situation is complex  
 ✅ Set up your Australian bank account for fee payment  
 ✅ Understand the approval conditions and compliance requirements  
-✅ Plan for annual re-certification if required for your visa type  
+✅ Plan for annual re-certification if required for your visa type
 
 ## Final Thoughts
 
@@ -309,4 +312,4 @@ The key to success is comprehensive planning. Understand the full cost picture, 
 
 Thousands of foreign investors successfully navigate the FIRB process every year and build profitable Australian property portfolios. With proper preparation and realistic expectations about costs, there's no reason you can't be one of them.
 
-*Disclaimer: This guide provides general information only and should not be considered financial or legal advice. FIRB fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions. Fees stated are based on the latest available guidance and are subject to annual indexation.*
+_Disclaimer: This guide provides general information only and should not be considered financial or legal advice. FIRB fees, regulations, and requirements are subject to change. Always consult with qualified professionals including immigration lawyers, tax advisors, and licensed conveyancers before making property investment decisions. Fees stated are based on the latest available guidance and are subject to annual indexation._

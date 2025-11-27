@@ -3,25 +3,25 @@
  * Collects citizenship status and related information
  */
 
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useTranslations } from "next-intl";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CitizenshipStatus, TEMPORARY_VISA_TYPES } from '@/lib/firb/constants';
-import { Info } from 'lucide-react';
+} from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CitizenshipStatus, TEMPORARY_VISA_TYPES } from "@/lib/firb/constants";
+import { Info } from "lucide-react";
 
 interface CitizenshipStepProps {
-  citizenshipStatus: CitizenshipStatus | '';
+  citizenshipStatus: CitizenshipStatus | "";
   visaType?: string;
   isOrdinarilyResident?: boolean;
   onCitizenshipStatusChange: (status: CitizenshipStatus) => void;
@@ -35,20 +35,22 @@ export default function CitizenshipStep({
   isOrdinarilyResident,
   onCitizenshipStatusChange,
   onVisaTypeChange,
-  onOrdinarilyResidentChange
+  onOrdinarilyResidentChange,
 }: CitizenshipStepProps) {
-  const t = useTranslations('FIRBCalculator.citizenship');
+  const t = useTranslations("FIRBCalculator.citizenship");
 
   return (
     <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader className="pb-6">
-        <CardTitle className="text-2xl font-semibold text-gray-900">{t('title')}</CardTitle>
-        <CardDescription className="text-base mt-2 text-gray-600">{t('description')}</CardDescription>
+        <CardTitle className="text-2xl font-semibold text-gray-900">{t("title")}</CardTitle>
+        <CardDescription className="text-base mt-2 text-gray-600">
+          {t("description")}
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Citizenship Status */}
         <div className="space-y-4">
-          <Label className="text-base font-semibold text-gray-900">{t('statusLabel')}</Label>
+          <Label className="text-base font-semibold text-gray-900">{t("statusLabel")}</Label>
           <RadioGroup
             value={citizenshipStatus}
             onValueChange={(value) => onCitizenshipStatusChange(value as CitizenshipStatus)}
@@ -59,11 +61,9 @@ export default function CitizenshipStep({
               <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="australian" id="australian" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm text-gray-900">
-                    {t('australian.title')}
-                  </div>
+                  <div className="font-semibold text-sm text-gray-900">{t("australian.title")}</div>
                   <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
-                    {t('australian.description')}
+                    {t("australian.description")}
                   </p>
                 </div>
               </div>
@@ -74,11 +74,9 @@ export default function CitizenshipStep({
               <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="permanent" id="permanent" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm text-gray-900">
-                    {t('permanent.title')}
-                  </div>
+                  <div className="font-semibold text-sm text-gray-900">{t("permanent.title")}</div>
                   <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
-                    {t('permanent.description')}
+                    {t("permanent.description")}
                   </p>
                 </div>
               </div>
@@ -89,11 +87,9 @@ export default function CitizenshipStep({
               <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="temporary" id="temporary" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm text-gray-900">
-                    {t('temporary.title')}
-                  </div>
+                  <div className="font-semibold text-sm text-gray-900">{t("temporary.title")}</div>
                   <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
-                    {t('temporary.description')}
+                    {t("temporary.description")}
                   </p>
                 </div>
               </div>
@@ -104,11 +100,9 @@ export default function CitizenshipStep({
               <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
                 <RadioGroupItem value="foreign" id="foreign" />
                 <div className="flex-1">
-                  <div className="font-semibold text-sm text-gray-900">
-                    {t('foreign.title')}
-                  </div>
+                  <div className="font-semibold text-sm text-gray-900">{t("foreign.title")}</div>
                   <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">
-                    {t('foreign.description')}
+                    {t("foreign.description")}
                   </p>
                 </div>
               </div>
@@ -117,20 +111,18 @@ export default function CitizenshipStep({
         </div>
 
         {/* Conditional: Visa Type for Temporary Residents */}
-        {citizenshipStatus === 'temporary' && (
+        {citizenshipStatus === "temporary" && (
           <div className="space-y-3 p-4 bg-blue-50 rounded border border-blue-200">
             <div className="flex items-start gap-2">
               <Info className="h-5 w-5 text-blue-600 mt-0.5" />
               <div className="flex-1">
                 <Label htmlFor="visa-type" className="text-base font-medium text-gray-900">
-                  {t('visaType.label')}
+                  {t("visaType.label")}
                 </Label>
-                <p className="text-sm text-gray-600 mt-1 mb-3">
-                  {t('visaType.description')}
-                </p>
+                <p className="text-sm text-gray-600 mt-1 mb-3">{t("visaType.description")}</p>
                 <Select value={visaType} onValueChange={onVisaTypeChange}>
                   <SelectTrigger id="visa-type" className="bg-background">
-                    <SelectValue placeholder={t('visaType.placeholder')} />
+                    <SelectValue placeholder={t("visaType.placeholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {TEMPORARY_VISA_TYPES.map((visa) => (
@@ -146,7 +138,7 @@ export default function CitizenshipStep({
         )}
 
         {/* Conditional: Ordinarily Resident for Australian Citizens */}
-        {citizenshipStatus === 'australian' && (
+        {citizenshipStatus === "australian" && (
           <div className="space-y-3 p-4 bg-amber-50 rounded border border-amber-200">
             <div className="flex items-start gap-3">
               <Checkbox
@@ -156,12 +148,13 @@ export default function CitizenshipStep({
                 className="mt-1"
               />
               <div className="flex-1">
-                <Label htmlFor="ordinarily-resident" className="font-medium cursor-pointer text-gray-900">
-                  {t('ordinarilyResident.label')}
+                <Label
+                  htmlFor="ordinarily-resident"
+                  className="font-medium cursor-pointer text-gray-900"
+                >
+                  {t("ordinarilyResident.label")}
                 </Label>
-                <p className="text-sm text-gray-600 mt-1">
-                  {t('ordinarilyResident.description')}
-                </p>
+                <p className="text-sm text-gray-600 mt-1">{t("ordinarilyResident.description")}</p>
               </div>
             </div>
           </div>
@@ -173,10 +166,10 @@ export default function CitizenshipStep({
             <div className="flex gap-2">
               <Info className="h-5 w-5 text-gray-500 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-gray-600">
-                {citizenshipStatus === 'australian' && t('info.australian')}
-                {citizenshipStatus === 'permanent' && t('info.permanent')}
-                {citizenshipStatus === 'temporary' && t('info.temporary')}
-                {citizenshipStatus === 'foreign' && t('info.foreign')}
+                {citizenshipStatus === "australian" && t("info.australian")}
+                {citizenshipStatus === "permanent" && t("info.permanent")}
+                {citizenshipStatus === "temporary" && t("info.temporary")}
+                {citizenshipStatus === "foreign" && t("info.foreign")}
               </div>
             </div>
           </div>
@@ -185,4 +178,3 @@ export default function CitizenshipStep({
     </Card>
   );
 }
-

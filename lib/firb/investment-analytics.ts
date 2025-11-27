@@ -3,20 +3,16 @@
  * Comprehensive investment analysis for property purchases
  */
 
-import type { InvestmentInputs, InvestmentAnalytics, YearlyProjection } from '@/types/investment';
-import type { CostBreakdown } from './calculations';
-import { PropertyType, AustralianState } from './constants';
+import type { InvestmentInputs, InvestmentAnalytics, YearlyProjection } from "@/types/investment";
+import type { CostBreakdown } from "./calculations";
+import { PropertyType, AustralianState } from "./constants";
 import {
   calculateMonthlyRepayment,
   calculateInterestOnlyRepayment,
   calculateLoanSchedule,
   calculateLVR,
-} from './loan-calculator';
-import {
-  calculateTaxDeductions,
-  calculateTaxBenefit,
-  calculateCGT,
-} from './tax-calculator';
+} from "./loan-calculator";
+import { calculateTaxDeductions, calculateTaxBenefit, calculateCGT } from "./tax-calculator";
 
 /**
  * Generate smart default investment inputs based on property details
@@ -45,54 +41,54 @@ export function generateDefaultInputs(
     ACT: 0.038, // 3.8%
     NT: 0.055, // 5.5%
   };
-  
-  const grossYield = benchmarkData?.grossRentalYield 
+
+  const grossYield = benchmarkData?.grossRentalYield
     ? benchmarkData.grossRentalYield / 100 // Convert percentage to decimal
-    : (yieldRates[state] || 0.04);
+    : yieldRates[state] || 0.04;
   const annualRent = propertyValue * grossYield;
   const weeklyRent = Math.round(annualRent / 52);
-  
+
   // Use benchmark capital growth if available
-  const capitalGrowth = benchmarkData?.capitalGrowth5yr 
+  const capitalGrowth = benchmarkData?.capitalGrowth5yr
     ? benchmarkData.capitalGrowth5yr / 100 // Convert percentage to decimal
     : 0.06; // Default 6%
-  
+
   // Loan amount
   const depositAmount = propertyValue * (depositPercent / 100);
   const loanAmount = propertyValue - depositAmount;
-  
+
   return {
     // Rental
     estimatedWeeklyRent: weeklyRent,
     vacancyRate: 5,
     rentGrowthRate: 3,
-    
+
     // Management
     propertyManagementFee: 8,
     lettingFee: 2,
     selfManaged: false,
-    
+
     // Ongoing costs (use existing calculated costs)
     annualMaintenanceCost: existingCosts.ongoingCosts.maintenance,
     annualInsurance: existingCosts.ongoingCosts.insurance,
     annualStrataFees: 0, // User can override
-    
+
     // Financing
     loanAmount,
     interestRate: 6.5,
     loanTerm: 30,
-    loanType: 'principalAndInterest',
+    loanType: "principalAndInterest",
     interestOnlyPeriod: 0,
-    
+
     // Strategy
     holdPeriod: 10,
     capitalGrowthRate: capitalGrowth * 100, // Convert back to percentage for display
-    
+
     // Tax
     marginalTaxRate: 37, // Foreign resident rate
     currencyExchangeRate: 1,
-    homeCurrency: 'AUD',
-    
+    homeCurrency: "AUD",
+
     // Exit
     sellingCosts: 4, // 3% agent + 1% legal
     cgtWithholdingRate: 12.5,
@@ -113,10 +109,13 @@ export function calculateInvestmentAnalytics(
   const annualRent = inputs.estimatedWeeklyRent * 52;
   const vacancyCost = annualRent * (inputs.vacancyRate / 100);
   const effectiveRent = annualRent - vacancyCost;
-  
+
   const grossYield = (annualRent / propertyValue) * 100;
-  const netYield = (effectiveRent - (effectiveRent * (inputs.propertyManagementFee / 100))) / existingCosts.totalInvestmentCost * 100;
-  
+  const netYield =
+    ((effectiveRent - effectiveRent * (inputs.propertyManagementFee / 100)) /
+      existingCosts.totalInvestmentCost) *
+    100;
+
   const benchmarks: Record<AustralianState, number> = {
     NSW: 3.2,
     VIC: 3.4,
@@ -127,15 +126,19 @@ export function calculateInvestmentAnalytics(
     ACT: 3.8,
     NT: 5.5,
   };
-  
+
   const benchmark = benchmarks[state] || 4.0;
-  const comparison = grossYield > benchmark ? `Above ${state} average (${benchmark}%)` : `Below ${state} average (${benchmark}%)`;
-  
+  const comparison =
+    grossYield > benchmark
+      ? `Above ${state} average (${benchmark}%)`
+      : `Below ${state} average (${benchmark}%)`;
+
   // 2. LOAN CALCULATIONS
-  const loanRepayment = inputs.loanType === 'interestOnly' && inputs.interestOnlyPeriod >= inputs.holdPeriod
-    ? calculateInterestOnlyRepayment(inputs.loanAmount, inputs.interestRate)
-    : calculateMonthlyRepayment(inputs.loanAmount, inputs.interestRate, inputs.loanTerm);
-  
+  const loanRepayment =
+    inputs.loanType === "interestOnly" && inputs.interestOnlyPeriod >= inputs.holdPeriod
+      ? calculateInterestOnlyRepayment(inputs.loanAmount, inputs.interestRate)
+      : calculateMonthlyRepayment(inputs.loanAmount, inputs.interestRate, inputs.loanTerm);
+
   const annualLoanRepayment = loanRepayment * 12;
   const loanSchedule = calculateLoanSchedule(
     inputs.loanAmount,
@@ -145,17 +148,19 @@ export function calculateInvestmentAnalytics(
     inputs.interestOnlyPeriod,
     inputs.holdPeriod
   );
-  
+
   const loanBalanceAtEnd = loanSchedule[inputs.holdPeriod - 1]?.balance || inputs.loanAmount;
   const totalInterestPaid = loanSchedule.reduce((sum, year) => sum + year.interestPaid, 0);
   const totalPrincipalPaid = inputs.loanAmount - loanBalanceAtEnd;
-  
+
   const lvr = calculateLVR(inputs.loanAmount, propertyValue);
-  
+
   // 3. CASH FLOW CALCULATIONS (Year 1)
-  const propertyManagementCost = inputs.selfManaged ? 0 : effectiveRent * (inputs.propertyManagementFee / 100);
-  const lettingCost = inputs.selfManaged ? 0 : (inputs.estimatedWeeklyRent * inputs.lettingFee);
-  
+  const propertyManagementCost = inputs.selfManaged
+    ? 0
+    : effectiveRent * (inputs.propertyManagementFee / 100);
+  const lettingCost = inputs.selfManaged ? 0 : inputs.estimatedWeeklyRent * inputs.lettingFee;
+
   const annualExpenses = {
     loanRepayments: annualLoanRepayment,
     propertyManagement: propertyManagementCost,
@@ -167,7 +172,7 @@ export function calculateInvestmentAnalytics(
     strataFees: inputs.annualStrataFees || 0,
     vacancyFee: existingCosts.ongoingCosts.vacancyFee,
   };
-  
+
   const totalExpenses =
     annualExpenses.loanRepayments +
     annualExpenses.propertyManagement +
@@ -178,12 +183,13 @@ export function calculateInvestmentAnalytics(
     annualExpenses.landTax +
     annualExpenses.strataFees +
     annualExpenses.vacancyFee;
-  
+
   const netCashFlow = effectiveRent - totalExpenses;
-  
+
   // 4. TAX DEDUCTIONS & BENEFITS
-  const firstYearInterest = loanSchedule[0]?.interestPaid || (inputs.loanAmount * inputs.interestRate / 100);
-  
+  const firstYearInterest =
+    loanSchedule[0]?.interestPaid || (inputs.loanAmount * inputs.interestRate) / 100;
+
   const deductions = calculateTaxDeductions(
     firstYearInterest,
     annualExpenses.councilRates,
@@ -196,42 +202,47 @@ export function calculateInvestmentAnalytics(
     propertyType,
     0 // New property
   );
-  
+
   const taxBenefit = calculateTaxBenefit(deductions.total, effectiveRent, inputs.marginalTaxRate);
   const afterTaxCashFlow = netCashFlow + taxBenefit;
-  
+
   // 5. CAPITAL GROWTH & ROI
-  const futureValue = propertyValue * Math.pow(1 + inputs.capitalGrowthRate / 100, inputs.holdPeriod);
+  const futureValue =
+    propertyValue * Math.pow(1 + inputs.capitalGrowthRate / 100, inputs.holdPeriod);
   const totalAppreciation = futureValue - propertyValue;
-  
+
   const deposit = propertyValue - inputs.loanAmount;
   const totalCashInvested = existingCosts.totalInvestmentCost;
-  
+
   // Calculate year-by-year projections
   const yearByYear: YearlyProjection[] = [];
   let cumulativeCashFlow = 0;
-  
+
   for (let year = 1; year <= inputs.holdPeriod; year++) {
     const yearPropertyValue = propertyValue * Math.pow(1 + inputs.capitalGrowthRate / 100, year);
     const yearLoanBalance = loanSchedule[year - 1]?.balance || inputs.loanAmount;
     const yearEquity = yearPropertyValue - yearLoanBalance;
-    
+
     // Rent grows annually
     const yearRentalIncome = annualRent * Math.pow(1 + inputs.rentGrowthRate / 100, year - 1);
     const yearEffectiveRent = yearRentalIncome * (1 - inputs.vacancyRate / 100);
-    
+
     // Expenses (some grow with inflation, some are fixed)
     const yearExpenses = totalExpenses * Math.pow(1.025, year - 1); // 2.5% inflation
     const yearLoanRepayment = annualLoanRepayment; // Fixed
-    
+
     const yearNetCashFlow = yearEffectiveRent - yearExpenses;
-    const yearTaxBenefit = calculateTaxBenefit(deductions.total * Math.pow(1.025, year - 1), yearEffectiveRent, inputs.marginalTaxRate);
+    const yearTaxBenefit = calculateTaxBenefit(
+      deductions.total * Math.pow(1.025, year - 1),
+      yearEffectiveRent,
+      inputs.marginalTaxRate
+    );
     const yearAfterTaxCashFlow = yearNetCashFlow + yearTaxBenefit;
-    
+
     cumulativeCashFlow += yearAfterTaxCashFlow;
-    
+
     const cumulativeReturn = yearEquity - totalCashInvested + cumulativeCashFlow;
-    
+
     yearByYear.push({
       year,
       propertyValue: yearPropertyValue,
@@ -247,23 +258,24 @@ export function calculateInvestmentAnalytics(
       cumulativeReturn,
     });
   }
-  
+
   const finalEquity = futureValue - loanBalanceAtEnd;
-  const totalReturn = finalEquity - deposit + yearByYear.reduce((sum, y) => sum + y.afterTaxCashFlow, 0);
+  const totalReturn =
+    finalEquity - deposit + yearByYear.reduce((sum, y) => sum + y.afterTaxCashFlow, 0);
   const totalROI = (totalReturn / totalCashInvested) * 100;
   const annualizedROI = totalROI / inputs.holdPeriod;
   const cashOnCashReturn = (afterTaxCashFlow / totalCashInvested) * 100;
-  
+
   // 6. INVESTMENT COMPARISONS
   const comparisonAmount = totalCashInvested; // Same initial investment
-  
+
   const asxReturn = comparisonAmount * Math.pow(1.072, inputs.holdPeriod) - comparisonAmount;
   const termDepositReturn = comparisonAmount * Math.pow(1.04, inputs.holdPeriod) - comparisonAmount;
   const bondReturn = comparisonAmount * Math.pow(1.045, inputs.holdPeriod) - comparisonAmount;
   const savingsReturn = comparisonAmount * Math.pow(1.045, inputs.holdPeriod) - comparisonAmount;
-  
+
   // 7. SENSITIVITY ANALYSIS
-  const vacancyScenarios = [0, 5, 10, 15].map(rate => {
+  const vacancyScenarios = [0, 5, 10, 15].map((rate) => {
     const adjustedRent = annualRent * (1 - rate / 100);
     const adjustedCashFlow = adjustedRent - totalExpenses + taxBenefit;
     return {
@@ -273,11 +285,12 @@ export function calculateInvestmentAnalytics(
       impact: adjustedCashFlow - afterTaxCashFlow,
     };
   });
-  
-  const interestRateScenarios = [5.5, 6.5, 7.5, 8.5].map(rate => {
+
+  const interestRateScenarios = [5.5, 6.5, 7.5, 8.5].map((rate) => {
     const monthlyPayment = calculateMonthlyRepayment(inputs.loanAmount, rate, inputs.loanTerm);
     const annualCost = monthlyPayment * 12;
-    const adjustedCashFlow = effectiveRent - (totalExpenses - annualLoanRepayment + annualCost) + taxBenefit;
+    const adjustedCashFlow =
+      effectiveRent - (totalExpenses - annualLoanRepayment + annualCost) + taxBenefit;
     return {
       rate,
       monthlyRepayment: monthlyPayment,
@@ -286,18 +299,18 @@ export function calculateInvestmentAnalytics(
       impact: adjustedCashFlow - afterTaxCashFlow,
     };
   });
-  
+
   const growthScenarios = [
-    { rate: 4, label: 'Conservative' },
-    { rate: 6, label: 'Moderate' },
-    { rate: 8, label: 'Optimistic' },
-  ].map(scenario => {
+    { rate: 4, label: "Conservative" },
+    { rate: 6, label: "Moderate" },
+    { rate: 8, label: "Optimistic" },
+  ].map((scenario) => {
     const endValue = propertyValue * Math.pow(1 + scenario.rate / 100, inputs.holdPeriod);
     const endLoanBalance = loanBalanceAtEnd;
     const endEquity = endValue - endLoanBalance;
     const scenarioReturn = endEquity - deposit;
-    const scenarioROI = (scenarioReturn / totalCashInvested) / inputs.holdPeriod * 100;
-    
+    const scenarioROI = (scenarioReturn / totalCashInvested / inputs.holdPeriod) * 100;
+
     return {
       rate: scenario.rate,
       label: scenario.label,
@@ -306,7 +319,7 @@ export function calculateInvestmentAnalytics(
       annualizedROI: scenarioROI,
     };
   });
-  
+
   // 8. CGT ON EXIT
   const salePrice = futureValue;
   const sellingCostsAmount = salePrice * (inputs.sellingCosts / 100);
@@ -318,7 +331,7 @@ export function calculateInvestmentAnalytics(
     true,
     inputs.marginalTaxRate
   );
-  
+
   // 9. INVESTMENT SCORE
   const scores = {
     rentalYield: Math.min(10, Math.max(0, (grossYield / 5) * 10)), // 5% = perfect score
@@ -327,60 +340,68 @@ export function calculateInvestmentAnalytics(
     taxEfficiency: Math.min(10, Math.max(0, (taxBenefit / Math.abs(netCashFlow)) * 10)),
     riskProfile: 7, // Default medium-high (property is generally stable)
   };
-  
-  const overall = (scores.rentalYield + scores.capitalGrowth + scores.cashFlow + scores.taxEfficiency + scores.riskProfile) / 5;
-  
+
+  const overall =
+    (scores.rentalYield +
+      scores.capitalGrowth +
+      scores.cashFlow +
+      scores.taxEfficiency +
+      scores.riskProfile) /
+    5;
+
   // 10. RECOMMENDATION
-  let verdict: 'Excellent' | 'Good' | 'Moderate' | 'Poor' | 'Not Recommended';
-  if (overall >= 8) verdict = 'Excellent';
-  else if (overall >= 7) verdict = 'Good';
-  else if (overall >= 5.5) verdict = 'Moderate';
-  else if (overall >= 4) verdict = 'Poor';
-  else verdict = 'Not Recommended';
-  
+  let verdict: "Excellent" | "Good" | "Moderate" | "Poor" | "Not Recommended";
+  if (overall >= 8) verdict = "Excellent";
+  else if (overall >= 7) verdict = "Good";
+  else if (overall >= 5.5) verdict = "Moderate";
+  else if (overall >= 4) verdict = "Poor";
+  else verdict = "Not Recommended";
+
   const strengths: string[] = [];
   const weaknesses: string[] = [];
-  
+
   if (grossYield > benchmark) strengths.push(`Strong rental yield (${grossYield.toFixed(1)}%)`);
   else weaknesses.push(`Below average rental yield (${grossYield.toFixed(1)}%)`);
-  
-  if (inputs.capitalGrowthRate >= 6) strengths.push('Good capital growth potential');
-  else if (inputs.capitalGrowthRate < 4) weaknesses.push('Limited capital growth potential');
-  
-  if (afterTaxCashFlow >= 0) strengths.push('Positive cash flow after tax');
+
+  if (inputs.capitalGrowthRate >= 6) strengths.push("Good capital growth potential");
+  else if (inputs.capitalGrowthRate < 4) weaknesses.push("Limited capital growth potential");
+
+  if (afterTaxCashFlow >= 0) strengths.push("Positive cash flow after tax");
   else weaknesses.push(`Negative cash flow ($${Math.abs(afterTaxCashFlow).toLocaleString()}/year)`);
-  
-  if (taxBenefit > 5000) strengths.push(`Significant tax benefits ($${Math.round(taxBenefit).toLocaleString()}/year)`);
-  
-  if (totalROI > 60) strengths.push(`Strong ${inputs.holdPeriod}-year return (${totalROI.toFixed(1)}% ROI)`);
-  
+
+  if (taxBenefit > 5000)
+    strengths.push(`Significant tax benefits ($${Math.round(taxBenefit).toLocaleString()}/year)`);
+
+  if (totalROI > 60)
+    strengths.push(`Strong ${inputs.holdPeriod}-year return (${totalROI.toFixed(1)}% ROI)`);
+
   const suitableFor: string[] = [];
   if (afterTaxCashFlow < 0) {
-    suitableFor.push('Investors with stable income to cover negative cash flow');
-    suitableFor.push('High income earners benefiting from negative gearing');
+    suitableFor.push("Investors with stable income to cover negative cash flow");
+    suitableFor.push("High income earners benefiting from negative gearing");
   }
   if (inputs.holdPeriod >= 10) {
-    suitableFor.push('Long-term wealth building (10+ years)');
+    suitableFor.push("Long-term wealth building (10+ years)");
   }
   if (grossYield > 4) {
-    suitableFor.push('Investors seeking rental income');
+    suitableFor.push("Investors seeking rental income");
   }
   if (inputs.capitalGrowthRate >= 6) {
-    suitableFor.push('Capital growth focused investors');
+    suitableFor.push("Capital growth focused investors");
   }
-  
+
   const risksToConsider: string[] = [];
-  if (inputs.vacancyRate >= 10) risksToConsider.push('High vacancy risk');
-  if (lvr > 80) risksToConsider.push('High leverage (LVR > 80%)');
-  if (afterTaxCashFlow < -20000) risksToConsider.push('Significant ongoing cash requirement');
-  risksToConsider.push('Foreign buyer costs reduce returns');
-  risksToConsider.push('Currency exchange risk');
-  risksToConsider.push('Market downturn risk');
-  
+  if (inputs.vacancyRate >= 10) risksToConsider.push("High vacancy risk");
+  if (lvr > 80) risksToConsider.push("High leverage (LVR > 80%)");
+  if (afterTaxCashFlow < -20000) risksToConsider.push("Significant ongoing cash requirement");
+  risksToConsider.push("Foreign buyer costs reduce returns");
+  risksToConsider.push("Currency exchange risk");
+  risksToConsider.push("Market downturn risk");
+
   // Find break-even points
   let yearsToPositiveCashFlow = null;
   let yearsToCumulativeBreakEven = null;
-  
+
   for (let i = 0; i < yearByYear.length; i++) {
     if (yearsToPositiveCashFlow === null && yearByYear[i].afterTaxCashFlow >= 0) {
       yearsToPositiveCashFlow = yearByYear[i].year;
@@ -389,11 +410,11 @@ export function calculateInvestmentAnalytics(
       yearsToCumulativeBreakEven = yearByYear[i].year;
     }
   }
-  
+
   const totalCashRequired = yearByYear
-    .filter(y => y.afterTaxCashFlow < 0)
+    .filter((y) => y.afterTaxCashFlow < 0)
     .reduce((sum, y) => sum + Math.abs(y.afterTaxCashFlow), 0);
-  
+
   // BUILD FINAL ANALYTICS OBJECT
   return {
     rentalYield: {
@@ -405,7 +426,7 @@ export function calculateInvestmentAnalytics(
       comparison,
       benchmark,
     },
-    
+
     cashFlow: {
       annual: {
         rentalIncome: annualRent,
@@ -430,14 +451,14 @@ export function calculateInvestmentAnalytics(
         afterTaxCashFlow: afterTaxCashFlow / 12,
       },
     },
-    
+
     roi: {
       totalROI,
       annualizedROI,
       cashOnCashReturn,
       totalReturn,
     },
-    
+
     capitalGrowth: {
       initialValue: propertyValue,
       estimatedValueAtEnd: futureValue,
@@ -445,7 +466,7 @@ export function calculateInvestmentAnalytics(
       annualGrowthRate: inputs.capitalGrowthRate,
       totalPercentageGain: (totalAppreciation / propertyValue) * 100,
     },
-    
+
     loanMetrics: {
       lvr,
       initialLoanAmount: inputs.loanAmount,
@@ -458,9 +479,9 @@ export function calculateInvestmentAnalytics(
       equityAtEnd: finalEquity,
       equityGain: finalEquity - deposit,
     },
-    
+
     yearByYear,
-    
+
     comparisons: {
       propertyInvestment: {
         totalReturn,
@@ -487,20 +508,20 @@ export function calculateInvestmentAnalytics(
         rate: 4.5,
       },
     },
-    
+
     sensitivity: {
       vacancyImpact: vacancyScenarios,
       interestRateImpact: interestRateScenarios,
       growthScenarios,
     },
-    
+
     taxAnalysis: {
       annualDeductions: deductions,
       annualTaxSaving: taxBenefit,
       monthlyTaxSaving: taxBenefit / 12,
       cgtOnExit: cgt,
     },
-    
+
     score: {
       overall,
       rentalYield: scores.rentalYield,
@@ -509,18 +530,24 @@ export function calculateInvestmentAnalytics(
       taxEfficiency: scores.taxEfficiency,
       riskProfile: scores.riskProfile,
     },
-    
+
     recommendation: {
       verdict,
       rating: overall,
-      description: generateRecommendationText(verdict, grossYield, afterTaxCashFlow, totalROI, inputs.holdPeriod),
+      description: generateRecommendationText(
+        verdict,
+        grossYield,
+        afterTaxCashFlow,
+        totalROI,
+        inputs.holdPeriod
+      ),
       strengths,
       weaknesses,
       suitableFor,
       risksToConsider,
       keyTakeaways: generateKeyTakeaways(grossYield, netCashFlow, totalROI, inputs.holdPeriod),
     },
-    
+
     breakEven: {
       yearsToPositiveCashFlow,
       yearsToCumulativeBreakEven,
@@ -536,14 +563,14 @@ function generateRecommendationText(
   totalROI: number,
   holdPeriod: number
 ): string {
-  const gearing = afterTaxCashFlow < 0 ? 'negatively geared' : 'positively geared';
-  
+  const gearing = afterTaxCashFlow < 0 ? "negatively geared" : "positively geared";
+
   return `This is a **${verdict.toUpperCase()}** investment opportunity. The property is ${gearing} with a ${grossYield.toFixed(1)}% gross rental yield. Over ${holdPeriod} years, the projected total ROI is ${totalROI.toFixed(1)}%. ${
-    verdict === 'Excellent' || verdict === 'Good'
-      ? 'This investment shows strong potential for wealth building with balanced risk-return profile.'
-      : verdict === 'Moderate'
-      ? 'This investment has moderate potential. Consider your risk tolerance and cash flow capacity carefully.'
-      : 'This investment may not meet typical return expectations. Review all assumptions and consider alternatives.'
+    verdict === "Excellent" || verdict === "Good"
+      ? "This investment shows strong potential for wealth building with balanced risk-return profile."
+      : verdict === "Moderate"
+        ? "This investment has moderate potential. Consider your risk tolerance and cash flow capacity carefully."
+        : "This investment may not meet typical return expectations. Review all assumptions and consider alternatives."
   }`;
 }
 
@@ -554,20 +581,24 @@ function generateKeyTakeaways(
   holdPeriod: number
 ): string[] {
   const takeaways: string[] = [];
-  
-  takeaways.push(`Rental yield of ${grossYield.toFixed(1)}% ${grossYield > 4 ? '(above average)' : '(below average)'}`);
-  
+
+  takeaways.push(
+    `Rental yield of ${grossYield.toFixed(1)}% ${grossYield > 4 ? "(above average)" : "(below average)"}`
+  );
+
   if (netCashFlow < 0) {
-    takeaways.push(`Requires ${Math.abs(Math.round(netCashFlow / 12)).toLocaleString()}/month cash contribution`);
+    takeaways.push(
+      `Requires ${Math.abs(Math.round(netCashFlow / 12)).toLocaleString()}/month cash contribution`
+    );
   } else {
-    takeaways.push(`Generates ${Math.round(netCashFlow / 12).toLocaleString()}/month positive cash flow`);
+    takeaways.push(
+      `Generates ${Math.round(netCashFlow / 12).toLocaleString()}/month positive cash flow`
+    );
   }
-  
+
   takeaways.push(`Projected ${holdPeriod}-year ROI of ${totalROI.toFixed(1)}%`);
   takeaways.push(`Foreign buyer costs significantly impact returns`);
   takeaways.push(`Long-term capital growth is key to success`);
-  
+
   return takeaways;
 }
-
-

@@ -14,6 +14,7 @@ This PR transforms the FIRB Calculator from a cost estimator into a **comprehens
 ### **Major Feature: Investment Analytics**
 
 A complete investment analysis system that provides:
+
 - ✅ Rental yield analysis (gross & net)
 - ✅ Cash flow projections (10-30 years)
 - ✅ ROI calculations and comparisons
@@ -26,11 +27,13 @@ A complete investment analysis system that provides:
 ### **User Experience**
 
 **Before this PR**:
+
 - Calculator shows: FIRB fees + stamp duty + total costs
 - Users get cost breakdown only
 - No investment guidance
 
 **After this PR**:
+
 - All of the above PLUS:
 - **Toggle button**: "Show Investment Analysis"
 - **Click to expand**: Complete investment analytics dashboard
@@ -48,6 +51,7 @@ A complete investment analysis system that provides:
 **Location**: Results page, after basic cost breakdown
 
 **Design**:
+
 - Large card with gradient background (primary/accent)
 - Prominent "Show Investment Analysis" button
 - Click to expand/collapse full analytics
@@ -56,18 +60,21 @@ A complete investment analysis system that provides:
 ### 2. Investment Inputs Form
 
 **Features**:
+
 - Smart defaults auto-populated from property details
 - Grouped in 4 collapsible accordions
 - Real-time input validation
 - Helper text and examples
 
 **Input Sections**:
+
 1. **Rental Income** - Weekly rent, vacancy rate, rent growth
 2. **Property Management** - Fees, self-manage option
 3. **Financing** - Loan amount, interest rate, loan type (P&I or IO)
 4. **Assumptions** - Hold period, capital growth, tax rate, currency
 
 **Smart Defaults by State**:
+
 - NSW: 3.2% yield → $523/week for $850k property
 - QLD: 4.5% yield → $735/week for $850k property
 - Interest rate: 6.5% (current market)
@@ -76,17 +83,20 @@ A complete investment analysis system that provides:
 ### 3. Investment Summary Dashboard
 
 **4 Key Metric Cards**:
+
 1. **Gross Rental Yield** - With state benchmark comparison
 2. **Net Rental Yield** - After all expenses
 3. **Annualized ROI** - With ASX 200 comparison
 4. **Monthly Cash Flow** - Pre/post-tax with tax benefit note
 
 **3 Highlight Cards**:
+
 1. Property Value Growth (purple gradient)
 2. Your Equity (green gradient)
 3. Tax Savings (amber gradient)
 
 **Features**:
+
 - Color-coded by performance (green=good, amber=warning, red=poor)
 - Trend indicators
 - Benchmark comparisons
@@ -95,6 +105,7 @@ A complete investment analysis system that provides:
 ### 4. Cash Flow Analysis
 
 **Components**:
+
 - **Bar Chart**: Visual comparison of income vs expenses
 - **Summary Cards**: Annual income, expenses, after-tax cash flow
 - **Expense Breakdown**: Itemized list of all costs
@@ -102,6 +113,7 @@ A complete investment analysis system that provides:
 - **Monthly Summary**: Before and after-tax cash flow
 
 **Visualizations**:
+
 - Green bar: Income
 - Red bar: Expenses
 - Blue/Amber bar: Net cash flow (color based on positive/negative)
@@ -109,12 +121,14 @@ A complete investment analysis system that provides:
 ### 5. 10-Year Projection Chart
 
 **Features**:
+
 - **Line Chart**: 3 lines showing property value, loan balance, equity
 - **Key Milestones**: Starting value, final value, equity growth, total ROI
 - **Break-Even Analysis**: Years to positive cash flow, cumulative break-even, cash required
 - **Year-by-Year Table**: Complete 10-year projection data
 
 **Metrics Displayed**:
+
 - Property value growth over time
 - Loan balance declining
 - Your equity increasing
@@ -124,12 +138,14 @@ A complete investment analysis system that provides:
 ### 6. Investment Comparison
 
 **Compares Against**:
+
 1. ASX 200 Stocks (7.2% historical)
 2. Government Bonds (4.5%)
 3. Term Deposit (4%)
 4. High-Interest Savings (4.5%)
 
 **Features**:
+
 - **Horizontal Bar Chart**: Visual comparison of 10-year returns
 - **Winner Highlight**: Green banner if property wins
 - **Detailed Table**: Annual rates, total returns, risk levels
@@ -140,21 +156,25 @@ A complete investment analysis system that provides:
 **Three Scenario Types**:
 
 **1. Vacancy Rate Impact** (0%, 5%, 10%, 15%):
+
 - Shows impact on annual rent and cash flow
 - Identifies how much each 5% vacancy costs
 
 **2. Interest Rate Impact** (5.5%, 6.5%, 7.5%, 8.5%):
+
 - Monthly repayment changes
 - Annual loan cost changes
 - Cash flow impact
 
 **3. Capital Growth Scenarios** (4%, 6%, 8%):
+
 - Conservative, Moderate, Optimistic
 - Final property value
 - Total return variations
 - Annualized ROI
 
 **Features**:
+
 - Base case highlighted
 - Impact calculations ($ difference vs base)
 - Risk mitigation recommendations
@@ -162,6 +182,7 @@ A complete investment analysis system that provides:
 ### 8. Tax Analysis
 
 **Deductions Breakdown**:
+
 - Loan interest
 - Property management
 - Maintenance & repairs
@@ -172,11 +193,13 @@ A complete investment analysis system that provides:
 - Depreciation (for new properties)
 
 **Tax Benefits Display**:
+
 - Annual tax saving from negative gearing
 - Monthly tax saving
 - Total deductions
 
 **CGT on Exit Calculation**:
+
 - Sale price (after growth)
 - Cost base (purchase + costs)
 - Capital gain
@@ -187,6 +210,7 @@ A complete investment analysis system that provides:
 ### 9. Investment Score & Recommendation
 
 **5-Dimensional Scoring** (0-10 scale):
+
 1. Rental Yield
 2. Capital Growth Potential
 3. Cash Flow
@@ -196,12 +220,14 @@ A complete investment analysis system that provides:
 **Overall Score**: Average of 5 dimensions
 
 **Visual Elements**:
+
 - Circular progress gauges for each dimension
 - Large overall score display
 - Color-coded verdict banner (green/blue/amber/red)
 - Investment rating (Excellent/Good/Moderate/Poor)
 
 **AI-Generated Recommendations**:
+
 - Verdict with explanation
 - Strengths (dynamically identified)
 - Weaknesses (dynamically identified)
@@ -210,6 +236,7 @@ A complete investment analysis system that provides:
 - Key takeaways
 
 **Example Output**:
+
 ```
 GOOD INVESTMENT (7.2/10)
 
@@ -300,6 +327,7 @@ Suitable For:
 ### Type Definitions
 
 **investment.ts** (248 lines)
+
 - InvestmentInputs interface
 - InvestmentAnalytics interface
 - YearlyProjection interface
@@ -321,8 +349,8 @@ Suitable For:
 
 ```json
 {
-  "recharts": "^2.12.0",           // Charts library
-  "react-number-format": "^5.3.0"  // Number formatting
+  "recharts": "^2.12.0", // Charts library
+  "react-number-format": "^5.3.0" // Number formatting
 }
 ```
 
@@ -331,6 +359,7 @@ Suitable For:
 ## 📊 What Gets Calculated
 
 ### Rental Analysis
+
 - Gross rental yield with state benchmarks
 - Net rental yield after expenses
 - Vacancy impact modeling
@@ -338,18 +367,21 @@ Suitable For:
 - Property management costs
 
 ### Cash Flow
+
 - Monthly income and expenses
 - Pre-tax and after-tax cash flow
 - Tax benefits from negative gearing
 - Annual and monthly views
 
 ### Returns
+
 - Total ROI over hold period
 - Annualized ROI
 - Cash-on-cash return
 - Comparison to other investments
 
 ### Projections
+
 - Year-by-year property value
 - Loan balance declining
 - Equity buildup
@@ -357,6 +389,7 @@ Suitable For:
 - Break-even points
 
 ### Tax Benefits
+
 - All deductible expenses
 - Depreciation (for new properties)
 - Negative gearing tax savings
@@ -364,12 +397,14 @@ Suitable For:
 - Net proceeds after tax
 
 ### Risk Analysis
+
 - Vacancy rate sensitivity
 - Interest rate sensitivity
 - Capital growth scenarios
 - Market downturn impact
 
 ### Investment Quality
+
 - 5-dimension scoring
 - Overall rating (0-10)
 - AI-generated verdict
@@ -380,7 +415,9 @@ Suitable For:
 ## 📈 User Value
 
 ### Before (Basic Calculator)
+
 **Output**:
+
 ```
 FIRB Fee: $13,200
 Stamp Duty: $45,500
@@ -392,7 +429,9 @@ Total Cost: $187,340
 **User doesn't know**: Is it a good investment?
 
 ### After (Investment Analytics)
+
 **Output**:
+
 ```
 All basic costs PLUS:
 
@@ -422,6 +461,7 @@ Risks: Negative cash flow, vacancy, rate changes
 ### Slite-Inspired Styling
 
 All components match the site's design system:
+
 - ✅ Purple/indigo color scheme
 - ✅ Soft rounded corners (rounded-xl, rounded-2xl)
 - ✅ Gradient accents
@@ -432,6 +472,7 @@ All components match the site's design system:
 ### Charts
 
 **Recharts Integration**:
+
 - Professional-looking charts
 - Responsive sizing
 - Interactive tooltips
@@ -441,12 +482,14 @@ All components match the site's design system:
 ### Color Coding
 
 **Trend Indicators**:
+
 - 🟢 Green: Good performance
 - 🔵 Blue/Purple: Neutral
 - 🟡 Amber: Warning
 - 🔴 Red: Poor
 
 **Used Throughout**:
+
 - Metric cards
 - Cash flow displays
 - Verdict banners
@@ -458,16 +501,18 @@ All components match the site's design system:
 
 ### Bundle Size
 
-| Route | Before | After | Change |
-|-------|--------|-------|--------|
+| Route           | Before | After  | Change  |
+| --------------- | ------ | ------ | ------- |
 | FIRB Calculator | 340 KB | 458 KB | +118 KB |
 
 **Impact Analysis**:
+
 - Recharts library: ~100 KB (necessary for charts)
 - 9 new components: ~18 KB
 - **Total**: +118 KB (26% increase)
 
 **Optimization**:
+
 - ✅ Analytics only load when user clicks "Show Analysis"
 - ✅ Calculations memoized (only recalculate on input change)
 - ✅ Charts lazy-rendered
@@ -490,6 +535,7 @@ All components match the site's design system:
 ### Local Testing
 
 **Start dev server**:
+
 ```bash
 npm run dev
 ```
@@ -559,6 +605,7 @@ Visit: http://localhost:3002/en/firb-calculator
 ### New Files (12 files)
 
 **Components** (9):
+
 - `components/firb/MetricCard.tsx`
 - `components/firb/InvestmentInputs.tsx`
 - `components/firb/InvestmentSummary.tsx`
@@ -570,19 +617,23 @@ Visit: http://localhost:3002/en/firb-calculator
 - `components/firb/InvestmentScore.tsx`
 
 **Logic** (3):
+
 - `lib/firb/investment-analytics.ts`
 - `lib/firb/loan-calculator.ts`
 - `lib/firb/tax-calculator.ts`
 
 **Types** (1):
+
 - `types/investment.ts`
 
 ### Modified Files (3 files)
+
 - `components/firb/ResultsPanel.tsx` - Integration
 - `app/[locale]/firb-calculator/page.tsx` - Props
 - `package.json` - Dependencies
 
 ### Documentation (Multiple)
+
 - Investment analytics progress tracker
 - Technical review
 - Testing guides
@@ -625,25 +676,27 @@ Visit: http://localhost:3002/en/firb-calculator
 ### State-Based Rental Estimates
 
 | State | Yield | $850k Property | Weekly Rent |
-|-------|-------|----------------|-------------|
-| NSW | 3.2% | Sydney | $523 |
-| VIC | 3.4% | Melbourne | $553 |
-| QLD | 4.5% | Brisbane | $735 |
-| WA | 4.2% | Perth | $686 |
-| SA | 4.1% | Adelaide | $669 |
-| TAS | 4.8% | Hobart | $784 |
-| ACT | 3.8% | Canberra | $620 |
-| NT | 5.5% | Darwin | $898 |
+| ----- | ----- | -------------- | ----------- |
+| NSW   | 3.2%  | Sydney         | $523        |
+| VIC   | 3.4%  | Melbourne      | $553        |
+| QLD   | 4.5%  | Brisbane       | $735        |
+| WA    | 4.2%  | Perth          | $686        |
+| SA    | 4.1%  | Adelaide       | $669        |
+| TAS   | 4.8%  | Hobart         | $784        |
+| ACT   | 3.8%  | Canberra       | $620        |
+| NT    | 5.5%  | Darwin         | $898        |
 
 ### Market Benchmarks Used
 
 **Investment Comparisons**:
+
 - ASX 200: 7.2% p.a. (historical)
 - Term Deposit: 4.0% p.a. (current)
 - Government Bonds: 4.5% p.a.
 - High-Int. Savings: 4.5% p.a.
 
 **Property Assumptions**:
+
 - Capital growth: 6% p.a. (long-term average)
 - Rent growth: 3% p.a. (historical)
 - Vacancy: 5% (industry standard)
@@ -658,24 +711,28 @@ Visit: http://localhost:3002/en/firb-calculator
 **After clicking "Show Investment Analysis"**:
 
 **Investment Summary**:
+
 - Gross Yield: 4.8% (Above NSW 3.2% ✓)
 - Net Yield: 2.1%
 - Annual ROI: 8.3% (Beats ASX 7.2% ✓)
 - Monthly Cash Flow: -$1,921 (Tax benefit: $703)
 
 **10-Year Outcome**:
+
 - Property Value: $1,432,000 (+68%)
 - Your Equity: $882,000
 - Total Return: $682,000
 - ROI: 76.5%
 
 **Comparison**:
+
 - Property: $682,000
 - ASX Stocks: $580,000
 - Term Deposit: $295,000
 - **Winner**: Property by $102k!
 
 **Verdict**: GOOD (7.2/10)
+
 - Best for: Long-term wealth building
 - Requires: $185k cash over 10 years
 - Break-even: Year 8
@@ -689,21 +746,25 @@ Visit: http://localhost:3002/en/firb-calculator
 ### Responsive Breakpoints
 
 **Metric Cards**:
+
 - Mobile (<768px): 1 column
 - Tablet (768-1024px): 2 columns
 - Desktop (>1024px): 4 columns
 
 **Charts**:
+
 - All charts use ResponsiveContainer
 - Auto-adjust to screen width
 - Touch-friendly tooltips
 
 **Tables**:
+
 - Horizontal scroll on mobile
 - Readable font sizes
 - Proper spacing
 
 **Input Forms**:
+
 - Stack vertically
 - Large touch targets
 - Mobile-optimized sliders
@@ -729,10 +790,12 @@ Visit: http://localhost:3002/en/firb-calculator
 ### Competitive Advantage
 
 **vs Other FIRB Calculators**:
+
 - ❌ Others: Basic cost estimate only
 - ✅ Ours: Complete investment analysis
 
 **vs Paid Tools**:
+
 - ❌ Paid: $50-200 per report
 - ✅ Ours: Free, comprehensive, instant
 
@@ -743,6 +806,7 @@ Visit: http://localhost:3002/en/firb-calculator
 ### Current State
 
 ✅ **Working Now**:
+
 - All calculations accurate
 - All charts functional
 - All components integrated
@@ -750,6 +814,7 @@ Visit: http://localhost:3002/en/firb-calculator
 - Mobile responsive
 
 ⏳ **Not Yet Complete**:
+
 - PDF doesn't include analytics yet (still basic 2-page)
 - Some translation keys missing (works in English)
 - Not all tooltips have detailed explanations
@@ -773,6 +838,7 @@ Visit: http://localhost:3002/en/firb-calculator
 **Confidence Level**: ✅ HIGH
 
 **Reasons**:
+
 - Build successful (no errors, only minor warnings)
 - All features tested locally
 - No breaking changes
@@ -782,6 +848,7 @@ Visit: http://localhost:3002/en/firb-calculator
 **Risk Level**: ✅ LOW
 
 **Reasons**:
+
 - Analytics only show when user clicks toggle
 - Existing functionality unchanged
 - Falls back gracefully if errors
@@ -814,6 +881,7 @@ Visit: http://localhost:3002/en/firb-calculator
 ## 📚 Documentation
 
 **Comprehensive docs included**:
+
 1. `docs/INVESTMENT_ANALYTICS_PROGRESS.md` - Progress tracker
 2. `docs/INVESTMENT_ANALYTICS_REVIEW.md` - Technical review (971 lines)
 3. `docs/PR_INVESTMENT_ANALYTICS.md` - This document
@@ -823,6 +891,7 @@ Visit: http://localhost:3002/en/firb-calculator
 ## 🎊 Summary
 
 **This PR delivers**:
+
 - ✅ Complete investment analytics platform
 - ✅ 9 new UI components with charts
 - ✅ Professional-grade calculations
@@ -833,6 +902,7 @@ Visit: http://localhost:3002/en/firb-calculator
 - ✅ Production-ready code
 
 **Transforms calculator into**:
+
 - Professional investment analysis tool
 - Comprehensive decision support system
 - Unique market offering
@@ -854,17 +924,3 @@ Visit: http://localhost:3002/en/firb-calculator
 **Ready to revolutionize your FIRB Calculator!** 🎉🚀
 
 This feature will set your tool apart from every other FIRB calculator in the market. No one else offers this level of analysis for free!
-
-
-
-
-
-
-
-
-
-
-
-
-
-

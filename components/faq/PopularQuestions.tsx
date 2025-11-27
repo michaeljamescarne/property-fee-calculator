@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { TrendingUp, ArrowRight } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import type { FAQQuestion, FAQCategory } from '@/types/faq';
+import Link from "next/link";
+import { TrendingUp, ArrowRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import type { FAQQuestion, FAQCategory } from "@/types/faq";
 
 interface PopularQuestionsProps {
   questions: { question: FAQQuestion; category: FAQCategory }[];
@@ -22,22 +22,14 @@ export default function PopularQuestions({ questions, locale }: PopularQuestions
           <TrendingUp className="h-6 w-6 text-blue-600" />
         </div>
         <div>
-          <h2 className="text-3xl font-semibold text-gray-900">
-            Popular Questions
-          </h2>
-          <p className="text-gray-600 mt-1">
-            Most frequently asked by foreign property buyers
-          </p>
+          <h2 className="text-3xl font-semibold text-gray-900">Popular Questions</h2>
+          <p className="text-gray-600 mt-1">Most frequently asked by foreign property buyers</p>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {questions.map(({ question, category }) => (
-          <Link
-            key={question.id}
-            href={`/${locale}/faq#${question.id}`}
-            className="group"
-          >
+          <Link key={question.id} href={`/${locale}/faq#${question.id}`} className="group">
             <Card className="h-full border border-gray-200 shadow-sm hover:shadow-md transition-all bg-white rounded">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between gap-3 mb-3">
@@ -46,11 +38,11 @@ export default function PopularQuestions({ questions, locale }: PopularQuestions
                   </span>
                   <ArrowRight className="h-4 w-4 text-gray-500 group-hover:text-blue-600 group-hover:translate-x-1 transition-all flex-shrink-0" />
                 </div>
-                
+
                 <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug">
                   {question.question}
                 </h3>
-                
+
                 <p className="text-sm text-gray-600 mt-3 line-clamp-2">
                   {question.answer.slice(0, 120)}...
                 </p>
@@ -68,17 +60,3 @@ export default function PopularQuestions({ questions, locale }: PopularQuestions
     </section>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

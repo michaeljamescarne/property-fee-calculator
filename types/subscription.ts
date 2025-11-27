@@ -3,10 +3,10 @@
  * Prepared for future payment integration
  */
 
-import { SubscriptionStatus } from './database';
+import { SubscriptionStatus } from "./database";
 
 // Subscription tiers
-export type SubscriptionTier = 'free' | 'basic' | 'pro' | 'enterprise';
+export type SubscriptionTier = "free" | "basic" | "pro" | "enterprise";
 
 // Subscription plan
 export interface SubscriptionPlan {
@@ -19,8 +19,8 @@ export interface SubscriptionPlan {
   };
   features: string[];
   limits: {
-    calculationsPerMonth: number | 'unlimited';
-    savedCalculations: number | 'unlimited';
+    calculationsPerMonth: number | "unlimited";
+    savedCalculations: number | "unlimited";
     pdfExports: boolean;
     prioritySupport: boolean;
     advancedAnalytics: boolean;
@@ -50,7 +50,7 @@ export interface PaymentIntent {
   id: string;
   amount: number;
   currency: string;
-  status: 'pending' | 'succeeded' | 'failed';
+  status: "pending" | "succeeded" | "failed";
 }
 
 // Usage tracking
@@ -58,19 +58,6 @@ export interface UsageStats {
   userId: string;
   period: string; // YYYY-MM
   calculationsUsed: number;
-  calculationsLimit: number | 'unlimited';
+  calculationsLimit: number | "unlimited";
   pdfExportsUsed: number;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 /**
  * Blog Content Processing Utility
- * 
+ *
  * This utility processes markdown content and converts it to properly formatted HTML
  * for use in blog posts. It handles:
  * - Converting markdown tables to styled HTML tables
@@ -24,45 +24,54 @@ export interface BlogPost {
  * Converts markdown table syntax to styled HTML table
  */
 export function convertMarkdownTableToHTML(markdownTable: string): string {
-  const lines = markdownTable.trim().split('\n');
+  const lines = markdownTable.trim().split("\n");
   if (lines.length < 3) return markdownTable; // Not a valid table
-  
+
   // Extract header row
   const headerLine = lines[1];
-  const headers = headerLine.split('|').map(h => h.trim()).filter(h => h);
-  
+  const headers = headerLine
+    .split("|")
+    .map((h) => h.trim())
+    .filter((h) => h);
+
   // Extract separator row (skip it)
   // const separatorLine = lines[2];
-  
+
   // Extract data rows
-  const dataRows = lines.slice(3).map(line => {
-    return line.split('|').map(cell => cell.trim()).filter(cell => cell);
-  }).filter(row => row.length > 0);
-  
+  const dataRows = lines
+    .slice(3)
+    .map((line) => {
+      return line
+        .split("|")
+        .map((cell) => cell.trim())
+        .filter((cell) => cell);
+    })
+    .filter((row) => row.length > 0);
+
   // Build HTML table
   let htmlTable = '<table class="w-full border-collapse border border-gray-300 mb-6">\n';
-  
+
   // Header
-  htmlTable += '  <thead>\n';
+  htmlTable += "  <thead>\n";
   htmlTable += '    <tr class="bg-gray-50">\n';
-  headers.forEach(header => {
+  headers.forEach((header) => {
     htmlTable += `      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">${header}</th>\n`;
   });
-  htmlTable += '    </tr>\n';
-  htmlTable += '  </thead>\n';
-  
+  htmlTable += "    </tr>\n";
+  htmlTable += "  </thead>\n";
+
   // Body
-  htmlTable += '  <tbody>\n';
-  dataRows.forEach(row => {
+  htmlTable += "  <tbody>\n";
+  dataRows.forEach((row) => {
     htmlTable += '    <tr class="hover:bg-gray-50">\n';
-    row.forEach(cell => {
+    row.forEach((cell) => {
       htmlTable += `      <td class="border border-gray-300 px-4 py-3">${cell}</td>\n`;
     });
-    htmlTable += '    </tr>\n';
+    htmlTable += "    </tr>\n";
   });
-  htmlTable += '  </tbody>\n';
-  htmlTable += '</table>';
-  
+  htmlTable += "  </tbody>\n";
+  htmlTable += "</table>";
+
   return htmlTable;
 }
 
@@ -72,12 +81,12 @@ export function convertMarkdownTableToHTML(markdownTable: string): string {
 export function removeExcessiveSpacingBeforeTables(content: string): string {
   // Pattern to match heading followed by blank lines and then a table
   const headingTablePattern = /(###? .+?)\n(\n+)(<table)/g;
-  
+
   return content.replace(headingTablePattern, (match, heading, blankLines, table) => {
     // Keep only one blank line before the table
     return `${heading}\n${table}`;
   });
-  
+
   // Also handle cases where there's text followed by blank lines and then a table
   const textTablePattern = /([^\n])\n(\n+)(<table)/g;
   return content.replace(textTablePattern, (match, text, blankLines, table) => {
@@ -92,14 +101,14 @@ export function removeExcessiveSpacingBeforeTables(content: string): string {
  */
 function normalizeDate(date: unknown): string {
   if (!date) {
-    return new Date().toISOString().split('T')[0];
+    return new Date().toISOString().split("T")[0];
   }
-  
+
   if (date instanceof Date) {
-    return date.toISOString().split('T')[0];
+    return date.toISOString().split("T")[0];
   }
-  
-  if (typeof date === 'string') {
+
+  if (typeof date === "string") {
     // If it's already a string in YYYY-MM-DD format, return it
     if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return date;
@@ -108,15 +117,15 @@ function normalizeDate(date: unknown): string {
     try {
       const parsed = new Date(date);
       if (!isNaN(parsed.getTime())) {
-        return parsed.toISOString().split('T')[0];
+        return parsed.toISOString().split("T")[0];
       }
     } catch {
       // Fall through to default
     }
   }
-  
+
   // Default to today's date if we can't parse it
-  return new Date().toISOString().split('T')[0];
+  return new Date().toISOString().split("T")[0];
 }
 
 /**
@@ -125,11 +134,11 @@ function normalizeDate(date: unknown): string {
 export function convertMarkdownLinksToHTML(content: string): string {
   // Pattern to match markdown links: [text](url)
   const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
-  
+
   return content.replace(linkPattern, (match, text, url) => {
     // Determine if it's an external link
-    const isExternal = url.startsWith('http') && !url.includes('propertycosts.com.au');
-    
+    const isExternal = url.startsWith("http") && !url.includes("propertycosts.com.au");
+
     if (isExternal) {
       return `<a href="${url}" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
     } else {
@@ -144,87 +153,111 @@ export function convertMarkdownLinksToHTML(content: string): string {
  */
 export function processMarkdownContent(content: string): string {
   // Only load Node.js modules on the server
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return content;
   }
-  
+
   try {
     // Dynamic import to avoid bundling issues (server-side only)
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { remark } = require('remark');
+    const { remark } = require("remark");
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const remarkHtml = require('remark-html');
-    
+    const remarkHtml = require("remark-html");
+
     // Process markdown with remark (synchronously)
     // remarkHtml.default is the plugin function
     const processor = remark().use(remarkHtml.default, { sanitize: false });
     const processed = processor.processSync(content);
-    
+
     let htmlContent = String(processed);
-    
+
     // Enhance HTML with additional styling classes
     // Add Tailwind classes to headings
     htmlContent = htmlContent.replace(/<h1>/g, '<h1 class="text-4xl font-bold mt-8 mb-4">');
     htmlContent = htmlContent.replace(/<h2>/g, '<h2 class="text-3xl font-bold mt-8 mb-4">');
     htmlContent = htmlContent.replace(/<h3>/g, '<h3 class="text-2xl font-semibold mt-6 mb-3">');
     htmlContent = htmlContent.replace(/<h4>/g, '<h4 class="text-xl font-semibold mt-4 mb-2">');
-    
+
     // Add Tailwind classes to paragraphs
     htmlContent = htmlContent.replace(/<p>/g, '<p class="mb-4 leading-relaxed">');
-    
+
     // Add Tailwind classes to lists
-    htmlContent = htmlContent.replace(/<ul>/g, '<ul class="list-disc list-inside mb-4 space-y-2 ml-4">');
-    htmlContent = htmlContent.replace(/<ol>/g, '<ol class="list-decimal list-inside mb-4 space-y-2 ml-4">');
+    htmlContent = htmlContent.replace(
+      /<ul>/g,
+      '<ul class="list-disc list-inside mb-4 space-y-2 ml-4">'
+    );
+    htmlContent = htmlContent.replace(
+      /<ol>/g,
+      '<ol class="list-decimal list-inside mb-4 space-y-2 ml-4">'
+    );
     htmlContent = htmlContent.replace(/<li>/g, '<li class="mb-1">');
-    
+
     // Add Tailwind classes to links (if not already styled)
-    htmlContent = htmlContent.replace(/<a href="/g, '<a class="text-blue-600 hover:text-blue-800 underline" href="');
-    
+    htmlContent = htmlContent.replace(
+      /<a href="/g,
+      '<a class="text-blue-600 hover:text-blue-800 underline" href="'
+    );
+
     // Add Tailwind classes to blockquotes
-    htmlContent = htmlContent.replace(/<blockquote>/g, '<blockquote class="border-l-4 border-gray-300 pl-4 italic my-4">');
-    
+    htmlContent = htmlContent.replace(
+      /<blockquote>/g,
+      '<blockquote class="border-l-4 border-gray-300 pl-4 italic my-4">'
+    );
+
     // Add Tailwind classes to code blocks
-    htmlContent = htmlContent.replace(/<code>/g, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">');
-    htmlContent = htmlContent.replace(/<pre>/g, '<pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4"><code class="text-sm">');
-    htmlContent = htmlContent.replace(/<\/pre>/g, '</code></pre>');
-    
+    htmlContent = htmlContent.replace(
+      /<code>/g,
+      '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">'
+    );
+    htmlContent = htmlContent.replace(
+      /<pre>/g,
+      '<pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4"><code class="text-sm">'
+    );
+    htmlContent = htmlContent.replace(/<\/pre>/g, "</code></pre>");
+
     // Add Tailwind classes to strong/bold
     htmlContent = htmlContent.replace(/<strong>/g, '<strong class="font-bold">');
     htmlContent = htmlContent.replace(/<b>/g, '<b class="font-bold">');
-    
+
     // Add Tailwind classes to emphasis/italic
     htmlContent = htmlContent.replace(/<em>/g, '<em class="italic">');
     htmlContent = htmlContent.replace(/<i>/g, '<i class="italic">');
-    
+
     // Ensure tables have proper styling (if they exist)
-    htmlContent = htmlContent.replace(/<table>/g, '<table class="w-full border-collapse border border-gray-300 mb-6">');
-    htmlContent = htmlContent.replace(/<thead>/g, '<thead>');
-    htmlContent = htmlContent.replace(/<tbody>/g, '<tbody>');
-    htmlContent = htmlContent.replace(/<th>/g, '<th class="border border-gray-300 px-4 py-3 text-left font-semibold">');
+    htmlContent = htmlContent.replace(
+      /<table>/g,
+      '<table class="w-full border-collapse border border-gray-300 mb-6">'
+    );
+    htmlContent = htmlContent.replace(/<thead>/g, "<thead>");
+    htmlContent = htmlContent.replace(/<tbody>/g, "<tbody>");
+    htmlContent = htmlContent.replace(
+      /<th>/g,
+      '<th class="border border-gray-300 px-4 py-3 text-left font-semibold">'
+    );
     htmlContent = htmlContent.replace(/<td>/g, '<td class="border border-gray-300 px-4 py-3">');
-    
+
     // Remove excessive spacing before tables
     htmlContent = removeExcessiveSpacingBeforeTables(htmlContent);
-    
+
     return htmlContent;
   } catch (error) {
-    console.error('Error processing markdown content:', error);
+    console.error("Error processing markdown content:", error);
     // Fallback to basic processing
     let processedContent = content;
-    
+
     // Convert markdown tables to HTML tables
     const tablePattern = /(\|.*\|[\s\S]*?)(?=\n\n|\n[^|]|$)/g;
     processedContent = processedContent.replace(tablePattern, (match) => {
-      const lines = match.trim().split('\n');
-      if (lines.length >= 3 && lines[1].includes('|') && lines[2].includes('|')) {
+      const lines = match.trim().split("\n");
+      if (lines.length >= 3 && lines[1].includes("|") && lines[2].includes("|")) {
         return convertMarkdownTableToHTML(match);
       }
       return match;
     });
-    
+
     // Convert markdown links to HTML links
     processedContent = convertMarkdownLinksToHTML(processedContent);
-    
+
     return processedContent;
   }
 }
@@ -244,10 +277,10 @@ export function createBlogPost(
   markdownContent: string
 ): BlogPost {
   const processedContent = processMarkdownContent(markdownContent);
-  
+
   // Ensure date is always a string
   const normalizedDate = normalizeDate(date);
-  
+
   return {
     slug,
     title,
@@ -257,7 +290,7 @@ export function createBlogPost(
     category,
     featured,
     tags,
-    content: processedContent
+    content: processedContent,
   };
 }
 
@@ -268,55 +301,55 @@ export function createBlogPost(
  */
 export function getAllBlogPosts(locale: string): BlogPost[] {
   // Only load Node.js modules on the server
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return [] as BlogPost[];
   }
-  
+
   try {
     // Dynamic import to avoid bundling issues (server-side only)
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const fs = require('fs');
+    const fs = require("fs");
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const path = require('path');
+    const path = require("path");
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const matter = require('gray-matter');
-    
-    const blogDir = path.join(process.cwd(), 'content', 'blog');
-    
+    const matter = require("gray-matter");
+
+    const blogDir = path.join(process.cwd(), "content", "blog");
+
     if (!fs.existsSync(blogDir)) {
       return [];
     }
-    
-    const files = fs.readdirSync(blogDir).filter((file: string) => file.endsWith('.md'));
-    
+
+    const files = fs.readdirSync(blogDir).filter((file: string) => file.endsWith(".md"));
+
     const posts = files
       .map((file: string) => {
         try {
           const filePath = path.join(blogDir, file);
-          const fileContents = fs.readFileSync(filePath, 'utf8');
-          
+          const fileContents = fs.readFileSync(filePath, "utf8");
+
           // Skip empty files
           if (!fileContents || fileContents.trim().length === 0) {
             return null;
           }
-          
+
           // Parse frontmatter
           const { data, content } = matter(fileContents);
-          
+
           // Extract slug from filename
-          const slug = file.replace(/\.md$/, '');
-          
+          const slug = file.replace(/\.md$/, "");
+
           // Ensure date is always a string
           const dateString = normalizeDate(data.date);
-          
+
           // Create blog post
           return createBlogPost(
             slug,
             data.title || slug,
-            data.excerpt || content.substring(0, 150) + '...',
+            data.excerpt || content.substring(0, 150) + "...",
             dateString,
-            data.readTime || '5 min read',
-            data.category || 'General',
+            data.readTime || "5 min read",
+            data.category || "General",
             data.featured || false,
             data.tags || [],
             content
@@ -331,10 +364,10 @@ export function getAllBlogPosts(locale: string): BlogPost[] {
         // Sort by date, newest first
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
-    
+
     return posts;
   } catch (error) {
-    console.error('Error loading blog posts:', error);
+    console.error("Error loading blog posts:", error);
     return [];
   }
 }
@@ -346,46 +379,46 @@ export function getAllBlogPosts(locale: string): BlogPost[] {
  */
 export function getBlogPost(slug: string, locale: string): BlogPost | null {
   // Only load Node.js modules on the server
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return null;
   }
-  
+
   try {
     // Dynamic import to avoid bundling issues (server-side only)
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const fs = require('fs');
+    const fs = require("fs");
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const path = require('path');
+    const path = require("path");
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const matter = require('gray-matter');
-    
-    const filePath = path.join(process.cwd(), 'content', 'blog', `${slug}.md`);
-    
+    const matter = require("gray-matter");
+
+    const filePath = path.join(process.cwd(), "content", "blog", `${slug}.md`);
+
     if (!fs.existsSync(filePath)) {
       return null;
     }
-    
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    
+
+    const fileContents = fs.readFileSync(filePath, "utf8");
+
     // Skip empty files
     if (!fileContents || fileContents.trim().length === 0) {
       return null;
     }
-    
+
     // Parse frontmatter
     const { data, content } = matter(fileContents);
-    
+
     // Ensure date is always a string
     const dateString = normalizeDate(data.date);
-    
+
     // Create blog post
     return createBlogPost(
       slug,
       data.title || slug,
-      data.excerpt || content.substring(0, 150) + '...',
+      data.excerpt || content.substring(0, 150) + "...",
       dateString,
-      data.readTime || '5 min read',
-      data.category || 'General',
+      data.readTime || "5 min read",
+      data.category || "General",
       data.featured || false,
       data.tags || [],
       content

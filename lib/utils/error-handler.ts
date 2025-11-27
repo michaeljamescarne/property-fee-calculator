@@ -85,8 +85,7 @@ export function handleApiError(error: unknown): NextResponse<ApiError> {
   }
 
   // Handle unknown errors
-  const errorMessage =
-    error instanceof Error ? error.message : "An unexpected error occurred";
+  const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
 
   return NextResponse.json(
     {
@@ -117,9 +116,7 @@ export function logError(error: unknown, context?: Record<string, unknown>): voi
 /**
  * Wrapper for API route handlers with error handling
  */
-export function withErrorHandler<T>(
-  handler: (request: Request) => Promise<T>
-) {
+export function withErrorHandler<T>(handler: (request: Request) => Promise<T>) {
   return async (request: Request): Promise<T | NextResponse<ApiError>> => {
     try {
       return await handler(request);
@@ -128,6 +125,3 @@ export function withErrorHandler<T>(
     }
   };
 }
-
-
-

@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Search, X } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import { Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface FAQSearchProps {
   onSearch: (term: string) => void;
   placeholder?: string;
 }
 
-export default function FAQSearch({ onSearch, placeholder = 'Search FAQs...' }: FAQSearchProps) {
-  const [searchTerm, setSearchTerm] = useState('');
+export default function FAQSearch({ onSearch, placeholder = "Search FAQs..." }: FAQSearchProps) {
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -22,8 +22,8 @@ export default function FAQSearch({ onSearch, placeholder = 'Search FAQs...' }: 
   }, [searchTerm, onSearch]);
 
   const handleClear = () => {
-    setSearchTerm('');
-    onSearch('');
+    setSearchTerm("");
+    onSearch("");
   };
 
   return (
@@ -48,26 +48,10 @@ export default function FAQSearch({ onSearch, placeholder = 'Search FAQs...' }: 
           </Button>
         )}
       </div>
-      
+
       {searchTerm && searchTerm.length < 2 && (
-        <p className="text-sm text-gray-500 mt-2 ml-1">
-          Type at least 2 characters to search
-        </p>
+        <p className="text-sm text-gray-500 mt-2 ml-1">Type at least 2 characters to search</p>
       )}
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

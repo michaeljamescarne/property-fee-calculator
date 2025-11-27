@@ -14,7 +14,7 @@ tags:
 
 # How to Calculate Property Investment Returns in Australia (2025 Guide)
 
-*Last updated: 22 December 2024 • 13 min read*
+_Last updated: 22 December 2024 • 13 min read_
 
 Here's a sobering truth: most property investors dramatically overestimate their returns. They focus on the purchase price and rental income, forgetting about the dozens of other costs that erode profits. For foreign investors in Australia, this problem is even worse—additional surcharges, taxes, and exit costs can turn what looks like a 6% return into a 2% return (or worse).
 
@@ -55,6 +55,7 @@ Rental yield measures the annual income your property generates as a percentage 
 The difference between gross and net yield is enormous and often misunderstood.
 
 **Example: Sydney apartment**
+
 - Property value: $750,000
 - Weekly rent: $600 ($31,200 annually)
 - Gross rental yield: 4.16%
@@ -90,16 +91,16 @@ Let's calculate ROI properly, using a realistic Brisbane property example.
 
 Don't just count the deposit. Your initial investment includes every dollar you need to get the keys:
 
-| Cost Item | Amount |
-|:----------|-------:|
-| Deposit (20% minimum for foreign buyers) | $130,000 |
-| FIRB application fee | $15,100 |
-| Queensland stamp duty | $24,350 |
-| Foreign acquirer duty (7%) | $45,500 |
-| Legal and conveyancing | $2,500 |
-| Building inspection | $600 |
-| Lenders mortgage insurance (on 80% LVR) | $12,000 |
-| **Total upfront investment** | **$230,050** |
+| Cost Item                                |       Amount |
+| :--------------------------------------- | -----------: |
+| Deposit (20% minimum for foreign buyers) |     $130,000 |
+| FIRB application fee                     |      $15,100 |
+| Queensland stamp duty                    |      $24,350 |
+| Foreign acquirer duty (7%)               |      $45,500 |
+| Legal and conveyancing                   |       $2,500 |
+| Building inspection                      |         $600 |
+| Lenders mortgage insurance (on 80% LVR)  |      $12,000 |
+| **Total upfront investment**             | **$230,050** |
 
 Notice that your true investment is 35% higher than just the deposit. Many investors forget this and calculate ROI based only on the $130,000 deposit, inflating their apparent returns.
 
@@ -108,11 +109,13 @@ Notice that your true investment is 35% higher than just the deposit. Many inves
 Now let's see what happens each year you own the property.
 
 **Income:**
+
 - Annual rent: $26,000
 - Less vacancy (4 weeks): -$2,000
 - **Net rental income**: $24,000
 
 **Expenses:**
+
 - Loan interest (6% on $520,000): -$31,200
 - Council rates: -$1,600
 - Strata fees: -$4,500
@@ -136,11 +139,13 @@ After 10 years:
 **Net capital gain**: $276,034
 
 **Total invested**:
+
 - Initial outlay: $230,050
 - 10 years of negative cash flow: $262,800
 - **Total capital invested**: $492,850
 
 **Total return**:
+
 - Net capital gain: $276,034
 - Loan principal paid down: ~$68,000
 - **Total profit**: $344,034
@@ -155,7 +160,7 @@ Now put this in context. Your $492,850 invested over 10 years at 5.5% annually r
 What if you'd invested that same capital differently?
 
 - **Australian ETF (VGS)** averaging 8% annually: ~$530,000 return
-- **Term deposit** at 4.5%: ~$287,000 return  
+- **Term deposit** at 4.5%: ~$287,000 return
 - **This property**: $344,000 return
 
 The property underperformed equities significantly, beat cash deposits, but required far more active management and came with risk of market downturns, tenant issues, and unexpected maintenance costs.
@@ -167,6 +172,7 @@ There's no universal "good" ROI—it depends on your strategy, risk tolerance, a
 ### By Strategy Type
 
 **Growth-focused (capital cities):**
+
 - Gross rental yield: 3-4%
 - Net rental yield: 1-2.5%
 - Expected capital growth: 6-8% annually
@@ -174,6 +180,7 @@ There's no universal "good" ROI—it depends on your strategy, risk tolerance, a
 - Typical profile: Negatively geared, tax benefits offset cash flow losses
 
 **Yield-focused (regional/apartments):**
+
 - Gross rental yield: 5-7%
 - Net rental yield: 3-5%
 - Expected capital growth: 3-5% annually
@@ -181,6 +188,7 @@ There's no universal "good" ROI—it depends on your strategy, risk tolerance, a
 - Typical profile: Neutral or positive cash flow, lower capital growth
 
 **Balanced approach:**
+
 - Gross rental yield: 4-5%
 - Net rental yield: 2-3%
 - Expected capital growth: 5-6% annually
@@ -190,21 +198,25 @@ There's no universal "good" ROI—it depends on your strategy, risk tolerance, a
 ### By Location
 
 **Sydney inner suburbs:**
+
 - Yields: 2.5-3.5%
 - Capital growth: 6-9% long term
 - Foreign buyer costs: Very high (8% stamp duty surcharge)
 
 **Melbourne inner/middle ring:**
+
 - Yields: 3-4%
 - Capital growth: 6-8% long term
 - Foreign buyer costs: Very high (8% stamp duty surcharge)
 
 **Brisbane growth corridors:**
+
 - Yields: 4-5%
 - Capital growth: 5-7% (potentially higher near Olympic precincts)
 - Foreign buyer costs: High (7% stamp duty surcharge)
 
 **Regional centers:**
+
 - Yields: 5-7%
 - Capital growth: 3-5%
 - Foreign buyer costs: State-dependent
@@ -240,6 +252,7 @@ One major repair can wipe out 2-3 years of profit.
 Most ROI calculations assume static interest rates. They aren't.
 
 If rates rise from 6% to 7.5% on your $520,000 loan:
+
 - Interest costs increase by $7,800 per year
 - Your negative cash flow worsens by $650 per month
 - Your annual ROI drops by 1-2 percentage points
@@ -257,6 +270,7 @@ When you sell, expect to lose:
 - **Legal fees**: $1,500-$2,500
 
 On a $1 million sale with $300,000 gain:
+
 - CGT: ~$97,500
 - Agent fees: ~$25,000
 - Other costs: ~$6,000
@@ -283,6 +297,7 @@ Even if your total 10-year ROI is excellent, negative cash flow means you need t
 Lower capital growth expectations, but the property pays for itself and potentially generates income. Less stressful, more sustainable for investors without deep capital reserves.
 
 **Critical question**: What's your capacity to fund negative cash flow during:
+
 - Extended vacancy periods?
 - Major maintenance emergencies?
 - Rising interest rates?
@@ -301,7 +316,7 @@ Calculating ROI manually is time-consuming and error-prone. Good property calcul
 ✅ **Use realistic assumptions**: 3-4 weeks vacancy, proper maintenance budgets  
 ✅ **Show sensitivity analysis**: What happens if rates rise 1-2%?  
 ✅ **Calculate after-tax returns**: Include CGT and withholding obligations  
-✅ **Compare scenarios**: Different properties, locations, or strategies side-by-side  
+✅ **Compare scenarios**: Different properties, locations, or strategies side-by-side
 
 ### Red Flags
 
@@ -309,7 +324,7 @@ Calculating ROI manually is time-consuming and error-prone. Good property calcul
 ❌ Tools that exclude foreign buyer surcharges  
 ❌ Projections that assume 0% vacancy or maintenance  
 ❌ ROI calculations based only on deposit, not total capital invested  
-❌ Overly optimistic capital growth assumptions (12%+ annually)  
+❌ Overly optimistic capital growth assumptions (12%+ annually)
 
 ## Practical Steps to Maximize Your ROI
 
@@ -359,7 +374,7 @@ If the investment still works with pessimistic assumptions, you have a margin of
 Every property is different. Your actual ROI depends on:
 
 - Specific purchase price and location
-- Your deposit size and loan structure  
+- Your deposit size and loan structure
 - State-specific taxes and surcharges
 - Property type and ongoing costs
 - Your individual tax situation
@@ -368,26 +383,31 @@ Every property is different. Your actual ROI depends on:
 Our **Property Investment Calculator** provides detailed ROI analysis tailored to foreign buyers, including:
 
 **Comprehensive cost modeling:**
+
 - All upfront costs with FIRB and foreign buyer surcharges
 - Year-by-year cash flow projections
 - Realistic expense assumptions with vacancy and maintenance buffers
 
 **Growth projections:**
+
 - Customizable capital growth rates by suburb
 - Rental income growth over time
 - Equity building through loan principal reduction
 
 **Tax analysis:**
+
 - Capital gains tax calculations for foreign residents
 - Withholding tax implications
 - After-tax return on investment
 
 **Scenario comparison:**
+
 - Compare multiple properties side-by-side
 - Test sensitivity to interest rate changes
 - Model different investment timeframes
 
 **Exit strategy planning:**
+
 - Calculate net proceeds after all selling costs
 - Show impact of CGT on final returns
 - Determine break-even holding periods
@@ -409,7 +429,7 @@ Before making any investment decision, ensure you've:
 ✅ Compared ROI to alternative investments (equities, other markets)  
 ✅ Obtained quotes for all professional services (don't guess)  
 ✅ Reviewed historical performance of specific suburb  
-✅ Considered currency risk against your home currency  
+✅ Considered currency risk against your home currency
 
 ## The Bottom Line
 
@@ -423,4 +443,4 @@ Australian property can deliver excellent returns for foreign investors, but onl
 
 Calculate conservatively, invest confidently, and maintain the discipline to walk away from deals that don't meet your return thresholds—even when emotions say otherwise.
 
-*Disclaimer: This guide provides general information only and should not be considered financial or investment advice. Property investment returns are not guaranteed and past performance does not indicate future results. Taxes, fees, and regulations are subject to change. Always consult with qualified professionals including financial advisors, tax specialists, and property investment advisors before making investment decisions.*
+_Disclaimer: This guide provides general information only and should not be considered financial or investment advice. Property investment returns are not guaranteed and past performance does not indicate future results. Taxes, fees, and regulations are subject to change. Always consult with qualified professionals including financial advisors, tax specialists, and property investment advisors before making investment decisions._

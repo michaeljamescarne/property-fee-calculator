@@ -3,12 +3,14 @@
 ## Pre-Deployment Verification
 
 ### ✅ Code Quality
+
 - [ ] No TypeScript errors (`npm run build`)
 - [ ] No ESLint errors (`npm run lint`)
 - [ ] All tests passing (if any)
 - [ ] Environment variables configured
 
 ### ✅ Feature Testing
+
 - [ ] FIRB Calculator works with sample data
 - [ ] Investment Analytics displays correctly
 - [ ] PDF download generates properly
@@ -18,12 +20,14 @@
 - [ ] Multi-language switching works
 
 ### ✅ Performance
+
 - [ ] Lighthouse scores above 90
 - [ ] Page load times under 3 seconds
 - [ ] Images optimized
 - [ ] Bundle size reasonable
 
 ### ✅ SEO
+
 - [ ] Meta tags present
 - [ ] Structured data valid
 - [ ] Sitemap up to date
@@ -32,16 +36,19 @@
 ## Deployment Steps
 
 1. **Build the project:**
+
    ```bash
    npm run build
    ```
 
 2. **Test the build locally:**
+
    ```bash
    npm start
    ```
 
 3. **Deploy to Vercel:**
+
    ```bash
    vercel --prod
    ```
@@ -55,6 +62,7 @@
 ## Post-Deployment
 
 ### ✅ Verification
+
 - [ ] Production site loads correctly
 - [ ] All features working
 - [ ] Mobile version functional
@@ -62,6 +70,7 @@
 - [ ] Analytics tracking active
 
 ### ✅ Monitoring
+
 - [ ] Set up error monitoring (if not already)
 - [ ] Check Google Search Console
 - [ ] Monitor user feedback
@@ -70,6 +79,7 @@
 ## Rollback Plan
 
 If issues are found:
+
 1. Revert to previous deployment in Vercel dashboard
 2. Investigate issues in development
 3. Fix and redeploy
@@ -79,13 +89,3 @@ If issues are found:
 - Vercel Support: [support.vercel.com](https://vercel.com/support)
 - Domain issues: Check domain registrar
 - Analytics: Google Analytics support
-
-
-
-
-
-
-
-
-
-

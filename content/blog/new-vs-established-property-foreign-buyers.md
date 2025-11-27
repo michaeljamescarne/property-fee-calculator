@@ -14,7 +14,7 @@ tags:
 
 # New vs Established Property: Complete Guide for Foreign Buyers in Australia 2025
 
-*Last updated: 5 January 2025 | 12 min read*
+_Last updated: 5 January 2025 | 12 min read_
 
 Choosing between new and established property is one of the most critical decisions for foreign investors in Australia—and it's not just about personal preference. Your foreign investment status fundamentally determines what you can buy, with FIRB rules creating vastly different pathways for each property type.
 
@@ -29,16 +29,19 @@ Before diving into comparisons, you need to understand exactly how FIRB classifi
 A property qualifies as a "new dwelling" if it meets ANY of these criteria:
 
 **1. Never Previously Sold as a Dwelling**
+
 - Brand new construction that has never been sold
 - House built on vacant land and never occupied
 - Apartment in a new development, never settled
 
 **2. Never Previously Occupied**
+
 - Has been built but never lived in
 - Applies even if technically "completed" months ago
 - Must truly be unoccupied—not even short-term rentals
 
 **3. Substantially Renovated and Unoccupied**
+
 - Property has undergone substantial renovation
 - Has not been occupied since the renovation
 - **AND** has not been occupied for more than 12 months total since construction
@@ -46,26 +49,31 @@ A property qualifies as a "new dwelling" if it meets ANY of these criteria:
 **Common examples of new dwellings:**
 
 ✅ **Off-the-Plan Apartment**
+
 - Purchased before completion
 - Never previously occupied
 - Bought directly from developer
 
 ✅ **House-and-Land Package**
+
 - Vacant land purchased with building contract
 - House constructed to your specifications
 - First occupants will be you or your tenants
 
 ✅ **Recently Completed Display Home**
+
 - Used only as display (not residential occupation)
 - Being sold by developer
 - Never actually lived in as a home
 
 ✅ **Newly Constructed Townhouse**
+
 - Part of new development
 - Just completed, never occupied
 - Selling through developer or immediately after
 
 ✅ **Substantially Renovated Property**
+
 - Completely gutted and rebuilt
 - Has been empty since renovation (under 12 months)
 - Effectively a "new" home in an old structure
@@ -80,20 +88,24 @@ An established dwelling is simply: **any dwelling that is NOT a new dwelling**.
 This includes:
 
 ❌ **Existing Houses**
+
 - Any house previously lived in
 - Properties sold on the secondary market
 - Homes purchased from private sellers
 
 ❌ **Second-Hand Apartments**
+
 - Units previously owned and occupied
 - Apartments purchased from other owners (not developer)
 - Any "used" residential property
 
 ❌ **Townhouses and Duplexes**
+
 - If previously occupied or sold
 - On the secondary market
 
 ❌ **Substantially Renovated BUT Occupied 12+ Months**
+
 - Even if recently renovated
 - If been lived in more than 12 months since completion
 - No longer qualifies as "new"
@@ -121,11 +133,13 @@ This is where new and established properties diverge dramatically for foreign bu
 ### FIRB Rules for New Dwellings
 
 **Who Can Buy:**
+
 - ✅ Foreign nationals (non-residents)
 - ✅ Temporary residents (all visa types)
 - ✅ Anyone classified as a "foreign person"
 
 **Requirements:**
+
 - **FIRB approval required** for each purchase
 - **No limit** on number of properties
 - Can buy for **investment** OR **owner-occupation**
@@ -133,12 +147,14 @@ This is where new and established properties diverge dramatically for foreign bu
 
 **Why it's allowed:**
 The Australian government actively encourages foreign investment in new dwellings because it:
+
 - Increases housing stock
 - Creates construction jobs
 - Stimulates economic activity
 - Doesn't reduce availability for Australian buyers
 
 **Process:**
+
 1. Find suitable new dwelling
 2. Apply for FIRB approval (or check developer exemption certificate)
 3. Pay FIRB application fee
@@ -147,6 +163,7 @@ The Australian government actively encourages foreign investment in new dwelling
 
 **Developer Exemption Certificates:**
 Many developers obtain exemption certificates for their projects. If buying from such a developer:
+
 - You don't need individual FIRB approval
 - Still must notify ATO within 30 days of purchase
 - Significantly streamlines the process
@@ -159,12 +176,14 @@ Many developers obtain exemption certificates for their projects. If buying from
 **From April 1, 2025 to March 31, 2027:**
 
 **Who CANNOT Buy:**
+
 - ❌ Foreign nationals
 - ❌ Temporary residents (including students, 482 visa holders, all others)
 - ❌ Foreign-owned companies
 - ❌ Foreign trusts
 
 **This means:**
+
 - Cannot purchase ANY established dwelling
 - Even if you want to live in it as primary residence
 - Even if you're a temporary resident who previously could buy one
@@ -175,18 +194,21 @@ Many developers obtain exemption certificates for their projects. If buying from
 Only these specific categories can potentially purchase established dwellings:
 
 **1. Large-Scale Redevelopment Projects**
+
 - Must increase housing stock by at least **20 additional dwellings**
 - Requires comprehensive redevelopment application
 - Must demonstrate genuine intent and capability
 - Not suitable for typical residential purchases
 
 **2. Build-to-Rent Developments**
+
 - Must meet specific BTR criteria
 - Minimum number of dwellings
 - Long-term rental requirements
 - Commercial-scale projects only
 
 **3. Pacific Australia Labour Mobility Scheme**
+
 - Properties for seasonal workers
 - Very specific circumstances
 - Limited applicability
@@ -198,6 +220,7 @@ Only these specific categories can potentially purchase established dwellings:
 Understanding the old rules helps with future planning:
 
 **Temporary Residents (Before the Ban):**
+
 - Could purchase **one** established dwelling
 - Must be used as **primary residence**
 - Had to **sell within 3 months** of:
@@ -208,12 +231,14 @@ Understanding the old rules helps with future planning:
 - Could NOT rent it out
 
 **Non-Resident Foreign Persons (Before the Ban):**
+
 - Generally could NOT purchase established dwellings
 - Very limited exceptions existed
 - Focused on new dwellings and vacant land
 
 **Post-March 2027:**
 The government will review the ban. Rules may:
+
 - Return to pre-April 2025 status
 - Continue the ban
 - Implement modified restrictions
@@ -228,25 +253,26 @@ Beyond the purchase price, new and established properties carry different cost s
 
 Let's compare a $800,000 property purchase in NSW:
 
-| Cost Item | New Dwelling | Established Dwelling* |
-|-----------|-------------|---------------------|
-| **Property Price** | $800,000 | $800,000 |
-| **Stamp Duty (NSW)** | ~$31,090 | ~$31,090 |
-| **Foreign Buyer Surcharge** | $72,000 (9%) | $72,000 (9%) |
-| **FIRB Application Fee** | $30,300 | $45,300 (tripled rate) |
-| **Building Inspection** | Often N/A (new construction warranty) | $600-$1,000 |
-| **Pest Inspection** | Often N/A | $300-$500 |
-| **Legal/Conveyancing** | $2,000-$3,000 | $2,000-$3,000 |
-| **Mortgage Registration** | ~$150 | ~$150 |
-| **Transfer Fees** | ~$200 | ~$200 |
-| **TOTAL UPFRONT** | **~$935,740** | **~$951,740** |
+| Cost Item                   | New Dwelling                          | Established Dwelling\* |
+| --------------------------- | ------------------------------------- | ---------------------- |
+| **Property Price**          | $800,000                              | $800,000               |
+| **Stamp Duty (NSW)**        | ~$31,090                              | ~$31,090               |
+| **Foreign Buyer Surcharge** | $72,000 (9%)                          | $72,000 (9%)           |
+| **FIRB Application Fee**    | $30,300                               | $45,300 (tripled rate) |
+| **Building Inspection**     | Often N/A (new construction warranty) | $600-$1,000            |
+| **Pest Inspection**         | Often N/A                             | $300-$500              |
+| **Legal/Conveyancing**      | $2,000-$3,000                         | $2,000-$3,000          |
+| **Mortgage Registration**   | ~$150                                 | ~$150                  |
+| **Transfer Fees**           | ~$200                                 | ~$200                  |
+| **TOTAL UPFRONT**           | **~$935,740**                         | **~$951,740**          |
 
-*Note: Established dwellings currently banned for foreign buyers. Figures shown for comparison purposes only.
+\*Note: Established dwellings currently banned for foreign buyers. Figures shown for comparison purposes only.
 
 **Key observations:**
 
 **1. FIRB Fees are Tripled for Established Dwellings**
 When permitted, established dwelling FIRB fees are 3x higher:
+
 - $800K property: $30,300 vs $45,300 (15K difference)
 - $2M property: $90,900 vs $181,800 ($90K difference)
 
@@ -254,6 +280,7 @@ When permitted, established dwelling FIRB fees are 3x higher:
 New dwellings come with construction warranties, eliminating need for pre-purchase inspections.
 
 **3. GST Considerations**
+
 - New dwellings: Purchase price may include GST
 - Established dwellings: No GST on the sale itself
 - Can affect loan calculations and deductibility
@@ -262,33 +289,36 @@ New dwellings come with construction warranties, eliminating need for pre-purcha
 
 After purchase, ownership costs differ significantly:
 
-| Cost Category | New Dwelling | Established Dwelling |
-|--------------|--------------|---------------------|
-| **Strata Fees** | $3,000-6,000/year | $2,500-5,000/year* |
-| **Council Rates** | Similar | Similar |
-| **Land Tax** | Same calculation | Same calculation |
-| **Foreign Land Tax Surcharge** | Applies equally | Applies equally |
-| **Maintenance** | Minimal first 5-10 years | $2,000-5,000+/year |
-| **Insurance** | Lower (new = less risk) | Higher (age = more risk) |
-| **Vacancy Fee** | If vacant 183+ days | If vacant 183+ days |
+| Cost Category                  | New Dwelling             | Established Dwelling     |
+| ------------------------------ | ------------------------ | ------------------------ |
+| **Strata Fees**                | $3,000-6,000/year        | $2,500-5,000/year\*      |
+| **Council Rates**              | Similar                  | Similar                  |
+| **Land Tax**                   | Same calculation         | Same calculation         |
+| **Foreign Land Tax Surcharge** | Applies equally          | Applies equally          |
+| **Maintenance**                | Minimal first 5-10 years | $2,000-5,000+/year       |
+| **Insurance**                  | Lower (new = less risk)  | Higher (age = more risk) |
+| **Vacancy Fee**                | If vacant 183+ days      | If vacant 183+ days      |
 
-*Established strata fees often lower as building already amortized sinking fund contributions.
+\*Established strata fees often lower as building already amortized sinking fund contributions.
 
 **Maintenance differences are significant:**
 
 **New dwelling (Years 1-10):**
+
 - Builder's warranty covers major defects
 - Minimal maintenance required
 - Modern, efficient systems
 - **Estimated: $500-1,500/year**
 
 **Established dwelling (Varies by age):**
+
 - Hot water system replacements ($1,500-3,000)
 - Appliance repairs/replacements
 - Painting, repairs, wear and tear
 - **Estimated: $2,000-5,000+/year**
 
 **Over 10 years:**
+
 - New dwelling maintenance: ~$10,000
 - Established dwelling maintenance: ~$35,000
 - **Difference: $25,000**
@@ -300,6 +330,7 @@ This is where new dwellings offer significant advantages for investors.
 **Depreciation Benefits:**
 
 **New Dwelling:**
+
 - **Building depreciation:** 2.5% per year for 40 years
   - $800K property, ~$300K building value
   - Depreciation: ~$7,500/year
@@ -310,12 +341,14 @@ This is where new dwellings offer significant advantages for investors.
 - **Over 10 years: $105,000-125,000 in deductions**
 
 **Established Dwelling (Built pre-1987):**
+
 - **No building depreciation** (if built before Sept 1987)
 - **Limited fixtures depreciation** (existing items already depreciated)
 - **Total annual depreciation: $0-2,000**
 - **Over 10 years: $0-20,000 in deductions**
 
 **Established Dwelling (Built post-1987):**
+
 - **Building depreciation:** Remaining portion only
 - **Fixtures depreciation:** Limited to newer items
 - **Total annual depreciation: $3,000-6,000**
@@ -338,17 +371,20 @@ Let's analyze the investment case for each property type.
 **Established Dwellings (Advantages):**
 
 **1. Prime Locations**
+
 - Often in established, desirable suburbs
 - Close to CBDs, beaches, parks
 - Proven demand over decades
 - Infrastructure already in place
 
 **2. Land Value Appreciation**
+
 - Growth driven by land component
 - Limited supply in established areas
 - Historical performance track record
 
 **3. Immediate Liquidity**
+
 - Can sell to wider market (not just foreign buyers)
 - Established demand and comparable sales
 - Less risk of oversupply
@@ -358,16 +394,19 @@ Let's analyze the investment case for each property type.
 **New Dwellings (Advantages):**
 
 **1. Modern Appeal**
+
 - Attracts quality tenants
 - Higher rental premiums initially
 - Lower maintenance costs
 
 **2. Growth Corridors**
+
 - Often in developing areas
 - Potential for infrastructure boosts
 - May benefit from urban expansion
 
 **3. Initial Depreciation Risk**
+
 - May experience initial value stagnation
 - "New" premium dissipates quickly
 - Need to hold 7-10+ years for solid returns
@@ -379,16 +418,19 @@ Let's analyze the investment case for each property type.
 **Established Dwellings:**
 
 **Advantages:**
+
 - Proven rental history in area
 - Established tenant demand
 - Often closer to employment centers
 
 **Yields:**
+
 - Inner established suburbs: 2.5-3.5%
 - Middle ring suburbs: 3.5-4.5%
 - Outer suburbs: 4.5-5.5%
 
 **Challenges:**
+
 - Higher maintenance affects net yield
 - Older properties may have vacancy periods during repairs
 - Tenant preferences shifting to newer properties
@@ -396,17 +438,20 @@ Let's analyze the investment case for each property type.
 **New Dwellings:**
 
 **Advantages:**
+
 - Lower maintenance reduces costs
 - Modern features attract quality tenants
 - Can charge premium rent initially
 - Energy efficiency appeals to renters
 
 **Yields:**
+
 - New apartments in CBD: 3.5-4.5%
 - New houses in growth corridors: 4.5-5.5%
 - Master-planned communities: 4.0-5.0%
 
 **Challenges:**
+
 - Oversupply risk in some areas
 - Rental premium erodes as property ages
 - Longer tenancy crucial to offset higher entry cost
@@ -416,12 +461,14 @@ Let's analyze the investment case for each property type.
 **New Dwelling Risks:**
 
 **1. Oversupply**
+
 - Multiple developments in same area
 - Too many similar properties
 - Rental and capital growth suppression
 - **Mitigation:** Research planned developments, choose diverse areas
 
 **2. Off-the-Plan Specific Risks**
+
 - Completion delays
 - Developer insolvency
 - Changes to plans/specifications
@@ -429,18 +476,21 @@ Let's analyze the investment case for each property type.
 - **Mitigation:** Research developer, use established developers, include protective clauses
 
 **3. Sunset Clauses**
+
 - Developer can cancel if not complete by date
 - You may not get full benefit of capital growth
 - Market may have moved significantly
 - **Mitigation:** Negotiate favorable sunset dates, understand your rights
 
 **4. Valuation Risk**
+
 - Bank valuation may come in lower than purchase price
 - Affects loan amount available
 - May need larger deposit
 - **Mitigation:** Compare with recent sales, avoid paying significant premiums
 
 **5. Quality Issues**
+
 - Construction defects
 - Body corporate disputes over defects
 - Builder warranty claims process
@@ -449,24 +499,28 @@ Let's analyze the investment case for each property type.
 **Established Dwelling Risks:**
 
 **1. Maintenance and Unexpected Repairs**
+
 - Hidden structural issues
 - Aging infrastructure requiring replacement
 - Expensive surprises (plumbing, electrical, roofing)
 - **Mitigation:** Comprehensive inspections, maintenance reserve fund
 
 **2. Limited Foreign Buyer Market**
+
 - Cannot sell to foreign buyers (currently)
 - Reduces potential buyer pool
 - May affect resale value
 - **Mitigation:** Buy in areas with strong domestic demand
 
 **3. Rental Property Condition**
+
 - May need updating to attract tenants
 - Renovation costs to maintain competitiveness
 - Tenant expectations rising toward newer properties
 - **Mitigation:** Budget for periodic updates, choose well-maintained properties
 
 **4. Energy Efficiency**
+
 - Higher utility costs affect tenant appeal
 - May need to upgrade to remain competitive
 - Environmental regulations tightening
@@ -479,17 +533,20 @@ How easy is it to get a mortgage for each property type?
 ### New Dwelling Financing
 
 **Advantages:**
+
 - Banks generally prefer new properties
 - Lower loan-to-value ratio (LVR) restrictions
 - May accept pre-sale contract for pre-approval
 - Developer often has relationship with specific lenders
 
 **Typical terms for foreign buyers:**
+
 - LVR: 60-70% (30-40% deposit)
 - Interest rates: 6.5-8.0%
 - Loan term: 20-30 years
 
 **Challenges:**
+
 - Bank valuation may come in low for off-the-plan
 - May need to cover gap between contract price and valuation
 - Construction loans different from standard mortgages (if land + build)
@@ -497,16 +554,19 @@ How easy is it to get a mortgage for each property type?
 ### Established Dwelling Financing
 
 **Advantages:**
+
 - Property already exists (certain valuation)
 - Immediate rental income starts
 - No completion risk
 
 **Typical terms for foreign buyers:**
+
 - LVR: 60-70% (30-40% deposit)
 - Interest rates: 6.5-8.0%
 - Loan term: 20-30 years
 
 **Challenges:**
+
 - Limited lenders willing to finance foreign buyers
 - Stricter serviceability requirements
 - May require larger deposit if older property
@@ -514,6 +574,7 @@ How easy is it to get a mortgage for each property type?
 ### Practical Financing Tip
 
 Many foreign buyers find:
+
 - **New dwellings:** Easier approval process, better lender options
 - **Established dwellings:** More conservative lending, fewer willing lenders
 
@@ -528,12 +589,14 @@ Different investors should favor different property types based on their goals a
 **Recommended: New Dwelling (Off-the-Plan Apartment)**
 
 **Why:**
+
 - Only option during current ban
 - Depreciation benefits maximize tax returns
 - Low maintenance while studying
 - Can sell to other foreign buyers when leaving
 
 **Location strategy:**
+
 - Near university
 - Good public transport
 - Rental demand from other students
@@ -546,12 +609,14 @@ Buy 2-bed apartment near University of Melbourne for $550,000. Live in one room,
 **Recommended: New Dwelling in Growth Corridor OR Wait for PR**
 
 **Why:**
+
 - If PR expected within 1-2 years, waiting eliminates FIRB restrictions
 - If buying now, new dwelling offers flexibility
 - Growth corridor provides capital appreciation potential
 - Can retain as investment after getting PR
 
 **Location strategy:**
+
 - Areas with infrastructure investment
 - Future transport links
 - Master-planned communities
@@ -564,12 +629,14 @@ Buy 2-bed apartment near University of Melbourne for $550,000. Live in one room,
 **Recommended: New Dwelling - Strategic Portfolio Approach**
 
 **Why:**
+
 - Only option currently available
 - Depreciation maximizes returns
 - Professional property management essential
 - Build diversified portfolio over time
 
 **Location strategy:**
+
 - Proven rental markets
 - Near employment centers
 - Transport accessibility
@@ -583,12 +650,14 @@ Hong Kong-based investor builds portfolio of 3 new apartments over 5 years: Sydn
 **Recommended: New Dwellings in Prestige Developments**
 
 **Why:**
+
 - Access to premium locations via new luxury developments
 - Top-quality finishes and amenities
 - Attracts executive tenants
 - Strong resale potential
 
 **Location strategy:**
+
 - Waterfront developments
 - CBD prestige towers
 - Master-planned estates
@@ -602,12 +671,14 @@ Ultra-high-net-worth investor purchases $2.5M penthouse in new Sydney Harbour de
 **Recommended: New House-and-Land (Owner-Occupation Focus)**
 
 **Why:**
+
 - Suitable for family living
 - Can move in immediately upon migration
 - Modern, low-maintenance
 - School proximity crucial
 
 **Location strategy:**
+
 - Good school zones
 - Family-friendly suburbs
 - Parks and amenities
@@ -623,12 +694,14 @@ Use this decision tree to determine which property type suits you:
 ### Step 1: Check Your Eligibility
 
 **Are you a foreign person?**
+
 - **No** (Australian citizen/PR) → Can buy either, skip to Step 3
 - **Yes** → Continue to Step 2
 
 ### Step 2: Current FIRB Reality Check
 
 **Can you legally purchase established dwellings?**
+
 - **No** (April 2025 - March 2027 ban applies) → **Must choose new dwelling**
 - **Yes** (after ban ends, or qualifying exception) → Continue to Step 3
 
@@ -637,16 +710,19 @@ Use this decision tree to determine which property type suits you:
 **How long do you plan to hold?**
 
 **Less than 5 years:**
+
 - **Risk:** New dwellings may not appreciate significantly
 - **Better choice:** Established in proven location (if available)
 - **Reality check:** Capital growth limited in short term for new
 
 **5-10 years:**
+
 - **Either option viable**
 - New dwelling depreciation benefits valuable
 - Established location advantage matters
 
 **10+ years:**
+
 - **New dwellings catch up** on capital appreciation
 - Tax benefits compound
 - Less maintenance means lower costs
@@ -656,11 +732,13 @@ Use this decision tree to determine which property type suits you:
 **Is maximizing tax deductions important?**
 
 **Yes, need strong deductions:**
+
 - **Clear winner: New dwelling**
 - Depreciation provides $10,000-15,000+ annual deductions
 - Significantly improves after-tax returns
 
 **No, not concerned about tax:**
+
 - **Established dwelling more attractive** (when permitted)
 - Focus on land value and location
 
@@ -669,16 +747,19 @@ Use this decision tree to determine which property type suits you:
 **How do you feel about development risk?**
 
 **Low risk tolerance:**
+
 - Avoid off-the-plan
 - Consider completed new dwellings only
 - Or established property in proven location
 
 **Moderate risk tolerance:**
+
 - Off-the-plan from established developers acceptable
 - Research track record carefully
 - Include protective clauses
 
 **High risk tolerance:**
+
 - Off-the-plan in emerging areas
 - Potential for higher returns
 - Accept volatility
@@ -688,11 +769,13 @@ Use this decision tree to determine which property type suits you:
 **Do you need a mortgage?**
 
 **Yes, financing crucial:**
+
 - **New dwellings** generally easier for foreign buyers
 - More lenders willing to finance
 - Better LVR availability
 
 **No, cash purchase:**
+
 - Financing not a differentiator
 - Focus on investment merit
 
@@ -706,6 +789,7 @@ Use this decision tree to determine which property type suits you:
 **Strategy:** Buy off-the-plan, rent to professional tenants
 
 **Results after 5 years:**
+
 - Current value: $715,000 (+15% growth)
 - Annual rent: $28,000 (4.5% gross yield)
 - Depreciation saved: ~$50,000 in tax over 5 years
@@ -713,6 +797,7 @@ Use this decision tree to determine which property type suits you:
 - Net position: Strong positive returns
 
 **Key learnings:**
+
 - Chose oversupplied area (many similar apartments)
 - Growth moderate but tax benefits significant
 - Low maintenance crucial for offshore management
@@ -726,6 +811,7 @@ Use this decision tree to determine which property type suits you:
 **Strategy:** Live in during study, sell when returning to China
 
 **Challenges encountered:**
+
 - Hidden structural issues discovered ($15,000 repairs)
 - Visa expired sooner than expected
 - Forced to sell within 3 months
@@ -733,6 +819,7 @@ Use this decision tree to determine which property type suits you:
 - Sold for $820,000 (5-year hold cut short)
 
 **Total loss:**
+
 - Purchase price: $850,000
 - Stamp duty: ~$100,000 (base + foreign surcharge)
 - Repairs: $15,000
@@ -741,6 +828,7 @@ Use this decision tree to determine which property type suits you:
 - **Total loss: ~$170,000**
 
 **Key learnings:**
+
 - Should have bought new dwelling (no forced sale)
 - Underestimated visa timing risk
 - Property inspection missed issues
@@ -752,6 +840,7 @@ Use this decision tree to determine which property type suits you:
 **Strategy:** Build diversified portfolio over 10 years
 
 **Portfolio (as of 2025):**
+
 1. New apartment, Brisbane CBD ($480,000 - purchased 2018)
 2. New apartment, Melbourne Southbank ($650,000 - purchased 2020)
 3. House-and-land, Sydney growth corridor ($820,000 - purchased 2023)
@@ -761,6 +850,7 @@ Use this decision tree to determine which property type suits you:
 **Combined rental: $95,000/year (4.8% gross yield)**
 
 **Strategy benefits:**
+
 - Geographic diversification
 - All new dwellings (maximum depreciation)
 - Professional management across all properties
@@ -768,6 +858,7 @@ Use this decision tree to determine which property type suits you:
 - Building wealth in multiple markets
 
 **Key learnings:**
+
 - Spread risk across cities and property types
 - New dwelling strategy provided consistency
 - Tax benefits substantial across portfolio
@@ -778,6 +869,7 @@ Use this decision tree to determine which property type suits you:
 **Q: Is off-the-plan always a bad idea?**
 
 A: No, but requires careful selection. Look for:
+
 - Established developer with good track record
 - Limited competing supply in area
 - Strong underlying demand fundamentals
@@ -789,6 +881,7 @@ Many successful investors use off-the-plan strategically, especially in supply-c
 **Q: Can I renovate an established property to make it "new"?**
 
 A: Potentially, but it's complex:
+
 - Must be "substantially renovated"
 - Cannot be occupied for 12+ months after renovation
 - FIRB may scrutinize the claim
@@ -798,6 +891,7 @@ A: Potentially, but it's complex:
 **Q: What happens to my new dwelling after 10 years—does it become established?**
 
 A: For FIRB purposes:
+
 - A property sold as "new" remains treated as such
 - Future sales (you selling it later) would be as "established"
 - But by then, if you have PR, FIRB doesn't matter
@@ -806,18 +900,20 @@ A: For FIRB purposes:
 **Q: Should I wait until the established dwelling ban ends to buy?**
 
 A: Depends on your situation:
+
 - If you want established property specifically: Maybe
 - But waiting means:
   - Missing 2+ years of potential growth
   - Missing tax benefits (if investing)
   - No certainty ban will end
   - Rules might not return to previous status
-  
+
 For most foreign buyers, purchasing available new dwellings now is the better strategy.
 
 **Q: Are new apartments always in oversupplied areas?**
 
 A: No, but common issue in some markets:
+
 - Research planned supply in area
 - Check current rental vacancy rates
 - Assess underlying demand drivers
@@ -890,7 +986,6 @@ Many new developments in supply-constrained locations offer excellent opportunit
    - Review contract carefully with lawyer
    - Understand sunset clauses
    - Check bank will lend on property
-   
 6. **For completed new dwellings:**
    - Obtain independent valuation
    - Check comparable recent sales
@@ -924,7 +1019,7 @@ Many new developments in supply-constrained locations offer excellent opportunit
 
 ---
 
-*This guide is for informational purposes only and does not constitute financial, legal, or investment advice. Property markets and regulations change. Always seek professional advice specific to your circumstances and verify current FIRB rules before making investment decisions.*
+_This guide is for informational purposes only and does not constitute financial, legal, or investment advice. Property markets and regulations change. Always seek professional advice specific to your circumstances and verify current FIRB rules before making investment decisions._
 
 **Last verified:** January 5, 2025
 **Sources:** FIRB Official Guidance, ATO, State Revenue Offices, Property Market Data

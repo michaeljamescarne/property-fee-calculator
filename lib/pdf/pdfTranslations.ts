@@ -39,18 +39,24 @@ export interface PDFTranslations {
   glossary?: {
     title: string;
     description: string;
-    terms: Record<string, {
-      term: string;
-      fullName: string;
-      definition: string;
-    }>;
+    terms: Record<
+      string,
+      {
+        term: string;
+        fullName: string;
+        definition: string;
+      }
+    >;
   };
   disclaimer?: {
     title: string;
-    sections: Record<string, {
-      title: string;
-      content: string;
-    }>;
+    sections: Record<
+      string,
+      {
+        title: string;
+        content: string;
+      }
+    >;
     footer: string;
   };
   propertyDetails?: {
@@ -82,10 +88,13 @@ export interface PDFTranslations {
     description: string;
     upgradeButton: string;
     visitWebsite: string;
-    features: Record<string, {
-      title: string;
-      description: string;
-    }>;
+    features: Record<
+      string,
+      {
+        title: string;
+        description: string;
+      }
+    >;
   };
   labels: {
     address: string;
@@ -183,8 +192,3 @@ export function getPDFTranslations(allTranslations: Record<string, unknown>): PD
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (allTranslations as any).FIRBCalculator.pdf as PDFTranslations;
 }
-
-
-
-
-

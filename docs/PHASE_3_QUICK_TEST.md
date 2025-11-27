@@ -5,6 +5,7 @@
 ### Step 1: Basic Wizard Flow (5 minutes)
 
 1. **Open Calculator**
+
    ```
    http://localhost:3002/en/firb-calculator
    ```
@@ -51,9 +52,11 @@
 ### Step 5: Test API (Optional - 2 minutes)
 
 1. **Test Regulations API**
+
    ```
    http://localhost:3002/api/short-stay-regulations?state=VIC
    ```
+
    - Expected: `{ "success": true, "regulation": null }` (if no data in DB)
    - Or: Returns regulation object if data exists
 
@@ -79,8 +82,8 @@
 ## 📝 Report Issues
 
 If you find issues, note:
+
 - Which step failed
 - Error message (if any)
 - Browser console errors
 - Screenshot (if helpful)
-

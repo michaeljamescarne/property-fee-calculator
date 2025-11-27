@@ -47,4 +47,3 @@
 2. Add translation keys for financial step
 3. Test the complete wizard flow
 4. Build optimal use case analysis (Phase 3 Task 2)
-

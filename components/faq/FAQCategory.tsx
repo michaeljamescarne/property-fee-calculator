@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useLocale } from 'next-intl';
-import { FileText, UserCheck, DollarSign, AlertTriangle, Home, HelpCircle } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import FAQItem from './FAQItem';
-import type { FAQCategory as FAQCategoryType } from '@/types/faq';
+import { useState, useEffect } from "react";
+import { useLocale } from "next-intl";
+import { FileText, UserCheck, DollarSign, AlertTriangle, Home, HelpCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import FAQItem from "./FAQItem";
+import type { FAQCategory as FAQCategoryType } from "@/types/faq";
 
 interface FAQCategoryProps {
   category: FAQCategoryType;
@@ -22,15 +22,19 @@ const iconMap = {
   HelpCircle,
 };
 
-export default function FAQCategory({ category, defaultOpen = false, openQuestionId: externalOpenQuestionId }: FAQCategoryProps) {
+export default function FAQCategory({
+  category,
+  defaultOpen = false,
+  openQuestionId: externalOpenQuestionId,
+}: FAQCategoryProps) {
   const locale = useLocale();
   const [internalOpenQuestionId, setInternalOpenQuestionId] = useState<string | null>(
     defaultOpen && category.questions.length > 0 ? category.questions[0].id : null
   );
-  
+
   // Sync external openQuestionId to internal state when it changes
   useEffect(() => {
-    if (externalOpenQuestionId && category.questions.some(q => q.id === externalOpenQuestionId)) {
+    if (externalOpenQuestionId && category.questions.some((q) => q.id === externalOpenQuestionId)) {
       setInternalOpenQuestionId(externalOpenQuestionId);
     }
   }, [externalOpenQuestionId, category.questions]);
@@ -60,11 +64,10 @@ export default function FAQCategory({ category, defaultOpen = false, openQuestio
               <Icon className="h-6 w-6 text-blue-600" />
             </div>
             <div>
-              <h2 className="text-3xl font-semibold text-gray-900">
-                {category.name}
-              </h2>
+              <h2 className="text-3xl font-semibold text-gray-900">{category.name}</h2>
               <p className="text-sm text-gray-600 mt-0.5">
-                {category.questions.length} {category.questions.length === 1 ? 'question' : 'questions'}
+                {category.questions.length}{" "}
+                {category.questions.length === 1 ? "question" : "questions"}
               </p>
             </div>
           </div>
@@ -87,4 +90,3 @@ export default function FAQCategory({ category, defaultOpen = false, openQuestio
     </section>
   );
 }
-

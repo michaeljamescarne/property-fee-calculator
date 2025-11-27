@@ -3,11 +3,11 @@
  * Layout wrapper for admin pages with navigation
  */
 
-import { redirect } from 'next/navigation';
-import { requireAdmin } from '@/lib/auth/admin';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Database, Home, ArrowLeft } from 'lucide-react';
+import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/auth/admin";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Database, Home, ArrowLeft } from "lucide-react";
 
 export default async function AdminLayout({
   children,
@@ -17,7 +17,7 @@ export default async function AdminLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  
+
   // Require admin access
   await requireAdmin(locale);
 
@@ -53,4 +53,3 @@ export default async function AdminLayout({
     </div>
   );
 }
-

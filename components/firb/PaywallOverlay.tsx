@@ -1,16 +1,16 @@
 /**
  * Paywall Overlay Component
  * Blurred overlay for locked content
- * 
+ *
  * NOTE: This component is prepared but not active yet.
  * Will be used when paywall is enabled.
  */
 
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Lock, Star } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Lock, Star } from "lucide-react";
 
 interface PaywallOverlayProps {
   title: string;
@@ -59,13 +59,11 @@ export default function PaywallOverlay({
 
             <div>
               <h3 className="text-xl font-bold mb-2">{title}</h3>
-              {description && (
-                <p className="text-sm text-muted-foreground">{description}</p>
-              )}
+              {description && <p className="text-sm text-muted-foreground">{description}</p>}
             </div>
 
             <Button onClick={onUnlock} size="lg" className="w-full">
-              {isAuthenticated ? 'Upgrade to Unlock' : 'Login to Unlock'}
+              {isAuthenticated ? "Upgrade to Unlock" : "Login to Unlock"}
             </Button>
 
             {!isAuthenticated && (
@@ -79,16 +77,3 @@ export default function PaywallOverlay({
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { FileText, UserCheck, DollarSign, AlertTriangle, Home, HelpCircle } from 'lucide-react';
-import type { FAQCategory } from '@/types/faq';
+import { useState, useEffect } from "react";
+import { FileText, UserCheck, DollarSign, AlertTriangle, Home, HelpCircle } from "lucide-react";
+import type { FAQCategory } from "@/types/faq";
 
 interface FAQNavigationProps {
   categories: FAQCategory[];
@@ -19,7 +19,11 @@ const iconMap = {
   HelpCircle,
 };
 
-export default function FAQNavigation({ categories, activeCategory, onCategoryClick }: FAQNavigationProps) {
+export default function FAQNavigation({
+  categories,
+  activeCategory,
+  onCategoryClick,
+}: FAQNavigationProps) {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -27,22 +31,22 @@ export default function FAQNavigation({ categories, activeCategory, onCategoryCl
       setIsSticky(window.scrollY > 300);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleClick = (categoryId: string) => {
     if (onCategoryClick) {
       onCategoryClick(categoryId);
     }
-    
+
     const element = document.getElementById(categoryId);
     if (element) {
       const offset = 100;
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
         top: elementPosition - offset,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
@@ -50,7 +54,7 @@ export default function FAQNavigation({ categories, activeCategory, onCategoryCl
   return (
     <nav
       className={`bg-white border-y border-gray-200 transition-all duration-200 ${
-        isSticky ? 'sticky top-0 z-40 shadow-sm' : ''
+        isSticky ? "sticky top-0 z-40 shadow-sm" : ""
       }`}
     >
       <div className="container mx-auto px-4">
@@ -65,15 +69,13 @@ export default function FAQNavigation({ categories, activeCategory, onCategoryCl
                 onClick={() => handleClick(category.id)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded whitespace-nowrap transition-all font-medium text-sm ${
                   isActive
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900"
                 }`}
               >
                 <Icon className="h-4 w-4" />
                 <span>{category.name}</span>
-                <span className="ml-1 text-xs opacity-70">
-                  ({category.questions.length})
-                </span>
+                <span className="ml-1 text-xs opacity-70">({category.questions.length})</span>
               </button>
             );
           })}
@@ -82,17 +84,3 @@ export default function FAQNavigation({ categories, activeCategory, onCategoryCl
     </nav>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

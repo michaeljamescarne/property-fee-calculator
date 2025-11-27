@@ -3,45 +3,57 @@
  * Displays eligibility verdict and cost breakdown
  */
 
-'use client';
+"use client";
 
-import { useState, useMemo, useRef, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { useReactToPrint } from 'react-to-print';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState, useMemo, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { useReactToPrint } from "react-to-print";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { CustomAlert } from '@/components/ui/custom-alert';
-import { Download, Mail, Edit, Info, RotateCcw, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
-import { EligibilityResult } from '@/lib/firb/eligibility';
-import { CostBreakdown } from '@/lib/firb/calculations';
-import { PropertyType, AustralianState } from '@/lib/firb/constants';
-import { generateDefaultInputs, calculateInvestmentAnalytics } from '@/lib/firb/investment-analytics';
-import type { InvestmentInputs, InvestmentAnalytics } from '@/types/investment';
-import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
-import type { CalculationData } from '@/types/database';
-import InvestmentInputsComponent from './InvestmentInputs';
-import InvestmentSummary from './InvestmentSummary';
-import CashFlowAnalysis from './CashFlowAnalysis';
-import ProjectionChart from './ProjectionChart';
-import InvestmentComparison from './InvestmentComparison';
-import SensitivityAnalysis from './SensitivityAnalysis';
-import TaxAnalysis from './TaxAnalysis';
-import InvestmentScore from './InvestmentScore';
-import OptimalUseCaseSection from './OptimalUseCaseSection';
-import SaveCalculationButton from './SaveCalculationButton';
-import LoginModal from '@/components/auth/LoginModal';
-import EligibilityResultCard from './EligibilityResultCard';
-import PrintableReport from './PrintableReport';
-import BenchmarkComparison from './BenchmarkComparison';
-import { calculateOptimalUseCase, getDefaultOccupancyRate } from '@/lib/firb/optimal-use-case';
-import type { ShortStayRegulation } from '@/lib/firb/optimal-use-case';
-import type { BenchmarkData } from '@/app/api/benchmarks/route';
+} from "@/components/ui/accordion";
+import { CustomAlert } from "@/components/ui/custom-alert";
+import {
+  Download,
+  Mail,
+  Edit,
+  Info,
+  RotateCcw,
+  TrendingUp,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import { EligibilityResult } from "@/lib/firb/eligibility";
+import { CostBreakdown } from "@/lib/firb/calculations";
+import { PropertyType, AustralianState } from "@/lib/firb/constants";
+import {
+  generateDefaultInputs,
+  calculateInvestmentAnalytics,
+} from "@/lib/firb/investment-analytics";
+import type { InvestmentInputs, InvestmentAnalytics } from "@/types/investment";
+import type { FIRBCalculatorFormData } from "@/lib/validations/firb";
+import type { CalculationData } from "@/types/database";
+import InvestmentInputsComponent from "./InvestmentInputs";
+import InvestmentSummary from "./InvestmentSummary";
+import CashFlowAnalysis from "./CashFlowAnalysis";
+import ProjectionChart from "./ProjectionChart";
+import InvestmentComparison from "./InvestmentComparison";
+import SensitivityAnalysis from "./SensitivityAnalysis";
+import TaxAnalysis from "./TaxAnalysis";
+import InvestmentScore from "./InvestmentScore";
+import OptimalUseCaseSection from "./OptimalUseCaseSection";
+import SaveCalculationButton from "./SaveCalculationButton";
+import LoginModal from "@/components/auth/LoginModal";
+import EligibilityResultCard from "./EligibilityResultCard";
+import PrintableReport from "./PrintableReport";
+import BenchmarkComparison from "./BenchmarkComparison";
+import { calculateOptimalUseCase, getDefaultOccupancyRate } from "@/lib/firb/optimal-use-case";
+import type { ShortStayRegulation } from "@/lib/firb/optimal-use-case";
+import type { BenchmarkData } from "@/app/api/benchmarks/route";
 
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
@@ -68,43 +80,45 @@ export default function ResultsPanel({
   propertyType,
   state,
   depositPercent,
-  formData
+  formData,
 }: ResultsPanelProps) {
-  const t = useTranslations('FIRBCalculator.results');
-  const tAnalytics = useTranslations('FIRBCalculator.results.investmentAnalytics');
-  
+  const t = useTranslations("FIRBCalculator.results");
+  const tAnalytics = useTranslations("FIRBCalculator.results.investmentAnalytics");
+
   // Auth state
   const [showLoginModal, setShowLoginModal] = useState(false);
-  
+
   // Print ref for browser-based PDF generation
   const printRef = useRef<HTMLDivElement>(null);
-  
+
   // Setup print handler
   const handlePrint = useReactToPrint({
     contentRef: printRef,
-    documentTitle: `FIRB-Investment-Analysis-${new Date().toISOString().split('T')[0]}`,
+    documentTitle: `FIRB-Investment-Analysis-${new Date().toISOString().split("T")[0]}`,
   });
-  
+
   // Investment Analytics State
   const [showInvestmentAnalysis, setShowInvestmentAnalysis] = useState(false);
   const [investmentInputs, setInvestmentInputs] = useState<InvestmentInputs>(() =>
     generateDefaultInputs(propertyValue, state, propertyType, depositPercent, costs)
   );
-  
+
   // Short-stay regulations state
-  const [shortStayRegulations, setShortStayRegulations] = useState<ShortStayRegulation | null>(null);
+  const [shortStayRegulations, setShortStayRegulations] = useState<ShortStayRegulation | null>(
+    null
+  );
   const [isLoadingRegulations, setIsLoadingRegulations] = useState(false);
-  
+
   // Benchmark data state
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
   const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
-  
+
   // Calculate investment analytics
-  const investmentAnalytics = useMemo(() => 
-    calculateInvestmentAnalytics(investmentInputs, propertyValue, state, propertyType, costs),
+  const investmentAnalytics = useMemo(
+    () => calculateInvestmentAnalytics(investmentInputs, propertyValue, state, propertyType, costs),
     [investmentInputs, propertyValue, state, propertyType, costs]
   );
-  
+
   // Calculate optimal use case
   const optimalUseCase = useMemo(() => {
     if (!investmentInputs.estimatedWeeklyRent) return null;
@@ -117,7 +131,7 @@ export default function ResultsPanel({
       shortStayRegulations
     );
   }, [investmentInputs, propertyValue, state, propertyType, costs, shortStayRegulations]);
-  
+
   // Fetch short-stay regulations on mount
   useEffect(() => {
     const fetchRegulations = async () => {
@@ -126,16 +140,16 @@ export default function ResultsPanel({
         const params = new URLSearchParams({
           state: state,
         });
-        
+
         // Add address details if available
         if (formData.propertyAddress) {
           // Try to extract postcode from address
           const postcodeMatch = formData.propertyAddress.match(/\b\d{4}\b/);
           if (postcodeMatch) {
-            params.append('postcode', postcodeMatch[0]);
+            params.append("postcode", postcodeMatch[0]);
           }
         }
-        
+
         const response = await fetch(`/api/short-stay-regulations?${params.toString()}`);
         if (response.ok) {
           const data = await response.json();
@@ -144,26 +158,26 @@ export default function ResultsPanel({
           }
         }
       } catch (error) {
-        console.error('Failed to fetch short-stay regulations:', error);
+        console.error("Failed to fetch short-stay regulations:", error);
       } finally {
         setIsLoadingRegulations(false);
       }
     };
-    
+
     fetchRegulations();
   }, [state, formData.propertyAddress]);
-  
+
   // Handle investment input changes
   const handleInvestmentInputChange = (updates: Partial<InvestmentInputs>) => {
-    setInvestmentInputs(prev => ({ ...prev, ...updates }));
+    setInvestmentInputs((prev) => ({ ...prev, ...updates }));
   };
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-AU', {
-      style: 'currency',
-      currency: 'AUD',
+    return new Intl.NumberFormat("en-AU", {
+      style: "currency",
+      currency: "AUD",
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(value);
   };
 
@@ -183,31 +197,27 @@ export default function ResultsPanel({
     costs: costs,
   };
 
-
   return (
     <div className="space-y-6">
       {/* Enhanced FIRB Eligibility Results */}
-      <EligibilityResultCard 
-        eligibility={eligibility}
-        formData={formData}
-      />
+      <EligibilityResultCard eligibility={eligibility} formData={formData} />
 
       {/* Cost Breakdown */}
       <Card className="border border-gray-200 shadow-sm rounded bg-white">
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold text-gray-900">{t('costs.title')}</CardTitle>
-          <CardDescription className="text-gray-600">{t('costs.description')}</CardDescription>
+          <CardTitle className="text-2xl font-semibold text-gray-900">{t("costs.title")}</CardTitle>
+          <CardDescription className="text-gray-600">{t("costs.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           {/* Total Investment Cost */}
           <div className="p-6 mb-6 rounded bg-blue-600 text-white">
-            <p className="text-sm text-white/90">{t('costs.totalInvestment')}</p>
+            <p className="text-sm text-white/90">{t("costs.totalInvestment")}</p>
             <p className="text-4xl font-bold mt-2">{formatCurrency(costs.totalInvestmentCost)}</p>
             <p className="text-sm text-white/75 mt-2">
-              {t('costs.propertyPrice')}: {formatCurrency(costs.upfrontCosts.propertyPrice)}
+              {t("costs.propertyPrice")}: {formatCurrency(costs.upfrontCosts.propertyPrice)}
             </p>
             <p className="text-sm text-white/75">
-              {t('costs.upfrontCosts')}: {formatCurrency(costs.upfrontCosts.total)}
+              {t("costs.upfrontCosts")}: {formatCurrency(costs.upfrontCosts.total)}
             </p>
           </div>
 
@@ -229,13 +239,15 @@ export default function ResultsPanel({
                           )}
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold text-gray-900">{formatCurrency(item.amount)}</p>
+                          <p className="font-semibold text-gray-900">
+                            {formatCurrency(item.amount)}
+                          </p>
                         </div>
                       </div>
                     ))}
                     {section.items.length > 1 && (
                       <div className="flex justify-between items-center pt-3 border-t border-gray-200 font-semibold text-gray-900">
-                        <span>{t('costs.subtotal')}</span>
+                        <span>{t("costs.subtotal")}</span>
                         <span>
                           {formatCurrency(
                             section.items.reduce((sum, item) => sum + item.amount, 0)
@@ -253,17 +265,19 @@ export default function ResultsPanel({
           <div className="mt-6 p-4 rounded bg-gray-50 border border-gray-200">
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-semibold text-gray-900">{t('costs.annualOngoing')}</p>
-                <p className="text-sm text-gray-600">{t('costs.annualOngoingNote')}</p>
+                <p className="font-semibold text-gray-900">{t("costs.annualOngoing")}</p>
+                <p className="text-sm text-gray-600">{t("costs.annualOngoingNote")}</p>
               </div>
-              <p className="text-2xl font-bold text-gray-900">{formatCurrency(costs.ongoingCosts.total)}</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {formatCurrency(costs.ongoingCosts.total)}
+              </p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Investment Analytics Toggle */}
-      <Card 
+      <Card
         className="border-2 border-blue-200 shadow-md rounded bg-blue-50 cursor-pointer hover:shadow-lg hover:border-blue-600 transition-all"
         onClick={() => setShowInvestmentAnalysis(!showInvestmentAnalysis)}
       >
@@ -272,18 +286,19 @@ export default function ResultsPanel({
             <div className="flex-1">
               <CardTitle className="flex items-center gap-2 text-xl font-semibold text-gray-900">
                 <TrendingUp className="h-6 w-6 text-blue-600" />
-                {tAnalytics('toggle.title') === 'FIRBCalculator.investmentAnalytics.toggle.title' 
-                  ? 'Investment Analysis & Projections' 
-                  : tAnalytics('toggle.title')}
+                {tAnalytics("toggle.title") === "FIRBCalculator.investmentAnalytics.toggle.title"
+                  ? "Investment Analysis & Projections"
+                  : tAnalytics("toggle.title")}
               </CardTitle>
               <CardDescription className="mt-2 text-gray-600">
-                {tAnalytics('toggle.description') === 'FIRBCalculator.investmentAnalytics.toggle.description'
-                  ? 'See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments'
-                  : tAnalytics('toggle.description')}
+                {tAnalytics("toggle.description") ===
+                "FIRBCalculator.investmentAnalytics.toggle.description"
+                  ? "See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments"
+                  : tAnalytics("toggle.description")}
               </CardDescription>
             </div>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               className="gap-2 font-semibold rounded"
               onClick={(e) => {
@@ -293,15 +308,17 @@ export default function ResultsPanel({
             >
               {showInvestmentAnalysis ? (
                 <>
-                  {tAnalytics('toggle.hide') === 'FIRBCalculator.investmentAnalytics.toggle.hide' 
-                    ? 'Hide Analysis' 
-                    : tAnalytics('toggle.hide')} <ChevronUp className="h-5 w-5" />
+                  {tAnalytics("toggle.hide") === "FIRBCalculator.investmentAnalytics.toggle.hide"
+                    ? "Hide Analysis"
+                    : tAnalytics("toggle.hide")}{" "}
+                  <ChevronUp className="h-5 w-5" />
                 </>
               ) : (
                 <>
-                  {tAnalytics('toggle.show') === 'FIRBCalculator.investmentAnalytics.toggle.show'
-                    ? 'Show Investment Analysis'
-                    : tAnalytics('toggle.show')} <ChevronDown className="h-5 w-5" />
+                  {tAnalytics("toggle.show") === "FIRBCalculator.investmentAnalytics.toggle.show"
+                    ? "Show Investment Analysis"
+                    : tAnalytics("toggle.show")}{" "}
+                  <ChevronDown className="h-5 w-5" />
                 </>
               )}
             </Button>
@@ -313,7 +330,7 @@ export default function ResultsPanel({
       {showInvestmentAnalysis && (
         <div className="space-y-6 animate-in slide-in-from-top-4 duration-500">
           {/* Investment Inputs */}
-          <InvestmentInputsComponent 
+          <InvestmentInputsComponent
             inputs={investmentInputs}
             onChange={handleInvestmentInputChange}
           />
@@ -350,79 +367,51 @@ export default function ResultsPanel({
 
           {/* Optimal Use Case Analysis */}
           {optimalUseCase && (
-            <OptimalUseCaseSection 
-              comparison={optimalUseCase}
-              propertyValue={propertyValue}
-            />
+            <OptimalUseCaseSection comparison={optimalUseCase} propertyValue={propertyValue} />
           )}
         </div>
       )}
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
-        <Button
-          onClick={handlePrint}
-          variant="default"
-          size="lg"
-          className="gap-2 rounded"
-        >
+        <Button onClick={handlePrint} variant="default" size="lg" className="gap-2 rounded">
           <Download className="h-5 w-5" />
-          {t('actions.downloadPDF')}
+          {t("actions.downloadPDF")}
           {showInvestmentAnalysis && <span className="text-xs ml-1">(with analytics)</span>}
         </Button>
-        
+
         {/* Save Calculation Button */}
         <SaveCalculationButton
           calculationData={calculationData}
           onLoginClick={() => setShowLoginModal(true)}
           className="sm:flex-shrink-0"
         />
-        
-        <Button
-          onClick={onEmailResults}
-          variant="outline"
-          size="lg"
-          className="gap-2 rounded"
-        >
+
+        <Button onClick={onEmailResults} variant="outline" size="lg" className="gap-2 rounded">
           <Mail className="h-5 w-5" />
-          {t('actions.emailResults')}
+          {t("actions.emailResults")}
         </Button>
-        <Button
-          onClick={onEditCalculation}
-          variant="outline"
-          size="lg"
-          className="gap-2 rounded"
-        >
+        <Button onClick={onEditCalculation} variant="outline" size="lg" className="gap-2 rounded">
           <Edit className="h-5 w-5" />
-          {t('actions.editCalculation')}
+          {t("actions.editCalculation")}
         </Button>
-        <Button
-          onClick={onStartAgain}
-          variant="outline"
-          size="lg"
-          className="gap-2 rounded"
-        >
+        <Button onClick={onStartAgain} variant="outline" size="lg" className="gap-2 rounded">
           <RotateCcw className="h-5 w-5" />
-          {t('actions.startAgain')}
+          {t("actions.startAgain")}
         </Button>
       </div>
 
       {/* Disclaimer */}
-      <CustomAlert 
+      <CustomAlert
         variant="default"
         icon={<Info className="h-4 w-4" />}
-        title={t('disclaimer.title')}
+        title={t("disclaimer.title")}
       >
-        <p className="text-sm">
-          {t('disclaimer.content')}
-        </p>
+        <p className="text-sm">{t("disclaimer.content")}</p>
       </CustomAlert>
 
       {/* Login Modal */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-      />
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
 
       {/* Hidden Printable Report for Browser-Based PDF Generation */}
       <div ref={printRef}>
@@ -436,4 +425,3 @@ export default function ResultsPanel({
     </div>
   );
 }
-

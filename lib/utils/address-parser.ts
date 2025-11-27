@@ -3,7 +3,7 @@
  * Extracts suburb, state, and postcode from property addresses
  */
 
-import type { AustralianState } from '@/lib/firb/constants';
+import type { AustralianState } from "@/lib/firb/constants";
 
 export interface ParsedAddress {
   suburb?: string;
@@ -12,22 +12,22 @@ export interface ParsedAddress {
 }
 
 const STATE_ABBREVIATIONS: Record<string, AustralianState> = {
-  'new south wales': 'NSW',
-  'nsw': 'NSW',
-  'victoria': 'VIC',
-  'vic': 'VIC',
-  'queensland': 'QLD',
-  'qld': 'QLD',
-  'south australia': 'SA',
-  'sa': 'SA',
-  'western australia': 'WA',
-  'wa': 'WA',
-  'tasmania': 'TAS',
-  'tas': 'TAS',
-  'australian capital territory': 'ACT',
-  'act': 'ACT',
-  'northern territory': 'NT',
-  'nt': 'NT',
+  "new south wales": "NSW",
+  nsw: "NSW",
+  victoria: "VIC",
+  vic: "VIC",
+  queensland: "QLD",
+  qld: "QLD",
+  "south australia": "SA",
+  sa: "SA",
+  "western australia": "WA",
+  wa: "WA",
+  tasmania: "TAS",
+  tas: "TAS",
+  "australian capital territory": "ACT",
+  act: "ACT",
+  "northern territory": "NT",
+  nt: "NT",
 };
 
 /**
@@ -38,7 +38,10 @@ export function parseAddress(address: string): ParsedAddress {
     return {};
   }
 
-  const parts = address.split(',').map(p => p.trim()).filter(p => p.length > 0);
+  const parts = address
+    .split(",")
+    .map((p) => p.trim())
+    .filter((p) => p.length > 0);
   const result: ParsedAddress = {};
 
   // Postcode is typically 4 digits, usually at the end
@@ -62,7 +65,7 @@ export function parseAddress(address: string): ParsedAddress {
   if (parts.length >= 2) {
     // If we found postcode, suburb is likely before it
     if (result.postcode) {
-      const postcodeIndex = parts.findIndex(p => p === result.postcode);
+      const postcodeIndex = parts.findIndex((p) => p === result.postcode);
       if (postcodeIndex > 0) {
         result.suburb = parts[postcodeIndex - 1];
       }
@@ -101,4 +104,3 @@ export function extractPostcode(address: string): string | undefined {
   const parsed = parseAddress(address);
   return parsed.postcode;
 }
-

@@ -1,6 +1,7 @@
 # ✅ Alert Text Cropping Fix - COMPLETED
 
 ## Issue Description
+
 The alert message in the FIRB Calculator results page was being cropped at the bottom, showing only partial text like "Based on your citizenship status, you may not be eligible to purchase this type of prope..." (with "property" cut off).
 
 ## Root Cause Analysis
@@ -15,6 +16,7 @@ The issue was caused by multiple constraints in the Alert component:
 ## Solution Implemented
 
 ### 1. Fixed Alert Component Layout
+
 **File**: `components/firb/ResultsPanel.tsx`
 
 ```typescript
@@ -39,6 +41,7 @@ The issue was caused by multiple constraints in the Alert component:
 ```
 
 ### 2. Increased Container Width
+
 **File**: `app/[locale]/firb-calculator/page.tsx`
 
 ```typescript
@@ -61,11 +64,13 @@ The issue was caused by multiple constraints in the Alert component:
 ## Verification
 
 ### ✅ Build Status
+
 - Local build: Successful
 - TypeScript: No errors
 - Production deployment: Successful (commit e2fa4ac)
 
 ### ✅ Expected Results
+
 - Alert text now displays in full without cropping
 - Text wraps properly within the available space
 - Better spacing and readability
@@ -79,6 +84,7 @@ The issue was caused by multiple constraints in the Alert component:
 4. **Verify**: Text should display completely without any cropping
 
 ### Test Cases
+
 - ✅ Foreign citizen trying to buy established dwelling (shows restriction message)
 - ✅ Australian citizen buying any property (shows eligible message)
 - ✅ Temporary resident scenarios (shows FIRB required message)
@@ -100,16 +106,3 @@ The issue was caused by multiple constraints in the Alert component:
 **Status**: ✅ COMPLETE - Alert text cropping issue resolved  
 **Impact**: Users can now read complete alert messages without text being cut off  
 **Next**: Ready to address remaining issues systematically
-
-
-
-
-
-
-
-
-
-
-
-
-

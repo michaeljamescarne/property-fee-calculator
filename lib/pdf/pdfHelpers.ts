@@ -16,11 +16,10 @@ export function blobToBase64(blob: Blob): Promise<string> {
       // Convert ArrayBuffer to Buffer (Node.js)
       const buffer = Buffer.from(arrayBuffer);
       // Convert Buffer to base64 string
-      const base64 = buffer.toString('base64');
+      const base64 = buffer.toString("base64");
       resolve(base64);
     } catch (error) {
       reject(error);
     }
   });
 }
-

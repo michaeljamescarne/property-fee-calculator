@@ -3,8 +3,9 @@
 ## Overview
 
 Phase 3 builds the comprehensive calculator that extends the existing FIRB calculator to include:
+
 - ✅ Eligibility Assessment (FIRB) - Already implemented
-- ✅ Comprehensive Cost Analysis - Already implemented  
+- ✅ Comprehensive Cost Analysis - Already implemented
 - ⚠️ Investment Quality Analysis - Partially implemented (needs integration)
 - ❌ Optimal Use Case Analysis - Not yet implemented
 
@@ -62,6 +63,7 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 ### Task 1: Enhance Calculator Wizard
 
 #### 1.1 Add Step 3: Financial Details
+
 - [ ] Create `FinancialDetailsStep.tsx` component
 - [ ] Add weekly rent input
 - [ ] Add capital growth rate input
@@ -71,6 +73,7 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 - [ ] Integrate with wizard flow
 
 #### 1.2 Update Wizard Flow
+
 - [ ] Update progress indicator (add Step 3)
 - [ ] Update step navigation logic
 - [ ] Update form data structure
@@ -79,12 +82,14 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 ### Task 2: Integrate Investment Analytics
 
 #### 2.1 Update Calculation API
+
 - [ ] Enhance `/api/firb-calculate` endpoint
 - [ ] Add investment analytics calculation
 - [ ] Return investment quality metrics
 - [ ] Add error handling
 
 #### 2.2 Update Results Panel
+
 - [ ] Add Investment Quality section
 - [ ] Display rental yield metrics
 - [ ] Display cash flow projections
@@ -95,6 +100,7 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 ### Task 3: Build Optimal Use Case Analysis
 
 #### 3.1 Create Optimal Use Case Calculator
+
 - [ ] Create `lib/firb/optimal-use-case.ts`
 - [ ] Implement long-term rental income model
 - [ ] Implement short-stay income model
@@ -102,12 +108,14 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 - [ ] Add comparison logic
 
 #### 3.2 Integrate Short-Stay Regulations
+
 - [ ] Create API endpoint for regulations lookup
 - [ ] Query `short_stay_regulations` table
 - [ ] Display regulations in results
 - [ ] Add compliance cost calculations
 
 #### 3.3 Create Optimal Use Case Component
+
 - [ ] Create `OptimalUseCaseSection.tsx`
 - [ ] Display income comparison
 - [ ] Display management cost comparison
@@ -117,6 +125,7 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 ### Task 4: Enhance Results Dashboard
 
 #### 4.1 Add Investment Quality Section
+
 - [ ] Rental yield display (gross, net, effective)
 - [ ] Cash flow projections (10-year)
 - [ ] Capital growth projections
@@ -124,12 +133,14 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 - [ ] Investment score
 
 #### 4.2 Add Sensitivity Analysis
+
 - [ ] Vacancy rate scenarios
 - [ ] Interest rate scenarios
 - [ ] Growth rate scenarios
 - [ ] Interactive charts
 
 #### 4.3 Add Alternative Investment Comparison
+
 - [ ] Property vs Bonds
 - [ ] Property vs Equities
 - [ ] Property vs Term Deposits
@@ -138,6 +149,7 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 ### Task 5: Update PDF Generation
 
 #### 5.1 Enhance PDF Report
+
 - [ ] Add investment quality section
 - [ ] Add optimal use case comparison
 - [ ] Add sensitivity analysis charts
@@ -174,4 +186,3 @@ Phase 3 builds the comprehensive calculator that extends the existing FIRB calcu
 ## Next Steps
 
 Start with Task 1.1: Create Financial Details Step component.
-

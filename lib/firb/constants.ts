@@ -5,10 +5,10 @@
  */
 
 // Citizenship Status Types
-export type CitizenshipStatus = 'australian' | 'permanent' | 'temporary' | 'foreign';
-export type PropertyType = 'newDwelling' | 'established' | 'vacantLand' | 'commercial';
-export type AustralianState = 'NSW' | 'VIC' | 'QLD' | 'SA' | 'WA' | 'TAS' | 'ACT' | 'NT';
-export type EntityType = 'individual' | 'company' | 'trust';
+export type CitizenshipStatus = "australian" | "permanent" | "temporary" | "foreign";
+export type PropertyType = "newDwelling" | "established" | "vacantLand" | "commercial";
+export type AustralianState = "NSW" | "VIC" | "QLD" | "SA" | "WA" | "TAS" | "ACT" | "NT";
+export type EntityType = "individual" | "company" | "trust";
 
 // FIRB Application Fee Tiers (2025/26) - Updated from ATO Official Source
 // Source: Australian Taxation Office - Foreign Investment Fees (1 July 2025 – 30 June 2026)
@@ -25,7 +25,7 @@ export const FIRB_FEE_TIERS_NEW_DWELLINGS = [
   { max: 8000000, fee: 212100 },
   { max: 9000000, fee: 242400 },
   { max: 10000000, fee: 272700 },
-  { max: Infinity, fee: 1205200 } // For properties over $40M
+  { max: Infinity, fee: 1205200 }, // For properties over $40M
 ];
 
 export const FIRB_FEE_TIERS_ESTABLISHED_DWELLINGS = [
@@ -40,7 +40,7 @@ export const FIRB_FEE_TIERS_ESTABLISHED_DWELLINGS = [
   { max: 8000000, fee: 636300 },
   { max: 9000000, fee: 727200 },
   { max: 10000000, fee: 818100 },
-  { max: Infinity, fee: 3357300 } // For properties over $40M
+  { max: Infinity, fee: 3357300 }, // For properties over $40M
 ];
 
 // Legacy fee tiers (kept for reference and gradual migration)
@@ -55,29 +55,35 @@ export const FIRB_FEE_TIERS = [
   { max: 8000000, fee: 105600 },
   { max: 9000000, fee: 118800 },
   { max: 10000000, fee: 132000 },
-  { max: Infinity, fee: 0 } // Above $10M: $13,200 per additional million
+  { max: Infinity, fee: 0 }, // Above $10M: $13,200 per additional million
 ];
 
 // Calculate FIRB fee based on property value and type (2025/26 rates)
-export function calculateFIRBFee(propertyValue: number, propertyType: PropertyType = 'newDwelling'): number {
+export function calculateFIRBFee(
+  propertyValue: number,
+  propertyType: PropertyType = "newDwelling"
+): number {
   // Use appropriate fee tier based on property type
-  const feeTiers = propertyType === 'established' ? FIRB_FEE_TIERS_ESTABLISHED_DWELLINGS : FIRB_FEE_TIERS_NEW_DWELLINGS;
-  
+  const feeTiers =
+    propertyType === "established"
+      ? FIRB_FEE_TIERS_ESTABLISHED_DWELLINGS
+      : FIRB_FEE_TIERS_NEW_DWELLINGS;
+
   // Find the applicable tier
-  const tier = feeTiers.find(t => propertyValue <= t.max);
+  const tier = feeTiers.find((t) => propertyValue <= t.max);
   return tier?.fee || 0;
 }
 
 // Legacy function (kept for backward compatibility)
 export function calculateFIRBFeeLegacy(propertyValue: number): number {
   if (propertyValue <= 10000000) {
-    const tier = FIRB_FEE_TIERS.find(t => propertyValue <= t.max);
+    const tier = FIRB_FEE_TIERS.find((t) => propertyValue <= t.max);
     return tier?.fee || 0;
   }
   // For properties over $10M: $132,000 + $13,200 per additional million
   const baseFee = 132000;
   const additionalMillions = Math.ceil((propertyValue - 10000000) / 1000000);
-  return baseFee + (additionalMillions * 13200);
+  return baseFee + additionalMillions * 13200;
 }
 
 // Expedited FIRB Processing Fee (additional cost for 10-day processing)
@@ -85,117 +91,126 @@ export const FIRB_EXPEDITED_FEE_MULTIPLIER = 2; // Double the standard fee
 
 // Foreign Buyer Surcharge Rates by State (as percentage)
 export const FOREIGN_SURCHARGE_RATES: Record<AustralianState, number> = {
-  NSW: 8.0,  // 8% surcharge
-  VIC: 8.0,  // 8% surcharge
-  QLD: 7.0,  // 7% surcharge
-  SA: 7.0,   // 7% surcharge
-  WA: 7.0,   // 7% surcharge
-  TAS: 8.0,  // 8% surcharge
-  ACT: 0.0,  // No foreign buyer surcharge
-  NT: 0.0    // No foreign buyer surcharge
+  NSW: 8.0, // 8% surcharge
+  VIC: 8.0, // 8% surcharge
+  QLD: 7.0, // 7% surcharge
+  SA: 7.0, // 7% surcharge
+  WA: 7.0, // 7% surcharge
+  TAS: 8.0, // 8% surcharge
+  ACT: 0.0, // No foreign buyer surcharge
+  NT: 0.0, // No foreign buyer surcharge
 };
 
 // Stamp Duty Rates by State (2025 Verified Rates)
 // Last Verified: October 16, 2025
 // Sources: Official state revenue office websites
-export const STAMP_DUTY_RATES: Record<AustralianState, { thresholds: { max: number; rate: number; base: number }[] }> = {
+export const STAMP_DUTY_RATES: Record<
+  AustralianState,
+  { thresholds: { max: number; rate: number; base: number }[] }
+> = {
   NSW: {
     thresholds: [
-      { max: 17000, rate: 1.25, base: 0 },      // Up to $17,000: $1.25 per $100 (min $20)
-      { max: 36000, rate: 1.5, base: 212 },    // $17,001-$36,000: $212 + $1.50 per $100 over $17,000
-      { max: 97000, rate: 1.75, base: 497 },   // $36,001-$97,000: $497 + $1.75 per $100 over $36,000
-      { max: 364000, rate: 3.5, base: 1564 },  // $97,001-$364,000: $1,564 + $3.50 per $100 over $97,000
+      { max: 17000, rate: 1.25, base: 0 }, // Up to $17,000: $1.25 per $100 (min $20)
+      { max: 36000, rate: 1.5, base: 212 }, // $17,001-$36,000: $212 + $1.50 per $100 over $17,000
+      { max: 97000, rate: 1.75, base: 497 }, // $36,001-$97,000: $497 + $1.75 per $100 over $36,000
+      { max: 364000, rate: 3.5, base: 1564 }, // $97,001-$364,000: $1,564 + $3.50 per $100 over $97,000
       { max: 1212000, rate: 4.5, base: 10909 }, // $364,001-$1,212,000: $10,909 + $4.50 per $100 over $364,000
-      { max: Infinity, rate: 5.5, base: 49069 } // Over $1,212,000: $49,069 + $5.50 per $100 over $1,212,000
-    ]
+      { max: Infinity, rate: 5.5, base: 49069 }, // Over $1,212,000: $49,069 + $5.50 per $100 over $1,212,000
+    ],
   },
   VIC: {
     thresholds: [
-      { max: 25000, rate: 1.4, base: 0 },       // $0-$25,000: 1.4% of property value
-      { max: 130000, rate: 2.4, base: 350 },    // $25,001-$130,000: $350 + 2.4% of value over $25,000
-      { max: 960000, rate: 6.0, base: 2870 },   // $130,001-$960,000: $2,870 + 6% of value over $130,000
-      { max: 2000000, rate: 5.5, base: 0 },     // $960,001-$2,000,000: 5.5% flat rate
-      { max: Infinity, rate: 6.5, base: 110000 } // Over $2,000,000: $110,000 + 6.5% of value over $2,000,000
-    ]
+      { max: 25000, rate: 1.4, base: 0 }, // $0-$25,000: 1.4% of property value
+      { max: 130000, rate: 2.4, base: 350 }, // $25,001-$130,000: $350 + 2.4% of value over $25,000
+      { max: 960000, rate: 6.0, base: 2870 }, // $130,001-$960,000: $2,870 + 6% of value over $130,000
+      { max: 2000000, rate: 5.5, base: 0 }, // $960,001-$2,000,000: 5.5% flat rate
+      { max: Infinity, rate: 6.5, base: 110000 }, // Over $2,000,000: $110,000 + 6.5% of value over $2,000,000
+    ],
   },
   QLD: {
     thresholds: [
-      { max: 5000, rate: 0, base: 0 },         // $0-$5,000: No duty payable
-      { max: 75000, rate: 1.5, base: 0 },       // $5,001-$75,000: $1.50 per $100 over $5,000
-      { max: 540000, rate: 3.5, base: 1050 },   // $75,001-$540,000: $1,050 + $3.50 per $100 over $75,000
+      { max: 5000, rate: 0, base: 0 }, // $0-$5,000: No duty payable
+      { max: 75000, rate: 1.5, base: 0 }, // $5,001-$75,000: $1.50 per $100 over $5,000
+      { max: 540000, rate: 3.5, base: 1050 }, // $75,001-$540,000: $1,050 + $3.50 per $100 over $75,000
       { max: 1000000, rate: 4.5, base: 17325 }, // $540,001-$1,000,000: $17,325 + $4.50 per $100 over $540,000
-      { max: Infinity, rate: 5.75, base: 38025 } // Over $1,000,000: $38,025 + $5.75 per $100 over $1,000,000
-    ]
+      { max: Infinity, rate: 5.75, base: 38025 }, // Over $1,000,000: $38,025 + $5.75 per $100 over $1,000,000
+    ],
   },
   SA: {
     thresholds: [
-      { max: 12000, rate: 1.0, base: 0 },       // Up to $12,000: 1% of property value
-      { max: 30000, rate: 2.0, base: 120 },     // $12,001-$30,000: $120 + 2% of value over $12,000
-      { max: 50000, rate: 3.0, base: 480 },     // $30,001-$50,000: $480 + 3% of value over $30,000
-      { max: 100000, rate: 3.5, base: 1080 },   // $50,001-$100,000: $1,080 + 3.5% of value over $50,000
-      { max: 200000, rate: 4.0, base: 2830 },   // $100,001-$200,000: $2,830 + 4% of value over $100,000
-      { max: 250000, rate: 4.25, base: 6830 },  // $200,001-$250,000: $6,830 + 4.25% of value over $200,000
-      { max: 300000, rate: 4.75, base: 8955 },  // $250,001-$300,000: $8,955 + 4.75% of value over $250,000
-      { max: Infinity, rate: 5.0, base: 11330 } // Over $300,000: $11,330 + 5% of value over $300,000
-    ]
+      { max: 12000, rate: 1.0, base: 0 }, // Up to $12,000: 1% of property value
+      { max: 30000, rate: 2.0, base: 120 }, // $12,001-$30,000: $120 + 2% of value over $12,000
+      { max: 50000, rate: 3.0, base: 480 }, // $30,001-$50,000: $480 + 3% of value over $30,000
+      { max: 100000, rate: 3.5, base: 1080 }, // $50,001-$100,000: $1,080 + 3.5% of value over $50,000
+      { max: 200000, rate: 4.0, base: 2830 }, // $100,001-$200,000: $2,830 + 4% of value over $100,000
+      { max: 250000, rate: 4.25, base: 6830 }, // $200,001-$250,000: $6,830 + 4.25% of value over $200,000
+      { max: 300000, rate: 4.75, base: 8955 }, // $250,001-$300,000: $8,955 + 4.75% of value over $250,000
+      { max: Infinity, rate: 5.0, base: 11330 }, // Over $300,000: $11,330 + 5% of value over $300,000
+    ],
   },
   WA: {
     thresholds: [
-      { max: 120000, rate: 1.9, base: 0 },      // $0-$120,000: 1.9% of property value
-      { max: 150000, rate: 2.85, base: 2280 },  // $120,001-$150,000: $2,280 + 2.85% of value over $120,000
-      { max: 360000, rate: 3.8, base: 3135 },   // $150,001-$360,000: $3,135 + 3.8% of value over $150,000
+      { max: 120000, rate: 1.9, base: 0 }, // $0-$120,000: 1.9% of property value
+      { max: 150000, rate: 2.85, base: 2280 }, // $120,001-$150,000: $2,280 + 2.85% of value over $120,000
+      { max: 360000, rate: 3.8, base: 3135 }, // $150,001-$360,000: $3,135 + 3.8% of value over $150,000
       { max: 725000, rate: 4.75, base: 11115 }, // $360,001-$725,000: $11,115 + 4.75% of value over $360,000
-      { max: Infinity, rate: 5.15, base: 28453 } // Over $725,000: $28,453 + 5.15% of value over $725,000
-    ]
+      { max: Infinity, rate: 5.15, base: 28453 }, // Over $725,000: $28,453 + 5.15% of value over $725,000
+    ],
   },
   TAS: {
     thresholds: [
-      { max: 3000, rate: 0, base: 50 },         // $0-$3,000: $50
-      { max: 25000, rate: 1.75, base: 50 },     // $3,001-$25,000: $50 + 1.75% of value over $3,000
-      { max: 75000, rate: 2.25, base: 435 },    // $25,001-$75,000: $435 + 2.25% of value over $25,000
-      { max: 200000, rate: 3.5, base: 1560 },   // $75,001-$200,000: $1,560 + 3.5% of value over $75,000
-      { max: 375000, rate: 4.0, base: 5935 },   // $200,001-$375,000: $5,935 + 4% of value over $200,000
+      { max: 3000, rate: 0, base: 50 }, // $0-$3,000: $50
+      { max: 25000, rate: 1.75, base: 50 }, // $3,001-$25,000: $50 + 1.75% of value over $3,000
+      { max: 75000, rate: 2.25, base: 435 }, // $25,001-$75,000: $435 + 2.25% of value over $25,000
+      { max: 200000, rate: 3.5, base: 1560 }, // $75,001-$200,000: $1,560 + 3.5% of value over $75,000
+      { max: 375000, rate: 4.0, base: 5935 }, // $200,001-$375,000: $5,935 + 4% of value over $200,000
       { max: 725000, rate: 4.25, base: 12935 }, // $375,001-$725,000: $12,935 + 4.25% of value over $375,000
-      { max: Infinity, rate: 4.5, base: 27810 } // Over $725,000: $27,810 + 4.5% of value over $725,000
-    ]
+      { max: Infinity, rate: 4.5, base: 27810 }, // Over $725,000: $27,810 + 4.5% of value over $725,000
+    ],
   },
   ACT: {
     thresholds: [
-      { max: 200000, rate: 0, base: 20 },       // $0-$200,000: $20 or $1.20 per $100, whichever is greater
-      { max: 300000, rate: 2.2, base: 2400 },   // $200,001-$300,000: $2,400 + $2.20 per $100 over $200,000
-      { max: 500000, rate: 3.4, base: 4600 },   // $300,001-$500,000: $4,600 + $3.40 per $100 over $300,000
+      { max: 200000, rate: 0, base: 20 }, // $0-$200,000: $20 or $1.20 per $100, whichever is greater
+      { max: 300000, rate: 2.2, base: 2400 }, // $200,001-$300,000: $2,400 + $2.20 per $100 over $200,000
+      { max: 500000, rate: 3.4, base: 4600 }, // $300,001-$500,000: $4,600 + $3.40 per $100 over $300,000
       { max: 750000, rate: 4.32, base: 11400 }, // $500,001-$750,000: $11,400 + $4.32 per $100 over $500,000
       { max: 1000000, rate: 5.9, base: 22200 }, // $750,001-$1,000,000: $22,200 + $5.90 per $100 over $750,000
-      { max: Infinity, rate: 6.4, base: 36950 } // Over $1,000,000: $36,950 + $6.40 per $100 over $1,000,000
-    ]
+      { max: Infinity, rate: 6.4, base: 36950 }, // Over $1,000,000: $36,950 + $6.40 per $100 over $1,000,000
+    ],
   },
   NT: {
     thresholds: [
-      { max: 525000, rate: 0, base: 0 },       // $0-$525,000: Complex formula (0.06571441 x V²) + 15V
-      { max: 3000000, rate: 4.95, base: 0 },    // $525,001-$3,000,000: 4.95% of value
+      { max: 525000, rate: 0, base: 0 }, // $0-$525,000: Complex formula (0.06571441 x V²) + 15V
+      { max: 3000000, rate: 4.95, base: 0 }, // $525,001-$3,000,000: 4.95% of value
       { max: 5000000, rate: 5.75, base: 122513 }, // $3,000,001-$5,000,000: 5.75% of value
-      { max: Infinity, rate: 5.95, base: 237513 } // Over $5,000,000: 5.95% of value
-    ]
-  }
+      { max: Infinity, rate: 5.95, base: 237513 }, // Over $5,000,000: 5.95% of value
+    ],
+  },
 };
 
 // Calculate stamp duty for a property
-export function calculateStampDuty(propertyValue: number, state: AustralianState, isFirstHome: boolean = false): number {
+export function calculateStampDuty(
+  propertyValue: number,
+  state: AustralianState,
+  isFirstHome: boolean = false
+): number {
   const stateDuty = STAMP_DUTY_RATES[state];
-  
+
   // Find the applicable threshold
-  const threshold = stateDuty.thresholds.find(t => propertyValue <= t.max);
+  const threshold = stateDuty.thresholds.find((t) => propertyValue <= t.max);
   if (!threshold) return 0;
-  
+
   // Calculate duty
-  const dutyAmount = threshold.base + ((propertyValue - (threshold.max === Infinity ? 0 : 0)) * (threshold.rate / 100));
-  
+  const dutyAmount =
+    threshold.base +
+    (propertyValue - (threshold.max === Infinity ? 0 : 0)) * (threshold.rate / 100);
+
   // First home buyer concessions (simplified - varies by state)
   if (isFirstHome && propertyValue <= 600000) {
     // Most states offer concessions for first home buyers under $600k
     return Math.max(0, dutyAmount * 0.5); // 50% reduction (simplified)
   }
-  
+
   return dutyAmount;
 }
 
@@ -203,47 +218,50 @@ export function calculateStampDuty(propertyValue: number, state: AustralianState
 // Land Tax Rates (2025 Verified)
 // Source: Official state revenue offices, last verified October 16, 2025
 // Note: Rates are progressive and vary by land value - these are base rates
-export const LAND_TAX_RATES: Record<AustralianState, { threshold: number; rate: number; isForeignRate?: number }> = {
-  NSW: { 
+export const LAND_TAX_RATES: Record<
+  AustralianState,
+  { threshold: number; rate: number; isForeignRate?: number }
+> = {
+  NSW: {
     threshold: 1075000, // $1,075,000 threshold confirmed
     rate: 1.6, // Base rate confirmed
-    isForeignRate: 5.0 // Increased from 4% to 5% effective January 1, 2025
+    isForeignRate: 5.0, // Increased from 4% to 5% effective January 1, 2025
   },
-  VIC: { 
+  VIC: {
     threshold: 300000, // $300,000 threshold confirmed
     rate: 0.2, // Base rate confirmed (progressive up to 2.55%)
-    isForeignRate: 2.0 // Absentee owner surcharge confirmed
+    isForeignRate: 2.0, // Absentee owner surcharge confirmed
   },
-  QLD: { 
+  QLD: {
     threshold: 600000, // $600,000 threshold confirmed
     rate: 1.7, // Base rate confirmed (progressive up to 2.75%)
-    isForeignRate: 2.0 // Foreign owner surcharge confirmed
+    isForeignRate: 2.0, // Foreign owner surcharge confirmed
   },
-  SA: { 
+  SA: {
     threshold: 482000, // Updated from $450,000 to $482,000
     rate: 0.5, // Base rate confirmed (progressive up to 2.4%)
-    isForeignRate: 0.5 // No specific foreign surcharge in SA
+    isForeignRate: 0.5, // No specific foreign surcharge in SA
   },
-  WA: { 
+  WA: {
     threshold: 300000, // $300,000 threshold confirmed
     rate: 0.4, // Base rate confirmed (progressive up to 2.67%)
-    isForeignRate: 0.4 // No specific foreign surcharge in WA
+    isForeignRate: 0.4, // No specific foreign surcharge in WA
   },
-  TAS: { 
+  TAS: {
     threshold: 50000, // Updated from $25,000 to $50,000
     rate: 0.55, // Base rate confirmed (progressive up to 1.5%)
-    isForeignRate: 1.5 // Foreign owner surcharge confirmed
+    isForeignRate: 1.5, // Foreign owner surcharge confirmed
   },
-  ACT: { 
-    threshold: 0, 
-    rate: 0, 
-    isForeignRate: 0 
+  ACT: {
+    threshold: 0,
+    rate: 0,
+    isForeignRate: 0,
   }, // ACT uses different system - applies to all investment properties
-  NT: { 
-    threshold: 0, 
-    rate: 0, 
-    isForeignRate: 0 
-  }  // NT has no land tax as of 2025
+  NT: {
+    threshold: 0,
+    rate: 0,
+    isForeignRate: 0,
+  }, // NT has no land tax as of 2025
 };
 
 // Calculate annual land tax
@@ -253,56 +271,56 @@ export function calculateLandTax(
   isForeignOwner: boolean = false
 ): number {
   const taxConfig = LAND_TAX_RATES[state];
-  
+
   if (landValue <= taxConfig.threshold) {
     return 0; // Below threshold
   }
-  
+
   const taxableValue = landValue - taxConfig.threshold;
   const rate = isForeignOwner && taxConfig.isForeignRate ? taxConfig.isForeignRate : taxConfig.rate;
-  
+
   return (taxableValue * rate) / 100;
 }
 
 // Common Visa Types for Temporary Residents
 export const TEMPORARY_VISA_TYPES = [
-  { value: '485', label: 'Temporary Graduate (485)' },
-  { value: '457', label: 'Temporary Work Skilled (457/482)' },
-  { value: '500', label: 'Student Visa (500)' },
-  { value: '820', label: 'Partner Visa (820)' },
-  { value: '489', label: 'Skilled Regional (489)' },
-  { value: 'other', label: 'Other Temporary Visa' }
+  { value: "485", label: "Temporary Graduate (485)" },
+  { value: "457", label: "Temporary Work Skilled (457/482)" },
+  { value: "500", label: "Student Visa (500)" },
+  { value: "820", label: "Partner Visa (820)" },
+  { value: "489", label: "Skilled Regional (489)" },
+  { value: "other", label: "Other Temporary Visa" },
 ];
 
 // Property Eligibility Rules
 export const PROPERTY_ELIGIBILITY = {
   australian: {
-    canBuy: ['newDwelling', 'established', 'vacantLand', 'commercial'],
+    canBuy: ["newDwelling", "established", "vacantLand", "commercial"],
     requiresFIRB: false,
-    restrictions: []
+    restrictions: [],
   },
   permanent: {
-    canBuy: ['newDwelling', 'established', 'vacantLand', 'commercial'],
+    canBuy: ["newDwelling", "established", "vacantLand", "commercial"],
     requiresFIRB: false,
-    restrictions: []
+    restrictions: [],
   },
   temporary: {
-    canBuy: ['newDwelling'],
+    canBuy: ["newDwelling"],
     requiresFIRB: true,
-    restrictions: []
+    restrictions: [],
   },
   foreign: {
-    canBuy: ['newDwelling', 'vacantLand'],
+    canBuy: ["newDwelling", "vacantLand"],
     requiresFIRB: true,
-    restrictions: []
-  }
+    restrictions: [],
+  },
 };
 
 // FIRB Processing Times
 export const FIRB_PROCESSING_TIMES = {
-  standard: '30 days',
-  expedited: '10 days',
-  complex: '90+ days'
+  standard: "30 days",
+  expedited: "10 days",
+  complex: "90+ days",
 };
 
 // Annual Vacancy Fee (for foreign owners)
@@ -312,17 +330,18 @@ export const ANNUAL_VACANCY_FEE_RATE = 0; // Varies by state and property value
 // Source: FIRB Residential Land Guidance Note (Version 6, March 14, 2025)
 // Last Verified: October 16, 2025
 export const TEMPORARY_BAN = {
-  startDate: new Date('2025-04-01'),
-  endDate: new Date('2027-03-31'),
-  affectedPropertyTypes: ['established'] as PropertyType[],
-  affectedCitizenshipStatuses: ['temporary', 'foreign'] as CitizenshipStatus[],
-  description: 'Temporary ban on foreign persons (including temporary residents) purchasing established dwellings',
+  startDate: new Date("2025-04-01"),
+  endDate: new Date("2027-03-31"),
+  affectedPropertyTypes: ["established"] as PropertyType[],
+  affectedCitizenshipStatuses: ["temporary", "foreign"] as CitizenshipStatus[],
+  description:
+    "Temporary ban on foreign persons (including temporary residents) purchasing established dwellings",
   exceptions: [
-    'Redevelopment projects resulting in at least 20 additional dwellings',
-    'Commercial-scale housing (retirement villages, aged care facilities, student accommodation)',
-    'Existing build-to-rent developments',
-    'Housing for workers from Pacific island countries and Timor-Leste under specific schemes'
-  ]
+    "Redevelopment projects resulting in at least 20 additional dwellings",
+    "Commercial-scale housing (retirement villages, aged care facilities, student accommodation)",
+    "Existing build-to-rent developments",
+    "Housing for workers from Pacific island countries and Timor-Leste under specific schemes",
+  ],
 };
 
 /**
@@ -343,10 +362,11 @@ export function isAffectedByTemporaryBan(
   if (!isTemporaryBanActive(checkDate)) {
     return false;
   }
-  
+
   const isAffectedProperty = TEMPORARY_BAN.affectedPropertyTypes.includes(propertyType);
-  const isAffectedCitizenship = TEMPORARY_BAN.affectedCitizenshipStatuses.includes(citizenshipStatus);
-  
+  const isAffectedCitizenship =
+    TEMPORARY_BAN.affectedCitizenshipStatuses.includes(citizenshipStatus);
+
   return isAffectedProperty && isAffectedCitizenship;
 }
 
@@ -363,38 +383,39 @@ export const FIRB_PENALTIES = {
     individuals: {
       maxPenaltyUnits: 30000, // Up to 30,000 penalty units
       maxAmount: 30000 * PENALTY_UNIT_VALUE_2025, // $6,660,000
-      description: "Failure to advertise dwellings, unauthorized acquisitions"
+      description: "Failure to advertise dwellings, unauthorized acquisitions",
     },
     corporations: {
-      maxPenaltyUnits: 300000, // Up to 300,000 penalty units  
+      maxPenaltyUnits: 300000, // Up to 300,000 penalty units
       maxAmount: 300000 * PENALTY_UNIT_VALUE_2025, // $66,600,000
-      description: "Failure to advertise dwellings, unauthorized acquisitions"
-    }
+      description: "Failure to advertise dwellings, unauthorized acquisitions",
+    },
   },
-  
+
   // Criminal Penalties
   criminal: {
     maxImprisonment: 10, // Up to 10 years imprisonment
-    description: "Serious breaches of foreign investment laws"
+    description: "Serious breaches of foreign investment laws",
   },
-  
+
   // Unauthorized Acquisition Penalties
   unauthorizedAcquisition: {
-    calculation: "Greater of: double capital gain, 50% acquisition consideration, or 50% market value",
-    description: "For foreign persons acquiring property without FIRB approval"
+    calculation:
+      "Greater of: double capital gain, 50% acquisition consideration, or 50% market value",
+    description: "For foreign persons acquiring property without FIRB approval",
   },
-  
+
   // Vacancy Fee Non-Compliance
   vacancyFeeNonCompliance: {
     maxPenalty: 500 * PENALTY_UNIT_VALUE_2025, // $111,000
-    description: "Failure to comply with notice or vacancy fee return requirements"
+    description: "Failure to comply with notice or vacancy fee return requirements",
   },
-  
+
   // Forced Divestment
   forcedDivestment: {
     description: "Foreign persons may be forced to sell property, often at a loss",
-    note: "No guarantee of recovering all costs"
-  }
+    note: "No guarantee of recovering all costs",
+  },
 };
 
 // Vacancy Fee Information (2025 Verified)
@@ -402,10 +423,10 @@ export const FIRB_PENALTIES = {
 // Last Verified: October 16, 2025
 export const VACANCY_FEE_INFO = {
   // Vacancy fees doubled as of April 9, 2024
-  doubledAsOf: new Date('2024-04-09'),
+  doubledAsOf: new Date("2024-04-09"),
   calculation: "Based on foreign investment application fee paid at acquisition",
-  requirement: "Property must be occupied or genuinely available for rent for minimum 183 days per year",
+  requirement:
+    "Property must be occupied or genuinely available for rent for minimum 183 days per year",
   returnDeadline: "Within 30 days from end of each vacancy year",
-  penaltyForLateReturn: "Imposition of vacancy fee itself"
+  penaltyForLateReturn: "Imposition of vacancy fee itself",
 };
-

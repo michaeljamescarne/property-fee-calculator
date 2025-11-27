@@ -52,45 +52,56 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 📊 Content Breakdown
 
 ### Category 1: FIRB Process & Applications (15 Q&A)
+
 **Target Keywords**: FIRB approval, application process, processing time
 
 **Top Questions**:
+
 - What is FIRB and why do I need approval? (15,420 views)
 - How long does FIRB approval take? (12,350 views)
 - What information do I need for a FIRB application? (8,760 views)
 
 ### Category 2: Eligibility & Visa Types (20 Q&A)
+
 **Target Keywords**: foreign person, visa types, eligibility, temporary resident
 
 **Top Questions**:
+
 - What is the current FIRB application fee? (18,900 views)
 - What property can I buy on a temporary resident visa? (14,560 views)
 - Can foreign investors buy property purely for investment? (13,450 views)
 
 ### Category 3: Costs & Fees (15 Q&A)
+
 **Target Keywords**: stamp duty surcharge, costs, fees, total cost
 
 **Top Questions**:
+
 - What is the stamp duty surcharge and how much is it? (16,780 views)
 - What are the total upfront costs for foreign buyers? (15,670 views)
 - What is the land tax surcharge? (14,230 views)
 
 ### Category 4: Compliance & Penalties (11 Q&A)
+
 **Target Keywords**: penalties, compliance, vacancy fee, fines
 
 **Top Questions**:
+
 - What are the penalties for non-compliance? (8,760 views)
 - What is the annual vacancy fee compliance requirement? (7,890 views)
 - What happens if my visa expires while I own property? (6,780 views)
 
 ### Category 5: Selling Property (8 Q&A)
+
 **Target Keywords**: selling, capital gains tax, withholding tax
 
 **Top Questions**:
+
 - What taxes apply when I sell as a foreign resident? (8,760 views)
 - What is the withholding tax on property sales? (5,670 views)
 
 ### Category 6: Special Situations (16 Q&A)
+
 **Target Keywords**: auction, tenant, special circumstances
 
 **Covers**: Auctions, defects, tenants, foreclosures, joint ventures, bankruptcy, transfers
@@ -102,9 +113,11 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ### New Files Created (13 files)
 
 #### Route
+
 - `app/[locale]/faq/page.tsx` - Main FAQ page component
 
 #### Components (7 files)
+
 - `components/faq/FAQItem.tsx` - Individual Q&A accordion
 - `components/faq/FAQCategory.tsx` - Category section with header
 - `components/faq/FAQSearch.tsx` - Search input with debouncing
@@ -114,11 +127,13 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - (More components can be added later)
 
 #### Library (3 files)
+
 - `lib/faq/faq-utils.ts` - Utility functions
 - `lib/faq/faq-search.ts` - Search and filter logic
 - `lib/faq/faq-schema.ts` - Schema.org generation
 
 #### Data & Types (2 files)
+
 - `lib/faq/faq-data.json` - 85+ FAQ questions/answers
 - `types/faq.ts` - TypeScript interfaces
 
@@ -185,6 +200,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ### Structured Data (Schema.org)
 
 #### 1. FAQPage Schema
+
 ```json
 {
   "@context": "https://schema.org",
@@ -197,12 +213,14 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ```
 
 **Benefits**:
+
 - Rich snippets in Google search
 - Featured in "People also ask"
 - Higher click-through rates
 - Better AI search indexing
 
 #### 2. Breadcrumb Schema
+
 ```json
 {
   "@type": "BreadcrumbList",
@@ -214,6 +232,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ```
 
 #### 3. WebPage Schema
+
 ```json
 {
   "@type": "WebPage",
@@ -225,12 +244,14 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ### Keyword Targeting (100+ Keywords)
 
 **Primary Keywords**:
+
 - FIRB approval (high volume)
 - Foreign property buyer Australia (high intent)
 - Stamp duty surcharge foreign buyers (transactional)
 - FIRB fees calculator (branded)
 
 **Long-tail Keywords** (50+ variations):
+
 - "How long does FIRB approval take"
 - "Can I buy Australian property on student visa"
 - "What is stamp duty surcharge for foreign buyers"
@@ -238,6 +259,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - "Which Australian state has lowest foreign buyer fees"
 
 **Question Keywords** (AI Search):
+
 - What is FIRB
 - How much does it cost to buy property in Australia as a foreigner
 - Do I need FIRB approval
@@ -246,6 +268,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ### Content Optimization
 
 **For Featured Snippets**:
+
 - 40-60 word summary answers
 - Bullet point lists
 - Comparison tables
@@ -253,6 +276,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - Definition boxes
 
 **For AI Search**:
+
 - Self-contained answers
 - Context in each response
 - Natural language
@@ -264,12 +288,14 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 🔗 Internal Linking Strategy
 
 ### From FAQ
+
 - 85+ links to FIRB Calculator (from relevant Q&A)
 - Links to homepage
 - Cross-references between questions (300+ internal links)
 - Links to official sources (50+ external links)
 
 ### To FAQ
+
 - Navigation menu
 - Footer (quick links)
 - Homepage (future: featured questions section)
@@ -280,6 +306,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 📱 Mobile Responsiveness
 
 ### Key Features
+
 - Touch-friendly accordion buttons
 - Scrollable category navigation
 - Responsive grid (1/2/3 columns)
@@ -288,6 +315,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - Proper spacing on small screens
 
 ### Testing
+
 - ✅ iPhone SE (375px)
 - ✅ iPhone 12 Pro (390px)
 - ✅ iPad (768px)
@@ -298,11 +326,13 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## ⚡ Performance
 
 ### Bundle Size
+
 - **FAQ Page**: 195 kB First Load JS
 - **Components**: 22.4 kB page-specific
 - **Impact**: Minimal (+19 kB vs homepage)
 
 ### Optimizations
+
 - Client-side search (no API calls)
 - Debounced search (300ms)
 - Lazy accordion rendering
@@ -310,6 +340,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - Minimal JavaScript
 
 ### Expected Lighthouse Scores
+
 - Performance: 90+
 - Accessibility: 100
 - Best Practices: 100
@@ -320,6 +351,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 🧪 Testing Checklist
 
 ### Functionality
+
 - [ ] Search returns relevant results
 - [ ] Search debouncing works (no lag)
 - [ ] Clear search button works
@@ -332,6 +364,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - [ ] Mobile navigation scrolls horizontally
 
 ### SEO
+
 - [ ] View page source - verify Schema.org scripts
 - [ ] Test in Rich Results Test: https://search.google.com/test/rich-results
 - [ ] Check meta tags
@@ -339,6 +372,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - [ ] Test internal links
 
 ### Design
+
 - [ ] Matches Slite-inspired theme
 - [ ] White cards on beige background
 - [ ] Gradient text on headings
@@ -347,12 +381,14 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - [ ] Icons render correctly
 
 ### Multi-Language
+
 - [ ] /en/faq loads correctly
 - [ ] /zh/faq loads correctly
 - [ ] Navigation labels correct
 - [ ] Language switcher works
 
 ### Mobile
+
 - [ ] Responsive on 375px width
 - [ ] Category nav scrolls
 - [ ] Popular questions stack vertically
@@ -364,18 +400,21 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 📊 Expected SEO Impact
 
 ### Short-term (1-3 months)
+
 - **10-20 new keywords** ranking in top 50
 - **5-10 featured snippets** in Google
 - **25%+ traffic increase** from organic search
 - **Reduced bounce rate** (more content to engage with)
 
 ### Medium-term (3-6 months)
+
 - **50+ keywords** ranking in top 20
 - **FAQ page** becoming top traffic source
 - **AI search** citations (ChatGPT, Perplexity)
 - **Authority** for FIRB/foreign property content
 
 ### Long-term (6-12 months)
+
 - **Top 3 rankings** for primary keywords
 - **1,000+ monthly** FAQ page visits
 - **500+ conversions** from FAQ to calculator
@@ -386,6 +425,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 🎯 User Value Delivered
 
 ### Genuine Insights
+
 - 85+ detailed, accurate answers
 - Real-world examples and scenarios
 - Official source citations
@@ -393,6 +433,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - Cost breakdowns and comparisons
 
 ### Service Information
+
 - How to use the calculator
 - Understanding reports
 - When to seek professional advice
@@ -400,6 +441,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - Compliance requirements
 
 ### Decision Support
+
 - Eligibility determination
 - Cost comparisons by state
 - Property type restrictions
@@ -411,6 +453,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 🔄 Future Enhancements (Not in this PR)
 
 ### Phase 2 (Future)
+
 - [ ] Analytics tracking (view counts, popular searches)
 - [ ] "Was this helpful?" voting system
 - [ ] Email/share individual answers
@@ -418,6 +461,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - [ ] FAQ search suggestions/autocomplete
 
 ### Phase 3 (Future)
+
 - [ ] Video explanations for complex topics
 - [ ] Interactive cost calculator widgets in answers
 - [ ] User-submitted questions
@@ -425,6 +469,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - [ ] Multi-language expansion (more languages)
 
 ### Phase 4 (Future)
+
 - [ ] Personalized FAQ recommendations
 - [ ] A/B testing on answers
 - [ ] Advanced analytics dashboard
@@ -436,6 +481,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 📋 Deployment Checklist
 
 ### Pre-Merge
+
 - [x] Build successful
 - [x] No linting errors
 - [x] TypeScript compilation passes
@@ -446,6 +492,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - [ ] Mobile testing completed
 
 ### Post-Merge
+
 - [ ] Verify production deployment
 - [ ] Test FAQ page live
 - [ ] Verify Schema.org markup (Rich Results Test)
@@ -454,6 +501,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - [ ] Monitor search console for indexing
 
 ### SEO Setup (Post-Deployment)
+
 - [ ] Submit to Google Search Console
 - [ ] Request indexing for /faq page
 - [ ] Monitor rich results appearance
@@ -465,18 +513,21 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 🎨 Visual Preview
 
 ### Hero Section
+
 - Large gradient heading: "Frequently Asked Questions"
 - Badge: "85+ Questions Answered"
 - Prominent search bar
 - Clean, professional design
 
 ### Popular Questions
+
 - 3-column grid (responsive)
 - Category tags
 - View counts
 - Click-through cards with hover effects
 
 ### FAQ Categories
+
 - Icon-based headers (purple gradients)
 - Collapsible accordions
 - Official source links
@@ -484,6 +535,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 - Related questions
 
 ### Bottom CTA
+
 - Purple gradient background
 - "Ready to Calculate Your Fees?"
 - Large calculator button
@@ -493,6 +545,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 🔍 Search Functionality Details
 
 ### How It Works
+
 1. User types in search bar
 2. 300ms debounce (smooth UX)
 3. Search across:
@@ -505,6 +558,7 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 6. No results → helpful message
 
 ### Search Features
+
 - Real-time feedback
 - Character minimum (2 chars)
 - Clear button
@@ -516,7 +570,9 @@ This PR implements a world-class FAQ system with 85+ detailed questions and answ
 ## 📚 Content Quality
 
 ### Answer Structure
+
 Each FAQ includes:
+
 - **Clear question** (conversational, how users ask)
 - **Detailed answer** (200-400 words)
 - **Keywords** (SEO optimization)
@@ -531,6 +587,7 @@ Each FAQ includes:
 **Question**: "What is the current FIRB application fee?"
 
 **Answer**: 600+ word comprehensive answer covering:
+
 - Fee structure by property value
 - Tiered pricing ($1M, $2M, $3M+)
 - Vacant land fees
@@ -546,12 +603,14 @@ Each FAQ includes:
 ## 🌐 Multi-Language Support
 
 ### English (`/en/faq`)
+
 - All 85+ questions in English
 - Professional, clear language
 - Australian English spelling
 - Technical accuracy
 
 ### Chinese (`/zh/faq`)
+
 - Navigation translated
 - Page structure identical
 - Future: Full content translation (Phase 2)
@@ -562,15 +621,20 @@ Each FAQ includes:
 ## 🚀 SEO Technical Details
 
 ### Meta Tags (Generated)
+
 ```html
 <title>FAQ - FIRB & Foreign Property Buyer Guide | Property Fee Calculator</title>
-<meta name="description" content="Comprehensive answers to FIRB approval, costs, visa requirements, and buying Australian property as a foreign investor. Calculate your fees instantly.">
-<link rel="canonical" href="https://aupropertyinvestmentmc.vercel.app/en/faq">
-<link rel="alternate" hreflang="en" href="...">
-<link rel="alternate" hreflang="zh" href="...">
+<meta
+  name="description"
+  content="Comprehensive answers to FIRB approval, costs, visa requirements, and buying Australian property as a foreign investor. Calculate your fees instantly."
+/>
+<link rel="canonical" href="https://aupropertyinvestmentmc.vercel.app/en/faq" />
+<link rel="alternate" hreflang="en" href="..." />
+<link rel="alternate" hreflang="zh" href="..." />
 ```
 
 ### Structured Data Injection
+
 - 3 JSON-LD scripts per page
 - FAQPage with all 85 questions
 - Breadcrumb navigation
@@ -578,6 +642,7 @@ Each FAQ includes:
 - Total: ~25KB of structured data
 
 ### URL Structure
+
 - Clean: `/en/faq`
 - Hash navigation: `/en/faq#faq-1`
 - Language-specific: `/zh/faq`
@@ -588,25 +653,27 @@ Each FAQ includes:
 ## 📊 Analytics & Tracking (Future)
 
 ### Events to Track
+
 ```typescript
 // Question interactions
-faq_question_opened
-faq_question_closed
-faq_search_performed
-faq_category_clicked
+faq_question_opened;
+faq_question_closed;
+faq_search_performed;
+faq_category_clicked;
 
 // Conversions
-faq_calculator_clicked
-faq_external_link_clicked
-faq_popular_question_clicked
+faq_calculator_clicked;
+faq_external_link_clicked;
+faq_popular_question_clicked;
 
 // Engagement
-faq_page_viewed
-faq_scroll_depth
-faq_time_on_page
+faq_page_viewed;
+faq_scroll_depth;
+faq_time_on_page;
 ```
 
 ### Metrics to Monitor
+
 - FAQ page views
 - Search terms used
 - Most opened questions
@@ -620,24 +687,28 @@ faq_time_on_page
 ## 🎯 Success Metrics
 
 ### Immediate (Week 1)
+
 - [ ] FAQ page accessible and functional
 - [ ] Zero errors in production
 - [ ] Mobile responsive
 - [ ] All 85 questions visible
 
 ### Short-term (Month 1)
+
 - [ ] Google indexes FAQ page
 - [ ] Rich snippets appear
 - [ ] 100+ monthly page views
 - [ ] 10+ FAQ → Calculator conversions
 
 ### Medium-term (Month 3)
+
 - [ ] 500+ monthly page views
 - [ ] 5+ featured snippets
 - [ ] 50+ FAQ → Calculator conversions
 - [ ] 10+ ranking keywords
 
 ### Long-term (Month 6+)
+
 - [ ] 1,000+ monthly page views
 - [ ] 10+ featured snippets
 - [ ] 100+ conversions per month
@@ -648,18 +719,21 @@ faq_time_on_page
 ## ⚠️ Important Notes
 
 ### Content Accuracy
+
 - All fees and rates based on 2025 schedules
 - Official source links provided
 - Disclaimer included
 - Regular updates required (quarterly)
 
 ### Limitations
+
 - General information only
 - Not professional advice
 - State-specific rules may vary
 - Subject to regulatory changes
 
 ### Maintenance Required
+
 - Update fees annually (January 1)
 - Review answers quarterly
 - Add new questions as needed
@@ -691,6 +765,7 @@ faq_time_on_page
 ## ✅ Quality Assurance
 
 ### Code Quality
+
 - ✅ TypeScript strict mode
 - ✅ No console errors
 - ✅ No linting errors (only existing warnings)
@@ -698,6 +773,7 @@ faq_time_on_page
 - ✅ Accessible (keyboard navigation, ARIA)
 
 ### Content Quality
+
 - ✅ 85+ detailed answers
 - ✅ Accurate information (2025 rates)
 - ✅ Official sources cited
@@ -705,6 +781,7 @@ faq_time_on_page
 - ✅ Actionable advice
 
 ### Performance
+
 - ✅ Fast page load (195KB)
 - ✅ Smooth animations
 - ✅ No layout shift
@@ -715,6 +792,7 @@ faq_time_on_page
 ## 🎊 Expected Outcomes
 
 ### For Users
+
 - ✅ Comprehensive information resource
 - ✅ Quick answers to common questions
 - ✅ Clear path to calculator
@@ -722,6 +800,7 @@ faq_time_on_page
 - ✅ Reduces confusion
 
 ### For Business
+
 - ✅ Improved SEO rankings
 - ✅ Increased organic traffic
 - ✅ Higher calculator conversions
@@ -729,6 +808,7 @@ faq_time_on_page
 - ✅ Authority positioning
 
 ### For Search Engines
+
 - ✅ Rich, indexable content
 - ✅ Structured data compliance
 - ✅ Clear site hierarchy
@@ -740,6 +820,7 @@ faq_time_on_page
 ## 🚀 Ready to Deploy!
 
 **This PR delivers**:
+
 - ✅ 85+ SEO-optimized Q&A pairs
 - ✅ Modern, searchable UI
 - ✅ Schema.org structured data
@@ -749,17 +830,3 @@ faq_time_on_page
 - ✅ Production-ready code
 
 **Merge and watch your SEO soar!** 📈🎉
-
-
-
-
-
-
-
-
-
-
-
-
-
-

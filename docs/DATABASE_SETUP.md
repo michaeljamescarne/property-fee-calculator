@@ -9,6 +9,7 @@ This project currently **does not have a database**. All calculations are statel
 ## Why Add a Database?
 
 ### Current Limitations (No Database)
+
 - ❌ No shareable calculation URLs
 - ❌ No calculation history
 - ❌ No saved results
@@ -16,6 +17,7 @@ This project currently **does not have a database**. All calculations are statel
 - ❌ No analytics on calculations
 
 ### Benefits with Supabase
+
 - ✅ Shareable calculation URLs (e.g., `/results/abc123`)
 - ✅ Save and retrieve calculations
 - ✅ Email results to users
@@ -81,6 +83,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 6. Verify success message
 
 **Alternative (using Supabase CLI):**
+
 ```bash
 # Install Supabase CLI
 npm install -g supabase
@@ -100,7 +103,7 @@ supabase db push
 Create `lib/supabase.ts`:
 
 ```typescript
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -111,16 +114,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 // Server-side Supabase client (for API routes)
 export function createServerSupabaseClient() {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  
+
   if (!serviceRoleKey) {
-    throw new Error('SUPABASE_SERVICE_ROLE_KEY not set');
+    throw new Error("SUPABASE_SERVICE_ROLE_KEY not set");
   }
-  
+
   return createClient(supabaseUrl, serviceRoleKey, {
     auth: {
       autoRefreshToken: false,
-      persistSession: false
-    }
+      persistSession: false,
+    },
   });
 }
 ```
@@ -146,40 +149,38 @@ For production deployment:
 
 ### Table: `firb_calculations`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | UUID | Primary key (auto-generated) |
-| `created_at` | TIMESTAMPTZ | Creation timestamp |
-| `updated_at` | TIMESTAMPTZ | Last update timestamp (auto-updated) |
-| `share_url_slug` | TEXT | Unique slug for shareable URLs (auto-generated) |
-| `citizenship_status` | ENUM | 'australian', 'permanent', 'temporary', 'foreign' |
-| `visa_type` | TEXT | Visa subclass (e.g., '482', '500', '444') |
-| `is_ordinarily_resident` | BOOLEAN | Whether temporary resident ordinarily resides in Australia |
-| `property_type` | ENUM | 'newDwelling', 'established', 'vacantLand', 'commercial' |
-| `property_value` | DECIMAL(12,2) | Property purchase price |
-| `property_state` | ENUM | 'NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'ACT', 'NT' |
-| `property_address` | TEXT | Optional property address |
-| `is_first_home` | BOOLEAN | First home buyer status |
-| `deposit_percent` | DECIMAL(5,2) | Deposit percentage (0-100) |
-| `entity_type` | ENUM | 'individual', 'company', 'trust' |
-| `eligibility_result` | JSONB | Eligibility determination results |
-| `cost_breakdown` | JSONB | Detailed fee breakdown |
-| `user_email` | TEXT | Email for sharing results (optional) |
-| `locale` | TEXT | 'en' or 'zh' |
-| `deleted_at` | TIMESTAMPTZ | Soft delete timestamp |
+| Column                   | Type          | Description                                                |
+| ------------------------ | ------------- | ---------------------------------------------------------- |
+| `id`                     | UUID          | Primary key (auto-generated)                               |
+| `created_at`             | TIMESTAMPTZ   | Creation timestamp                                         |
+| `updated_at`             | TIMESTAMPTZ   | Last update timestamp (auto-updated)                       |
+| `share_url_slug`         | TEXT          | Unique slug for shareable URLs (auto-generated)            |
+| `citizenship_status`     | ENUM          | 'australian', 'permanent', 'temporary', 'foreign'          |
+| `visa_type`              | TEXT          | Visa subclass (e.g., '482', '500', '444')                  |
+| `is_ordinarily_resident` | BOOLEAN       | Whether temporary resident ordinarily resides in Australia |
+| `property_type`          | ENUM          | 'newDwelling', 'established', 'vacantLand', 'commercial'   |
+| `property_value`         | DECIMAL(12,2) | Property purchase price                                    |
+| `property_state`         | ENUM          | 'NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'ACT', 'NT'        |
+| `property_address`       | TEXT          | Optional property address                                  |
+| `is_first_home`          | BOOLEAN       | First home buyer status                                    |
+| `deposit_percent`        | DECIMAL(5,2)  | Deposit percentage (0-100)                                 |
+| `entity_type`            | ENUM          | 'individual', 'company', 'trust'                           |
+| `eligibility_result`     | JSONB         | Eligibility determination results                          |
+| `cost_breakdown`         | JSONB         | Detailed fee breakdown                                     |
+| `user_email`             | TEXT          | Email for sharing results (optional)                       |
+| `locale`                 | TEXT          | 'en' or 'zh'                                               |
+| `deleted_at`             | TIMESTAMPTZ   | Soft delete timestamp                                      |
 
 ### JSONB Structures
 
 #### `eligibility_result`:
+
 ```json
 {
   "isEligible": true,
   "requiresFIRB": true,
   "firbApprovalType": "required",
-  "restrictions": [
-    "Must use as primary residence",
-    "Must sell within 3 months of visa expiry"
-  ],
+  "restrictions": ["Must use as primary residence", "Must sell within 3 months of visa expiry"],
   "recommendations": [
     "Apply for FIRB approval before contract signing",
     "Budget for annual vacancy fee compliance"
@@ -192,6 +193,7 @@ For production deployment:
 ```
 
 #### `cost_breakdown`:
+
 ```json
 {
   "upfrontCosts": {
@@ -237,19 +239,19 @@ For production deployment:
 
 ```typescript
 // app/api/calculate-firb/route.ts
-import { createServerSupabaseClient } from '@/lib/supabase';
-import { FIRBCalculationInsert } from '@/types/database';
+import { createServerSupabaseClient } from "@/lib/supabase";
+import { FIRBCalculationInsert } from "@/types/database";
 
 export async function POST(request: NextRequest) {
   const input = await request.json();
-  
+
   // Perform calculations
   const eligibilityResult = determineEligibility(input);
   const costBreakdown = calculateCosts(input);
-  
+
   // Save to database
   const supabase = createServerSupabaseClient();
-  
+
   const calculation: FIRBCalculationInsert = {
     citizenship_status: input.citizenshipStatus,
     visa_type: input.visaType,
@@ -264,24 +266,24 @@ export async function POST(request: NextRequest) {
     eligibility_result: eligibilityResult,
     cost_breakdown: costBreakdown,
     user_email: input.userEmail,
-    locale: input.locale || 'en'
+    locale: input.locale || "en",
     // share_url_slug will be auto-generated
   };
-  
+
   const { data, error } = await supabase
-    .from('firb_calculations')
+    .from("firb_calculations")
     .insert(calculation)
     .select()
     .single();
-  
+
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  
+
   return NextResponse.json({
     ...costBreakdown,
     eligibility: eligibilityResult,
-    shareUrl: `/results/${data.share_url_slug}`
+    shareUrl: `/results/${data.share_url_slug}`,
   });
 }
 ```
@@ -290,25 +292,22 @@ export async function POST(request: NextRequest) {
 
 ```typescript
 // app/api/results/[slug]/route.ts
-import { createServerSupabaseClient } from '@/lib/supabase';
+import { createServerSupabaseClient } from "@/lib/supabase";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createServerSupabaseClient();
-  
+
   const { data, error } = await supabase
-    .from('firb_calculations_public') // Use public view (excludes email)
-    .select('*')
-    .eq('share_url_slug', slug)
+    .from("firb_calculations_public") // Use public view (excludes email)
+    .select("*")
+    .eq("share_url_slug", slug)
     .single();
-  
+
   if (error || !data) {
-    return NextResponse.json({ error: 'Calculation not found' }, { status: 404 });
+    return NextResponse.json({ error: "Calculation not found" }, { status: 404 });
   }
-  
+
   return NextResponse.json(data);
 }
 ```
@@ -325,15 +324,15 @@ import { Share2, Copy, Check } from 'lucide-react';
 
 export default function FIRBResults({ shareUrl }: { shareUrl: string }) {
   const [copied, setCopied] = useState(false);
-  
+
   const fullUrl = `${window.location.origin}${shareUrl}`;
-  
+
   const handleCopy = async () => {
     await navigator.clipboard.writeText(fullUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-  
+
   return (
     <div className="flex items-center gap-2">
       <Input value={fullUrl} readOnly />
@@ -360,17 +359,17 @@ export default async function ResultsPage({
 }) {
   const { slug } = await params;
   const supabase = createServerSupabaseClient();
-  
+
   const { data } = await supabase
     .from('firb_calculations_public')
     .select('*')
     .eq('share_url_slug', slug)
     .single();
-  
+
   if (!data) {
     notFound();
   }
-  
+
   return (
     <main className="container mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold mb-8">Saved Calculation Results</h1>
@@ -402,14 +401,14 @@ The migration includes RLS policies:
 
 ```typescript
 // ❌ DON'T: Use service role key client-side
-import { createServerSupabaseClient } from '@/lib/supabase';
+import { createServerSupabaseClient } from "@/lib/supabase";
 
 export default function ClientComponent() {
   const supabase = createServerSupabaseClient(); // ERROR!
 }
 
 // ✅ DO: Use anon key client-side
-import { supabase } from '@/lib/supabase';
+import { supabase } from "@/lib/supabase";
 
 export default function ClientComponent() {
   const client = supabase; // Safe
@@ -433,7 +432,7 @@ npm install resend
 
 ```typescript
 // lib/email.ts
-import { Resend } from 'resend';
+import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -443,15 +442,15 @@ export async function sendCalculationEmail(
   calculation: CostBreakdown
 ) {
   await resend.emails.send({
-    from: 'FIRB Calculator <noreply@propertyfeecalculator.com>',
+    from: "FIRB Calculator <noreply@propertyfeecalculator.com>",
     to: email,
-    subject: 'Your FIRB Calculation Results',
+    subject: "Your FIRB Calculation Results",
     html: `
       <h1>Your FIRB Fee Calculation</h1>
       <p>Total Upfront Costs: $${calculation.upfrontCosts.totalUpfront.toLocaleString()}</p>
       <p>Annual Costs: $${calculation.annualCosts.totalAnnual.toLocaleString()}</p>
       <p><a href="${shareUrl}">View Full Results</a></p>
-    `
+    `,
   });
 }
 ```
@@ -470,18 +469,15 @@ npm run dev
 Create a test file: `test-supabase.ts`
 
 ```typescript
-import { supabase } from './lib/supabase';
+import { supabase } from "./lib/supabase";
 
 async function testConnection() {
-  const { data, error } = await supabase
-    .from('firb_calculations')
-    .select('count')
-    .limit(1);
-  
+  const { data, error } = await supabase.from("firb_calculations").select("count").limit(1);
+
   if (error) {
-    console.error('Connection failed:', error);
+    console.error("Connection failed:", error);
   } else {
-    console.log('✅ Supabase connected successfully!');
+    console.log("✅ Supabase connected successfully!");
   }
 }
 
@@ -492,45 +488,45 @@ testConnection();
 
 ```typescript
 const { data, error } = await supabase
-  .from('firb_calculations')
+  .from("firb_calculations")
   .insert({
-    citizenship_status: 'foreign',
-    property_type: 'newDwelling',
+    citizenship_status: "foreign",
+    property_type: "newDwelling",
     property_value: 850000,
-    property_state: 'NSW',
-    entity_type: 'individual',
+    property_state: "NSW",
+    entity_type: "individual",
     is_first_home: true,
     eligibility_result: {
       isEligible: true,
       requiresFIRB: true,
-      firbApprovalType: 'required',
+      firbApprovalType: "required",
       restrictions: [],
-      recommendations: []
+      recommendations: [],
     },
     cost_breakdown: {
       upfrontCosts: { totalUpfront: 117000 },
       annualCosts: { totalAnnual: 29400 },
       firstYearTotal: 146400,
-      breakdown: []
+      breakdown: [],
     },
-    locale: 'en'
+    locale: "en",
   })
   .select()
   .single();
 
-console.log('Share URL:', data.share_url_slug);
+console.log("Share URL:", data.share_url_slug);
 ```
 
 ### 3. Test Retrieval
 
 ```typescript
 const { data } = await supabase
-  .from('firb_calculations')
-  .select('*')
-  .eq('share_url_slug', 'abc12345')
+  .from("firb_calculations")
+  .select("*")
+  .eq("share_url_slug", "abc12345")
   .single();
 
-console.log('Retrieved:', data);
+console.log("Retrieved:", data);
 ```
 
 ---
@@ -583,7 +579,7 @@ $$ LANGUAGE plpgsql;
 ### Popular States
 
 ```sql
-SELECT 
+SELECT
   property_state,
   COUNT(*) as calculation_count,
   AVG(property_value) as avg_property_value,
@@ -598,7 +594,7 @@ ORDER BY calculation_count DESC;
 ### Property Type Distribution
 
 ```sql
-SELECT 
+SELECT
   property_type,
   citizenship_status,
   COUNT(*) as count
@@ -611,7 +607,7 @@ ORDER BY count DESC;
 ### Average Costs by State
 
 ```sql
-SELECT 
+SELECT
   property_state,
   AVG((cost_breakdown->'upfrontCosts'->>'firbApplicationFee')::numeric) as avg_firb_fee,
   AVG((cost_breakdown->'upfrontCosts'->>'stampDutySurcharge')::numeric) as avg_surcharge,
@@ -629,6 +625,7 @@ ORDER BY property_state;
 ### Enable Point-in-Time Recovery
 
 In Supabase Dashboard:
+
 1. Go to **Settings** → **Database**
 2. Enable **Point-in-Time Recovery** (PITR)
 3. Restore up to 7 days of history
@@ -651,7 +648,7 @@ supabase db reset --db-url postgresql://...
 
 ```sql
 -- Check slow queries
-SELECT 
+SELECT
   calls,
   total_time,
   mean_time,
@@ -665,7 +662,7 @@ LIMIT 10;
 
 ```sql
 -- Check table size and row count
-SELECT 
+SELECT
   schemaname,
   tablename,
   pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) AS size,
@@ -696,16 +693,19 @@ WHERE tablename = 'firb_calculations';
 If you prefer to keep the application stateless:
 
 ### Option 1: URL-based Sharing
+
 - Encode calculation parameters in URL query string
 - No database needed
 - Works but URLs are very long
 
 ### Option 2: localStorage Only
+
 - Save calculations in browser
 - No server persistence
 - No cross-device access
 
 ### Option 3: Hybrid Approach
+
 - Keep calculations stateless
 - Add optional "Save" feature with Supabase
 - Most users can use without database
@@ -718,6 +718,7 @@ If you prefer to keep the application stateless:
 ## Cost Estimate
 
 ### Supabase Free Tier
+
 - ✅ 500 MB database storage
 - ✅ 50K monthly active users
 - ✅ 2GB bandwidth
@@ -725,11 +726,13 @@ If you prefer to keep the application stateless:
 - ✅ Unlimited API requests
 
 **Expected Usage:**
+
 - Each calculation: ~2KB
 - 10,000 calculations/month: ~20MB
 - Well within free tier limits! 💰
 
 ### Paid Tier ($25/month)
+
 - 8 GB database
 - 100K monthly active users
 - 250 GB bandwidth
@@ -746,23 +749,10 @@ If you prefer to keep the application stateless:
 ✅ **Documentation**: This file
 
 **The database is optional but recommended for:**
+
 - Shareable calculation URLs
 - User calculation history
 - Email results
 - Analytics and insights
 
 **Current project works perfectly without a database** - add it when you need persistence features! 🚀
-
-
-
-
-
-
-
-
-
-
-
-
-
-

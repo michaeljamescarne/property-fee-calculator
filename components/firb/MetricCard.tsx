@@ -1,21 +1,16 @@
-'use client';
+"use client";
 
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { TrendingUp, TrendingDown, Minus, Info } from 'lucide-react';
-import { ReactNode } from 'react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { TrendingUp, TrendingDown, Minus, Info } from "lucide-react";
+import { ReactNode } from "react";
 
 interface MetricCardProps {
   icon?: ReactNode;
   title: string;
   value: string | number;
   subtitle?: string;
-  trend?: 'good' | 'neutral' | 'warning' | 'poor';
+  trend?: "good" | "neutral" | "warning" | "poor";
   benchmark?: string;
   tooltip?: string;
   change?: number;
@@ -27,7 +22,7 @@ export default function MetricCard({
   title,
   value,
   subtitle,
-  trend = 'neutral',
+  trend = "neutral",
   benchmark,
   tooltip,
   change,
@@ -44,32 +39,34 @@ export default function MetricCard({
 
   const getTrendColor = () => {
     switch (trend) {
-      case 'good':
-        return 'border-green-200 bg-green-50';
-      case 'warning':
-        return 'border-amber-200 bg-amber-50';
-      case 'poor':
-        return 'border-red-200 bg-red-50';
+      case "good":
+        return "border-green-200 bg-green-50";
+      case "warning":
+        return "border-amber-200 bg-amber-50";
+      case "poor":
+        return "border-red-200 bg-red-50";
       default:
-        return 'border-gray-200 bg-white';
+        return "border-gray-200 bg-white";
     }
   };
 
   const getValueColor = () => {
     switch (trend) {
-      case 'good':
-        return 'text-green-700';
-      case 'warning':
-        return 'text-amber-700';
-      case 'poor':
-        return 'text-red-700';
+      case "good":
+        return "text-green-700";
+      case "warning":
+        return "text-amber-700";
+      case "poor":
+        return "text-red-700";
       default:
-        return 'text-gray-900';
+        return "text-gray-900";
     }
   };
 
   return (
-    <Card className={`border ${getTrendColor()} shadow-sm hover:shadow-md transition-shadow rounded min-w-0`}>
+    <Card
+      className={`border ${getTrendColor()} shadow-sm hover:shadow-md transition-shadow rounded min-w-0`}
+    >
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-3 gap-2">
           <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -94,9 +91,7 @@ export default function MetricCard({
           )}
         </div>
 
-        <div className={`text-3xl font-bold ${getValueColor()} mb-1`}>
-          {value}
-        </div>
+        <div className={`text-3xl font-bold ${getValueColor()} mb-1`}>{value}</div>
 
         {subtitle && (
           <p className="text-sm text-gray-600 mb-2 break-words leading-relaxed">{subtitle}</p>
@@ -105,8 +100,9 @@ export default function MetricCard({
         {change !== undefined && changeLabel && (
           <div className="flex items-center gap-1 text-sm">
             {getTrendIcon()}
-            <span className={change >= 0 ? 'text-green-600' : 'text-red-600'}>
-              {change >= 0 ? '+' : ''}{change.toFixed(1)}%
+            <span className={change >= 0 ? "text-green-600" : "text-red-600"}>
+              {change >= 0 ? "+" : ""}
+              {change.toFixed(1)}%
             </span>
             <span className="text-gray-500 text-xs">{changeLabel}</span>
           </div>
@@ -121,4 +117,3 @@ export default function MetricCard({
     </Card>
   );
 }
-

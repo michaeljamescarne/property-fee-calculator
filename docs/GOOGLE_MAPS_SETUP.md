@@ -80,6 +80,7 @@ npm run dev
 ### User Experience
 
 **With API Key:**
+
 - User types "123 George St"
 - Sees dropdown suggestions: "123 George Street, Sydney NSW 2000"
 - Selects address
@@ -87,6 +88,7 @@ npm run dev
 - State automatically set to "NSW"
 
 **Without API Key:**
+
 - Works as regular text input
 - User can type any address
 - Must manually select state
@@ -97,6 +99,7 @@ npm run dev
 ## Pricing
 
 **Google Places API Pricing:**
+
 - **Free Tier**: $200/month credit (approximately 28,000 autocomplete requests)
 - **After Free Tier**: $2.83 per 1,000 requests (Autocomplete - Per Session)
 - **Estimated Cost**: For 1,000 monthly users, ~$3-10/month
@@ -144,12 +147,14 @@ If you see "Google Maps API key not configured", the component will work as a re
 ## Security Best Practices
 
 ✅ **DO:**
+
 - Restrict API key to specific domains
 - Restrict to only Places API
 - Monitor usage in Google Cloud Console
 - Set up billing alerts
 
 ❌ **DON'T:**
+
 - Commit API keys to git
 - Use unrestricted API keys
 - Share API keys publicly
@@ -160,16 +165,19 @@ If you see "Google Maps API key not configured", the component will work as a re
 ## Troubleshooting
 
 **"Google Maps API key not configured"**
+
 - Check `.env.local` has `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
 - Restart dev server after adding key
 - Key must start with `NEXT_PUBLIC_` to be available in browser
 
 **"RefererNotAllowedMapError"**
+
 - Check API key restrictions in Google Cloud Console
 - Ensure your domain is in the allowed list
 - Include `http://localhost:3000/*` for local development
 
 **No autocomplete suggestions appearing**
+
 - Check browser console for errors
 - Verify Places API is enabled in Google Cloud Console
 - Check API key restrictions
@@ -184,17 +192,3 @@ If you see "Google Maps API key not configured", the component will work as a re
 - ✅ Auto-fills state when address selected
 - ✅ Fallback to regular input if no API key
 - ⚠️ Requires `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` to be set
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -3,22 +3,22 @@
  * Shows the current step in the FIRB calculator wizard
  */
 
-'use client';
+"use client";
 
-import { Check } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-export type Step = 'citizenship' | 'property' | 'financial' | 'review' | 'results';
+export type Step = "citizenship" | "property" | "financial" | "review" | "results";
 
 interface ProgressIndicatorProps {
   currentStep: Step;
   completedSteps: Step[];
 }
 
-const steps: Step[] = ['citizenship', 'property', 'financial', 'review', 'results'];
+const steps: Step[] = ["citizenship", "property", "financial", "review", "results"];
 
 export default function ProgressIndicator({ currentStep, completedSteps }: ProgressIndicatorProps) {
-  const t = useTranslations('FIRBCalculator.progress');
+  const t = useTranslations("FIRBCalculator.progress");
 
   const getStepIndex = (step: Step) => steps.indexOf(step);
   const currentIndex = getStepIndex(currentStep);
@@ -39,9 +39,9 @@ export default function ProgressIndicator({ currentStep, completedSteps }: Progr
                   <div
                     className={`
                       flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all shadow-sm
-                      ${isCurrent ? 'border-blue-600 bg-blue-600 text-white scale-110' : ''}
-                      ${isPast || isCompleted ? 'border-blue-600 bg-blue-600 text-white' : ''}
-                      ${!isCurrent && !isPast && !isCompleted ? 'border-gray-200 bg-gray-100 text-gray-500' : ''}
+                      ${isCurrent ? "border-blue-600 bg-blue-600 text-white scale-110" : ""}
+                      ${isPast || isCompleted ? "border-blue-600 bg-blue-600 text-white" : ""}
+                      ${!isCurrent && !isPast && !isCompleted ? "border-gray-200 bg-gray-100 text-gray-500" : ""}
                     `}
                   >
                     {isPast || isCompleted ? (
@@ -53,9 +53,9 @@ export default function ProgressIndicator({ currentStep, completedSteps }: Progr
                   <span
                     className={`
                       mt-2 text-sm font-medium
-                      ${isCurrent ? 'text-blue-600' : ''}
-                      ${isPast || isCompleted ? 'text-blue-600' : ''}
-                      ${!isCurrent && !isPast && !isCompleted ? 'text-gray-500' : ''}
+                      ${isCurrent ? "text-blue-600" : ""}
+                      ${isPast || isCompleted ? "text-blue-600" : ""}
+                      ${!isCurrent && !isPast && !isCompleted ? "text-gray-500" : ""}
                     `}
                   >
                     {t(step)}
@@ -68,7 +68,7 @@ export default function ProgressIndicator({ currentStep, completedSteps }: Progr
                     <div
                       className={`
                         h-full transition-all
-                        ${isPast || isCompleted ? 'bg-blue-600' : 'bg-gray-200'}
+                        ${isPast || isCompleted ? "bg-blue-600" : "bg-gray-200"}
                       `}
                     />
                   </div>
@@ -81,4 +81,3 @@ export default function ProgressIndicator({ currentStep, completedSteps }: Progr
     </div>
   );
 }
-

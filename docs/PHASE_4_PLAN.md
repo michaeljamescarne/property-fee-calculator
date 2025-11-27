@@ -13,6 +13,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 ### 1. Database & API (Priority: High)
 
 #### 1.1 Verify Schema
+
 - [ ] Check if `benchmark_data` table exists from Phase 2 migration
 - [ ] Verify schema matches PRD requirements:
   - State-level benchmarks
@@ -23,6 +24,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 - [ ] Add any missing columns if needed
 
 #### 1.2 API Endpoints
+
 - [ ] Create `/api/benchmarks` endpoint
   - GET with query params: `state`, `suburb`, `postcode`
   - Returns benchmark data or null
@@ -31,11 +33,13 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 - [ ] Add response validation
 
 #### 1.3 Address Mapping
+
 - [ ] Create utility function to extract suburb/state from address
 - [ ] Handle various address formats
 - [ ] Support postcode lookup
 
 #### 1.4 Fallback Logic
+
 - [ ] Implement fallback chain: suburb → state → national default
 - [ ] Return appropriate benchmark level
 - [ ] Log when fallback is used
@@ -45,12 +49,14 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 ### 2. Admin Interface (Priority: High)
 
 #### 2.1 Admin Dashboard
+
 - [ ] Create `/admin/benchmarks` route (protected)
 - [ ] Add admin role check middleware
 - [ ] Build admin dashboard layout
 - [ ] Add navigation to admin section
 
 #### 2.2 Benchmarks CRUD Interface
+
 - [ ] Create list view (table) of all benchmarks
 - [ ] Add filters (by state, type)
 - [ ] Create form for adding/editing benchmarks
@@ -58,6 +64,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 - [ ] Add validation on form submission
 
 #### 2.3 Bulk Import
+
 - [ ] Create CSV import interface
 - [ ] Parse CSV file
 - [ ] Validate data format
@@ -65,6 +72,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 - [ ] Show import results/errors
 
 #### 2.4 Data Validation
+
 - [ ] Validate rental yield ranges (0-20%)
 - [ ] Validate capital growth ranges (0-15%)
 - [ ] Validate state codes
@@ -72,6 +80,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 - [ ] Prevent duplicate entries
 
 #### 2.5 Version History (Optional)
+
 - [ ] Track changes to benchmarks
 - [ ] Display change history
 - [ ] Show who made changes
@@ -81,6 +90,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 ### 3. Initial Data Population (Priority: Medium)
 
 #### 3.1 Research & Collection
+
 - [ ] Research state-level rental yields (8 states/territories)
 - [ ] Research state-level capital growth rates
 - [ ] Research top 50-100 suburb benchmarks (major cities)
@@ -88,6 +98,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 - [ ] Verify data accuracy
 
 #### 3.2 Data Population
+
 - [ ] Create seed script or SQL file
 - [ ] Populate state-level benchmarks
 - [ ] Populate suburb-level benchmarks (if available)
@@ -99,6 +110,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 ### 4. Calculator Integration (Priority: High)
 
 #### 4.1 Step 3 Integration
+
 - [ ] Fetch benchmarks when property details are entered
 - [ ] Display benchmark suggestions in Financial Details step
 - [ ] Show "Use Benchmark" buttons
@@ -106,6 +118,7 @@ Phase 4 implements the benchmark data system that provides default/benchmark ren
 - [ ] Show comparison (user input vs benchmark)
 
 #### 4.2 Results Comparison
+
 - [ ] Add benchmark comparison section to results
 - [ ] Show how user's inputs compare to benchmarks
 - [ ] Highlight significant differences
@@ -123,17 +136,17 @@ CREATE TABLE IF NOT EXISTS benchmark_data (
   state australian_state NOT NULL,
   suburb_name TEXT,
   postcode TEXT,
-  
+
   -- Benchmark Values
   rental_yield_benchmark DECIMAL(5,2), -- e.g., 4.50 for 4.5%
   capital_growth_benchmark DECIMAL(5,2), -- e.g., 6.00 for 6%
-  
+
   -- Metadata
   data_source TEXT,
   effective_date DATE,
   last_updated TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_by UUID REFERENCES auth.users(id),
-  
+
   -- Constraints
   CONSTRAINT unique_location UNIQUE(state, COALESCE(suburb_name, ''), COALESCE(postcode, ''))
 );
@@ -151,11 +164,13 @@ CREATE INDEX idx_benchmark_postcode ON benchmark_data(postcode) WHERE postcode I
 ### GET /api/benchmarks
 
 **Query Parameters:**
+
 - `state` (required): Australian state code (NSW, VIC, etc.)
 - `suburb` (optional): Suburb name
 - `postcode` (optional): Postcode
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -170,6 +185,7 @@ CREATE INDEX idx_benchmark_postcode ON benchmark_data(postcode) WHERE postcode I
 ```
 
 **Fallback Logic:**
+
 1. Try suburb + state match
 2. Try postcode match
 3. Try state-level match
@@ -222,4 +238,3 @@ CREATE INDEX idx_benchmark_postcode ON benchmark_data(postcode) WHERE postcode I
 3. Build admin interface
 4. Integrate with calculator
 5. Populate initial data
-

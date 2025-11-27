@@ -1,25 +1,30 @@
-'use client';
+"use client";
 
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import { useLocale } from 'next-intl';
-import Link from 'next/link';
-import { ArrowRight, Calculator, AlertCircle, BookOpen } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import FAQSearch from '@/components/faq/FAQSearch';
-import FAQNavigation from '@/components/faq/FAQNavigation';
-import FAQCategory from '@/components/faq/FAQCategory';
-import PopularQuestions from '@/components/faq/PopularQuestions';
-import { getFAQData } from '@/lib/faq/faq-utils';
-import { filterFAQs, getPopularQuestions } from '@/lib/faq/faq-search';
-import { generateFAQPageSchema, generateBreadcrumbSchema, generateWebPageSchema, injectStructuredData } from '@/lib/faq/faq-schema';
+import { useState, useCallback, useMemo, useEffect } from "react";
+import { useLocale } from "next-intl";
+import Link from "next/link";
+import { ArrowRight, Calculator, AlertCircle, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import FAQSearch from "@/components/faq/FAQSearch";
+import FAQNavigation from "@/components/faq/FAQNavigation";
+import FAQCategory from "@/components/faq/FAQCategory";
+import PopularQuestions from "@/components/faq/PopularQuestions";
+import { getFAQData } from "@/lib/faq/faq-utils";
+import { filterFAQs, getPopularQuestions } from "@/lib/faq/faq-search";
+import {
+  generateFAQPageSchema,
+  generateBreadcrumbSchema,
+  generateWebPageSchema,
+  injectStructuredData,
+} from "@/lib/faq/faq-schema";
 
 export default function FAQPage() {
   const locale = useLocale();
   const allCategories = getFAQData();
-  
-  const [searchTerm, setSearchTerm] = useState('');
+
+  const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | undefined>();
   const [openQuestionId, setOpenQuestionId] = useState<string | undefined>();
 
@@ -39,10 +44,13 @@ export default function FAQPage() {
     setActiveCategory(undefined); // Clear category filter when searching
   }, []);
 
-  const handleCategoryClick = useCallback((categoryId: string) => {
-    setActiveCategory(categoryId === activeCategory ? undefined : categoryId);
-    setSearchTerm(''); // Clear search when clicking category
-  }, [activeCategory]);
+  const handleCategoryClick = useCallback(
+    (categoryId: string) => {
+      setActiveCategory(categoryId === activeCategory ? undefined : categoryId);
+      setSearchTerm(""); // Clear search when clicking category
+    },
+    [activeCategory]
+  );
 
   // Total questions count
   const totalQuestions = allCategories.reduce((sum, cat) => sum + cat.questions.length, 0);
@@ -54,23 +62,23 @@ export default function FAQPage() {
 
   // Scroll to question from URL hash and auto-expand
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const hash = window.location.hash.substring(1);
       if (hash) {
         // Set the question as open
         setOpenQuestionId(hash);
-        
+
         // Scroll to the element after a short delay
         setTimeout(() => {
           const element = document.getElementById(hash);
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         }, 100);
       }
     }
   }, []);
-  
+
   // Listen for hash changes
   useEffect(() => {
     const handleHashChange = () => {
@@ -80,14 +88,14 @@ export default function FAQPage() {
         setTimeout(() => {
           const element = document.getElementById(hash);
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         }, 100);
       }
     };
-    
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   return (
@@ -115,11 +123,9 @@ export default function FAQPage() {
                 <BookOpen className="h-4 w-4" />
                 {totalQuestions}+ Questions Answered
               </div>
-              
-              <h1 className="text-4xl font-bold mb-6 text-gray-900">
-                Frequently Asked Questions
-              </h1>
-              
+
+              <h1 className="text-4xl font-bold mb-6 text-gray-900">Frequently Asked Questions</h1>
+
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 Everything you need to know about buying Australian property as a foreign investor
               </p>
@@ -151,9 +157,12 @@ export default function FAQPage() {
               <Alert className="mb-12 border-blue-400 bg-blue-50">
                 <AlertCircle className="h-5 w-5 text-blue-600" />
                 <AlertDescription className="text-gray-800">
-                  <strong className="font-semibold">Need calculations?</strong> Use our FIRB Calculator to get instant cost estimates for your property purchase.
-                  {' '}
-                  <Link href={`/${locale}/firb-calculator`} className="text-blue-600 hover:underline font-medium">
+                  <strong className="font-semibold">Need calculations?</strong> Use our FIRB
+                  Calculator to get instant cost estimates for your property purchase.{" "}
+                  <Link
+                    href={`/${locale}/firb-calculator`}
+                    className="text-blue-600 hover:underline font-medium"
+                  >
                     Calculate Now →
                   </Link>
                 </AlertDescription>
@@ -165,7 +174,11 @@ export default function FAQPage() {
           {searchTerm && searchTerm.length >= 2 && (
             <div className="mb-8">
               <p className="text-gray-600">
-                Found <strong className="text-gray-900">{filteredCategories.reduce((sum, cat) => sum + cat.questions.length, 0)}</strong> results for &ldquo;{searchTerm}&rdquo;
+                Found{" "}
+                <strong className="text-gray-900">
+                  {filteredCategories.reduce((sum, cat) => sum + cat.questions.length, 0)}
+                </strong>{" "}
+                results for &ldquo;{searchTerm}&rdquo;
               </p>
             </div>
           )}
@@ -181,11 +194,7 @@ export default function FAQPage() {
                 <p className="text-gray-600 mb-6">
                   We couldn&apos;t find any FAQs matching &ldquo;{searchTerm}&rdquo;
                 </p>
-                <Button
-                  variant="outline"
-                  onClick={() => setSearchTerm('')}
-                  className="rounded"
-                >
+                <Button variant="outline" onClick={() => setSearchTerm("")} className="rounded">
                   Clear Search
                 </Button>
               </CardContent>
@@ -214,7 +223,8 @@ export default function FAQPage() {
                   Ready to Calculate Your Fees?
                 </h2>
                 <p className="text-white/90 text-base mb-8 max-w-2xl mx-auto">
-                  Get instant, accurate cost estimates for your Australian property purchase including FIRB fees, stamp duty, and ongoing costs.
+                  Get instant, accurate cost estimates for your Australian property purchase
+                  including FIRB fees, stamp duty, and ongoing costs.
                 </p>
                 <Button
                   size="lg"
@@ -235,7 +245,10 @@ export default function FAQPage() {
           {/* Disclaimer */}
           <div className="mt-12 text-center text-sm text-gray-600 max-w-3xl mx-auto">
             <p className="leading-relaxed">
-              <strong className="text-gray-900">Disclaimer:</strong> This information is general in nature and does not constitute professional advice. FIRB rules, fees, and requirements are subject to change. Always seek professional legal and financial advice for your specific circumstances. Last updated: January 2025.
+              <strong className="text-gray-900">Disclaimer:</strong> This information is general in
+              nature and does not constitute professional advice. FIRB rules, fees, and requirements
+              are subject to change. Always seek professional legal and financial advice for your
+              specific circumstances. Last updated: January 2025.
             </p>
           </div>
         </div>
@@ -243,4 +256,3 @@ export default function FAQPage() {
     </>
   );
 }
-

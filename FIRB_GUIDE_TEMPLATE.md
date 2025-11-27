@@ -69,6 +69,7 @@ Previously, temporary residents could buy one established dwelling to live in wh
 After the Ban Ends (Post-March 2027)
 
 Historical rules will likely resume:
+
 - Established dwellings can only be purchased as your primary residence
 - The property must be sold when it's no longer your main home
 - You cannot rent the property to others while you own it
@@ -76,7 +77,8 @@ Historical rules will likely resume:
 ### Vacant Land
 
 Approval Status: Required for foreign persons  
-Key Conditions: 
+Key Conditions:
+
 - Construction must begin within 24 months of purchase
 - All construction must be completed within 4 years of approval
 - The land cannot be sold until construction is finished
@@ -90,18 +92,18 @@ Application fees are indexed annually and vary significantly based on property t
 ### New Dwellings & Vacant Land Fees
 
 | Property Value | Application Fee |
-|----------------|-----------------|
-| Under $75,000 | $4,500 |
-| Up to $1M | $15,100 |
-| Up to $2M | $30,300 |
-| Up to $3M | $60,600 |
-| Up to $4M | $90,900 |
-| Up to $5M | $121,200 |
-| Up to $10M | $272,700 |
-| Up to $20M | $575,700 |
-| Up to $30M | $878,700 |
-| Up to $40M | $1,181,700 |
-| Over $40M | $1,205,200 |
+| -------------- | --------------- |
+| Under $75,000  | $4,500          |
+| Up to $1M      | $15,100         |
+| Up to $2M      | $30,300         |
+| Up to $3M      | $60,600         |
+| Up to $4M      | $90,900         |
+| Up to $5M      | $121,200        |
+| Up to $10M     | $272,700        |
+| Up to $20M     | $575,700        |
+| Up to $30M     | $878,700        |
+| Up to $40M     | $1,181,700      |
+| Over $40M      | $1,205,200      |
 
 For the complete fee schedule including all price points, visit the [ATO Website](https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors).
 
@@ -110,17 +112,17 @@ For the complete fee schedule including all price points, visit the [ATO Website
 ⚠️ Note: While established dwellings are banned during April 2025–March 2027, these tripled fees apply to exceptional circumstances and will apply again after the ban ends:
 
 | Property Value | Application Fee |
-|----------------|-----------------|
-| Under $75,000 | $13,500 |
-| Up to $1M | $45,300 |
-| Up to $2M | $90,900 |
-| Up to $3M | $181,800 |
-| Up to $5M | $363,600 |
-| Up to $10M | $818,100 |
-| Up to $20M | $1,727,100 |
-| Up to $30M | $2,636,100 |
-| Up to $40M | $3,545,100 |
-| Over $40M | $3,615,600 |
+| -------------- | --------------- |
+| Under $75,000  | $13,500         |
+| Up to $1M      | $45,300         |
+| Up to $2M      | $90,900         |
+| Up to $3M      | $181,800        |
+| Up to $5M      | $363,600        |
+| Up to $10M     | $818,100        |
+| Up to $20M     | $1,727,100      |
+| Up to $30M     | $2,636,100      |
+| Up to $40M     | $3,545,100      |
+| Over $40M      | $3,615,600      |
 
 The tripling of established dwelling fees reflects the government's policy to encourage foreign investment in new housing stock rather than existing homes.
 
@@ -129,6 +131,7 @@ The tripling of established dwelling fees reflects the government's policy to en
 Expedited Processing: You can pay double the standard fee for 10-day priority processing (subject to approval).
 
 Variation Fees: If you need to modify an existing approval:
+
 - Simple variation: $4,500
 - Complex variation: $30,300
 
@@ -139,6 +142,7 @@ Developer Certificates: Property developers pay a flat $65,200 initial fee for N
 ### Step 1: Determine Your Eligibility
 
 Start by using the [FIRB Calculator on PropertyCosts.com.au](https://www.propertycosts.com.au/en/firb-calculator) to:
+
 - Confirm whether you need approval
 - Calculate your exact application fee
 - Understand applicable conditions
@@ -171,6 +175,7 @@ Important: The 30-day assessment period only begins once the correct fee is paid
 The Treasury and FIRB typically assess applications within 30 days, though this can be extended if additional information is needed or if the application raises national interest concerns.
 
 You'll receive either:
+
 - A no objection notification with conditions
 - A request for more information
 - In rare cases, a rejection
@@ -220,6 +225,7 @@ As of 2025, civil penalties for breaching FIRB regulations can include:
 - Corporations: Up to $16.5 million (50,000 penalty units)
 
 Common civil penalty offenses include:
+
 - Failing to obtain FIRB approval before purchasing
 - Breaching conditions of your approval
 - Making false or misleading statements in your application
@@ -234,6 +240,7 @@ Serious breaches can result in criminal prosecution:
 - Criminal record: Affecting future visa applications and business opportunities
 
 Criminal charges typically apply to:
+
 - Willful violations of FIRB requirements
 - Fraud or deliberate misrepresentation
 - Repeated non-compliance after warnings
@@ -382,20 +389,12 @@ Understanding FIRB is complex, but getting started doesn't have to be. The [Prop
 
 Understanding FIRB requirements is your first step toward successful property investment in Australia. With proper planning, professional guidance, and the right tools, navigating the FIRB process becomes manageable—setting you up for a compliant and rewarding investment experience.
 
-*This guide is for informational purposes only and does not constitute legal or financial advice. FIRB regulations are complex and change frequently. Always seek professional advice for your specific situation.*
+_This guide is for informational purposes only and does not constitute legal or financial advice. FIRB regulations are complex and change frequently. Always seek professional advice for your specific situation._
 
 ---
 
 Related Resources:
+
 - [FIRB Official Website](https://foreigninvestment.gov.au/)
 - [ATO Foreign Investment Portal](https://www.ato.gov.au/)
 - [PropertyCosts FIRB Calculator](https://www.propertycosts.com.au/en/firb-calculator)
-
-
-
-
-
-
-
-
-

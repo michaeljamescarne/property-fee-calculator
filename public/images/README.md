@@ -5,8 +5,10 @@ This directory contains HTML/CSS mockups for creating professional product scree
 ## Files Created
 
 ### 1. `analytics-dashboard-mockup.html`
+
 **Purpose**: Hero image showing comprehensive investment analytics
 **Features**:
+
 - 7 key metric cards (ROI, cash flow, equity growth, etc.)
 - Professional dashboard layout with gradients
 - Interactive hover effects
@@ -14,8 +16,10 @@ This directory contains HTML/CSS mockups for creating professional product scree
 - Realistic sample data matching your calculator's output
 
 ### 2. `eligibility-result-mockup.html`
+
 **Purpose**: Feature screenshot showing eligibility check results
 **Features**:
+
 - Green approval status with checkmark
 - Detailed requirements breakdown
 - Professional card layout
@@ -23,8 +27,10 @@ This directory contains HTML/CSS mockups for creating professional product scree
 - Trust indicators and badges
 
 ### 3. `cost-breakdown-mockup.html`
+
 **Purpose**: Feature screenshot showing detailed cost analysis
 **Features**:
+
 - Complete cost breakdown by category
 - Government fees, legal costs, finance costs
 - Visual hierarchy with color coding
@@ -32,8 +38,10 @@ This directory contains HTML/CSS mockups for creating professional product scree
 - Professional chart placeholder
 
 ### 4. `calculator-interface-mockup.html`
+
 **Purpose**: Feature screenshot showing the calculator form
 **Features**:
+
 - Multi-step form interface
 - Realistic sample data filled in
 - Progress indicator
@@ -43,10 +51,12 @@ This directory contains HTML/CSS mockups for creating professional product scree
 ## How to Use These Mockups
 
 ### Step 1: Open in Browser
+
 1. Open any of the HTML files in your web browser
 2. The mockups are fully responsive and will look great on any screen size
 
 ### Step 2: Take Screenshots
+
 1. **Desktop**: Use browser dev tools to set viewport to 1200x800px
 2. **Mobile**: Set viewport to 375x667px for mobile screenshots
 3. Take screenshots using:
@@ -55,6 +65,7 @@ This directory contains HTML/CSS mockups for creating professional product scree
    - Windows: Snipping Tool or Win+Shift+S
 
 ### Step 3: Optimize Images
+
 1. Save screenshots as PNG files
 2. Optimize using tools like:
    - TinyPNG for compression
@@ -62,7 +73,9 @@ This directory contains HTML/CSS mockups for creating professional product scree
    - Squoosh.app for web optimization
 
 ### Step 4: Replace Placeholders
+
 Replace these placeholder files in your project:
+
 - `public/images/analytics-dashboard-hero.png`
 - `public/images/eligibility-screenshot.png`
 - `public/images/cost-breakdown-screenshot.png`
@@ -71,14 +84,18 @@ Replace these placeholder files in your project:
 ## Customization
 
 ### Colors
+
 All mockups use your existing blue color scheme:
+
 - Primary: `#3b82f6` (blue-600)
 - Secondary: `#2563eb` (blue-700)
 - Success: `#10b981` (emerald-500)
 - Background: `#f8fafc` (slate-50)
 
 ### Sample Data
+
 The mockups include realistic sample data that matches your calculator's capabilities:
+
 - Property value: $750,000
 - FIRB fee: $6,350
 - Stamp duty: $30,000
@@ -86,7 +103,9 @@ The mockups include realistic sample data that matches your calculator's capabil
 - Cash flow: -$2,533/month
 
 ### Responsive Design
+
 All mockups are fully responsive and will work on:
+
 - Desktop (1200px+)
 - Tablet (768px-1199px)
 - Mobile (320px-767px)
@@ -108,15 +127,3 @@ All mockups are fully responsive and will work on:
 - The layouts are optimized for conversion and user engagement
 
 These mockups provide a solid foundation for professional product screenshots that will significantly improve your homepage's visual appeal and conversion potential.
-
-
-
-
-
-
-
-
-
-
-
-

@@ -48,7 +48,7 @@ SELECT id, email FROM auth.users WHERE email = 'your@email.com';
 -- Then insert (replace YOUR_ACTUAL_USER_ID with the UUID from above)
 INSERT INTO user_profiles (id, email, role)
 VALUES ('YOUR_ACTUAL_USER_ID', 'your@email.com', 'admin')
-ON CONFLICT (id) 
+ON CONFLICT (id)
 DO UPDATE SET role = 'admin';
 ```
 
@@ -57,8 +57,8 @@ DO UPDATE SET role = 'admin';
 Run this query to verify:
 
 ```sql
-SELECT id, email, role 
-FROM user_profiles 
+SELECT id, email, role
+FROM user_profiles
 WHERE role = 'admin';
 ```
 
@@ -79,9 +79,11 @@ You should see your user listed with `role = 'admin'`.
    - Log in first, then try the admin route
 
 2. **Check your user_profiles record:**
+
    ```sql
    SELECT * FROM user_profiles WHERE email = 'your@email.com';
    ```
+
    - If no record exists, create one with the INSERT statement above
    - If record exists but `role` is NULL or 'user', update it to 'admin'
 
@@ -96,17 +98,21 @@ You should see your user listed with `role = 'admin'`.
 ### Common Issues
 
 **Issue:** "Admin check failed - no profile"
+
 - **Solution:** Your user doesn't have a `user_profiles` record. Create one using the SQL above.
 
 **Issue:** "Admin check failed - user is not admin"
+
 - **Solution:** Your user's role is not set to 'admin'. Update it using the SQL above.
 
 **Issue:** Getting redirected to `/en/firb-calculator?login=true`
+
 - **Solution:** You're not logged in. Log in first, then try the admin route.
 
 ## Security Note
 
 ⚠️ **Important:** Only grant admin access to trusted users. Admin users can:
+
 - View all benchmark data
 - Create, edit, and delete benchmarks
 - Modify critical system data
@@ -114,8 +120,8 @@ You should see your user listed with `role = 'admin'`.
 ## Next Steps
 
 Once you have admin access:
+
 1. Test creating a new benchmark
 2. Test editing an existing benchmark
 3. Test deleting a benchmark
 4. Verify filters work correctly
-

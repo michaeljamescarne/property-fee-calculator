@@ -5,6 +5,7 @@ This guide walks you through setting up the passwordless authentication system f
 ## Overview
 
 The authentication system includes:
+
 - ✅ Passwordless email authentication (magic codes)
 - ✅ User profiles and session management
 - ✅ Saved calculations dashboard
@@ -68,6 +69,7 @@ JWT_SECRET=your-secure-random-32-character-secret-here
 ```
 
 2. Generate a secure JWT secret:
+
 ```bash
 openssl rand -base64 32
 ```
@@ -87,6 +89,7 @@ npm install
 ```
 
 Installed packages:
+
 - `@supabase/supabase-js` - Supabase client
 - `@supabase/ssr` - Server-side rendering support
 - `jose` - JWT token handling
@@ -94,6 +97,7 @@ Installed packages:
 ## Step 6: Test Authentication Flow
 
 1. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -132,21 +136,25 @@ npm run dev
 ## Troubleshooting
 
 ### "Unauthorized" errors
+
 - Check that JWT_SECRET is set correctly
 - Verify cookies are being set (check browser DevTools → Application → Cookies)
 - Clear cookies and try logging in again
 
 ### Email not sending
+
 - Check RESEND_API_KEY is valid
 - Check Resend dashboard for delivery status
 - Verify email is not in spam folder
 
 ### Database errors
+
 - Verify migration was run successfully
 - Check Supabase logs (Database → Logs)
 - Ensure RLS policies allow user operations
 
 ### "Failed to fetch user profile"
+
 - Check user_profiles table exists
 - Verify trigger `on_auth_user_created` is active
 - Check Supabase logs for errors
@@ -154,6 +162,7 @@ npm run dev
 ## Features Enabled
 
 ### ✅ Currently Active
+
 - Passwordless email authentication
 - User profiles and sessions
 - Saved calculations
@@ -161,6 +170,7 @@ npm run dev
 - Auth-protected routes
 
 ### ⏸️ Prepared But Inactive
+
 - Paywall/content locking (set `PAYWALL_CONFIG.enabled = true` in `lib/features/paywall.ts`)
 - Payment integration placeholders
 - Usage limits tracking
@@ -168,12 +178,14 @@ npm run dev
 ## Next Steps
 
 ### When Ready for Paywall
+
 1. Review `lib/features/paywall.ts`
 2. Set `enabled: true` in PAYWALL_CONFIG
 3. Integrate payment provider (Stripe/Paddle)
 4. Update paywall components to handle payment flow
 
 ### Optional Enhancements
+
 - Email templates customization (`emails/MagicCodeEmail.tsx`)
 - Dashboard analytics
 - Export calculations to PDF
@@ -183,6 +195,7 @@ npm run dev
 ## Support
 
 For issues:
+
 1. Check Supabase logs (Dashboard → Logs)
 2. Check browser console for errors
 3. Review network requests in DevTools
@@ -191,21 +204,9 @@ For issues:
 ## Cost Estimate
 
 **Free Tier Limits:**
+
 - Supabase: 500MB database, 2GB bandwidth, 50K MAU
 - Resend: 3,000 emails/month
 - **Total**: $0/month for MVP stage
 
 You'll only need to upgrade when you exceed these limits.
-
-
-
-
-
-
-
-
-
-
-
-
-

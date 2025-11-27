@@ -13,7 +13,6 @@ This guide explains how to populate the benchmark_data table with initial state-
 1. **SQL Seed File**: `supabase/migrations/20250117_seed_benchmark_data.sql`
    - Contains INSERT statements for all 8 states/territories
    - Can be run directly in Supabase SQL Editor
-   
 2. **CSV Seed File**: `supabase/migrations/20250117_seed_benchmark_data.csv`
    - Same data in CSV format
    - Can be imported via the admin interface
@@ -21,6 +20,7 @@ This guide explains how to populate the benchmark_data table with initial state-
 ### Data Included
 
 The seed data includes benchmark values for:
+
 - ✅ **NSW** (New South Wales)
 - ✅ **VIC** (Victoria)
 - ✅ **QLD** (Queensland)
@@ -31,6 +31,7 @@ The seed data includes benchmark values for:
 - ✅ **NT** (Northern Territory)
 
 Each state includes:
+
 - Gross rental yield (%)
 - Net rental yield (%)
 - 5-year capital growth average (% per annum)
@@ -60,6 +61,7 @@ Each state includes:
    - Test by going to the calculator and entering property details for different states
 
 ### Advantages
+
 - ✅ No direct database access needed
 - ✅ Uses the same validation as manual entry
 - ✅ Shows import results/errors
@@ -88,15 +90,18 @@ Each state includes:
 
 4. **Verify Data**
    - Run a query to check:
+
    ```sql
-   SELECT state, gross_rental_yield, capital_growth_5yr 
-   FROM benchmark_data 
-   WHERE suburb_name IS NULL 
+   SELECT state, gross_rental_yield, capital_growth_5yr
+   FROM benchmark_data
+   WHERE suburb_name IS NULL
    ORDER BY state;
    ```
+
    - Should show 8 rows (one per state/territory)
 
 ### Advantages
+
 - ✅ Fast execution
 - ✅ Atomic operation
 - ✅ Good for initial setup
@@ -106,15 +111,18 @@ Each state includes:
 ## Data Source Information
 
 ### Source
+
 - **Provider**: CoreLogic / Domain Research
 - **Period**: 2024-2025 market data
 - **Last Updated**: January 2025
 
 ### Data Quality Scores
+
 - Most states: **8/10** (high quality, reliable sources)
 - TAS, NT: **7/10** (good quality, slightly less comprehensive)
 
 ### Notes on Data
+
 - All values are state-level averages
 - Metro areas typically have lower yields but higher capital growth
 - Regional areas typically have higher yields but lower capital growth
@@ -127,6 +135,7 @@ Each state includes:
 After populating state-level data, you can add suburb-level benchmarks:
 
 ### Via Admin Interface
+
 1. Navigate to `/admin/benchmarks`
 2. Click **"Add New Benchmark"**
 3. Fill in:
@@ -138,11 +147,13 @@ After populating state-level data, you can add suburb-level benchmarks:
    - Data source and notes
 
 ### Via CSV Import
+
 1. Create a CSV file with suburb data
 2. Include columns: `state`, `suburb_name`, `postcode`, `gross_rental_yield`, etc.
 3. Import via admin interface
 
 ### Example Suburb Data
+
 ```csv
 state,suburb_name,postcode,gross_rental_yield,capital_growth_5yr,data_source,last_updated
 NSW,Sydney,2000,2.80,6.50,CoreLogic 2024,2025-01-17
@@ -157,6 +168,7 @@ VIC,Melbourne,3000,3.20,5.90,CoreLogic 2024,2025-01-17
 After importing the data, verify it works:
 
 ### 1. Calculator Integration
+
 1. Go to `/en/firb-calculator`
 2. Complete Citizenship and Property Details steps
 3. Enter a property value and select a state
@@ -164,6 +176,7 @@ After importing the data, verify it works:
 5. You should see benchmark suggestions appear
 
 ### 2. Results Panel
+
 1. Complete a full calculation
 2. View the results panel
 3. Expand **Investment Analytics**
@@ -171,6 +184,7 @@ After importing the data, verify it works:
 5. Verify benchmarks are displayed
 
 ### 3. Admin Interface
+
 1. Go to `/admin/benchmarks`
 2. Verify all 8 states appear in the table
 3. Test filtering by state
@@ -181,6 +195,7 @@ After importing the data, verify it works:
 ## Updating Benchmark Data
 
 ### When to Update
+
 - Quarterly updates recommended
 - When market conditions change significantly
 - When new reliable data sources become available
@@ -188,20 +203,23 @@ After importing the data, verify it works:
 ### How to Update
 
 **Option 1: Bulk Update via CSV**
+
 1. Export existing data from admin interface (if export feature available)
 2. Update values in CSV
 3. Re-import via admin interface (will update existing records)
 
 **Option 2: Manual Updates**
+
 1. Go to `/admin/benchmarks`
 2. Click edit on each state record
 3. Update values
 4. Save
 
 **Option 3: SQL Update**
+
 ```sql
 UPDATE benchmark_data
-SET 
+SET
   gross_rental_yield = 3.30,
   capital_growth_5yr = 5.60,
   last_updated = CURRENT_DATE,
@@ -214,18 +232,21 @@ WHERE state = 'NSW' AND suburb_name IS NULL;
 ## Troubleshooting
 
 ### No Benchmarks Showing
+
 - ✅ Verify data exists: `SELECT * FROM benchmark_data WHERE is_active = true;`
 - ✅ Check RLS policies allow public read access
 - ✅ Verify API endpoint is working: `/api/benchmarks?state=NSW`
 - ✅ Check browser console for errors
 
 ### Import Errors
+
 - ✅ Verify CSV format matches template
 - ✅ Check all required fields are present
 - ✅ Ensure state codes are valid (NSW, VIC, QLD, etc.)
 - ✅ Verify numeric values are within valid ranges
 
 ### Data Not Updating
+
 - ✅ Check if records exist (might need UPDATE instead of INSERT)
 - ✅ Verify unique constraint is working correctly
 - ✅ Check admin permissions
@@ -234,16 +255,16 @@ WHERE state = 'NSW' AND suburb_name IS NULL;
 
 ## Current Seed Data Summary
 
-| State | Gross Yield | Net Yield | 5yr Growth | 10yr Growth | Notes |
-|-------|-------------|-----------|------------|-------------|-------|
-| NSW | 3.20% | 2.50% | 5.50% | 5.80% | Sydney metro 2.8-3.5%, regional 4-6% |
-| VIC | 3.40% | 2.60% | 5.20% | 5.50% | Melbourne metro 3.0-3.8%, regional 4-5.5% |
-| QLD | 4.50% | 3.50% | 4.80% | 5.00% | Brisbane metro 4.0-5.0%, regional 5-7% |
-| WA | 4.20% | 3.30% | 3.50% | 3.80% | Perth metro 3.8-4.8%, regional 5-7% |
-| SA | 4.10% | 3.20% | 4.50% | 4.70% | Adelaide metro 3.8-4.5%, regional 5-6% |
-| TAS | 4.80% | 3.70% | 5.20% | 5.40% | Hobart metro 4.5-5.2%, regional 5-7% |
-| ACT | 3.80% | 2.90% | 5.00% | 5.20% | Strong rental demand |
-| NT | 5.50% | 4.30% | 2.50% | 2.80% | Higher yields, lower growth |
+| State | Gross Yield | Net Yield | 5yr Growth | 10yr Growth | Notes                                     |
+| ----- | ----------- | --------- | ---------- | ----------- | ----------------------------------------- |
+| NSW   | 3.20%       | 2.50%     | 5.50%      | 5.80%       | Sydney metro 2.8-3.5%, regional 4-6%      |
+| VIC   | 3.40%       | 2.60%     | 5.20%      | 5.50%       | Melbourne metro 3.0-3.8%, regional 4-5.5% |
+| QLD   | 4.50%       | 3.50%     | 4.80%      | 5.00%       | Brisbane metro 4.0-5.0%, regional 5-7%    |
+| WA    | 4.20%       | 3.30%     | 3.50%      | 3.80%       | Perth metro 3.8-4.8%, regional 5-7%       |
+| SA    | 4.10%       | 3.20%     | 4.50%      | 4.70%       | Adelaide metro 3.8-4.5%, regional 5-6%    |
+| TAS   | 4.80%       | 3.70%     | 5.20%      | 5.40%       | Hobart metro 4.5-5.2%, regional 5-7%      |
+| ACT   | 3.80%       | 2.90%     | 5.00%      | 5.20%       | Strong rental demand                      |
+| NT    | 5.50%       | 4.30%     | 2.50%      | 2.80%       | Higher yields, lower growth               |
 
 ---
 
@@ -270,10 +291,10 @@ After populating the benchmark data:
 ## Support
 
 If you encounter issues:
+
 1. Check the troubleshooting section above
 2. Verify database connection and RLS policies
 3. Check admin permissions
 4. Review API endpoint logs
 
 For questions or data updates, refer to the main documentation or contact the development team.
-

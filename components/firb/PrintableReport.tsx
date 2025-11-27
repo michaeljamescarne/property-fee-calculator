@@ -3,20 +3,20 @@
  * Browser-print friendly version of the FIRB analysis report
  */
 
-'use client';
+"use client";
 
-import React from 'react';
-import { useTranslations } from 'next-intl';
-import { formatCurrency, formatDate } from '@/lib/utils/format';
-import { EligibilityResult } from '@/lib/firb/eligibility';
-import { CostBreakdown } from '@/lib/firb/calculations';
-import type { InvestmentAnalytics } from '@/types/investment';
-import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
-import EligibilityResultCard from './EligibilityResultCard';
-import InvestmentSummary from './InvestmentSummary';
-import SensitivityAnalysis from './SensitivityAnalysis';
-import TaxAnalysis from './TaxAnalysis';
-import InvestmentScore from './InvestmentScore';
+import React from "react";
+import { useTranslations } from "next-intl";
+import { formatCurrency, formatDate } from "@/lib/utils/format";
+import { EligibilityResult } from "@/lib/firb/eligibility";
+import { CostBreakdown } from "@/lib/firb/calculations";
+import type { InvestmentAnalytics } from "@/types/investment";
+import type { FIRBCalculatorFormData } from "@/lib/validations/firb";
+import EligibilityResultCard from "./EligibilityResultCard";
+import InvestmentSummary from "./InvestmentSummary";
+import SensitivityAnalysis from "./SensitivityAnalysis";
+import TaxAnalysis from "./TaxAnalysis";
+import InvestmentScore from "./InvestmentScore";
 
 interface PrintableReportProps {
   eligibility: EligibilityResult;
@@ -29,9 +29,9 @@ export default function PrintableReport({
   eligibility,
   costs,
   formData,
-  analytics
+  analytics,
 }: PrintableReportProps) {
-  const t = useTranslations('FIRBCalculator.results');
+  const t = useTranslations("FIRBCalculator.results");
 
   // Add a state to track if we're in print mode
   const [isPrintMode, setIsPrintMode] = React.useState(false);
@@ -41,85 +41,97 @@ export default function PrintableReport({
     const handleBeforePrint = () => setIsPrintMode(true);
     const handleAfterPrint = () => setIsPrintMode(false);
 
-    window.addEventListener('beforeprint', handleBeforePrint);
-    window.addEventListener('afterprint', handleAfterPrint);
+    window.addEventListener("beforeprint", handleBeforePrint);
+    window.addEventListener("afterprint", handleAfterPrint);
 
     return () => {
-      window.removeEventListener('beforeprint', handleBeforePrint);
-      window.removeEventListener('afterprint', handleAfterPrint);
+      window.removeEventListener("beforeprint", handleBeforePrint);
+      window.removeEventListener("afterprint", handleAfterPrint);
     };
   }, []);
 
   const costSections = [
     {
-      title: 'Upfront Costs',
+      title: "Upfront Costs",
       items: [
         {
-          label: 'FIRB Fee',
+          label: "FIRB Fee",
           amount: costs.upfrontCosts?.firbFee || 0,
-          description: 'Foreign Investment Review Board application fee'
+          description: "Foreign Investment Review Board application fee",
         },
         {
-          label: 'Stamp Duty',
+          label: "Stamp Duty",
           amount: costs.upfrontCosts?.stampDuty || 0,
-          description: 'State government transfer duty'
+          description: "State government transfer duty",
         },
         {
-          label: 'Foreign Buyer Surcharge',
+          label: "Foreign Buyer Surcharge",
           amount: costs.upfrontCosts?.foreignSurcharge || 0,
-          description: 'Additional surcharge for foreign buyers'
+          description: "Additional surcharge for foreign buyers",
         },
         {
-          label: 'Legal Fees',
+          label: "Legal Fees",
           amount: costs.upfrontCosts?.legalFees || 0,
-          description: 'Conveyancing and legal costs'
+          description: "Conveyancing and legal costs",
         },
         {
-          label: 'Inspection Fees',
+          label: "Inspection Fees",
           amount: costs.upfrontCosts?.inspectionFees || 0,
-          description: 'Building and pest inspections'
+          description: "Building and pest inspections",
         },
         {
-          label: 'Loan Costs',
+          label: "Loan Costs",
           amount: costs.upfrontCosts?.loanCosts || 0,
-          description: 'Loan establishment fees'
-        }
-      ]
+          description: "Loan establishment fees",
+        },
+      ],
     },
     {
-      title: 'Ongoing Costs',
+      title: "Ongoing Costs",
       items: [
         {
-          label: 'Land Tax',
+          label: "Land Tax",
           amount: costs.ongoingCosts?.annualLandTax || 0,
-          description: 'Annual land tax assessment'
+          description: "Annual land tax assessment",
         },
         {
-          label: 'Council Rates',
+          label: "Council Rates",
           amount: costs.ongoingCosts?.councilRates || 0,
-          description: 'Local government rates'
+          description: "Local government rates",
         },
         {
-          label: 'Insurance',
+          label: "Insurance",
           amount: costs.ongoingCosts?.insurance || 0,
-          description: 'Property and landlord insurance'
+          description: "Property and landlord insurance",
         },
         {
-          label: 'Maintenance',
+          label: "Maintenance",
           amount: costs.ongoingCosts?.maintenance || 0,
-          description: 'Property maintenance and repairs'
+          description: "Property maintenance and repairs",
         },
         {
-          label: 'Vacancy Fee',
+          label: "Vacancy Fee",
           amount: costs.ongoingCosts?.vacancyFee || 0,
-          description: 'Annual vacancy fee (if applicable)'
-        }
-      ]
-    }
+          description: "Annual vacancy fee (if applicable)",
+        },
+      ],
+    },
   ];
 
   return (
-    <div className="print-container p-12 pt-16" style={{ position: 'absolute', top: 0, left: 0, width: '210mm', minHeight: '297mm', zIndex: -1, opacity: 0.01, pointerEvents: 'none' }}>
+    <div
+      className="print-container p-12 pt-16"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "210mm",
+        minHeight: "297mm",
+        zIndex: -1,
+        opacity: 0.01,
+        pointerEvents: "none",
+      }}
+    >
       <style jsx>{`
         @media print {
           .print-container {
@@ -134,11 +146,11 @@ export default function PrintableReport({
             pointer-events: auto !important;
             display: block !important;
           }
-          
+
           .print-page-break {
             page-break-before: always;
           }
-          
+
           .print-avoid-break {
             page-break-inside: avoid;
           }
@@ -148,14 +160,12 @@ export default function PrintableReport({
       {/* Cover Page */}
       <div className="print-avoid-break">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-6">
-            FIRB Investment Analysis Report
-          </h1>
+          <h1 className="text-4xl font-bold mb-6">FIRB Investment Analysis Report</h1>
           <p className="text-xl text-muted-foreground mb-4">
             Comprehensive Property Investment Analysis
           </p>
           <p className="text-sm text-muted-foreground">
-            Generated on {formatDate(new Date(), 'en-AU')}
+            Generated on {formatDate(new Date(), "en-AU")}
           </p>
         </div>
 
@@ -202,7 +212,7 @@ export default function PrintableReport({
       {/* Cost Breakdown */}
       <div className="print-page-break mt-16">
         <h2 className="text-2xl font-bold mb-6">Cost Breakdown</h2>
-        
+
         {/* Total Investment */}
         <div className="mb-8 p-6 border rounded-lg bg-muted">
           <div className="flex justify-between items-center">
@@ -220,7 +230,10 @@ export default function PrintableReport({
             <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
             <div className="space-y-4">
               {section.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-start p-4 border rounded">
+                <div
+                  key={itemIndex}
+                  className="flex justify-between items-start p-4 border rounded"
+                >
                   <div>
                     <p className="font-medium">{item.label}</p>
                     <p className="text-sm text-muted-foreground">{item.description}</p>
@@ -232,9 +245,7 @@ export default function PrintableReport({
                 <div className="flex justify-between items-center pt-3 border-t font-semibold">
                   <span>Subtotal</span>
                   <span>
-                    {formatCurrency(
-                      section.items.reduce((sum, item) => sum + item.amount, 0)
-                    )}
+                    {formatCurrency(section.items.reduce((sum, item) => sum + item.amount, 0))}
                   </span>
                 </div>
               )}
@@ -292,18 +303,18 @@ export default function PrintableReport({
         <h2 className="text-2xl font-bold mb-6">Important Disclaimer</h2>
         <div className="p-8 border rounded-lg">
           <p className="text-sm mb-4">
-            This calculator provides estimates only and should not be considered financial or legal advice. 
-            Actual costs may vary. FIRB regulations are subject to change. We strongly recommend consulting 
-            with qualified professionals including lawyers, accountants, and FIRB specialists before making 
-            any property investment decisions.
+            This calculator provides estimates only and should not be considered financial or legal
+            advice. Actual costs may vary. FIRB regulations are subject to change. We strongly
+            recommend consulting with qualified professionals including lawyers, accountants, and
+            FIRB specialists before making any property investment decisions.
           </p>
           <p className="text-xs text-muted-foreground">
-            This report is for informational purposes only and does not constitute financial, investment, or legal advice.
-            Please consult with qualified professionals before making any investment decisions.
+            This report is for informational purposes only and does not constitute financial,
+            investment, or legal advice. Please consult with qualified professionals before making
+            any investment decisions.
           </p>
         </div>
       </div>
     </div>
   );
 }
-

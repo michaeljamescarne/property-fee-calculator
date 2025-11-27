@@ -3,10 +3,10 @@
  * Server-side endpoint for eligibility and cost calculations
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { firbCalculatorSchema } from '@/lib/validations/firb';
-import { performFullEligibilityCheck } from '@/lib/firb/eligibility';
-import { calculateCompleteCostBreakdown, CalculationInput } from '@/lib/firb/calculations';
+import { NextRequest, NextResponse } from "next/server";
+import { firbCalculatorSchema } from "@/lib/validations/firb";
+import { performFullEligibilityCheck } from "@/lib/firb/eligibility";
+import { calculateCompleteCostBreakdown, CalculationInput } from "@/lib/firb/calculations";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,12 +14,12 @@ export async function POST(request: NextRequest) {
 
     // Validate request body
     const validation = firbCalculatorSchema.safeParse(body);
-    
+
     if (!validation.success) {
       return NextResponse.json(
-        { 
-          error: 'Validation failed',
-          details: validation.error.issues 
+        {
+          error: "Validation failed",
+          details: validation.error.issues,
         },
         { status: 400 }
       );
@@ -44,9 +44,9 @@ export async function POST(request: NextRequest) {
       state: data.state,
       isFirstHome: data.isFirstHome || false,
       depositPercent: data.depositPercent || 20,
-      entityType: data.entityType || 'individual',
+      entityType: data.entityType || "individual",
       isOrdinarilyResident: data.isOrdinarilyResident,
-      expeditedFIRB: data.expeditedFIRB || false
+      expeditedFIRB: data.expeditedFIRB || false,
     };
 
     const costs = calculateCompleteCostBreakdown(calculationInput);
@@ -54,16 +54,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       eligibility,
-      costs
+      costs,
     });
-
   } catch (error) {
-    console.error('FIRB calculation error:', error);
-    
+    console.error("FIRB calculation error:", error);
+
     return NextResponse.json(
-      { 
-        error: 'Calculation failed',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      {
+        error: "Calculation failed",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
@@ -72,9 +71,5 @@ export async function POST(request: NextRequest) {
 
 // Handle GET requests (not allowed)
 export async function GET() {
-  return NextResponse.json(
-    { error: 'Method not allowed. Use POST.' },
-    { status: 405 }
-  );
+  return NextResponse.json({ error: "Method not allowed. Use POST." }, { status: 405 });
 }
-

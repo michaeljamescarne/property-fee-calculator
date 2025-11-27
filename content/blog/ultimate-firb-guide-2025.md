@@ -12,6 +12,7 @@ tags:
 ---
 
 <!-- Updated spacing fix -->
+
 Thinking about investing in Australian property as a foreign buyer? Understanding FIRB (Foreign Investment Review Board) requirements isn't just recommended—it's mandatory. This comprehensive guide breaks down everything you need to know about FIRB approval, fees, and compliance in 2025.
 
 ## **What is FIRB and Why Does It Matter?**
@@ -77,6 +78,7 @@ Previously, temporary residents could buy one established dwelling to live in wh
 **After the Ban Ends (Post-March 2027)**
 
 Historical rules will likely resume:
+
 - Established dwellings can only be purchased as your primary residence
 - The property must be sold when it's no longer your main home
 - You cannot rent the property to others while you own it
@@ -84,7 +86,8 @@ Historical rules will likely resume:
 ### Vacant Land
 
 **Approval Status:** Required for foreign persons  
-**Key Conditions:** 
+**Key Conditions:**
+
 - Construction must begin within **24 months** of purchase
 - All construction must be completed within **4 years** of approval
 - The land cannot be sold until construction is finished
@@ -96,6 +99,7 @@ These timelines are strictly enforced, with the government cracking down on "lan
 Application fees are indexed annually and vary significantly based on property type and value. Here's what you'll pay for applications from July 1, 2025 to June 30, 2026:
 
 ### New Dwellings & Vacant Land Fees
+
 <table class="w-full border-collapse border border-gray-300 mb-6">
   <thead>
     <tr class="bg-gray-50">
@@ -151,9 +155,12 @@ Application fees are indexed annually and vary significantly based on property t
   </tbody>
 </table>
 
-*For the complete fee schedule including all price points, visit the <a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATO website</a>.*
+_For the complete fee schedule including all price points, visit the <a href="https://www.ato.gov.au/individuals-and-families/investments-and-assets/foreign-resident-investments/foreign-investment-in-australia/fees-for-foreign-residential-investors" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATO website</a>._
+
 ### Established Dwellings Fees (Tripled Rates)
+
 ⚠️ **Note:** While established dwellings are banned during April 2025–March 2027, these tripled fees apply to exceptional circumstances and will apply again after the ban ends:
+
 <table class="w-full border-collapse border border-gray-300 mb-6">
   <thead>
     <tr class="bg-gray-50">
@@ -212,6 +219,7 @@ The tripling of established dwelling fees reflects the government's policy to en
 **Expedited Processing:** You can pay double the standard fee for 10-day priority processing (subject to approval).
 
 **Variation Fees:** If you need to modify an existing approval:
+
 - Simple variation: $4,500
 - Complex variation: $30,300
 
@@ -222,6 +230,7 @@ The tripling of established dwelling fees reflects the government's policy to en
 ### Step 1: Determine Your Eligibility
 
 Start by using the <a href="https://www.propertycosts.com.au/en/firb-calculator" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">FIRB Calculator on PropertyCosts.com.au</a> to:
+
 - Confirm whether you need approval
 - Calculate your exact application fee
 - Understand applicable conditions
@@ -254,6 +263,7 @@ Applications for residential property are submitted through the <a href="https:/
 The Treasury and FIRB typically assess applications within **30 days**, though this can be extended if additional information is needed or if the application raises national interest concerns.
 
 You'll receive either:
+
 - A **no objection notification** with conditions
 - A request for more information
 - In rare cases, a rejection
@@ -303,6 +313,7 @@ As of 2025, civil penalties for breaching FIRB regulations can include:
 - **Corporations:** Up to $16.5 million (50,000 penalty units)
 
 Common civil penalty offenses include:
+
 - Failing to obtain FIRB approval before purchasing
 - Breaching conditions of your approval
 - Making false or misleading statements in your application
@@ -317,6 +328,7 @@ Serious breaches can result in criminal prosecution:
 - **Criminal record:** Affecting future visa applications and business opportunities
 
 Criminal charges typically apply to:
+
 - Willful violations of FIRB requirements
 - Fraud or deliberate misrepresentation
 - Repeated non-compliance after warnings
@@ -465,11 +477,12 @@ Understanding FIRB is complex, but getting started doesn't have to be. The <a hr
 
 Understanding FIRB requirements is your first step toward successful property investment in Australia. With proper planning, professional guidance, and the right tools, navigating the FIRB process becomes manageable—setting you up for a compliant and rewarding investment experience.
 
-*This guide is for informational purposes only and does not constitute legal or financial advice. FIRB regulations are complex and change frequently. Always seek professional advice for your specific situation.*
+_This guide is for informational purposes only and does not constitute legal or financial advice. FIRB regulations are complex and change frequently. Always seek professional advice for your specific situation._
 
 ---
 
 **Related Resources:**
+
 - <a href="https://foreigninvestment.gov.au/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">FIRB Official Website</a>
 - <a href="https://www.ato.gov.au/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATO Foreign Investment Portal</a>
 - <a href="https://www.propertycosts.com.au/en/firb-calculator" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">PropertyCosts FIRB Calculator</a>

@@ -1,506 +1,519 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FIRB Calculator Interface - Screenshot Mockup</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-            line-height: 1.5;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #f8fafc;
+        color: #1e293b;
+        line-height: 1.5;
+      }
 
+      .calculator {
+        max-width: 900px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        padding: 32px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .header p {
+        font-size: 16px;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 32px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .form-section {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.2s ease;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .form-select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        background: white;
+        cursor: pointer;
+      }
+
+      .form-select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .form-textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .form-textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .checkbox {
+        width: 16px;
+        height: 16px;
+        accent-color: #3b82f6;
+      }
+
+      .checkbox-label {
+        font-size: 14px;
+        color: #374151;
+        cursor: pointer;
+      }
+
+      .help-text {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 4px;
+      }
+
+      .quick-estimate {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border: 1px solid #bbf7d0;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 32px;
+      }
+
+      .estimate-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #059669;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .estimate-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+
+      .estimate-item {
+        text-align: center;
+        padding: 16px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #d1fae5;
+      }
+
+      .estimate-label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #059669;
+        margin-bottom: 8px;
+      }
+
+      .estimate-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #047857;
+      }
+
+      .action-section {
+        text-align: center;
+        padding: 24px;
+        background: #f8fafc;
+        border-radius: 12px;
+      }
+
+      .btn {
+        padding: 16px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: #3b82f6;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: white;
+        color: #3b82f6;
+        border: 1px solid #3b82f6;
+        margin-left: 12px;
+      }
+
+      .btn-secondary:hover {
+        background: #f8fafc;
+      }
+
+      .progress-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+
+      .progress-step {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e2e8f0;
+      }
+
+      .progress-step.active {
+        background: #3b82f6;
+      }
+
+      .progress-step.completed {
+        background: #10b981;
+      }
+
+      @media (max-width: 768px) {
         .calculator {
-            max-width: 900px;
-            margin: 40px auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+          margin: 20px;
         }
 
         .header {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
-            padding: 32px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
+          padding: 24px;
         }
 
         .content {
-            padding: 32px;
+          padding: 24px;
         }
 
         .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .form-section {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 24px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.2s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
-            background: white;
-            cursor: pointer;
-        }
-
-        .form-select:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-textarea:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .checkbox {
-            width: 16px;
-            height: 16px;
-            accent-color: #3b82f6;
-        }
-
-        .checkbox-label {
-            font-size: 14px;
-            color: #374151;
-            cursor: pointer;
-        }
-
-        .help-text {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 4px;
-        }
-
-        .quick-estimate {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border: 1px solid #bbf7d0;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-
-        .estimate-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #059669;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+          grid-template-columns: 1fr;
         }
 
         .estimate-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .estimate-item {
-            text-align: center;
-            padding: 16px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #d1fae5;
-        }
-
-        .estimate-label {
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #059669;
-            margin-bottom: 8px;
-        }
-
-        .estimate-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #047857;
-        }
-
-        .action-section {
-            text-align: center;
-            padding: 24px;
-            background: #f8fafc;
-            border-radius: 12px;
-        }
-
-        .btn {
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
+          grid-template-columns: repeat(2, 1fr);
         }
 
         .btn-secondary {
-            background: white;
-            color: #3b82f6;
-            border: 1px solid #3b82f6;
-            margin-left: 12px;
+          margin-left: 0;
+          margin-top: 12px;
         }
-
-        .btn-secondary:hover {
-            background: #f8fafc;
-        }
-
-        .progress-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .progress-step {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #e2e8f0;
-        }
-
-        .progress-step.active {
-            background: #3b82f6;
-        }
-
-        .progress-step.completed {
-            background: #10b981;
-        }
-
-        @media (max-width: 768px) {
-            .calculator {
-                margin: 20px;
-            }
-            
-            .header {
-                padding: 24px;
-            }
-            
-            .content {
-                padding: 24px;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .estimate-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .btn-secondary {
-                margin-left: 0;
-                margin-top: 12px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="calculator">
-        <!-- Header -->
-        <div class="header">
-            <h1>FIRB Fee Calculator</h1>
-            <p>Calculate your Australian property investment costs instantly</p>
+      <!-- Header -->
+      <div class="header">
+        <h1>FIRB Fee Calculator</h1>
+        <p>Calculate your Australian property investment costs instantly</p>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+          <div class="progress-step completed"></div>
+          <div class="progress-step completed"></div>
+          <div class="progress-step active"></div>
+          <div class="progress-step"></div>
         </div>
 
-        <!-- Content -->
-        <div class="content">
-            <!-- Progress Indicator -->
-            <div class="progress-indicator">
-                <div class="progress-step completed"></div>
-                <div class="progress-step completed"></div>
-                <div class="progress-step active"></div>
-                <div class="progress-step"></div>
+        <!-- Quick Estimate -->
+        <div class="quick-estimate">
+          <div class="estimate-title">
+            <span>⚡</span>
+            Quick Estimate
+          </div>
+          <div class="estimate-grid">
+            <div class="estimate-item">
+              <div class="estimate-label">FIRB Fee</div>
+              <div class="estimate-value">$6,350</div>
             </div>
-
-            <!-- Quick Estimate -->
-            <div class="quick-estimate">
-                <div class="estimate-title">
-                    <span>⚡</span>
-                    Quick Estimate
-                </div>
-                <div class="estimate-grid">
-                    <div class="estimate-item">
-                        <div class="estimate-label">FIRB Fee</div>
-                        <div class="estimate-value">$6,350</div>
-                    </div>
-                    <div class="estimate-item">
-                        <div class="estimate-label">Stamp Duty</div>
-                        <div class="estimate-value">$30,000</div>
-                    </div>
-                    <div class="estimate-item">
-                        <div class="estimate-label">Total Costs</div>
-                        <div class="estimate-value">$88,150</div>
-                    </div>
-                </div>
+            <div class="estimate-item">
+              <div class="estimate-label">Stamp Duty</div>
+              <div class="estimate-value">$30,000</div>
             </div>
-
-            <!-- Form Grid -->
-            <div class="form-grid">
-                <!-- Personal Information -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <span>👤</span>
-                        Personal Information
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Citizenship Status</label>
-                        <select class="form-select">
-                            <option value="foreign">Foreign National</option>
-                            <option value="permanent">Permanent Resident</option>
-                            <option value="citizen">Australian Citizen</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Visa Type</label>
-                        <select class="form-select">
-                            <option value="temporary">Temporary Resident</option>
-                            <option value="student">Student Visa</option>
-                            <option value="work">Work Visa</option>
-                            <option value="business">Business Visa</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Country of Origin</label>
-                        <select class="form-select">
-                            <option value="singapore">Singapore</option>
-                            <option value="china">China</option>
-                            <option value="uk">United Kingdom</option>
-                            <option value="usa">United States</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Property Details -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <span>🏠</span>
-                        Property Details
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Property Value (AUD)</label>
-                        <input type="number" class="form-input" value="750000" placeholder="Enter property value">
-                        <div class="help-text">Enter the purchase price of the property</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Property Type</label>
-                        <select class="form-select">
-                            <option value="established">Established Dwelling</option>
-                            <option value="new">New Dwelling</option>
-                            <option value="vacant">Vacant Land</option>
-                            <option value="commercial">Commercial Property</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">State/Territory</label>
-                        <select class="form-select">
-                            <option value="nsw">New South Wales</option>
-                            <option value="vic">Victoria</option>
-                            <option value="qld">Queensland</option>
-                            <option value="wa">Western Australia</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Property Address</label>
-                        <input type="text" class="form-input" value="123 Collins Street, Sydney NSW 2000" placeholder="Enter property address">
-                    </div>
-                </div>
-
-                <!-- Investment Details -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <span>💰</span>
-                        Investment Details
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Investment Purpose</label>
-                        <select class="form-select">
-                            <option value="investment">Investment Property</option>
-                            <option value="primary">Primary Residence</option>
-                            <option value="holiday">Holiday Home</option>
-                            <option value="development">Development</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Loan Amount (AUD)</label>
-                        <input type="number" class="form-input" value="600000" placeholder="Enter loan amount">
-                        <div class="help-text">Leave blank if paying cash</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Deposit Amount (AUD)</label>
-                        <input type="number" class="form-input" value="150000" placeholder="Enter deposit amount">
-                    </div>
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" class="checkbox" id="first-home" checked>
-                        <label class="checkbox-label" for="first-home">First-time property buyer</label>
-                    </div>
-                </div>
-
-                <!-- Additional Information -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <span>📋</span>
-                        Additional Information
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Expected Settlement Date</label>
-                        <input type="date" class="form-input" value="2024-06-15">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Special Requirements</label>
-                        <textarea class="form-textarea" placeholder="Any special circumstances or requirements..."></textarea>
-                    </div>
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" class="checkbox" id="newsletter">
-                        <label class="checkbox-label" for="newsletter">Subscribe to property investment updates</label>
-                    </div>
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" class="checkbox" id="terms" checked>
-                        <label class="checkbox-label" for="terms">I agree to the terms and conditions</label>
-                    </div>
-                </div>
+            <div class="estimate-item">
+              <div class="estimate-label">Total Costs</div>
+              <div class="estimate-value">$88,150</div>
             </div>
-
-            <!-- Action Section -->
-            <div class="action-section">
-                <button class="btn btn-primary">
-                    <span>🚀</span>
-                    Calculate My Investment Costs
-                </button>
-                <button class="btn btn-secondary">
-                    <span>💾</span>
-                    Save Progress
-                </button>
-            </div>
+          </div>
         </div>
+
+        <!-- Form Grid -->
+        <div class="form-grid">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <div class="section-title">
+              <span>👤</span>
+              Personal Information
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Citizenship Status</label>
+              <select class="form-select">
+                <option value="foreign">Foreign National</option>
+                <option value="permanent">Permanent Resident</option>
+                <option value="citizen">Australian Citizen</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Visa Type</label>
+              <select class="form-select">
+                <option value="temporary">Temporary Resident</option>
+                <option value="student">Student Visa</option>
+                <option value="work">Work Visa</option>
+                <option value="business">Business Visa</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Country of Origin</label>
+              <select class="form-select">
+                <option value="singapore">Singapore</option>
+                <option value="china">China</option>
+                <option value="uk">United Kingdom</option>
+                <option value="usa">United States</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Property Details -->
+          <div class="form-section">
+            <div class="section-title">
+              <span>🏠</span>
+              Property Details
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Property Value (AUD)</label>
+              <input
+                type="number"
+                class="form-input"
+                value="750000"
+                placeholder="Enter property value"
+              />
+              <div class="help-text">Enter the purchase price of the property</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Property Type</label>
+              <select class="form-select">
+                <option value="established">Established Dwelling</option>
+                <option value="new">New Dwelling</option>
+                <option value="vacant">Vacant Land</option>
+                <option value="commercial">Commercial Property</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">State/Territory</label>
+              <select class="form-select">
+                <option value="nsw">New South Wales</option>
+                <option value="vic">Victoria</option>
+                <option value="qld">Queensland</option>
+                <option value="wa">Western Australia</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Property Address</label>
+              <input
+                type="text"
+                class="form-input"
+                value="123 Collins Street, Sydney NSW 2000"
+                placeholder="Enter property address"
+              />
+            </div>
+          </div>
+
+          <!-- Investment Details -->
+          <div class="form-section">
+            <div class="section-title">
+              <span>💰</span>
+              Investment Details
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Investment Purpose</label>
+              <select class="form-select">
+                <option value="investment">Investment Property</option>
+                <option value="primary">Primary Residence</option>
+                <option value="holiday">Holiday Home</option>
+                <option value="development">Development</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Loan Amount (AUD)</label>
+              <input
+                type="number"
+                class="form-input"
+                value="600000"
+                placeholder="Enter loan amount"
+              />
+              <div class="help-text">Leave blank if paying cash</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Deposit Amount (AUD)</label>
+              <input
+                type="number"
+                class="form-input"
+                value="150000"
+                placeholder="Enter deposit amount"
+              />
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" class="checkbox" id="first-home" checked />
+              <label class="checkbox-label" for="first-home">First-time property buyer</label>
+            </div>
+          </div>
+
+          <!-- Additional Information -->
+          <div class="form-section">
+            <div class="section-title">
+              <span>📋</span>
+              Additional Information
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Expected Settlement Date</label>
+              <input type="date" class="form-input" value="2024-06-15" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Special Requirements</label>
+              <textarea
+                class="form-textarea"
+                placeholder="Any special circumstances or requirements..."
+              ></textarea>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" class="checkbox" id="newsletter" />
+              <label class="checkbox-label" for="newsletter"
+                >Subscribe to property investment updates</label
+              >
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" class="checkbox" id="terms" checked />
+              <label class="checkbox-label" for="terms">I agree to the terms and conditions</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Section -->
+        <div class="action-section">
+          <button class="btn btn-primary">
+            <span>🚀</span>
+            Calculate My Investment Costs
+          </button>
+          <button class="btn btn-secondary">
+            <span>💾</span>
+            Save Progress
+          </button>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

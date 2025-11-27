@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     // Insert lead
     const { data, error } = await supabase
       .from("leads")
-      .insert({ email: email.toLowerCase().trim() })
+      .insert({ email: email.toLowerCase().trim() } as never)
       .select()
       .single();
 
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
 // Optional: GET endpoint for admins to view leads (protected)
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = createServiceRoleClient();
 
     // Check if user is authenticated and is admin
     const {
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
       .eq("id", user.id)
       .single();
 
-    if (userError || userData?.role !== "admin") {
+    if (userError || (userData as { role?: string } | null)?.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

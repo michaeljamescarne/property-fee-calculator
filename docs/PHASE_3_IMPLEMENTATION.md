@@ -3,6 +3,7 @@
 ## Current Status
 
 ### ✅ Already Implemented
+
 - FIRB Calculator wizard (Citizenship → Property → Review → Results)
 - Eligibility checking
 - Cost breakdown calculations
@@ -11,6 +12,7 @@
 - PDF generation
 
 ### ❌ Missing for Phase 3
+
 1. **Step 3: Financial Details** in wizard flow
 2. **Optimal Use Case Analysis** (long-term vs short-stay)
 3. **Integration** of financial inputs into wizard
@@ -26,6 +28,7 @@ Citizenship → Property → Review → Results
 Citizenship → Property → **Financial Details** → Review → Results
 
 **Steps:**
+
 1. Create `FinancialDetailsStep.tsx` component
 2. Update wizard navigation logic
 3. Update progress indicator (5 steps instead of 4)
@@ -34,6 +37,7 @@ Citizenship → Property → **Financial Details** → Review → Results
 ### Task 2: Build Optimal Use Case Analysis
 
 **Components Needed:**
+
 1. `lib/firb/optimal-use-case.ts` - Calculation logic
 2. `components/firb/OptimalUseCaseSection.tsx` - Display component
 3. API endpoint for short-stay regulations lookup
@@ -42,6 +46,7 @@ Citizenship → Property → **Financial Details** → Review → Results
 ### Task 3: Enhance Results Dashboard
 
 **Add:**
+
 - Optimal use case comparison section
 - Enhanced investment quality display
 - Better integration of all sections
@@ -55,4 +60,3 @@ Citizenship → Property → **Financial Details** → Review → Results
 ## Next Action
 
 Start with Task 1: Create Financial Details Step component.
-

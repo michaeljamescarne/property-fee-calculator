@@ -3,7 +3,9 @@
 ## How to Update Blog Posts Without Formatting Issues
 
 ### The Problem We Solved
+
 Previously, when updating blog posts, we had to manually convert:
+
 - Markdown tables to HTML tables
 - Markdown links to HTML links
 - Ensure consistent formatting
@@ -17,6 +19,7 @@ I've created a `blogContentProcessor.ts` utility that automatically handles all 
 ### How to Use It
 
 #### Step 1: Create Your Content in Markdown
+
 Create your blog post content in a `.md` file with proper markdown syntax:
 
 ```markdown
@@ -31,7 +34,7 @@ Your content here...
 ### Subsection
 
 | Column 1 | Column 2 |
-|----------|----------|
+| -------- | -------- |
 | Data 1   | Data 2   |
 | Data 3   | Data 4   |
 
@@ -39,15 +42,17 @@ More content with [links](https://example.com) and **bold text**.
 ```
 
 **IMPORTANT SPACING RULES:**
+
 - **No blank lines before tables** - Tables should appear directly after headings or text
 - **One blank line between sections** - Use single blank lines for paragraph breaks
 - **Avoid multiple consecutive blank lines** - This creates excessive white space
 
 #### Step 2: Process the Content
+
 Use the blog content processor to convert it:
 
 ```typescript
-import { createBlogPost } from '@/lib/blogContentProcessor';
+import { createBlogPost } from "@/lib/blogContentProcessor";
 
 const markdownContent = `
 # Your Blog Post Title
@@ -69,24 +74,25 @@ More content with [links](https://example.com) and **bold text**.
 `;
 
 const blogPost = createBlogPost(
-  'your-slug',
-  'Your Blog Post Title',
-  'Your excerpt...',
-  '2025-01-15',
-  '12 min read',
-  'Category',
+  "your-slug",
+  "Your Blog Post Title",
+  "Your excerpt...",
+  "2025-01-15",
+  "12 min read",
+  "Category",
   true,
-  ['tag1', 'tag2'],
+  ["tag1", "tag2"],
   markdownContent
 );
 ```
 
 #### Step 3: Add to Blog Posts
+
 Add the processed blog post to your `blogPosts` object in `page.tsx`:
 
 ```typescript
 const blogPosts: Record<string, BlogPost> = {
-  'your-slug': blogPost,
+  "your-slug": blogPost,
   // ... other blog posts
 };
 ```
@@ -135,6 +141,7 @@ When you want to update any blog post:
 4. **Consistent results** every time
 
 This system ensures that your blog posts will always have:
+
 - Properly formatted tables
 - Correctly styled links
 - Consistent typography

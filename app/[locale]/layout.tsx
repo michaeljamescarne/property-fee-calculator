@@ -45,16 +45,16 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  
+
   // Ensure locale is valid, fallback to 'en'
-  const validLocale = locale && ['en', 'zh'].includes(locale) ? locale : 'en';
-  
+  const validLocale = locale && ["en", "zh"].includes(locale) ? locale : "en";
+
   // Load messages directly
   const messages = await import(`../../messages/${validLocale}.json`);
 

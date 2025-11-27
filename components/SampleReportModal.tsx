@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Download, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
-import { useLocale } from 'next-intl';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Download, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 interface SampleReportModalProps {
   isOpen: boolean;
@@ -16,7 +16,7 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
 
   const handleDownloadSample = () => {
     // TODO: Implement actual sample PDF download
-    console.log('Downloading sample PDF...');
+    console.log("Downloading sample PDF...");
   };
 
   return (
@@ -30,7 +30,7 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
             See what you&apos;ll receive after completing your calculation
           </p>
         </DialogHeader>
-        
+
         <div className="space-y-6">
           {/* Sample Report Preview */}
           <div className="border rounded-lg overflow-hidden bg-muted/20">
@@ -41,7 +41,8 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
                 </div>
                 <h4 className="text-xl font-bold mb-2">Comprehensive Investment Report</h4>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Your personalized 7-page analysis includes eligibility status, cost breakdown, and 10-year investment projections.
+                  Your personalized 7-page analysis includes eligibility status, cost breakdown, and
+                  10-year investment projections.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="bg-white/50 rounded p-2 flex justify-between">
@@ -60,24 +61,15 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
               </div>
             </div>
           </div>
-          
+
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button 
-              onClick={handleDownloadSample}
-              className="flex-1"
-              size="lg"
-            >
+            <Button onClick={handleDownloadSample} className="flex-1" size="lg">
               <Download className="w-4 h-4 mr-2" />
               Download Sample PDF
             </Button>
             <Link href={`/${locale}/firb-calculator`} className="flex-1">
-              <Button 
-                variant="outline" 
-                className="w-full"
-                size="lg"
-                onClick={onClose}
-              >
+              <Button variant="outline" className="w-full" size="lg" onClick={onClose}>
                 <ArrowRight className="w-4 h-4 mr-2" />
                 Start My Calculation
               </Button>
@@ -86,7 +78,9 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
 
           {/* Features List */}
           <div className="bg-blue-50 rounded-lg p-6">
-            <h4 className="font-semibold mb-4 text-blue-900">What&apos;s Included in Your Report:</h4>
+            <h4 className="font-semibold mb-4 text-blue-900">
+              What&apos;s Included in Your Report:
+            </h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">

@@ -4,7 +4,8 @@
 
 This document outlines the step-by-step implementation plan for building the comprehensive Property Investment Analysis Platform as specified in the PRD. This will be a **fresh implementation** that replaces the existing FIRB calculator while preserving its core functionality.
 
-> **Related Documents**: 
+> **Related Documents**:
+>
 > - [Product Requirements Document](./PRODUCT_REQUIREMENTS_DOCUMENT.md)
 > - [Style Guide](./STYLE_GUIDE.md) - Design system and styling
 > - [Development Guidelines](./DEVELOPMENT_GUIDELINES.md) - **Development workflow, testing, and deployment process**
@@ -18,6 +19,7 @@ This document outlines the step-by-step implementation plan for building the com
 **Decision**: Start fresh with a new repository/project structure
 
 **Recommended Approach**:
+
 - Create new repository: `property-investment-platform` (or similar)
 - Clean slate implementation
 - Import/adapt code from existing FIRB calculator where applicable
@@ -28,6 +30,7 @@ This document outlines the step-by-step implementation plan for building the com
 Based on PRD and existing codebase:
 
 **Frontend**:
+
 - Next.js 15 (App Router) - ✅ Confirmed
 - React 18+
 - TypeScript
@@ -36,17 +39,21 @@ Based on PRD and existing codebase:
 - next-intl (i18n - English, Chinese)
 
 **Backend**:
+
 - Next.js API Routes
 - Server Actions (where applicable)
 
 **Database**:
+
 - Supabase (PostgreSQL)
 - Row Level Security (RLS)
 
 **Authentication**:
+
 - Supabase Auth
 
 **Other Services**:
+
 - Resend (Email)
 - PDF Generation (jsPDF or server-side alternative)
 
@@ -166,6 +173,7 @@ property-investment-platform/
 **Goal**: Set up project infrastructure and core systems
 
 #### Tasks:
+
 1. **Project Initialization**
    - [ ] Create new repository
    - [ ] Set up Next.js project with TypeScript
@@ -195,6 +203,7 @@ property-investment-platform/
 **Goal**: Build the public-facing website to generate demand and collect leads before calculator launch
 
 #### Tasks:
+
 1. **Homepage Development**
    - [ ] Build hero section with value proposition
    - [ ] Create features section (3 main features)
@@ -251,7 +260,7 @@ property-investment-platform/
    - [ ] Add thank you page/confirmation message
    - [ ] Export leads to CRM (manual or API integration)
 
-8. **SEO & Performance**
+7. **SEO & Performance**
    - [ ] Optimize all pages for SEO
    - [ ] Add structured data (Schema.org)
    - [ ] Create XML sitemap
@@ -260,22 +269,23 @@ property-investment-platform/
    - [ ] Ensure <3s page load times
    - [ ] Set up analytics (Google Analytics)
 
-9. **Multi-Language Content**
+8. **Multi-Language Content**
    - [ ] Translate homepage content
    - [ ] Translate FAQ content
    - [ ] Translate legal pages
    - [ ] Create initial blog posts (English and Chinese)
    - [ ] Ensure all UI elements are translated
 
-10. **Accessibility & Responsive Design**
-    - [ ] Ensure WCAG 2.1 AA compliance
-    - [ ] Test on mobile, tablet, desktop
-    - [ ] Implement keyboard navigation
-    - [ ] Add screen reader support
+9. **Accessibility & Responsive Design**
+   - [ ] Ensure WCAG 2.1 AA compliance
+   - [ ] Test on mobile, tablet, desktop
+   - [ ] Implement keyboard navigation
+   - [ ] Add screen reader support
 
 **Deliverable**: Fully functional public website with lead capture, ready for marketing and demand generation
 
 **Key Features**:
+
 - Professional homepage showcasing platform value
 - Blog system for content marketing
 - FAQ system for user education
@@ -291,6 +301,7 @@ property-investment-platform/
 **Goal**: Set up user authentication system for when calculator launches
 
 #### Tasks:
+
 1. **Database Setup (Complete)**
    - [ ] Create user accounts table (Supabase Auth handles this)
    - [ ] Create calculations table (for saved calculations)
@@ -317,6 +328,7 @@ property-investment-platform/
 **Goal**: Build the essential calculator functionality (P0 features)
 
 #### Tasks:
+
 1. **Import Existing Calculator Code**
    - [ ] Port FIRB calculation logic from existing project
    - [ ] Port cost breakdown calculation logic
@@ -374,6 +386,7 @@ property-investment-platform/
 **Goal**: Implement state/suburb benchmark data system (P1)
 
 #### Tasks:
+
 1. **Database & API**
    - [ ] Verify benchmark_data table schema
    - [ ] Create API endpoints for benchmark lookups
@@ -408,6 +421,7 @@ property-investment-platform/
 **Goal**: Implement short-stay regulations database (P1)
 
 #### Tasks:
+
 1. **Database & API**
    - [ ] Verify short_stay_regulations table schema
    - [ ] Create API endpoints for regulation lookups
@@ -441,6 +455,7 @@ property-investment-platform/
 **Goal**: Build long-term rental vs short-stay comparison (P1)
 
 #### Tasks:
+
 1. **Calculation Engine**
    - [ ] Build long-term rental income model
    - [ ] Build short-stay income model (with occupancy rates)
@@ -469,6 +484,7 @@ property-investment-platform/
 **Goal**: Complete investment quality analysis and sensitivity analysis (P1)
 
 #### Tasks:
+
 1. **Sensitivity Analysis**
    - [ ] Build vacancy rate impact scenarios (3-4)
    - [ ] Build interest rate impact scenarios (3-4)
@@ -496,6 +512,7 @@ property-investment-platform/
 **Goal**: Finalize MVP and prepare for launch
 
 #### Tasks:
+
 1. **Launch Preparation**
    - [ ] UI/UX polish
    - [ ] Responsive design testing
@@ -540,6 +557,7 @@ property-investment-platform/
 ### 3.1 From Existing FIRB Calculator
 
 **What to Port**:
+
 - ✅ FIRB calculation logic (`lib/firb/calculations.ts`)
 - ✅ Eligibility checking (`lib/firb/eligibility.ts`)
 - ✅ Cost breakdown calculations (`lib/firb/calculations.ts`)
@@ -548,11 +566,13 @@ property-investment-platform/
 - ✅ Type definitions (`types/investment.ts`, `types/database.ts`)
 
 **What to Adapt**:
+
 - 🔄 Calculator wizard UI (rebuild with new structure)
 - 🔄 Results display (enhance with new features)
 - 🔄 API routes (restructure for new architecture)
 
 **What to Build New**:
+
 - 🆕 Benchmark data system
 - 🆕 Short-stay regulations system
 - 🆕 Optimal use case comparison
@@ -600,6 +620,7 @@ CREATE INDEX idx_leads_created_at ON leads(created_at);
 ### 4.2 Future Database Schema (Phases 2+)
 
 Follow the PRD database schemas:
+
 - User accounts and authentication (Phase 2)
 - `calculations` table (store comprehensive results)
 - `short_stay_regulations` table (Section 13.1)
@@ -610,6 +631,7 @@ Follow the PRD database schemas:
 **Decision**: Existing FIRB calculator data can be archived or migrated
 
 **Options**:
+
 1. **Archive**: Keep existing database for historical reference
 2. **Migrate**: Export existing calculations and import to new system (if needed)
 
@@ -656,18 +678,21 @@ Each feature must follow this workflow:
 ### 5.3 Testing Strategy
 
 **Unit Tests** (Required):
+
 - All calculation functions (minimum 80% coverage)
 - Data validation functions
 - Utility functions
 - Custom hooks
 
 **Integration Tests** (Required for critical flows):
+
 - API endpoints
 - Database operations
 - Authentication flows
 - Calculator workflow
 
 **E2E Tests** (Required for key user journeys):
+
 - Complete calculator flow
 - Multi-language switching
 - PDF generation
@@ -678,6 +703,7 @@ Each feature must follow this workflow:
 ### 5.4 Code Quality Standards
 
 **Required**:
+
 - TypeScript strict mode enabled
 - ESLint configuration (no errors)
 - Prettier formatting (auto-format on save)
@@ -693,15 +719,18 @@ Each feature must follow this workflow:
 ### 6.1 Environments
 
 **Development**:
+
 - Local development with Supabase local or dev instance
 - Hot reloading
 
 **Staging**:
+
 - Production-like environment
 - Test data
 - Beta user testing
 
 **Production**:
+
 - Vercel (or similar) for Next.js
 - Supabase production instance
 - Monitoring and analytics
@@ -761,6 +790,7 @@ Each feature must follow this workflow:
 ### 7.2 Launch Readiness Checklist
 
 **Code Quality**:
+
 - [ ] All P0 features implemented and tested
 - [ ] All P1 features implemented and tested
 - [ ] All tests passing (unit, integration, E2E)
@@ -770,6 +800,7 @@ Each feature must follow this workflow:
 - [ ] Security audit passed
 
 **Functionality**:
+
 - [ ] Calculation accuracy verified (100%)
 - [ ] PDF generation working
 - [ ] Multi-language support (English, Chinese)
@@ -778,24 +809,28 @@ Each feature must follow this workflow:
 - [ ] Lead capture functional
 
 **Data & Infrastructure**:
+
 - [ ] Database populated with initial data
 - [ ] All migrations applied
 - [ ] Environment variables configured
 - [ ] Monitoring configured
 
 **Performance**:
+
 - [ ] Performance targets met (<2s calculation, <5s PDF)
 - [ ] Web Vitals meet targets (LCP < 2.5s, FID < 100ms)
 - [ ] Mobile performance acceptable
 - [ ] Load testing completed
 
 **Documentation**:
+
 - [ ] Legal disclaimers included
 - [ ] User documentation complete
 - [ ] API documentation complete
 - [ ] Development guidelines followed
 
 **Testing**:
+
 - [ ] Beta testing completed
 - [ ] Staging environment verified
 - [ ] Rollback plan documented
@@ -808,6 +843,7 @@ Each feature must follow this workflow:
 ## 8. Post-Launch (v1.1+)
 
 After MVP launch, continue with:
+
 - P2 features (see PRD Section 10)
 - Payment processing
 - API integrations
@@ -820,7 +856,7 @@ After MVP launch, continue with:
 
 ### 9.1 Technical Decisions
 
-1. **PDF Generation**: 
+1. **PDF Generation**:
    - **Recommendation**: Start with client-side (jsPDF) for MVP
    - Consider server-side for v1.1 if performance issues
 
@@ -835,6 +871,7 @@ After MVP launch, continue with:
 ### 9.2 Team Structure
 
 **Recommended Roles**:
+
 - 1-2 Full-stack developers
 - 1 Designer (UI/UX)
 - 1 Product manager
@@ -843,10 +880,12 @@ After MVP launch, continue with:
 ### 9.3 Timeline Summary
 
 **Public Website First (Weeks 1-3)**:
+
 - **Phase 0**: 1 week (Foundation setup)
 - **Phase 1**: 2 weeks (Public website + lead capture)
 
 **Calculator Development (Weeks 4-15)**:
+
 - **Phase 2**: 1 week (Authentication)
 - **Phase 3**: 3 weeks (Core calculator)
 - **Phase 4**: 2 weeks (Benchmark data)
@@ -855,6 +894,7 @@ After MVP launch, continue with:
 - **Phase 7**: 2 weeks (Enhanced analytics)
 
 **Launch Preparation (Weeks 16-17)**:
+
 - **Phase 8**: 2 weeks (Polish, testing, lead notification)
 
 **Total**: ~17 weeks (~4 months) to MVP launch
@@ -902,4 +942,3 @@ After MVP launch, continue with:
 **Created**: January 2025  
 **Status**: Ready for Review  
 **Owner**: Development Team
-

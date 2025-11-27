@@ -3,20 +3,20 @@
  * Inline prompt to encourage users to login
  */
 
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Lock, Save } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Lock, Save } from "lucide-react";
 
 interface AuthPromptProps {
   onLoginClick: () => void;
   message?: string;
 }
 
-export default function AuthPrompt({ 
-  onLoginClick, 
-  message = 'Login to save this calculation and access it later'
+export default function AuthPrompt({
+  onLoginClick,
+  message = "Login to save this calculation and access it later",
 }: AuthPromptProps) {
   return (
     <Card className="border-2 border-primary/20 bg-primary/5">
@@ -29,12 +29,8 @@ export default function AuthPrompt({
           </div>
           <div className="flex-1 space-y-3">
             <div>
-              <h4 className="font-semibold text-foreground mb-1">
-                Save Your Calculation
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                {message}
-              </p>
+              <h4 className="font-semibold text-foreground mb-1">Save Your Calculation</h4>
+              <p className="text-sm text-muted-foreground">{message}</p>
             </div>
             <Button onClick={onLoginClick} size="sm">
               <Save className="mr-2 h-4 w-4" />
@@ -46,16 +42,3 @@ export default function AuthPrompt({
     </Card>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

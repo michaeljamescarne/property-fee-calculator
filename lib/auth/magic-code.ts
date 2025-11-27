@@ -3,7 +3,7 @@
  * Generate and validate 6-digit OTP codes
  */
 
-import { createHash } from 'crypto';
+import { createHash } from "crypto";
 
 /**
  * Generate a random 6-digit code
@@ -16,7 +16,7 @@ export function generateCode(): string {
  * Hash a code for secure storage
  */
 export function hashCode(code: string): string {
-  return createHash('sha256').update(code).digest('hex');
+  return createHash("sha256").update(code).digest("hex");
 }
 
 /**
@@ -62,29 +62,16 @@ export function isValidCodeFormat(code: string): boolean {
 export function getRateLimitWait(attempts: { timestamp: number }[]): number {
   const now = Date.now();
   const tenMinutesAgo = now - 10 * 60 * 1000;
-  
+
   // Filter recent attempts (within last 10 minutes)
-  const recentAttempts = attempts.filter(a => a.timestamp > tenMinutesAgo);
-  
+  const recentAttempts = attempts.filter((a) => a.timestamp > tenMinutesAgo);
+
   // Max 3 attempts per 10 minutes
   if (recentAttempts.length >= 3) {
-    const oldestAttempt = Math.min(...recentAttempts.map(a => a.timestamp));
+    const oldestAttempt = Math.min(...recentAttempts.map((a) => a.timestamp));
     const waitUntil = oldestAttempt + 10 * 60 * 1000;
     return Math.ceil((waitUntil - now) / 1000);
   }
-  
+
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

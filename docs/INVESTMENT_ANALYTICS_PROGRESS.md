@@ -11,19 +11,23 @@
 ### What's Been Built
 
 #### 1. Calculation Engine (3 files)
+
 - ✅ `lib/firb/investment-analytics.ts` - Main analytics calculator
 - ✅ `lib/firb/loan-calculator.ts` - Mortgage calculations
 - ✅ `lib/firb/tax-calculator.ts` - Tax deductions and CGT
 
 #### 2. Type Definitions
+
 - ✅ `types/investment.ts` - Complete TypeScript interfaces
 
 #### 3. UI Components (3 files)
+
 - ✅ `components/firb/MetricCard.tsx` - Reusable metric display
 - ✅ `components/firb/InvestmentInputs.tsx` - Parameter input form
 - ✅ `components/firb/InvestmentSummary.tsx` - Key metrics dashboard
 
 #### 4. Dependencies
+
 - ✅ Recharts 2.12.0 installed
 - ✅ React-number-format 5.3.0 installed
 
@@ -32,6 +36,7 @@
 ## 📊 Calculations Implemented
 
 ### Rental Yield
+
 - ✅ Gross rental yield calculation
 - ✅ Net rental yield calculation
 - ✅ State-by-state benchmarks (NSW 3.2%, VIC 3.4%, etc.)
@@ -39,6 +44,7 @@
 - ✅ Rent growth projections
 
 ### Cash Flow Analysis
+
 - ✅ Annual income calculations
 - ✅ Monthly cash flow breakdown
 - ✅ Property management fees
@@ -47,12 +53,14 @@
 - ✅ Tax benefit calculations
 
 ### ROI Metrics
+
 - ✅ Total ROI over hold period
 - ✅ Annualized ROI
 - ✅ Cash-on-cash return
 - ✅ Total return (dollar amount)
 
 ### Loan Calculations
+
 - ✅ Principal & Interest repayments
 - ✅ Interest-only repayments
 - ✅ Loan schedule (year-by-year balance)
@@ -61,12 +69,14 @@
 - ✅ Equity buildup over time
 
 ### Capital Growth
+
 - ✅ Future value projections
 - ✅ Total appreciation
 - ✅ Percentage gain
 - ✅ Multiple growth scenarios (4%, 6%, 8%)
 
 ### Tax Analysis
+
 - ✅ Deductible expenses breakdown
 - ✅ Negative gearing tax benefits
 - ✅ Annual tax savings
@@ -75,6 +85,7 @@
 - ✅ Withholding tax computation
 
 ### Investment Comparisons
+
 - ✅ ASX 200 stocks (7.2% historical)
 - ✅ Term deposits (4%)
 - ✅ Government bonds (4.5%)
@@ -82,12 +93,14 @@
 - ✅ Side-by-side 10-year comparison
 
 ### Sensitivity Analysis
+
 - ✅ Vacancy rate scenarios (0%, 5%, 10%, 15%)
 - ✅ Interest rate scenarios (5.5%, 6.5%, 7.5%, 8.5%)
 - ✅ Growth rate scenarios (Conservative, Moderate, Optimistic)
 - ✅ Impact calculations for each scenario
 
 ### Investment Scoring
+
 - ✅ Rental yield score (0-10)
 - ✅ Capital growth score (0-10)
 - ✅ Cash flow score (0-10)
@@ -96,6 +109,7 @@
 - ✅ Overall weighted score
 
 ### Recommendations
+
 - ✅ Investment verdict (Excellent/Good/Moderate/Poor)
 - ✅ Strengths identification
 - ✅ Weaknesses identification
@@ -104,6 +118,7 @@
 - ✅ Key takeaways
 
 ### Break-Even Analysis
+
 - ✅ Years to positive cash flow
 - ✅ Years to cumulative break-even
 - ✅ Total cash required (negative periods)
@@ -113,12 +128,14 @@
 ## 🚧 Phase 2-7: REMAINING WORK
 
 ### Phase 2: Chart Visualizations (Not Started)
+
 - ⏳ Cash Flow Bar Chart (income vs expenses)
 - ⏳ 10-Year Projection Line Chart (value, equity, loan)
 - ⏳ Investment Comparison Bar Chart
 - ⏳ Expense Breakdown Pie/Donut Chart
 
 ### Phase 3: Detailed Analysis Components (Not Started)
+
 - ⏳ CashFlowAnalysis.tsx - Detailed breakdown component
 - ⏳ ProjectionChart.tsx - Year-by-year visualization
 - ⏳ InvestmentComparison.tsx - Comparison display
@@ -127,6 +144,7 @@
 - ⏳ InvestmentScore.tsx - Score visualization with gauges
 
 ### Phase 4: Integration (Not Started)
+
 - ⏳ Update ResultsPanel to include investment analytics
 - ⏳ Add toggle/expand for analytics section
 - ⏳ Wire up investment inputs to analytics
@@ -134,6 +152,7 @@
 - ⏳ State management for inputs
 
 ### Phase 5: PDF Enhancement (Not Started)
+
 - ⏳ Expand to 7-page report
 - ⏳ Add investment analytics sections
 - ⏳ Include charts as tables/images
@@ -141,12 +160,14 @@
 - ⏳ Executive summary page
 
 ### Phase 6: Translations (Not Started)
+
 - ⏳ English labels and descriptions
 - ⏳ Chinese translations
 - ⏳ Currency formatting
 - ⏳ Number localization
 
 ### Phase 7: Testing & Polish (Not Started)
+
 - ⏳ Accuracy verification
 - ⏳ Edge case handling
 - ⏳ Mobile responsive testing
@@ -158,18 +179,20 @@
 ## 📈 Smart Defaults Implemented
 
 ### State-Based Rental Yields
+
 | State | Gross Yield | Example $850k Property |
-|-------|-------------|------------------------|
-| NSW | 3.2% | $520/week |
-| VIC | 3.4% | $553/week |
-| QLD | 4.5% | $735/week |
-| WA | 4.2% | $686/week |
-| SA | 4.1% | $669/week |
-| TAS | 4.8% | $784/week |
-| ACT | 3.8% | $620/week |
-| NT | 5.5% | $898/week |
+| ----- | ----------- | ---------------------- |
+| NSW   | 3.2%        | $520/week              |
+| VIC   | 3.4%        | $553/week              |
+| QLD   | 4.5%        | $735/week              |
+| WA    | 4.2%        | $686/week              |
+| SA    | 4.1%        | $669/week              |
+| TAS   | 4.8%        | $784/week              |
+| ACT   | 3.8%        | $620/week              |
+| NT    | 5.5%        | $898/week              |
 
 ### Market Assumptions
+
 - **Interest Rate**: 6.5% (investment loan standard)
 - **Loan Term**: 30 years (most common)
 - **Vacancy Rate**: 5% (industry average)
@@ -184,6 +207,7 @@
 ## 🎯 Key Features Ready
 
 ### Calculations
+
 - ✅ Handles Principal & Interest loans
 - ✅ Handles Interest-Only loans
 - ✅ Supports mixed IO→P&I transitions
@@ -194,6 +218,7 @@
 - ✅ Currency conversion ready
 
 ### Intelligence
+
 - ✅ Auto-estimates rent by state
 - ✅ Compares to market benchmarks
 - ✅ Identifies strengths/weaknesses
@@ -207,16 +232,16 @@
 
 ### Estimated Effort Remaining
 
-| Phase | Effort | Status |
-|-------|--------|--------|
-| Phase 1: Infrastructure | 20 hours | ✅ DONE |
-| Phase 2: Charts | 12 hours | ⏳ TODO |
-| Phase 3: UI Components | 16 hours | ⏳ TODO |
-| Phase 4: Integration | 10 hours | ⏳ TODO |
-| Phase 5: PDF Enhancement | 12 hours | ⏳ TODO |
-| Phase 6: Translations | 8 hours | ⏳ TODO |
-| Phase 7: Testing & Polish | 12 hours | ⏳ TODO |
-| **Total** | **90 hours** | **22% Complete** |
+| Phase                     | Effort       | Status           |
+| ------------------------- | ------------ | ---------------- |
+| Phase 1: Infrastructure   | 20 hours     | ✅ DONE          |
+| Phase 2: Charts           | 12 hours     | ⏳ TODO          |
+| Phase 3: UI Components    | 16 hours     | ⏳ TODO          |
+| Phase 4: Integration      | 10 hours     | ⏳ TODO          |
+| Phase 5: PDF Enhancement  | 12 hours     | ⏳ TODO          |
+| Phase 6: Translations     | 8 hours      | ⏳ TODO          |
+| Phase 7: Testing & Polish | 12 hours     | ⏳ TODO          |
+| **Total**                 | **90 hours** | **22% Complete** |
 
 ---
 
@@ -267,6 +292,7 @@
 ### Where Analytics Will Appear
 
 **In ResultsPanel**:
+
 ```tsx
 {/* Existing: Eligibility + Basic Costs */}
 <EligibilitySection />
@@ -297,6 +323,7 @@
 ## 📊 Sample Output (When Complete)
 
 ### Investment Summary Cards
+
 ```
 [Gross Rental Yield]     [Net Rental Yield]
      4.8%                      2.1%
@@ -310,6 +337,7 @@ Beats ASX (7.2%)         Tax benefit: $703/mo
 ```
 
 ### Year 10 Projection
+
 ```
 Property Value:  $1,432,000 (+68%)
 Loan Balance:    $550,000
@@ -318,6 +346,7 @@ Cumulative ROI:  76.5%
 ```
 
 ### Verdict
+
 ```
 GOOD INVESTMENT (7.2/10)
 
@@ -384,6 +413,7 @@ Suitable For:
 ## 💡 Current Status Summary
 
 ### ✅ What Works Now
+
 - Complete calculation engine
 - All investment metrics calculated
 - Smart defaults by state
@@ -391,12 +421,14 @@ Suitable For:
 - Build successful
 
 ### ⏳ What's Not Visible Yet
+
 - Charts not created yet
 - Not integrated into Results Panel
 - PDF not enhanced yet
 - No UI for users to see analytics
 
 ### 🎯 Next Priority
+
 Create the chart components and complete the UI integration so users can actually see and interact with the analytics.
 
 ---
@@ -420,6 +452,7 @@ Create the chart components and complete the UI integration so users can actuall
 ## 🚀 Estimated Completion
 
 At current pace:
+
 - **Phase 1** (Infrastructure): ✅ Complete (20 hours)
 - **Phase 2-7** (UI & Integration): ⏳ Remaining (~70 hours)
 - **Total Timeline**: 2-3 weeks with focused effort
@@ -433,17 +466,3 @@ C) Test the foundation
 D) Something else
 
 Let me know how you'd like to proceed! 🚀
-
-
-
-
-
-
-
-
-
-
-
-
-
-

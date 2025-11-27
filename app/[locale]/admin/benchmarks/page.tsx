@@ -3,10 +3,10 @@
  * CRUD interface for managing benchmark data
  */
 
-import { redirect } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
-import { requireAdmin } from '@/lib/auth/admin';
-import BenchmarksAdminClient from '@/components/admin/BenchmarksAdminClient';
+import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { requireAdmin } from "@/lib/auth/admin";
+import BenchmarksAdminClient from "@/components/admin/BenchmarksAdminClient";
 
 export default async function AdminBenchmarksPage({
   params,
@@ -14,8 +14,8 @@ export default async function AdminBenchmarksPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations('Admin');
-  
+  const t = await getTranslations("Admin");
+
   // Require admin access
   await requireAdmin(locale);
 
@@ -24,10 +24,11 @@ export default async function AdminBenchmarksPage({
       {/* Header */}
       <div>
         <h1 className="text-4xl font-bold mb-2">
-          {t('benchmarks.title') || 'Benchmark Data Management'}
+          {t("benchmarks.title") || "Benchmark Data Management"}
         </h1>
         <p className="text-lg text-muted-foreground">
-          {t('benchmarks.description') || 'Manage rental yield and capital growth benchmarks by state and suburb'}
+          {t("benchmarks.description") ||
+            "Manage rental yield and capital growth benchmarks by state and suburb"}
         </p>
       </div>
 
@@ -36,4 +37,3 @@ export default async function AdminBenchmarksPage({
     </div>
   );
 }
-

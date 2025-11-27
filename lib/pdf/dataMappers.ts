@@ -3,10 +3,10 @@
  * Transforms application data structures into PDF template format
  */
 
-import type { InvestmentAnalytics } from '@/types/investment';
-import type { EligibilityResult } from '@/lib/firb/eligibility';
-import type { CostBreakdown } from '@/lib/firb/calculations';
-import type { FIRBCalculatorFormData } from '@/lib/validations/firb';
+import type { InvestmentAnalytics } from "@/types/investment";
+import type { EligibilityResult } from "@/lib/firb/eligibility";
+import type { CostBreakdown } from "@/lib/firb/calculations";
+import type { FIRBCalculatorFormData } from "@/lib/validations/firb";
 
 /**
  * PDF Report Data Structure
@@ -125,39 +125,39 @@ export function mapAnalyticsToPDFData(
   analytics: InvestmentAnalytics
 ): PDFReportData {
   // Extract property details
-  const propertyAddress = formData.propertyAddress || 'Property Address Not Provided';
+  const propertyAddress = formData.propertyAddress || "Property Address Not Provided";
   const propertyValue = formData.propertyValue || 0;
-  const propertyType = formData.propertyType || 'newDwelling';
-  const state = formData.state || 'NSW';
-  const citizenshipStatus = formData.citizenshipStatus || 'foreign';
-  const visaType = formData.visaType || 'N/A';
-  const entityType = formData.entityType || 'individual';
+  const propertyType = formData.propertyType || "newDwelling";
+  const state = formData.state || "NSW";
+  const citizenshipStatus = formData.citizenshipStatus || "foreign";
+  const visaType = formData.visaType || "N/A";
+  const entityType = formData.entityType || "individual";
 
   // Map property type to readable string
   const propertyTypeMap: Record<string, string> = {
-    newDwelling: 'New Dwelling',
-    established: 'Established Dwelling',
-    vacantLand: 'Vacant Land',
-    commercial: 'Commercial Property'
+    newDwelling: "New Dwelling",
+    established: "Established Dwelling",
+    vacantLand: "Vacant Land",
+    commercial: "Commercial Property",
   };
 
   // Map citizenship status to readable string
   const citizenshipMap: Record<string, string> = {
-    australian: 'Australian Citizen',
-    permanent: 'Permanent Resident',
-    temporary: 'Temporary Resident',
-    foreign: 'Foreign Person'
+    australian: "Australian Citizen",
+    permanent: "Permanent Resident",
+    temporary: "Temporary Resident",
+    foreign: "Foreign Person",
   };
 
   // Map entity type to readable string
   const entityMap: Record<string, string> = {
-    individual: 'Individual',
-    company: 'Company',
-    trust: 'Trust'
+    individual: "Individual",
+    company: "Company",
+    trust: "Trust",
   };
 
   // Calculate additional upfront costs
-  const additionalUpfront = 
+  const additionalUpfront =
     costs.upfrontCosts.firbFee +
     costs.upfrontCosts.stampDuty +
     costs.upfrontCosts.foreignSurcharge +
@@ -178,52 +178,52 @@ export function mapAnalyticsToPDFData(
   // Calculate sensitivity scenarios
   const baseCashFlow = analytics.cashFlow.annual.afterTaxCashFlow;
   const baseRent = analytics.cashFlow.annual.effectiveIncome;
-  
-  const vacancyImpact = [0, 5, 10, 15].map(rate => {
+
+  const vacancyImpact = [0, 5, 10, 15].map((rate) => {
     const adjustedRent = analytics.rentalYield.annualRent * (1 - rate / 100);
     const rentDiff = adjustedRent - baseRent;
     const adjustedCashFlow = baseCashFlow + rentDiff;
-    
+
     return {
       rate,
       rent: adjustedRent,
       cashFlow: adjustedCashFlow,
-      impact: adjustedCashFlow - baseCashFlow
+      impact: adjustedCashFlow - baseCashFlow,
     };
   });
 
   // Interest rate sensitivity (current rate from loan metrics)
   const currentRate = 6.5; // Default assumption
   const loanAmount = analytics.loanMetrics.initialLoanAmount;
-  const interestImpact = [5.5, 6.5, 7.5, 8.5].map(rate => {
+  const interestImpact = [5.5, 6.5, 7.5, 8.5].map((rate) => {
     const annualCost = loanAmount * (rate / 100);
     const monthlyCost = annualCost / 12;
-    const impact = annualCost - (loanAmount * (currentRate / 100));
-    
+    const impact = annualCost - loanAmount * (currentRate / 100);
+
     return {
       rate,
       monthly: monthlyCost,
       annual: annualCost,
-      impact
+      impact,
     };
   });
 
   // Growth scenarios
-  const growthScenarios = analytics.sensitivity.growthScenarios.map(scenario => ({
+  const growthScenarios = analytics.sensitivity.growthScenarios.map((scenario) => ({
     scenario: scenario.label,
     rate: scenario.rate,
     finalValue: scenario.valueAtEnd,
     totalReturn: scenario.totalReturn,
-    roi: scenario.annualizedROI
+    roi: scenario.annualizedROI,
   }));
 
   // Map verdict
   const verdictMap: Record<string, string> = {
-    'Excellent': 'Excellent Investment',
-    'Good': 'Good Investment',
-    'Moderate': 'Moderate Investment',
-    'Poor': 'Poor Investment',
-    'Not Recommended': 'Not Recommended'
+    Excellent: "Excellent Investment",
+    Good: "Good Investment",
+    Moderate: "Moderate Investment",
+    Poor: "Poor Investment",
+    "Not Recommended": "Not Recommended",
   };
 
   return {
@@ -231,15 +231,15 @@ export function mapAnalyticsToPDFData(
       address: propertyAddress,
       type: propertyTypeMap[propertyType] || propertyType,
       purchasePrice: propertyValue,
-      propertyValue: propertyValue
+      propertyValue: propertyValue,
     },
     eligibility: {
-      status: eligibility.isEligible ? 'Eligible' : 'Not Eligible',
+      status: eligibility.isEligible ? "Eligible" : "Not Eligible",
       citizenshipStatus: citizenshipMap[citizenshipStatus] || citizenshipStatus,
       visa: visaType,
-      propertyUse: formData.isFirstHome ? 'Primary Residence' : 'Investment Property',
+      propertyUse: formData.isFirstHome ? "Primary Residence" : "Investment Property",
       purchasingEntity: entityMap[entityType] || entityType,
-      stateTerritory: state
+      stateTerritory: state,
     },
     costs: {
       totalInvestment: costs.totalInvestmentCost,
@@ -250,13 +250,13 @@ export function mapAnalyticsToPDFData(
       legalFees: costs.upfrontCosts.legalFees,
       inspectionFees: costs.upfrontCosts.inspectionFees,
       loanEstablishment: costs.upfrontCosts.loanCosts,
-      additionalUpfront: additionalUpfront
+      additionalUpfront: additionalUpfront,
     },
     ongoingCosts: {
       councilRates: costs.ongoingCosts.councilRates,
       insurance: costs.ongoingCosts.insurance,
       maintenance: costs.ongoingCosts.maintenance,
-      total: costs.ongoingCosts.total
+      total: costs.ongoingCosts.total,
     },
     performance: {
       grossYield: analytics.rentalYield.gross,
@@ -266,13 +266,13 @@ export function mapAnalyticsToPDFData(
       effectiveIncome: analytics.cashFlow.annual.effectiveIncome,
       totalExpenses: analytics.cashFlow.annual.totalExpenses,
       monthlyCashFlow: analytics.cashFlow.monthly.netCashFlow,
-      afterTaxCashFlow: analytics.cashFlow.annual.afterTaxCashFlow
+      afterTaxCashFlow: analytics.cashFlow.annual.afterTaxCashFlow,
     },
     taxBenefits: {
       annualSaving: annualTaxSaving,
       monthlyBenefit: monthlyTaxBenefit,
       totalDeductions: totalDeductions,
-      marginalRate: 37 // Default, should come from analytics inputs
+      marginalRate: 37, // Default, should come from analytics inputs
     },
     projection: {
       startingValue: analytics.capitalGrowth.initialValue,
@@ -281,7 +281,7 @@ export function mapAnalyticsToPDFData(
       years: analytics.yearByYear.length,
       equity: finalEquity,
       equityGain: analytics.loanMetrics.equityGain,
-      totalROI: analytics.roi.totalROI
+      totalROI: analytics.roi.totalROI,
     },
     cgt: {
       salePrice: analytics.taxAnalysis.cgtOnExit.salePrice,
@@ -293,12 +293,12 @@ export function mapAnalyticsToPDFData(
       cgtRate: analytics.taxAnalysis.cgtOnExit.cgtRate,
       cgtPayable: analytics.taxAnalysis.cgtOnExit.cgtAmount,
       withholdingTax: analytics.taxAnalysis.cgtOnExit.withholdingTax,
-      netProceeds: analytics.taxAnalysis.cgtOnExit.netProceedsAfterTax
+      netProceeds: analytics.taxAnalysis.cgtOnExit.netProceedsAfterTax,
     },
     sensitivity: {
       vacancyImpact,
       interestImpact,
-      growthScenarios
+      growthScenarios,
     },
     score: {
       overall: analytics.score.overall,
@@ -309,8 +309,7 @@ export function mapAnalyticsToPDFData(
       riskProfile: analytics.score.riskProfile,
       verdict: verdictMap[analytics.recommendation.verdict] || analytics.recommendation.verdict,
       strengths: analytics.recommendation.strengths,
-      weaknesses: analytics.recommendation.weaknesses
-    }
+      weaknesses: analytics.recommendation.weaknesses,
+    },
   };
 }
-

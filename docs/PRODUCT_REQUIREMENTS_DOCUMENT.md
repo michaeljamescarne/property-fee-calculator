@@ -1,6 +1,7 @@
 # Product Requirements Document: Property Investment Analysis Platform
 
-> **Related Documents**: 
+> **Related Documents**:
+>
 > - [Implementation Plan](./IMPLEMENTATION_PLAN.md)
 > - [Style Guide](./STYLE_GUIDE.md) - Design system, colors, typography, and component specifications
 > - [Development Guidelines](./DEVELOPMENT_GUIDELINES.md) - Development workflow, testing, and deployment process
@@ -8,14 +9,17 @@
 ## Executive Summary
 
 ### Product Vision
+
 A comprehensive SaaS platform that helps property investors (Australian and foreign) quickly assess eligibility, understand all acquisition and ongoing costs, evaluate investment quality, and determine optimal property use (long-term rental vs short-stay accommodation) for Australian property investments.
 
 ### Core Value Proposition
+
 **"Advise if an investment property is a good investment and how to use the property to maximize returns"**
 
 The platform provides factual information and analysis (not recommendations) to help investors make informed decisions about Australian property investments.
 
 ### Product Relationship
+
 **This is a NEW comprehensive product that extends the existing FIRB calculator.** The existing FIRB calculator serves as the foundation, and this PRD defines the expanded comprehensive product scope.
 
 ---
@@ -23,7 +27,9 @@ The platform provides factual information and analysis (not recommendations) to 
 ## 1. Product Overview
 
 ### 1.1 Problem Statement
+
 Purchasing investment property in Australia is complex and risky due to:
+
 - **Eligibility Complexity**: Difficult to understand if eligible to purchase a given property (especially for foreign investors)
 - **Cost Transparency**: Hard to understand all acquisition and ongoing costs
 - **Investment Quality**: Challenging to assess if it's a good investment opportunity (potential returns)
@@ -32,17 +38,20 @@ Purchasing investment property in Australia is complex and risky due to:
 ### 1.2 Target Users
 
 #### Primary Users
+
 - **Property Investors** purchasing properties in Australia ONLY
 - **Australian Investors**: Citizens and permanent residents
 - **Foreign Investors**: Temporary residents, foreign nationals, and overseas investors
 
 #### User Personas
+
 1. **First-Time Investor (Australian)**: Needs guidance on eligibility, costs, and investment basics
 2. **Experienced Investor (Australian)**: Wants detailed analysis and comparison tools
 3. **Foreign Investor (Temporary Resident)**: Critical need for FIRB guidance and restrictions understanding
 4. **Foreign Investor (Overseas)**: Requires comprehensive FIRB, costs, and tax implications
 
 #### User Segments
+
 - **Experience Level**: Both first-time and experienced investors
 - **Nationality**: Australian and foreign (with different feature needs)
 - **Property Use Intent**: Owner-occupied, rental, or short-stay accommodation
@@ -50,16 +59,19 @@ Purchasing investment property in Australia is complex and risky due to:
 ### 1.3 Geographic & Property Scope
 
 #### Property Types Supported
+
 - **Residential**: Houses, apartments, townhouses, units
 - **Commercial**: Office, retail, industrial (all types)
 - **Land**: Vacant land, off-the-plan purchases
 - **Special**: New dwellings, established dwellings, off-the-plan
 
 #### Geographic Coverage
+
 - **All Australian States and Territories**: NSW, VIC, QLD, SA, WA, TAS, ACT, NT
 - **All Cities and Suburbs**: Nationwide coverage
 
 #### Price Range
+
 - **MVP Limit**: Properties under $20,000,000 AUD
 - **Future**: May expand beyond this limit
 
@@ -74,16 +86,18 @@ The public-facing website serves as the primary entry point for users, providing
 ### 2.2 Homepage
 
 #### 2.2.1 Purpose
+
 The homepage is the primary landing page that introduces the platform, explains its value proposition, and guides users to start using the calculator.
 
 #### 2.2.2 Key Sections
 
 **Hero Section**:
+
 - **Headline**: Clear value proposition (e.g., "Analyze any investment property in seconds")
 - **Subheading**: Brief description of platform capabilities
 - **Primary CTA**: "Start Analysis" or "Get Started Free" button linking to calculator
 - **Secondary CTA**: "View Sample Report" button
-- **Trust Indicators**: 
+- **Trust Indicators**:
   - "Trusted by X investors"
   - "Free to use"
   - "Results in 30 seconds"
@@ -92,6 +106,7 @@ The homepage is the primary landing page that introduces the platform, explains 
 - **Language Selector**: Prominent language switcher (English/Chinese)
 
 **Features Section**:
+
 - **Feature 1: Instant Eligibility Check**
   - Title: "Check FIRB Eligibility Instantly"
   - Description: Explain eligibility assessment capabilities
@@ -120,16 +135,19 @@ The homepage is the primary landing page that introduces the platform, explains 
     - Market benchmarks comparison
 
 **How It Works Section**:
+
 - Step-by-step process (3-4 steps)
 - Visual flow or numbered steps
 - Clear explanation of user journey
 
 **Fees Required Section**:
+
 - Information about FIRB fees (when required vs not required)
 - Visual distinction between required and not required
 - Links to detailed information
 
 **FIRB Approval Information Section**:
+
 - What is FIRB explanation
 - Timeline information (standard, expedited, complex)
 - Process steps (4-step visual)
@@ -137,12 +155,14 @@ The homepage is the primary landing page that introduces the platform, explains 
 - Penalties and warnings
 
 **Call-to-Action (CTA) Section**:
+
 - Prominent CTA button
 - Compelling headline
 - Clear value proposition
 - Link to calculator
 
 #### 2.2.3 Design Requirements
+
 - Modern, professional design (see Style Guide)
 - Responsive (mobile, tablet, desktop)
 - Fast loading (<3 seconds)
@@ -153,6 +173,7 @@ The homepage is the primary landing page that introduces the platform, explains 
 **Design System**: See `STYLE_GUIDE.md` for complete design specifications, color palette, typography, and component styling based on Attio.com design aesthetic.
 
 #### 2.2.4 SEO Elements
+
 - Structured data (Schema.org markup)
 - Meta tags (title, description, keywords)
 - Open Graph tags for social sharing
@@ -162,6 +183,7 @@ The homepage is the primary landing page that introduces the platform, explains 
 ### 2.3 Navigation
 
 #### 2.3.1 Navigation Structure
+
 - **Logo/Brand**: Clickable logo linking to homepage
 - **Main Navigation Items**:
   - Home
@@ -179,6 +201,7 @@ The homepage is the primary landing page that introduces the platform, explains 
     - Logout
 
 #### 2.3.2 Navigation Behavior
+
 - Sticky navigation (stays visible on scroll)
 - Mobile-responsive hamburger menu
 - Active state indication
@@ -188,11 +211,13 @@ The homepage is the primary landing page that introduces the platform, explains 
 ### 2.4 Blog
 
 #### 2.4.1 Purpose
+
 Provide educational content, market insights, regulatory updates, and investment guidance to attract and retain users.
 
 #### 2.4.2 Blog Structure
 
 **Blog Listing Page** (`/blog`):
+
 - **Header**:
   - Page title: "Property Investment Blog"
   - Brief description
@@ -217,6 +242,7 @@ Provide educational content, market insights, regulatory updates, and investment
 - **Newsletter Signup**: Optional opt-in
 
 **Blog Post Page** (`/blog/[slug]`):
+
 - **Header**:
   - Title
   - Meta information (date, author, read time, category)
@@ -238,6 +264,7 @@ Provide educational content, market insights, regulatory updates, and investment
   - Comments section (optional)
 
 #### 2.4.3 Blog Content Categories
+
 - **FIRB Guides**: FIRB requirements, eligibility, application process
 - **Costs & Fees**: Stamp duty, surcharges, ongoing costs
 - **Investment Guides**: Investment strategies, market analysis
@@ -247,8 +274,9 @@ Provide educational content, market insights, regulatory updates, and investment
 - **How-To Guides**: Step-by-step tutorials
 
 #### 2.4.4 Content Management
+
 - **Content Storage**: Markdown files or CMS
-- **Content Structure**: 
+- **Content Structure**:
   - Front matter (metadata)
   - Markdown content
   - Images/assets
@@ -257,6 +285,7 @@ Provide educational content, market insights, regulatory updates, and investment
 - **Multi-language**: Blog posts in English and Chinese (or translation)
 
 #### 2.4.5 Blog Features
+
 - Search functionality
 - Category filtering
 - Tag system
@@ -269,11 +298,13 @@ Provide educational content, market insights, regulatory updates, and investment
 ### 2.5 FAQ (Frequently Asked Questions)
 
 #### 2.5.1 Purpose
+
 Provide quick answers to common questions, reducing support burden and improving user experience.
 
 #### 2.5.2 FAQ Structure
 
 **FAQ Landing Page** (`/faq`):
+
 - **Header**:
   - Page title: "Frequently Asked Questions"
   - Brief description
@@ -297,6 +328,7 @@ Provide quick answers to common questions, reducing support burden and improving
   - Expand/collapse functionality
 
 **FAQ Question Display**:
+
 - Question title (clickable)
 - Answer content (expandable)
 - Related questions links
@@ -304,6 +336,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - "Contact support" link if not helpful
 
 #### 2.5.3 FAQ Content Requirements
+
 - **Coverage**: All major user questions
 - **Clarity**: Clear, concise answers
 - **Accuracy**: Regularly updated
@@ -312,6 +345,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - **Multi-language**: Full FAQ in English and Chinese
 
 #### 2.5.4 FAQ Features
+
 - Full-text search
 - Category filtering
 - Popular questions highlighting
@@ -326,6 +360,7 @@ Provide quick answers to common questions, reducing support burden and improving
 **Purpose**: Allow registered users to access their account and saved calculations.
 
 **Page Elements**:
+
 - **Header**: "Sign In" or "Login"
 - **Form Fields**:
   - Email address (required)
@@ -342,6 +377,7 @@ Provide quick answers to common questions, reducing support burden and improving
   - Language selector
 
 **Functionality**:
+
 - Email/password validation
 - Error handling (invalid credentials, account locked, etc.)
 - Success redirect to dashboard or previous page
@@ -353,6 +389,7 @@ Provide quick answers to common questions, reducing support burden and improving
 **Purpose**: Allow new users to create accounts.
 
 **Page Elements**:
+
 - **Header**: "Create Account" or "Sign Up"
 - **Form Fields**:
   - Email address (required, validated)
@@ -371,6 +408,7 @@ Provide quick answers to common questions, reducing support burden and improving
   - Security information
 
 **Functionality**:
+
 - Real-time validation
 - Password strength requirements
 - Email format validation
@@ -381,12 +419,14 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 2.6.3 Password Reset Flow
 
 **Forgot Password Page**:
+
 - Email input field
 - "Send Reset Link" button
 - Instructions
 - Back to login link
 
 **Reset Password Page**:
+
 - New password input
 - Confirm password input
 - "Reset Password" button
@@ -396,11 +436,13 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 2.6.4 Email Verification
 
 **Verification Page**:
+
 - Confirmation message
 - "Resend verification email" option
 - Link to login once verified
 
 **Verification Email**:
+
 - Professional email template
 - Clear verification link
 - Expiration notice
@@ -411,6 +453,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 2.7.1 Privacy Policy (`/privacy`)
 
 **Content Requirements**:
+
 - Data collection practices
 - Data usage and storage
 - User rights (GDPR compliance)
@@ -423,6 +466,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 2.7.2 Terms of Service (`/terms`)
 
 **Content Requirements**:
+
 - Service description
 - User obligations
 - Platform rules
@@ -436,6 +480,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 2.7.3 Disclaimer (`/disclaimer`)
 
 **Content Requirements**:
+
 - Not financial advice disclaimer
 - Not legal advice disclaimer
 - Accuracy disclaimers
@@ -449,6 +494,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 2.8.1 Footer Structure
 
 **Columns**:
+
 - **Column 1: Company**
   - Company name/logo
   - Brief description
@@ -473,6 +519,7 @@ Provide quick answers to common questions, reducing support burden and improving
   - Social media links
 
 **Bottom Bar**:
+
 - Copyright notice
 - Language selector
 - Social media icons
@@ -481,6 +528,7 @@ Provide quick answers to common questions, reducing support burden and improving
 ### 2.9 Search Functionality
 
 #### 2.9.1 Global Search
+
 - Search bar in navigation
 - Search across:
   - Blog posts
@@ -491,6 +539,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - Search suggestions/autocomplete
 
 #### 2.9.2 Search Features
+
 - Full-text search
 - Result highlighting
 - Category filtering
@@ -500,12 +549,14 @@ Provide quick answers to common questions, reducing support burden and improving
 ### 2.10 Multi-Language Support
 
 #### 2.10.1 Language Options
+
 - **English**: Primary language
 - **Chinese (Mandarin)**: Secondary language
 - Language selector in navigation
 - URL structure: `/en/` or `/zh/`
 
 #### 2.10.2 Translation Requirements
+
 - All website content translated
 - Blog posts translated (or separate versions)
 - FAQ fully translated
@@ -514,6 +565,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - Email templates translated
 
 #### 2.10.3 Language Detection
+
 - Browser language detection
 - Default to English if unsupported language
 - User preference saved in account
@@ -522,6 +574,7 @@ Provide quick answers to common questions, reducing support burden and improving
 ### 2.11 SEO & Performance
 
 #### 2.11.1 SEO Requirements
+
 - **On-Page SEO**:
   - Optimized title tags
   - Meta descriptions
@@ -542,6 +595,7 @@ Provide quick answers to common questions, reducing support burden and improving
   - Mobile-friendly
 
 #### 2.11.2 Performance Requirements
+
 - **Page Load Speed**: <3 seconds
 - **Core Web Vitals**: Meet Google thresholds
 - **Mobile Performance**: Optimized for mobile devices
@@ -550,6 +604,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - **CDN**: Content delivery network for assets
 
 #### 2.11.3 Analytics & Tracking
+
 - Google Analytics integration
 - User behavior tracking
 - Conversion tracking
@@ -560,6 +615,7 @@ Provide quick answers to common questions, reducing support burden and improving
 ### 2.12 Accessibility
 
 #### 2.12.1 Accessibility Standards
+
 - **WCAG 2.1 Level AA** compliance
 - Keyboard navigation support
 - Screen reader compatibility
@@ -569,6 +625,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - ARIA labels where needed
 
 #### 2.12.2 Accessibility Features
+
 - Skip to content link
 - High contrast mode (optional)
 - Text size adjustment
@@ -578,12 +635,14 @@ Provide quick answers to common questions, reducing support burden and improving
 ### 2.13 Responsive Design
 
 #### 2.13.1 Breakpoints
+
 - **Mobile**: < 768px
 - **Tablet**: 768px - 1024px
 - **Desktop**: > 1024px
 - **Large Desktop**: > 1440px
 
 #### 2.13.2 Mobile Considerations
+
 - Touch-friendly interface
 - Mobile-optimized navigation
 - Simplified layouts for small screens
@@ -597,6 +656,7 @@ Provide quick answers to common questions, reducing support burden and improving
 ### 3.1 Eligibility Assessment
 
 #### 3.1.1 Scope
+
 **Purpose**: Provide factual information about eligibility to purchase specific property types based on citizenship/residency status.
 
 **Important**: The system provides **information only**, not final determinations. Users must seek professional advice.
@@ -604,6 +664,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 3.1.2 Eligibility Factors Analyzed
 
 **✓ FIRB Approval Requirements** (YES - Core Feature)
+
 - Foreign Investment Review Board requirements
 - Visa type impact on eligibility
 - Property type restrictions
@@ -612,17 +673,21 @@ Provide quick answers to common questions, reducing support burden and improving
 - Expedited vs standard processing
 
 **✗ Borrowing Capacity/Finance Approval** (NO - Out of Scope)
+
 - Not included in MVP
 - Users assume they have financing
 
 **✗ Strata/Body Corporate Rules** (NO - Out of Scope)
+
 - Not included in MVP
 - Users must check individually
 
 **✗ Other Regulatory Constraints** (NO - Out of Scope)
+
 - Not included in MVP
 
 #### 3.1.3 Eligibility Output
+
 - Eligibility status (Eligible, Not Eligible, Requires FIRB Approval)
 - Detailed restrictions and explanations
 - FIRB application requirements (if applicable)
@@ -634,6 +699,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 3.2.1 Acquisition Costs
 
 **Government Fees & Taxes**
+
 - FIRB Application Fee (tiered by property value)
   - Standard processing (30 days)
   - Expedited processing (10 days) - premium fee
@@ -648,12 +714,14 @@ Provide quick answers to common questions, reducing support burden and improving
 - Annual Land Tax Surcharge (if applicable)
 
 **Professional Fees**
+
 - Legal & Conveyancing (estimated based on property value)
 - Building & Pest Inspections
 - Land Surveys
 - Loan Establishment Fees (if applicable)
 
 **Additional Costs**
+
 - Deposit amount
 - Loan costs (if borrowing)
 - Other upfront expenses
@@ -661,6 +729,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 3.2.2 Ongoing Costs
 
 **Annual Ongoing Costs**
+
 - Council Rates (user input with default)
 - Land Tax (if applicable)
 - Insurance (building & contents)
@@ -670,11 +739,13 @@ Provide quick answers to common questions, reducing support burden and improving
 - Vacancy Fee (if applicable for foreign investors)
 
 **Loan Costs** (if applicable)
+
 - Monthly loan repayments
 - Interest payments
 - Loan insurance
 
 #### 3.2.3 Cost Breakdown Output
+
 - Total upfront investment required
 - Annual ongoing costs
 - Monthly cash flow impact
@@ -686,6 +757,7 @@ Provide quick answers to common questions, reducing support burden and improving
 #### 3.3.1 Metrics Analyzed
 
 **✓ Rental Yield** (YES)
+
 - Gross rental yield
 - Net rental yield (after expenses)
 - Effective yield (after vacancy)
@@ -693,6 +765,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - Weekly rent input (user-provided, with benchmark suggestions)
 
 **✓ Cash Flow Projections** (YES - FULL in MVP)
+
 - 10-year projections (user-configurable)
 - Monthly and annual cash flow
 - After-tax cash flow
@@ -700,6 +773,7 @@ Provide quick answers to common questions, reducing support burden and improving
 - Break-even analysis
 
 **✓ Capital Growth Projections** (YES)
+
 - Default: State/suburb-specific benchmarks (from database)
 - User can override all defaults
 - 10-year projection
@@ -709,12 +783,14 @@ Provide quick answers to common questions, reducing support burden and improving
 - Scenarios: Conservative, Moderate (state default), Optimistic
 
 **✓ Area Demographics & Growth Indicators** (YES)
+
 - Population growth (if data available)
 - Economic indicators
 - Infrastructure development
 - Market trends
 
 **✓ Alternative Investment Comparison** (YES)
+
 - Bonds (historical average, fixed initially)
 - Equities/ASX (historical average, fixed initially)
 - Term deposits
@@ -722,15 +798,18 @@ Provide quick answers to common questions, reducing support burden and improving
 - Future: API data integration
 
 **✓ Sensitivity Analysis** (YES - FULL in MVP)
+
 - Vacancy rate impact (multiple scenarios)
 - Interest rate impact (multiple scenarios)
 - Capital growth scenarios (Conservative, Moderate, Optimistic)
 
 **✗ Comparable Sales Data** (NO - Not for MVP)
+
 - Manual user input initially
 - Future: API integration (CoreLogic, Domain, etc.)
 
 #### 3.3.2 Investment Analysis Output
+
 - Investment score (0-10) with breakdown
 - Rental yield metrics (with market comparison)
 - Cash flow projections (10-year)
@@ -750,6 +829,7 @@ Provide quick answers to common questions, reducing support burden and improving
 **Analysis Components**:
 
 **✓ Short-Stay Regulations & Restrictions** (YES - Configurable Database)
+
 - **Data Source**: Configurable rules database (manually updated by admins)
 - **Data Lookup**: Based on property address (council/area identification)
 - **Regulation Details**:
@@ -763,18 +843,21 @@ Provide quick answers to common questions, reducing support burden and improving
 - **Fallback**: If no specific regulation found, show general guidance and note that user should verify
 
 **✓ Income Comparison Modeling** (YES)
+
 - Long-term rental income (annual)
 - Short-stay income (annual, considering occupancy rates)
 - Income after management costs
 - Income after regulatory compliance costs
 
 **✓ Management Costs & Effort** (YES)
+
 - Long-term: Property management fees, tenant sourcing, maintenance
 - Short-stay: Platform fees (Airbnb, Booking.com), cleaning, management, compliance
 - Time investment comparison
 - Risk factors (vacancy, damage, regulation changes)
 
 #### 3.4.2 Optimal Use Output
+
 - Income comparison matrix (long-term vs short-stay)
 - Net profit comparison
 - Management complexity comparison
@@ -785,10 +868,13 @@ Provide quick answers to common questions, reducing support burden and improving
 ### 3.5 Offer Calculator (Max Allowable Offer)
 
 #### 3.5.1 Purpose
+
 Help investors determine the maximum price they can offer while still meeting their investment criteria. This reverse calculation allows users to work backwards from their desired returns to determine the highest acceptable purchase price.
 
 #### 3.5.2 Calculation Criteria (User Selectable)
+
 Users can select one or more criteria to calculate maximum offer:
+
 - **Target ROI (%)**: Desired return on investment over hold period
 - **Target Cash Flow**: Desired annual or monthly cash flow (positive or negative)
 - **Target Cap Rate (%)**: Desired capitalization rate
@@ -796,6 +882,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Target Cash-on-Cash Return (%)**: Desired return on cash invested
 
 #### 3.5.3 Calculation Process
+
 1. User selects primary criteria (e.g., "I need 5% ROI")
 2. User enters all other property details (rent, expenses, etc.)
 3. System calculates maximum offer price that meets criteria
@@ -803,6 +890,7 @@ Users can select one or more criteria to calculate maximum offer:
 5. System compares to current list price or user's estimated purchase price
 
 #### 3.5.4 Output
+
 - **Maximum Allowable Offer Price**: The highest price that still meets investment criteria
 - **Deal Score**: Rating (0-10) at different price points showing deal quality
 - **Sensitivity Analysis**: "What if seller asks for $X more?" scenarios
@@ -811,6 +899,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Warning Alerts**: If maximum offer is below market value (deal may not be feasible)
 
 #### 3.5.5 Integration
+
 - Accessible from calculator wizard (alternative calculation mode)
 - Available in results dashboard
 - Included in PDF report
@@ -821,11 +910,13 @@ Users can select one or more criteria to calculate maximum offer:
 ### 3.6 Investment Strategy Modes
 
 #### 3.6.1 Buy & Hold (Rental) - Current Implementation
+
 - Standard long-term rental analysis
 - Existing comprehensive implementation
 - Suitable for traditional rental property investments
 
 #### 3.6.2 Renovate & Hold (P2 - Post-MVP)
+
 - **Purpose**: Analyze properties that require renovation before renting
 - **Inputs Required**:
   - Purchase price
@@ -843,6 +934,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Output**: Similar to BRRRR method but adapted for Australian market context
 
 #### 3.6.3 Renovate & Sell (Flip) (P2 - Post-MVP)
+
 - **Purpose**: Analyze properties purchased for renovation and quick sale
 - **Inputs Required**:
   - Purchase price
@@ -861,6 +953,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Output**: Profit projections, timeline analysis, risk assessment
 
 #### 3.6.4 Development & Subdivision (P2 - Post-MVP)
+
 - **Purpose**: Analyze land development or subdivision projects
 - **Inputs Required**:
   - Land purchase price
@@ -881,17 +974,20 @@ Users can select one or more criteria to calculate maximum offer:
 - **Output**: Development feasibility analysis, timeline projections, profit analysis
 
 #### 3.6.5 Short-Stay Accommodation - Current Implementation
+
 - Existing comprehensive implementation
 - Includes short-stay regulations and compliance
 - Income comparison with long-term rental
 
 #### 3.6.6 Commercial Properties - Current Implementation
+
 - Basic commercial analysis included
 - Can be expanded in future versions
 
 ### 3.7 Property Comparison & Portfolio Management
 
 #### 3.7.1 Property Comparison (P2 - Post-MVP)
+
 - **Purpose**: Compare multiple properties side-by-side to identify the best investment opportunity
 - **Functionality**:
   - Compare 2-4 properties simultaneously
@@ -909,6 +1005,7 @@ Users can select one or more criteria to calculate maximum offer:
   - Export comparison report
 
 #### 3.7.2 Portfolio Management (P2 - Post-MVP)
+
 - **Purpose**: Track and manage multiple property analyses over time
 - **Features**:
   - Save multiple property analyses
@@ -925,6 +1022,7 @@ Users can select one or more criteria to calculate maximum offer:
   - Export portfolio summary report
 
 #### 3.7.3 Use Cases
+
 - **Investors**: Compare multiple properties before making purchase decision
 - **Agents/Brokers**: Present multiple investment options to clients
 - **Portfolio Builders**: Track and manage growing property portfolio
@@ -937,6 +1035,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 4.1 Property Information Input
 
 #### 4.1.1 Property Details (Required)
+
 - **Property Address**: Street, suburb, state, postcode
   - **Option**: "Use example/dummy property" if user doesn't have specific property
 - **Property Type**: House, apartment, townhouse, land, commercial
@@ -945,13 +1044,15 @@ Users can select one or more criteria to calculate maximum offer:
 - **Number of Bathrooms**: (for rental yield estimation)
 
 #### 4.1.2 Optional Property Details
+
 - Property Size (land area, building area) - Not required for MVP
 - Strata Fees: Selector (yes/no) with default value if yes
 
 ### 4.2 User Profile Information
 
 #### 4.2.1 Required User Information
-- **Nationality/Residency Status**: 
+
+- **Nationality/Residency Status**:
   - Australian Citizen
   - Permanent Resident
   - Temporary Resident (with visa type)
@@ -963,6 +1064,7 @@ Users can select one or more criteria to calculate maximum offer:
   - Mixed use
 
 #### 4.2.2 Optional User Information
+
 - Investment goals (not required for MVP)
 - Budget (not required for MVP)
 - Risk tolerance (not required for MVP)
@@ -970,6 +1072,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 4.3 Financial Inputs
 
 #### 4.3.1 Acquisition Financials
+
 - **Purchase Price**: Required
 - **Deposit %**: Default 20%, user can override
 - **First Home Buyer**: Yes/No selector
@@ -980,6 +1083,7 @@ Users can select one or more criteria to calculate maximum offer:
   - Loan term (years)
 
 #### 4.3.2 Rental & Investment Inputs
+
 - **Expected Weekly Rent**: Required (user input)
   - **System Suggestion**: Based on property value and state/suburb benchmark yield
   - User can use suggestion or enter own estimate
@@ -992,6 +1096,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 4.4 Calculation Assumptions & Defaults
 
 #### 4.4.1 Long-Term Rental Yield
+
 - **User Input**: Weekly rent amount (required)
 - **Benchmark Data**: State/Suburb-specific rental yield benchmarks (from database)
   - System calculates expected rent based on property value and benchmark yield
@@ -1000,11 +1105,13 @@ Users can select one or more criteria to calculate maximum offer:
 - **Comparison**: Highlight if user input is above/below market average
 
 #### 4.4.2 Cash Flow Projections
+
 - **Projection Period**: 10 years (default)
 - **Rent Growth**: 3% per annum (default, user override)
 - **Expense Growth**: 3% per annum (default)
 
 #### 4.4.3 Capital Growth Projections
+
 - **Default**: State/Suburb-specific benchmark data (from database)
   - State-level defaults (required for MVP)
   - Suburb-level defaults (if available, otherwise use state)
@@ -1013,6 +1120,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Display**: Show user input vs market benchmark for comparison
 
 #### 4.4.4 Expense Assumptions
+
 - **Rates**: User input with default
 - **Strata**: Yes/no selector with default if yes
 - **Insurance**: 0.25% of property value (default)
@@ -1021,6 +1129,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Loan Interest**: Based on user input or market rate
 
 #### 4.4.5 Alternative Investment Benchmarks (Fixed - MVP)
+
 - **ASX/Equities**: 7-8% annual return (historical average)
 - **Term Deposits**: 4-4.5% annual return
 - **Government Bonds**: 4-4.5% annual return
@@ -1034,6 +1143,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 5.1 Report Formats
 
 #### 5.1.1 Dashboard View (Interactive)
+
 - Real-time calculation results
 - Interactive charts and graphs
 - Expandable sections
@@ -1041,6 +1151,7 @@ Users can select one or more criteria to calculate maximum offer:
 - Save/share capabilities
 
 #### 5.1.2 PDF Report (Downloadable)
+
 - Comprehensive multi-page report
 - Professional branded template
 - All calculations and analysis
@@ -1049,6 +1160,7 @@ Users can select one or more criteria to calculate maximum offer:
 - Print-optimized layout
 
 #### 5.1.3 Marketing Report (P2 - Post-MVP)
+
 - Cleaner, less technical presentation
 - Focus on key highlights and selling points
 - Suitable for presenting to clients, lenders, or partners
@@ -1058,6 +1170,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 5.2 Report Contents
 
 #### 5.2.1 Eligibility Assessment Section
+
 - Eligibility status
 - FIRB requirements (if applicable)
 - Restrictions and explanations
@@ -1065,6 +1178,7 @@ Users can select one or more criteria to calculate maximum offer:
 - Next steps guidance
 
 #### 5.2.2 Investment Cost Breakdown
+
 - Complete upfront cost breakdown
 - Annual ongoing costs
 - Monthly cash flow impact
@@ -1072,6 +1186,7 @@ Users can select one or more criteria to calculate maximum offer:
 - Visual charts and graphs
 
 #### 5.2.3 Financial Projections
+
 - 10-year cash flow projections
 - Rental yield metrics (gross, net, effective)
 - Capital growth projections
@@ -1080,12 +1195,14 @@ Users can select one or more criteria to calculate maximum offer:
 - User inputs vs market benchmarks comparison
 
 #### 5.2.4 Comparison Matrix
+
 - Long-term rental vs short-stay income comparison
 - Management costs comparison
 - Regulatory compliance comparison
 - Risk assessment for each use case
 
 #### 5.2.5 Alternative Investment Comparison
+
 - Property investment vs bonds
 - Property investment vs equities
 - Property investment vs term deposits
@@ -1093,11 +1210,13 @@ Users can select one or more criteria to calculate maximum offer:
 - Annualized return comparison
 
 #### 5.2.6 Sensitivity Analysis
+
 - Vacancy rate impact scenarios
 - Interest rate impact scenarios
 - Capital growth scenarios (Conservative, Moderate, Optimistic)
 
 #### 5.2.7 Regulatory Alerts & Warnings
+
 - FIRB requirements (if applicable)
 - Short-stay restrictions (if applicable)
 - State-specific surcharges
@@ -1105,6 +1224,7 @@ Users can select one or more criteria to calculate maximum offer:
 - Legal disclaimers
 
 #### 5.2.8 Next Steps Guidance (Not Recommendations)
+
 - What to do next (informational)
 - Professional services to consider
 - Documentation required
@@ -1114,12 +1234,14 @@ Users can select one or more criteria to calculate maximum offer:
 ### 5.3 Sample Report Access
 
 #### 5.3.1 Dummy/Sample Report
+
 - **Access**: Available without account creation
 - **Content**: Full report structure with example data
 - **Purpose**: Show users what they'll receive
 - **Limitation**: Not personalized, example data only
 
 #### 5.3.2 Full Report
+
 - **Access**: Requires account creation
 - **Content**: Full personalized analysis with user's data
 - **Payment**: Required for full report (v1.1 - MVP is free/beta)
@@ -1127,6 +1249,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 5.4 Custom Branding & Marketing Reports (P2 - Post-MVP)
 
 #### 5.4.1 Custom Branding Options
+
 - **Purpose**: Allow agents, brokers, and professionals to brand reports with their company identity
 - **Branding Elements**:
   - **Company Logo**: Upload and display company logo on reports
@@ -1140,6 +1263,7 @@ Users can select one or more criteria to calculate maximum offer:
   - Executive summary reports (optional branding)
 
 #### 5.4.2 Marketing Report Features
+
 - **Target Audience**: Clients, lenders, partners, investors
 - **Content Focus**:
   - Key highlights and selling points
@@ -1156,6 +1280,7 @@ Users can select one or more criteria to calculate maximum offer:
   - Shareable online link
 
 #### 5.4.3 Sharing & Distribution
+
 - **Shareable Links**: Generate public or private links to reports
 - **Email Distribution**: Send reports directly to clients via email
 - **Download Options**: PDF download with custom branding
@@ -1163,6 +1288,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Analytics**: Track report views and engagement (optional)
 
 #### 5.4.4 Use Cases
+
 - **Real Estate Agents**: Present investment properties to potential buyers
 - **Property Brokers**: Showcase investment opportunities to clients
 - **Investment Advisors**: Share analysis with clients
@@ -1176,6 +1302,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 6.1 Account Requirements
 
 #### 5.1.1 Account Creation
+
 - **Required For**: Full report generation
 - **Required For**: Saving calculations
 - **Required For**: Calculation history
@@ -1183,12 +1310,14 @@ Users can select one or more criteria to calculate maximum offer:
 - **Not Required For**: Basic calculations (may be limited)
 
 #### 5.1.2 Account Information
+
 - Email address (required)
 - Password (required)
 - Name (optional)
 - Language preference (English/Chinese)
 
 #### 5.1.3 Account Features
+
 - Save calculations
 - View calculation history
 - Download reports
@@ -1198,11 +1327,13 @@ Users can select one or more criteria to calculate maximum offer:
 ### 6.2 Access Levels
 
 #### 5.2.1 Guest Access (No Account)
+
 - View sample report
 - Basic calculations (may be limited)
 - Cannot save or download
 
 #### 5.2.2 Registered User (Free/Beta)
+
 - Full calculation access
 - Save calculations
 - Download PDF reports
@@ -1210,6 +1341,7 @@ Users can select one or more criteria to calculate maximum offer:
 - Email reports
 
 #### 5.2.3 Paid User (v1.1 - Future)
+
 - All registered user features
 - Unlimited calculations
 - Priority support
@@ -1222,6 +1354,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 7.1 Data Sources (MVP)
 
 #### 6.1.1 User-Provided Data (Primary)
+
 - Property details (address, type, price)
 - Financial inputs (rent, deposit, loan details)
 - User profile (citizenship, intended use)
@@ -1229,6 +1362,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **User can override all defaults**
 
 #### 6.1.2 Static Data (System)
+
 - FIRB fee schedules (regularly updated manually)
 - Stamp duty rates by state (regularly updated manually)
 - Foreign buyer surcharge rates by state (regularly updated manually)
@@ -1237,14 +1371,15 @@ Users can select one or more criteria to calculate maximum offer:
 #### 6.1.3 Short-Stay Regulations Database (Configurable)
 
 **Data Source Strategy**:
-- **Primary Sources**: 
+
+- **Primary Sources**:
   - Council websites and official documentation
   - State government planning departments
   - Local planning scheme documents
   - Council meeting minutes and resolutions
   - Planning permit databases
 - **Data Collection Method**: Manual research and data entry by admin team
-- **Verification Process**: 
+- **Verification Process**:
   - Cross-reference with official council sources
   - Verify effective dates
   - Document source URLs/documents
@@ -1253,6 +1388,7 @@ Users can select one or more criteria to calculate maximum offer:
 **Database Structure**: Configurable rules database for manual updates
 
 **Fields Required**:
+
 - Council/Area identifier (name, postcode range, or geographic boundary)
 - State/Territory
 - Short-stay permitted (yes/no)
@@ -1265,24 +1401,28 @@ Users can select one or more criteria to calculate maximum offer:
 - Source of regulation (URL or document reference)
 - Notes/additional requirements
 
-**Update Frequency**: 
+**Update Frequency**:
+
 - **Initial Population**: Research and populate all major councils (200+) in first 3 months
 - **Ongoing Maintenance**: Monthly review of all councils for regulation changes
 - **Priority Councils**: Major tourist areas (Sydney, Melbourne, Gold Coast, etc.) reviewed bi-weekly
 - **Change Detection**: Monitor council websites and planning department announcements
 
 **Admin Interface**: Required for managing regulations
+
 - Bulk import/export functionality
 - Version history tracking
 - Verification workflow
 - Change notifications
 
 **Version Control**: Track changes over time with audit trail
+
 - Previous versions stored for historical reference
 - Change log shows who updated and when
 - Effective date tracking for temporal queries
 
-**Fallback Strategy**: 
+**Fallback Strategy**:
+
 - If no specific regulation found, show general guidance
 - Display warning: "No specific regulation found for this area. Please verify with local council."
 - Provide links to council contact information
@@ -1291,14 +1431,15 @@ Users can select one or more criteria to calculate maximum offer:
 #### 6.1.4 Benchmark Data (State/Suburb Level - MVP)
 
 **Data Source Strategy**:
+
 - **Rental Yield Benchmarks**:
-  - **Primary Sources**: 
+  - **Primary Sources**:
     - CoreLogic rental data (via manual research initially, API in v1.2)
     - Domain.com.au rental listings (aggregated analysis)
     - Realestate.com.au rental listings (aggregated analysis)
     - Australian Bureau of Statistics (ABS) housing data
     - State government housing reports
-  - **Data Collection Method**: 
+  - **Data Collection Method**:
     - Initial: Manual research and aggregation of market data
     - Calculate median/average yields from available listings
     - Cross-reference multiple sources for accuracy
@@ -1354,6 +1495,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 7.2 Data Maintenance Requirements
 
 #### 6.2.1 Regular Updates Required
+
 - **FIRB Rules & Fees**: Quarterly review (regulations change)
 - **Stamp Duty Rates**: Quarterly review (state budgets)
 - **Foreign Buyer Surcharges**: Quarterly review (policy changes)
@@ -1361,6 +1503,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Market Benchmarks**: Quarterly review (economic conditions)
 
 #### 6.2.2 Update Process (MVP)
+
 - Manual data entry by admin team
 - Admin interface for managing data
 - Version control for regulatory changes
@@ -1368,6 +1511,7 @@ Users can select one or more criteria to calculate maximum offer:
 - User notifications for significant changes
 
 ### 7.3 Future Data Integrations (Post-MVP)
+
 - Real estate API integrations (Domain, realestate.com.au)
 - CoreLogic data (property values, rental yields)
 - Government APIs (FIRB, state revenue offices)
@@ -1381,6 +1525,7 @@ Users can select one or more criteria to calculate maximum offer:
 ### 8.1 Platform Architecture
 
 #### 7.1.1 Current Stack
+
 - **Frontend**: Next.js 15 (App Router)
 - **Backend**: Next.js API Routes
 - **Database**: Supabase (PostgreSQL)
@@ -1390,6 +1535,7 @@ Users can select one or more criteria to calculate maximum offer:
 - **Internationalization**: next-intl (English, Chinese)
 
 #### 7.1.2 Key Technical Components
+
 - **FIRB calculation engine** (existing - extends for comprehensive product)
 - **Investment analytics engine** (existing - extends for comprehensive analysis)
 - **Cost calculation engine** (existing)
@@ -1397,6 +1543,7 @@ Users can select one or more criteria to calculate maximum offer:
 - Multi-language support (existing)
 
 #### 7.1.3 New Components Required for Comprehensive Product
+
 - **Short-Stay Regulations Database**:
   - Database schema for regulations
   - Admin interface for managing regulations
@@ -1415,12 +1562,14 @@ Users can select one or more criteria to calculate maximum offer:
   - Risk assessment algorithms
 
 ### 8.2 Performance Requirements
+
 - Calculation response time: < 2 seconds
 - PDF generation: < 5 seconds
 - Page load time: < 3 seconds
 - Support concurrent users: 100+ (MVP)
 
 ### 8.3 Security & Compliance
+
 - Data encryption (in transit and at rest)
 - User data privacy (GDPR considerations)
 - Secure authentication
@@ -1678,12 +1827,14 @@ User selects "Short-stay accommodation" as intended use
 ```
 
 ### 9.2 Sample Report Flow
+
 1. User clicks "View Sample Report" on homepage
 2. System displays sample report (no account required)
 3. User can see full report structure
 4. User can proceed to create account for personalized report
 
 ### 9.3 Account Creation Flow
+
 1. User attempts to generate full report
 2. System prompts for account creation
 3. User enters email and password
@@ -1698,26 +1849,28 @@ User selects "Short-stay accommodation" as intended use
 ### 10.1 User Engagement Metrics
 
 #### Targets (MVP - First 6 Months):
-- **Number of calculations performed**: 
+
+- **Number of calculations performed**:
   - Target: 500+ calculations/month by month 3
   - Target: 1,000+ calculations/month by month 6
-- **Report downloads**: 
+- **Report downloads**:
   - Target: 60% of calculations result in PDF download
   - Target: 300+ downloads/month by month 6
-- **User registration rate**: 
+- **User registration rate**:
   - Target: 40% of users who start calculation create account
   - Target: 200+ new registrations/month by month 6
-- **Return user rate**: 
+- **Return user rate**:
   - Target: 25% of registered users return within 30 days
   - Target: 35% of registered users return within 90 days
-- **Time spent on platform**: 
+- **Time spent on platform**:
   - Target: Average 8-12 minutes per session
   - Target: Average 15-20 minutes for complete analysis
-- **Benchmark data usage**: 
+- **Benchmark data usage**:
   - Target: 70% of users accept at least one benchmark suggestion
   - Target: 50% of users accept both rent and capital growth suggestions
 
 #### Tracking Methods:
+
 - Google Analytics / Product analytics tool
 - Database logging of calculation events
 - User session tracking
@@ -1726,21 +1879,23 @@ User selects "Short-stay accommodation" as intended use
 ### 10.2 Business Metrics
 
 #### Targets (MVP - First 6 Months):
-- **User acquisition cost (CAC)**: 
+
+- **User acquisition cost (CAC)**:
   - Target: <$50 per registered user
   - Target: <$25 per registered user by month 6 (optimization)
-- **Conversion rate (sample → full report)**: 
+- **Conversion rate (sample → full report)**:
   - Target: 30% of sample report viewers create account
   - Target: 40% of sample report viewers create account by month 6
-- **User retention rate**: 
+- **User retention rate**:
   - Target: 30% of users return within 7 days
   - Target: 20% of users return within 30 days
   - Target: 10% of users return within 90 days
-- **Revenue per user (v1.1 - Post-MVP)**: 
+- **Revenue per user (v1.1 - Post-MVP)**:
   - Target: $20-50/month per paid subscriber
   - Target: 5% paid conversion rate from free users
 
 #### Tracking Methods:
+
 - Marketing attribution tracking
 - Conversion funnel analysis
 - Cohort retention analysis
@@ -1749,26 +1904,28 @@ User selects "Short-stay accommodation" as intended use
 ### 10.3 Quality Metrics
 
 #### Targets (MVP - First 6 Months):
-- **Calculation accuracy**: 
+
+- **Calculation accuracy**:
   - Target: 100% accuracy on manual QA checks (weekly)
   - Target: 0 critical calculation errors
   - Target: <1% minor calculation errors (rounding, formatting)
-- **User satisfaction scores**: 
+- **User satisfaction scores**:
   - Target: Net Promoter Score (NPS) > 40
   - Target: Customer Satisfaction Score (CSAT) > 4.0/5.0
   - Target: 80%+ positive feedback on report quality
-- **Error rate**: 
+- **Error rate**:
   - Target: <2% of calculations result in user-reported errors
   - Target: <0.5% system errors (500 errors, etc.)
-- **Support ticket volume**: 
+- **Support ticket volume**:
   - Target: <5% of users submit support tickets
   - Target: Average resolution time <24 hours
-- **Data accuracy (benchmark data, regulations)**: 
+- **Data accuracy (benchmark data, regulations)**:
   - Target: 95%+ accuracy on benchmark data (verified quarterly)
   - Target: 90%+ accuracy on short-stay regulations (verified monthly)
   - Target: <5% user-reported data accuracy issues
 
 #### Tracking Methods:
+
 - Weekly manual QA of calculations
 - User feedback surveys (post-report)
 - Error logging and monitoring
@@ -1778,6 +1935,7 @@ User selects "Short-stay accommodation" as intended use
 ### 10.4 Success Criteria for MVP Launch
 
 **Must Achieve (Minimum Viable Product)**:
+
 - ✅ All core features functional and tested
 - ✅ 100% calculation accuracy (manual QA)
 - ✅ <2% error rate
@@ -1786,6 +1944,7 @@ User selects "Short-stay accommodation" as intended use
 - ✅ Database schemas implemented and populated with initial data
 
 **Should Achieve (Success Metrics)**:
+
 - 100+ calculations in first month
 - 50+ registered users in first month
 - NPS > 30
@@ -1793,6 +1952,7 @@ User selects "Short-stay accommodation" as intended use
 - <5% support ticket rate
 
 **Nice to Have (Stretch Goals)**:
+
 - 500+ calculations in first month
 - 200+ registered users in first month
 - NPS > 50
@@ -1808,6 +1968,7 @@ User selects "Short-stay accommodation" as intended use
 #### Feature Prioritization (Must Have / Should Have / Nice to Have)
 
 ##### P0 - Must Have (MVP Critical Path)
+
 These features are absolutely essential for MVP launch:
 
 1. **Eligibility Assessment (FIRB)** - **Extends existing calculator**
@@ -1850,6 +2011,7 @@ These features are absolutely essential for MVP launch:
    - Dependencies: None
 
 ##### P1 - Should Have (MVP Important)
+
 These features significantly enhance value but can be launched without initially:
 
 8. **State/Suburb Benchmark Data System**
@@ -1904,6 +2066,7 @@ These features significantly enhance value but can be launched without initially
     - Dependencies: Investment analytics engine
 
 ##### P2 - Nice to Have (Post-MVP Enhancement)
+
 These features can be added after MVP launch:
 
 15. **Alternative Investment Comparison - Detailed**
@@ -1961,11 +2124,13 @@ These features can be added after MVP launch:
 #### MVP Launch Requirements
 
 **Phase 1 - Core MVP (Launch Ready)**:
+
 - All P0 features ✅
 - P1 features: #8 (State-level benchmarks only), #9, #10 (basic), #12, #14 (Offer Calculator)
 - Goal: Launch with core functionality, expand post-launch
 
 **Phase 2 - Enhanced MVP (Month 2-3)**:
+
 - Complete all P1 features including:
   - #13 (Full sensitivity analysis)
   - #14 (Offer Calculator - full implementation)
@@ -1973,6 +2138,7 @@ These features can be added after MVP launch:
 - Expand short-stay regulations (top 50 councils)
 
 **Phase 3 - Post-MVP (v1.1+)**:
+
 - P2 features prioritized:
   - #20 (Marketing Reports & Custom Branding) - High value for agents/brokers
   - #21 (Property Comparison & Portfolio Management) - High user demand
@@ -1983,6 +2149,7 @@ These features can be added after MVP launch:
 - Advanced features
 
 #### Excluded Features (Future Releases)
+
 - Payment processing (v1.1)
 - API integrations for property data (v1.2)
 - Advanced market data (v1.2)
@@ -1993,18 +2160,21 @@ These features can be added after MVP launch:
 ### 11.2 Future Enhancements
 
 #### v1.1 - Monetization
+
 - Payment processing
 - Subscription tiers
 - Usage limits for free tier
 - Premium features
 
 #### v1.2 - Data Integration
+
 - Real estate API integrations
 - CoreLogic data
 - Market data APIs
 - Automated data updates
 
 #### v1.3 - Advanced Features
+
 - Mobile app
 - Property comparison tool
 - Investment portfolio tracking
@@ -2021,27 +2191,27 @@ These features can be added after MVP launch:
 ```
 IMPORTANT DISCLAIMER
 
-This report and all calculations are provided for informational purposes only and do not 
-constitute financial, investment, tax, or legal advice. The information contained herein 
-is based on the data and assumptions you have provided and should not be relied upon as 
+This report and all calculations are provided for informational purposes only and do not
+constitute financial, investment, tax, or legal advice. The information contained herein
+is based on the data and assumptions you have provided and should not be relied upon as
 the sole basis for making investment decisions.
 
 NOT FINANCIAL ADVICE
-This report is not intended to be financial advice. The calculations, projections, and 
-analysis are illustrative only and are based on certain assumptions that may not reflect 
-your actual circumstances or future market conditions. Past performance is not indicative 
-of future results. Property values can decrease as well as increase, and rental income 
+This report is not intended to be financial advice. The calculations, projections, and
+analysis are illustrative only and are based on certain assumptions that may not reflect
+your actual circumstances or future market conditions. Past performance is not indicative
+of future results. Property values can decrease as well as increase, and rental income
 is not guaranteed.
 
 NOT LEGAL ADVICE
-Eligibility information, FIRB requirements, and regulatory guidance provided in this report 
-are general in nature and do not constitute legal advice. Laws and regulations change 
-frequently, and this information may not be current or applicable to your specific 
-situation. You must seek independent legal advice regarding property purchase, FIRB 
+Eligibility information, FIRB requirements, and regulatory guidance provided in this report
+are general in nature and do not constitute legal advice. Laws and regulations change
+frequently, and this information may not be current or applicable to your specific
+situation. You must seek independent legal advice regarding property purchase, FIRB
 requirements, and compliance with all applicable laws.
 
 PROFESSIONAL CONSULTATION REQUIRED
-Before making any investment decisions, you should consult with qualified professionals 
+Before making any investment decisions, you should consult with qualified professionals
 including:
 - A licensed financial advisor
 - A qualified accountant or tax advisor
@@ -2050,7 +2220,7 @@ including:
 - A mortgage broker (if applicable)
 
 ACCURACY OF INFORMATION
-While we strive to ensure the accuracy of calculations and data, we make no warranties 
+While we strive to ensure the accuracy of calculations and data, we make no warranties
 or representations regarding:
 - The accuracy, completeness, or currency of the information provided
 - The accuracy of benchmark data, which are estimates based on historical averages
@@ -2058,64 +2228,69 @@ or representations regarding:
 - Future market conditions or property performance
 
 REGULATORY CHANGES
-Laws, regulations, and policies change frequently. FIRB requirements, stamp duty rates, 
-foreign buyer surcharges, and short-stay regulations may have changed since this report 
+Laws, regulations, and policies change frequently. FIRB requirements, stamp duty rates,
+foreign buyer surcharges, and short-stay regulations may have changed since this report
 was generated. You must verify all current requirements with relevant authorities.
 
 BENCHMARK DATA
-Market benchmarks (rental yields, capital growth rates) are estimates based on historical 
-data and market averages. Actual results may vary significantly. The benchmarks provided 
+Market benchmarks (rental yields, capital growth rates) are estimates based on historical
+data and market averages. Actual results may vary significantly. The benchmarks provided
 are indicative only and should not be used as guarantees of future performance.
 
 NO LIABILITY
-To the maximum extent permitted by law, [Company Name] and its affiliates, officers, 
-employees, and agents exclude all liability for any loss or damage (including indirect, 
+To the maximum extent permitted by law, [Company Name] and its affiliates, officers,
+employees, and agents exclude all liability for any loss or damage (including indirect,
 consequential, or special loss or damage) arising from or in connection with:
 - Your use of or reliance on this report
 - Any errors or omissions in the information provided
 - Any decisions made based on this report
 
-By using this service, you acknowledge that you have read, understood, and agree to this 
+By using this service, you acknowledge that you have read, understood, and agree to this
 disclaimer.
 ```
 
 #### 11.1.2 Short Disclaimer (For dashboard/UI)
 
 ```
-⚠️ This analysis is for informational purposes only and does not constitute financial, 
-investment, tax, or legal advice. Please consult with qualified professionals before 
+⚠️ This analysis is for informational purposes only and does not constitute financial,
+investment, tax, or legal advice. Please consult with qualified professionals before
 making investment decisions.
 ```
 
 #### 11.1.3 Section-Specific Disclaimers
 
 **Eligibility Section**:
+
 ```
-This eligibility assessment is based on general rules and regulations. Laws change 
-frequently. You must verify current requirements with FIRB and relevant authorities 
+This eligibility assessment is based on general rules and regulations. Laws change
+frequently. You must verify current requirements with FIRB and relevant authorities
 before proceeding. This is not legal advice.
 ```
 
 **Investment Quality Section**:
+
 ```
-All projections are based on assumptions and historical data. Actual results may vary. 
+All projections are based on assumptions and historical data. Actual results may vary.
 Property values can decrease. Past performance does not guarantee future results.
 ```
 
 **Short-Stay Regulations Section**:
+
 ```
-Regulations change frequently and vary by council. This information may not be current. 
-You must verify current regulations with your local council before operating a short-stay 
+Regulations change frequently and vary by council. This information may not be current.
+You must verify current regulations with your local council before operating a short-stay
 property.
 ```
 
 **Benchmark Data**:
+
 ```
-Market benchmarks are estimates based on historical averages. Actual market conditions 
+Market benchmarks are estimates based on historical averages. Actual market conditions
 may differ significantly. Data sources: [List sources]. Last updated: [Date].
 ```
 
 ### 12.2 Compliance Requirements
+
 - Privacy policy (GDPR compliant)
 - Terms of service
 - Data protection
@@ -2123,6 +2298,7 @@ may differ significantly. Data sources: [List sources]. Last updated: [Date].
 - Financial services regulations (if applicable)
 
 ### 12.3 Liability Limitations
+
 - System provides information, not recommendations
 - Users responsible for verifying information
 - No guarantee of accuracy
@@ -2140,13 +2316,13 @@ CREATE TABLE short_stay_regulations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  
+
   -- Geographic Identification
   council_name TEXT NOT NULL,
   state australian_state NOT NULL,
   postcode_range TEXT, -- e.g., "2000-2010" or "2000"
   suburb_name TEXT,
-  
+
   -- Regulation Details
   short_stay_permitted BOOLEAN NOT NULL,
   max_days_per_year INTEGER, -- NULL if unlimited
@@ -2155,14 +2331,14 @@ CREATE TABLE short_stay_regulations (
   compliance_cost_annual DECIMAL(10, 2),
   compliance_cost_one_time DECIMAL(10, 2),
   zoning_restrictions TEXT,
-  
+
   -- Metadata
   effective_date DATE NOT NULL,
   last_verified_date DATE,
   source_url TEXT,
   source_document TEXT,
   notes TEXT,
-  
+
   -- Status
   is_active BOOLEAN DEFAULT true,
   version INTEGER DEFAULT 1
@@ -2180,28 +2356,28 @@ CREATE TABLE benchmark_data (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  
+
   -- Geographic Identification
   state australian_state NOT NULL,
   suburb_name TEXT, -- NULL for state-level data
   postcode TEXT,
-  
+
   -- Rental Yield Benchmarks
   gross_rental_yield DECIMAL(5, 2), -- Percentage
   net_rental_yield DECIMAL(5, 2), -- Percentage
   median_weekly_rent DECIMAL(10, 2),
-  
+
   -- Capital Growth Benchmarks
   capital_growth_5yr DECIMAL(5, 2), -- Percentage per annum
   capital_growth_10yr DECIMAL(5, 2), -- Percentage per annum
   median_property_value DECIMAL(12, 2),
-  
+
   -- Data Quality
   data_source TEXT,
   last_updated DATE NOT NULL,
   data_quality_score INTEGER, -- 1-10
   notes TEXT,
-  
+
   -- Status
   is_active BOOLEAN DEFAULT true,
   version INTEGER DEFAULT 1
@@ -2217,6 +2393,7 @@ CREATE INDEX idx_benchmark_data_active ON benchmark_data(is_active) WHERE is_act
 ## 14. Admin Interface Requirements
 
 ### 14.1 Short-Stay Regulations Admin
+
 - **CRUD Operations**: Create, Read, Update, Delete regulations
 - **Bulk Import**: CSV import for regulations
 - **Search/Filter**: By state, council, postcode
@@ -2225,6 +2402,7 @@ CREATE INDEX idx_benchmark_data_active ON benchmark_data(is_active) WHERE is_act
 - **Export**: Export regulations for backup
 
 ### 14.2 Benchmark Data Admin
+
 - **CRUD Operations**: Create, Read, Update, Delete benchmark data
 - **Bulk Import**: CSV import for benchmark data
 - **Search/Filter**: By state, suburb
@@ -2237,6 +2415,7 @@ CREATE INDEX idx_benchmark_data_active ON benchmark_data(is_active) WHERE is_act
 ## 15. Appendices
 
 ### 15.1 Glossary
+
 - **FIRB**: Foreign Investment Review Board
 - **LVR**: Loan-to-Value Ratio
 - **ROI**: Return on Investment
@@ -2245,6 +2424,7 @@ CREATE INDEX idx_benchmark_data_active ON benchmark_data(is_active) WHERE is_act
 - **Short-Stay**: Temporary accommodation (Airbnb, Booking.com, etc.)
 
 ### 15.2 Reference Documents
+
 - Existing FIRB calculator implementation
 - Investment analytics types
 - Database schema
@@ -2253,6 +2433,7 @@ CREATE INDEX idx_benchmark_data_active ON benchmark_data(is_active) WHERE is_act
 ---
 
 ## Document Status
+
 **Version**: 1.0  
 **Last Updated**: [Date]  
 **Status**: Final Draft - Ready for Review  
@@ -2267,4 +2448,3 @@ CREATE INDEX idx_benchmark_data_active ON benchmark_data(is_active) WHERE is_act
 3. **Benchmark Data**: State/suburb-level benchmarks included in MVP (user can override)
 4. **MVP Scope**: FULL investment quality analysis and optimal use case comparison included in MVP
 5. **Data Sources**: Manual admin updates for regulations and benchmarks (API integrations in v1.2+)
-

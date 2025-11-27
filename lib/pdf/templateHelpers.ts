@@ -3,27 +3,27 @@
  * Reusable utilities for generating PDF elements with consistent styling
  */
 
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 // Color constants matching template design
 export const COLORS = {
-  primary: '#3B82F6',    // Blue
-  success: '#10B981',     // Green
-  danger: '#DC2626',      // Red
-  warning: '#F97316',     // Orange
+  primary: "#3B82F6", // Blue
+  success: "#10B981", // Green
+  danger: "#DC2626", // Red
+  warning: "#F97316", // Orange
   gray: {
-    50: '#F9FAFB',
-    100: '#F3F4F6',
-    200: '#E5E7EB',
-    300: '#D1D5DB',
-    400: '#9CA3AF',
-    500: '#6B7280',
-    600: '#4B5563',
-    700: '#374151',
-    800: '#1F2937',
-    900: '#111827'
-  }
+    50: "#F9FAFB",
+    100: "#F3F4F6",
+    200: "#E5E7EB",
+    300: "#D1D5DB",
+    400: "#9CA3AF",
+    500: "#6B7280",
+    600: "#4B5563",
+    700: "#374151",
+    800: "#1F2937",
+    900: "#111827",
+  },
 } as const;
 
 // Typography constants
@@ -31,7 +31,7 @@ export const FONTS = {
   title: 24,
   subtitle: 12,
   body: 10,
-  small: 8
+  small: 8,
 } as const;
 
 // Spacing constants
@@ -39,7 +39,7 @@ export const SPACING = {
   margin: 20, // 2cm margins
   sectionGap: 15,
   elementGap: 10,
-  lineHeight: 1.2
+  lineHeight: 1.2,
 } as const;
 
 // Removed getCurrentY and getCurrentX helper functions as they don't exist in production jsPDF
@@ -61,8 +61,8 @@ export function addCoverPage(
   // Title - centered at top
   doc.setTextColor(COLORS.gray[800]);
   doc.setFontSize(FONTS.title);
-  doc.setFont('helvetica', 'bold');
-  doc.text(title, pageWidth / 2, 80, { align: 'center' });
+  doc.setFont("helvetica", "bold");
+  doc.text(title, pageWidth / 2, 80, { align: "center" });
 
   // Blue horizontal line separator
   doc.setDrawColor(COLORS.primary);
@@ -73,19 +73,23 @@ export function addCoverPage(
 
   // Property address - centered
   doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'normal');
-  doc.text(propertyAddress, pageWidth / 2, 130, { align: 'center' });
+  doc.setFont("helvetica", "normal");
+  doc.text(propertyAddress, pageWidth / 2, 130, { align: "center" });
 
   // Purchase price - centered
-  doc.text(`Purchase Price: $${purchasePrice.toLocaleString()}`, pageWidth / 2, 150, { align: 'center' });
+  doc.text(`Purchase Price: $${purchasePrice.toLocaleString()}`, pageWidth / 2, 150, {
+    align: "center",
+  });
 
   // Report generation date - centered at bottom
   doc.setFontSize(FONTS.small);
-  doc.text(`Report Generated: ${generationDate}`, pageWidth / 2, pageHeight - 30, { align: 'center' });
+  doc.text(`Report Generated: ${generationDate}`, pageWidth / 2, pageHeight - 30, {
+    align: "center",
+  });
 
   // Add new page for content
   doc.addPage();
-  
+
   // Return the starting Y position for the new page
   return SPACING.margin;
 }
@@ -107,41 +111,41 @@ export function addTableOfContents(
   // Title
   doc.setTextColor(COLORS.gray[800]);
   doc.setFontSize(FONTS.title);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Table of Contents', SPACING.margin, currentY);
+  doc.setFont("helvetica", "bold");
+  doc.text("Table of Contents", SPACING.margin, currentY);
   currentY += 20;
 
   // Sections in two columns
   doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont("helvetica", "normal");
 
   const midPoint = Math.ceil(sections.length / 2);
-  
+
   for (let i = 0; i < sections.length; i++) {
     const section = sections[i];
     const isLeftColumn = i < midPoint;
     const x = isLeftColumn ? leftColumnX : rightColumnX;
-    const y = isLeftColumn ? currentY + (i * lineHeight) : currentY + ((i - midPoint) * lineHeight);
+    const y = isLeftColumn ? currentY + i * lineHeight : currentY + (i - midPoint) * lineHeight;
 
     // Section title
     doc.text(section.title, x, y);
-    
+
     // Dot leaders
     const dotsStart = x + 120;
     const dotsEnd = x + 140;
     const dotsY = y - 2;
-    
+
     for (let dotX = dotsStart; dotX < dotsEnd; dotX += 2) {
-      doc.text('.', dotX, dotsY);
+      doc.text(".", dotX, dotsY);
     }
-    
+
     // Page number
     doc.text(section.page.toString(), x + 145, y);
   }
 
   // Add new page
   doc.addPage();
-  
+
   // Return the starting Y position for the new page
   return SPACING.margin;
 }
@@ -160,26 +164,26 @@ export function addSectionHeader(
 
   // Blue header bar
   doc.setFillColor(COLORS.primary);
-  doc.rect(0, startY - 5, pageWidth, 25, 'F');
+  doc.rect(0, startY - 5, pageWidth, 25, "F");
 
   // White title text
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(FONTS.title);
-  doc.setFont('helvetica', 'bold');
+  doc.setFont("helvetica", "bold");
   doc.text(title, SPACING.margin, startY + 8);
 
   // White subtitle text (if provided)
   if (subtitle) {
     doc.setFontSize(FONTS.subtitle);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont("helvetica", "normal");
     doc.text(subtitle, SPACING.margin, startY + 18);
   }
 
   // Reset text color and position
   doc.setTextColor(COLORS.gray[800]);
   doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'normal');
-  
+  doc.setFont("helvetica", "normal");
+
   // Return the Y position below the header
   return startY + 35;
 }
@@ -196,7 +200,7 @@ export function addDataTable(
   options?: {
     title?: string;
     widths?: number[];
-    align?: ('left' | 'center' | 'right')[];
+    align?: ("left" | "center" | "right")[];
   }
 ): number {
   let currentY = startY;
@@ -204,7 +208,7 @@ export function addDataTable(
   // Add title if provided
   if (options?.title) {
     doc.setFontSize(FONTS.body);
-    doc.setFont('helvetica', 'bold');
+    doc.setFont("helvetica", "bold");
     doc.text(options.title, SPACING.margin, currentY);
     currentY += 15;
   }
@@ -214,29 +218,29 @@ export function addDataTable(
     startY: currentY,
     head: [headers],
     body: rows,
-    theme: 'grid' as const,
+    theme: "grid" as const,
     headStyles: {
       fillColor: COLORS.gray[200],
       textColor: COLORS.gray[800],
-      fontStyle: 'bold' as const,
-      fontSize: FONTS.body
+      fontStyle: "bold" as const,
+      fontSize: FONTS.body,
     },
     bodyStyles: {
       fontSize: FONTS.body,
-      textColor: COLORS.gray[700]
+      textColor: COLORS.gray[700],
     },
     alternateRowStyles: {
-      fillColor: COLORS.gray[50]
+      fillColor: COLORS.gray[50],
     },
-    columnStyles: options?.align ? 
-      Object.fromEntries(options.align.map((align, i) => [i, { halign: align }])) : 
-      {},
+    columnStyles: options?.align
+      ? Object.fromEntries(options.align.map((align, i) => [i, { halign: align }]))
+      : {},
     columnWidths: options?.widths,
     margin: { left: SPACING.margin, right: SPACING.margin },
     didDrawPage: () => {
       // Add footer to each page
       addFooter(doc);
-    }
+    },
   };
 
   // Use the autoTable method directly
@@ -266,45 +270,45 @@ export function addMetricCard(
 
   // Subtle shadow effect (gray rectangle offset)
   doc.setFillColor(220, 220, 220);
-  doc.roundedRect(startX + 1, startY + 1, cardWidth, cardHeight, cornerRadius, cornerRadius, 'F');
+  doc.roundedRect(startX + 1, startY + 1, cardWidth, cardHeight, cornerRadius, cornerRadius, "F");
 
   // Card background (white or custom color)
   if (backgroundColor) {
     doc.setFillColor(backgroundColor);
-    doc.roundedRect(startX, startY, cardWidth, cardHeight, cornerRadius, cornerRadius, 'F');
+    doc.roundedRect(startX, startY, cardWidth, cardHeight, cornerRadius, cornerRadius, "F");
   }
 
   // Card border with lighter gray
   doc.setDrawColor(229, 231, 235); // #E5E7EB
   doc.setLineWidth(0.5);
-  doc.roundedRect(startX, startY, cardWidth, cardHeight, cornerRadius, cornerRadius, 'S');
+  doc.roundedRect(startX, startY, cardWidth, cardHeight, cornerRadius, cornerRadius, "S");
 
   // Colored left accent border (3px width)
   doc.setFillColor(color);
-  doc.roundedRect(startX, startY, 3, cardHeight, cornerRadius, cornerRadius, 'F');
+  doc.roundedRect(startX, startY, 3, cardHeight, cornerRadius, cornerRadius, "F");
 
   // Info icon in top-right corner
   doc.setTextColor(COLORS.gray[400]);
   doc.setFontSize(8);
-  doc.text('ⓘ', startX + cardWidth - 8, startY + 8);
+  doc.text("ⓘ", startX + cardWidth - 8, startY + 8);
 
   // Label
   doc.setTextColor(COLORS.gray[600]);
   doc.setFontSize(FONTS.small);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont("helvetica", "normal");
   doc.text(label, startX + 8, startY + 8);
 
   // Value
   doc.setTextColor(color);
   doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'bold');
+  doc.setFont("helvetica", "bold");
   doc.text(value.toString(), startX + 8, startY + 20);
 
   // Subtext (if provided)
   if (subtext) {
     doc.setTextColor(COLORS.gray[500]);
     doc.setFontSize(FONTS.small);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont("helvetica", "normal");
     doc.text(subtext, startX + 8, startY + 32);
   }
 
@@ -319,12 +323,12 @@ export function addMetricCard(
 export function addAlertBox(
   doc: jsPDF,
   message: string,
-  type: 'info' | 'warning' | 'success' | 'danger' = 'info',
+  type: "info" | "warning" | "success" | "danger" = "info",
   title?: string,
   startY: number = SPACING.margin
 ): number {
   const pageWidth = doc.internal.pageSize.getWidth();
-  const boxWidth = pageWidth - (SPACING.margin * 2);
+  const boxWidth = pageWidth - SPACING.margin * 2;
   const boxHeight = title ? 50 : 35;
 
   // Color mapping
@@ -332,14 +336,14 @@ export function addAlertBox(
     info: COLORS.primary,
     warning: COLORS.warning,
     success: COLORS.success,
-    danger: COLORS.danger
+    danger: COLORS.danger,
   };
 
   const bgColor = colorMap[type];
 
   // Background
   doc.setFillColor(bgColor);
-  doc.rect(SPACING.margin, startY, boxWidth, boxHeight, 'F');
+  doc.rect(SPACING.margin, startY, boxWidth, boxHeight, "F");
 
   // Border
   doc.setDrawColor(bgColor);
@@ -350,14 +354,14 @@ export function addAlertBox(
   if (title) {
     doc.setTextColor(bgColor);
     doc.setFontSize(FONTS.body);
-    doc.setFont('helvetica', 'bold');
+    doc.setFont("helvetica", "bold");
     doc.text(title, SPACING.margin + 10, startY + 12);
   }
 
   // Message
   doc.setTextColor(COLORS.gray[800]);
   doc.setFontSize(FONTS.body);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont("helvetica", "normal");
   const messageY = title ? startY + 25 : startY + 15;
   doc.text(message, SPACING.margin + 10, messageY);
 
@@ -383,16 +387,18 @@ export function addFooter(doc: jsPDF): void {
   // Footer text
   doc.setTextColor(COLORS.gray[500]);
   doc.setFontSize(FONTS.small);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont("helvetica", "normal");
 
   // Left: Generator name
-  doc.text('Property Investment Calculator', SPACING.margin, pageHeight - 10);
+  doc.text("Property Investment Calculator", SPACING.margin, pageHeight - 10);
 
   // Center: Page number
-  doc.text(`Page ${pageNumber} of ${totalPages}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+  doc.text(`Page ${pageNumber} of ${totalPages}`, pageWidth / 2, pageHeight - 10, {
+    align: "center",
+  });
 
   // Right: Date
-  doc.text(currentDate, pageWidth - SPACING.margin, pageHeight - 10, { align: 'right' });
+  doc.text(currentDate, pageWidth - SPACING.margin, pageHeight - 10, { align: "right" });
 }
 
 /**
@@ -408,12 +414,12 @@ export function addPageBreak(doc: jsPDF): number {
 /**
  * Formats currency values with proper locale formatting
  */
-export function formatCurrency(amount: number, currency: string = 'AUD'): string {
-  return new Intl.NumberFormat('en-AU', {
-    style: 'currency',
+export function formatCurrency(amount: number, currency: string = "AUD"): string {
+  return new Intl.NumberFormat("en-AU", {
+    style: "currency",
     currency: currency,
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0
+    maximumFractionDigits: 0,
   }).format(amount);
 }
 

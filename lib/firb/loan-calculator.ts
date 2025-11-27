@@ -34,11 +34,11 @@ export function calculateMonthlyRepayment(
 
   const monthlyRate = annualInterestRate / 100 / 12;
   const numberOfPayments = loanTermYears * 12;
-  
+
   const monthlyPayment =
     (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
     (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
-  
+
   return monthlyPayment;
 }
 
@@ -59,20 +59,20 @@ export function calculateLoanRepayment(
   loanAmount: number,
   annualInterestRate: number,
   loanTermYears: number,
-  loanType: 'principalAndInterest' | 'interestOnly',
+  loanType: "principalAndInterest" | "interestOnly",
   interestOnlyPeriodYears: number = 0
 ): LoanRepayment {
   let monthlyPayment: number;
   let totalInterest = 0;
   let totalPrincipal = 0;
 
-  if (loanType === 'interestOnly' || interestOnlyPeriodYears > 0) {
+  if (loanType === "interestOnly" || interestOnlyPeriodYears > 0) {
     // Interest only period
     const ioMonthly = calculateInterestOnlyRepayment(loanAmount, annualInterestRate);
     const ioMonths = Math.min(interestOnlyPeriodYears, loanTermYears) * 12;
     const ioInterest = ioMonthly * ioMonths;
-    
-    if (loanType === 'interestOnly' || interestOnlyPeriodYears >= loanTermYears) {
+
+    if (loanType === "interestOnly" || interestOnlyPeriodYears >= loanTermYears) {
       // Fully interest only
       monthlyPayment = ioMonthly;
       totalInterest = ioInterest;
@@ -84,7 +84,7 @@ export function calculateLoanRepayment(
       const piMonths = remainingTerm * 12;
       const piTotal = piMonthly * piMonths;
       const piInterest = piTotal - loanAmount;
-      
+
       // Use P&I payment for monthly (more relevant for ongoing)
       monthlyPayment = piMonthly;
       totalInterest = ioInterest + piInterest;
@@ -113,7 +113,7 @@ export function calculateLoanSchedule(
   loanAmount: number,
   annualInterestRate: number,
   loanTermYears: number,
-  loanType: 'principalAndInterest' | 'interestOnly',
+  loanType: "principalAndInterest" | "interestOnly",
   interestOnlyPeriodYears: number = 0,
   projectionYears: number = 10
 ): LoanBalance[] {
@@ -121,17 +121,17 @@ export function calculateLoanSchedule(
   let balance = loanAmount;
   let cumulativePrincipal = 0;
   let cumulativeInterest = 0;
-  
+
   const monthlyRate = annualInterestRate / 100 / 12;
-  
+
   for (let year = 1; year <= Math.min(projectionYears, loanTermYears); year++) {
     let yearPrincipalPaid = 0;
     let yearInterestPaid = 0;
-    
+
     // Determine payment type for this year
     const isIOPeriod = year <= interestOnlyPeriodYears;
-    
-    if (isIOPeriod || loanType === 'interestOnly') {
+
+    if (isIOPeriod || loanType === "interestOnly") {
       // Interest only payments
       const monthlyPayment = calculateInterestOnlyRepayment(balance, annualInterestRate);
       yearInterestPaid = monthlyPayment * 12;
@@ -140,23 +140,23 @@ export function calculateLoanSchedule(
       // Principal and interest payments
       const remainingTerm = loanTermYears - year + 1;
       const monthlyPayment = calculateMonthlyRepayment(balance, annualInterestRate, remainingTerm);
-      
+
       // Calculate principal and interest for each month of this year
       let yearBalance = balance;
       for (let month = 0; month < 12; month++) {
         const interestPayment = yearBalance * monthlyRate;
         const principalPayment = monthlyPayment - interestPayment;
-        
+
         yearInterestPaid += interestPayment;
         yearPrincipalPaid += principalPayment;
         yearBalance -= principalPayment;
       }
       balance = yearBalance;
     }
-    
+
     cumulativePrincipal += yearPrincipalPaid;
     cumulativeInterest += yearInterestPaid;
-    
+
     schedule.push({
       year,
       balance,
@@ -166,7 +166,7 @@ export function calculateLoanSchedule(
       cumulativeInterest,
     });
   }
-  
+
   return schedule;
 }
 
@@ -198,17 +198,3 @@ export function calculateRequiredDeposit(
   const minDepositPercent = isForeignBuyer ? 20 : 20;
   return propertyValue * (minDepositPercent / 100);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

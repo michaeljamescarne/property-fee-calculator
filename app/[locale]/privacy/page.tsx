@@ -1,16 +1,16 @@
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - Property Fee Calculator',
-  description: 'Our privacy policy explaining how we collect, use, and protect your personal information.',
+  title: "Privacy Policy - Property Fee Calculator",
+  description:
+    "Our privacy policy explaining how we collect, use, and protect your personal information.",
 };
 
 export default function PrivacyPage() {
-
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
-      
+
       <div className="prose prose-lg max-w-none">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
           <p className="text-blue-700">
@@ -46,7 +46,10 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-2xl font-semibold mb-4">Information Sharing</h2>
-            <p className="mb-4">We do not sell, trade, or otherwise transfer your personal information to third parties, except:</p>
+            <p className="mb-4">
+              We do not sell, trade, or otherwise transfer your personal information to third
+              parties, except:
+            </p>
             <ul className="list-disc list-inside space-y-2">
               <li>To trusted service providers who assist in operating our website</li>
               <li>When required by law or to protect our rights</li>
@@ -57,7 +60,9 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-2xl font-semibold mb-4">Data Security</h2>
-            <p className="mb-4">We implement appropriate security measures to protect your personal information:</p>
+            <p className="mb-4">
+              We implement appropriate security measures to protect your personal information:
+            </p>
             <ul className="list-disc list-inside space-y-2">
               <li>Encryption of data in transit and at rest</li>
               <li>Secure authentication using magic codes</li>
@@ -77,7 +82,8 @@ export default function PrivacyPage() {
               <li>Improve our services</li>
             </ul>
             <p className="mt-4">
-              You can request deletion of your account and associated data at any time by contacting us.
+              You can request deletion of your account and associated data at any time by contacting
+              us.
             </p>
           </section>
 
@@ -112,16 +118,23 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-semibold mb-4">Third-Party Services</h2>
             <p className="mb-4">We use third-party services that may collect information:</p>
             <ul className="list-disc list-inside space-y-2">
-              <li><strong>Resend:</strong> For sending emails (subject to their privacy policy)</li>
-              <li><strong>Supabase:</strong> For data storage and authentication (subject to their privacy policy)</li>
-              <li><strong>Vercel:</strong> For hosting and analytics (subject to their privacy policy)</li>
+              <li>
+                <strong>Resend:</strong> For sending emails (subject to their privacy policy)
+              </li>
+              <li>
+                <strong>Supabase:</strong> For data storage and authentication (subject to their
+                privacy policy)
+              </li>
+              <li>
+                <strong>Vercel:</strong> For hosting and analytics (subject to their privacy policy)
+              </li>
             </ul>
           </section>
 
           <section>
             <h2 className="text-2xl font-semibold mb-4">International Users</h2>
             <p className="mb-4">
-              Our services are hosted in Australia and may involve data transfer to other countries. 
+              Our services are hosted in Australia and may involve data transfer to other countries.
               By using our services, you consent to such transfers and processing.
             </p>
           </section>
@@ -129,7 +142,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Changes to This Policy</h2>
             <p className="mb-4">
-              We may update this privacy policy from time to time. We will notify you of any changes 
+              We may update this privacy policy from time to time. We will notify you of any changes
               by posting the new policy on this page and updating the &quot;Last updated&quot; date.
             </p>
           </section>
@@ -137,8 +150,12 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
             <p>
-              If you have questions about this privacy policy or our data practices, please contact us at{' '}
-              <a href="mailto:info@propertyfeecalculator.com" className="text-blue-600 hover:underline">
+              If you have questions about this privacy policy or our data practices, please contact
+              us at{" "}
+              <a
+                href="mailto:info@propertyfeecalculator.com"
+                className="text-blue-600 hover:underline"
+              >
                 info@propertyfeecalculator.com
               </a>
             </p>

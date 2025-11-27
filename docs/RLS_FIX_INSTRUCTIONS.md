@@ -50,6 +50,7 @@ After applying the migration, test the save functionality:
 ## What the Fix Does
 
 The new policies:
+
 - Grant service role (used by API routes) full access to all tables
 - Ensure authenticated users can only access their own data
 - Maintain security while allowing our custom auth system to work
@@ -72,19 +73,7 @@ DROP POLICY IF EXISTS "Users can manage own profile" ON user_profiles;
 ## Next Steps
 
 Once this is fixed, the following will work:
+
 - ✅ Users can save calculations from the calculator
 - ✅ Dashboard will populate with saved calculations
 - ✅ No more RLS policy errors in logs
-
-
-
-
-
-
-
-
-
-
-
-
-

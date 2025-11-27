@@ -93,4 +93,3 @@ describe("Leads API", () => {
     expect(data.message).toBe("Email already registered");
   });
 });
-

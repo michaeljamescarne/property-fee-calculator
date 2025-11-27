@@ -1,24 +1,23 @@
-import { useTranslations } from 'next-intl';
-import { Metadata } from 'next';
+import { useTranslations } from "next-intl";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Disclaimer - Property Fee Calculator',
-  description: 'Important disclaimer about the accuracy and limitations of our property investment calculator.',
+  title: "Disclaimer - Property Fee Calculator",
+  description:
+    "Important disclaimer about the accuracy and limitations of our property investment calculator.",
 };
 
 export default function DisclaimerPage() {
-  const t = useTranslations('Footer');
+  const t = useTranslations("Footer");
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <h1 className="text-3xl font-bold mb-6">Disclaimer</h1>
-      
+
       <div className="prose prose-lg max-w-none">
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-yellow-800">Important Notice</h2>
-          <p className="text-yellow-700">
-            {t('disclaimer.text')}
-          </p>
+          <p className="text-yellow-700">{t("disclaimer.text")}</p>
         </div>
 
         <div className="space-y-6">
@@ -36,7 +35,8 @@ export default function DisclaimerPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Professional Advice Required</h2>
             <p className="mb-4">
-              This calculator is not a substitute for professional advice. We strongly recommend consulting with:
+              This calculator is not a substitute for professional advice. We strongly recommend
+              consulting with:
             </p>
             <ul className="list-disc list-inside space-y-2">
               <li>Licensed immigration lawyers for visa and FIRB matters</li>
@@ -59,9 +59,7 @@ export default function DisclaimerPage() {
 
           <section>
             <h2 className="text-2xl font-semibold mb-4">Limitation of Liability</h2>
-            <p className="mb-4">
-              Property Fee Calculator and its operators:
-            </p>
+            <p className="mb-4">Property Fee Calculator and its operators:</p>
             <ul className="list-disc list-inside space-y-2">
               <li>Are not affiliated with FIRB or any Australian government agency</li>
               <li>Do not provide financial, legal, or investment advice</li>
@@ -74,9 +72,12 @@ export default function DisclaimerPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
             <p>
-              If you have questions about this disclaimer or need clarification about our services, 
-              please contact us at{' '}
-              <a href="mailto:info@propertyfeecalculator.com" className="text-blue-600 hover:underline">
+              If you have questions about this disclaimer or need clarification about our services,
+              please contact us at{" "}
+              <a
+                href="mailto:info@propertyfeecalculator.com"
+                className="text-blue-600 hover:underline"
+              >
                 info@propertyfeecalculator.com
               </a>
             </p>

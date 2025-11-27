@@ -87,6 +87,7 @@ This guide covers testing the complete calculator wizard flow, including the new
 ## Test 3: Optimal Use Case Analysis
 
 ### Prerequisites
+
 - Complete wizard with financial details
 - View results page
 - Expand Investment Analysis section
@@ -141,27 +142,35 @@ This guide covers testing the complete calculator wizard flow, including the new
 ### Manual API Testing
 
 1. **Test with State Only**
+
    ```
    GET /api/short-stay-regulations?state=VIC
    ```
+
    - Expected: Returns regulations for Victoria (if exists)
 
 2. **Test with Postcode**
+
    ```
    GET /api/short-stay-regulations?state=NSW&postcode=2000
    ```
+
    - Expected: Returns regulations for Sydney CBD (if exists)
 
 3. **Test with Council**
+
    ```
    GET /api/short-stay-regulations?state=VIC&council=Melbourne
    ```
+
    - Expected: Returns regulations for Melbourne council (if exists)
 
 4. **Test No Regulations**
+
    ```
    GET /api/short-stay-regulations?state=NT
    ```
+
    - Expected: Returns `{ success: true, regulation: null }`
 
 ---
@@ -243,7 +252,7 @@ This guide covers testing the complete calculator wizard flow, including the new
 ✅ Short-stay regulations API works  
 ✅ Recommendations are logical and accurate  
 ✅ No console errors or translation key issues  
-✅ All calculations are accurate  
+✅ All calculations are accurate
 
 ---
 
@@ -254,4 +263,3 @@ This guide covers testing the complete calculator wizard flow, including the new
 3. Optimize performance if needed
 4. Document any edge cases
 5. Proceed to Phase 4 (if Phase 3 is complete)
-

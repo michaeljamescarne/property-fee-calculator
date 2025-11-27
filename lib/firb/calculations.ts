@@ -13,8 +13,8 @@ import {
   calculateStampDuty,
   calculateLandTax,
   FOREIGN_SURCHARGE_RATES,
-  FIRB_EXPEDITED_FEE_MULTIPLIER
-} from './constants';
+  FIRB_EXPEDITED_FEE_MULTIPLIER,
+} from "./constants";
 
 export interface CostBreakdown {
   upfrontCosts: {
@@ -65,10 +65,10 @@ export function calculateFIRBFees(
   expedited: boolean = false
 ): number {
   // Check if FIRB is required
-  const requiresFIRB = 
-    citizenshipStatus === 'temporary' || 
-    citizenshipStatus === 'foreign' ||
-    (citizenshipStatus === 'australian' && isOrdinarilyResident === false);
+  const requiresFIRB =
+    citizenshipStatus === "temporary" ||
+    citizenshipStatus === "foreign" ||
+    (citizenshipStatus === "australian" && isOrdinarilyResident === false);
 
   if (!requiresFIRB) {
     return 0;
@@ -100,10 +100,10 @@ export function calculateForeignSurcharge(
   isOrdinarilyResident?: boolean
 ): number {
   // Foreign surcharge applies to temporary residents and foreign persons
-  const isForeignBuyer = 
-    citizenshipStatus === 'temporary' ||
-    citizenshipStatus === 'foreign' ||
-    (citizenshipStatus === 'australian' && isOrdinarilyResident === false);
+  const isForeignBuyer =
+    citizenshipStatus === "temporary" ||
+    citizenshipStatus === "foreign" ||
+    (citizenshipStatus === "australian" && isOrdinarilyResident === false);
 
   if (!isForeignBuyer) {
     return 0;
@@ -122,9 +122,9 @@ export function calculateAnnualLandTax(
   citizenshipStatus: CitizenshipStatus,
   isOrdinarilyResident?: boolean
 ): number {
-  const isForeignOwner = 
-    citizenshipStatus === 'foreign' ||
-    (citizenshipStatus === 'australian' && isOrdinarilyResident === false);
+  const isForeignOwner =
+    citizenshipStatus === "foreign" ||
+    (citizenshipStatus === "australian" && isOrdinarilyResident === false);
 
   return calculateLandTax(landValue, state, isForeignOwner);
 }
@@ -144,11 +144,11 @@ export function estimateLegalFees(propertyValue: number, _state: AustralianState
  * Estimate inspection fees
  */
 export function estimateInspectionFees(propertyType: PropertyType): number {
-  if (propertyType === 'newDwelling') {
+  if (propertyType === "newDwelling") {
     return 500; // Lower for new properties (may not need full inspection)
-  } else if (propertyType === 'established') {
+  } else if (propertyType === "established") {
     return 800; // Building and pest inspection
-  } else if (propertyType === 'vacantLand') {
+  } else if (propertyType === "vacantLand") {
     return 300; // Soil and environmental testing
   }
   return 500;
@@ -162,7 +162,7 @@ export function estimateLoanCosts(loanAmount: number): number {
   const applicationFee = 600;
   const valuationFee = 300;
   const lendersFees = loanAmount * 0.001; // 0.1% of loan amount
-  
+
   return applicationFee + valuationFee + lendersFees;
 }
 
@@ -181,10 +181,10 @@ export function estimateCouncilRates(propertyValue: number, _state: AustralianSt
  * Estimate annual property insurance
  */
 export function estimateInsurance(propertyValue: number, propertyType: PropertyType): number {
-  if (propertyType === 'vacantLand') {
+  if (propertyType === "vacantLand") {
     return 200; // Minimal insurance for vacant land
   }
-  
+
   // Typical building and contents insurance
   const baseInsurance = 1200;
   const valueComponent = propertyValue * 0.002; // 0.2% of value
@@ -195,14 +195,14 @@ export function estimateInsurance(propertyValue: number, propertyType: PropertyT
  * Estimate annual maintenance costs
  */
 export function estimateMaintenance(propertyValue: number, propertyType: PropertyType): number {
-  if (propertyType === 'vacantLand') {
+  if (propertyType === "vacantLand") {
     return 500; // Lawn mowing, maintenance
   }
-  
-  if (propertyType === 'newDwelling') {
+
+  if (propertyType === "newDwelling") {
     return propertyValue * 0.01; // 1% for new properties
   }
-  
+
   return propertyValue * 0.015; // 1.5% for established properties
 }
 
@@ -215,7 +215,7 @@ export function calculateVacancyFee(
 ): number {
   // Vacancy fee only applies to foreign persons who don't occupy or rent the property
   // This is a simplified calculation - actual fees vary
-  if (citizenshipStatus !== 'foreign') {
+  if (citizenshipStatus !== "foreign") {
     return 0;
   }
 
@@ -227,7 +227,7 @@ export function calculateVacancyFee(
 /**
  * Calculate total upfront costs
  */
-export function calculateTotalUpfrontCosts(input: CalculationInput): CostBreakdown['upfrontCosts'] {
+export function calculateTotalUpfrontCosts(input: CalculationInput): CostBreakdown["upfrontCosts"] {
   const {
     propertyValue,
     citizenshipStatus,
@@ -236,14 +236,25 @@ export function calculateTotalUpfrontCosts(input: CalculationInput): CostBreakdo
     depositPercent,
     isOrdinarilyResident,
     expeditedFIRB,
-    propertyType
+    propertyType,
   } = input;
 
   const loanAmount = propertyValue * (1 - depositPercent / 100);
 
-  const firbFee = calculateFIRBFees(propertyValue, citizenshipStatus, propertyType, isOrdinarilyResident, expeditedFIRB);
+  const firbFee = calculateFIRBFees(
+    propertyValue,
+    citizenshipStatus,
+    propertyType,
+    isOrdinarilyResident,
+    expeditedFIRB
+  );
   const stampDuty = calculateStateDuties(propertyValue, state, isFirstHome);
-  const foreignSurcharge = calculateForeignSurcharge(propertyValue, state, citizenshipStatus, isOrdinarilyResident);
+  const foreignSurcharge = calculateForeignSurcharge(
+    propertyValue,
+    state,
+    citizenshipStatus,
+    isOrdinarilyResident
+  );
   const legalFees = estimateLegalFees(propertyValue, state);
   const inspectionFees = estimateInspectionFees(propertyType);
   const loanCosts = depositPercent < 100 ? estimateLoanCosts(loanAmount) : 0;
@@ -258,26 +269,25 @@ export function calculateTotalUpfrontCosts(input: CalculationInput): CostBreakdo
     legalFees,
     inspectionFees,
     loanCosts,
-    total
+    total,
   };
 }
 
 /**
  * Calculate ongoing annual costs
  */
-export function calculateOngoingCosts(input: CalculationInput): CostBreakdown['ongoingCosts'] {
-  const {
-    propertyValue,
-    citizenshipStatus,
-    state,
-    propertyType,
-    isOrdinarilyResident
-  } = input;
+export function calculateOngoingCosts(input: CalculationInput): CostBreakdown["ongoingCosts"] {
+  const { propertyValue, citizenshipStatus, state, propertyType, isOrdinarilyResident } = input;
 
   // Estimate land value as 30% of property value
   const landValue = propertyValue * 0.3;
 
-  const annualLandTax = calculateAnnualLandTax(landValue, state, citizenshipStatus, isOrdinarilyResident);
+  const annualLandTax = calculateAnnualLandTax(
+    landValue,
+    state,
+    citizenshipStatus,
+    isOrdinarilyResident
+  );
   const councilRates = estimateCouncilRates(propertyValue, state);
   const insurance = estimateInsurance(propertyValue, propertyType);
   const maintenance = estimateMaintenance(propertyValue, propertyType);
@@ -291,7 +301,7 @@ export function calculateOngoingCosts(input: CalculationInput): CostBreakdown['o
     insurance,
     maintenance,
     vacancyFee,
-    total
+    total,
   };
 }
 
@@ -307,97 +317,118 @@ export function calculateCompleteCostBreakdown(input: CalculationInput): CostBre
   // Create detailed breakdown for display
   const breakdown = [
     {
-      category: 'Purchase Price',
+      category: "Purchase Price",
       items: [
-        { 
-          name: 'Property Purchase Price', 
+        {
+          name: "Property Purchase Price",
           amount: upfrontCosts.propertyPrice,
-          description: 'The agreed purchase price of the property'
-        }
-      ]
+          description: "The agreed purchase price of the property",
+        },
+      ],
     },
     {
-      category: 'Government Fees & Taxes',
+      category: "Government Fees & Taxes",
       items: [
-        ...(upfrontCosts.firbFee > 0 ? [{
-          name: 'FIRB Application Fee',
-          amount: upfrontCosts.firbFee,
-          description: input.expeditedFIRB ? 'Expedited processing (10 days)' : 'Standard processing (30 days)'
-        }] : []),
+        ...(upfrontCosts.firbFee > 0
+          ? [
+              {
+                name: "FIRB Application Fee",
+                amount: upfrontCosts.firbFee,
+                description: input.expeditedFIRB
+                  ? "Expedited processing (10 days)"
+                  : "Standard processing (30 days)",
+              },
+            ]
+          : []),
         {
-          name: 'Stamp Duty',
+          name: "Stamp Duty",
           amount: upfrontCosts.stampDuty,
-          description: `${input.state} stamp duty${input.isFirstHome ? ' (first home buyer concession applied)' : ''}`
+          description: `${input.state} stamp duty${input.isFirstHome ? " (first home buyer concession applied)" : ""}`,
         },
-        ...(upfrontCosts.foreignSurcharge > 0 ? [{
-          name: 'Foreign Buyer Surcharge',
-          amount: upfrontCosts.foreignSurcharge,
-          description: `${FOREIGN_SURCHARGE_RATES[input.state]}% surcharge in ${input.state}`
-        }] : [])
-      ]
+        ...(upfrontCosts.foreignSurcharge > 0
+          ? [
+              {
+                name: "Foreign Buyer Surcharge",
+                amount: upfrontCosts.foreignSurcharge,
+                description: `${FOREIGN_SURCHARGE_RATES[input.state]}% surcharge in ${input.state}`,
+              },
+            ]
+          : []),
+      ],
     },
     {
-      category: 'Professional Fees',
+      category: "Professional Fees",
       items: [
         {
-          name: 'Legal & Conveyancing',
+          name: "Legal & Conveyancing",
           amount: upfrontCosts.legalFees,
-          description: 'Solicitor or conveyancer fees'
+          description: "Solicitor or conveyancer fees",
         },
         {
-          name: 'Inspection Fees',
+          name: "Inspection Fees",
           amount: upfrontCosts.inspectionFees,
-          description: 'Building, pest, or land inspections'
-        }
-      ]
+          description: "Building, pest, or land inspections",
+        },
+      ],
     },
-    ...(upfrontCosts.loanCosts > 0 ? [{
-      category: 'Loan Costs',
-      items: [
-        {
-          name: 'Loan Establishment',
-          amount: upfrontCosts.loanCosts,
-          description: 'Application, valuation, and lender fees'
-        }
-      ]
-    }] : []),
+    ...(upfrontCosts.loanCosts > 0
+      ? [
+          {
+            category: "Loan Costs",
+            items: [
+              {
+                name: "Loan Establishment",
+                amount: upfrontCosts.loanCosts,
+                description: "Application, valuation, and lender fees",
+              },
+            ],
+          },
+        ]
+      : []),
     {
-      category: 'Annual Ongoing Costs',
+      category: "Annual Ongoing Costs",
       items: [
-        ...(ongoingCosts.annualLandTax > 0 ? [{
-          name: 'Land Tax',
-          amount: ongoingCosts.annualLandTax,
-          description: 'Annual state land tax'
-        }] : []),
+        ...(ongoingCosts.annualLandTax > 0
+          ? [
+              {
+                name: "Land Tax",
+                amount: ongoingCosts.annualLandTax,
+                description: "Annual state land tax",
+              },
+            ]
+          : []),
         {
-          name: 'Council Rates',
+          name: "Council Rates",
           amount: ongoingCosts.councilRates,
-          description: 'Annual local council rates'
+          description: "Annual local council rates",
         },
         {
-          name: 'Insurance',
+          name: "Insurance",
           amount: ongoingCosts.insurance,
-          description: 'Building and contents insurance'
+          description: "Building and contents insurance",
         },
         {
-          name: 'Maintenance',
+          name: "Maintenance",
           amount: ongoingCosts.maintenance,
-          description: 'Estimated annual maintenance and repairs'
+          description: "Estimated annual maintenance and repairs",
         },
-        ...(ongoingCosts.vacancyFee > 0 ? [{
-          name: 'Vacancy Fee',
-          amount: ongoingCosts.vacancyFee,
-          description: 'Annual fee if property is vacant (foreign owners)'
-        }] : [])
-      ]
-    }
+        ...(ongoingCosts.vacancyFee > 0
+          ? [
+              {
+                name: "Vacancy Fee",
+                amount: ongoingCosts.vacancyFee,
+                description: "Annual fee if property is vacant (foreign owners)",
+              },
+            ]
+          : []),
+      ],
+    },
   ];
 
   return {
     upfrontCosts,
     ongoingCosts,
     totalInvestmentCost,
-    breakdown
+    breakdown,
   };
 }
-

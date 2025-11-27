@@ -15,6 +15,7 @@
 ### **What EXISTS in the Codebase:**
 
 #### ✅ **1. Enhanced PDF Generator File**
+
 - **File**: `lib/pdf/generateEnhancedPDF.ts` (841 lines)
 - **Status**: File exists with comprehensive structure
 - **Sections Called**:
@@ -33,6 +34,7 @@
   13. ✅ Disclaimer (`generateDisclaimer`)
 
 #### ✅ **2. Supporting Infrastructure**
+
 - ✅ `lib/pdf/templateHelpers.ts` - PDF template utilities
 - ✅ `lib/pdf/dataMappers.ts` - Data transformation utilities
 - ✅ `lib/pdf/colors.ts` - Color scheme
@@ -42,6 +44,7 @@
 - ✅ `lib/pdf/generateChartImages.ts` - Chart generation (file exists)
 
 #### ✅ **3. Integration Points**
+
 - ✅ Called in `app/[locale]/firb-calculator/page.tsx` (line 412)
 - ✅ Conditional: Uses enhanced PDF when analytics provided
 - ✅ Falls back to basic PDF when no analytics
@@ -51,14 +54,17 @@
 ## ⚠️ **What's INCOMPLETE or ISSUES:**
 
 ### **1. Chart Generation - NOT IMPLEMENTED** ❌
+
 **Status**: File exists but implementation incomplete
 
 **Issue**: According to `PDF_ENHANCEMENTS_COMPLETE.md`:
+
 - Chart Generation Utility marked as "Not implemented"
 - Requires `canvas` library which has compatibility issues
 - Charts are NOT being generated/embedded in PDF
 
 **Required for Phase 5**:
+
 - ❌ Projection line chart (10-year growth)
 - ❌ Cash flow bar chart
 - ❌ ROI comparison chart
@@ -69,9 +75,11 @@
 ---
 
 ### **2. Table of Contents - PARTIALLY IMPLEMENTED** ⚠️
+
 **Status**: Function exists but may not be fully functional
 
-**Issue**: 
+**Issue**:
+
 - `generateTableOfContents()` is called
 - But PDF_ENHANCEMENTS_COMPLETE.md says "Table of Contents: NOT implemented"
 - Requires dynamic page number tracking which may not be working
@@ -81,10 +89,12 @@
 ---
 
 ### **3. Executive Summary - NEEDS ENHANCEMENT** ⚠️
+
 **Status**: Exists but marked as "could be enhanced"
 
 **Current**: Basic executive summary
 **Needed for Phase 5**:
+
 - ✅ Executive summary page exists
 - ⚠️ Could be more visual with key highlights grid
 - ⚠️ Property image placeholder not implemented
@@ -94,9 +104,11 @@
 ---
 
 ### **4. PDF Translations - PARTIALLY IMPLEMENTED** ⚠️
+
 **Status**: Partial implementation
 
 **According to docs**:
+
 - ✅ Existing translations work
 - ❌ Glossary terms in Chinese missing
 - ❌ Legal disclaimer sections in Chinese missing
@@ -107,7 +119,9 @@
 ---
 
 ### **5. Testing & Verification Status** ❓
+
 **Unknown**:
+
 - Has the enhanced PDF been tested end-to-end?
 - Are all sections generating correctly?
 - Are there runtime errors?
@@ -119,13 +133,13 @@
 
 ### **From WHATS_NEXT.md (Phase 5 Requirements):**
 
-| Requirement | Status | Notes |
-|-------------|--------|-------|
+| Requirement                           | Status         | Notes                                        |
+| ------------------------------------- | -------------- | -------------------------------------------- |
 | Expand to 7-page comprehensive report | ⚠️ **PARTIAL** | Structure exists, but completeness uncertain |
-| Include investment analytics sections | ✅ **YES** | All sections appear to be in code |
-| Add charts as tables/images | ❌ **NO** | Charts not implemented per docs |
-| Executive summary page | ✅ **YES** | Exists but needs enhancement |
-| Professional formatting | ✅ **YES** | Template helpers exist |
+| Include investment analytics sections | ✅ **YES**     | All sections appear to be in code            |
+| Add charts as tables/images           | ❌ **NO**      | Charts not implemented per docs              |
+| Executive summary page                | ✅ **YES**     | Exists but needs enhancement                 |
+| Professional formatting               | ✅ **YES**     | Template helpers exist                       |
 
 ---
 
@@ -162,6 +176,7 @@
 ### **Phase 5 Status: PARTIALLY IMPLEMENTED**
 
 **Conclusion**: The enhanced PDF infrastructure EXISTS and appears comprehensive, but:
+
 1. ❌ Chart generation is NOT implemented (confirmed in docs)
 2. ⚠️ Table of Contents may not be fully functional
 3. ⚠️ Executive Summary needs enhancement
@@ -169,6 +184,7 @@
 5. ❓ End-to-end testing status unknown
 
 **Next Steps**:
+
 1. **Immediate**: Test the enhanced PDF generation end-to-end
 2. **Verify**: What actually works vs what's documented
 3. **Complete**: Implement missing chart generation
@@ -181,8 +197,9 @@
 ## 🎯 **Phase 5 Completion Criteria (From Plan):**
 
 From `INVESTMENT_ANALYTICS_PROGRESS.md`:
+
 - ⏳ Expand to 7-page report
-- ⏳ Add investment analytics sections  
+- ⏳ Add investment analytics sections
 - ⏳ Include charts as tables/images
 - ⏳ Enhanced formatting
 - ⏳ Executive summary page
@@ -198,6 +215,7 @@ From `INVESTMENT_ANALYTICS_PROGRESS.md`:
 ## ✅ **FINAL ASSESSMENT:**
 
 ### **What IS Working:**
+
 1. ✅ Enhanced PDF file structure exists (841 lines)
 2. ✅ All 13 sections are implemented (cover, exec summary, ToC, eligibility, costs, performance, cash flow, tax, projection, sensitivity, comparison, glossary, disclaimer)
 3. ✅ Table of Contents is FULLY implemented (contrary to docs saying it's not)
@@ -206,6 +224,7 @@ From `INVESTMENT_ANALYTICS_PROGRESS.md`:
 6. ✅ Chart generation functions EXIST in separate file
 
 ### **What's NOT Working / Missing:**
+
 1. ❌ **Chart generation is NOT INTEGRATED** - The chart functions exist in `generateChartImages.ts` but are NEVER CALLED in `generateEnhancedPDF.ts`
 2. ❌ **Charts will NOT appear in PDF** - Even though chart generation code exists, it's not being used
 3. ⚠️ **Chart library compatibility** - Uses `canvas` and `canvg` which may not work in serverless environment
@@ -216,11 +235,11 @@ From `INVESTMENT_ANALYTICS_PROGRESS.md`:
 **Infrastructure**: ✅ Complete  
 **Sections**: ✅ Complete  
 **Charts**: ❌ Not integrated  
-**Translations**: ⚠️ Partial  
+**Translations**: ⚠️ Partial
 
 **To Complete Phase 5, need to:**
+
 1. Integrate chart generation into PDF (call chart functions and embed images)
 2. Fix chart library compatibility issues (or use alternative approach)
 3. Complete Chinese translations
 4. Test end-to-end PDF generation
-

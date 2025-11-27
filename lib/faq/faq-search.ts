@@ -1,11 +1,8 @@
 // FAQ Search and Filter Logic
 
-import type { FAQQuestion, FAQCategory, FAQSearchResult, FAQFilterOptions } from '@/types/faq';
+import type { FAQQuestion, FAQCategory, FAQSearchResult, FAQFilterOptions } from "@/types/faq";
 
-export function searchFAQs(
-  categories: FAQCategory[],
-  searchTerm: string
-): FAQSearchResult[] {
+export function searchFAQs(categories: FAQCategory[], searchTerm: string): FAQSearchResult[] {
   if (!searchTerm || searchTerm.trim().length < 2) {
     return [];
   }
@@ -53,10 +50,7 @@ export function searchFAQs(
   return results.sort((a, b) => b.relevance - a.relevance);
 }
 
-export function filterFAQs(
-  categories: FAQCategory[],
-  options: FAQFilterOptions
-): FAQCategory[] {
+export function filterFAQs(categories: FAQCategory[], options: FAQFilterOptions): FAQCategory[] {
   let filtered = [...categories];
 
   // Filter by category
@@ -66,21 +60,25 @@ export function filterFAQs(
 
   // Filter by popular
   if (options.popular) {
-    filtered = filtered.map((cat) => ({
-      ...cat,
-      questions: cat.questions.filter((q) => q.popular),
-    })).filter((cat) => cat.questions.length > 0);
+    filtered = filtered
+      .map((cat) => ({
+        ...cat,
+        questions: cat.questions.filter((q) => q.popular),
+      }))
+      .filter((cat) => cat.questions.length > 0);
   }
 
   // Search term filtering
   if (options.searchTerm && options.searchTerm.trim().length >= 2) {
     const searchResults = searchFAQs(filtered, options.searchTerm);
     const questionIds = new Set(searchResults.map((r) => r.question.id));
-    
-    filtered = filtered.map((cat) => ({
-      ...cat,
-      questions: cat.questions.filter((q) => questionIds.has(q.id)),
-    })).filter((cat) => cat.questions.length > 0);
+
+    filtered = filtered
+      .map((cat) => ({
+        ...cat,
+        questions: cat.questions.filter((q) => questionIds.has(q.id)),
+      }))
+      .filter((cat) => cat.questions.length > 0);
   }
 
   return filtered;
@@ -101,9 +99,7 @@ export function getPopularQuestions(
   });
 
   // Sort by views
-  return all
-    .sort((a, b) => b.question.views - a.question.views)
-    .slice(0, limit);
+  return all.sort((a, b) => b.question.views - a.question.views).slice(0, limit);
 }
 
 export function getRelatedQuestions(
@@ -112,7 +108,7 @@ export function getRelatedQuestions(
 ): { question: FAQQuestion; category: FAQCategory }[] {
   // Find the current question
   let currentQuestion: FAQQuestion | null = null;
-  
+
   for (const category of categories) {
     const found = category.questions.find((q) => q.id === currentQuestionId);
     if (found) {
@@ -146,20 +142,6 @@ export function highlightSearchTerm(text: string, searchTerm: string): string {
     return text;
   }
 
-  const regex = new RegExp(`(${searchTerm})`, 'gi');
+  const regex = new RegExp(`(${searchTerm})`, "gi");
   return text.replace(regex, '<mark class="bg-yellow-200">$1</mark>');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,6 +5,7 @@
 This folder contains database migrations and configuration for the FIRB Calculator.
 
 ### Current Status
+
 ⚠️ **Database is NOT currently set up** - the application works without it.
 
 ### To Enable Database Features:
@@ -30,6 +31,7 @@ See `../docs/DATABASE_SETUP.md` for detailed instructions.
 ## Migration File
 
 The migration creates:
+
 - ✅ `firb_calculations` table with full schema
 - ✅ 4 enum types for type safety
 - ✅ Indexes for performance
@@ -43,6 +45,7 @@ The migration creates:
 ## What Database Enables
 
 ### Features Requiring Database:
+
 - Shareable calculation URLs (`/results/abc123`)
 - Calculation history
 - Save results for later
@@ -51,6 +54,7 @@ The migration creates:
 - User accounts (optional)
 
 ### Works Without Database:
+
 - All FIRB fee calculations
 - Live results display
 - Everything else in the app
@@ -60,6 +64,7 @@ The migration creates:
 ## When to Add Database
 
 **Add Supabase when you want:**
+
 1. Users to share calculations with others
 2. Users to save calculations
 3. Analytics on popular states/property types
@@ -67,6 +72,7 @@ The migration creates:
 5. User accounts and saved searches
 
 **Current Setup (No Database):**
+
 - Fast and simple
 - No maintenance
 - Zero cost
@@ -77,17 +83,3 @@ The migration creates:
 ## Need Help?
 
 See detailed setup guide: `../docs/DATABASE_SETUP.md`
-
-
-
-
-
-
-
-
-
-
-
-
-
-

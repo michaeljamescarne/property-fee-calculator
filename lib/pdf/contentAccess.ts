@@ -3,7 +3,7 @@
  * Future-proofing for tiered subscription model
  */
 
-export type ContentTier = 'free' | 'standard' | 'premium';
+export type ContentTier = "free" | "standard" | "premium";
 
 export interface UserSubscription {
   userId: string;
@@ -45,7 +45,7 @@ export const TIER_FEATURES: Record<ContentTier, TierFeatures> = {
     taxAnalysis: false,
     recommendations: false,
     glossary: true,
-    disclaimer: true
+    disclaimer: true,
   },
   standard: {
     executiveSummary: true,
@@ -61,7 +61,7 @@ export const TIER_FEATURES: Record<ContentTier, TierFeatures> = {
     taxAnalysis: true,
     recommendations: true,
     glossary: true,
-    disclaimer: true
+    disclaimer: true,
   },
   premium: {
     // All features enabled
@@ -78,15 +78,15 @@ export const TIER_FEATURES: Record<ContentTier, TierFeatures> = {
     taxAnalysis: true,
     recommendations: true,
     glossary: true,
-    disclaimer: true
-  }
+    disclaimer: true,
+  },
 };
 
 /**
  * Check user's subscription tier
  * @param userId - User ID to check subscription for
  * @returns Content tier the user has access to
- * 
+ *
  * @note Currently defaults to 'premium' for all users
  * @todo Implement when payment system is added:
  *  - Query database for user subscription
@@ -97,21 +97,21 @@ export const TIER_FEATURES: Record<ContentTier, TierFeatures> = {
 export async function getUserContentTier(userId?: string): Promise<ContentTier> {
   // TODO: Implement when payment system is added
   // Example future implementation:
-  // 
+  //
   // if (!userId) return 'free';
-  // 
+  //
   // const subscription = await db.query(`
-  //   SELECT tier, expires_at FROM user_subscriptions 
+  //   SELECT tier, expires_at FROM user_subscriptions
   //   WHERE user_id = $1 AND expires_at > NOW()
   //   ORDER BY expires_at DESC LIMIT 1
   // `, [userId]);
-  // 
+  //
   // if (!subscription) return 'free';
   // return subscription.tier as ContentTier;
-  
+
   // For now, return premium for all users
-  console.log('[ContentAccess] getUserContentTier called for userId:', userId);
-  return 'premium';
+  console.log("[ContentAccess] getUserContentTier called for userId:", userId);
+  return "premium";
 }
 
 /**
@@ -131,9 +131,9 @@ export function hasAccess(tier: ContentTier, feature: keyof TierFeatures): boole
  */
 export function getTierDisplayName(tier: ContentTier): string {
   const names: Record<ContentTier, string> = {
-    free: 'Free',
-    standard: 'Standard',
-    premium: 'Premium'
+    free: "Free",
+    standard: "Standard",
+    premium: "Premium",
   };
   return names[tier];
 }
@@ -144,17 +144,17 @@ export function getTierDisplayName(tier: ContentTier): string {
  * @returns Call-to-action text for upgrading
  */
 export function getUpgradeCTA(currentTier: ContentTier): string {
-  if (currentTier === 'free') {
-    return 'Upgrade to Standard or Premium to unlock full analysis';
-  } else if (currentTier === 'standard') {
-    return 'Upgrade to Premium for complete investment insights with charts';
+  if (currentTier === "free") {
+    return "Upgrade to Standard or Premium to unlock full analysis";
+  } else if (currentTier === "standard") {
+    return "Upgrade to Premium for complete investment insights with charts";
   }
-  return '';
+  return "";
 }
 
 /**
  * Database schema reference (for future implementation)
- * 
+ *
  * CREATE TABLE user_subscriptions (
  *   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
  *   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -168,20 +168,7 @@ export function getUpgradeCTA(currentTier: ContentTier): string {
  *   updated_at TIMESTAMP DEFAULT NOW(),
  *   UNIQUE(user_id, started_at)
  * );
- * 
+ *
  * CREATE INDEX idx_user_subscriptions_user_id ON user_subscriptions(user_id);
  * CREATE INDEX idx_user_subscriptions_expires ON user_subscriptions(expires_at);
  */
-
-
-
-
-
-
-
-
-
-
-
-
-

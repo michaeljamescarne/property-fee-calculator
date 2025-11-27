@@ -2,7 +2,7 @@
  * Authentication Types
  */
 
-import { UserProfile } from './database';
+import { UserProfile } from "./database";
 
 // Auth state
 export interface AuthState {
@@ -42,28 +42,15 @@ export interface Session {
 
 // Auth errors
 export type AuthError =
-  | 'INVALID_EMAIL'
-  | 'CODE_EXPIRED'
-  | 'CODE_INVALID'
-  | 'MAX_ATTEMPTS'
-  | 'RATE_LIMITED'
-  | 'SERVER_ERROR'
-  | 'ALREADY_USED';
+  | "INVALID_EMAIL"
+  | "CODE_EXPIRED"
+  | "CODE_INVALID"
+  | "MAX_ATTEMPTS"
+  | "RATE_LIMITED"
+  | "SERVER_ERROR"
+  | "ALREADY_USED";
 
 export interface AuthErrorResponse {
   error: AuthError;
   message: string;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
