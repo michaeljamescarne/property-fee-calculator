@@ -38,7 +38,7 @@
     "clearFilters": "Clear filters"
   },
   "FIRBCalculator": {
-    "title": "FIRB Calculator",
+    "title": "Calculator",
     "subtitle": "Calculate your complete property investment costs including FIRB fees, stamp duty, and ongoing expenses",
     "description": "Calculate your complete property investment costs including FIRB fees, stamp duty, and ongoing expenses",
     "next": "Next",
@@ -139,7 +139,19 @@
         "vacancyHelp": "Typical: 3-5% for good locations, 7-10% for high-risk areas",
         "rentGrowth": "Annual Rent Growth",
         "rentGrowthHelp": "Historical average: 2-4% per year",
-        "help": "Based on similar properties in the area. You can adjust this later."
+        "help": "Based on similar properties in the area. You can adjust this later.",
+        "benchmark": {
+          "loading": "Loading benchmark data...",
+          "available": "Benchmark Available",
+          "suburb": "Suburb",
+          "state": "State",
+          "using": "Using benchmark",
+          "marketBenchmark": "Market Benchmark",
+          "yourInput": "Your Input",
+          "yield": "yield",
+          "useBenchmark": "Use Market Benchmark",
+          "noData": "No benchmark data available for this location. Enter your estimated weekly rent above."
+        }
       },
       "growth": {
         "title": "Capital Growth Projections",
@@ -147,7 +159,23 @@
         "conservative": "Conservative (4%)",
         "moderate": "Moderate (6%)",
         "optimistic": "Optimistic (8%)",
-        "help": "Historical average: 6% per year. Adjust based on your expectations."
+        "help": "Historical average: 6% per year. Adjust based on your expectations.",
+        "benchmark": {
+          "loading": "Loading benchmark data...",
+          "available": "Benchmark Available",
+          "suburb": "Suburb",
+          "state": "State",
+          "using": "Using benchmark",
+          "marketBenchmark": "Market Benchmark",
+          "yourInput": "Your Input",
+          "fiveYearAverage": "5-year average",
+          "perYear": "per year",
+          "aboveBenchmark": "Above benchmark",
+          "belowBenchmark": "Below benchmark",
+          "matchesBenchmark": "Matches benchmark",
+          "useBenchmark": "Use Market Benchmark",
+          "noData": "No benchmark data available for this location. Adjust the slider above based on your expectations."
+        }
       },
       "loan": {
         "title": "Loan Details",
@@ -230,6 +258,272 @@
         "title": "Important Disclaimer",
         "content": "This calculation is an estimate only and should not be considered financial or legal advice. Regulations and fees can change. Always consult with a qualified professional before making investment decisions."
       },
+      "investmentAnalytics": {
+        "toggle": {
+          "title": "Investment Analytics",
+          "show": "Show Investment Analysis",
+          "hide": "Hide Analysis",
+          "description": "See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments"
+        },
+        "summary": {
+          "title": "Investment Performance Summary",
+          "description": "Key metrics at a glance based on your investment assumptions",
+          "grossYield": "Gross Rental Yield",
+          "netYield": "Net Rental Yield",
+          "afterExpenses": "After expenses",
+          "annualizedROI": "Annualized ROI",
+          "totalReturn": "total return",
+          "monthlyCashFlow": "Monthly Cash Flow",
+          "negativelyGeared": "Negatively geared",
+          "positivelyGeared": "Positively geared",
+          "taxBenefit": "Tax benefit",
+          "propertyValueGrowth": "Property Value Growth",
+          "afterYears": "After",
+          "years": "years",
+          "yourEquity": "Your Equity",
+          "equityGain": "Equity gain",
+          "taxSavings": "Tax Savings",
+          "fromNegativeGearing": "From negative gearing"
+        },
+        "score": {
+          "title": "Investment Score",
+          "description": "Comprehensive analysis of your investment opportunity",
+          "overallVerdict": "Overall Verdict",
+          "investment": "Investment",
+          "scoreBreakdown": "Score Breakdown",
+          "dimensions": {
+            "rentalYield": "Rental Yield",
+            "capitalGrowth": "Capital Growth",
+            "cashFlow": "Cash Flow",
+            "taxEfficiency": "Tax Efficiency",
+            "riskProfile": "Risk Profile"
+          },
+          "verdicts": {
+            "excellent": "Excellent",
+            "good": "Good",
+            "moderate": "Moderate",
+            "poor": "Poor",
+            "notRecommended": "Not Recommended"
+          },
+          "strengths": "Strengths",
+          "weaknesses": "Weaknesses",
+          "suitableFor": "Suitable For",
+          "risksToConsider": "Risks to Consider",
+          "keyTakeaways": "Key Takeaways"
+        },
+        "taxAnalysis": {
+          "title": "Tax Analysis",
+          "description": "Tax implications and deductions for your investment property",
+          "annualTaxSaving": "Annual Tax Saving",
+          "fromNegativeGearing": "from negative gearing",
+          "totalDeductions": "Total Deductions",
+          "deductionsDesc": "Tax-deductible expenses for the year",
+          "breakdownTitle": "Deductions Breakdown",
+          "deductionItems": {
+            "loanInterest": "Loan Interest",
+            "propertyManagement": "Property Management",
+            "maintenance": "Maintenance",
+            "landTax": "Land Tax",
+            "councilRates": "Council Rates",
+            "insurance": "Insurance",
+            "strataFees": "Strata Fees",
+            "depreciation": "Depreciation",
+            "other": "Other"
+          },
+          "negativeGearing": {
+            "title": "Negative Gearing Analysis",
+            "rentalIncome": "Rental Income",
+            "deductibleExpenses": "Deductible Expenses",
+            "netRentalLoss": "Net Rental Loss",
+            "taxBenefit": "Tax Benefit"
+          },
+          "cgtTitle": "Capital Gains Tax (CGT) on Exit",
+          "cgtItems": {
+            "salePrice": "Sale Price (after {year} years)",
+            "originalPrice": "Original Purchase Price",
+            "purchaseCosts": "Purchase Costs",
+            "sellingCosts": "Selling Costs",
+            "costBase": "Cost Base",
+            "capitalGain": "Capital Gain",
+            "cgtRate": "CGT Rate",
+            "cgtPayable": "CGT Payable",
+            "withholdingTax": "Withholding Tax",
+            "netProceeds": "Net Proceeds After Tax"
+          },
+          "taxPlanningTip": "Tax planning tip: Consider speaking with a qualified tax advisor to optimize your investment structure and maximize tax benefits. Tax laws and rates can change, affecting your calculations."
+        },
+        "sensitivity": {
+          "title": "Sensitivity Analysis",
+          "description": "How changes in key variables affect your investment returns",
+          "warning": "Sensitivity Analysis Warning",
+          "warningDesc": "These scenarios show how changes in key variables could impact your investment. Results are estimates and actual outcomes may vary.",
+          "vacancyImpact": "Vacancy Impact",
+          "vacancyDesc": "How vacancy rates affect rental income",
+          "vacancyRate": "Vacancy Rate",
+          "annualRent": "Annual Rent",
+          "baseCase": "Base Case",
+          "vacancyNote": "Note: Vacancy rates significantly impact rental income and cash flow.",
+          "interestImpact": "Interest Rate Impact",
+          "interestDesc": "How interest rate changes affect loan repayments",
+          "interestRate": "Interest Rate",
+          "monthlyRepayment": "Monthly Repayment",
+          "annualCost": "Annual Cost",
+          "cashFlowImpact": "Cash Flow Impact",
+          "impact": "Impact",
+          "growthScenarios": "Growth Scenarios",
+          "growthDesc": "How different growth rates affect your investment",
+          "conservative": "Conservative",
+          "moderate": "Moderate",
+          "optimistic": "Optimistic",
+          "base": "Base Case",
+          "growthRate": "Growth Rate",
+          "finalValue": "Final Value",
+          "totalReturn": "Total Return",
+          "riskFactors": "Risk Factors",
+          "mostSensitive": "Most Sensitive Factors",
+          "riskMitigation": "Risk Mitigation",
+          "sensitivityItems": {
+            "capitalGrowth": "Capital Growth",
+            "interestRate": "Interest Rate",
+            "vacancy": "Vacancy Rate",
+            "highDemand": "High Demand Area",
+            "fixRate": "Fixed Rate Loan",
+            "cashReserves": "Cash Reserves"
+          }
+        },
+        "comparison": {
+          "title": "Investment Comparison",
+          "description": "Compare your property investment against other investment options over {years} years",
+          "comparisonResults": "Comparison Results",
+          "comparisonDesc": "{best} returned {return} over {years} years, compared to your property investment of {propertyReturn}",
+          "propertyLeads": "Property Investment Leads!",
+          "propertyLeadsDesc": "Your property investment returned {return} over {years} years with an annualized return of {rate}%",
+          "chartTitle": "Investment Type",
+          "detailedComparison": "Detailed Comparison",
+          "yearReturn": "{years}-Year Return",
+          "annualRate": "Annual Rate",
+          "riskLevel": "Risk Level",
+          "yourInvestment": "Your Investment",
+          "investmentTypes": {
+            "property": "Property Investment",
+            "stocks": "Stocks (ASX)",
+            "bonds": "Government Bonds",
+            "termDeposit": "Term Deposit",
+            "savings": "High Interest Savings"
+          },
+          "riskLevels": {
+            "veryLow": "Very Low",
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High",
+            "veryHigh": "Very High"
+          },
+          "assumptions": "Assumptions: Property growth at {growth}% p.a., ASX at 7.2% p.a., Bonds at 4.5% p.a., Term Deposit at 4% p.a., Savings at 4.5% p.a. Returns are estimates based on historical averages."
+        },
+        "cashFlow": {
+          "title": "Cash Flow Analysis",
+          "description": "Detailed breakdown of your rental income and expenses",
+          "annualIncome": "Annual Income",
+          "annualExpenses": "Annual Expenses",
+          "afterTaxCashFlow": "After Tax Cash Flow",
+          "effectiveAfterVacancy": "after vacancy",
+          "includingLoanRepayments": "Including loan repayments",
+          "chartTitle": "Annual Cash Flow Breakdown",
+          "expenseBreakdown": "Detailed Expense Breakdown",
+          "totalAnnualExpenses": "Total Annual Expenses",
+          "negativeGearingBenefit": "Negative Gearing Benefit",
+          "savedPerMonth": "saved/month",
+          "deductibleExpenses": "Deductible Expenses",
+          "beforeTax": "Before Tax",
+          "afterTax": "After Tax",
+          "income": "Income",
+          "expenses": "Expenses",
+          "netCashFlow": "Net Cash Flow",
+          "perMonth": "per month"
+        },
+        "inputs": {
+          "title": "Investment Analysis Parameters",
+          "description": "Adjust these values to see how different scenarios affect your investment returns",
+          "note": "These are estimates based on current market conditions and typical investor scenarios. Actual results may vary based on specific circumstances, market changes, and individual tax situations.",
+          "rental": {
+            "title": "Rental Income",
+            "weeklyRent": "Estimated Weekly Rent",
+            "vacancyRate": "Vacancy Rate",
+            "vacancyHelp": "Typical: 3-5% for good locations, 7-10% for high-risk areas",
+            "rentGrowth": "Annual Rent Growth",
+            "rentGrowthHelp": "Historical average: 2-4% per year",
+            "perYear": "per year"
+          },
+          "management": {
+            "title": "Property Management",
+            "selfManaged": "I will self-manage this property (no management fees)",
+            "managementFee": "Property Management Fee",
+            "managementHelp": "Typical: 7-9% of rental income. Estimated",
+            "lettingFee": "Letting Fee (when finding new tenant)",
+            "weeksRent": "weeks of rent"
+          },
+          "financing": {
+            "title": "Financing Details",
+            "loanAmount": "Loan Amount",
+            "interestRate": "Interest Rate",
+            "interestHelp": "Current market rates: 5.5-7.5% for investment properties",
+            "loanTerm": "Loan Term",
+            "loanType": "Loan Type",
+            "principalAndInterest": "Principal and Interest",
+            "interestOnly": "Interest Only",
+            "interestOnlyPeriod": "Interest Only Period"
+          },
+          "assumptions": {
+            "title": "Investment Assumptions",
+            "holdPeriod": "Investment Hold Period",
+            "holdPeriodHelp": "How long you plan to hold this investment property",
+            "capitalGrowth": "Capital Growth Rate",
+            "capitalGrowthHelp": "Historical average: 6-8% per year for Australian property",
+            "taxRate": "Marginal Tax Rate",
+            "taxRateHelp": "Your highest tax bracket rate for investment income",
+            "sellingCosts": "Selling Costs",
+            "sellingCostsHelp": "Typical: 3-4% (agent commission, legal fees, marketing)"
+          },
+          "currency": {
+            "title": "Currency Conversion (Optional)",
+            "homeCurrency": "Home Currency",
+            "exchangeRate": "Exchange Rate (1 AUD = {currency})",
+            "exchangeHelp": "Enter the current exchange rate to convert all amounts to your home currency",
+            "aud": "Australian Dollar (AUD)",
+            "usd": "US Dollar (USD)",
+            "cny": "Chinese Yuan (CNY)",
+            "eur": "Euro (EUR)",
+            "gbp": "British Pound (GBP)",
+            "jpy": "Japanese Yen (JPY)",
+            "sgd": "Singapore Dollar (SGD)"
+          }
+        },
+        "projections": {
+          "title": "{years}-Year Investment Projections",
+          "description": "See how your investment grows over time with property appreciation and loan paydown",
+          "yearByYear": "10-Year Projection Table",
+          "startingValue": "Starting Value",
+          "finalValue": "Final Value",
+          "yourEquity": "Your Equity",
+          "from": "from",
+          "totalROI": "Total ROI",
+          "perAnnum": "per annum",
+          "tableHeaders": {
+            "year": "Year",
+            "propertyValue": "Property Value",
+            "equity": "Your Equity",
+            "cashFlow": "Cash Flow",
+            "cumulativeReturn": "Cumulative Return"
+          },
+          "breakEven": {
+            "title": "Break-Even Analysis",
+            "cumulativeBreakEven": "Cumulative Break-Even",
+            "positiveCashFlow": "Positive Cash Flow",
+            "cashRequired": "Cash Required",
+            "year": "Year"
+          }
+        }
+      },
       "optimalUseCase": {
         "title": "Optimal Use Case Analysis",
         "description": "Compare long-term rental vs short-stay accommodation to maximize your returns",
@@ -269,6 +563,27 @@
         "reasoning": {
           "title": "Analysis Reasoning"
         }
+      },
+      "benchmarkComparison": {
+        "title": "Market Benchmark Comparison",
+        "description": "Compare your inputs with {level} market benchmarks",
+        "yourInput": "Your Input",
+        "benchmark": "Market Benchmark",
+        "dataSource": "Data Source",
+        "lastUpdated": "Last Updated",
+        "rentalYield": {
+          "title": "Gross Rental Yield",
+          "above": "Your rental yield is above the market benchmark",
+          "below": "Your rental yield is below the market benchmark",
+          "similar": "Your rental yield is similar to the market benchmark"
+        },
+        "capitalGrowth": {
+          "title": "Capital Growth Rate",
+          "perYear": "per year",
+          "above": "Your capital growth expectation is above the market benchmark",
+          "below": "Your capital growth expectation is below the market benchmark",
+          "similar": "Your capital growth expectation is similar to the market benchmark"
+        }
       }
     }
   },
@@ -291,5 +606,54 @@
     "contact": "Contact",
     "copyright": "© 2025 Property Fee Calculator. All rights reserved.",
     "disclaimerText": "This calculator provides estimates only. Please consult with qualified professionals for financial and legal advice."
+  },
+  "Admin": {
+    "benchmarks": {
+      "title": "Benchmark Data Management",
+      "description": "Manage rental yield and capital growth benchmarks by state and suburb",
+      "addNew": "Add New Benchmark",
+      "edit": "Edit Benchmark",
+      "delete": "Delete Benchmark",
+      "state": "State",
+      "suburb": "Suburb",
+      "postcode": "Postcode",
+      "grossYield": "Gross Rental Yield (%)",
+      "netYield": "Net Rental Yield (%)",
+      "capitalGrowth5yr": "Capital Growth 5yr (%)",
+      "capitalGrowth10yr": "Capital Growth 10yr (%)",
+      "dataSource": "Data Source",
+      "qualityScore": "Quality Score",
+      "notes": "Notes",
+      "isActive": "Active",
+      "actions": "Actions",
+      "save": "Save",
+      "cancel": "Cancel",
+      "deleteConfirm": "Are you sure you want to delete this benchmark?",
+      "success": "Benchmark saved successfully",
+      "error": "Failed to save benchmark",
+      "loading": "Loading...",
+      "noData": "No benchmarks found",
+      "filterByState": "Filter by state",
+      "showActiveOnly": "Show active only",
+      "importCSV": "Import CSV",
+      "csvImport": {
+        "title": "Import Benchmarks from CSV",
+        "description": "Upload a CSV file to bulk import benchmark data. The CSV should have columns: state, suburb_name (optional), postcode (optional), gross_rental_yield, net_rental_yield, capital_growth_5yr, capital_growth_10yr, data_source, data_quality_score, notes, is_active.",
+        "fileLabel": "CSV File",
+        "selectFile": "Select CSV file",
+        "downloadTemplate": "Download CSV Template",
+        "import": "Import",
+        "importing": "Importing...",
+        "success": "Import Successful!",
+        "failed": "Import Failed",
+        "totalRows": "Total rows",
+        "inserted": "Inserted",
+        "updated": "Updated",
+        "errors": "Errors",
+        "errorDetails": "Error Details",
+        "validationErrors": "Validation Errors",
+        "row": "Row"
+      }
+    }
   }
 }

@@ -47,7 +47,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { name: string }; fill: string; value: number }> }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 border border-border rounded-lg shadow-md">
+        <div className="bg-white p-3 border border-gray-200 rounded shadow-md">
           <p className="font-semibold">{payload[0].payload.name}</p>
           <p className="text-sm" style={{ color: payload[0].fill }}>
             {currency(Math.abs(payload[0].value))}
@@ -59,15 +59,15 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
   };
 
   return (
-    <Card className="border-none shadow-md rounded-2xl bg-white">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <DollarSign className="h-5 w-5 text-primary" />
+        <CardTitle className="flex items-center gap-2 text-2xl font-semibold text-gray-900">
+          <DollarSign className="h-5 w-5 text-blue-600" />
           {t('cashFlow.title') === 'FIRBCalculator.investmentAnalytics.cashFlow.title' 
             ? 'Cash Flow Analysis' 
             : t('cashFlow.title')}
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-600">
           {t('cashFlow.description') === 'FIRBCalculator.investmentAnalytics.cashFlow.description'
             ? 'Detailed breakdown of your rental income and expenses'
             : t('cashFlow.description')}
@@ -77,7 +77,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
       <CardContent className="space-y-8">
         {/* Summary Cards */}
         <div className="grid md:grid-cols-3 gap-4">
-          <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
+          <div className="p-4 bg-green-50 border border-green-200 rounded">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-5 w-5 text-green-600" />
               <p className="text-sm font-medium text-green-900">
@@ -94,7 +94,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
             </p>
           </div>
 
-          <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+          <div className="p-4 bg-red-50 border border-red-200 rounded">
             <div className="flex items-center gap-2 mb-2">
               <TrendingDown className="h-5 w-5 text-red-600" />
               <p className="text-sm font-medium text-red-900">
@@ -113,7 +113,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
             </p>
           </div>
 
-          <div className={`p-4 rounded-xl border ${
+          <div className={`p-4 rounded border ${
             analytics.cashFlow.annual.afterTaxCashFlow >= 0
               ? 'bg-blue-50 border-blue-200'
               : 'bg-amber-50 border-amber-200'
@@ -177,7 +177,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           </h4>
           <div className="space-y-3">
             {expenseBreakdown.map((item, index) => (
-              <div key={index} className="flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+              <div key={index} className="flex justify-between items-center p-3 rounded hover:bg-gray-50 transition-colors">
                 <span className="text-sm font-medium">{item.name}</span>
                 <span className="text-sm font-semibold">{currency(item.amount)}</span>
               </div>
@@ -195,7 +195,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
 
         {/* Tax Benefit */}
         {analytics.cashFlow.annual.taxBenefit > 0 && (
-          <div className="p-5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl">
+          <div className="p-5 bg-green-50 border border-green-200 rounded">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-semibold text-green-900 mb-1">
@@ -223,9 +223,9 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
         )}
 
         {/* Monthly Summary */}
-        <div className="grid md:grid-cols-2 gap-4 p-5 bg-muted/50 rounded-xl border border-border/40">
+        <div className="grid md:grid-cols-2 gap-4 p-5 bg-gray-50 rounded border border-gray-200">
           <div>
-            <p className="text-sm text-muted-foreground mb-1">
+            <p className="text-sm text-gray-600 mb-1">
               {t('cashFlow.beforeTax') === 'FIRBCalculator.investmentAnalytics.cashFlow.beforeTax' 
                 ? 'Before Tax' 
                 : t('cashFlow.beforeTax')}
@@ -237,7 +237,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
             </p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground mb-1">
+            <p className="text-sm text-gray-600 mb-1">
               {t('cashFlow.afterTax') === 'FIRBCalculator.investmentAnalytics.cashFlow.afterTax' 
                 ? 'After Tax' 
                 : t('cashFlow.afterTax')}

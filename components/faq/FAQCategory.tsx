@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
 import { FileText, UserCheck, DollarSign, AlertTriangle, Home, HelpCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import FAQItem from './FAQItem';
@@ -22,33 +23,47 @@ const iconMap = {
 };
 
 export default function FAQCategory({ category, defaultOpen = false, openQuestionId: externalOpenQuestionId }: FAQCategoryProps) {
+  const locale = useLocale();
   const [internalOpenQuestionId, setInternalOpenQuestionId] = useState<string | null>(
     defaultOpen && category.questions.length > 0 ? category.questions[0].id : null
   );
   
-  // Use external openQuestionId if provided, otherwise use internal state
-  const openQuestionId = externalOpenQuestionId || internalOpenQuestionId;
+  // Sync external openQuestionId to internal state when it changes
+  useEffect(() => {
+    if (externalOpenQuestionId && category.questions.some(q => q.id === externalOpenQuestionId)) {
+      setInternalOpenQuestionId(externalOpenQuestionId);
+    }
+  }, [externalOpenQuestionId, category.questions]);
+
+  // Use internal state for toggling (allows user interaction to override external state)
+  const openQuestionId = internalOpenQuestionId;
 
   const Icon = iconMap[category.icon as keyof typeof iconMap] || HelpCircle;
 
   const handleQuestionToggle = (questionId: string) => {
-    setInternalOpenQuestionId(openQuestionId === questionId ? null : questionId);
+    // If clicking the currently open question, close it
+    if (openQuestionId === questionId) {
+      setInternalOpenQuestionId(null);
+    } else {
+      // Otherwise, open the clicked question
+      setInternalOpenQuestionId(questionId);
+    }
   };
 
   return (
     <section id={category.id} className="scroll-mt-24">
-      <Card className="border-none shadow-md rounded-2xl overflow-hidden bg-white">
+      <Card className="border border-gray-200 shadow-sm rounded overflow-hidden bg-white p-0">
         {/* Category Header */}
-        <div className="bg-gradient-to-r from-primary/10 to-accent/10 px-6 py-5 border-b border-border/40">
+        <div className="bg-blue-50 px-6 py-5 border-b border-gray-200">
           <div className="flex items-center gap-3">
-            <div className="bg-primary/10 p-2.5 rounded-lg">
-              <Icon className="h-6 w-6 text-primary" />
+            <div className="bg-blue-100 p-2.5 rounded">
+              <Icon className="h-6 w-6 text-blue-600" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">
+              <h2 className="text-3xl font-semibold text-gray-900">
                 {category.name}
               </h2>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <p className="text-sm text-gray-600 mt-0.5">
                 {category.questions.length} {category.questions.length === 1 ? 'question' : 'questions'}
               </p>
             </div>
@@ -56,13 +71,15 @@ export default function FAQCategory({ category, defaultOpen = false, openQuestio
         </div>
 
         {/* Questions */}
-        <div className="divide-y divide-border/40">
+        <div className="divide-y divide-gray-200">
           {category.questions.map((question) => (
             <FAQItem
               key={question.id}
               question={question}
-              isOpen={openQuestionId === question.id}
+              category={category}
+              isOpen={openQuestionId}
               onToggle={handleQuestionToggle}
+              locale={locale}
             />
           ))}
         </div>

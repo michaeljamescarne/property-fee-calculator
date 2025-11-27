@@ -38,8 +38,10 @@ import SaveCalculationButton from './SaveCalculationButton';
 import LoginModal from '@/components/auth/LoginModal';
 import EligibilityResultCard from './EligibilityResultCard';
 import PrintableReport from './PrintableReport';
+import BenchmarkComparison from './BenchmarkComparison';
 import { calculateOptimalUseCase, getDefaultOccupancyRate } from '@/lib/firb/optimal-use-case';
 import type { ShortStayRegulation } from '@/lib/firb/optimal-use-case';
+import type { BenchmarkData } from '@/app/api/benchmarks/route';
 
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
@@ -92,6 +94,10 @@ export default function ResultsPanel({
   // Short-stay regulations state
   const [shortStayRegulations, setShortStayRegulations] = useState<ShortStayRegulation | null>(null);
   const [isLoadingRegulations, setIsLoadingRegulations] = useState(false);
+  
+  // Benchmark data state
+  const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
+  const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
   
   // Calculate investment analytics
   const investmentAnalytics = useMemo(() => 
@@ -187,20 +193,20 @@ export default function ResultsPanel({
       />
 
       {/* Cost Breakdown */}
-      <Card>
+      <Card className="border border-gray-200 shadow-sm rounded bg-white">
         <CardHeader>
-          <CardTitle>{t('costs.title')}</CardTitle>
-          <CardDescription>{t('costs.description')}</CardDescription>
+          <CardTitle className="text-2xl font-semibold text-gray-900">{t('costs.title')}</CardTitle>
+          <CardDescription className="text-gray-600">{t('costs.description')}</CardDescription>
         </CardHeader>
         <CardContent>
           {/* Total Investment Cost */}
-          <div className="p-6 mb-6 rounded-lg bg-gradient-to-r from-blue-500 to-blue-400 text-white">
-            <p className="text-sm opacity-90">{t('costs.totalInvestment')}</p>
+          <div className="p-6 mb-6 rounded bg-blue-600 text-white">
+            <p className="text-sm text-white/90">{t('costs.totalInvestment')}</p>
             <p className="text-4xl font-bold mt-2">{formatCurrency(costs.totalInvestmentCost)}</p>
-            <p className="text-sm opacity-75 mt-2">
+            <p className="text-sm text-white/75 mt-2">
               {t('costs.propertyPrice')}: {formatCurrency(costs.upfrontCosts.propertyPrice)}
             </p>
-            <p className="text-sm opacity-75">
+            <p className="text-sm text-white/75">
               {t('costs.upfrontCosts')}: {formatCurrency(costs.upfrontCosts.total)}
             </p>
           </div>
@@ -217,18 +223,18 @@ export default function ResultsPanel({
                     {section.items.map((item, itemIndex) => (
                       <div key={itemIndex} className="flex justify-between items-start gap-4">
                         <div className="flex-1">
-                          <p className="font-medium">{item.name}</p>
+                          <p className="font-medium text-gray-900">{item.name}</p>
                           {item.description && (
-                            <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                            <p className="text-sm text-gray-600 mt-1">{item.description}</p>
                           )}
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold">{formatCurrency(item.amount)}</p>
+                          <p className="font-semibold text-gray-900">{formatCurrency(item.amount)}</p>
                         </div>
                       </div>
                     ))}
                     {section.items.length > 1 && (
-                      <div className="flex justify-between items-center pt-3 border-t font-semibold">
+                      <div className="flex justify-between items-center pt-3 border-t border-gray-200 font-semibold text-gray-900">
                         <span>{t('costs.subtotal')}</span>
                         <span>
                           {formatCurrency(
@@ -244,13 +250,13 @@ export default function ResultsPanel({
           </Accordion>
 
           {/* Ongoing Costs Summary */}
-          <div className="mt-6 p-4 rounded-lg bg-muted">
+          <div className="mt-6 p-4 rounded bg-gray-50 border border-gray-200">
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-semibold">{t('costs.annualOngoing')}</p>
-                <p className="text-sm text-muted-foreground">{t('costs.annualOngoingNote')}</p>
+                <p className="font-semibold text-gray-900">{t('costs.annualOngoing')}</p>
+                <p className="text-sm text-gray-600">{t('costs.annualOngoingNote')}</p>
               </div>
-              <p className="text-2xl font-bold">{formatCurrency(costs.ongoingCosts.total)}</p>
+              <p className="text-2xl font-bold text-gray-900">{formatCurrency(costs.ongoingCosts.total)}</p>
             </div>
           </div>
         </CardContent>
@@ -258,19 +264,19 @@ export default function ResultsPanel({
 
       {/* Investment Analytics Toggle */}
       <Card 
-        className="border-2 border-primary/30 shadow-lg rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 cursor-pointer hover:shadow-xl transition-all"
+        className="border-2 border-blue-200 shadow-md rounded bg-blue-50 cursor-pointer hover:shadow-lg hover:border-blue-600 transition-all"
         onClick={() => setShowInvestmentAnalysis(!showInvestmentAnalysis)}
       >
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex-1">
-              <CardTitle className="flex items-center gap-2 text-xl">
-                <TrendingUp className="h-6 w-6 text-primary" />
+              <CardTitle className="flex items-center gap-2 text-xl font-semibold text-gray-900">
+                <TrendingUp className="h-6 w-6 text-blue-600" />
                 {tAnalytics('toggle.title') === 'FIRBCalculator.investmentAnalytics.toggle.title' 
                   ? 'Investment Analysis & Projections' 
                   : tAnalytics('toggle.title')}
               </CardTitle>
-              <CardDescription className="mt-2">
+              <CardDescription className="mt-2 text-gray-600">
                 {tAnalytics('toggle.description') === 'FIRBCalculator.investmentAnalytics.toggle.description'
                   ? 'See rental yields, ROI, 10-year projections, cash flow analysis, and compare against other investments'
                   : tAnalytics('toggle.description')}
@@ -279,7 +285,7 @@ export default function ResultsPanel({
             <Button 
               variant="outline" 
               size="lg"
-              className="gap-2 font-semibold"
+              className="gap-2 font-semibold rounded"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowInvestmentAnalysis(!showInvestmentAnalysis);
@@ -315,6 +321,15 @@ export default function ResultsPanel({
           {/* Investment Summary */}
           <InvestmentSummary analytics={investmentAnalytics} />
 
+          {/* Benchmark Comparison */}
+          <BenchmarkComparison
+            benchmarkData={benchmarkData}
+            investmentInputs={investmentInputs}
+            investmentAnalytics={investmentAnalytics}
+            propertyValue={propertyValue}
+            state={state}
+          />
+
           {/* Cash Flow Analysis */}
           <CashFlowAnalysis analytics={investmentAnalytics} />
 
@@ -349,7 +364,7 @@ export default function ResultsPanel({
           onClick={handlePrint}
           variant="default"
           size="lg"
-          className="gap-2"
+          className="gap-2 rounded"
         >
           <Download className="h-5 w-5" />
           {t('actions.downloadPDF')}
@@ -367,7 +382,7 @@ export default function ResultsPanel({
           onClick={onEmailResults}
           variant="outline"
           size="lg"
-          className="gap-2"
+          className="gap-2 rounded"
         >
           <Mail className="h-5 w-5" />
           {t('actions.emailResults')}
@@ -376,7 +391,7 @@ export default function ResultsPanel({
           onClick={onEditCalculation}
           variant="outline"
           size="lg"
-          className="gap-2"
+          className="gap-2 rounded"
         >
           <Edit className="h-5 w-5" />
           {t('actions.editCalculation')}
@@ -385,7 +400,7 @@ export default function ResultsPanel({
           onClick={onStartAgain}
           variant="outline"
           size="lg"
-          className="gap-2"
+          className="gap-2 rounded"
         >
           <RotateCcw className="h-5 w-5" />
           {t('actions.startAgain')}

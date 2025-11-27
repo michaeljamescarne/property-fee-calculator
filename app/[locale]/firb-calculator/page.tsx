@@ -24,6 +24,9 @@ import { CostBreakdown } from '@/lib/firb/calculations';
 import { generateFIRBPDF } from '@/lib/pdf/generateFIRBPDF';
 import { generateEnhancedPDF } from '@/lib/pdf/generateEnhancedPDF';
 import type { InvestmentAnalytics, InvestmentInputs } from '@/types/investment';
+import { parseAddress } from '@/lib/utils/address-parser';
+import { generateDefaultInputs } from '@/lib/firb/investment-analytics';
+import type { BenchmarkData } from '@/app/api/benchmarks/route';
 
 export default function FIRBCalculatorPage() {
   const t = useTranslations('FIRBCalculator');
@@ -49,6 +52,10 @@ export default function FIRBCalculatorPage() {
 
   // Investment inputs state
   const [investmentInputs, setInvestmentInputs] = useState<Partial<InvestmentInputs>>({});
+  
+  // Benchmark data state
+  const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
+  const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
 
   // Results state
   const [eligibility, setEligibility] = useState<EligibilityResult | null>(null);
@@ -72,50 +79,67 @@ export default function FIRBCalculatorPage() {
     }
   }, [searchParams, isLoadingSavedCalculation, eligibility, costs]);
 
+  // Fetch benchmarks when property details are available
+  useEffect(() => {
+    const fetchBenchmarks = async () => {
+      if (!formData.state || !formData.propertyValue) return;
+      
+      setIsLoadingBenchmarks(true);
+      try {
+        // Parse address to get suburb/postcode if available
+        const parsedAddress = formData.propertyAddress 
+          ? parseAddress(formData.propertyAddress)
+          : {};
+        
+        // Build query params
+        const params = new URLSearchParams({ state: formData.state });
+        if (parsedAddress.suburb) {
+          params.append('suburb', parsedAddress.suburb);
+        }
+        if (parsedAddress.postcode) {
+          params.append('postcode', parsedAddress.postcode);
+        }
+        
+        const response = await fetch(`/api/benchmarks?${params.toString()}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.benchmark) {
+            setBenchmarkData(data.benchmark);
+          } else {
+            setBenchmarkData(null);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch benchmarks:', error);
+        setBenchmarkData(null);
+      } finally {
+        setIsLoadingBenchmarks(false);
+      }
+    };
+    
+    fetchBenchmarks();
+  }, [formData.state, formData.propertyAddress]);
+
   // Initialize investment inputs when property details are available
   useEffect(() => {
-    if (formData.propertyValue && formData.state && formData.propertyType && Object.keys(investmentInputs).length === 0) {
-      // Generate default investment inputs (without costs, will be updated after calculation)
-      const depositAmount = (formData.propertyValue || 0) * ((formData.depositPercent || 20) / 100);
-      const loanAmount = (formData.propertyValue || 0) - depositAmount;
+    if (formData.propertyValue && formData.state && formData.propertyType && costs && Object.keys(investmentInputs).length === 0) {
+      // Use generateDefaultInputs with benchmark data if available
+      const defaultInputs = generateDefaultInputs(
+        formData.propertyValue,
+        formData.state,
+        formData.propertyType,
+        formData.depositPercent || 20,
+        costs,
+        benchmarkData ? {
+          grossRentalYield: benchmarkData.grossRentalYield,
+          capitalGrowth5yr: benchmarkData.capitalGrowth5yr,
+          capitalGrowth10yr: benchmarkData.capitalGrowth10yr,
+        } : null
+      );
       
-      // Estimate weekly rent based on state
-      const yieldRates: Record<AustralianState, number> = {
-        NSW: 0.032,
-        VIC: 0.034,
-        QLD: 0.045,
-        WA: 0.042,
-        SA: 0.041,
-        TAS: 0.048,
-        ACT: 0.038,
-        NT: 0.055,
-      };
-      const grossYield = yieldRates[formData.state] || 0.04;
-      const annualRent = (formData.propertyValue || 0) * grossYield;
-      const weeklyRent = Math.round(annualRent / 52);
-
-      setInvestmentInputs({
-        estimatedWeeklyRent: weeklyRent,
-        vacancyRate: 5,
-        rentGrowthRate: 3,
-        propertyManagementFee: 8,
-        lettingFee: 2,
-        selfManaged: false,
-        loanAmount,
-        interestRate: 6.5,
-        loanTerm: 30,
-        loanType: 'principalAndInterest',
-        interestOnlyPeriod: 0,
-        holdPeriod: 10,
-        capitalGrowthRate: 6,
-        marginalTaxRate: 37,
-        currencyExchangeRate: 1,
-        homeCurrency: 'AUD',
-        sellingCosts: 4,
-        cgtWithholdingRate: 12.5,
-      });
+      setInvestmentInputs(defaultInputs);
     }
-  }, [formData.propertyValue, formData.state, formData.propertyType, formData.depositPercent]);
+  }, [formData.propertyValue, formData.state, formData.propertyType, formData.depositPercent, costs, benchmarkData]);
 
   // Function to load saved calculation
   const loadSavedCalculation = async (calculationId: string) => {
@@ -443,13 +467,13 @@ export default function FIRBCalculatorPage() {
   };
 
   return (
-    <main className="min-h-screen bg-muted">
+    <main className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">{t('title')}</h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 leading-tight">{t('title')}</h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             {t('description')}
           </p>
         </div>
@@ -466,8 +490,8 @@ export default function FIRBCalculatorPage() {
           {isLoadingSavedCalculation && (
             <div className="flex items-center justify-center py-12">
               <div className="text-center space-y-4">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                <p className="text-lg text-muted-foreground">Loading saved calculation...</p>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+                <p className="text-lg text-gray-600">Loading saved calculation...</p>
               </div>
             </div>
           )}
@@ -556,6 +580,8 @@ export default function FIRBCalculatorPage() {
                 }}
                 propertyValue={formData.propertyValue}
                 depositPercent={formData.depositPercent || 20}
+                benchmarkData={benchmarkData}
+                isLoadingBenchmarks={isLoadingBenchmarks}
               />
 
               {/* Navigation */}

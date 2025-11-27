@@ -38,7 +38,7 @@
     "clearFilters": "清除筛选"
   },
   "FIRBCalculator": {
-    "title": "FIRB计算器",
+    "title": "计算器",
     "subtitle": "计算您的完整房产投资成本，包括FIRB费用、印花税和持续费用",
     "description": "计算您的完整房产投资成本，包括FIRB费用、印花税和持续费用",
     "next": "下一步",
@@ -139,7 +139,19 @@
         "vacancyHelp": "典型：好地段3-5%，高风险地区7-10%",
         "rentGrowth": "年租金增长",
         "rentGrowthHelp": "历史平均：每年2-4%",
-        "help": "基于该地区类似房产。您可以稍后调整。"
+        "help": "基于该地区类似房产。您可以稍后调整。",
+        "benchmark": {
+          "loading": "加载基准数据...",
+          "available": "基准可用",
+          "suburb": "郊区",
+          "state": "州",
+          "using": "使用基准",
+          "marketBenchmark": "市场基准",
+          "yourInput": "您的输入",
+          "yield": "收益率",
+          "useBenchmark": "使用市场基准",
+          "noData": "此位置没有基准数据。请在上方输入您估计的周租金。"
+        }
       },
       "growth": {
         "title": "资本增长预测",
@@ -147,7 +159,23 @@
         "conservative": "保守（4%）",
         "moderate": "中等（6%）",
         "optimistic": "乐观（8%）",
-        "help": "历史平均：每年6%。根据您的预期进行调整。"
+        "help": "历史平均：每年6%。根据您的预期进行调整。",
+        "benchmark": {
+          "loading": "加载基准数据...",
+          "available": "基准可用",
+          "suburb": "郊区",
+          "state": "州",
+          "using": "使用基准",
+          "marketBenchmark": "市场基准",
+          "yourInput": "您的输入",
+          "fiveYearAverage": "5年平均",
+          "perYear": "每年",
+          "aboveBenchmark": "高于基准",
+          "belowBenchmark": "低于基准",
+          "matchesBenchmark": "符合基准",
+          "useBenchmark": "使用市场基准",
+          "noData": "此位置没有基准数据。请根据您的预期调整上方的滑块。"
+        }
       },
       "loan": {
         "title": "贷款详情",
@@ -230,6 +258,272 @@
         "title": "重要免责声明",
         "content": "此计算仅为估算，不应视为财务或法律建议。法规和费用可能会发生变化。在做出投资决策之前，请务必咨询合格的专业人士。"
       },
+      "investmentAnalytics": {
+        "toggle": {
+          "title": "投资分析",
+          "show": "显示投资分析",
+          "hide": "隐藏分析",
+          "description": "查看租金收益率、投资回报率、10年预测、现金流分析，并与其他投资进行比较"
+        },
+        "summary": {
+          "title": "投资表现摘要",
+          "description": "基于您的投资假设的关键指标一览",
+          "grossYield": "总租金收益率",
+          "netYield": "净租金收益率",
+          "afterExpenses": "扣除费用后",
+          "annualizedROI": "年化投资回报率",
+          "totalReturn": "总回报",
+          "monthlyCashFlow": "月度现金流",
+          "negativelyGeared": "负扣税",
+          "positivelyGeared": "正扣税",
+          "taxBenefit": "税收优惠",
+          "propertyValueGrowth": "房产价值增长",
+          "afterYears": "之后",
+          "years": "年",
+          "yourEquity": "您的权益",
+          "equityGain": "权益增长",
+          "taxSavings": "税收节省",
+          "fromNegativeGearing": "来自负扣税"
+        },
+        "score": {
+          "title": "投资评分",
+          "description": "对您的投资机会的全面分析",
+          "overallVerdict": "总体判断",
+          "investment": "投资",
+          "scoreBreakdown": "评分细分",
+          "dimensions": {
+            "rentalYield": "租金收益率",
+            "capitalGrowth": "资本增长",
+            "cashFlow": "现金流",
+            "taxEfficiency": "税务效率",
+            "riskProfile": "风险概况"
+          },
+          "verdicts": {
+            "excellent": "优秀",
+            "good": "良好",
+            "moderate": "中等",
+            "poor": "较差",
+            "notRecommended": "不推荐"
+          },
+          "strengths": "优势",
+          "weaknesses": "劣势",
+          "suitableFor": "适合人群",
+          "risksToConsider": "需要考虑的风险",
+          "keyTakeaways": "关键要点"
+        },
+        "taxAnalysis": {
+          "title": "税务分析",
+          "description": "您投资房产的税务影响和扣除项",
+          "annualTaxSaving": "年度税收节省",
+          "fromNegativeGearing": "来自负扣税",
+          "totalDeductions": "总扣除额",
+          "deductionsDesc": "年度可扣除费用",
+          "breakdownTitle": "扣除明细",
+          "deductionItems": {
+            "loanInterest": "贷款利息",
+            "propertyManagement": "物业管理",
+            "maintenance": "维护",
+            "landTax": "土地税",
+            "councilRates": "市政费",
+            "insurance": "保险",
+            "strataFees": "物业费",
+            "depreciation": "折旧",
+            "other": "其他"
+          },
+          "negativeGearing": {
+            "title": "负扣税分析",
+            "rentalIncome": "租金收入",
+            "deductibleExpenses": "可扣除费用",
+            "netRentalLoss": "净租金损失",
+            "taxBenefit": "税收优惠"
+          },
+          "cgtTitle": "退出时的资本利得税（CGT）",
+          "cgtItems": {
+            "salePrice": "售价（{year}年后）",
+            "originalPrice": "原始购买价格",
+            "purchaseCosts": "购买成本",
+            "sellingCosts": "销售成本",
+            "costBase": "成本基础",
+            "capitalGain": "资本收益",
+            "cgtRate": "CGT税率",
+            "cgtPayable": "应缴CGT",
+            "withholdingTax": "预扣税",
+            "netProceeds": "税后净收益"
+          },
+          "taxPlanningTip": "税务规划提示：考虑咨询合格的税务顾问，以优化您的投资结构并最大化税收优惠。税法可能会发生变化，影响您的计算。"
+        },
+        "sensitivity": {
+          "title": "敏感性分析",
+          "description": "关键变量的变化如何影响您的投资回报",
+          "warning": "敏感性分析警告",
+          "warningDesc": "这些情景显示了关键变量的变化可能如何影响您的投资。结果是估算值，实际结果可能会有所不同。",
+          "vacancyImpact": "空置率影响",
+          "vacancyDesc": "空置率如何影响租金收入",
+          "vacancyRate": "空置率",
+          "annualRent": "年租金",
+          "baseCase": "基准情况",
+          "vacancyNote": "注意：空置率显著影响租金收入和现金流。",
+          "interestImpact": "利率影响",
+          "interestDesc": "利率变化如何影响贷款还款",
+          "interestRate": "利率",
+          "monthlyRepayment": "月还款额",
+          "annualCost": "年度成本",
+          "cashFlowImpact": "现金流影响",
+          "impact": "影响",
+          "growthScenarios": "增长情景",
+          "growthDesc": "不同增长率如何影响您的投资",
+          "conservative": "保守",
+          "moderate": "中等",
+          "optimistic": "乐观",
+          "base": "基准情况",
+          "growthRate": "增长率",
+          "finalValue": "最终价值",
+          "totalReturn": "总回报",
+          "riskFactors": "风险因素",
+          "mostSensitive": "最敏感因素",
+          "riskMitigation": "风险缓解",
+          "sensitivityItems": {
+            "capitalGrowth": "资本增长",
+            "interestRate": "利率",
+            "vacancy": "空置率",
+            "highDemand": "高需求区域",
+            "fixRate": "固定利率贷款",
+            "cashReserves": "现金储备"
+          }
+        },
+        "comparison": {
+          "title": "投资比较",
+          "description": "将您的房产投资与其他投资选择在{years}年内进行比较",
+          "comparisonResults": "比较结果",
+          "comparisonDesc": "{best}在{years}年内回报{return}，而您的房产投资回报{propertyReturn}",
+          "propertyLeads": "房产投资领先！",
+          "propertyLeadsDesc": "您的房产投资在{years}年内回报{return}，年化回报率为{rate}%",
+          "chartTitle": "投资类型",
+          "detailedComparison": "详细比较",
+          "yearReturn": "{years}年回报",
+          "annualRate": "年化利率",
+          "riskLevel": "风险水平",
+          "yourInvestment": "您的投资",
+          "investmentTypes": {
+            "property": "房产投资",
+            "stocks": "股票（ASX）",
+            "bonds": "政府债券",
+            "termDeposit": "定期存款",
+            "savings": "高息储蓄"
+          },
+          "riskLevels": {
+            "veryLow": "非常低",
+            "low": "低",
+            "medium": "中等",
+            "high": "高",
+            "veryHigh": "非常高"
+          },
+          "assumptions": "假设：房产增长率为{growth}%/年，ASX为7.2%/年，债券为4.5%/年，定期存款为4%/年，储蓄为4.5%/年。回报是基于历史平均值的估算。"
+        },
+        "cashFlow": {
+          "title": "现金流分析",
+          "description": "您的租金收入和支出的详细明细",
+          "annualIncome": "年收入",
+          "annualExpenses": "年支出",
+          "afterTaxCashFlow": "税后现金流",
+          "effectiveAfterVacancy": "扣除空置后",
+          "includingLoanRepayments": "包括贷款还款",
+          "chartTitle": "年度现金流明细",
+          "expenseBreakdown": "详细支出明细",
+          "totalAnnualExpenses": "年度总支出",
+          "negativeGearingBenefit": "负扣税优惠",
+          "savedPerMonth": "节省/月",
+          "deductibleExpenses": "可扣除费用",
+          "beforeTax": "税前",
+          "afterTax": "税后",
+          "income": "收入",
+          "expenses": "支出",
+          "netCashFlow": "净现金流",
+          "perMonth": "每月"
+        },
+        "inputs": {
+          "title": "投资分析参数",
+          "description": "调整这些值以查看不同情景如何影响您的投资回报",
+          "note": "这些是基于当前市场条件和典型投资者情景的估算。实际结果可能因具体情况、市场变化和个人税务情况而有所不同。",
+          "rental": {
+            "title": "租金收入",
+            "weeklyRent": "预计周租金",
+            "vacancyRate": "空置率",
+            "vacancyHelp": "典型：好地段3-5%，高风险区域7-10%",
+            "rentGrowth": "年租金增长",
+            "rentGrowthHelp": "历史平均：每年2-4%",
+            "perYear": "每年"
+          },
+          "management": {
+            "title": "物业管理",
+            "selfManaged": "我将自行管理此房产（无管理费）",
+            "managementFee": "物业管理费",
+            "managementHelp": "典型：租金收入的7-9%。估算",
+            "lettingFee": "租赁费（寻找新租户时）",
+            "weeksRent": "周租金"
+          },
+          "financing": {
+            "title": "融资详情",
+            "loanAmount": "贷款金额",
+            "interestRate": "利率",
+            "interestHelp": "当前市场利率：投资房产5.5-7.5%",
+            "loanTerm": "贷款期限",
+            "loanType": "贷款类型",
+            "principalAndInterest": "本息同还",
+            "interestOnly": "只还利息",
+            "interestOnlyPeriod": "只还利息期限"
+          },
+          "assumptions": {
+            "title": "投资假设",
+            "holdPeriod": "投资持有期",
+            "holdPeriodHelp": "您计划持有此投资房产的时间",
+            "capitalGrowth": "资本增长率",
+            "capitalGrowthHelp": "历史平均：澳大利亚房产每年6-8%",
+            "taxRate": "边际税率",
+            "taxRateHelp": "您投资收入的最高税率档次",
+            "sellingCosts": "销售成本",
+            "sellingCostsHelp": "典型：3-4%（代理佣金、法律费用、营销）"
+          },
+          "currency": {
+            "title": "货币转换（可选）",
+            "homeCurrency": "本国货币",
+            "exchangeRate": "汇率（1澳元 = {currency}）",
+            "exchangeHelp": "输入当前汇率以将所有金额转换为您的本国货币",
+            "aud": "澳元（AUD）",
+            "usd": "美元（USD）",
+            "cny": "人民币（CNY）",
+            "eur": "欧元（EUR）",
+            "gbp": "英镑（GBP）",
+            "jpy": "日元（JPY）",
+            "sgd": "新加坡元（SGD）"
+          }
+        },
+        "projections": {
+          "title": "{years}年投资预测",
+          "description": "查看您的投资如何随着房产升值和贷款偿还而增长",
+          "yearByYear": "10年预测表",
+          "startingValue": "起始价值",
+          "finalValue": "最终价值",
+          "yourEquity": "您的权益",
+          "from": "从",
+          "totalROI": "总投资回报率",
+          "perAnnum": "每年",
+          "tableHeaders": {
+            "year": "年份",
+            "propertyValue": "房产价值",
+            "equity": "您的权益",
+            "cashFlow": "现金流",
+            "cumulativeReturn": "累计回报"
+          },
+          "breakEven": {
+            "title": "盈亏平衡分析",
+            "cumulativeBreakEven": "累计盈亏平衡",
+            "positiveCashFlow": "正现金流",
+            "cashRequired": "所需现金",
+            "year": "年"
+          }
+        }
+      },
       "optimalUseCase": {
         "title": "最佳使用案例分析",
         "description": "比较长期租赁与短期住宿，以最大化您的回报",
@@ -269,6 +563,27 @@
         "reasoning": {
           "title": "分析理由"
         }
+      },
+      "benchmarkComparison": {
+        "title": "市场基准比较",
+        "description": "将您的输入与{level}市场基准进行比较",
+        "yourInput": "您的输入",
+        "benchmark": "市场基准",
+        "dataSource": "数据来源",
+        "lastUpdated": "最后更新",
+        "rentalYield": {
+          "title": "总租金收益率",
+          "above": "您的租金收益率高于市场基准",
+          "below": "您的租金收益率低于市场基准",
+          "similar": "您的租金收益率与市场基准相似"
+        },
+        "capitalGrowth": {
+          "title": "资本增长率",
+          "perYear": "每年",
+          "above": "您的资本增长预期高于市场基准",
+          "below": "您的资本增长预期低于市场基准",
+          "similar": "您的资本增长预期与市场基准相似"
+        }
       }
     }
   },
@@ -291,5 +606,54 @@
     "contact": "联系我们",
     "copyright": "© 2025 房产费用计算器。保留所有权利。",
     "disclaimerText": "此计算器仅提供估算。请咨询合格的专业人士获取财务和法律建议。"
+  },
+  "Admin": {
+    "benchmarks": {
+      "title": "基准数据管理",
+      "description": "按州和郊区管理租金收益率和资本增长基准",
+      "addNew": "添加新基准",
+      "edit": "编辑基准",
+      "delete": "删除基准",
+      "state": "州",
+      "suburb": "郊区",
+      "postcode": "邮编",
+      "grossYield": "总租金收益率 (%)",
+      "netYield": "净租金收益率 (%)",
+      "capitalGrowth5yr": "5年资本增长 (%)",
+      "capitalGrowth10yr": "10年资本增长 (%)",
+      "dataSource": "数据来源",
+      "qualityScore": "质量分数",
+      "notes": "备注",
+      "isActive": "激活",
+      "actions": "操作",
+      "save": "保存",
+      "cancel": "取消",
+      "deleteConfirm": "您确定要删除此基准吗？",
+      "success": "基准保存成功",
+      "error": "保存基准失败",
+      "loading": "加载中...",
+      "noData": "未找到基准",
+      "filterByState": "按州筛选",
+      "showActiveOnly": "仅显示激活",
+      "importCSV": "导入CSV",
+      "csvImport": {
+        "title": "从CSV导入基准",
+        "description": "上传CSV文件以批量导入基准数据。CSV应包含列：state, suburb_name（可选）, postcode（可选）, gross_rental_yield, net_rental_yield, capital_growth_5yr, capital_growth_10yr, data_source, data_quality_score, notes, is_active。",
+        "fileLabel": "CSV文件",
+        "selectFile": "选择CSV文件",
+        "downloadTemplate": "下载CSV模板",
+        "import": "导入",
+        "importing": "导入中...",
+        "success": "导入成功！",
+        "failed": "导入失败",
+        "totalRows": "总行数",
+        "inserted": "已插入",
+        "updated": "已更新",
+        "errors": "错误",
+        "errorDetails": "错误详情",
+        "validationErrors": "验证错误",
+        "row": "行"
+      }
+    }
   }
 }

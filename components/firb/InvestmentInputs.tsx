@@ -25,7 +25,7 @@ export default function InvestmentInputsComponent({ inputs, onChange }: Investme
   const { t, number } = useInvestmentTranslations();
 
   return (
-    <Card className="border-2 border-primary/20 shadow-md rounded-2xl bg-white">
+    <Card className="border-2 border-blue-200 shadow-sm rounded bg-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />

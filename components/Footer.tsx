@@ -1,10 +1,11 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 export default function Footer() {
   const locale = useLocale();
+  const t = useTranslations('Nav');
 
   return (
     <footer className="bg-muted/50 border-t border-border/40 mt-auto">
@@ -29,7 +30,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href={`/${locale}/firb-calculator`} className="text-muted-foreground hover:text-primary transition-colors">
-                  FIRB Calculator
+                  {t('calculator')}
                 </Link>
               </li>
               <li>

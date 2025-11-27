@@ -1,0 +1,10 @@
+state,suburb_name,postcode,gross_rental_yield,net_rental_yield,capital_growth_5yr,capital_growth_10yr,data_source,data_quality_score,notes,is_active,last_updated
+NSW,,,3.20,2.50,5.50,5.80,CoreLogic / Domain Research (2024-2025),8,"Based on Sydney and NSW regional averages. Sydney metro yields typically 2.8-3.5%, regional areas 4-6%.",true,2025-01-17
+VIC,,,3.40,2.60,5.20,5.50,CoreLogic / Domain Research (2024-2025),8,"Based on Melbourne and VIC regional averages. Melbourne metro yields typically 3.0-3.8%, regional areas 4-5.5%.",true,2025-01-17
+QLD,,,4.50,3.50,4.80,5.00,CoreLogic / Domain Research (2024-2025),8,"Based on Brisbane and QLD regional averages. Brisbane metro yields typically 4.0-5.0%, regional areas 5-7%.",true,2025-01-17
+WA,,,4.20,3.30,3.50,3.80,CoreLogic / Domain Research (2024-2025),8,"Based on Perth and WA regional averages. Perth metro yields typically 3.8-4.8%, regional areas 5-7%.",true,2025-01-17
+SA,,,4.10,3.20,4.50,4.70,CoreLogic / Domain Research (2024-2025),8,"Based on Adelaide and SA regional averages. Adelaide metro yields typically 3.8-4.5%, regional areas 5-6%.",true,2025-01-17
+TAS,,,4.80,3.70,5.20,5.40,CoreLogic / Domain Research (2024-2025),7,"Based on Hobart and TAS regional averages. Hobart metro yields typically 4.5-5.2%, regional areas 5-7%.",true,2025-01-17
+ACT,,,3.80,2.90,5.00,5.20,CoreLogic / Domain Research (2024-2025),8,"Based on Canberra averages. Yields typically 3.5-4.2%. Strong rental demand due to stable government employment.",true,2025-01-17
+NT,,,5.50,4.30,2.50,2.80,CoreLogic / Domain Research (2024-2025),7,"Based on Darwin and NT regional averages. Higher yields but lower capital growth. Yields typically 5.0-6.5%.",true,2025-01-17
+

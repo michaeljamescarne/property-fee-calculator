@@ -41,7 +41,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
   ].filter(item => item.amount > 0);
 
   return (
-    <Card className="border-none shadow-md rounded-2xl bg-white">
+    <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />
@@ -159,7 +159,9 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
             </div>
             <div className="pt-3 border-t border-border/40">
               <p className="text-muted-foreground mb-1">
-                {t('taxAnalysis.negativeGearing.taxBenefit', { rate: '37' })}:
+                {t('taxAnalysis.negativeGearing.taxBenefit') === 'FIRBCalculator.investmentAnalytics.taxAnalysis.negativeGearing.taxBenefit' 
+                  ? 'Tax Benefit' 
+                  : t('taxAnalysis.negativeGearing.taxBenefit')}:
               </p>
               <p className="font-semibold text-green-600 text-lg">
                 {currency(analytics.taxAnalysis.annualTaxSaving)}
@@ -179,7 +181,9 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  {t('taxAnalysis.cgtItems.salePrice', { year: analytics.yearByYear.length })}:
+                  {t('taxAnalysis.cgtItems.salePrice', { year: analytics.yearByYear.length }) === `FIRBCalculator.investmentAnalytics.taxAnalysis.cgtItems.salePrice` 
+                    ? `Sale Price (after ${analytics.yearByYear.length} years)` 
+                    : t('taxAnalysis.cgtItems.salePrice', { year: analytics.yearByYear.length })}:
                 </span>
                 <span className="font-semibold">{currency(cgt.salePrice)}</span>
               </div>

@@ -29,28 +29,28 @@ export default function FAQSearch({ onSearch, placeholder = 'Search FAQs...' }: 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500 pointer-events-none" />
         <Input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder={placeholder}
-          className="pl-12 pr-12 h-14 text-base rounded-xl border-2 border-border/50 focus:border-primary/50 transition-colors"
+          className="pl-12 pr-12 h-14 text-base rounded border-2 border-gray-200 focus:border-blue-600 transition-colors"
         />
         {searchTerm && (
           <Button
             variant="ghost"
             size="sm"
             onClick={handleClear}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-muted rounded-lg"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-gray-100 rounded"
           >
-            <X className="h-5 w-5 text-muted-foreground" />
+            <X className="h-5 w-5 text-gray-500" />
           </Button>
         )}
       </div>
       
       {searchTerm && searchTerm.length < 2 && (
-        <p className="text-sm text-muted-foreground mt-2 ml-1">
+        <p className="text-sm text-gray-500 mt-2 ml-1">
           Type at least 2 characters to search
         </p>
       )}
