@@ -3,12 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Home, BookOpen } from "lucide-react";
 import { getBlogPost, getAllBlogPosts } from "@/lib/blogContentProcessor";
-import {
-  getRelatedPosts,
-  formatBlogDate,
-  generateBlogUrl,
-  getCategoryColor,
-} from "@/lib/blog/blog-utils";
+import { getRelatedPosts, formatBlogDate, getCategoryColor } from "@/lib/blog/blog-utils-client";
 import {
   generateArticleSchema,
   generatePostBreadcrumbSchema,

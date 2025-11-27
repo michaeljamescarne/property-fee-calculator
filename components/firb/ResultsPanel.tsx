@@ -297,7 +297,7 @@ export default function ResultsPanel({
           "FIRBCalculator.results.investmentAnalytics.inputs.rental.rentGrowth"
             ? "Annual Rent Growth"
             : tAnalytics("inputs.rental.rentGrowth"),
-        value: formatPercent(investmentInputs.rentGrowth) || "—",
+        value: formatPercent(investmentInputs.rentGrowthRate) || "—",
       },
       {
         label:

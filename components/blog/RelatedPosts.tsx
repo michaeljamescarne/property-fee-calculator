@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { BlogPost } from "@/lib/blogContentProcessor";
-import { formatBlogDate, generateBlogUrl, getCategoryColor } from "@/lib/blog/blog-utils";
+import { formatBlogDate, generateBlogUrl, getCategoryColor } from "@/lib/blog/blog-utils-client";
 
 interface RelatedPostsProps {
   posts: BlogPost[];
