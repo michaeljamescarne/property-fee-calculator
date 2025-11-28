@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ExternalLink, ThumbsUp, ThumbsDown, BookOpen } from "lucide-react";
 import Link from "next/link";
 import type { FAQQuestion, FAQCategory } from "@/types/faq";
 import RelatedQuestions from "./RelatedQuestions";
 import { getFAQData } from "@/lib/faq/faq-utils";
 import { getRelatedQuestions } from "@/lib/faq/faq-search";
-import { findRelatedBlogPosts, getCalculatorLink } from "@/lib/utils/blog-linking";
-import { getAllBlogPosts } from "@/lib/blogContentProcessor";
+import { findRelatedBlogPosts } from "@/lib/utils/blog-linking";
+import type { BlogPost } from "@/lib/blogContentProcessor";
 
 interface FAQItemProps {
   question: FAQQuestion;
@@ -37,12 +37,23 @@ export default function FAQItem({ question, category, isOpen, onToggle, locale }
   const allCategories = getFAQData();
   const relatedQuestions = getRelatedQuestions(question.id, allCategories);
 
-  // Get related blog posts
-  const allBlogPosts = useMemo(() => getAllBlogPosts(locale), [locale]);
-  const relatedBlogPosts = useMemo(
-    () => findRelatedBlogPosts(question.question, allBlogPosts, 2),
-    [question.question, allBlogPosts]
-  );
+  // Get related blog posts - fetch from API to avoid fs module issues
+  const [relatedBlogPosts, setRelatedBlogPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    // Fetch blog posts from API route (server-side only)
+    fetch(`/api/blog-posts?locale=${locale}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.posts) {
+          const related = findRelatedBlogPosts(question.question, data.posts, 2);
+          setRelatedBlogPosts(related);
+        }
+      })
+      .catch(() => {
+        // Silently fail - blog posts are optional
+      });
+  }, [question.question, locale]);
 
   return (
     <div id={question.id} className="scroll-mt-24">

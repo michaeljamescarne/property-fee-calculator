@@ -8,6 +8,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import ProgressIndicator, { Step } from "@/components/firb/ProgressIndicator";
@@ -27,7 +28,6 @@ import type { InvestmentAnalytics, InvestmentInputs } from "@/types/investment";
 import { parseAddress } from "@/lib/utils/address-parser";
 import { generateDefaultInputs } from "@/lib/firb/investment-analytics";
 import type { BenchmarkData } from "@/app/api/benchmarks/route";
-import Glossary, { defaultFIRBGlossary } from "@/components/content/Glossary";
 
 export default function FIRBCalculatorPage() {
   const t = useTranslations("FIRBCalculator");
@@ -659,10 +659,35 @@ export default function FIRBCalculatorPage() {
                   ? "FIRB（外国投资审查委员会）计算器是一个免费工具，帮助外国投资者计算在澳大利亚购买房产所需的所有费用。这包括FIRB申请费、印花税、土地税附加费、律师费和其他相关成本。"
                   : "The FIRB (Foreign Investment Review Board) Calculator is a free tool that helps foreign investors calculate all costs required to purchase property in Australia. This includes FIRB application fees, stamp duty, land tax surcharge, legal fees, and other related costs."}
               </p>
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-3">
                 {locale === "zh"
                   ? "我们的计算器会根据您的公民身份、房产类型、所在州和房产价值，为您提供详细的费用明细和投资分析。"
                   : "Our calculator provides detailed cost breakdowns and investment analysis based on your citizenship status, property type, state, and property value."}
+              </p>
+              <p className="text-sm text-gray-600">
+                {locale === "zh" ? (
+                  <>
+                    需要了解术语定义？查看我们的{" "}
+                    <Link
+                      href={`/${locale}/faq`}
+                      className="text-blue-600 hover:text-blue-800 underline font-medium"
+                    >
+                      常见问题页面
+                    </Link>
+                    ，其中包含完整的术语表。
+                  </>
+                ) : (
+                  <>
+                    Need help with terminology? Check our{" "}
+                    <Link
+                      href={`/${locale}/faq`}
+                      className="text-blue-600 hover:text-blue-800 underline font-medium"
+                    >
+                      FAQ page
+                    </Link>
+                    , which includes a complete glossary of terms.
+                  </>
+                )}
               </p>
             </div>
           )}
@@ -847,15 +872,6 @@ export default function FIRBCalculatorPage() {
               locale={locale}
               pdfTranslations={pdfTranslations}
             />
-          )}
-
-          {/* Glossary Section - Show when not in results */}
-          {!isResults && currentStep === "citizenship" && (
-            <section className="mt-16 pt-12 border-t border-gray-200">
-              <div className="max-w-4xl mx-auto">
-                <Glossary terms={defaultFIRBGlossary} locale={locale} />
-              </div>
-            </section>
           )}
         </div>
       </div>
