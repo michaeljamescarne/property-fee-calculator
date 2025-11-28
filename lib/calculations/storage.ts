@@ -4,6 +4,7 @@
  */
 
 import type { CalculationData, SavedCalculation } from "@/types/database";
+import type { EligibilityResult } from "@/lib/firb/eligibility";
 
 /**
  * Extract summary data from calculation for list display
@@ -39,12 +40,10 @@ export function prepareCalculationForStorage(
   // Handle eligibility status - check both isEligible and canPurchase
   let eligibilityStatus = "Review Required";
   if (calculationData.eligibility) {
-    if (calculationData.eligibility.canPurchase && !calculationData.eligibility.requiresFIRB) {
+    const eligibility = calculationData.eligibility as EligibilityResult;
+    if (eligibility.canPurchase && !eligibility.requiresFIRB) {
       eligibilityStatus = "Eligible";
-    } else if (
-      calculationData.eligibility.canPurchase &&
-      calculationData.eligibility.requiresFIRB
-    ) {
+    } else if (eligibility.canPurchase && eligibility.requiresFIRB) {
       eligibilityStatus = "Review Required";
     } else {
       eligibilityStatus = "Not Eligible";
