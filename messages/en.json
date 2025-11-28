@@ -578,6 +578,9 @@
       "benchmarkComparison": {
         "title": "Market Benchmark Comparison",
         "description": "Compare your inputs with {level} market benchmarks",
+        "loading": "Loading benchmark data...",
+        "noData": "Benchmark data is not available for this location.",
+        "noDataDescription": "We couldn't find market benchmark data for this state. The calculator will use default values.",
         "yourInput": "Your Input",
         "benchmark": "Market Benchmark",
         "dataSource": "Data Source",
@@ -859,6 +862,31 @@
         "errorDetails": "Error Details",
         "validationErrors": "Validation Errors",
         "row": "Row"
+      }
+    },
+    "emailModal": {
+      "title": "Email Your Results",
+      "description": "Enter your email address to receive a detailed PDF report of your calculation results.",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name (optional)",
+      "optional": "Optional",
+      "consentLabel": "I consent to receiving this email",
+      "consentDescription": "By checking this box, you agree to receive the calculation results via email.",
+      "send": "Send Results",
+      "sending": "Sending...",
+      "cancel": "Cancel",
+      "info": "Your results will be sent as a PDF attachment. This may take a few moments.",
+      "success": {
+        "title": "Email Sent Successfully!",
+        "description": "Your calculation results have been sent to your email address."
+      },
+      "errors": {
+        "required": "Please fill in all required fields.",
+        "invalidEmail": "Please enter a valid email address.",
+        "sendFailed": "Failed to send email. Please try again later.",
+        "general": "An error occurred. Please try again."
       }
     }
   }

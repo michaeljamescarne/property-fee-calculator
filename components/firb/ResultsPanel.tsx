@@ -9,14 +9,11 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { useReactToPrint } from "react-to-print";
+import { trackConversion } from "@/components/analytics/GoogleAnalytics";
+import { trackMetaEvent } from "@/components/analytics/MetaPixel";
+import { initializeUTMTracking, getUTMParamsForAnalytics } from "@/lib/utils/utm-tracker";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { CustomAlert } from "@/components/ui/custom-alert";
 import { Download, Mail, Edit, Info, RotateCcw, ChevronDown, ChevronUp } from "lucide-react";
 import { EligibilityResult } from "@/lib/firb/eligibility";
@@ -97,6 +94,23 @@ export default function ResultsPanel({
     contentRef: printRef,
     documentTitle: `FIRB-Investment-Analysis-${new Date().toISOString().split("T")[0]}`,
   });
+
+  // Track calculator completion on mount
+  useEffect(() => {
+    // Initialize UTM tracking
+    initializeUTMTracking();
+
+    // Track calculator completion
+    trackConversion.calculatorCompleted(propertyValue, state);
+    trackMetaEvent.calculatorCompleted(propertyValue);
+
+    // Get UTM params for additional context
+    const utmParams = getUTMParamsForAnalytics();
+    if (Object.keys(utmParams).length > 0) {
+      // Additional tracking with UTM context can be added here
+      console.log("UTM params:", utmParams);
+    }
+  }, []); // Only run once on mount
 
   // Investment Analytics State
   const investmentInputs = useMemo(
@@ -179,6 +193,49 @@ export default function ResultsPanel({
     fetchRegulations();
   }, [state, formData.propertyAddress]);
 
+  // Fetch benchmark data on mount
+  useEffect(() => {
+    const fetchBenchmarks = async () => {
+      setIsLoadingBenchmarks(true);
+      try {
+        const params = new URLSearchParams({
+          state: state,
+        });
+
+        // Add address details if available
+        if (formData.propertyAddress) {
+          // Try to extract postcode from address
+          const postcodeMatch = formData.propertyAddress.match(/\b\d{4}\b/);
+          if (postcodeMatch) {
+            params.append("postcode", postcodeMatch[0]);
+          }
+          // Try to extract suburb from address (first part before comma or state)
+          const addressParts = formData.propertyAddress.split(",");
+          if (addressParts.length > 0) {
+            const suburb = addressParts[0].trim();
+            if (suburb) {
+              params.append("suburb", suburb);
+            }
+          }
+        }
+
+        const response = await fetch(`/api/benchmarks?${params.toString()}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.benchmark) {
+            setBenchmarkData(data.benchmark);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch benchmark data:", error);
+      } finally {
+        setIsLoadingBenchmarks(false);
+      }
+    };
+
+    fetchBenchmarks();
+  }, [state, formData.propertyAddress]);
+
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-AU", {
       style: "currency",
@@ -222,40 +279,36 @@ export default function ResultsPanel({
         </p>
       </div>
 
-      <Accordion type="multiple" className="w-full">
+      <div className="space-y-6">
         {costs.breakdown.map((section, index) => (
-          <AccordionItem key={index} value={`section-${index}`}>
-            <AccordionTrigger className="text-base font-semibold">
-              {section.category}
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="space-y-3 pt-2">
-                {section.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex justify-between items-start gap-4">
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-900">{item.name}</p>
-                      {item.description && (
-                        <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                      )}
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900">{formatCurrency(item.amount)}</p>
-                    </div>
+          <div key={index} className="space-y-3">
+            <h4 className="text-base font-semibold text-gray-900">{section.category}</h4>
+            <div className="space-y-3">
+              {section.items.map((item, itemIndex) => (
+                <div key={itemIndex} className="flex justify-between items-start gap-4">
+                  <div className="flex-1">
+                    <p className="font-medium text-gray-900">{item.name}</p>
+                    {item.description && (
+                      <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                    )}
                   </div>
-                ))}
-                {section.items.length > 1 && (
-                  <div className="flex justify-between items-center pt-3 border-t border-gray-200 font-semibold text-gray-900">
-                    <span>{t("costs.subtotal")}</span>
-                    <span>
-                      {formatCurrency(section.items.reduce((sum, item) => sum + item.amount, 0))}
-                    </span>
+                  <div className="text-right">
+                    <p className="font-semibold text-gray-900">{formatCurrency(item.amount)}</p>
                   </div>
-                )}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
+                </div>
+              ))}
+              {section.items.length > 1 && (
+                <div className="flex justify-between items-center pt-3 border-t border-gray-200 font-semibold text-gray-900">
+                  <span>{t("costs.subtotal")}</span>
+                  <span>
+                    {formatCurrency(section.items.reduce((sum, item) => sum + item.amount, 0))}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
         ))}
-      </Accordion>
+      </div>
 
       <div className="mt-6 p-4 rounded bg-gray-50 border border-gray-200">
         <div className="flex justify-between items-center">
@@ -326,14 +379,14 @@ export default function ResultsPanel({
             className="rounded font-semibold"
             onClick={onEditInvestmentInputs}
           >
-            {t("results.analysisParams.cta") === "FIRBCalculator.results.analysisParams.cta"
+            {t("analysisParams.cta") === "FIRBCalculator.results.analysisParams.cta"
               ? "Adjust inputs in wizard"
-              : t("results.analysisParams.cta")}
+              : t("analysisParams.cta")}
           </Button>
           <p className="text-sm text-gray-600">
-            {t("results.analysisParams.note") === "FIRBCalculator.results.analysisParams.note"
+            {t("analysisParams.note") === "FIRBCalculator.results.analysisParams.note"
               ? "You will return to the Financial step to edit rent, rates, and growth assumptions."
-              : t("results.analysisParams.note")}
+              : t("analysisParams.note")}
           </p>
         </div>
       </div>
@@ -364,22 +417,24 @@ export default function ResultsPanel({
             ? "Investment Assumptions"
             : tAnalytics("inputs.title"),
         description:
-          t("results.analysisParams.description") ===
-          "FIRBCalculator.results.analysisParams.description"
+          t("analysisParams.description") === "FIRBCalculator.results.analysisParams.description"
             ? "These inputs were captured during the wizard. Update them to refine your analysis."
-            : t("results.analysisParams.description"),
+            : t("analysisParams.description"),
         content: renderAssumptionsSummary(),
         defaultOpen: true,
       },
       {
         id: "benchmark",
         title:
-          t("results.benchmarkComparison.title") ===
-          "FIRBCalculator.results.benchmarkComparison.title"
+          t("benchmarkComparison.title") === "FIRBCalculator.results.benchmarkComparison.title"
             ? "Market Benchmark Comparison"
-            : t("results.benchmarkComparison.title"),
-        description: t("results.benchmarkComparison.description", { level: state }),
-        content: (
+            : t("benchmarkComparison.title"),
+        description: t("benchmarkComparison.description", { level: state }),
+        content: isLoadingBenchmarks ? (
+          <div className="py-8 text-center text-gray-600">
+            {t("benchmarkComparison.loading") || "Loading benchmark data..."}
+          </div>
+        ) : (
           <BenchmarkComparison
             benchmarkData={benchmarkData}
             investmentInputs={investmentInputs}
@@ -454,10 +509,10 @@ export default function ResultsPanel({
       sections.push({
         id: "optimal",
         title:
-          t("results.optimalUseCase.title") === "FIRBCalculator.results.optimalUseCase.title"
+          t("optimalUseCase.title") === "FIRBCalculator.results.optimalUseCase.title"
             ? "Optimal Use Case Analysis"
-            : t("results.optimalUseCase.title"),
-        description: t("results.optimalUseCase.description"),
+            : t("optimalUseCase.title"),
+        description: t("optimalUseCase.description"),
         content: (
           <OptimalUseCaseSection comparison={optimalUseCase} propertyValue={propertyValue} />
         ),
@@ -499,7 +554,19 @@ export default function ResultsPanel({
         className="sm:flex-shrink-0"
       />
 
-      <Button onClick={onEmailResults} variant="outline" size="lg" className="gap-2 rounded">
+      <Button
+        onClick={() => {
+          trackConversion.emailSent();
+          trackMetaEvent.lead({
+            content_name: "Email Results",
+            content_category: "Engagement",
+          });
+          onEmailResults();
+        }}
+        variant="outline"
+        size="lg"
+        className="gap-2 rounded"
+      >
         <Mail className="h-5 w-5" />
         {t("actions.emailResults")}
       </Button>
@@ -524,13 +591,13 @@ export default function ResultsPanel({
         {collapsibleSections.map((section) => {
           const open = isSectionOpen(section.id);
           const expandLabel =
-            t("results.sections.expand") === "FIRBCalculator.results.sections.expand"
+            t("sections.expand") === "FIRBCalculator.results.sections.expand"
               ? "Expand section"
-              : t("results.sections.expand");
+              : t("sections.expand");
           const collapseLabel =
-            t("results.sections.collapse") === "FIRBCalculator.results.sections.collapse"
+            t("sections.collapse") === "FIRBCalculator.results.sections.collapse"
               ? "Collapse section"
-              : t("results.sections.collapse");
+              : t("sections.collapse");
 
           return (
             <Card key={section.id} className="border border-gray-200 shadow-sm rounded bg-white">

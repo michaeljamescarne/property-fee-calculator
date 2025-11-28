@@ -15,7 +15,20 @@ Allow: /
 User-agent: Slurp
 Allow: /
 
-# Disallow admin/auth routes
+# Disallow admin/auth routes and API endpoints
 User-agent: *
 Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /_next/
+
+# Allow important pages
+Allow: /en/
+Allow: /zh/
+Allow: /en/firb-calculator
+Allow: /zh/firb-calculator
+Allow: /en/blog
+Allow: /zh/blog
+Allow: /en/faq
+Allow: /zh/faq
 

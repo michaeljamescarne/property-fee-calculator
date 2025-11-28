@@ -11,11 +11,19 @@ export function generateArticleSchema(post: BlogPost, locale: string) {
   const url = `${BASE_URL}/${locale}/blog/${post.slug}`;
   const publishedDate = new Date(post.date).toISOString();
 
+  // Extract plain text from content for articleBody (first 500 chars)
+  const articleBody = post.content
+    .replace(/<[^>]*>/g, "")
+    .replace(/\n/g, " ")
+    .trim()
+    .substring(0, 500);
+
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
+    articleBody: articleBody,
     image: `${BASE_URL}/images/blog-og-default.png`, // Default OG image
     datePublished: publishedDate,
     dateModified: publishedDate,
@@ -40,6 +48,7 @@ export function generateArticleSchema(post: BlogPost, locale: string) {
     keywords: post.tags.join(", "),
     inLanguage: locale === "zh" ? "zh-CN" : "en-AU",
     url,
+    wordCount: post.content.replace(/<[^>]*>/g, "").split(/\s+/).length,
   };
 }
 

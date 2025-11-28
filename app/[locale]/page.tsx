@@ -1,9 +1,97 @@
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Calculator, TrendingUp, Shield, FileText, CheckCircle } from "lucide-react";
 import LeadCaptureForm from "@/components/lead/LeadCaptureForm";
+import { getLocaleUrl } from "@/lib/utils/schema-base-url";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isZh = locale === "zh";
+  const baseUrl = "https://propertycosts.com.au";
+  const url = getLocaleUrl(locale);
+  const enUrl = getLocaleUrl("en");
+  const zhUrl = getLocaleUrl("zh");
+
+  const title = isZh
+    ? "澳大利亚房产投资费用计算器 | FIRB费用、印花税、投资分析工具"
+    : "Australian Property Investment Fee Calculator | FIRB Fees, Stamp Duty & Investment Analysis";
+
+  const description = isZh
+    ? "免费的澳大利亚房产投资费用计算器。计算FIRB申请费、印花税、土地税附加费、律师费等所有费用。提供详细的投资回报率分析、现金流预测和10年投资展望。"
+    : "Free Australian property investment fee calculator. Calculate FIRB application fees, stamp duty, land tax surcharge, legal costs, and all property purchase expenses. Includes detailed ROI analysis, cash flow projections, and 10-year investment outlook.";
+
+  return {
+    title,
+    description,
+    keywords: isZh
+      ? [
+          "澳大利亚房产投资",
+          "FIRB计算器",
+          "印花税计算器",
+          "房产投资费用",
+          "外国投资审批",
+          "澳洲买房成本",
+          "投资回报率计算",
+          "FIRB费用",
+          "土地税附加费",
+        ]
+      : [
+          "Australian property investment",
+          "FIRB calculator",
+          "stamp duty calculator",
+          "property investment fees",
+          "foreign investment approval",
+          "buying property in Australia",
+          "ROI calculator",
+          "FIRB fees",
+          "land tax surcharge",
+          "property investment analysis",
+          "foreign buyer costs",
+        ],
+    alternates: {
+      canonical: url,
+      languages: {
+        "en-AU": enUrl,
+        en: enUrl,
+        "zh-CN": zhUrl,
+        zh: zhUrl,
+        "x-default": enUrl,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: isZh ? "zh_CN" : "en_AU",
+      alternateLocale: isZh ? "en_AU" : "zh_CN",
+      url,
+      siteName: "Property Costs",
+      title,
+      description,
+      images: [
+        {
+          url: `${baseUrl}/images/calculator-preview.png`,
+          width: 1200,
+          height: 630,
+          alt: isZh
+            ? "澳大利亚房产投资费用计算器"
+            : "Australian Property Investment Fee Calculator",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${baseUrl}/images/calculator-preview.png`],
+    },
+  };
+}
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -140,6 +228,32 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
+      {/* What is FIRB Section */}
+      <section className="container mx-auto px-4 py-12 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-semibold text-gray-900 mb-6 text-center">
+            {locale === "zh" ? "什么是FIRB？" : "What is FIRB?"}
+          </h2>
+          <div className="prose prose-lg max-w-none">
+            <p className="text-gray-600 mb-4">
+              {locale === "zh"
+                ? "FIRB（外国投资审查委员会）是澳大利亚政府的一个机构，负责审查外国投资提案，确保这些投资符合国家利益。对于希望在澳大利亚购买房产的外国投资者，通常需要获得FIRB的批准。"
+                : "FIRB (Foreign Investment Review Board) is an Australian government body responsible for reviewing foreign investment proposals to ensure they align with national interests. Foreign investors wishing to purchase property in Australia typically need to obtain FIRB approval."}
+            </p>
+            <p className="text-gray-600 mb-4">
+              {locale === "zh"
+                ? "FIRB申请过程涉及支付申请费，费用金额取决于房产价值。此外，外国买家还需要支付额外的印花税附加费和年度土地税附加费（在某些州）。"
+                : "The FIRB application process involves paying an application fee, the amount of which depends on the property value. Additionally, foreign buyers are required to pay additional stamp duty surcharges and annual land tax surcharges (in certain states)."}
+            </p>
+            <p className="text-gray-600">
+              {locale === "zh"
+                ? "我们的免费计算器可以帮助您准确计算所有这些费用，让您在投资前充分了解总成本。"
+                : "Our free calculator helps you accurately calculate all these costs, giving you a complete understanding of the total expenses before you invest."}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Feature Navigation */}
       <section className="container mx-auto px-4 py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto">
@@ -195,7 +309,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   alt={section.image.alt}
                   width={section.image.width}
                   height={section.image.height}
-                  className="rounded-2xl border border-gray-200 shadow-lg"
+                  className="rounded border border-gray-200 shadow-lg"
                   priority={index === 0}
                 />
               </div>
@@ -229,7 +343,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       {/* Lead Capture */}
       <section className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm px-8 py-12 text-center">
+        <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded shadow-sm px-8 py-12 text-center">
           <p className="text-sm font-semibold tracking-wide uppercase text-blue-600">
             {t("leadCapture.title")}
           </p>

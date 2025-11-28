@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PropertyType, AustralianState, EntityType } from "@/lib/firb/constants";
-import { Home, Building, MapPin, DollarSign, Percent } from "lucide-react";
+import { Home, Building, MapPin, DollarSign, Percent, AlertCircle } from "lucide-react";
 import AddressAutocomplete from "./AddressAutocomplete";
 
 interface PropertyDetailsStepProps {
@@ -37,6 +37,7 @@ interface PropertyDetailsStepProps {
   onFirstHomeChange: (isFirstHome: boolean) => void;
   onDepositPercentChange: (percent: number) => void;
   onEntityTypeChange: (type: EntityType) => void;
+  errors?: Record<string, boolean>;
 }
 
 export default function PropertyDetailsStep({
@@ -54,6 +55,7 @@ export default function PropertyDetailsStep({
   onFirstHomeChange,
   onDepositPercentChange,
   onEntityTypeChange,
+  errors = {},
 }: PropertyDetailsStepProps) {
   const t = useTranslations("FIRBCalculator.property");
 
@@ -76,18 +78,28 @@ export default function PropertyDetailsStep({
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Property Type */}
-        <div className="space-y-4">
+        <div id="property-type-section" className="space-y-4">
           <Label className="text-base font-semibold flex items-center gap-2 text-gray-900">
             <Home className="h-5 w-5 text-gray-600" />
-            {t("typeLabel")}
+            {t("typeLabel")} <span className="text-red-600">*</span>
           </Label>
+          {errors.propertyType && (
+            <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+              <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+              <p className="text-sm text-red-600">Please select a property type</p>
+            </div>
+          )}
           <RadioGroup
             value={propertyType}
             onValueChange={(value) => onPropertyTypeChange(value as PropertyType)}
-            className="grid grid-cols-1 md:grid-cols-2 gap-3"
+            className={`grid grid-cols-1 md:grid-cols-2 gap-3 ${errors.propertyType ? "ring-2 ring-red-500 rounded-lg p-2" : ""}`}
           >
             <Label htmlFor="newDwelling" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
+              <div
+                className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
+                  errors.propertyType ? "border-red-300 bg-red-50/50" : "border-gray-200"
+                }`}
+              >
                 <RadioGroupItem value="newDwelling" id="newDwelling" />
                 <div className="flex-1">
                   <div className="font-semibold text-sm text-gray-900">
@@ -101,7 +113,11 @@ export default function PropertyDetailsStep({
             </Label>
 
             <Label htmlFor="established" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
+              <div
+                className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
+                  errors.propertyType ? "border-red-300 bg-red-50/50" : "border-gray-200"
+                }`}
+              >
                 <RadioGroupItem value="established" id="established" />
                 <div className="flex-1">
                   <div className="font-semibold text-sm text-gray-900">
@@ -115,7 +131,11 @@ export default function PropertyDetailsStep({
             </Label>
 
             <Label htmlFor="vacantLand" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
+              <div
+                className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
+                  errors.propertyType ? "border-red-300 bg-red-50/50" : "border-gray-200"
+                }`}
+              >
                 <RadioGroupItem value="vacantLand" id="vacantLand" />
                 <div className="flex-1">
                   <div className="font-semibold text-sm text-gray-900">
@@ -129,7 +149,11 @@ export default function PropertyDetailsStep({
             </Label>
 
             <Label htmlFor="commercial" className="cursor-pointer block">
-              <div className="flex items-center space-x-3 rounded border-2 border-gray-200 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20">
+              <div
+                className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
+                  errors.propertyType ? "border-red-300 bg-red-50/50" : "border-gray-200"
+                }`}
+              >
                 <RadioGroupItem value="commercial" id="commercial" />
                 <div className="flex-1">
                   <div className="font-semibold text-sm text-gray-900">
@@ -151,8 +175,14 @@ export default function PropertyDetailsStep({
             className="text-base font-semibold flex items-center gap-2 text-gray-900"
           >
             <DollarSign className="h-5 w-5 text-gray-600" />
-            {t("valueLabel")}
+            {t("valueLabel")} <span className="text-red-600">*</span>
           </Label>
+          {errors.propertyValue && (
+            <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+              <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+              <p className="text-sm text-red-600">Please enter a valid property value</p>
+            </div>
+          )}
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <Input
@@ -161,38 +191,12 @@ export default function PropertyDetailsStep({
               value={propertyValue || ""}
               onChange={(e) => onPropertyValueChange(Number(e.target.value))}
               placeholder="1000000"
-              className="pl-8 rounded"
+              className={`pl-8 rounded ${errors.propertyValue ? "border-red-500 focus:ring-red-500" : ""}`}
             />
           </div>
           {propertyValue > 0 && (
             <p className="text-sm text-gray-600">{formatCurrency(propertyValue)}</p>
           )}
-        </div>
-
-        {/* State/Territory */}
-        <div className="space-y-3">
-          <Label
-            htmlFor="state"
-            className="text-base font-semibold flex items-center gap-2 text-gray-900"
-          >
-            <MapPin className="h-5 w-5 text-gray-600" />
-            {t("stateLabel")}
-          </Label>
-          <Select value={state} onValueChange={(value) => onStateChange(value as AustralianState)}>
-            <SelectTrigger id="state" className="w-full">
-              <SelectValue placeholder={t("statePlaceholder")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="NSW">New South Wales (NSW)</SelectItem>
-              <SelectItem value="VIC">Victoria (VIC)</SelectItem>
-              <SelectItem value="QLD">Queensland (QLD)</SelectItem>
-              <SelectItem value="SA">South Australia (SA)</SelectItem>
-              <SelectItem value="WA">Western Australia (WA)</SelectItem>
-              <SelectItem value="TAS">Tasmania (TAS)</SelectItem>
-              <SelectItem value="ACT">Australian Capital Territory (ACT)</SelectItem>
-              <SelectItem value="NT">Northern Territory (NT)</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
 
         {/* Property Address (Optional) */}
@@ -214,6 +218,41 @@ export default function PropertyDetailsStep({
           <p className="text-xs text-gray-500">
             Start typing to see address suggestions. Selecting an address will auto-fill the state.
           </p>
+        </div>
+
+        {/* State/Territory */}
+        <div className="space-y-3">
+          <Label
+            htmlFor="state"
+            className="text-base font-semibold flex items-center gap-2 text-gray-900"
+          >
+            <MapPin className="h-5 w-5 text-gray-600" />
+            {t("stateLabel")} <span className="text-red-600">*</span>
+          </Label>
+          {errors.state && (
+            <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+              <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+              <p className="text-sm text-red-600">Please select a state</p>
+            </div>
+          )}
+          <Select value={state} onValueChange={(value) => onStateChange(value as AustralianState)}>
+            <SelectTrigger
+              id="state"
+              className={`w-full ${errors.state ? "border-red-500 focus:ring-red-500" : ""}`}
+            >
+              <SelectValue placeholder={t("statePlaceholder")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="NSW">New South Wales (NSW)</SelectItem>
+              <SelectItem value="VIC">Victoria (VIC)</SelectItem>
+              <SelectItem value="QLD">Queensland (QLD)</SelectItem>
+              <SelectItem value="SA">South Australia (SA)</SelectItem>
+              <SelectItem value="WA">Western Australia (WA)</SelectItem>
+              <SelectItem value="TAS">Tasmania (TAS)</SelectItem>
+              <SelectItem value="ACT">Australian Capital Territory (ACT)</SelectItem>
+              <SelectItem value="NT">Northern Territory (NT)</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* First Home Buyer */}

@@ -578,6 +578,9 @@
       "benchmarkComparison": {
         "title": "市场基准比较",
         "description": "将您的输入与{level}市场基准进行比较",
+        "loading": "正在加载基准数据...",
+        "noData": "此位置没有可用的基准数据。",
+        "noDataDescription": "我们无法找到此州的市场基准数据。计算器将使用默认值。",
         "yourInput": "您的输入",
         "benchmark": "市场基准",
         "dataSource": "数据来源",
@@ -859,6 +862,31 @@
         "errorDetails": "错误详情",
         "validationErrors": "验证错误",
         "row": "行"
+      }
+    },
+    "emailModal": {
+      "title": "发送结果到邮箱",
+      "description": "输入您的邮箱地址，我们将向您发送详细的计算结果PDF报告。",
+      "emailLabel": "邮箱地址",
+      "emailPlaceholder": "your@email.com",
+      "nameLabel": "姓名",
+      "namePlaceholder": "您的姓名（可选）",
+      "optional": "可选",
+      "consentLabel": "我同意接收此邮件",
+      "consentDescription": "勾选此框即表示您同意通过邮件接收计算结果。",
+      "send": "发送结果",
+      "sending": "发送中...",
+      "cancel": "取消",
+      "info": "您的结果将作为PDF附件发送。这可能需要几分钟。",
+      "success": {
+        "title": "邮件发送成功！",
+        "description": "您的计算结果已发送到您的邮箱地址。"
+      },
+      "errors": {
+        "required": "请填写所有必填字段。",
+        "invalidEmail": "请输入有效的邮箱地址。",
+        "sendFailed": "发送邮件失败。请稍后再试。",
+        "general": "发生错误。请重试。"
       }
     }
   }

@@ -6,7 +6,9 @@ import "../globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/components/auth/AuthProvider";
-// GoogleAnalytics component - optional
+import { generateOrganizationSchema, injectStructuredData } from "@/lib/schema/organization-schema";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import MetaPixel from "@/components/analytics/MetaPixel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +20,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const isZh = locale === "zh";
 
+  const baseUrl = "https://propertycosts.com.au";
+  const enUrl = `${baseUrl}/en`;
+  const zhUrl = `${baseUrl}/zh`;
+
   return {
-    metadataBase: new URL("https://propertycosts.com.au"),
+    metadataBase: new URL(baseUrl),
     title: {
       default: isZh
         ? "FIRB计算器 - 澳大利亚房产投资费用计算 | 外国投资审批"
@@ -40,6 +46,47 @@ export async function generateMetadata({
       isZh ? "房产投资回报率" : "property investment ROI",
       isZh ? "外籍人士买房" : "foreign national property purchase",
     ],
+    alternates: {
+      canonical: `${baseUrl}/${locale}`,
+      languages: {
+        "en-AU": enUrl,
+        en: enUrl,
+        "zh-CN": zhUrl,
+        zh: zhUrl,
+        "x-default": enUrl,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: isZh ? "zh_CN" : "en_AU",
+      alternateLocale: isZh ? "en_AU" : "zh_CN",
+      url: `${baseUrl}/${locale}`,
+      siteName: "Property Costs",
+      title: isZh
+        ? "FIRB计算器 - 澳大利亚房产投资费用计算"
+        : "FIRB Calculator - Australian Property Investment Fee Calculator",
+      description: isZh
+        ? "免费FIRB费用计算器，帮助外国投资者计算澳大利亚房产投资的所有费用、税收和FIRB申请要求。"
+        : "Free FIRB fee calculator helping foreign investors calculate all costs, taxes, and FIRB application requirements for Australian property investment.",
+      images: [
+        {
+          url: `${baseUrl}/images/calculator-preview.png`,
+          width: 1200,
+          height: 630,
+          alt: isZh ? "FIRB计算器界面" : "FIRB Calculator Interface",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: isZh
+        ? "FIRB计算器 - 澳大利亚房产投资费用计算"
+        : "FIRB Calculator - Australian Property Investment Fee Calculator",
+      description: isZh
+        ? "免费FIRB费用计算器，帮助外国投资者计算澳大利亚房产投资的所有费用。"
+        : "Free FIRB fee calculator helping foreign investors calculate all costs for Australian property investment.",
+      images: [`${baseUrl}/images/calculator-preview.png`],
+    },
   };
 }
 
@@ -58,8 +105,18 @@ export default async function LocaleLayout({
   // Load messages directly
   const messages = await import(`../../messages/${validLocale}.json`);
 
+  // Generate Organization schema
+  const organizationSchema = generateOrganizationSchema();
+
   return (
     <html lang={validLocale}>
+      <head>
+        {/* Organization Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={injectStructuredData(organizationSchema)}
+        />
+      </head>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages.default} locale={validLocale}>
           <AuthProvider>
@@ -79,7 +136,8 @@ export default async function LocaleLayout({
             </div>
           </AuthProvider>
         </NextIntlClientProvider>
-        {/* Google Analytics - add when component is available */}
+        <GoogleAnalytics />
+        <MetaPixel />
       </body>
     </html>
   );
