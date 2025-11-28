@@ -464,7 +464,9 @@ export default function ResultsPanel({
         id: "eligibility",
         title: t("eligibility.header"),
         description: t("eligibility.summary.description"),
-        content: <EligibilityResultCard eligibility={eligibility} formData={formData} />,
+        content: (
+          <EligibilityResultCard eligibility={eligibility} formData={formData} costs={costs} />
+        ),
         defaultOpen: true,
       },
       {
