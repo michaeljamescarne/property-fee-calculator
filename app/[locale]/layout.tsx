@@ -73,7 +73,9 @@ export async function generateMetadata({
           url: `${baseUrl}/images/calculator-preview.png`,
           width: 1200,
           height: 630,
-          alt: isZh ? "FIRB计算器界面" : "FIRB Calculator Interface",
+          alt: isZh
+            ? "成本明细表 - 房产投资费用明细"
+            : "Cost Breakdown - Property Investment Cost Details",
         },
       ],
     },

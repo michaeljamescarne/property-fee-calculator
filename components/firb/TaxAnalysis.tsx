@@ -173,7 +173,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
               <span className="text-sm font-semibold">{currency(item.amount)}</span>
             </div>
           ))}
-          <div className="flex justify-between items-center p-4 rounded-lg bg-blue-50 border-2 border-blue-300 font-bold mt-2">
+          <div className="flex justify-between items-center p-4 rounded-xl bg-blue-50 border border-blue-200 font-bold mt-2">
             <span className="text-blue-900">
               {t("taxAnalysis.totalDeductions") ===
               "FIRBCalculator.investmentAnalytics.taxAnalysis.totalDeductions"

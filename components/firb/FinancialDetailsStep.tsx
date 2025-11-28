@@ -52,9 +52,13 @@ export default function FinancialDetailsStep({
   const calculatedDepositAmount = propertyValue * (depositPercent / 100);
   const loanAmount = investmentInputs.loanAmount ?? propertyValue - calculatedDepositAmount;
 
-  // Default values
+  // Default values - ensure we use the actual input value, not a fallback
+  // Use the input value if it exists (even if 0), otherwise calculate default
   const weeklyRent =
-    investmentInputs.estimatedWeeklyRent || Math.round((propertyValue * 0.04) / 52);
+    investmentInputs.estimatedWeeklyRent !== undefined &&
+    investmentInputs.estimatedWeeklyRent !== null
+      ? investmentInputs.estimatedWeeklyRent
+      : Math.round((propertyValue * 0.04) / 52);
   const capitalGrowthRate = investmentInputs.capitalGrowthRate || 6;
   const interestRate = investmentInputs.interestRate || 6.5;
   const councilRates = investmentInputs.annualMaintenanceCost || 0; // This will be updated to use council rates
@@ -96,12 +100,13 @@ export default function FinancialDetailsStep({
               <Input
                 id="weekly-rent"
                 type="number"
-                value={weeklyRent}
-                onChange={(e) =>
+                value={weeklyRent || ""}
+                onChange={(e) => {
+                  const value = e.target.value === "" ? undefined : Number(e.target.value);
                   onInvestmentInputsChange({
-                    estimatedWeeklyRent: Number(e.target.value) || 0,
-                  })
-                }
+                    estimatedWeeklyRent: value !== undefined && !isNaN(value) ? value : undefined,
+                  });
+                }}
                 className={`flex-1 rounded ${errors.estimatedWeeklyRent ? "border-red-500 focus:ring-red-500" : ""}`}
                 placeholder="e.g., 500"
               />

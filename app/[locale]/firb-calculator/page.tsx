@@ -783,7 +783,11 @@ export default function FIRBCalculatorPage() {
                   <FinancialDetailsStep
                     investmentInputs={investmentInputs}
                     onInvestmentInputsChange={(updates) => {
-                      setInvestmentInputs((prev) => ({ ...prev, ...updates }));
+                      setInvestmentInputs((prev) => {
+                        const newInputs = { ...prev, ...updates };
+                        // Ensure we're creating a new object reference to trigger re-renders
+                        return newInputs;
+                      });
                       // Clear validation errors for updated fields
                       const updatedKeys = Object.keys(updates);
                       setValidationErrors((prev) => {
@@ -857,6 +861,7 @@ export default function FIRBCalculatorPage() {
                   state={formData.state}
                   depositPercent={formData.depositPercent || 20}
                   formData={formData as FIRBCalculatorFormData}
+                  investmentInputs={investmentInputs}
                 />
               )}
           </div>

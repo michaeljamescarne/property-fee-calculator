@@ -40,7 +40,7 @@ export function generateCalculatorSchema(locale: string) {
           "Cash flow projections",
           "10-year investment outlook",
         ],
-    screenshot: `${BASE_URL}/images/calculator-preview.png`,
+    screenshot: `${BASE_URL}/images/calculator-preview.png`, // Cost Breakdown preview image
   };
 }
 

@@ -81,7 +81,9 @@ export async function generateMetadata({
           url: `${baseUrl}/images/calculator-preview.png`,
           width: 1200,
           height: 630,
-          alt: isZh ? "FIRB计算器界面预览" : "FIRB Calculator Interface Preview",
+          alt: isZh
+            ? "成本明细表 - FIRB费用、印花税和年度费用明细"
+            : "Cost Breakdown - FIRB Fees, Stamp Duty, and Annual Costs Details",
         },
       ],
     },

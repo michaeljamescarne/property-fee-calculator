@@ -56,6 +56,7 @@ interface ResultsPanelProps {
   state: AustralianState;
   depositPercent: number;
   formData: FIRBCalculatorFormData;
+  investmentInputs: Partial<InvestmentInputs>;
 }
 
 interface CollapsibleSection {
@@ -79,6 +80,7 @@ export default function ResultsPanel({
   state,
   depositPercent,
   formData,
+  investmentInputs: propInvestmentInputs,
 }: ResultsPanelProps) {
   const t = useTranslations("FIRBCalculator.results");
   const tAnalytics = useTranslations("FIRBCalculator.results.investmentAnalytics");
@@ -112,11 +114,22 @@ export default function ResultsPanel({
     }
   }, []); // Only run once on mount
 
-  // Investment Analytics State
-  const investmentInputs = useMemo(
-    () => generateDefaultInputs(propertyValue, state, propertyType, depositPercent, costs),
-    [propertyValue, state, propertyType, depositPercent, costs]
-  );
+  // Investment Analytics State - use provided inputs or generate defaults if not provided
+  const investmentInputs = useMemo(() => {
+    // If we have actual inputs from the wizard, use them (merge with defaults for any missing values)
+    if (propInvestmentInputs && Object.keys(propInvestmentInputs).length > 0) {
+      const defaults = generateDefaultInputs(
+        propertyValue,
+        state,
+        propertyType,
+        depositPercent,
+        costs
+      );
+      return { ...defaults, ...propInvestmentInputs };
+    }
+    // Otherwise generate defaults
+    return generateDefaultInputs(propertyValue, state, propertyType, depositPercent, costs);
+  }, [propInvestmentInputs, propertyValue, state, propertyType, depositPercent, costs]);
   const [openSections, setOpenSections] = useState<string[]>([
     "eligibility",
     "costs",
@@ -266,63 +279,114 @@ export default function ResultsPanel({
     costs: costs,
   };
 
-  const renderCostBreakdown = () => (
-    <>
-      <div className="p-6 mb-6 rounded bg-blue-600 text-white">
-        <p className="text-sm text-white/90">{t("costs.totalInvestment")}</p>
-        <p className="text-4xl font-bold mt-2">{formatCurrency(costs.totalInvestmentCost)}</p>
-        <p className="text-sm text-white/75 mt-2">
-          {t("costs.propertyPrice")}: {formatCurrency(costs.upfrontCosts.propertyPrice)}
-        </p>
-        <p className="text-sm text-white/75">
-          {t("costs.upfrontCosts")}: {formatCurrency(costs.upfrontCosts.total)}
-        </p>
-      </div>
+  const renderCostBreakdown = () => {
+    // Separate upfront and ongoing cost sections
+    const upfrontSections = costs.breakdown.filter(
+      (section) => section.category !== "Annual Ongoing Costs"
+    );
+    const ongoingSection = costs.breakdown.find(
+      (section) => section.category === "Annual Ongoing Costs"
+    );
 
-      <div className="space-y-6">
-        {costs.breakdown.map((section, index) => (
-          <div key={index} className="space-y-3">
-            <h4 className="text-base font-semibold text-gray-900">{section.category}</h4>
-            <div className="space-y-3">
-              {section.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-start gap-4">
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">{item.name}</p>
-                    {item.description && (
-                      <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                    )}
+    // Calculate total upfront costs
+    const totalUpfrontCosts = costs.upfrontCosts.total;
+
+    return (
+      <>
+        {/* Summary Cards at Top */}
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          <div className="p-6 bg-green-50 border border-green-200 rounded-xl">
+            <p className="text-sm font-medium text-green-900 mb-1">{t("costs.totalInvestment")}</p>
+            <p className="text-3xl font-bold text-green-600">
+              {formatCurrency(costs.totalInvestmentCost)}
+            </p>
+            <p className="text-sm text-green-600 mt-2">
+              {t("costs.propertyPrice")}: {formatCurrency(costs.upfrontCosts.propertyPrice)} +{" "}
+              {t("costs.upfrontCosts")}: {formatCurrency(costs.upfrontCosts.total)}
+            </p>
+          </div>
+
+          <div className="p-6 bg-blue-50 border border-blue-200 rounded-xl">
+            <p className="text-sm font-medium text-blue-900 mb-1">{t("costs.annualOngoing")}</p>
+            <p className="text-3xl font-bold text-blue-600">
+              {formatCurrency(costs.ongoingCosts.total)}
+            </p>
+            <p className="text-sm text-blue-600 mt-2">{t("costs.annualOngoingNote")}</p>
+          </div>
+        </div>
+
+        {/* Upfront Costs Breakdown */}
+        {upfrontSections.length > 0 && (
+          <div>
+            <h4 className="text-sm font-semibold text-foreground/70 mb-4 uppercase tracking-wide">
+              {t("costs.upfrontCosts") || "Upfront Costs"}
+            </h4>
+            <div className="space-y-2">
+              {upfrontSections.map((section, index) =>
+                section.items.map((item, itemIndex) => (
+                  <div
+                    key={`${index}-${itemIndex}`}
+                    className="flex justify-between items-center p-3 rounded hover:bg-muted/50 transition-colors border border-border/20"
+                  >
+                    <span className="text-sm font-medium">
+                      {item.description ? (
+                        <>
+                          {item.name}:{" "}
+                          <span className="text-muted-foreground">{item.description}</span>
+                        </>
+                      ) : (
+                        item.name
+                      )}
+                    </span>
+                    <span className="text-sm font-semibold">{formatCurrency(item.amount)}</span>
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-900">{formatCurrency(item.amount)}</p>
-                  </div>
-                </div>
-              ))}
-              {section.items.length > 1 && (
-                <div className="flex justify-between items-center pt-3 border-t border-gray-200 font-semibold text-gray-900">
-                  <span>{t("costs.subtotal")}</span>
-                  <span>
-                    {formatCurrency(section.items.reduce((sum, item) => sum + item.amount, 0))}
-                  </span>
-                </div>
+                ))
               )}
+              <div className="flex justify-between items-center p-4 rounded-xl bg-green-50 border border-green-200 font-bold mt-2">
+                <span className="text-green-900">{t("costs.upfrontCosts") || "Upfront Costs"}</span>
+                <span className="text-green-600 text-lg">{formatCurrency(totalUpfrontCosts)}</span>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
+        )}
 
-      <div className="mt-6 p-4 rounded bg-gray-50 border border-gray-200">
-        <div className="flex justify-between items-center">
-          <div>
-            <p className="font-semibold text-gray-900">{t("costs.annualOngoing")}</p>
-            <p className="text-sm text-gray-600">{t("costs.annualOngoingNote")}</p>
+        {/* Annual Ongoing Costs Breakdown */}
+        {ongoingSection && ongoingSection.items.length > 0 && (
+          <div className="mt-8">
+            <h4 className="text-sm font-semibold text-foreground/70 mb-4 uppercase tracking-wide">
+              {t("costs.annualOngoing")}
+            </h4>
+            <div className="space-y-2">
+              {ongoingSection.items.map((item, itemIndex) => (
+                <div
+                  key={itemIndex}
+                  className="flex justify-between items-center p-3 rounded hover:bg-muted/50 transition-colors border border-border/20"
+                >
+                  <span className="text-sm font-medium">
+                    {item.description ? (
+                      <>
+                        {item.name}:{" "}
+                        <span className="text-muted-foreground">{item.description}</span>
+                      </>
+                    ) : (
+                      item.name
+                    )}
+                  </span>
+                  <span className="text-sm font-semibold">{formatCurrency(item.amount)}</span>
+                </div>
+              ))}
+              <div className="flex justify-between items-center p-4 rounded-xl bg-blue-50 border border-blue-200 font-bold mt-2">
+                <span className="text-blue-900">{t("costs.annualOngoing")}</span>
+                <span className="text-blue-600 text-lg">
+                  {formatCurrency(costs.ongoingCosts.total)}
+                </span>
+              </div>
+            </div>
           </div>
-          <p className="text-2xl font-bold text-gray-900">
-            {formatCurrency(costs.ongoingCosts.total)}
-          </p>
-        </div>
-      </div>
-    </>
-  );
+        )}
+      </>
+    );
+  };
 
   const renderAssumptionsSummary = () => {
     const summaryItems = [
@@ -585,7 +649,7 @@ export default function ResultsPanel({
     <div className="space-y-6">
       {renderActionCluster()}
 
-      <InvestmentSummary analytics={investmentAnalytics} />
+      <InvestmentSummary analytics={investmentAnalytics} costs={costs} eligibility={eligibility} />
 
       <div className="space-y-6">
         {collapsibleSections.map((section) => {

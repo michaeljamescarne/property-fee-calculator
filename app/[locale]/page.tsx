@@ -79,8 +79,8 @@ export async function generateMetadata({
           width: 1200,
           height: 630,
           alt: isZh
-            ? "澳大利亚房产投资费用计算器"
-            : "Australian Property Investment Fee Calculator",
+            ? "成本明细表 - 总投资成本、前期费用和年度持续费用"
+            : "Cost Breakdown - Total Investment Cost, Upfront Costs, and Annual Ongoing Costs",
         },
       ],
     },
@@ -137,7 +137,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       ],
       image: {
         src: "/images/calculator-preview.png",
-        alt: t("sections.costCalculator.imageAlt"),
+        alt:
+          t("sections.costCalculator.imageAlt") ||
+          "Cost Breakdown showing Total Investment Cost, Upfront Costs, and Annual Ongoing Costs",
         width: 720,
         height: 512,
       },
