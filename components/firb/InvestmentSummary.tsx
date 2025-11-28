@@ -157,17 +157,17 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
 
       {/* Additional Highlight Metrics */}
       <div className="grid md:grid-cols-3 gap-4">
-        <div className="p-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl border border-primary/20">
-          <p className="text-sm font-medium text-foreground/70 mb-1 break-words">
+        <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
+          <p className="text-sm font-medium text-gray-700 mb-1 break-words">
             {t("summary.propertyValueGrowth") ===
             "FIRBCalculator.investmentAnalytics.summary.propertyValueGrowth"
               ? "Property Value Growth"
               : t("summary.propertyValueGrowth")}
           </p>
-          <p className="text-2xl font-bold text-primary">
+          <p className="text-2xl font-bold text-blue-700">
             {currency(analytics.capitalGrowth.estimatedValueAtEnd)}
           </p>
-          <p className="text-xs text-muted-foreground mt-1 break-words">
+          <p className="text-xs text-gray-600 mt-1 break-words">
             {t("summary.afterYears") === "FIRBCalculator.investmentAnalytics.summary.afterYears"
               ? "After"
               : t("summary.afterYears")}{" "}
@@ -179,8 +179,8 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
           </p>
         </div>
 
-        <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200">
-          <p className="text-sm font-medium text-foreground/70 mb-1 break-words">
+        <div className="p-4 bg-green-50 rounded-xl border border-green-200">
+          <p className="text-sm font-medium text-gray-700 mb-1 break-words">
             {t("summary.yourEquity") === "FIRBCalculator.investmentAnalytics.summary.yourEquity"
               ? "Your Equity"
               : t("summary.yourEquity")}
@@ -188,7 +188,7 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
           <p className="text-2xl font-bold text-green-700">
             {currency(analytics.loanMetrics.equityAtEnd)}
           </p>
-          <p className="text-xs text-muted-foreground mt-1 break-words">
+          <p className="text-xs text-gray-600 mt-1 break-words">
             {t("summary.equityGain") === "FIRBCalculator.investmentAnalytics.summary.equityGain"
               ? "Equity gain"
               : t("summary.equityGain")}
@@ -196,8 +196,8 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
           </p>
         </div>
 
-        <div className="p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200">
-          <p className="text-sm font-medium text-foreground/70 mb-1 break-words">
+        <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
+          <p className="text-sm font-medium text-gray-700 mb-1 break-words">
             {t("summary.taxSavings") === "FIRBCalculator.investmentAnalytics.summary.taxSavings"
               ? "Tax Savings"
               : t("summary.taxSavings")}
@@ -205,7 +205,7 @@ export default function InvestmentSummary({ analytics }: InvestmentSummaryProps)
           <p className="text-2xl font-bold text-amber-700">
             {currency(analytics.taxAnalysis.annualTaxSaving)}
           </p>
-          <p className="text-xs text-muted-foreground mt-1 break-words">
+          <p className="text-xs text-gray-600 mt-1 break-words">
             {t("summary.fromNegativeGearing") ===
             "FIRBCalculator.investmentAnalytics.summary.fromNegativeGearing"
               ? "From negative gearing"

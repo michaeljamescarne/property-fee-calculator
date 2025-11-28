@@ -20,6 +20,7 @@ import {
   Loader2,
   TrendingDown,
   TrendingUp as TrendingUpIcon,
+  AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +34,7 @@ interface FinancialDetailsStepProps {
   depositPercent: number;
   benchmarkData?: BenchmarkData | null;
   isLoadingBenchmarks?: boolean;
+  errors?: Record<string, boolean>;
 }
 
 export default function FinancialDetailsStep({
@@ -42,12 +44,13 @@ export default function FinancialDetailsStep({
   depositPercent,
   benchmarkData,
   isLoadingBenchmarks = false,
+  errors = {},
 }: FinancialDetailsStepProps) {
   const t = useTranslations("FIRBCalculator.financialDetails");
 
-  // Calculate loan amount
-  const depositAmount = propertyValue * (depositPercent / 100);
-  const loanAmount = propertyValue - depositAmount;
+  // Calculate loan amount (use custom values if set, otherwise calculate from propertyValue and depositPercent)
+  const calculatedDepositAmount = propertyValue * (depositPercent / 100);
+  const loanAmount = investmentInputs.loanAmount ?? propertyValue - calculatedDepositAmount;
 
   // Default values
   const weeklyRent =
@@ -69,9 +72,9 @@ export default function FinancialDetailsStep({
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Rental Income */}
-        <div className="space-y-4 p-4 rounded border-2 border-blue-200 bg-blue-50">
+        <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <Home className="h-5 w-5 text-blue-600" />
+            <Home className="h-5 w-5 text-gray-600" />
             <Label className="text-base font-semibold text-gray-900">
               {t("rental.title") || "Rental Income"}
             </Label>
@@ -79,8 +82,15 @@ export default function FinancialDetailsStep({
 
           <div className="space-y-2">
             <Label htmlFor="weekly-rent" className="text-sm text-gray-900">
-              {t("rental.weeklyRent") || "Estimated Weekly Rent"}
+              {t("rental.weeklyRent") || "Estimated Weekly Rent"}{" "}
+              <span className="text-red-600">*</span>
             </Label>
+            {errors.estimatedWeeklyRent && (
+              <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+                <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                <p className="text-sm text-red-600">Please enter a valid weekly rent amount</p>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <span className="text-gray-500 font-medium">$</span>
               <Input
@@ -92,7 +102,7 @@ export default function FinancialDetailsStep({
                     estimatedWeeklyRent: Number(e.target.value) || 0,
                   })
                 }
-                className="flex-1 rounded"
+                className={`flex-1 rounded ${errors.estimatedWeeklyRent ? "border-red-500 focus:ring-red-500" : ""}`}
                 placeholder="e.g., 500"
               />
               <span className="text-sm text-gray-600 whitespace-nowrap">
@@ -197,7 +207,7 @@ export default function FinancialDetailsStep({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm">
+            <Label className="text-sm text-gray-900">
               {t("rental.vacancyRate") || "Vacancy Rate"}: {investmentInputs.vacancyRate || 5}%
             </Label>
             <Slider
@@ -216,16 +226,16 @@ export default function FinancialDetailsStep({
         </div>
 
         {/* Capital Growth */}
-        <div className="space-y-4 p-4 rounded border-2 border-accent/20 bg-accent/5">
+        <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-accent" />
-            <Label className="text-base font-semibold">
+            <TrendingUp className="h-5 w-5 text-gray-600" />
+            <Label className="text-base font-semibold text-gray-900">
               {t("growth.title") || "Capital Growth Projections"}
             </Label>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm">
+            <Label className="text-sm text-gray-900">
               {t("growth.rate") || "Expected Annual Capital Growth"}: {capitalGrowthRate}%
             </Label>
             <Slider
@@ -255,11 +265,11 @@ export default function FinancialDetailsStep({
             {!isLoadingBenchmarks &&
               benchmarkData?.capitalGrowth5yr !== undefined &&
               benchmarkData.capitalGrowth5yr !== null && (
-                <div className="p-3 rounded bg-accent/10 border-2 border-accent/30 space-y-2">
+                <div className="p-3 rounded bg-blue-600/10 border-2 border-blue-600/30 space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-accent" />
-                      <span className="text-sm font-medium text-accent-foreground">
+                      <Sparkles className="h-4 w-4 text-blue-600" />
+                      <span className="text-sm font-medium text-blue-600">
                         {benchmarkData.level === "suburb"
                           ? t("growth.benchmark.suburb") || "Suburb"
                           : t("growth.benchmark.state") || "State"}{" "}
@@ -350,30 +360,62 @@ export default function FinancialDetailsStep({
 
         {/* Loan Details */}
         {loanAmount > 0 && (
-          <div className="space-y-4 p-4 rounded border-2 border-blue-200 bg-blue-50">
+          <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-blue-600" />
-              <Label className="text-base font-semibold">{t("loan.title") || "Loan Details"}</Label>
+              <DollarSign className="h-5 w-5 text-gray-600" />
+              <Label className="text-base font-semibold text-gray-900">
+                {t("loan.title") || "Loan Details"}
+              </Label>
             </div>
 
             <div className="space-y-4">
-              <div className="p-3 rounded bg-white border">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-600">{t("loan.amount") || "Loan Amount"}</span>
-                  <span className="font-semibold">
-                    ${loanAmount.toLocaleString("en-AU", { maximumFractionDigits: 0 })}
-                  </span>
+              <div className="space-y-3">
+                <Label htmlFor="loan-amount" className="text-sm text-gray-900">
+                  {t("loan.amount") || "Loan Amount"}
+                </Label>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500 font-medium">$</span>
+                  <Input
+                    id="loan-amount"
+                    type="number"
+                    value={loanAmount}
+                    onChange={(e) =>
+                      onInvestmentInputsChange({
+                        loanAmount: Number(e.target.value) || 0,
+                      })
+                    }
+                    className="flex-1 rounded"
+                    placeholder="e.g., 1600000"
+                  />
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">{t("loan.deposit") || "Deposit"}</span>
-                  <span className="font-semibold">
-                    ${depositAmount.toLocaleString("en-AU", { maximumFractionDigits: 0 })}
-                  </span>
+              </div>
+
+              <div className="space-y-3">
+                <Label htmlFor="deposit-amount" className="text-sm text-gray-900">
+                  {t("loan.deposit") || "Deposit"}
+                </Label>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500 font-medium">$</span>
+                  <Input
+                    id="deposit-amount"
+                    type="number"
+                    value={calculatedDepositAmount}
+                    onChange={(e) => {
+                      // Calculate loan amount based on new deposit
+                      const newDeposit = Number(e.target.value) || 0;
+                      const newLoan = propertyValue - newDeposit;
+                      onInvestmentInputsChange({
+                        loanAmount: newLoan,
+                      });
+                    }}
+                    className="flex-1 rounded"
+                    placeholder="e.g., 400000"
+                  />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm">
+                <Label className="text-sm text-gray-900">
                   {t("loan.interestRate") || "Interest Rate"}: {interestRate}%
                 </Label>
                 <Slider
@@ -390,7 +432,7 @@ export default function FinancialDetailsStep({
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm">
+                <Label className="text-sm text-gray-900">
                   {t("loan.term") || "Loan Term"}: {investmentInputs.loanTerm || 30} years
                 </Label>
                 <Slider
@@ -426,7 +468,7 @@ export default function FinancialDetailsStep({
 
         {/* Council Rates */}
         <div className="space-y-2">
-          <Label htmlFor="council-rates" className="text-base font-semibold">
+          <Label htmlFor="council-rates" className="text-base font-semibold text-gray-900">
             {t("councilRates") || "Annual Council Rates (Optional)"}
           </Label>
           <div className="flex items-center gap-2">
@@ -471,8 +513,8 @@ export default function FinancialDetailsStep({
           </div>
 
           {!investmentInputs.selfManaged && (
-            <div className="space-y-2 pl-6">
-              <Label className="text-sm">
+            <div className="space-y-2">
+              <Label className="text-sm text-gray-900">
                 {t("managementFee") || "Property Management Fee"}:{" "}
                 {investmentInputs.propertyManagementFee || 8}%
               </Label>

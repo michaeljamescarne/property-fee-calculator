@@ -7,6 +7,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { trackConversion } from "@/components/analytics/GoogleAnalytics";
+import { trackMetaEvent } from "@/components/analytics/MetaPixel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -97,6 +99,12 @@ export default function EmailResultsModal({
 
       if (data.success) {
         setStatus("success");
+        // Track successful email send
+        trackConversion.emailSent();
+        trackMetaEvent.lead({
+          content_name: "Email Results Sent",
+          content_category: "Email",
+        });
         setTimeout(() => {
           onClose();
           // Reset form

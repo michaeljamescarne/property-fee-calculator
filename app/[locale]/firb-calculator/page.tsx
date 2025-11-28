@@ -70,6 +70,9 @@ export default function FIRBCalculatorPage() {
   // Loading state for saved calculations
   const [isLoadingSavedCalculation, setIsLoadingSavedCalculation] = useState(false);
 
+  // Validation errors state
+  const [validationErrors, setValidationErrors] = useState<Record<string, boolean>>({});
+
   // Format helpers
   const formatCurrencyValue = (value?: number | null) => {
     if (!value) return null;
@@ -367,36 +370,125 @@ export default function FIRBCalculatorPage() {
   // Update form data
   const updateFormData = (updates: Partial<FIRBCalculatorFormData>) => {
     setFormData((prev) => ({ ...prev, ...updates }));
+    // Clear validation errors for updated fields
+    const updatedKeys = Object.keys(updates);
+    setValidationErrors((prev) => {
+      const newErrors = { ...prev };
+      updatedKeys.forEach((key) => {
+        delete newErrors[key];
+      });
+      return newErrors;
+    });
   };
 
-  // Validate current step
-  const validateStep = (step: Step): boolean => {
+  // Get validation errors for current step
+  const getValidationErrors = (step: Step): Record<string, boolean> => {
+    const errors: Record<string, boolean> = {};
+
     if (step === "citizenship") {
-      if (!formData.citizenshipStatus) return false;
-      if (formData.citizenshipStatus === "temporary" && !formData.visaType) return false;
-      return true;
+      if (!formData.citizenshipStatus) {
+        errors.citizenshipStatus = true;
+      }
+      if (formData.citizenshipStatus === "temporary" && !formData.visaType) {
+        errors.visaType = true;
+      }
     }
 
     if (step === "property") {
-      return !!(
-        formData.propertyType &&
-        formData.propertyValue &&
-        formData.propertyValue > 0 &&
-        formData.state
-      );
+      if (!formData.propertyType) {
+        errors.propertyType = true;
+      }
+      if (!formData.propertyValue || formData.propertyValue <= 0) {
+        errors.propertyValue = true;
+      }
+      if (!formData.state) {
+        errors.state = true;
+      }
     }
 
     if (step === "financial") {
       // Financial step is optional but we should have at least weekly rent
-      return !!(investmentInputs.estimatedWeeklyRent && investmentInputs.estimatedWeeklyRent > 0);
+      if (!investmentInputs.estimatedWeeklyRent || investmentInputs.estimatedWeeklyRent <= 0) {
+        errors.estimatedWeeklyRent = true;
+      }
     }
 
-    return true;
+    return errors;
+  };
+
+  // Validate current step
+  const validateStep = (step: Step): boolean => {
+    const errors = getValidationErrors(step);
+    return Object.keys(errors).length === 0;
   };
 
   // Handle next button
-  const handleNext = () => {
-    if (!validateStep(currentStep)) return;
+  const handleNext = (e?: React.MouseEvent) => {
+    // Prevent any default form submission behavior
+    if (e) {
+      e.preventDefault();
+    }
+
+    const errors = getValidationErrors(currentStep);
+
+    if (Object.keys(errors).length > 0) {
+      // Set validation errors and prevent navigation
+      setValidationErrors(errors);
+
+      // Scroll to first error field after a brief delay to ensure DOM is updated
+      setTimeout(() => {
+        const firstErrorKey = Object.keys(errors)[0];
+        let elementId = "";
+
+        // Map error keys to element IDs
+        if (currentStep === "citizenship") {
+          if (firstErrorKey === "citizenshipStatus") {
+            elementId = "citizenship-status-section";
+          } else if (firstErrorKey === "visaType") {
+            elementId = "visa-type";
+          }
+        } else if (currentStep === "property") {
+          if (firstErrorKey === "propertyType") {
+            elementId = "property-type-section";
+          } else if (firstErrorKey === "propertyValue") {
+            elementId = "property-value";
+          } else if (firstErrorKey === "state") {
+            elementId = "state";
+          }
+        } else if (currentStep === "financial") {
+          if (firstErrorKey === "estimatedWeeklyRent") {
+            elementId = "weekly-rent";
+          }
+        }
+
+        if (elementId) {
+          const element = document.getElementById(elementId);
+          if (element) {
+            // Scroll to the element with offset for sticky header
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - 100; // 100px offset for header
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+
+            // Try to focus the first input/select in the section if possible
+            const focusableElement = element.querySelector(
+              'input, select, button, [tabindex]:not([tabindex="-1"])'
+            ) as HTMLElement;
+            if (focusableElement) {
+              setTimeout(() => focusableElement.focus(), 300);
+            }
+          }
+        }
+      }, 150);
+
+      return;
+    }
+
+    // Clear validation errors for current step
+    setValidationErrors({});
 
     // Mark current step as completed
     if (!completedSteps.includes(currentStep)) {
@@ -555,6 +647,25 @@ export default function FIRBCalculatorPage() {
             </p>
           </div>
 
+          {/* Purpose Statement - Show on first step */}
+          {!isResults && currentStep === "citizenship" && (
+            <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                {locale === "zh" ? "什么是FIRB计算器？" : "What is the FIRB Calculator?"}
+              </h2>
+              <p className="text-gray-600 mb-3">
+                {locale === "zh"
+                  ? "FIRB（外国投资审查委员会）计算器是一个免费工具，帮助外国投资者计算在澳大利亚购买房产所需的所有费用。这包括FIRB申请费、印花税、土地税附加费、律师费和其他相关成本。"
+                  : "The FIRB (Foreign Investment Review Board) Calculator is a free tool that helps foreign investors calculate all costs required to purchase property in Australia. This includes FIRB application fees, stamp duty, land tax surcharge, legal fees, and other related costs."}
+              </p>
+              <p className="text-gray-600">
+                {locale === "zh"
+                  ? "我们的计算器会根据您的公民身份、房产类型、所在州和房产价值，为您提供详细的费用明细和投资分析。"
+                  : "Our calculator provides detailed cost breakdowns and investment analysis based on your citizenship status, property type, state, and property value."}
+              </p>
+            </div>
+          )}
+
           {/* Progress Indicator */}
           {!isResults && (
             <ProgressIndicator currentStep={currentStep} completedSteps={completedSteps} />
@@ -586,16 +697,12 @@ export default function FIRBCalculatorPage() {
                   onOrdinarilyResidentChange={(isResident) =>
                     updateFormData({ isOrdinarilyResident: isResident })
                   }
+                  errors={validationErrors}
                 />
 
                 {/* Navigation */}
                 <div className="flex justify-end">
-                  <Button
-                    size="lg"
-                    onClick={handleNext}
-                    disabled={!validateStep("citizenship")}
-                    className="gap-2"
-                  >
+                  <Button size="lg" onClick={handleNext} className="gap-2">
                     {t("next")}
                     <ArrowRight className="h-5 w-5" />
                   </Button>
@@ -623,6 +730,7 @@ export default function FIRBCalculatorPage() {
                   onFirstHomeChange={(isFirstHome) => updateFormData({ isFirstHome })}
                   onDepositPercentChange={(percent) => updateFormData({ depositPercent: percent })}
                   onEntityTypeChange={(type) => updateFormData({ entityType: type })}
+                  errors={validationErrors}
                 />
 
                 {/* Navigation */}
@@ -631,12 +739,7 @@ export default function FIRBCalculatorPage() {
                     <ArrowLeft className="h-5 w-5" />
                     {t("back")}
                   </Button>
-                  <Button
-                    size="lg"
-                    onClick={handleNext}
-                    disabled={!validateStep("property")}
-                    className="gap-2"
-                  >
+                  <Button size="lg" onClick={handleNext} className="gap-2">
                     {t("next")}
                     <ArrowRight className="h-5 w-5" />
                   </Button>
@@ -655,11 +758,21 @@ export default function FIRBCalculatorPage() {
                     investmentInputs={investmentInputs}
                     onInvestmentInputsChange={(updates) => {
                       setInvestmentInputs((prev) => ({ ...prev, ...updates }));
+                      // Clear validation errors for updated fields
+                      const updatedKeys = Object.keys(updates);
+                      setValidationErrors((prev) => {
+                        const newErrors = { ...prev };
+                        updatedKeys.forEach((key) => {
+                          delete newErrors[key];
+                        });
+                        return newErrors;
+                      });
                     }}
                     propertyValue={formData.propertyValue}
                     depositPercent={formData.depositPercent || 20}
                     benchmarkData={benchmarkData}
                     isLoadingBenchmarks={isLoadingBenchmarks}
+                    errors={validationErrors}
                   />
 
                   {/* Navigation */}
@@ -668,12 +781,7 @@ export default function FIRBCalculatorPage() {
                       <ArrowLeft className="h-5 w-5" />
                       {t("back")}
                     </Button>
-                    <Button
-                      size="lg"
-                      onClick={handleNext}
-                      disabled={!validateStep("financial")}
-                      className="gap-2"
-                    >
+                    <Button size="lg" onClick={handleNext} className="gap-2">
                       {t("next")}
                       <ArrowRight className="h-5 w-5" />
                     </Button>

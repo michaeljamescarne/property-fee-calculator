@@ -7,6 +7,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { trackConversion } from "@/components/analytics/GoogleAnalytics";
+import { trackMetaEvent } from "@/components/analytics/MetaPixel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -54,6 +56,13 @@ export default function LeadCaptureForm({ variant = "default", onSuccess }: Lead
       if (response.ok && data.success) {
         setStatus("success");
         setEmail(""); // Clear form
+
+        // Track lead capture
+        trackConversion.leadCaptured("homepage");
+        trackMetaEvent.lead({
+          content_name: "Lead Capture",
+          content_category: "Newsletter",
+        });
 
         // Call success callback if provided
         if (onSuccess) {
