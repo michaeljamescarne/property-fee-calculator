@@ -648,50 +648,6 @@ export default function FIRBCalculatorPage() {
             </p>
           </div>
 
-          {/* Purpose Statement - Show on first step */}
-          {!isResults && currentStep === "citizenship" && (
-            <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded">
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">
-                {locale === "zh" ? "什么是FIRB计算器？" : "What is the FIRB Calculator?"}
-              </h2>
-              <p className="text-gray-600 mb-3">
-                {locale === "zh"
-                  ? "FIRB（外国投资审查委员会）计算器是一个免费工具，帮助外国投资者计算在澳大利亚购买房产所需的所有费用。这包括FIRB申请费、印花税、土地税附加费、律师费和其他相关成本。"
-                  : "The FIRB (Foreign Investment Review Board) Calculator is a free tool that helps foreign investors calculate all costs required to purchase property in Australia. This includes FIRB application fees, stamp duty, land tax surcharge, legal fees, and other related costs."}
-              </p>
-              <p className="text-gray-600 mb-3">
-                {locale === "zh"
-                  ? "我们的计算器会根据您的公民身份、房产类型、所在州和房产价值，为您提供详细的费用明细和投资分析。"
-                  : "Our calculator provides detailed cost breakdowns and investment analysis based on your citizenship status, property type, state, and property value."}
-              </p>
-              <p className="text-sm text-gray-600">
-                {locale === "zh" ? (
-                  <>
-                    需要了解术语定义？查看我们的{" "}
-                    <Link
-                      href={`/${locale}/faq`}
-                      className="text-blue-600 hover:text-blue-800 underline font-medium"
-                    >
-                      常见问题页面
-                    </Link>
-                    ，其中包含完整的术语表。
-                  </>
-                ) : (
-                  <>
-                    Need help with terminology? Check our{" "}
-                    <Link
-                      href={`/${locale}/faq`}
-                      className="text-blue-600 hover:text-blue-800 underline font-medium"
-                    >
-                      FAQ page
-                    </Link>
-                    , which includes a complete glossary of terms.
-                  </>
-                )}
-              </p>
-            </div>
-          )}
-
           {/* Progress Indicator */}
           {!isResults && (
             <ProgressIndicator currentStep={currentStep} completedSteps={completedSteps} />
@@ -877,6 +833,50 @@ export default function FIRBCalculatorPage() {
               locale={locale}
               pdfTranslations={pdfTranslations}
             />
+          )}
+
+          {/* Purpose Statement - At bottom of page */}
+          {!isResults && (
+            <div className="mt-16 p-6 bg-blue-50 border border-blue-200 rounded">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                {locale === "zh" ? "什么是计算器？" : "What is the Calculator?"}
+              </h2>
+              <p className="text-gray-600 mb-3">
+                {locale === "zh"
+                  ? "计算器是一个工具，帮助投资者计算在澳大利亚购买房产所需的所有费用。这包括FIRB申请费、印花税、土地税附加费、律师费和其他相关成本。"
+                  : "The Calculator is a tool that helps investors calculate all costs required to purchase property in Australia. This includes FIRB application fees, stamp duty, land tax surcharge, legal fees, and other related costs."}
+              </p>
+              <p className="text-gray-600 mb-3">
+                {locale === "zh"
+                  ? "我们的计算器会根据您的公民身份、房产类型、所在州和房产价值，为您提供详细的费用明细和投资分析。"
+                  : "Our calculator provides detailed cost breakdowns and investment analysis based on your citizenship status, property type, state, and property value."}
+              </p>
+              <p className="text-sm text-gray-600">
+                {locale === "zh" ? (
+                  <>
+                    需要了解术语定义？查看我们的{" "}
+                    <Link
+                      href={`/${locale}/faq`}
+                      className="text-blue-600 hover:text-blue-800 underline font-medium"
+                    >
+                      常见问题页面
+                    </Link>
+                    ，其中包含完整的术语表。
+                  </>
+                ) : (
+                  <>
+                    Need help with terminology? Check our{" "}
+                    <Link
+                      href={`/${locale}/faq`}
+                      className="text-blue-600 hover:text-blue-800 underline font-medium"
+                    >
+                      FAQ page
+                    </Link>
+                    , which includes a complete glossary of terms.
+                  </>
+                )}
+              </p>
+            </div>
           )}
         </div>
       </div>

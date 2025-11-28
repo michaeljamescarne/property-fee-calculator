@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
-import { FileText, UserCheck, DollarSign, AlertTriangle, Home, HelpCircle } from "lucide-react";
+import {
+  FileText,
+  UserCheck,
+  DollarSign,
+  AlertTriangle,
+  Home,
+  HelpCircle,
+  BookOpen,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import FAQItem from "./FAQItem";
 import type { FAQCategory as FAQCategoryType } from "@/types/faq";
@@ -20,6 +28,7 @@ const iconMap = {
   AlertTriangle,
   Home,
   HelpCircle,
+  BookOpen,
 };
 
 export default function FAQCategory({

@@ -979,12 +979,354 @@
           "officialSources": []
         }
       ]
+    },
+    {
+      "id": "glossary",
+      "name": "Glossary",
+      "icon": "BookOpen",
+      "questions": [
+        {
+          "id": "glossary-1",
+          "question": "What is FIRB?",
+          "answer": "Foreign Investment Review Board. The Australian government body that reviews and manages non-sensitive foreign investment in Australia, including residential real estate acquisitions.",
+          "keywords": ["firb", "foreign investment review board", "definition", "what is"],
+          "popular": true,
+          "views": 12500,
+          "relatedQuestions": ["glossary-2", "glossary-3", "faq-1"],
+          "calculatorScenario": null,
+          "officialSources": [
+            {
+              "title": "Foreign Investment Review Board",
+              "url": "https://firb.gov.au"
+            }
+          ]
+        },
+        {
+          "id": "glossary-2",
+          "question": "What is the Foreign Acquisitions and Takeovers Act 1975?",
+          "answer": "The primary Australian legislation that sets out the rules and requirements for foreign investment, which the FIRB and ATO administer.",
+          "keywords": ["act", "legislation", "law", "regulation"],
+          "popular": false,
+          "views": 2100,
+          "relatedQuestions": ["glossary-1", "glossary-4"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-3",
+          "question": "What is a Foreign Person?",
+          "answer": "The legal definition of an individual, company, or trust required to seek FIRB approval before purchasing property in Australia.",
+          "keywords": ["foreign person", "foreign buyer", "definition", "who needs firb"],
+          "popular": true,
+          "views": 8900,
+          "relatedQuestions": ["glossary-1", "faq-21"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-4",
+          "question": "What is a No Objection Notification?",
+          "answer": "The official document issued by the government, typically by the Treasury or ATO, which confirms that a foreign investment proposal has been approved.",
+          "keywords": ["approval", "notification", "document", "certificate"],
+          "popular": false,
+          "views": 3400,
+          "relatedQuestions": ["glossary-1", "faq-2"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-5",
+          "question": "What is Non-compliance?",
+          "answer": "The act of failing to adhere to the requirements of the Foreign Acquisitions and Takeovers Act 1975 or the conditions attached to a FIRB approval.",
+          "keywords": ["non-compliance", "breach", "violation", "penalties"],
+          "popular": false,
+          "views": 1800,
+          "relatedQuestions": ["glossary-6", "faq-4"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-6",
+          "question": "What is a Divestment Order?",
+          "answer": "A formal order issued by the Treasurer of Australia, or delegates in the Treasury/ATO, forcing a foreign owner to sell a property that was acquired or held in breach of the rules.",
+          "keywords": ["divestment", "forced sale", "penalty", "order"],
+          "popular": false,
+          "views": 1200,
+          "relatedQuestions": ["glossary-5", "faq-4"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-7",
+          "question": "What is a Temporary Resident Visa?",
+          "answer": "A non-permanent visa status. For FIRB purposes, temporary residents face restrictions, such as being generally required to sell an established dwelling upon their visa expiry.",
+          "keywords": ["temporary resident", "visa", "temporary visa", "visa holder"],
+          "popular": true,
+          "views": 11200,
+          "relatedQuestions": ["glossary-8", "glossary-9", "faq-21"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-8",
+          "question": "What is a Permanent Resident (PR)?",
+          "answer": "A resident status that generally exempts the buyer from requiring FIRB approval and some foreign buyer surcharges.",
+          "keywords": ["permanent resident", "pr", "exemption", "resident"],
+          "popular": true,
+          "views": 9800,
+          "relatedQuestions": ["glossary-7", "faq-21"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-9",
+          "question": "What is a Special Category Visa (Subclass 444)?",
+          "answer": "A visa specifically for New Zealand citizens, who are generally treated as Australian residents for FIRB and stamp duty purposes, provided they meet certain residency conditions.",
+          "keywords": ["new zealand", "subclass 444", "scv", "visa"],
+          "popular": false,
+          "views": 1500,
+          "relatedQuestions": ["glossary-7", "glossary-8"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-10",
+          "question": "What is an Established Dwelling?",
+          "answer": "A property that has previously been built and occupied. Purchases by temporary residents are highly restricted, often requiring the dwelling to be used as a principal place of residence and sold upon visa expiry.",
+          "keywords": ["established dwelling", "existing property", "property type"],
+          "popular": true,
+          "views": 10200,
+          "relatedQuestions": ["glossary-11", "glossary-12", "faq-23"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-11",
+          "question": "What is a New Dwelling?",
+          "answer": "A newly constructed residential property (or one sold as part of a development). FIRB rules for foreign persons buying these are generally more permissive than for established dwellings.",
+          "keywords": ["new dwelling", "new property", "off the plan", "property type"],
+          "popular": true,
+          "views": 9500,
+          "relatedQuestions": ["glossary-10", "glossary-12"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-12",
+          "question": "What is Vacant Land?",
+          "answer": "Land with no residential dwelling on it. Foreign investors buying vacant land must typically agree to construct a dwelling within a specified timeframe.",
+          "keywords": ["vacant land", "land", "property type", "construction"],
+          "popular": false,
+          "views": 3200,
+          "relatedQuestions": ["glossary-10", "glossary-11"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-13",
+          "question": "What is a Primary Residence?",
+          "answer": "The owner's main place of residence. The definition is critical for FIRB conditions and for claiming the Main Residence Exemption from Capital Gains Tax (CGT).",
+          "keywords": ["primary residence", "main residence", "principal residence", "cgt"],
+          "popular": false,
+          "views": 2800,
+          "relatedQuestions": ["glossary-10", "glossary-14"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-14",
+          "question": "What is the FIRB Application Fee?",
+          "answer": "The mandatory, non-refundable fee required when lodging a foreign investment application. The fee is tiered based on the value of the property being acquired.",
+          "keywords": ["firb fee", "application fee", "cost", "fee"],
+          "popular": true,
+          "views": 15600,
+          "relatedQuestions": ["glossary-1", "faq-36"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-15",
+          "question": "What is Stamp Duty?",
+          "answer": "A state tax levied on property purchases in Australia. Rates vary by state and property value.",
+          "keywords": ["stamp duty", "tax", "transfer duty", "state tax"],
+          "popular": true,
+          "views": 13400,
+          "relatedQuestions": ["glossary-16", "faq-37"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-16",
+          "question": "What is Stamp Duty Surcharge?",
+          "answer": "Also known as Foreign Purchaser Additional Duty, this is a significant additional tax levied by state governments on foreign persons purchasing residential property, on top of the standard stamp duty.",
+          "keywords": ["stamp duty surcharge", "foreign surcharge", "additional duty", "tax"],
+          "popular": true,
+          "views": 11800,
+          "relatedQuestions": ["glossary-15", "glossary-17", "faq-37"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-17",
+          "question": "What is Foreign Surcharge?",
+          "answer": "An additional stamp duty surcharge applied to foreign property buyers in most Australian states. Also known as Foreign Purchaser Additional Duty.",
+          "keywords": ["foreign surcharge", "stamp duty surcharge", "additional duty"],
+          "popular": true,
+          "views": 10900,
+          "relatedQuestions": ["glossary-15", "glossary-16"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-18",
+          "question": "What is Land Tax Surcharge?",
+          "answer": "An annual property tax levied by state governments on foreign owners of residential land (particularly investment properties), in addition to the standard land tax. Note: Rates and rules vary significantly by state.",
+          "keywords": ["land tax", "surcharge", "annual tax", "ongoing costs"],
+          "popular": true,
+          "views": 8700,
+          "relatedQuestions": ["glossary-19", "faq-40"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-19",
+          "question": "What is the Vacancy Fee?",
+          "answer": "An annual fee administered by the ATO imposed on foreign owners of residential dwellings if the property is not genuinely occupied or rented out for at least 183 days (approx. 6 months) in a year.",
+          "keywords": ["vacancy fee", "annual fee", "ato", "occupancy"],
+          "popular": true,
+          "views": 9200,
+          "relatedQuestions": ["glossary-18", "faq-60"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-20",
+          "question": "What is Capital Gains Tax (CGT)?",
+          "answer": "The tax paid on the profit realized when selling an investment property. The rules and exemptions are different for foreign residents compared to Australian residents.",
+          "keywords": ["cgt", "capital gains tax", "tax", "property sale"],
+          "popular": false,
+          "views": 4100,
+          "relatedQuestions": ["glossary-13", "glossary-21"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-21",
+          "question": "What is Withholding Tax on Property Sales (FRCGW)?",
+          "answer": "Officially the Foreign Resident Capital Gains Withholding (FRCGW), this is an amount the purchaser must withhold from the sale price and pay to the ATO when the seller is a foreign resident.",
+          "keywords": ["withholding tax", "frcgw", "property sale", "ato"],
+          "popular": false,
+          "views": 1900,
+          "relatedQuestions": ["glossary-20"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-22",
+          "question": "What is GST (Goods and Services Tax)?",
+          "answer": "A 10% broad-based consumption tax that is generally included in the price of new residential property or vacant land subdivided for new housing.",
+          "keywords": ["gst", "goods and services tax", "tax", "new property"],
+          "popular": false,
+          "views": 2300,
+          "relatedQuestions": ["glossary-11", "glossary-12"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-23",
+          "question": "What are First-Home Buyer Concessions?",
+          "answer": "State-based schemes offering discounts or exemptions on stamp duty. Foreign buyers may be excluded or subject to specific conditions when accessing these benefits.",
+          "keywords": ["first home buyer", "concessions", "discount", "exemption"],
+          "popular": false,
+          "views": 2700,
+          "relatedQuestions": ["glossary-15", "faq-39"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-24",
+          "question": "What are Upfront Costs?",
+          "answer": "The total cash amount required at the time of purchase, including the deposit, FIRB fee, stamp duty/surcharge, and legal fees.",
+          "keywords": ["upfront costs", "deposit", "purchase costs", "initial costs"],
+          "popular": true,
+          "views": 10100,
+          "relatedQuestions": ["glossary-14", "glossary-15", "faq-36"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-25",
+          "question": "What are Off-the-plan Purchases?",
+          "answer": "Buying a property based on floor plans and specifications before the building's construction is finished. States often offer stamp duty concessions on the construction value for these purchases.",
+          "keywords": ["off the plan", "otp", "new dwelling", "construction"],
+          "popular": false,
+          "views": 3600,
+          "relatedQuestions": ["glossary-11", "glossary-15"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-26",
+          "question": "What is Investment Analytics?",
+          "answer": "The use of data-driven tools to project the financial viability of a property purchase, including cash flow and profitability over time.",
+          "keywords": ["investment analytics", "analysis", "roi", "cash flow"],
+          "popular": false,
+          "views": 1800,
+          "relatedQuestions": ["glossary-27", "glossary-28"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-27",
+          "question": "What is ROI (Return on Investment)?",
+          "answer": "A measure of the profitability of the investment, calculated as the gain from the investment relative to its cost.",
+          "keywords": ["roi", "return on investment", "profitability", "return"],
+          "popular": false,
+          "views": 2400,
+          "relatedQuestions": ["glossary-26", "glossary-28"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-28",
+          "question": "What is Equity Growth?",
+          "answer": "The increase in the ownership value of the property over time, calculated as the difference between the property's current market value and the outstanding loan balance.",
+          "keywords": ["equity", "equity growth", "property value", "loan"],
+          "popular": false,
+          "views": 1600,
+          "relatedQuestions": ["glossary-27"],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-29",
+          "question": "What is a Mortgagee Sale?",
+          "answer": "The forced sale of a property by the lender (mortgagee) to recover the outstanding debt from a defaulting borrower.",
+          "keywords": ["mortgagee sale", "foreclosure", "forced sale", "default"],
+          "popular": false,
+          "views": 1100,
+          "relatedQuestions": [],
+          "calculatorScenario": null,
+          "officialSources": []
+        },
+        {
+          "id": "glossary-30",
+          "question": "What is Foreign Investment?",
+          "answer": "Investment in Australian assets by individuals or entities that are not Australian citizens or permanent residents.",
+          "keywords": ["foreign investment", "foreign buyer", "investment"],
+          "popular": false,
+          "views": 2900,
+          "relatedQuestions": ["glossary-1", "glossary-3"],
+          "calculatorScenario": null,
+          "officialSources": []
+        }
+      ]
     }
   ],
   "metadata": {
     "version": "1.0",
     "lastUpdated": "2025-01-08",
-    "totalQuestions": 80,
-    "totalCategories": 6
+    "totalQuestions": 110,
+    "totalCategories": 7
   }
 }

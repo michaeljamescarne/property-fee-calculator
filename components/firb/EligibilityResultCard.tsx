@@ -214,94 +214,106 @@ export default function EligibilityResultCard({
         </div>
       </div>
 
-      {/* Requirements Section - Show if FIRB is required or purchase is prohibited */}
-      {(eligibility.requiresFIRB || !eligibility.canPurchase) && (
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-gray-900">{t("requirements.title")}</h3>
-          <div className="space-y-3">
-            <div
-              className={`flex items-start gap-3 p-3 rounded border ${
-                !eligibility.canPurchase
-                  ? "bg-red-50 border-red-200"
+      {/* Requirements Section - Always show to display FIRB status */}
+      <div>
+        <h3 className="text-lg font-semibold mb-4 text-gray-900">{t("requirements.title")}</h3>
+        <div className="space-y-3">
+          <div
+            className={`flex items-start gap-3 p-3 rounded border ${
+              !eligibility.canPurchase
+                ? "bg-red-50 border-red-200"
+                : eligibility.requiresFIRB
+                  ? "bg-amber-50 border-amber-200"
                   : "bg-green-50 border-green-200"
-              }`}
-            >
-              {!eligibility.canPurchase ? (
-                <XCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-              ) : (
-                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-              )}
+            }`}
+          >
+            {!eligibility.canPurchase ? (
+              <XCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+            ) : eligibility.requiresFIRB ? (
+              <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+            ) : (
+              <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+            )}
+            <div className="flex-1">
+              <p
+                className={`font-medium ${
+                  !eligibility.canPurchase
+                    ? "text-red-900"
+                    : eligibility.requiresFIRB
+                      ? "text-amber-900"
+                      : "text-green-900"
+                }`}
+              >
+                {t("requirements.firbApplication")}
+              </p>
+              <p
+                className={`text-sm ${
+                  !eligibility.canPurchase
+                    ? "text-red-700"
+                    : eligibility.requiresFIRB
+                      ? "text-amber-700"
+                      : "text-green-700"
+                }`}
+              >
+                {!eligibility.canPurchase
+                  ? "Purchase is prohibited"
+                  : eligibility.requiresFIRB
+                    ? "Required before contract signing"
+                    : "No FIRB application required"}
+              </p>
+            </div>
+          </div>
+
+          {eligibility.processingTimeline && eligibility.canPurchase && (
+            <div className="flex items-start gap-3 p-3 rounded bg-white border border-blue-200">
+              <Clock className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
-                <p
-                  className={`font-medium ${
-                    !eligibility.canPurchase ? "text-red-900" : "text-green-900"
-                  }`}
-                >
-                  {t("requirements.firbApplication")}
-                </p>
-                <p
-                  className={`text-sm ${
-                    !eligibility.canPurchase ? "text-red-700" : "text-green-700"
-                  }`}
-                >
-                  {!eligibility.canPurchase
-                    ? "Purchase is prohibited"
-                    : "Required before contract signing"}
+                <p className="font-medium text-blue-900">{t("requirements.processingTime")}</p>
+                <p className="text-sm text-blue-700">
+                  Standard: {eligibility.processingTimeline.standard} | Expedited:{" "}
+                  {eligibility.processingTimeline.expedited}
                 </p>
               </div>
             </div>
+          )}
 
-            {eligibility.processingTimeline && eligibility.canPurchase && (
-              <div className="flex items-start gap-3 p-3 rounded bg-white border border-blue-200">
-                <Clock className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="font-medium text-blue-900">{t("requirements.processingTime")}</p>
-                  <p className="text-sm text-blue-700">
-                    Standard: {eligibility.processingTimeline.standard} | Expedited:{" "}
-                    {eligibility.processingTimeline.expedited}
-                  </p>
-                </div>
+          {eligibility.canPurchase && (
+            <div className="flex items-start gap-3 p-3 rounded bg-white border border-blue-200">
+              <FileText className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="font-medium text-blue-900">{t("requirements.documentation")}</p>
+                <p className="text-sm text-blue-700">
+                  Identification, proof of funds, property contract
+                </p>
               </div>
-            )}
+            </div>
+          )}
 
-            {eligibility.canPurchase && (
-              <div className="flex items-start gap-3 p-3 rounded bg-white border border-blue-200">
-                <FileText className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="font-medium text-blue-900">{t("requirements.documentation")}</p>
-                  <p className="text-sm text-blue-700">
-                    Identification, proof of funds, property contract
+          {/* FIRB Costs */}
+          {eligibility.canPurchase && formData?.propertyValue && formData?.propertyType && (
+            <div className="flex items-start gap-3 p-3 rounded bg-white border border-blue-200">
+              <DollarSign className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="font-medium text-blue-900">FIRB Application Fee</p>
+                <p className="text-sm text-blue-700">
+                  {costs?.upfrontCosts?.firbFee
+                    ? formatCurrency(costs.upfrontCosts.firbFee)
+                    : formatCurrency(
+                        calculateFIRBFee(formData.propertyValue, formData.propertyType) *
+                          (formData.expeditedFIRB ? 2 : 1)
+                      )}
+                  {formData.expeditedFIRB && " (Expedited processing)"}
+                </p>
+                {costs?.upfrontCosts?.firbFee && formData.expeditedFIRB && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Standard fee: {formatCurrency(costs.upfrontCosts.firbFee / 2)}
                   </p>
-                </div>
+                )}
               </div>
-            )}
-
-            {/* FIRB Costs */}
-            {eligibility.canPurchase && formData?.propertyValue && formData?.propertyType && (
-              <div className="flex items-start gap-3 p-3 rounded bg-white border border-blue-200">
-                <DollarSign className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="font-medium text-blue-900">FIRB Application Fee</p>
-                  <p className="text-sm text-blue-700">
-                    {costs?.upfrontCosts?.firbFee
-                      ? formatCurrency(costs.upfrontCosts.firbFee)
-                      : formatCurrency(
-                          calculateFIRBFee(formData.propertyValue, formData.propertyType) *
-                            (formData.expeditedFIRB ? 2 : 1)
-                        )}
-                    {formData.expeditedFIRB && " (Expedited processing)"}
-                  </p>
-                  {costs?.upfrontCosts?.firbFee && formData.expeditedFIRB && (
-                    <p className="text-xs text-gray-500 mt-1">
-                      Standard fee: {formatCurrency(costs.upfrontCosts.firbFee / 2)}
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Restrictions Section */}
       {eligibility.restrictions.length > 0 && (
