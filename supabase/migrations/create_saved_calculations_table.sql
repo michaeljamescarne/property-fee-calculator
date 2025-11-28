@@ -4,6 +4,14 @@
 -- Enable UUID extension if not already enabled
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- Create subscription_status enum if it doesn't exist
+DO $$ 
+BEGIN
+    CREATE TYPE subscription_status AS ENUM ('free', 'trial', 'paid');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
 -- Check if user_profiles exists, if not create it first
 DO $$ 
 BEGIN
@@ -12,13 +20,6 @@ BEGIN
         WHERE table_schema = 'public' 
         AND table_name = 'user_profiles'
     ) THEN
-        -- Create subscription_status enum if it doesn't exist
-        DO $$ BEGIN
-            CREATE TYPE subscription_status AS ENUM ('free', 'trial', 'paid');
-        EXCEPTION
-            WHEN duplicate_object THEN null;
-        END $$;
-
         -- Create user_profiles table
         CREATE TABLE user_profiles (
             id UUID PRIMARY KEY,
