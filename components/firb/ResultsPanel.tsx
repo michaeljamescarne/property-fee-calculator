@@ -67,6 +67,8 @@ interface CollapsibleSection {
   defaultOpen?: boolean;
 }
 
+const PDF_DOWNLOAD_ENABLED = false; // Temporarily disable PDF downloads (UI button hidden)
+
 export default function ResultsPanel({
   eligibility,
   costs,
@@ -609,10 +611,13 @@ export default function ResultsPanel({
 
   const renderActionCluster = () => (
     <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
-      <Button onClick={handlePrint} variant="default" size="lg" className="gap-2 rounded">
-        <Download className="h-5 w-5" />
-        {t("actions.downloadPDF")}
-      </Button>
+      {/* Temporarily disabled: re-enable when PDF downloads are available again */}
+      {PDF_DOWNLOAD_ENABLED && (
+        <Button onClick={handlePrint} variant="default" size="lg" className="gap-2 rounded">
+          <Download className="h-5 w-5" />
+          {t("actions.downloadPDF")}
+        </Button>
+      )}
 
       <SaveCalculationButton
         calculationData={calculationData}
