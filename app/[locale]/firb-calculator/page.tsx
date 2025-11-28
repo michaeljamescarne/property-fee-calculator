@@ -27,6 +27,7 @@ import type { InvestmentAnalytics, InvestmentInputs } from "@/types/investment";
 import { parseAddress } from "@/lib/utils/address-parser";
 import { generateDefaultInputs } from "@/lib/firb/investment-analytics";
 import type { BenchmarkData } from "@/app/api/benchmarks/route";
+import Glossary, { defaultFIRBGlossary } from "@/components/content/Glossary";
 
 export default function FIRBCalculatorPage() {
   const t = useTranslations("FIRBCalculator");
@@ -846,6 +847,15 @@ export default function FIRBCalculatorPage() {
               locale={locale}
               pdfTranslations={pdfTranslations}
             />
+          )}
+
+          {/* Glossary Section - Show when not in results */}
+          {!isResults && currentStep === "citizenship" && (
+            <section className="mt-16 pt-12 border-t border-gray-200">
+              <div className="max-w-4xl mx-auto">
+                <Glossary terms={defaultFIRBGlossary} locale={locale} />
+              </div>
+            </section>
           )}
         </div>
       </div>

@@ -13,6 +13,7 @@ import FAQCategory from "@/components/faq/FAQCategory";
 import PopularQuestions from "@/components/faq/PopularQuestions";
 import { getFAQData } from "@/lib/faq/faq-utils";
 import { filterFAQs, getPopularQuestions } from "@/lib/faq/faq-search";
+import Glossary, { defaultFIRBGlossary } from "@/components/content/Glossary";
 import {
   generateFAQPageSchema,
   generateBreadcrumbSchema,
@@ -240,6 +241,13 @@ export default function FAQPage() {
                 </Button>
               </CardContent>
             </Card>
+          </section>
+
+          {/* Glossary Section */}
+          <section className="mt-16 pt-12 border-t border-gray-200">
+            <div className="max-w-4xl mx-auto">
+              <Glossary terms={defaultFIRBGlossary} locale={locale} />
+            </div>
           </section>
 
           {/* Disclaimer */}

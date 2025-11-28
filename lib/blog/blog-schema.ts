@@ -27,17 +27,26 @@ export function generateArticleSchema(post: BlogPost, locale: string) {
     image: `${BASE_URL}/images/blog-og-default.png`, // Default OG image
     datePublished: publishedDate,
     dateModified: publishedDate,
-    author: {
-      "@type": "Organization",
-      name: "Property Costs",
-      url: BASE_URL,
-    },
+    author: [
+      {
+        "@type": "Person",
+        name: "Property Costs Editorial Team",
+        url: BASE_URL,
+      },
+      {
+        "@type": "Organization",
+        name: "Property Costs",
+        url: BASE_URL,
+      },
+    ],
     publisher: {
       "@type": "Organization",
       name: "Property Costs",
       logo: {
         "@type": "ImageObject",
         url: `${BASE_URL}/logo.svg`,
+        width: 200,
+        height: 200,
       },
     },
     mainEntityOfPage: {

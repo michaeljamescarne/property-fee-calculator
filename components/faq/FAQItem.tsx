@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, ExternalLink, ThumbsUp, ThumbsDown } from "lucide-react";
+import { useState, useMemo } from "react";
+import { ChevronDown, ExternalLink, ThumbsUp, ThumbsDown, BookOpen } from "lucide-react";
+import Link from "next/link";
 import type { FAQQuestion, FAQCategory } from "@/types/faq";
 import RelatedQuestions from "./RelatedQuestions";
 import { getFAQData } from "@/lib/faq/faq-utils";
 import { getRelatedQuestions } from "@/lib/faq/faq-search";
+import { findRelatedBlogPosts, getCalculatorLink } from "@/lib/utils/blog-linking";
+import { getAllBlogPosts } from "@/lib/blogContentProcessor";
 
 interface FAQItemProps {
   question: FAQQuestion;
@@ -33,6 +36,13 @@ export default function FAQItem({ question, category, isOpen, onToggle, locale }
   // Get related questions
   const allCategories = getFAQData();
   const relatedQuestions = getRelatedQuestions(question.id, allCategories);
+
+  // Get related blog posts
+  const allBlogPosts = useMemo(() => getAllBlogPosts(locale), [locale]);
+  const relatedBlogPosts = useMemo(
+    () => findRelatedBlogPosts(question.question, allBlogPosts, 2),
+    [question.question, allBlogPosts]
+  );
 
   return (
     <div id={question.id} className="scroll-mt-24">

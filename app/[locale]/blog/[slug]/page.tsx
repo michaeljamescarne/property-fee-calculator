@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, Home, BookOpen } from "lucide-react";
+import { ChevronRight, Home, BookOpen, Calculator, HelpCircle } from "lucide-react";
 import { getBlogPost, getAllBlogPosts } from "@/lib/blogContentProcessor";
 import { getRelatedPosts, formatBlogDate, getCategoryColor } from "@/lib/blog/blog-utils-client";
+import { getCalculatorLink, getFAQLink } from "@/lib/utils/blog-linking";
 import {
   generateArticleSchema,
   generatePostBreadcrumbSchema,
@@ -209,6 +210,35 @@ export default async function BlogPostPage({
 
             {/* Helpful Feedback */}
             <HelpfulFeedback postSlug={post.slug} />
+
+            {/* Internal Links Section */}
+            <div className="mt-12 pt-8 border-t border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Explore More</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Link
+                  href={getCalculatorLink(locale)}
+                  className="flex items-center gap-3 p-4 border border-gray-200 rounded hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                >
+                  <Calculator className="h-5 w-5 text-blue-600" />
+                  <div>
+                    <p className="font-medium text-gray-900">FIRB Calculator</p>
+                    <p className="text-sm text-gray-600">
+                      Calculate your property investment costs
+                    </p>
+                  </div>
+                </Link>
+                <Link
+                  href={getFAQLink(locale)}
+                  className="flex items-center gap-3 p-4 border border-gray-200 rounded hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                >
+                  <HelpCircle className="h-5 w-5 text-blue-600" />
+                  <div>
+                    <p className="font-medium text-gray-900">FAQ</p>
+                    <p className="text-sm text-gray-600">Get answers to common questions</p>
+                  </div>
+                </Link>
+              </div>
+            </div>
 
             {/* Related Posts */}
             {relatedPosts.length > 0 && <RelatedPosts posts={relatedPosts} locale={locale} />}

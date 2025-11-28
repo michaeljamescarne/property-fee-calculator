@@ -36,12 +36,27 @@ export function prepareCalculationForStorage(
   userId: string,
   name?: string
 ) {
+  // Handle eligibility status - check both isEligible and canPurchase
+  let eligibilityStatus = "Review Required";
+  if (calculationData.eligibility) {
+    if (calculationData.eligibility.canPurchase && !calculationData.eligibility.requiresFIRB) {
+      eligibilityStatus = "Eligible";
+    } else if (
+      calculationData.eligibility.canPurchase &&
+      calculationData.eligibility.requiresFIRB
+    ) {
+      eligibilityStatus = "Review Required";
+    } else {
+      eligibilityStatus = "Not Eligible";
+    }
+  }
+
   return {
     user_id: userId,
     calculation_data: calculationData,
     property_address: calculationData.propertyAddress || null,
     property_value: calculationData.propertyValue,
-    eligibility_status: calculationData.eligibility.isEligible ? "Eligible" : "Review Required",
+    eligibility_status: eligibilityStatus,
     calculation_name: name || null,
     is_favorite: false,
   };

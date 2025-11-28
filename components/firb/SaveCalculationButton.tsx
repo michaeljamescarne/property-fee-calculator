@@ -55,7 +55,10 @@ export default function SaveCalculationButton({
         setTimeout(() => setSaveStatus("idle"), 3000);
       } else {
         setSaveStatus("error");
-        setErrorMessage(data.error || "Failed to save calculation");
+        const errorMsg = data.error || "Failed to save calculation";
+        const details = data.details ? `: ${data.details}` : "";
+        setErrorMessage(`${errorMsg}${details}`);
+        console.error("Save calculation error:", data);
       }
     } catch {
       setSaveStatus("error");

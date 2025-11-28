@@ -228,32 +228,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
-      {/* What is FIRB Section */}
-      <section className="container mx-auto px-4 py-12 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-semibold text-gray-900 mb-6 text-center">
-            {locale === "zh" ? "什么是FIRB？" : "What is FIRB?"}
-          </h2>
-          <div className="prose prose-lg max-w-none">
-            <p className="text-gray-600 mb-4">
-              {locale === "zh"
-                ? "FIRB（外国投资审查委员会）是澳大利亚政府的一个机构，负责审查外国投资提案，确保这些投资符合国家利益。对于希望在澳大利亚购买房产的外国投资者，通常需要获得FIRB的批准。"
-                : "FIRB (Foreign Investment Review Board) is an Australian government body responsible for reviewing foreign investment proposals to ensure they align with national interests. Foreign investors wishing to purchase property in Australia typically need to obtain FIRB approval."}
-            </p>
-            <p className="text-gray-600 mb-4">
-              {locale === "zh"
-                ? "FIRB申请过程涉及支付申请费，费用金额取决于房产价值。此外，外国买家还需要支付额外的印花税附加费和年度土地税附加费（在某些州）。"
-                : "The FIRB application process involves paying an application fee, the amount of which depends on the property value. Additionally, foreign buyers are required to pay additional stamp duty surcharges and annual land tax surcharges (in certain states)."}
-            </p>
-            <p className="text-gray-600">
-              {locale === "zh"
-                ? "我们的免费计算器可以帮助您准确计算所有这些费用，让您在投资前充分了解总成本。"
-                : "Our free calculator helps you accurately calculate all these costs, giving you a complete understanding of the total expenses before you invest."}
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Feature Navigation */}
       <section className="container mx-auto px-4 py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto">
@@ -340,6 +314,32 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </section>
         ))}
       </div>
+
+      {/* What is FIRB Section */}
+      <section className="container mx-auto px-4 py-12 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-semibold text-gray-900 mb-6 text-center">
+            {locale === "zh" ? "什么是FIRB？" : "What is FIRB?"}
+          </h2>
+          <div className="prose prose-lg max-w-none">
+            <p className="text-gray-600 mb-4">
+              {locale === "zh"
+                ? "FIRB（外国投资审查委员会）是澳大利亚政府的一个机构，负责审查外国投资提案，确保这些投资符合国家利益。对于希望在澳大利亚购买房产的外国投资者，通常需要获得FIRB的批准。"
+                : "FIRB (Foreign Investment Review Board) is an Australian government body responsible for reviewing foreign investment proposals to ensure they align with national interests. Foreign investors wishing to purchase property in Australia typically need to obtain FIRB approval."}
+            </p>
+            <p className="text-gray-600 mb-4">
+              {locale === "zh"
+                ? "FIRB申请过程涉及支付申请费，费用金额取决于房产价值。此外，外国买家还需要支付额外的印花税附加费和年度土地税附加费（在某些州）。"
+                : "The FIRB application process involves paying an application fee, the amount of which depends on the property value. Additionally, foreign buyers are required to pay additional stamp duty surcharges and annual land tax surcharges (in certain states)."}
+            </p>
+            <p className="text-gray-600">
+              {locale === "zh"
+                ? "我们的免费计算器可以帮助您准确计算所有这些费用，让您在投资前充分了解总成本。"
+                : "Our free calculator helps you accurately calculate all these costs, giving you a complete understanding of the total expenses before you invest."}
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Lead Capture */}
       <section className="container mx-auto px-4 py-16">

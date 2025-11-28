@@ -27,11 +27,44 @@ export async function POST(request: NextRequest) {
 
     // Validate calculation data
     if (!calculationData || !calculationData.eligibility || !calculationData.costs) {
-      return NextResponse.json({ error: "Invalid calculation data" }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Invalid calculation data",
+          details: "Missing required fields: eligibility or costs",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Validate required fields
+    if (
+      !calculationData.propertyValue ||
+      !calculationData.propertyType ||
+      !calculationData.propertyState
+    ) {
+      return NextResponse.json(
+        {
+          error: "Invalid calculation data",
+          details: "Missing required property fields",
+        },
+        { status: 400 }
+      );
     }
 
     // Prepare data for storage
-    const dataToSave = prepareCalculationForStorage(calculationData, session.user.id, name);
+    let dataToSave;
+    try {
+      dataToSave = prepareCalculationForStorage(calculationData, session.user.id, name);
+    } catch (prepError) {
+      console.error("Error preparing calculation for storage:", prepError);
+      return NextResponse.json(
+        {
+          error: "Failed to prepare calculation data",
+          details: prepError instanceof Error ? prepError.message : "Unknown error",
+        },
+        { status: 500 }
+      );
+    }
 
     // Save to database using service role client (bypasses RLS)
     const supabase = createServiceRoleClient();
@@ -43,7 +76,14 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Database error:", error);
-      return NextResponse.json({ error: "Failed to save calculation" }, { status: 500 });
+      return NextResponse.json(
+        {
+          error: "Failed to save calculation",
+          details: error.message,
+          code: error.code,
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({
