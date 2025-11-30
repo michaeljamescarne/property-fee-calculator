@@ -35,17 +35,18 @@ export async function GET() {
       });
     }
 
+    const profileData = profile as { id: string; email: string; role: string | null } | null;
+    const role = profileData?.role || "not set";
+    const isAdmin = role === "admin";
+
     return NextResponse.json({
       loggedIn: true,
       hasProfile: true,
       userId: session.user.id,
       userEmail: session.user.email,
-      role: profile?.role || "not set",
-      isAdmin: profile?.role === "admin",
-      message:
-        profile?.role === "admin"
-          ? "You are an admin"
-          : `Role is "${profile?.role || "not set"}", not admin`,
+      role,
+      isAdmin,
+      message: isAdmin ? "You are an admin" : `Role is "${role}", not admin`,
     });
   } catch (error) {
     return NextResponse.json(
