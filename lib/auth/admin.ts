@@ -56,8 +56,14 @@ export async function isAdmin(): Promise<AdminUser | null> {
 export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
   const session = await getSession();
 
+  console.log("requireAdmin - Session check:", {
+    hasSession: !!session,
+    userId: session?.user?.id,
+  });
+
   // First check if user is logged in
   if (!session) {
+    console.log("requireAdmin - No session, redirecting to calculator");
     redirect(`/${locale}/calculator?login=true`);
   }
 
@@ -85,6 +91,12 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
 
   const profileData = profile as { id: string; email: string; role: string | null };
 
+  console.log("requireAdmin - Profile data:", {
+    email: profileData.email,
+    role: profileData.role,
+    isAdmin: profileData.role === "admin",
+  });
+
   // Check if role column exists and is set
   if (!profileData.role) {
     console.error("Admin check failed - role column is null or missing:", {
@@ -106,6 +118,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
     redirect(`/${locale}/dashboard`);
   }
 
+  console.log("requireAdmin - Admin access granted for:", profileData.email);
   return {
     id: profileData.id,
     email: profileData.email,

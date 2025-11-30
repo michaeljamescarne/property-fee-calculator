@@ -3,13 +3,18 @@
  * Returns the current user session
  */
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const session = await getSession();
+
+    // Debug logging
+    const cookieHeader = request.headers.get("cookie");
+    console.log("Session API - Cookie header present:", !!cookieHeader);
+    console.log("Session API - Session found:", !!session);
 
     if (!session) {
       return NextResponse.json({
@@ -20,19 +25,21 @@ export async function GET() {
 
     // Get full user profile from database
     const supabase = await createClient();
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from("user_profiles")
       .select("*")
       .eq("id", session.user.id)
       .single();
 
-    if (!profile) {
+    if (profileError || !profile) {
+      console.error("Session API - Profile fetch error:", profileError);
       return NextResponse.json({
         authenticated: false,
         user: null,
       });
     }
 
+    console.log("Session API - Returning authenticated user:", profile.email);
     return NextResponse.json({
       authenticated: true,
       user: profile,
