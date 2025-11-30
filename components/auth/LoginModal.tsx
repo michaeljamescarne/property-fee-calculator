@@ -126,8 +126,11 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         setTimeout(() => {
           onClose();
           onSuccess?.();
-          // Refresh auth state to ensure session is synced
-          window.location.reload();
+          // Redirect to dashboard with a small delay to ensure cookie is set
+          // Use window.location.href for a full page load to ensure server reads the cookie
+          setTimeout(() => {
+            window.location.href = "/en/dashboard";
+          }, 100);
         }, 1500);
       }
     } catch {
