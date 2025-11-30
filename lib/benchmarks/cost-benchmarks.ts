@@ -74,7 +74,7 @@ export async function getCostBenchmark(
       return null;
     }
 
-    return data.value_numeric;
+    return (data as { value_numeric: number }).value_numeric;
   } catch (error) {
     console.error(`Failed to fetch cost benchmark for ${metric}:`, error);
     return null;
