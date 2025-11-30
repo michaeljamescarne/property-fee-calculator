@@ -7,6 +7,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { firbCalculatorSchema } from "@/lib/validations/firb";
 import { performFullEligibilityCheck } from "@/lib/firb/eligibility";
 import { calculateCompleteCostBreakdown, CalculationInput } from "@/lib/firb/calculations";
+import { createServiceRoleClient } from "@/lib/supabase/server";
+import { getCostBenchmarks } from "@/lib/benchmarks/cost-benchmarks";
+import { getMacroBenchmarks } from "@/lib/benchmarks/macro-benchmarks";
 
 export async function POST(request: NextRequest) {
   try {
@@ -37,6 +40,26 @@ export async function POST(request: NextRequest) {
     );
 
     // Calculate costs
+    // Fetch cost and macro benchmarks
+    const supabase = createServiceRoleClient();
+    const costBenchmarks = await getCostBenchmarks(
+      data.state,
+      data.propertyType,
+      [
+        "council_rate_percent",
+        "insurance_percent",
+        "maintenance_percent",
+        "vacancy_rate_percent",
+        "loan_cost_basis_points",
+      ],
+      supabase
+    );
+
+    const macroBenchmarks = await getMacroBenchmarks(
+      ["default_interest_rate", "cgt_withholding", "default_marginal_tax_rate"],
+      supabase
+    );
+
     const calculationInput: CalculationInput = {
       citizenshipStatus: data.citizenshipStatus,
       propertyType: data.propertyType,
@@ -47,6 +70,8 @@ export async function POST(request: NextRequest) {
       entityType: data.entityType || "individual",
       isOrdinarilyResident: data.isOrdinarilyResident,
       expeditedFIRB: data.expeditedFIRB || false,
+      costBenchmarks,
+      macroBenchmarks,
     };
 
     const costs = calculateCompleteCostBreakdown(calculationInput);

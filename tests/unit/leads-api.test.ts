@@ -2,17 +2,24 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { POST } from "@/app/api/leads/route";
 import { NextRequest } from "next/server";
 
-// Mock Supabase client
+const { mockSupabase, mockCreateServiceRoleClient } = vi.hoisted(() => {
+  const mockSupabaseInstance = {
+    from: vi.fn(),
+    auth: {
+      getUser: vi.fn(),
+    },
+  };
+
+  const mockCreate = vi.fn(() => mockSupabaseInstance);
+
+  return {
+    mockSupabase: mockSupabaseInstance,
+    mockCreateServiceRoleClient: mockCreate,
+  };
+});
+
 vi.mock("@/lib/supabase/server", () => ({
-  createClient: vi.fn(() => ({
-    from: vi.fn(() => ({
-      insert: vi.fn(() => ({
-        select: vi.fn(() => ({
-          single: vi.fn(),
-        })),
-      })),
-    })),
-  })),
+  createServiceRoleClient: mockCreateServiceRoleClient,
 }));
 
 describe("Leads API", () => {
@@ -34,12 +41,10 @@ describe("Leads API", () => {
   });
 
   it("should accept valid email", async () => {
-    const { createClient } = await import("@/lib/supabase/server");
-    const mockSupabase = createClient() as unknown as {
-      from: jest.Mock;
-    };
+    const { createServiceRoleClient } = await import("@/lib/supabase/server");
+    const supabase = createServiceRoleClient();
 
-    mockSupabase.from.mockReturnValue({
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue({
       insert: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           single: vi.fn().mockResolvedValue({
@@ -53,6 +58,7 @@ describe("Leads API", () => {
     const request = new NextRequest("http://localhost:3000/api/leads", {
       method: "POST",
       body: JSON.stringify({ email: "test@example.com" }),
+      headers: new Headers({ "content-type": "application/json" }),
     });
 
     const response = await POST(request);
@@ -64,12 +70,10 @@ describe("Leads API", () => {
   });
 
   it("should handle duplicate email gracefully", async () => {
-    const { createClient } = await import("@/lib/supabase/server");
-    const mockSupabase = createClient() as unknown as {
-      from: jest.Mock;
-    };
+    const { createServiceRoleClient } = await import("@/lib/supabase/server");
+    const supabase = createServiceRoleClient();
 
-    mockSupabase.from.mockReturnValue({
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue({
       insert: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           single: vi.fn().mockResolvedValue({
@@ -83,6 +87,7 @@ describe("Leads API", () => {
     const request = new NextRequest("http://localhost:3000/api/leads", {
       method: "POST",
       body: JSON.stringify({ email: "existing@example.com" }),
+      headers: new Headers({ "content-type": "application/json" }),
     });
 
     const response = await POST(request);

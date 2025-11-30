@@ -18,6 +18,11 @@ import { calculateTaxDeductions, calculateTaxBenefit, calculateCGT } from "./tax
  * Generate smart default investment inputs based on property details
  * Uses benchmark data when available, falls back to state defaults
  */
+import type { CostMetric } from "@/lib/benchmarks/cost-benchmarks";
+import type { MacroMetric } from "@/lib/benchmarks/macro-benchmarks";
+import { DEFAULT_COST_BENCHMARKS } from "@/lib/benchmarks/cost-benchmarks";
+import { DEFAULT_MACRO_BENCHMARKS } from "@/lib/benchmarks/macro-benchmarks";
+
 export function generateDefaultInputs(
   propertyValue: number,
   state: AustralianState,
@@ -28,7 +33,9 @@ export function generateDefaultInputs(
     grossRentalYield?: number;
     capitalGrowth5yr?: number;
     capitalGrowth10yr?: number;
-  } | null
+  } | null,
+  costBenchmarks?: Partial<Record<CostMetric, number>>,
+  macroBenchmarks?: Partial<Record<MacroMetric, number>>
 ): InvestmentInputs {
   // Use benchmark data if available, otherwise fall back to state defaults
   const yieldRates: Record<AustralianState, number> = {
@@ -57,25 +64,46 @@ export function generateDefaultInputs(
   const depositAmount = propertyValue * (depositPercent / 100);
   const loanAmount = propertyValue - depositAmount;
 
+  // Use benchmarks if available, otherwise use defaults
+  const vacancyRate =
+    costBenchmarks?.vacancy_rate_percent ?? DEFAULT_COST_BENCHMARKS.vacancy_rate_percent;
+  const rentGrowthRate =
+    costBenchmarks?.rent_growth_percent ?? DEFAULT_COST_BENCHMARKS.rent_growth_percent;
+  const propertyManagementFee =
+    costBenchmarks?.management_fee_percent ?? DEFAULT_COST_BENCHMARKS.management_fee_percent;
+  const lettingFee = costBenchmarks?.letting_fee_weeks ?? DEFAULT_COST_BENCHMARKS.letting_fee_weeks;
+  const interestRate =
+    costBenchmarks?.interest_rate_percent ??
+    macroBenchmarks?.default_interest_rate ??
+    DEFAULT_COST_BENCHMARKS.interest_rate_percent;
+  const marginalTaxRate =
+    macroBenchmarks?.default_marginal_tax_rate ??
+    DEFAULT_MACRO_BENCHMARKS.default_marginal_tax_rate;
+  const sellingCosts =
+    costBenchmarks?.selling_costs_percent ?? DEFAULT_COST_BENCHMARKS.selling_costs_percent;
+  const cgtWithholdingRate =
+    macroBenchmarks?.cgt_withholding ?? DEFAULT_MACRO_BENCHMARKS.cgt_withholding;
+
   return {
     // Rental
     estimatedWeeklyRent: weeklyRent,
-    vacancyRate: 5,
-    rentGrowthRate: 3,
+    vacancyRate,
+    rentGrowthRate,
 
     // Management
-    propertyManagementFee: 8,
-    lettingFee: 2,
+    propertyManagementFee,
+    lettingFee,
     selfManaged: false,
 
     // Ongoing costs (use existing calculated costs)
     annualMaintenanceCost: existingCosts.ongoingCosts.maintenance,
     annualInsurance: existingCosts.ongoingCosts.insurance,
+    annualCouncilRates: existingCosts.ongoingCosts.councilRates,
     annualStrataFees: 0, // User can override
 
     // Financing
     loanAmount,
-    interestRate: 6.5,
+    interestRate,
     loanTerm: 30,
     loanType: "principalAndInterest",
     interestOnlyPeriod: 0,
@@ -85,13 +113,13 @@ export function generateDefaultInputs(
     capitalGrowthRate: capitalGrowth * 100, // Convert back to percentage for display
 
     // Tax
-    marginalTaxRate: 37, // Foreign resident rate
+    marginalTaxRate,
     currencyExchangeRate: 1,
     homeCurrency: "AUD",
 
     // Exit
-    sellingCosts: 4, // 3% agent + 1% legal
-    cgtWithholdingRate: 12.5,
+    sellingCosts,
+    cgtWithholdingRate,
   };
 }
 
@@ -103,7 +131,8 @@ export function calculateInvestmentAnalytics(
   propertyValue: number,
   state: AustralianState,
   propertyType: PropertyType,
-  existingCosts: CostBreakdown
+  existingCosts: CostBreakdown,
+  macroBenchmarks?: Partial<Record<MacroMetric, number>>
 ): InvestmentAnalytics {
   // 1. RENTAL YIELD CALCULATIONS
   const annualRent = inputs.estimatedWeeklyRent * 52;
@@ -111,8 +140,22 @@ export function calculateInvestmentAnalytics(
   const effectiveRent = annualRent - vacancyCost;
 
   const grossYield = (annualRent / propertyValue) * 100;
+
+  // Calculate net yield: (effective rent - all expenses) / total investment cost
+  // Note: We calculate expenses here before they're fully computed, so we use a simplified version
+  // The full expenses calculation happens later, but for net yield we need a reasonable estimate
+  const propertyManagementCost = inputs.selfManaged
+    ? 0
+    : effectiveRent * (inputs.propertyManagementFee / 100);
+  const estimatedOtherExpenses =
+    (inputs.annualCouncilRates ?? existingCosts.ongoingCosts.councilRates) +
+    (inputs.annualInsurance ?? existingCosts.ongoingCosts.insurance) +
+    (inputs.annualMaintenanceCost ?? existingCosts.ongoingCosts.maintenance) +
+    existingCosts.ongoingCosts.annualLandTax +
+    (inputs.annualStrataFees ?? 0);
+
   const netYield =
-    ((effectiveRent - effectiveRent * (inputs.propertyManagementFee / 100)) /
+    ((effectiveRent - propertyManagementCost - estimatedOtherExpenses) /
       existingCosts.totalInvestmentCost) *
     100;
 
@@ -156,20 +199,18 @@ export function calculateInvestmentAnalytics(
   const lvr = calculateLVR(inputs.loanAmount, propertyValue);
 
   // 3. CASH FLOW CALCULATIONS (Year 1)
-  const propertyManagementCost = inputs.selfManaged
-    ? 0
-    : effectiveRent * (inputs.propertyManagementFee / 100);
+  // Reuse propertyManagementCost calculated above for net yield
   const lettingCost = inputs.selfManaged ? 0 : inputs.estimatedWeeklyRent * inputs.lettingFee;
 
   const annualExpenses = {
     loanRepayments: annualLoanRepayment,
     propertyManagement: propertyManagementCost,
     lettingFee: lettingCost,
-    councilRates: existingCosts.ongoingCosts.councilRates,
-    insurance: inputs.annualInsurance || existingCosts.ongoingCosts.insurance,
-    maintenance: inputs.annualMaintenanceCost || existingCosts.ongoingCosts.maintenance,
+    councilRates: inputs.annualCouncilRates ?? existingCosts.ongoingCosts.councilRates,
+    insurance: inputs.annualInsurance ?? existingCosts.ongoingCosts.insurance,
+    maintenance: inputs.annualMaintenanceCost ?? existingCosts.ongoingCosts.maintenance,
     landTax: existingCosts.ongoingCosts.annualLandTax,
-    strataFees: inputs.annualStrataFees || 0,
+    strataFees: inputs.annualStrataFees ?? 0,
     vacancyFee: existingCosts.ongoingCosts.vacancyFee,
   };
 
@@ -190,6 +231,12 @@ export function calculateInvestmentAnalytics(
   const firstYearInterest =
     loanSchedule[0]?.interestPaid || (inputs.loanAmount * inputs.interestRate) / 100;
 
+  // Determine building age for depreciation calculations
+  // New dwellings are 0 years old, established properties default to 10 years if not specified
+  const buildingAge =
+    inputs.buildingAge ??
+    (propertyType === "newDwelling" ? 0 : propertyType === "established" ? 10 : 0);
+
   const deductions = calculateTaxDeductions(
     firstYearInterest,
     annualExpenses.councilRates,
@@ -200,7 +247,7 @@ export function calculateInvestmentAnalytics(
     annualExpenses.strataFees,
     propertyValue,
     propertyType,
-    0 // New property
+    buildingAge
   );
 
   const taxBenefit = calculateTaxBenefit(deductions.total, effectiveRent, inputs.marginalTaxRate);
@@ -269,10 +316,22 @@ export function calculateInvestmentAnalytics(
   // 6. INVESTMENT COMPARISONS
   const comparisonAmount = totalCashInvested; // Same initial investment
 
-  const asxReturn = comparisonAmount * Math.pow(1.072, inputs.holdPeriod) - comparisonAmount;
-  const termDepositReturn = comparisonAmount * Math.pow(1.04, inputs.holdPeriod) - comparisonAmount;
-  const bondReturn = comparisonAmount * Math.pow(1.045, inputs.holdPeriod) - comparisonAmount;
-  const savingsReturn = comparisonAmount * Math.pow(1.045, inputs.holdPeriod) - comparisonAmount;
+  // Use macro benchmarks if available, otherwise use defaults
+  const asxRate =
+    (macroBenchmarks?.asx_total_return ?? DEFAULT_MACRO_BENCHMARKS.asx_total_return) / 100;
+  const termDepositRate =
+    (macroBenchmarks?.term_deposit_rate ?? DEFAULT_MACRO_BENCHMARKS.term_deposit_rate) / 100;
+  const bondRate = (macroBenchmarks?.bond_rate ?? DEFAULT_MACRO_BENCHMARKS.bond_rate) / 100;
+  const savingsRate =
+    (macroBenchmarks?.savings_rate ?? DEFAULT_MACRO_BENCHMARKS.savings_rate) / 100;
+
+  const asxReturn = comparisonAmount * Math.pow(1 + asxRate, inputs.holdPeriod) - comparisonAmount;
+  const termDepositReturn =
+    comparisonAmount * Math.pow(1 + termDepositRate, inputs.holdPeriod) - comparisonAmount;
+  const bondReturn =
+    comparisonAmount * Math.pow(1 + bondRate, inputs.holdPeriod) - comparisonAmount;
+  const savingsReturn =
+    comparisonAmount * Math.pow(1 + savingsRate, inputs.holdPeriod) - comparisonAmount;
 
   // 7. SENSITIVITY ANALYSIS
   const vacancyScenarios = [0, 5, 10, 15].map((rate) => {

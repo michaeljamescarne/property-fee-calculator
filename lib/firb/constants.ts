@@ -97,7 +97,7 @@ export const FOREIGN_SURCHARGE_RATES: Record<AustralianState, number> = {
   SA: 7.0, // 7% surcharge
   WA: 7.0, // 7% surcharge
   TAS: 8.0, // 8% surcharge
-  ACT: 0.0, // No foreign buyer surcharge
+  ACT: 4.0, // 4% surcharge (verified October 2025)
   NT: 0.0, // No foreign buyer surcharge
 };
 
@@ -106,84 +106,84 @@ export const FOREIGN_SURCHARGE_RATES: Record<AustralianState, number> = {
 // Sources: Official state revenue office websites
 export const STAMP_DUTY_RATES: Record<
   AustralianState,
-  { thresholds: { max: number; rate: number; base: number }[] }
+  { thresholds: { min: number; max: number; rate: number; base: number }[] }
 > = {
   NSW: {
     thresholds: [
-      { max: 17000, rate: 1.25, base: 0 }, // Up to $17,000: $1.25 per $100 (min $20)
-      { max: 36000, rate: 1.5, base: 212 }, // $17,001-$36,000: $212 + $1.50 per $100 over $17,000
-      { max: 97000, rate: 1.75, base: 497 }, // $36,001-$97,000: $497 + $1.75 per $100 over $36,000
-      { max: 364000, rate: 3.5, base: 1564 }, // $97,001-$364,000: $1,564 + $3.50 per $100 over $97,000
-      { max: 1212000, rate: 4.5, base: 10909 }, // $364,001-$1,212,000: $10,909 + $4.50 per $100 over $364,000
-      { max: Infinity, rate: 5.5, base: 49069 }, // Over $1,212,000: $49,069 + $5.50 per $100 over $1,212,000
+      { min: 0, max: 17000, rate: 1.25, base: 0 }, // Up to $17,000
+      { min: 17000, max: 36000, rate: 1.5, base: 212 }, // $17,001-$36,000
+      { min: 36000, max: 97000, rate: 1.75, base: 497 }, // $36,001-$97,000
+      { min: 97000, max: 364000, rate: 3.5, base: 1564 }, // $97,001-$364,000
+      { min: 364000, max: 1212000, rate: 4.5, base: 10909 }, // $364,001-$1,212,000
+      { min: 1212000, max: Infinity, rate: 5.5, base: 49069 }, // Over $1,212,000
     ],
   },
   VIC: {
     thresholds: [
-      { max: 25000, rate: 1.4, base: 0 }, // $0-$25,000: 1.4% of property value
-      { max: 130000, rate: 2.4, base: 350 }, // $25,001-$130,000: $350 + 2.4% of value over $25,000
-      { max: 960000, rate: 6.0, base: 2870 }, // $130,001-$960,000: $2,870 + 6% of value over $130,000
-      { max: 2000000, rate: 5.5, base: 0 }, // $960,001-$2,000,000: 5.5% flat rate
-      { max: Infinity, rate: 6.5, base: 110000 }, // Over $2,000,000: $110,000 + 6.5% of value over $2,000,000
+      { min: 0, max: 25000, rate: 1.4, base: 0 }, // $0-$25,000
+      { min: 25000, max: 130000, rate: 2.4, base: 350 }, // $25,001-$130,000
+      { min: 130000, max: 960000, rate: 6.0, base: 2870 }, // $130,001-$960,000
+      { min: 0, max: 2000000, rate: 5.5, base: 0 }, // $960,001-$2,000,000 (flat rate on total value)
+      { min: 2000000, max: Infinity, rate: 6.5, base: 110000 }, // Over $2,000,000
     ],
   },
   QLD: {
     thresholds: [
-      { max: 5000, rate: 0, base: 0 }, // $0-$5,000: No duty payable
-      { max: 75000, rate: 1.5, base: 0 }, // $5,001-$75,000: $1.50 per $100 over $5,000
-      { max: 540000, rate: 3.5, base: 1050 }, // $75,001-$540,000: $1,050 + $3.50 per $100 over $75,000
-      { max: 1000000, rate: 4.5, base: 17325 }, // $540,001-$1,000,000: $17,325 + $4.50 per $100 over $540,000
-      { max: Infinity, rate: 5.75, base: 38025 }, // Over $1,000,000: $38,025 + $5.75 per $100 over $1,000,000
+      { min: 0, max: 5000, rate: 0, base: 0 }, // $0-$5,000
+      { min: 5000, max: 75000, rate: 1.5, base: 0 }, // $5,001-$75,000
+      { min: 75000, max: 540000, rate: 3.5, base: 1050 }, // $75,001-$540,000
+      { min: 540000, max: 1000000, rate: 4.5, base: 17325 }, // $540,001-$1,000,000
+      { min: 1000000, max: Infinity, rate: 5.75, base: 38025 }, // Over $1,000,000
     ],
   },
   SA: {
     thresholds: [
-      { max: 12000, rate: 1.0, base: 0 }, // Up to $12,000: 1% of property value
-      { max: 30000, rate: 2.0, base: 120 }, // $12,001-$30,000: $120 + 2% of value over $12,000
-      { max: 50000, rate: 3.0, base: 480 }, // $30,001-$50,000: $480 + 3% of value over $30,000
-      { max: 100000, rate: 3.5, base: 1080 }, // $50,001-$100,000: $1,080 + 3.5% of value over $50,000
-      { max: 200000, rate: 4.0, base: 2830 }, // $100,001-$200,000: $2,830 + 4% of value over $100,000
-      { max: 250000, rate: 4.25, base: 6830 }, // $200,001-$250,000: $6,830 + 4.25% of value over $200,000
-      { max: 300000, rate: 4.75, base: 8955 }, // $250,001-$300,000: $8,955 + 4.75% of value over $250,000
-      { max: Infinity, rate: 5.0, base: 11330 }, // Over $300,000: $11,330 + 5% of value over $300,000
+      { min: 0, max: 12000, rate: 1.0, base: 0 }, // Up to $12,000
+      { min: 12000, max: 30000, rate: 2.0, base: 120 }, // $12,001-$30,000
+      { min: 30000, max: 50000, rate: 3.0, base: 480 }, // $30,001-$50,000
+      { min: 50000, max: 100000, rate: 3.5, base: 1080 }, // $50,001-$100,000
+      { min: 100000, max: 200000, rate: 4.0, base: 2830 }, // $100,001-$200,000
+      { min: 200000, max: 250000, rate: 4.25, base: 6830 }, // $200,001-$250,000
+      { min: 250000, max: 300000, rate: 4.75, base: 8955 }, // $250,001-$300,000
+      { min: 300000, max: Infinity, rate: 5.0, base: 11330 }, // Over $300,000
     ],
   },
   WA: {
     thresholds: [
-      { max: 120000, rate: 1.9, base: 0 }, // $0-$120,000: 1.9% of property value
-      { max: 150000, rate: 2.85, base: 2280 }, // $120,001-$150,000: $2,280 + 2.85% of value over $120,000
-      { max: 360000, rate: 3.8, base: 3135 }, // $150,001-$360,000: $3,135 + 3.8% of value over $150,000
-      { max: 725000, rate: 4.75, base: 11115 }, // $360,001-$725,000: $11,115 + 4.75% of value over $360,000
-      { max: Infinity, rate: 5.15, base: 28453 }, // Over $725,000: $28,453 + 5.15% of value over $725,000
+      { min: 0, max: 120000, rate: 1.9, base: 0 }, // $0-$120,000
+      { min: 120000, max: 150000, rate: 2.85, base: 2280 }, // $120,001-$150,000
+      { min: 150000, max: 360000, rate: 3.8, base: 3135 }, // $150,001-$360,000
+      { min: 360000, max: 725000, rate: 4.75, base: 11115 }, // $360,001-$725,000
+      { min: 725000, max: Infinity, rate: 5.15, base: 28453 }, // Over $725,000
     ],
   },
   TAS: {
     thresholds: [
-      { max: 3000, rate: 0, base: 50 }, // $0-$3,000: $50
-      { max: 25000, rate: 1.75, base: 50 }, // $3,001-$25,000: $50 + 1.75% of value over $3,000
-      { max: 75000, rate: 2.25, base: 435 }, // $25,001-$75,000: $435 + 2.25% of value over $25,000
-      { max: 200000, rate: 3.5, base: 1560 }, // $75,001-$200,000: $1,560 + 3.5% of value over $75,000
-      { max: 375000, rate: 4.0, base: 5935 }, // $200,001-$375,000: $5,935 + 4% of value over $200,000
-      { max: 725000, rate: 4.25, base: 12935 }, // $375,001-$725,000: $12,935 + 4.25% of value over $375,000
-      { max: Infinity, rate: 4.5, base: 27810 }, // Over $725,000: $27,810 + 4.5% of value over $725,000
+      { min: 0, max: 3000, rate: 0, base: 50 }, // $0-$3,000
+      { min: 3000, max: 25000, rate: 1.75, base: 50 }, // $3,001-$25,000
+      { min: 25000, max: 75000, rate: 2.25, base: 435 }, // $25,001-$75,000
+      { min: 75000, max: 200000, rate: 3.5, base: 1560 }, // $75,001-$200,000
+      { min: 200000, max: 375000, rate: 4.0, base: 5935 }, // $200,001-$375,000
+      { min: 375000, max: 725000, rate: 4.25, base: 12935 }, // $375,001-$725,000
+      { min: 725000, max: Infinity, rate: 4.5, base: 27810 }, // Over $725,000
     ],
   },
   ACT: {
     thresholds: [
-      { max: 200000, rate: 0, base: 20 }, // $0-$200,000: $20 or $1.20 per $100, whichever is greater
-      { max: 300000, rate: 2.2, base: 2400 }, // $200,001-$300,000: $2,400 + $2.20 per $100 over $200,000
-      { max: 500000, rate: 3.4, base: 4600 }, // $300,001-$500,000: $4,600 + $3.40 per $100 over $300,000
-      { max: 750000, rate: 4.32, base: 11400 }, // $500,001-$750,000: $11,400 + $4.32 per $100 over $500,000
-      { max: 1000000, rate: 5.9, base: 22200 }, // $750,001-$1,000,000: $22,200 + $5.90 per $100 over $750,000
-      { max: Infinity, rate: 6.4, base: 36950 }, // Over $1,000,000: $36,950 + $6.40 per $100 over $1,000,000
+      { min: 0, max: 200000, rate: 0, base: 20 }, // $0-$200,000
+      { min: 200000, max: 300000, rate: 2.2, base: 2400 }, // $200,001-$300,000
+      { min: 300000, max: 500000, rate: 3.4, base: 4600 }, // $300,001-$500,000
+      { min: 500000, max: 750000, rate: 4.32, base: 11400 }, // $500,001-$750,000
+      { min: 750000, max: 1000000, rate: 5.9, base: 22200 }, // $750,001-$1,000,000
+      { min: 1000000, max: Infinity, rate: 6.4, base: 36950 }, // Over $1,000,000
     ],
   },
   NT: {
     thresholds: [
-      { max: 525000, rate: 0, base: 0 }, // $0-$525,000: Complex formula (0.06571441 x V²) + 15V
-      { max: 3000000, rate: 4.95, base: 0 }, // $525,001-$3,000,000: 4.95% of value
-      { max: 5000000, rate: 5.75, base: 122513 }, // $3,000,001-$5,000,000: 5.75% of value
-      { max: Infinity, rate: 5.95, base: 237513 }, // Over $5,000,000: 5.95% of value
+      { min: 0, max: 525000, rate: 0, base: 0 }, // $0-$525,000
+      { min: 0, max: 3000000, rate: 4.95, base: 0 }, // $525,001-$3,000,000 (approximated as flat rate)
+      { min: 3000000, max: 5000000, rate: 5.75, base: 122513 }, // $3,000,001-$5,000,000
+      { min: 5000000, max: Infinity, rate: 5.95, base: 237513 }, // Over $5,000,000
     ],
   },
 };
@@ -200,10 +200,8 @@ export function calculateStampDuty(
   const threshold = stateDuty.thresholds.find((t) => propertyValue <= t.max);
   if (!threshold) return 0;
 
-  // Calculate duty
-  const dutyAmount =
-    threshold.base +
-    (propertyValue - (threshold.max === Infinity ? 0 : 0)) * (threshold.rate / 100);
+  const amountOverMin = Math.max(0, propertyValue - threshold.min);
+  const dutyAmount = threshold.base + amountOverMin * (threshold.rate / 100);
 
   // First home buyer concessions (simplified - varies by state)
   if (isFirstHome && propertyValue <= 600000) {
@@ -265,6 +263,10 @@ export const LAND_TAX_RATES: Record<
 };
 
 // Calculate annual land tax
+// Note: This is a simplified calculation using base rates. Many states use progressive tiers
+// where the rate increases with land value. This function uses a flat rate above the threshold,
+// which may underestimate tax for high-value properties. For accurate calculations, consider
+// implementing full progressive tier structures per state.
 export function calculateLandTax(
   landValue: number,
   state: AustralianState,

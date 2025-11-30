@@ -17,6 +17,9 @@ import {
   calculateInvestmentAnalytics,
 } from "@/lib/firb/investment-analytics";
 import { blobToBase64 } from "@/lib/pdf/pdfHelpers";
+import { createServiceRoleClient } from "@/lib/supabase/server";
+import { getCostBenchmarks } from "@/lib/benchmarks/cost-benchmarks";
+import { getMacroBenchmarks } from "@/lib/benchmarks/macro-benchmarks";
 
 interface EmailRequest {
   email: string;
@@ -62,6 +65,38 @@ export async function POST(request: NextRequest) {
     console.log("Email API: Generating investment inputs");
     console.log("Email API: costs object:", JSON.stringify(costs, null, 2));
 
+    // Fetch cost and macro benchmarks
+    const supabase = createServiceRoleClient();
+    const costBenchmarks = await getCostBenchmarks(
+      formData.state!,
+      formData.propertyType!,
+      [
+        "council_rate_percent",
+        "insurance_percent",
+        "maintenance_percent",
+        "vacancy_rate_percent",
+        "management_fee_percent",
+        "letting_fee_weeks",
+        "rent_growth_percent",
+        "interest_rate_percent",
+        "selling_costs_percent",
+      ],
+      supabase
+    );
+
+    const macroBenchmarks = await getMacroBenchmarks(
+      [
+        "asx_total_return",
+        "term_deposit_rate",
+        "bond_rate",
+        "savings_rate",
+        "cgt_withholding",
+        "default_marginal_tax_rate",
+        "default_interest_rate",
+      ],
+      supabase
+    );
+
     let investmentInputs: InvestmentInputs;
     let analytics: InvestmentAnalytics;
 
@@ -71,7 +106,10 @@ export async function POST(request: NextRequest) {
         formData.state!,
         formData.propertyType!,
         formData.depositPercent || 20,
-        costs
+        costs,
+        null, // benchmarkData (market benchmarks)
+        costBenchmarks,
+        macroBenchmarks
       );
       console.log("Email API: Investment inputs generated successfully");
       console.log("Email API: Calculating investment analytics");
@@ -80,7 +118,8 @@ export async function POST(request: NextRequest) {
         formData.propertyValue!,
         formData.state!,
         formData.propertyType!,
-        costs
+        costs,
+        macroBenchmarks
       );
       console.log("Email API: Investment analytics calculated successfully");
     } catch (analyticsError) {
