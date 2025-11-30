@@ -11,7 +11,7 @@ const BASE_URL = "https://propertycosts.com.au";
  * Generate SoftwareApplication schema for the calculator
  */
 export function generateCalculatorSchema(locale: string) {
-  const url = getLocaleUrl(locale, "firb-calculator");
+  const url = getLocaleUrl(locale, "calculator");
   const isZh = locale === "zh";
 
   return {
@@ -48,7 +48,7 @@ export function generateCalculatorSchema(locale: string) {
  * Generate HowTo schema for calculator steps
  */
 export function generateCalculatorHowToSchema(locale: string) {
-  const url = getLocaleUrl(locale, "firb-calculator");
+  const url = getLocaleUrl(locale, "calculator");
   const isZh = locale === "zh";
 
   return {
@@ -182,7 +182,7 @@ export function generateCalculatorBreadcrumbSchema(locale: string) {
         "@type": "ListItem",
         position: 2,
         name: isZh ? "FIRB计算器" : "FIRB Calculator",
-        item: getLocaleUrl(locale, "firb-calculator"),
+        item: getLocaleUrl(locale, "calculator"),
       },
     ],
   };
