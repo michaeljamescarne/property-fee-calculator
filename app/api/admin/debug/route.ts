@@ -73,14 +73,14 @@ export async function GET() {
     };
 
     // Check if user is admin
-    const isAdmin = profile?.role === "admin";
+    const profileData = profile as { id: string; email: string; role: string | null } | null;
+    const role = profileData?.role || "not set";
+    const isAdmin = role === "admin";
     diagnostics.isAdmin = isAdmin;
     diagnostics.adminCheck = {
-      role: profile?.role || "not set",
+      role,
       isAdmin,
-      message: isAdmin
-        ? "You have admin access"
-        : `Role is "${profile?.role || "not set"}", expected "admin"`,
+      message: isAdmin ? "You have admin access" : `Role is "${role}", expected "admin"`,
     };
 
     return NextResponse.json(diagnostics, { status: 200 });
