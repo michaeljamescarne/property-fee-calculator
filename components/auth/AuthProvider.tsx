@@ -57,12 +57,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const login = (user: UserProfile) => {
+  const login = async (user: UserProfile) => {
     setState({
       user,
       isAuthenticated: true,
       isLoading: false,
     });
+    // Refresh session from server to ensure cookie is synced
+    await checkSession();
   };
 
   const logout = async () => {

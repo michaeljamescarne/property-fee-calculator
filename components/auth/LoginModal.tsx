@@ -126,6 +126,8 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         setTimeout(() => {
           onClose();
           onSuccess?.();
+          // Refresh auth state to ensure session is synced
+          window.location.reload();
         }, 1500);
       }
     } catch {
