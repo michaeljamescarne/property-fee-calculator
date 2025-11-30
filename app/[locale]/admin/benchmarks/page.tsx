@@ -3,7 +3,6 @@
  * CRUD interface for managing all benchmark data (market, cost, and macro)
  */
 
-import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { requireAdmin } from "@/lib/auth/admin";
 import BenchmarksAdminClient from "@/components/admin/BenchmarksAdminClient";

@@ -3,7 +3,7 @@
  * Diagnostic endpoint to check admin access issues
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 

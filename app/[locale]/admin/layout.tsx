@@ -3,7 +3,6 @@
  * Layout wrapper for admin pages with navigation
  */
 
-import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/admin";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
