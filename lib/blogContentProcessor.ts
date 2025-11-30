@@ -24,58 +24,92 @@ export interface BlogPost {
  * Converts markdown table syntax to styled HTML table
  */
 export function convertMarkdownTableToHTML(markdownTable: string): string {
-  const lines = markdownTable
-    .trim()
-    .split("\n")
-    .filter((line) => line.trim());
-  if (lines.length < 3) return markdownTable; // Not a valid table
+  try {
+    const lines = markdownTable
+      .trim()
+      .split("\n")
+      .filter((line) => line.trim());
 
-  // Extract header row (first line)
-  const headerLine = lines[0];
-  const headers = headerLine
-    .split("|")
-    .map((h) => h.trim())
-    .filter((h) => h && !h.match(/^-+$/)); // Filter out separator-only cells
+    if (lines.length < 3) return markdownTable; // Not a valid table
 
-  // Find separator row (usually line 1, contains dashes)
-  // Skip it - we don't need it
+    // Extract header row (first line)
+    const headerLine = lines[0];
+    const headers = headerLine
+      .split("|")
+      .map((h) => h.trim())
+      .filter((h) => h && !h.match(/^-+$/)); // Filter out separator-only cells
 
-  // Extract data rows (start from line 2, after header and separator)
-  const dataRows = lines
-    .slice(2) // Skip header (line 0) and separator (line 1)
-    .map((line) => {
-      return line
-        .split("|")
-        .map((cell) => cell.trim())
-        .filter((cell) => cell && !cell.match(/^-+$/)); // Filter out separator-only cells
-    })
-    .filter((row) => row.length > 0 && row.length === headers.length); // Ensure row has same number of cells as headers
+    // Validate headers exist
+    if (headers.length === 0) {
+      return markdownTable; // Invalid table, return original
+    }
 
-  // Build HTML table
-  let htmlTable = '<table class="w-full border-collapse border border-gray-300 mb-6">\n';
+    // Find separator row (usually line 1, contains dashes)
+    // Skip it - we don't need it
 
-  // Header
-  htmlTable += "  <thead>\n";
-  htmlTable += '    <tr class="bg-gray-50">\n';
-  headers.forEach((header) => {
-    htmlTable += `      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">${header}</th>\n`;
-  });
-  htmlTable += "    </tr>\n";
-  htmlTable += "  </thead>\n";
+    // Extract data rows (start from line 2, after header and separator)
+    const dataRows = lines
+      .slice(2) // Skip header (line 0) and separator (line 1)
+      .map((line) => {
+        return line
+          .split("|")
+          .map((cell) => cell.trim())
+          .filter((cell) => cell && !cell.match(/^-+$/)); // Filter out separator-only cells
+      })
+      .filter((row) => row.length > 0); // Keep rows with data
 
-  // Body
-  htmlTable += "  <tbody>\n";
-  dataRows.forEach((row) => {
-    htmlTable += '    <tr class="hover:bg-gray-50">\n';
-    row.forEach((cell) => {
-      htmlTable += `      <td class="border border-gray-300 px-4 py-3">${cell}</td>\n`;
+    // Build HTML table
+    let htmlTable = '<table class="w-full border-collapse border border-gray-300 mb-6">\n';
+
+    // Header
+    htmlTable += "  <thead>\n";
+    htmlTable += '    <tr class="bg-gray-50">\n';
+    headers.forEach((header) => {
+      // Escape HTML in header text to prevent XSS
+      const escapedHeader = header
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      htmlTable += `      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">${escapedHeader}</th>\n`;
     });
     htmlTable += "    </tr>\n";
-  });
-  htmlTable += "  </tbody>\n";
-  htmlTable += "</table>";
+    htmlTable += "  </thead>\n";
 
-  return htmlTable;
+    // Body
+    htmlTable += "  <tbody>\n";
+    dataRows.forEach((row) => {
+      // Create a new array to avoid mutating the original
+      let processedRow = [...row];
+
+      // Pad row to match header length if needed
+      while (processedRow.length < headers.length) {
+        processedRow.push("");
+      }
+      // Truncate if longer
+      if (processedRow.length > headers.length) {
+        processedRow = processedRow.slice(0, headers.length);
+      }
+
+      htmlTable += '    <tr class="hover:bg-gray-50">\n';
+      processedRow.forEach((cell) => {
+        // Escape HTML in cell text to prevent XSS
+        const escapedCell = String(cell || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+        htmlTable += `      <td class="border border-gray-300 px-4 py-3">${escapedCell}</td>\n`;
+      });
+      htmlTable += "    </tr>\n";
+    });
+    htmlTable += "  </tbody>\n";
+    htmlTable += "</table>";
+
+    return htmlTable;
+  } catch (error) {
+    console.error("Error converting markdown table to HTML:", error);
+    // Return original markdown on error to prevent breaking the page
+    return markdownTable;
+  }
 }
 
 /**

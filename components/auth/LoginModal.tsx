@@ -106,7 +106,18 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
+        credentials: "include", // Ensure cookies are sent and received
       });
+
+      // Check if Set-Cookie header is present
+      const setCookieHeader = response.headers.get("set-cookie");
+      console.log("LoginModal - Set-Cookie header present:", !!setCookieHeader);
+      if (setCookieHeader) {
+        console.log(
+          "LoginModal - Set-Cookie value (first 100 chars):",
+          setCookieHeader.substring(0, 100)
+        );
+      }
 
       const data: VerifyCodeResponse | AuthErrorResponse = await response.json();
 

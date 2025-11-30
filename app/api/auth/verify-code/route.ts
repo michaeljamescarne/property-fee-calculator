@@ -155,6 +155,7 @@ export async function POST(request: NextRequest) {
 
     // Create session
     const token = await createSession(profile);
+    console.log("Verify code - Session token created, length:", token.length);
 
     // Create response and set cookie in response headers
     const response = NextResponse.json({
@@ -164,13 +165,35 @@ export async function POST(request: NextRequest) {
     } as VerifyCodeResponse);
 
     // Set cookie directly on response headers
-    response.cookies.set("firb-session", token, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "lax" as const,
       maxAge: 30 * 24 * 60 * 60, // 30 days
       path: "/",
+    };
+
+    response.cookies.set("firb-session", token, cookieOptions);
+
+    // Log cookie setting for debugging
+    console.log("Verify code - Cookie set with options:", {
+      httpOnly: cookieOptions.httpOnly,
+      secure: cookieOptions.secure,
+      sameSite: cookieOptions.sameSite,
+      maxAge: cookieOptions.maxAge,
+      path: cookieOptions.path,
+      tokenLength: token.length,
     });
+
+    // Verify cookie is in response headers
+    const setCookieHeader = response.headers.get("set-cookie");
+    console.log("Verify code - Set-Cookie header:", setCookieHeader ? "PRESENT" : "MISSING");
+    if (setCookieHeader) {
+      console.log(
+        "Verify code - Set-Cookie value (first 100 chars):",
+        setCookieHeader.substring(0, 100)
+      );
+    }
 
     return response;
   } catch (error) {
