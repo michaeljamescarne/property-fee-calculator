@@ -147,6 +147,9 @@ export default function ResultsPanel({
   // Benchmark data state
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
   const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
+  const [macroBenchmarks, setMacroBenchmarks] = useState<Partial<Record<string, number>> | null>(
+    null
+  );
   const toggleSection = (id: string) => {
     setOpenSections((prev) =>
       prev.includes(id) ? prev.filter((sectionId) => sectionId !== id) : [...prev, id]
@@ -154,10 +157,39 @@ export default function ResultsPanel({
   };
   const isSectionOpen = (id: string) => openSections.includes(id);
 
+  // Fetch macro benchmarks for investment comparisons
+  useEffect(() => {
+    const fetchMacroBenchmarks = async () => {
+      try {
+        const response = await fetch("/api/macro-benchmarks");
+        const data = await response.json();
+        if (data.success && data.benchmarks) {
+          const benchmarksMap: Partial<Record<string, number>> = {};
+          data.benchmarks.forEach((b: { metric: string; value_numeric: number }) => {
+            benchmarksMap[b.metric] = b.value_numeric;
+          });
+          setMacroBenchmarks(benchmarksMap);
+        }
+      } catch (error) {
+        console.error("Failed to fetch macro benchmarks:", error);
+      }
+    };
+
+    fetchMacroBenchmarks();
+  }, []);
+
   // Calculate investment analytics
   const investmentAnalytics = useMemo(
-    () => calculateInvestmentAnalytics(investmentInputs, propertyValue, state, propertyType, costs),
-    [investmentInputs, propertyValue, state, propertyType, costs]
+    () =>
+      calculateInvestmentAnalytics(
+        investmentInputs,
+        propertyValue,
+        state,
+        propertyType,
+        costs,
+        macroBenchmarks || undefined
+      ),
+    [investmentInputs, propertyValue, state, propertyType, costs, macroBenchmarks]
   );
 
   // Calculate optimal use case

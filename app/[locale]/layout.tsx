@@ -26,6 +26,12 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(baseUrl),
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      maximumScale: 5,
+      userScalable: true,
+    },
     title: {
       default: isZh
         ? "FIRB计算器 - 澳大利亚房产投资费用计算 | 外国投资审批"

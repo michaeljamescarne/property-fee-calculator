@@ -42,6 +42,10 @@ export interface CostBreakdown {
   }[];
 }
 
+import type { CostMetric } from "@/lib/benchmarks/cost-benchmarks";
+import type { MacroMetric } from "@/lib/benchmarks/macro-benchmarks";
+import { DEFAULT_COST_BENCHMARKS } from "@/lib/benchmarks/cost-benchmarks";
+
 export interface CalculationInput {
   citizenshipStatus: CitizenshipStatus;
   propertyType: PropertyType;
@@ -52,6 +56,8 @@ export interface CalculationInput {
   entityType: EntityType;
   isOrdinarilyResident?: boolean;
   expeditedFIRB?: boolean;
+  costBenchmarks?: Partial<Record<CostMetric, number>>;
+  macroBenchmarks?: Partial<Record<MacroMetric, number>>;
 }
 
 /**
@@ -157,11 +163,18 @@ export function estimateInspectionFees(propertyType: PropertyType): number {
 /**
  * Estimate loan establishment costs
  */
-export function estimateLoanCosts(loanAmount: number): number {
+export function estimateLoanCosts(
+  loanAmount: number,
+  costBenchmarks?: Partial<Record<CostMetric, number>>
+): number {
   // Typical loan costs: application fee + valuation + mortgage insurance (if < 20% deposit)
   const applicationFee = 600;
   const valuationFee = 300;
-  const lendersFees = loanAmount * 0.001; // 0.1% of loan amount
+
+  // Use benchmark if available, otherwise default to 0.1% (10 basis points)
+  const loanCostBps =
+    costBenchmarks?.loan_cost_basis_points ?? DEFAULT_COST_BENCHMARKS.loan_cost_basis_points;
+  const lendersFees = loanAmount * (loanCostBps / 10000); // Convert basis points to decimal
 
   return applicationFee + valuationFee + lendersFees;
 }
@@ -169,59 +182,78 @@ export function estimateLoanCosts(loanAmount: number): number {
 /**
  * Estimate annual council rates
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function estimateCouncilRates(propertyValue: number, _state: AustralianState): number {
-  // Council rates vary significantly by location, this is a rough estimate
-  // Typically 0.2% - 0.5% of property value annually
-  const ratePercentage = 0.003; // 0.3% average
-  return propertyValue * ratePercentage;
+export function estimateCouncilRates(
+  propertyValue: number,
+  state: AustralianState,
+  propertyType: PropertyType,
+  costBenchmarks?: Partial<Record<CostMetric, number>>
+): number {
+  // Use benchmark if available, otherwise default to 0.3%
+  const ratePercent =
+    costBenchmarks?.council_rate_percent ?? DEFAULT_COST_BENCHMARKS.council_rate_percent;
+  return propertyValue * (ratePercent / 100);
 }
 
 /**
  * Estimate annual property insurance
  */
-export function estimateInsurance(propertyValue: number, propertyType: PropertyType): number {
+export function estimateInsurance(
+  propertyValue: number,
+  propertyType: PropertyType,
+  costBenchmarks?: Partial<Record<CostMetric, number>>
+): number {
   if (propertyType === "vacantLand") {
     return 200; // Minimal insurance for vacant land
   }
 
-  // Typical building and contents insurance
+  // Use benchmark if available, otherwise default to 0.2%
+  const insurancePercent =
+    costBenchmarks?.insurance_percent ?? DEFAULT_COST_BENCHMARKS.insurance_percent;
   const baseInsurance = 1200;
-  const valueComponent = propertyValue * 0.002; // 0.2% of value
+  const valueComponent = propertyValue * (insurancePercent / 100);
   return Math.min(baseInsurance + valueComponent, 3000); // Cap at $3,000
 }
 
 /**
  * Estimate annual maintenance costs
  */
-export function estimateMaintenance(propertyValue: number, propertyType: PropertyType): number {
+export function estimateMaintenance(
+  propertyValue: number,
+  propertyType: PropertyType,
+  costBenchmarks?: Partial<Record<CostMetric, number>>
+): number {
   if (propertyType === "vacantLand") {
     return 500; // Lawn mowing, maintenance
   }
 
-  if (propertyType === "newDwelling") {
-    return propertyValue * 0.01; // 1% for new properties
-  }
+  // Use benchmark if available, otherwise use defaults based on property type
+  const maintenancePercent =
+    costBenchmarks?.maintenance_percent ?? (propertyType === "newDwelling" ? 0.5 : 1.0); // 0.5% for new, 1% for established (defaults)
 
-  return propertyValue * 0.015; // 1.5% for established properties
+  return propertyValue * (maintenancePercent / 100);
 }
 
 /**
  * Calculate annual vacancy fee (for foreign owners)
+ * Note: Vacancy fees doubled effective April 1, 2025
+ * This is an estimate - actual fees depend on property value brackets and occupancy status
  */
 export function calculateVacancyFee(
   propertyValue: number,
   citizenshipStatus: CitizenshipStatus
 ): number {
   // Vacancy fee only applies to foreign persons who don't occupy or rent the property
-  // This is a simplified calculation - actual fees vary
   if (citizenshipStatus !== "foreign") {
     return 0;
   }
 
-  // Vacancy fee is typically a percentage of property value
-  // This is indicative only - actual calculation is complex
-  return 0; // Set to 0 by default as it's conditional on occupancy
+  // Vacancy fee is calculated annually based on property value brackets
+  // Simplified estimate: approximately 0.5-1% of property value per year (after doubling in 2025)
+  // Actual calculation uses specific brackets - this is an indicative estimate
+  // Fee is only payable if property is vacant for 183+ days per year
+  // This estimate assumes worst-case scenario (property is vacant)
+  const estimatedRate = 0.0075; // 0.75% of property value (mid-range estimate)
+  return propertyValue * estimatedRate;
 }
 
 /**
@@ -257,7 +289,7 @@ export function calculateTotalUpfrontCosts(input: CalculationInput): CostBreakdo
   );
   const legalFees = estimateLegalFees(propertyValue, state);
   const inspectionFees = estimateInspectionFees(propertyType);
-  const loanCosts = depositPercent < 100 ? estimateLoanCosts(loanAmount) : 0;
+  const loanCosts = depositPercent < 100 ? estimateLoanCosts(loanAmount, input.costBenchmarks) : 0;
 
   const total = firbFee + stampDuty + foreignSurcharge + legalFees + inspectionFees + loanCosts;
 
@@ -277,7 +309,14 @@ export function calculateTotalUpfrontCosts(input: CalculationInput): CostBreakdo
  * Calculate ongoing annual costs
  */
 export function calculateOngoingCosts(input: CalculationInput): CostBreakdown["ongoingCosts"] {
-  const { propertyValue, citizenshipStatus, state, propertyType, isOrdinarilyResident } = input;
+  const {
+    propertyValue,
+    citizenshipStatus,
+    state,
+    propertyType,
+    isOrdinarilyResident,
+    costBenchmarks,
+  } = input;
 
   // Estimate land value as 30% of property value
   const landValue = propertyValue * 0.3;
@@ -288,9 +327,9 @@ export function calculateOngoingCosts(input: CalculationInput): CostBreakdown["o
     citizenshipStatus,
     isOrdinarilyResident
   );
-  const councilRates = estimateCouncilRates(propertyValue, state);
-  const insurance = estimateInsurance(propertyValue, propertyType);
-  const maintenance = estimateMaintenance(propertyValue, propertyType);
+  const councilRates = estimateCouncilRates(propertyValue, state, propertyType, costBenchmarks);
+  const insurance = estimateInsurance(propertyValue, propertyType, costBenchmarks);
+  const maintenance = estimateMaintenance(propertyValue, propertyType, costBenchmarks);
   const vacancyFee = calculateVacancyFee(propertyValue, citizenshipStatus);
 
   const total = annualLandTax + councilRates + insurance + maintenance + vacancyFee;

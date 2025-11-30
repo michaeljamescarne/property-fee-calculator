@@ -61,7 +61,7 @@ export default function FinancialDetailsStep({
       : Math.round((propertyValue * 0.04) / 52);
   const capitalGrowthRate = investmentInputs.capitalGrowthRate || 6;
   const interestRate = investmentInputs.interestRate || 6.5;
-  const councilRates = investmentInputs.annualMaintenanceCost || 0; // This will be updated to use council rates
+  const councilRates = investmentInputs.annualCouncilRates ?? undefined;
 
   return (
     <Card className="border border-gray-200 shadow-sm rounded bg-white">
@@ -481,12 +481,13 @@ export default function FinancialDetailsStep({
             <Input
               id="council-rates"
               type="number"
-              value={councilRates}
-              onChange={(e) =>
+              value={councilRates ?? ""}
+              onChange={(e) => {
+                const value = e.target.value === "" ? undefined : Number(e.target.value);
                 onInvestmentInputsChange({
-                  annualMaintenanceCost: Number(e.target.value) || 0,
-                })
-              }
+                  annualCouncilRates: value !== undefined && !isNaN(value) ? value : undefined,
+                });
+              }}
               className="flex-1"
               placeholder="e.g., 2000"
             />

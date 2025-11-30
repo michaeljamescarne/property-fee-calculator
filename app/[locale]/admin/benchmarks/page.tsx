@@ -1,12 +1,15 @@
 /**
  * Admin Benchmarks Page
- * CRUD interface for managing benchmark data
+ * CRUD interface for managing all benchmark data (market, cost, and macro)
  */
 
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { requireAdmin } from "@/lib/auth/admin";
 import BenchmarksAdminClient from "@/components/admin/BenchmarksAdminClient";
+import CostBenchmarksAdminClient from "@/components/admin/CostBenchmarksAdminClient";
+import MacroBenchmarksAdminClient from "@/components/admin/MacroBenchmarksAdminClient";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default async function AdminBenchmarksPage({
   params,
@@ -28,12 +31,46 @@ export default async function AdminBenchmarksPage({
         </h1>
         <p className="text-lg text-muted-foreground">
           {t("benchmarks.description") ||
-            "Manage rental yield and capital growth benchmarks by state and suburb"}
+            "Manage all benchmark data: market benchmarks, cost benchmarks, and macro benchmarks"}
         </p>
       </div>
 
-      {/* Benchmarks Admin Client Component */}
-      <BenchmarksAdminClient locale={locale} />
+      {/* Tabs for different benchmark types */}
+      <Tabs defaultValue="market" className="w-full">
+        <TabsList className="grid w-full max-w-2xl grid-cols-3">
+          <TabsTrigger value="market">Market Benchmarks</TabsTrigger>
+          <TabsTrigger value="cost">Cost Benchmarks</TabsTrigger>
+          <TabsTrigger value="macro">Macro Benchmarks</TabsTrigger>
+        </TabsList>
+        <TabsContent value="market" className="mt-6">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold">Market Benchmarks</h2>
+            <p className="text-muted-foreground">
+              Manage rental yield and capital growth benchmarks by state and suburb
+            </p>
+            <BenchmarksAdminClient locale={locale} />
+          </div>
+        </TabsContent>
+        <TabsContent value="cost" className="mt-6">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold">Cost Benchmarks</h2>
+            <p className="text-muted-foreground">
+              Manage cost benchmarks by state and property type (council rates, insurance,
+              maintenance, etc.)
+            </p>
+            <CostBenchmarksAdminClient locale={locale} />
+          </div>
+        </TabsContent>
+        <TabsContent value="macro" className="mt-6">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold">Macro Benchmarks</h2>
+            <p className="text-muted-foreground">
+              Manage global benchmarks for investment comparisons, tax rates, and financing rates
+            </p>
+            <MacroBenchmarksAdminClient locale={locale} />
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

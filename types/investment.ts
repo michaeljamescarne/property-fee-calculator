@@ -14,7 +14,11 @@ export interface InvestmentInputs {
   // Ongoing Costs (overrides/supplements existing)
   annualMaintenanceCost?: number; // Optional override
   annualInsurance?: number; // Optional override
+  annualCouncilRates?: number; // Optional override for council rates
   annualStrataFees?: number; // Optional override
+
+  // Property Details
+  buildingAge?: number; // Age of building in years (for depreciation calculations)
 
   // Financing
   loanAmount: number;

@@ -15,7 +15,7 @@ interface GoogleAnalyticsProps {
 }
 
 export default function GoogleAnalytics({ gaId }: GoogleAnalyticsProps) {
-  const measurementId = gaId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const measurementId = gaId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-BQTTCSVY3H";
 
   useEffect(() => {
     if (!measurementId) {
@@ -81,7 +81,8 @@ export function trackEvent(action: string, category: string, label?: string, val
  */
 export function trackPageView(url: string) {
   if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("config", process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "", {
+    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-BQTTCSVY3H";
+    window.gtag("config", measurementId, {
       page_path: url,
     });
   }

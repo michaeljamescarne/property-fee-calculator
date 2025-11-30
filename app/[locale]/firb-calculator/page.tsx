@@ -28,6 +28,11 @@ import type { InvestmentAnalytics, InvestmentInputs } from "@/types/investment";
 import { parseAddress } from "@/lib/utils/address-parser";
 import { generateDefaultInputs } from "@/lib/firb/investment-analytics";
 import type { BenchmarkData } from "@/app/api/benchmarks/route";
+import {
+  generateCalculatorSchema,
+  generateCalculatorHowToSchema,
+  injectStructuredData,
+} from "@/lib/schema/calculator-schema";
 
 export default function FIRBCalculatorPage() {
   const t = useTranslations("FIRBCalculator");
@@ -59,6 +64,12 @@ export default function FIRBCalculatorPage() {
   // Benchmark data state
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
   const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
+  const [costBenchmarks, setCostBenchmarks] = useState<Partial<Record<string, number>> | null>(
+    null
+  );
+  const [macroBenchmarks, setMacroBenchmarks] = useState<Partial<Record<string, number>> | null>(
+    null
+  );
 
   // Results state
   const [eligibility, setEligibility] = useState<EligibilityResult | null>(null);
@@ -171,6 +182,49 @@ export default function FIRBCalculatorPage() {
     fetchBenchmarks();
   }, [formData.state, formData.propertyAddress]);
 
+  // Fetch cost and macro benchmarks when property details are available
+  useEffect(() => {
+    if (formData.state && formData.propertyType) {
+      const fetchCostBenchmarks = async () => {
+        try {
+          const params = new URLSearchParams();
+          if (formData.state) params.append("state", formData.state);
+          if (formData.propertyType) params.append("property_type", formData.propertyType);
+          const response = await fetch(`/api/cost-benchmarks?${params.toString()}`);
+          const data = await response.json();
+          if (data.success && data.benchmarks) {
+            const benchmarksMap: Partial<Record<string, number>> = {};
+            data.benchmarks.forEach((b: { metric: string; value_numeric: number }) => {
+              benchmarksMap[b.metric] = b.value_numeric;
+            });
+            setCostBenchmarks(benchmarksMap);
+          }
+        } catch (error) {
+          console.error("Failed to fetch cost benchmarks:", error);
+        }
+      };
+
+      const fetchMacroBenchmarks = async () => {
+        try {
+          const response = await fetch("/api/macro-benchmarks");
+          const data = await response.json();
+          if (data.success && data.benchmarks) {
+            const benchmarksMap: Partial<Record<string, number>> = {};
+            data.benchmarks.forEach((b: { metric: string; value_numeric: number }) => {
+              benchmarksMap[b.metric] = b.value_numeric;
+            });
+            setMacroBenchmarks(benchmarksMap);
+          }
+        } catch (error) {
+          console.error("Failed to fetch macro benchmarks:", error);
+        }
+      };
+
+      fetchCostBenchmarks();
+      fetchMacroBenchmarks();
+    }
+  }, [formData.state, formData.propertyType]);
+
   // Initialize investment inputs when property details are available
   useEffect(() => {
     if (
@@ -193,7 +247,9 @@ export default function FIRBCalculatorPage() {
               capitalGrowth5yr: benchmarkData.capitalGrowth5yr,
               capitalGrowth10yr: benchmarkData.capitalGrowth10yr,
             }
-          : null
+          : null,
+        costBenchmarks || undefined,
+        macroBenchmarks || undefined
       );
 
       setInvestmentInputs(defaultInputs);
@@ -205,6 +261,8 @@ export default function FIRBCalculatorPage() {
     formData.depositPercent,
     costs,
     benchmarkData,
+    costBenchmarks,
+    macroBenchmarks,
   ]);
 
   // Function to load saved calculation
@@ -634,130 +692,104 @@ export default function FIRBCalculatorPage() {
     setCosts(null);
   };
 
+  // Generate structured data schemas
+  const calculatorSchema = generateCalculatorSchema({
+    locale,
+    title: t("title"),
+    description: t("description"),
+  });
+  const howToSchema = generateCalculatorHowToSchema(locale);
+
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900 leading-tight">
-              {heroTitle}
-            </h1>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {heroSubtitle}
-            </p>
-          </div>
+    <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={injectStructuredData(calculatorSchema)}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={injectStructuredData(howToSchema)}
+      />
+      <main className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-12 md:py-16">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900 leading-tight">
+                {heroTitle}
+              </h1>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                {heroSubtitle}
+              </p>
+            </div>
 
-          {/* Progress Indicator */}
-          {!isResults && (
-            <ProgressIndicator currentStep={currentStep} completedSteps={completedSteps} />
-          )}
-
-          {/* Step Content */}
-          <div className="mt-8">
-            {/* Loading Saved Calculation */}
-            {isLoadingSavedCalculation && (
-              <div className="flex items-center justify-center py-12">
-                <div className="text-center space-y-4">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                  <p className="text-lg text-gray-600">Loading saved calculation...</p>
-                </div>
-              </div>
+            {/* Progress Indicator */}
+            {!isResults && (
+              <ProgressIndicator currentStep={currentStep} completedSteps={completedSteps} />
             )}
 
-            {/* Citizenship Step */}
-            {!isLoadingSavedCalculation && currentStep === "citizenship" && (
-              <div className="space-y-6">
-                <CitizenshipStep
-                  citizenshipStatus={formData.citizenshipStatus || ""}
-                  visaType={formData.visaType}
-                  isOrdinarilyResident={formData.isOrdinarilyResident}
-                  onCitizenshipStatusChange={(status) =>
-                    updateFormData({ citizenshipStatus: status })
-                  }
-                  onVisaTypeChange={(type) => updateFormData({ visaType: type })}
-                  onOrdinarilyResidentChange={(isResident) =>
-                    updateFormData({ isOrdinarilyResident: isResident })
-                  }
-                  errors={validationErrors}
-                />
-
-                {/* Navigation */}
-                <div className="flex justify-end">
-                  <Button size="lg" onClick={handleNext} className="gap-2">
-                    {t("next")}
-                    <ArrowRight className="h-5 w-5" />
-                  </Button>
+            {/* Step Content */}
+            <div className="mt-8">
+              {/* Loading Saved Calculation */}
+              {isLoadingSavedCalculation && (
+                <div className="flex items-center justify-center py-12">
+                  <div className="text-center space-y-4">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+                    <p className="text-lg text-gray-600">Loading saved calculation...</p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Property Details Step */}
-            {!isLoadingSavedCalculation && currentStep === "property" && (
-              <div className="space-y-6">
-                <PropertyDetailsStep
-                  propertyType={formData.propertyType || ""}
-                  propertyValue={formData.propertyValue || 0}
-                  state={formData.state || ""}
-                  propertyAddress={formData.propertyAddress}
-                  isFirstHome={formData.isFirstHome || false}
-                  depositPercent={formData.depositPercent || 20}
-                  entityType={formData.entityType || "individual"}
-                  onPropertyTypeChange={(type) => updateFormData({ propertyType: type })}
-                  onPropertyValueChange={(value) => updateFormData({ propertyValue: value })}
-                  onStateChange={(state) => updateFormData({ state })}
-                  onPropertyAddressChange={(address) =>
-                    updateFormData({ propertyAddress: address })
-                  }
-                  onFirstHomeChange={(isFirstHome) => updateFormData({ isFirstHome })}
-                  onDepositPercentChange={(percent) => updateFormData({ depositPercent: percent })}
-                  onEntityTypeChange={(type) => updateFormData({ entityType: type })}
-                  errors={validationErrors}
-                />
-
-                {/* Navigation */}
-                <div className="flex justify-between">
-                  <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
-                    <ArrowLeft className="h-5 w-5" />
-                    {t("back")}
-                  </Button>
-                  <Button size="lg" onClick={handleNext} className="gap-2">
-                    {t("next")}
-                    <ArrowRight className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Financial Details Step */}
-            {!isLoadingSavedCalculation &&
-              currentStep === "financial" &&
-              formData.propertyValue &&
-              formData.state &&
-              formData.propertyType && (
+              {/* Citizenship Step */}
+              {!isLoadingSavedCalculation && currentStep === "citizenship" && (
                 <div className="space-y-6">
-                  <FinancialDetailsStep
-                    investmentInputs={investmentInputs}
-                    onInvestmentInputsChange={(updates) => {
-                      setInvestmentInputs((prev) => {
-                        const newInputs = { ...prev, ...updates };
-                        // Ensure we're creating a new object reference to trigger re-renders
-                        return newInputs;
-                      });
-                      // Clear validation errors for updated fields
-                      const updatedKeys = Object.keys(updates);
-                      setValidationErrors((prev) => {
-                        const newErrors = { ...prev };
-                        updatedKeys.forEach((key) => {
-                          delete newErrors[key];
-                        });
-                        return newErrors;
-                      });
-                    }}
-                    propertyValue={formData.propertyValue}
+                  <CitizenshipStep
+                    citizenshipStatus={formData.citizenshipStatus || ""}
+                    visaType={formData.visaType}
+                    isOrdinarilyResident={formData.isOrdinarilyResident}
+                    onCitizenshipStatusChange={(status) =>
+                      updateFormData({ citizenshipStatus: status })
+                    }
+                    onVisaTypeChange={(type) => updateFormData({ visaType: type })}
+                    onOrdinarilyResidentChange={(isResident) =>
+                      updateFormData({ isOrdinarilyResident: isResident })
+                    }
+                    errors={validationErrors}
+                  />
+
+                  {/* Navigation */}
+                  <div className="flex justify-end">
+                    <Button size="lg" onClick={handleNext} className="gap-2">
+                      {t("next")}
+                      <ArrowRight className="h-5 w-5" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Property Details Step */}
+              {!isLoadingSavedCalculation && currentStep === "property" && (
+                <div className="space-y-6">
+                  <PropertyDetailsStep
+                    propertyType={formData.propertyType || ""}
+                    propertyValue={formData.propertyValue || 0}
+                    state={formData.state || ""}
+                    propertyAddress={formData.propertyAddress}
+                    isFirstHome={formData.isFirstHome || false}
                     depositPercent={formData.depositPercent || 20}
-                    benchmarkData={benchmarkData}
-                    isLoadingBenchmarks={isLoadingBenchmarks}
+                    entityType={formData.entityType || "individual"}
+                    onPropertyTypeChange={(type) => updateFormData({ propertyType: type })}
+                    onPropertyValueChange={(value) => updateFormData({ propertyValue: value })}
+                    onStateChange={(state) => updateFormData({ state })}
+                    onPropertyAddressChange={(address) =>
+                      updateFormData({ propertyAddress: address })
+                    }
+                    onFirstHomeChange={(isFirstHome) => updateFormData({ isFirstHome })}
+                    onDepositPercentChange={(percent) =>
+                      updateFormData({ depositPercent: percent })
+                    }
+                    onEntityTypeChange={(type) => updateFormData({ entityType: type })}
                     errors={validationErrors}
                   />
 
@@ -775,111 +807,158 @@ export default function FIRBCalculatorPage() {
                 </div>
               )}
 
-            {/* Review Step */}
-            {!isLoadingSavedCalculation && currentStep === "review" && (
-              <div className="space-y-6">
-                <ReviewStep
-                  formData={formData}
-                  investmentInputs={investmentInputs}
-                  onEdit={handleEdit}
-                  onCalculate={handleCalculate}
-                  isCalculating={isCalculating}
-                />
+              {/* Financial Details Step */}
+              {!isLoadingSavedCalculation &&
+                currentStep === "financial" &&
+                formData.propertyValue &&
+                formData.state &&
+                formData.propertyType && (
+                  <div className="space-y-6">
+                    <FinancialDetailsStep
+                      investmentInputs={investmentInputs}
+                      onInvestmentInputsChange={(updates) => {
+                        setInvestmentInputs((prev) => {
+                          const newInputs = { ...prev, ...updates };
+                          // Ensure we're creating a new object reference to trigger re-renders
+                          return newInputs;
+                        });
+                        // Clear validation errors for updated fields
+                        const updatedKeys = Object.keys(updates);
+                        setValidationErrors((prev) => {
+                          const newErrors = { ...prev };
+                          updatedKeys.forEach((key) => {
+                            delete newErrors[key];
+                          });
+                          return newErrors;
+                        });
+                      }}
+                      propertyValue={formData.propertyValue}
+                      depositPercent={formData.depositPercent || 20}
+                      benchmarkData={benchmarkData}
+                      isLoadingBenchmarks={isLoadingBenchmarks}
+                      errors={validationErrors}
+                    />
 
-                {/* Navigation */}
-                <div className="flex justify-start">
-                  <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
-                    <ArrowLeft className="h-5 w-5" />
-                    {t("back")}
-                  </Button>
+                    {/* Navigation */}
+                    <div className="flex justify-between">
+                      <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
+                        <ArrowLeft className="h-5 w-5" />
+                        {t("back")}
+                      </Button>
+                      <Button size="lg" onClick={handleNext} className="gap-2">
+                        {t("next")}
+                        <ArrowRight className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+              {/* Review Step */}
+              {!isLoadingSavedCalculation && currentStep === "review" && (
+                <div className="space-y-6">
+                  <ReviewStep
+                    formData={formData}
+                    investmentInputs={investmentInputs}
+                    onEdit={handleEdit}
+                    onCalculate={handleCalculate}
+                    isCalculating={isCalculating}
+                  />
+
+                  {/* Navigation */}
+                  <div className="flex justify-start">
+                    <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
+                      <ArrowLeft className="h-5 w-5" />
+                      {t("back")}
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Results Step */}
+              {!isLoadingSavedCalculation &&
+                currentStep === "results" &&
+                eligibility &&
+                costs &&
+                formData.propertyValue &&
+                formData.propertyType &&
+                formData.state && (
+                  <ResultsPanel
+                    eligibility={eligibility}
+                    costs={costs}
+                    onDownloadPDF={handleDownloadPDF}
+                    onEmailResults={handleEmailResults}
+                    onEditCalculation={handleEditCalculation}
+                    onEditInvestmentInputs={handleEditInvestmentInputs}
+                    onStartAgain={handleStartAgain}
+                    propertyValue={formData.propertyValue}
+                    propertyType={formData.propertyType}
+                    state={formData.state}
+                    depositPercent={formData.depositPercent || 20}
+                    formData={formData as FIRBCalculatorFormData}
+                    investmentInputs={investmentInputs}
+                  />
+                )}
+            </div>
+
+            {/* Email Modal */}
+            {eligibility && costs && (
+              <EmailResultsModal
+                isOpen={isEmailModalOpen}
+                onClose={() => setIsEmailModalOpen(false)}
+                eligibility={eligibility}
+                costs={costs}
+                formData={formData as FIRBCalculatorFormData}
+                locale={locale}
+                pdfTranslations={pdfTranslations}
+              />
             )}
 
-            {/* Results Step */}
-            {!isLoadingSavedCalculation &&
-              currentStep === "results" &&
-              eligibility &&
-              costs &&
-              formData.propertyValue &&
-              formData.propertyType &&
-              formData.state && (
-                <ResultsPanel
-                  eligibility={eligibility}
-                  costs={costs}
-                  onDownloadPDF={handleDownloadPDF}
-                  onEmailResults={handleEmailResults}
-                  onEditCalculation={handleEditCalculation}
-                  onEditInvestmentInputs={handleEditInvestmentInputs}
-                  onStartAgain={handleStartAgain}
-                  propertyValue={formData.propertyValue}
-                  propertyType={formData.propertyType}
-                  state={formData.state}
-                  depositPercent={formData.depositPercent || 20}
-                  formData={formData as FIRBCalculatorFormData}
-                  investmentInputs={investmentInputs}
-                />
-              )}
+            {/* Purpose Statement - At bottom of page */}
+            {!isResults && (
+              <div className="mt-16 p-6 bg-blue-50 border border-blue-200 rounded">
+                <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                  {locale === "zh" ? "什么是计算器？" : "What is the Calculator?"}
+                </h2>
+                <p className="text-gray-600 mb-3">
+                  {locale === "zh"
+                    ? "计算器是一个工具，帮助投资者计算在澳大利亚购买房产所需的所有费用。这包括FIRB申请费、印花税、土地税附加费、律师费和其他相关成本。"
+                    : "The Calculator is a tool that helps investors calculate all costs required to purchase property in Australia. This includes FIRB application fees, stamp duty, land tax surcharge, legal fees, and other related costs."}
+                </p>
+                <p className="text-gray-600 mb-3">
+                  {locale === "zh"
+                    ? "我们的计算器会根据您的公民身份、房产类型、所在州和房产价值，为您提供详细的费用明细和投资分析。"
+                    : "Our calculator provides detailed cost breakdowns and investment analysis based on your citizenship status, property type, state, and property value."}
+                </p>
+                <p className="text-sm text-gray-600">
+                  {locale === "zh" ? (
+                    <>
+                      需要了解术语定义？查看我们的{" "}
+                      <Link
+                        href={`/${locale}/faq`}
+                        className="text-blue-600 hover:text-blue-800 underline font-medium"
+                      >
+                        常见问题页面
+                      </Link>
+                      ，其中包含完整的术语表。
+                    </>
+                  ) : (
+                    <>
+                      Need help with terminology? Check our{" "}
+                      <Link
+                        href={`/${locale}/faq`}
+                        className="text-blue-600 hover:text-blue-800 underline font-medium"
+                      >
+                        FAQ page
+                      </Link>
+                      , which includes a complete glossary of terms.
+                    </>
+                  )}
+                </p>
+              </div>
+            )}
           </div>
-
-          {/* Email Modal */}
-          {eligibility && costs && (
-            <EmailResultsModal
-              isOpen={isEmailModalOpen}
-              onClose={() => setIsEmailModalOpen(false)}
-              eligibility={eligibility}
-              costs={costs}
-              formData={formData as FIRBCalculatorFormData}
-              locale={locale}
-              pdfTranslations={pdfTranslations}
-            />
-          )}
-
-          {/* Purpose Statement - At bottom of page */}
-          {!isResults && (
-            <div className="mt-16 p-6 bg-blue-50 border border-blue-200 rounded">
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">
-                {locale === "zh" ? "什么是计算器？" : "What is the Calculator?"}
-              </h2>
-              <p className="text-gray-600 mb-3">
-                {locale === "zh"
-                  ? "计算器是一个工具，帮助投资者计算在澳大利亚购买房产所需的所有费用。这包括FIRB申请费、印花税、土地税附加费、律师费和其他相关成本。"
-                  : "The Calculator is a tool that helps investors calculate all costs required to purchase property in Australia. This includes FIRB application fees, stamp duty, land tax surcharge, legal fees, and other related costs."}
-              </p>
-              <p className="text-gray-600 mb-3">
-                {locale === "zh"
-                  ? "我们的计算器会根据您的公民身份、房产类型、所在州和房产价值，为您提供详细的费用明细和投资分析。"
-                  : "Our calculator provides detailed cost breakdowns and investment analysis based on your citizenship status, property type, state, and property value."}
-              </p>
-              <p className="text-sm text-gray-600">
-                {locale === "zh" ? (
-                  <>
-                    需要了解术语定义？查看我们的{" "}
-                    <Link
-                      href={`/${locale}/faq`}
-                      className="text-blue-600 hover:text-blue-800 underline font-medium"
-                    >
-                      常见问题页面
-                    </Link>
-                    ，其中包含完整的术语表。
-                  </>
-                ) : (
-                  <>
-                    Need help with terminology? Check our{" "}
-                    <Link
-                      href={`/${locale}/faq`}
-                      className="text-blue-600 hover:text-blue-800 underline font-medium"
-                    >
-                      FAQ page
-                    </Link>
-                    , which includes a complete glossary of terms.
-                  </>
-                )}
-              </p>
-            </div>
-          )}
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
