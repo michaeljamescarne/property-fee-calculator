@@ -72,15 +72,37 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
 
   // If no profile or error, redirect
   if (error || !profile) {
-    console.error("Admin check failed - no profile:", error);
+    console.error("Admin check failed - no profile:", {
+      error: error?.message,
+      code: error?.code,
+      details: error?.details,
+      hint: error?.hint,
+      userId: session.user.id,
+      userEmail: session.user.email,
+    });
     redirect(`/${locale}/dashboard`);
   }
 
-  const profileData = profile as { id: string; email: string; role: string };
+  const profileData = profile as { id: string; email: string; role: string | null };
+
+  // Check if role column exists and is set
+  if (!profileData.role) {
+    console.error("Admin check failed - role column is null or missing:", {
+      userId: session.user.id,
+      userEmail: session.user.email,
+      profileData,
+    });
+    redirect(`/${locale}/dashboard`);
+  }
 
   // Check if admin
   if (profileData.role !== "admin") {
-    console.log("Admin check failed - user is not admin. Role:", profileData.role);
+    console.log("Admin check failed - user is not admin:", {
+      userId: session.user.id,
+      userEmail: session.user.email,
+      role: profileData.role,
+      expectedRole: "admin",
+    });
     redirect(`/${locale}/dashboard`);
   }
 
