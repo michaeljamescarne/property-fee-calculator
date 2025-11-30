@@ -157,42 +157,54 @@ export async function POST(request: NextRequest) {
     const token = await createSession(profile);
     console.log("Verify code - Session token created, length:", token.length);
 
-    // Create response and set cookie in response headers
-    const response = NextResponse.json({
-      success: true,
-      message: "Successfully authenticated",
-      user: profile,
-    } as VerifyCodeResponse);
+    // Build cookie string manually to ensure it's set correctly
+    const isProduction = process.env.NODE_ENV === "production";
+    const maxAge = 30 * 24 * 60 * 60; // 30 days
 
-    // Set cookie directly on response headers
-    const cookieOptions = {
+    // Build Set-Cookie header manually
+    const cookieParts = [
+      `firb-session=${token}`,
+      `Path=/`,
+      `Max-Age=${maxAge}`,
+      `SameSite=Lax`,
+      isProduction ? `Secure` : ``,
+      `HttpOnly`,
+    ].filter(Boolean); // Remove empty strings
+
+    const setCookieHeader = cookieParts.join("; ");
+    console.log(
+      "Verify code - Set-Cookie header built:",
+      setCookieHeader.substring(0, 100) + "..."
+    );
+
+    // Create response with cookie in headers
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: "Successfully authenticated",
+        user: profile,
+      } as VerifyCodeResponse,
+      {
+        headers: {
+          "Set-Cookie": setCookieHeader,
+        },
+      }
+    );
+
+    // Also set using cookies API as backup
+    response.cookies.set("firb-session", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax" as const,
-      maxAge: 30 * 24 * 60 * 60, // 30 days
+      secure: isProduction,
+      sameSite: "lax",
+      maxAge: maxAge,
       path: "/",
-    };
-
-    response.cookies.set("firb-session", token, cookieOptions);
-
-    // Log cookie setting for debugging
-    console.log("Verify code - Cookie set with options:", {
-      httpOnly: cookieOptions.httpOnly,
-      secure: cookieOptions.secure,
-      sameSite: cookieOptions.sameSite,
-      maxAge: cookieOptions.maxAge,
-      path: cookieOptions.path,
-      tokenLength: token.length,
     });
 
-    // Verify cookie is in response headers
-    const setCookieHeader = response.headers.get("set-cookie");
-    console.log("Verify code - Set-Cookie header:", setCookieHeader ? "PRESENT" : "MISSING");
-    if (setCookieHeader) {
-      console.log(
-        "Verify code - Set-Cookie value (first 100 chars):",
-        setCookieHeader.substring(0, 100)
-      );
+    // Verify both methods
+    const headerCookie = response.headers.get("set-cookie");
+    console.log("Verify code - Set-Cookie in headers:", headerCookie ? "PRESENT" : "MISSING");
+    if (headerCookie) {
+      console.log("Verify code - Header value (first 100 chars):", headerCookie.substring(0, 100));
     }
 
     return response;
