@@ -19,8 +19,13 @@ export default async function AdminBenchmarksPage({
   const { locale } = await params;
   const t = await getTranslations("Admin");
 
-  // Require admin access
-  await requireAdmin(locale);
+  // Require admin access - with detailed error logging
+  try {
+    await requireAdmin(locale);
+  } catch (error) {
+    console.error("Admin access check failed:", error);
+    throw error;
+  }
 
   return (
     <div className="space-y-8">
