@@ -30,7 +30,7 @@ export default function MagicCodeEmail({ code }: MagicCodeEmailProps) {
 
           <Text style={text}>Hello!</Text>
 
-          <Text style={text}>Use the code below to log in to your FIRB Calculator account:</Text>
+          <Text style={text}>Use the code below to log in to your Property Costs account:</Text>
 
           <Section style={codeBox}>
             <Text style={codeText}>{code}</Text>
@@ -46,7 +46,7 @@ export default function MagicCodeEmail({ code }: MagicCodeEmailProps) {
 
           <Section style={footer}>
             <Text style={footerText}>
-              This is an automated email from FIRB Calculator. Please do not reply.
+              This is an automated email from Property Costs. Please do not reply.
             </Text>
             <Text style={footerText}>
               &copy; {new Date().getFullYear()} Australian Property Investment. All rights reserved.

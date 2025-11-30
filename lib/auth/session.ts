@@ -67,7 +67,6 @@ export async function setSessionCookie(token: string): Promise<void> {
     sameSite: "lax",
     maxAge: SESSION_DURATION,
     path: "/",
-    domain: process.env.NODE_ENV === "production" ? ".propertycosts.com.au" : undefined,
   });
 }
 

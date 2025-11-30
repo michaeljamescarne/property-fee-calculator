@@ -180,7 +180,7 @@ export default function CalculationCard({
       </CardContent>
 
       <CardFooter className="pt-0">
-        <Link href={`/${locale}/firb-calculator?load=${calculation.id}`} className="w-full">
+        <Link href={`/${locale}/calculator?load=${calculation.id}`} className="w-full">
           <Button variant="outline" className="w-full" size="sm">
             <ExternalLink className="mr-2 h-4 w-4" />
             View Details

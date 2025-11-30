@@ -16,7 +16,7 @@ export interface CalculatorSchemaOptions {
  */
 export function generateCalculatorSchema(options: CalculatorSchemaOptions) {
   const { locale } = options;
-  const url = `${BASE_URL}/${locale}/firb-calculator`;
+  const url = `${BASE_URL}/${locale}/calculator`;
 
   const title =
     options.title ||
@@ -104,7 +104,7 @@ export function generateCalculatorSchema(options: CalculatorSchemaOptions) {
  * Generate HowTo schema for calculator usage (alternative/complementary schema)
  */
 export function generateCalculatorHowToSchema(locale: string) {
-  const url = `${BASE_URL}/${locale}/firb-calculator`;
+  const url = `${BASE_URL}/${locale}/calculator`;
 
   return {
     "@context": "https://schema.org",

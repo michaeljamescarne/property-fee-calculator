@@ -19,7 +19,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
   const session = await getSession();
 
   if (!session) {
-    redirect(`/${locale}/firb-calculator`);
+    redirect(`/${locale}/calculator`);
   }
 
   return (
@@ -33,7 +33,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
           </p>
         </div>
 
-        <Link href={`/${locale}/firb-calculator`}>
+        <Link href={`/${locale}/calculator`}>
           <Button size="lg">
             <Plus className="mr-2 h-5 w-5" />
             {t("newCalculation")}

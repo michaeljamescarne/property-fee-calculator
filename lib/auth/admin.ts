@@ -58,7 +58,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
 
   // First check if user is logged in
   if (!session) {
-    redirect(`/${locale}/firb-calculator?login=true`);
+    redirect(`/${locale}/calculator?login=true`);
   }
 
   const supabase = await createClient();

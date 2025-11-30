@@ -16,9 +16,9 @@ export async function generateMetadata({
   const { locale } = await params;
   const isZh = locale === "zh";
   const baseUrl = "https://propertycosts.com.au";
-  const url = getLocaleUrl(locale, "firb-calculator");
-  const enUrl = getLocaleUrl("en", "firb-calculator");
-  const zhUrl = getLocaleUrl("zh", "firb-calculator");
+  const url = getLocaleUrl(locale, "calculator");
+  const enUrl = getLocaleUrl("en", "calculator");
+  const zhUrl = getLocaleUrl("zh", "calculator");
 
   const title = isZh
     ? "FIRB计算器 - 免费在线计算澳大利亚房产投资费用 | 印花税、FIRB费用计算"

@@ -68,7 +68,7 @@ export default function SampleReportModal({ isOpen, onClose }: SampleReportModal
               <Download className="w-4 h-4 mr-2" />
               Download Sample PDF
             </Button>
-            <Link href={`/${locale}/firb-calculator`} className="flex-1">
+            <Link href={`/${locale}/calculator`} className="flex-1">
               <Button variant="outline" className="w-full" size="lg" onClick={onClose}>
                 <ArrowRight className="w-4 h-4 mr-2" />
                 Start My Calculation

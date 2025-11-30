@@ -107,7 +107,7 @@ export default function BlogPageClient({ posts, locale }: BlogPageClientProps) {
                 <strong className="font-semibold">Need calculations?</strong> Use our FIRB
                 Calculator to get instant cost estimates for your property purchase.{" "}
                 <Link
-                  href={`/${locale}/firb-calculator`}
+                  href={`/${locale}/calculator`}
                   className="text-blue-600 hover:underline font-medium"
                 >
                   Calculate Now →
@@ -180,7 +180,7 @@ export default function BlogPageClient({ posts, locale }: BlogPageClientProps) {
                 asChild
                 className="rounded px-8 py-3 text-base font-medium"
               >
-                <Link href={`/${locale}/firb-calculator`}>
+                <Link href={`/${locale}/calculator`}>
                   <Calculator className="h-5 w-5 mr-2" />
                   Calculate Fees Now
                   <ArrowRight className="h-5 w-5 ml-2" />

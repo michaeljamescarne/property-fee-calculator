@@ -144,7 +144,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         height: 512,
       },
       ctaLabel: t("sections.costCalculator.cta"),
-      ctaHref: `/${locale}/firb-calculator`,
+      ctaHref: `/${locale}/calculator`,
     },
     {
       id: "investment-analysis",
@@ -163,7 +163,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         height: 512,
       },
       ctaLabel: t("sections.investmentAnalysis.cta"),
-      ctaHref: `/${locale}/firb-calculator`,
+      ctaHref: `/${locale}/calculator`,
     },
     {
       id: "firb-eligibility",
@@ -201,7 +201,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         height: 512,
       },
       ctaLabel: t("sections.detailedReports.cta"),
-      ctaHref: `/${locale}/firb-calculator`,
+      ctaHref: `/${locale}/calculator`,
     },
   ];
 
@@ -218,7 +218,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild className="rounded">
-              <Link href={`/${locale}/firb-calculator`}>
+              <Link href={`/${locale}/calculator`}>
                 <Calculator className="mr-2 h-5 w-5" />
                 Start Calculator
               </Link>
@@ -372,7 +372,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             Get started with our comprehensive calculator and receive detailed analysis in minutes.
           </p>
           <Button size="lg" asChild className="rounded">
-            <Link href={`/${locale}/firb-calculator`}>Start Your Analysis</Link>
+            <Link href={`/${locale}/calculator`}>Start Your Analysis</Link>
           </Button>
         </div>
       </section>

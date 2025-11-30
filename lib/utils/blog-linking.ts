@@ -53,7 +53,7 @@ export function findRelatedBlogPosts(
  * Get calculator link for a given locale
  */
 export function getCalculatorLink(locale: string): string {
-  return `/${locale}/firb-calculator`;
+  return `/${locale}/calculator`;
 }
 
 /**

@@ -40,7 +40,7 @@ export default function Navigation() {
 
   const navLinks = [
     { href: "", label: t("home") },
-    { href: "/firb-calculator", label: t("calculator") },
+    { href: "/calculator", label: t("calculator") },
     { href: "/blog", label: t("blog") },
     { href: "/faq", label: t("faq") },
   ];

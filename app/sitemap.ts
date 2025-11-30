@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Static routes with priorities
   const staticRoutes = [
     { path: "", priority: 1.0, changeFrequency: "daily" as const },
-    { path: "/firb-calculator", priority: 0.9, changeFrequency: "weekly" as const },
+    { path: "/calculator", priority: 0.9, changeFrequency: "weekly" as const },
     { path: "/blog", priority: 0.8, changeFrequency: "daily" as const },
     { path: "/faq", priority: 0.8, changeFrequency: "weekly" as const },
     { path: "/dashboard", priority: 0.5, changeFrequency: "weekly" as const },

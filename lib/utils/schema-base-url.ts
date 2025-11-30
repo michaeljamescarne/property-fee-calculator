@@ -7,7 +7,7 @@ export const BASE_URL = "https://propertycosts.com.au";
 
 /**
  * Get the full URL for a given path
- * @param path - Path relative to base URL (e.g., "/en/firb-calculator")
+ * @param path - Path relative to base URL (e.g., "/en/calculator")
  * @returns Full URL
  */
 export function getSchemaUrl(path: string): string {
@@ -19,7 +19,7 @@ export function getSchemaUrl(path: string): string {
 /**
  * Get locale-specific URL
  * @param locale - Locale code (e.g., "en", "zh")
- * @param path - Path relative to locale (e.g., "firb-calculator")
+ * @param path - Path relative to locale (e.g., "calculator")
  * @returns Full URL
  */
 export function getLocaleUrl(locale: string, path: string = ""): string {

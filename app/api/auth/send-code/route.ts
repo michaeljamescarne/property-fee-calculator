@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: EMAIL_CONFIG.from,
         to: [email],
-        subject: "Your Login Code - FIRB Calculator",
+        subject: "Your Login Code - Property Costs",
         html: `
           <!DOCTYPE html>
           <html>
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
               <div class="container">
                 <h2>Your Login Code</h2>
                 <p>Hello!</p>
-                <p>Use the code below to log in to your FIRB Calculator account:</p>
+                <p>Use the code below to log in to your Property Costs account:</p>
                 
                 <div class="code-box">
                   <div class="code">${code}</div>
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
                 <p>If you didn't request this code, you can safely ignore this email.</p>
                 
                 <div class="footer">
-                  <p>This is an automated email from FIRB Calculator. Please do not reply.</p>
+                  <p>This is an automated email from Property Costs. Please do not reply.</p>
                   <p>&copy; ${new Date().getFullYear()} Australian Property Investment. All rights reserved.</p>
                 </div>
               </div>

@@ -29,7 +29,7 @@ export default function EmptyState({ locale }: EmptyStateProps) {
 
         <p className="text-muted-foreground max-w-md mb-8">{t("description")}</p>
 
-        <Link href={`/${locale}/firb-calculator`}>
+        <Link href={`/${locale}/calculator`}>
           <Button size="lg">
             <Calculator className="mr-2 h-5 w-5" />
             {t("cta")}
