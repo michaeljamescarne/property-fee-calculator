@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import CalculationList from "@/components/dashboard/CalculationList";
+import DashboardClient from "@/components/dashboard/DashboardClient";
 
 export default async function DashboardPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -24,6 +25,9 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
 
   return (
     <div className="space-y-8">
+      {/* Client-side session refresh */}
+      <DashboardClient />
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>

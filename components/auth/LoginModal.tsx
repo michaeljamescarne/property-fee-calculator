@@ -126,11 +126,11 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         setTimeout(() => {
           onClose();
           onSuccess?.();
-          // Redirect to dashboard with a small delay to ensure cookie is set
+          // Redirect to dashboard with a delay to ensure cookie is set and propagated
           // Use window.location.href for a full page load to ensure server reads the cookie
           setTimeout(() => {
             window.location.href = "/en/dashboard";
-          }, 100);
+          }, 500);
         }, 1500);
       }
     } catch {

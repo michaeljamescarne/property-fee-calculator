@@ -155,15 +155,24 @@ export async function POST(request: NextRequest) {
 
     // Create session
     const token = await createSession(profile);
-    await setSessionCookie(token);
 
-    const response: VerifyCodeResponse = {
+    // Create response and set cookie in response headers
+    const response = NextResponse.json({
       success: true,
       message: "Successfully authenticated",
       user: profile,
-    };
+    } as VerifyCodeResponse);
 
-    return NextResponse.json(response);
+    // Set cookie directly on response headers
+    response.cookies.set("firb-session", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60, // 30 days
+      path: "/",
+    });
+
+    return response;
   } catch (error) {
     console.error("Verify code error:", error);
     const errorResponse: AuthErrorResponse = {

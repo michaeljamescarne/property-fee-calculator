@@ -31,7 +31,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkSession = async () => {
     try {
-      const response = await fetch("/api/auth/session");
+      const response = await fetch("/api/auth/session", {
+        credentials: "include", // Ensure cookies are sent
+        cache: "no-store", // Don't cache the session check
+      });
       const data = await response.json();
 
       if (data.authenticated && data.user) {
