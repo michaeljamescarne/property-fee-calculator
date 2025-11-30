@@ -47,7 +47,8 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    console.log("Session API - Returning authenticated user:", profile.email);
+    const profileData = profile as { id: string; email: string; [key: string]: unknown };
+    console.log("Session API - Returning authenticated user:", profileData.email);
     return NextResponse.json({
       authenticated: true,
       user: profile,
