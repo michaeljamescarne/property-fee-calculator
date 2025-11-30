@@ -56,7 +56,7 @@ export async function getMacroBenchmark(
       return null;
     }
 
-    return data.value_numeric;
+    return (data as { value_numeric: number }).value_numeric;
   } catch (error) {
     console.error(`Failed to fetch macro benchmark for ${metric}:`, error);
     return null;
