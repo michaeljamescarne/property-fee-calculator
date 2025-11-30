@@ -12,7 +12,7 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || "your-secret-key-change-this-in-production"
 );
 
-const COOKIE_NAME = "firb-session";
+export const COOKIE_NAME = "firb-session";
 const SESSION_DURATION = 30 * 24 * 60 * 60; // 30 days in seconds
 
 /**

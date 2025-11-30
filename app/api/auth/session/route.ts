@@ -5,15 +5,23 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/session";
+import { getSessionFromRequest } from "@/lib/auth/session-helpers";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
+    // Try getting session from request first (for API routes)
+    let session = await getSessionFromRequest(request);
+
+    // Fallback to standard getSession
+    if (!session) {
+      session = await getSession();
+    }
 
     // Debug logging
     const cookieHeader = request.headers.get("cookie");
     console.log("Session API - Cookie header present:", !!cookieHeader);
+    console.log("Session API - Cookie header value:", cookieHeader?.substring(0, 50));
     console.log("Session API - Session found:", !!session);
 
     if (!session) {

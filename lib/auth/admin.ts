@@ -6,6 +6,7 @@
 import { getSession } from "./session";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export interface AdminUser {
   id: string;
