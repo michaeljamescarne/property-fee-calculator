@@ -24,29 +24,32 @@ export interface BlogPost {
  * Converts markdown table syntax to styled HTML table
  */
 export function convertMarkdownTableToHTML(markdownTable: string): string {
-  const lines = markdownTable.trim().split("\n");
+  const lines = markdownTable
+    .trim()
+    .split("\n")
+    .filter((line) => line.trim());
   if (lines.length < 3) return markdownTable; // Not a valid table
 
-  // Extract header row
-  const headerLine = lines[1];
+  // Extract header row (first line)
+  const headerLine = lines[0];
   const headers = headerLine
     .split("|")
     .map((h) => h.trim())
-    .filter((h) => h);
+    .filter((h) => h && !h.match(/^-+$/)); // Filter out separator-only cells
 
-  // Extract separator row (skip it)
-  // const separatorLine = lines[2];
+  // Find separator row (usually line 1, contains dashes)
+  // Skip it - we don't need it
 
-  // Extract data rows
+  // Extract data rows (start from line 2, after header and separator)
   const dataRows = lines
-    .slice(3)
+    .slice(2) // Skip header (line 0) and separator (line 1)
     .map((line) => {
       return line
         .split("|")
         .map((cell) => cell.trim())
-        .filter((cell) => cell);
+        .filter((cell) => cell && !cell.match(/^-+$/)); // Filter out separator-only cells
     })
-    .filter((row) => row.length > 0);
+    .filter((row) => row.length > 0 && row.length === headers.length); // Ensure row has same number of cells as headers
 
   // Build HTML table
   let htmlTable = '<table class="w-full border-collapse border border-gray-300 mb-6">\n';
