@@ -21,6 +21,37 @@ export interface BlogPost {
 }
 
 /**
+ * Processes inline markdown in text (bold, italic, links)
+ * Used for processing markdown inside table cells
+ */
+function processInlineMarkdown(text: string): string {
+  if (typeof window !== "undefined") {
+    return text; // Client-side, return as-is
+  }
+
+  try {
+    // Process bold (**text** or __text__)
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold">$1</strong>');
+    text = text.replace(/__(.+?)__/g, '<strong class="font-bold">$1</strong>');
+
+    // Process italic (*text* or _text_)
+    text = text.replace(/\*(.+?)\*/g, '<em class="italic">$1</em>');
+    text = text.replace(/_(.+?)_/g, '<em class="italic">$1</em>');
+
+    // Process links [text](url)
+    text = text.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" class="text-blue-600 hover:text-blue-800 underline">$1</a>'
+    );
+
+    return text;
+  } catch (error) {
+    console.error("Error processing inline markdown:", error);
+    return text; // Return original on error
+  }
+}
+
+/**
  * Converts markdown table syntax to styled HTML table
  */
 export function convertMarkdownTableToHTML(markdownTable: string): string {
@@ -65,12 +96,9 @@ export function convertMarkdownTableToHTML(markdownTable: string): string {
     htmlTable += "  <thead>\n";
     htmlTable += '    <tr class="bg-gray-50">\n';
     headers.forEach((header) => {
-      // Escape HTML in header text to prevent XSS
-      const escapedHeader = header
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-      htmlTable += `      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">${escapedHeader}</th>\n`;
+      // Process inline markdown (bold, italic, links)
+      const processedHeader = processInlineMarkdown(header);
+      htmlTable += `      <th class="border border-gray-300 px-4 py-3 text-left font-semibold">${processedHeader}</th>\n`;
     });
     htmlTable += "    </tr>\n";
     htmlTable += "  </thead>\n";
@@ -92,12 +120,9 @@ export function convertMarkdownTableToHTML(markdownTable: string): string {
 
       htmlTable += '    <tr class="hover:bg-gray-50">\n';
       processedRow.forEach((cell) => {
-        // Escape HTML in cell text to prevent XSS
-        const escapedCell = String(cell || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
-        htmlTable += `      <td class="border border-gray-300 px-4 py-3">${escapedCell}</td>\n`;
+        // Process inline markdown (bold, italic, links)
+        const processedCell = processInlineMarkdown(String(cell || ""));
+        htmlTable += `      <td class="border border-gray-300 px-4 py-3">${processedCell}</td>\n`;
       });
       htmlTable += "    </tr>\n";
     });
