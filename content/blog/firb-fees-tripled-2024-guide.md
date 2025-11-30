@@ -58,14 +58,17 @@ Following the July 2024 indexation, these fees increased further. As of the 2024
 
 Good news: If you're buying a new dwelling or vacant residential land, the fees remain at their pre-April 2024 levels:
 
-| Property Value   | Application Fee      |
-| ---------------- | -------------------- |
-| Up to $1 million | $14,100              |
-| $1M - $1.999M    | $28,200              |
-| $2M - $2.999M    | $56,400              |
-| $3M - $3.999M    | $84,600              |
-| $5M - $5.999M    | $141,000             |
-| $10M+            | Progressively higher |
+| Property Value   | Application Fee |
+| ---------------- | --------------- |
+| Up to $1 million | $14,100         |
+| $1M - $1.999M    | $28,200         |
+| $2M - $2.999M    | $56,400         |
+| $3M - $3.999M    | $84,600         |
+| $4M - $4.999M    | $112,800        |
+| $5M - $5.999M    | $141,000        |
+| $10M - $10.999M  | $282,000        |
+| $20M - $24.999M  | $565,500        |
+| $40M+            | $1,119,100+     |
 
 This fee structure is designed to incentivize foreign investment in new construction rather than competing with Australians for existing homes.
 
@@ -92,6 +95,7 @@ Previously, the vacancy fee equaled your original FIRB application fee. Now, it'
 | ---------------- | --------------- | ------------------- | -------------- |
 | Up to $1 million | $14,100/year    | **$84,600/year**    | 600%           |
 | $1M - $1.999M    | $28,200/year    | **$169,200/year**   | 600%           |
+| $2M - $2.999M    | $56,400/year    | **$338,400/year**   | 600%           |
 | $5M - $5.999M    | $141,000/year   | **$846,000/year**   | 600%           |
 | $40M+            | $1,119,100/year | **$6,714,600/year** | 600%           |
 

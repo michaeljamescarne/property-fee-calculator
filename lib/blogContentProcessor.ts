@@ -175,6 +175,29 @@ export function processMarkdownContent(content: string): string {
   }
 
   try {
+    // Pre-process: Convert markdown tables to HTML before remark processes them
+    // This prevents tables from being wrapped in <p> tags
+    let preprocessedContent = content;
+    const tablePattern = /^(\|.*\|[\s\S]*?)(?=\n\n|\n[^|]|$)/gm;
+    preprocessedContent = preprocessedContent.replace(tablePattern, (match) => {
+      const lines = match
+        .trim()
+        .split("\n")
+        .filter((line) => line.trim());
+      // Check if it's a valid markdown table: has header, separator with dashes, and at least one data row
+      if (lines.length >= 3) {
+        const hasHeader = lines[0].includes("|");
+        const hasSeparator =
+          lines[1].includes("|") && (lines[1].includes("-") || lines[1].includes(":"));
+        const hasDataRows = lines.slice(2).some((line) => line.includes("|"));
+
+        if (hasHeader && hasSeparator && hasDataRows) {
+          return "\n\n" + convertMarkdownTableToHTML(match) + "\n\n";
+        }
+      }
+      return match;
+    });
+
     // Dynamic import to avoid bundling issues (server-side only)
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { remark } = require("remark");
@@ -184,7 +207,7 @@ export function processMarkdownContent(content: string): string {
     // Process markdown with remark (synchronously)
     // remarkHtml.default is the plugin function
     const processor = remark().use(remarkHtml.default, { sanitize: false });
-    const processed = processor.processSync(content);
+    const processed = processor.processSync(preprocessedContent);
 
     let htmlContent = String(processed);
 
@@ -251,6 +274,44 @@ export function processMarkdownContent(content: string): string {
     htmlContent = htmlContent.replace(/<em>/g, '<em class="italic">');
     htmlContent = htmlContent.replace(/<i>/g, '<i class="italic">');
 
+    // Convert markdown tables that were wrapped in <p> tags back to proper HTML tables
+    // Pattern: <p> with markdown table syntax inside
+    const wrappedTablePattern = /<p[^>]*>\s*(\|.*\|[\s\S]*?)\s*<\/p>/g;
+    htmlContent = htmlContent.replace(wrappedTablePattern, (match, tableContent) => {
+      const lines = tableContent.trim().split("\n");
+      // Check if it's a valid markdown table (has header, separator, and data rows)
+      if (
+        lines.length >= 3 &&
+        lines[0].includes("|") &&
+        lines[1].includes("|") &&
+        lines[1].includes("-")
+      ) {
+        return convertMarkdownTableToHTML(tableContent);
+      }
+      return match; // Return original if not a valid table
+    });
+
+    // Also handle tables that might be in multiple <p> tags
+    const multiParagraphTablePattern = /(<p[^>]*>\s*\|[^<]*\|[^<]*<\/p>\s*)+/g;
+    htmlContent = htmlContent.replace(multiParagraphTablePattern, (match) => {
+      // Extract all table rows from the <p> tags
+      const rowMatches = match.match(/<p[^>]*>\s*(\|[^<]*\|)\s*<\/p>/g);
+      if (rowMatches && rowMatches.length >= 3) {
+        const tableRows = rowMatches
+          .map((pTag) => {
+            const rowMatch = pTag.match(/<p[^>]*>\s*(\|[^<]*\|)\s*<\/p>/);
+            return rowMatch ? rowMatch[1].trim() : "";
+          })
+          .filter((row) => row);
+
+        if (tableRows.length >= 3) {
+          const tableContent = tableRows.join("\n");
+          return convertMarkdownTableToHTML(tableContent);
+        }
+      }
+      return match;
+    });
+
     // Ensure tables have proper styling (if they exist)
     htmlContent = htmlContent.replace(
       /<table>/g,
@@ -260,7 +321,7 @@ export function processMarkdownContent(content: string): string {
     htmlContent = htmlContent.replace(/<tbody>/g, "<tbody>");
     htmlContent = htmlContent.replace(
       /<th>/g,
-      '<th class="border border-gray-300 px-4 py-3 text-left font-semibold">'
+      '<th class="border border-gray-300 px-4 py-3 text-left font-semibold bg-gray-50">'
     );
     htmlContent = htmlContent.replace(/<td>/g, '<td class="border border-gray-300 px-4 py-3">');
 
@@ -273,12 +334,23 @@ export function processMarkdownContent(content: string): string {
     // Fallback to basic processing
     let processedContent = content;
 
-    // Convert markdown tables to HTML tables
+    // Convert markdown tables to HTML tables BEFORE processing
+    // Pattern to match markdown tables (header, separator with dashes, and data rows)
     const tablePattern = /(\|.*\|[\s\S]*?)(?=\n\n|\n[^|]|$)/g;
     processedContent = processedContent.replace(tablePattern, (match) => {
-      const lines = match.trim().split("\n");
-      if (lines.length >= 3 && lines[1].includes("|") && lines[2].includes("|")) {
-        return convertMarkdownTableToHTML(match);
+      const lines = match
+        .trim()
+        .split("\n")
+        .filter((line) => line.trim());
+      // Check if it's a valid markdown table: has header, separator with dashes, and at least one data row
+      if (lines.length >= 3) {
+        const hasHeader = lines[0].includes("|");
+        const hasSeparator = lines[1].includes("|") && lines[1].includes("-");
+        const hasDataRows = lines.slice(2).some((line) => line.includes("|"));
+
+        if (hasHeader && hasSeparator && hasDataRows) {
+          return "\n\n" + convertMarkdownTableToHTML(match) + "\n\n";
+        }
       }
       return match;
     });
