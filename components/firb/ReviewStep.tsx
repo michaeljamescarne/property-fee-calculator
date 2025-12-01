@@ -5,10 +5,13 @@
 
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import {
   Edit,
   User,
@@ -19,6 +22,7 @@ import {
   Percent,
   Calculator,
   TrendingUp,
+  Info,
 } from "lucide-react";
 import { FIRBCalculatorFormData } from "@/lib/validations/firb";
 import type { InvestmentInputs } from "@/types/investment";
@@ -38,10 +42,12 @@ export default function ReviewStep({
   onCalculate,
   isCalculating,
 }: ReviewStepProps) {
+  const [disclaimerAcknowledged, setDisclaimerAcknowledged] = useState(false);
   const t = useTranslations("FIRBCalculator.review");
   const tCitizenship = useTranslations("FIRBCalculator.citizenship");
   const tProperty = useTranslations("FIRBCalculator.property");
   const tFinancial = useTranslations("FIRBCalculator.financialDetails");
+  const tResults = useTranslations("FIRBCalculator.results");
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-AU", {
@@ -304,17 +310,51 @@ export default function ReviewStep({
         </Card>
       )}
 
+      {/* Disclaimer Acknowledgment */}
+      <div className="p-6 bg-blue-50 border border-blue-200 rounded">
+        <div className="flex items-start gap-3 mb-4">
+          <Info className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <div className="flex-1">
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              {tResults("disclaimer.title")}
+            </h3>
+            <p className="text-sm text-gray-700 mb-4">{tResults("disclaimer.content")}</p>
+            <div className="flex items-start gap-3 pt-3 border-t border-blue-200">
+              <Checkbox
+                id="disclaimer-acknowledge"
+                checked={disclaimerAcknowledged}
+                onCheckedChange={(checked) => setDisclaimerAcknowledged(checked === true)}
+                className="mt-1"
+              />
+              <Label
+                htmlFor="disclaimer-acknowledge"
+                className="text-sm font-medium leading-relaxed cursor-pointer text-gray-900"
+              >
+                I acknowledge and accept that the information provided is general advice only and
+                that I should seek independent professional advice before making any investment
+                decisions.
+              </Label>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Calculate Button */}
       <div className="flex justify-center pt-4">
         <Button
           size="lg"
           onClick={onCalculate}
-          disabled={isCalculating}
+          disabled={isCalculating || !disclaimerAcknowledged}
           className="min-w-[200px] rounded"
         >
           {isCalculating ? t("calculating") : t("calculateButton")}
         </Button>
       </div>
+      {!disclaimerAcknowledged && (
+        <p className="text-sm text-center text-gray-500 mt-2">
+          Please acknowledge the disclaimer above to proceed
+        </p>
+      )}
     </div>
   );
 }

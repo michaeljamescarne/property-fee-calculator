@@ -17,70 +17,137 @@ export default function DisclaimerPage() {
       <div className="prose prose-lg max-w-none">
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-yellow-800">Important Notice</h2>
-          <p className="text-yellow-700">{t("disclaimer.text")}</p>
+          <p className="text-yellow-700">{t("disclaimerText")}</p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
+          {/* Section 1: Scope of Service */}
           <section>
-            <h2 className="text-2xl font-semibold mb-4">Calculator Limitations</h2>
-            <ul className="list-disc list-inside space-y-2">
-              <li>All calculations are estimates based on current rates and regulations</li>
-              <li>FIRB fees, stamp duty rates, and foreign surcharges may change without notice</li>
-              <li>Property-specific factors may affect actual costs</li>
-              <li>Investment analytics are based on historical data and assumptions</li>
-              <li>Market conditions and regulations are subject to change</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Professional Advice Required</h2>
+            <h2 className="text-2xl font-semibold mb-4">
+              1. Scope of Service: Factual Information &amp; General Advice Warning
+            </h2>
             <p className="mb-4">
-              This calculator is not a substitute for professional advice. We strongly recommend
-              consulting with:
+              This platform, PropertyCosts.com.au (The Service), provides cost estimates,
+              calculations, general information, and data regarding property ownership, acquisition,
+              and holding costs in Australia.
             </p>
-            <ul className="list-disc list-inside space-y-2">
-              <li>Licensed immigration lawyers for visa and FIRB matters</li>
-              <li>Tax advisors for investment and tax implications</li>
-              <li>Licensed conveyancers for property transactions</li>
-              <li>Financial advisors for investment strategies</li>
-              <li>Real estate agents for market-specific advice</li>
+
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-xl font-semibold mb-3">A. General Advice Warning (GAW)</h3>
+                <p className="mb-3">
+                  The information, estimates, and calculations provided by The Service constitute
+                  General Advice only. It is intended for general informational, educational, and
+                  illustrative purposes.
+                </p>
+                <p className="mb-3">
+                  The information is prepared without taking into account your personal objectives,
+                  financial situation, or needs.
+                </p>
+                <p className="mb-3">
+                  Before making any investment, financial, credit, or legal decisions based on the
+                  information provided by The Service, you must consider the appropriateness of the
+                  information having regard to your own personal objectives, financial situation,
+                  and needs. You should also seek independent professional advice from a qualified
+                  financial adviser, tax consultant, or legal practitioner.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-3">B. Non-Financial Product Advice</h3>
+                <p className="mb-3">
+                  The Service does not provide Personal Financial Product Advice as defined under
+                  the Corporations Act 2001 (Cth). We have not considered, nor should a reasonable
+                  person expect us to have considered, any aspect of your personal objectives,
+                  financial situation, or needs in providing this information or these calculations.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 2: Licensing Status */}
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">
+              2. Licensing Status and Credit Assistance Disclaimer
+            </h2>
+            <p className="mb-4">The Service and its operators:</p>
+            <ul className="list-disc list-inside space-y-2 mb-4">
+              <li>
+                Do not hold an Australian Financial Services (AFS) Licence issued by the Australian
+                Securities and Investments Commission (ASIC).
+              </li>
+              <li>
+                Are not authorised to provide, and do not provide, regulated financial product
+                advice concerning securities, derivatives, superannuation, insurance, or any other
+                financial product regulated under the Corporations Act.
+              </li>
+              <li>
+                Do not hold an Australian Credit Licence (ACL) issued by ASIC under the National
+                Consumer Credit Protection Act 2009 (Cth) (NCCPA).
+              </li>
+              <li>
+                Do not provide regulated credit assistance. This includes, but is not limited to,
+                suggesting that you apply for a particular credit contract with a particular credit
+                provider, or assisting you to apply for a particular credit contract. Any reference
+                to interest rates, loan repayments, or lending structures are generic, hypothetical
+                market data points only.
+              </li>
             </ul>
           </section>
 
+          {/* Section 3: Calculator Limitations */}
           <section>
-            <h2 className="text-2xl font-semibold mb-4">Accuracy and Updates</h2>
-            <ul className="list-disc list-inside space-y-2">
-              <li>We strive to keep information current but cannot guarantee accuracy</li>
-              <li>Regulations and fees are updated regularly by government bodies</li>
-              <li>Users should verify current requirements before making decisions</li>
-              <li>Past performance does not guarantee future results</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Limitation of Liability</h2>
-            <p className="mb-4">Property Fee Calculator and its operators:</p>
-            <ul className="list-disc list-inside space-y-2">
-              <li>Are not affiliated with FIRB or any Australian government agency</li>
-              <li>Do not provide financial, legal, or investment advice</li>
-              <li>Are not liable for decisions made based on calculator results</li>
-              <li>Cannot be held responsible for changes in regulations or fees</li>
-              <li>Provide this service on an &quot;as is&quot; basis</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
-            <p>
-              If you have questions about this disclaimer or need clarification about our services,
-              please contact us at{" "}
-              <a
-                href="mailto:info@propertyfeecalculator.com"
-                className="text-blue-600 hover:underline"
-              >
-                info@propertyfeecalculator.com
-              </a>
+            <h2 className="text-2xl font-semibold mb-4">
+              3. Calculator and Data Accuracy Limitations
+            </h2>
+            <p className="mb-4">
+              All numerical calculations, forecasts, and estimates provided by the tools within The
+              Service are provided for illustrative purposes only.
             </p>
+            <ul className="list-disc list-inside space-y-3">
+              <li>
+                <strong>Hypothetical Basis:</strong> Results are based on generic, user-entered, or
+                assumed inputs, and market averages, and are not specific to any actual property or
+                loan product.
+              </li>
+              <li>
+                <strong>Not a Valuation:</strong> Any estimation of property value, rental yield, or
+                market price is an automated valuation model (AVM) estimate and must not be relied
+                upon as a professional valuation or an accurate representation of the market sale or
+                rental value of the subject property.
+              </li>
+              <li>
+                <strong>External Data:</strong> We may rely on external or third-party data,
+                including data from government sources, which we do not verify independently. The
+                Service provides no warranties as to the accuracy, reliability, completeness,
+                currency, or suitability of this third-party data.
+              </li>
+            </ul>
+          </section>
+
+          {/* Section 4: General Exclusion of Liability */}
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">4. General Exclusion of Liability</h2>
+            <p className="mb-4">
+              To the maximum extent permitted by law, The Service (including its employees, agents,
+              and related entities) excludes all liability for any loss, damage, or cost, howsoever
+              arising (including without limitation, liability in negligence), incurred by any
+              person or entity.
+            </p>
+            <p className="mb-4">
+              This exclusion of liability applies whether the loss is suffered as a result of:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mb-4">
+              <li>
+                Reliance on the accuracy, currency, or completeness of the information or
+                calculation results provided by The Service.
+              </li>
+              <li>
+                Decisions made in relation to any financial product or credit contract based on the
+                information provided by The Service.
+              </li>
+            </ul>
+            <p className="font-semibold">Your use of The Service is entirely at your own risk.</p>
           </section>
         </div>
       </div>

@@ -914,7 +914,9 @@ export default function FIRBCalculatorPage() {
             )}
 
             {/* Purpose Statement - At bottom of page */}
-            {!isResults && (
+            {(currentStep === "citizenship" ||
+              currentStep === "property" ||
+              currentStep === "financial") && (
               <div className="mt-16 p-6 bg-blue-50 border border-blue-200 rounded">
                 <h2 className="text-xl font-semibold text-gray-900 mb-3">
                   {locale === "zh" ? "什么是计算器？" : "What is the Calculator?"}
