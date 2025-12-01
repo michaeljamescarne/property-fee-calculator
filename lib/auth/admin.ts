@@ -125,11 +125,15 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
 
     // Always try with role column first for email lookup
     // (ID lookup might fail due to wrong ID, but email lookup should work)
-    const { data: profileByEmail, error: emailError } = await supabase
+    const { data: profileByEmailData, error: emailError } = await supabase
       .from("user_profiles")
       .select("id, email, role")
       .eq("email", session.user.email)
       .single();
+
+    // Type assertion for profileByEmail
+    const profileByEmail: { id: string; email: string; role: string | null } | null =
+      profileByEmailData as { id: string; email: string; role: string | null } | null;
 
     // Log the email lookup result for debugging
     if (emailError) {
@@ -142,7 +146,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       console.log("Admin check - Email lookup successful:", {
         id: profileByEmail.id,
         email: profileByEmail.email,
-        role: (profileByEmail as { role?: string | null }).role,
+        role: profileByEmail.role,
       });
     }
 
@@ -159,8 +163,8 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       redirect(`/${locale}/dashboard`);
     }
 
-    // Cast to ensure type safety
-    profile = profileByEmail as { id: string; email: string; role: string | null };
+    // Use the typed profileByEmail
+    profile = profileByEmail;
   }
 
   // At this point, profile should not be null (we've checked above)
