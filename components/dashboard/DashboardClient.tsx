@@ -5,28 +5,22 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 export default function DashboardClient() {
   const { refreshUser, isAuthenticated } = useAuth();
+  const hasRefreshed = useRef(false);
 
-  // Refresh session on mount and when auth state changes
+  // Refresh session once on mount (only if not already authenticated)
   useEffect(() => {
-    // Refresh immediately and after a delay to ensure cookie is available
-    refreshUser();
-
-    const timer = setTimeout(() => {
+    // Only refresh if not authenticated and haven't refreshed yet
+    if (!isAuthenticated && !hasRefreshed.current) {
       refreshUser();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [refreshUser]);
-
-  // Log auth state for debugging
-  useEffect(() => {
-    console.log("DashboardClient - Auth state:", { isAuthenticated });
-  }, [isAuthenticated]);
+      hasRefreshed.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]); // Only depend on isAuthenticated, not refreshUser
 
   return null; // This component doesn't render anything
 }

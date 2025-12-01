@@ -62,6 +62,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           isAuthenticated: true,
           isLoading: false,
         });
+        // Stop retrying once authenticated
+        return;
       } else {
         // If we just logged in and session isn't found, retry once after a short delay
         // This handles cases where cookie is still propagating
