@@ -133,6 +133,7 @@ export interface UserProfile {
   subscription_tier: string | null;
   calculations_count: number;
   updated_at: string;
+  role: "user" | "admin" | null;
 }
 
 // Magic Code
