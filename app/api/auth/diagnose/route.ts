@@ -68,6 +68,7 @@ export async function GET(request: NextRequest) {
             .eq("id", session.user.id)
             .single();
 
+          const profileData = profile as { id?: string; email?: string } | null;
           diagnostics.step4_databaseCheck = {
             success: !!profile,
             hasProfile: !!profile,
@@ -78,8 +79,8 @@ export async function GET(request: NextRequest) {
                   details: profileError.details,
                 }
               : null,
-            profileId: (profile as { id?: string })?.id || null,
-            profileEmail: (profile as { email?: string })?.email || null,
+            profileId: profileData?.id || null,
+            profileEmail: profileData?.email || null,
           };
 
           // Step 5: If profile doesn't exist, try to create it
