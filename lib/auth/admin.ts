@@ -100,7 +100,11 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       .single();
 
     if (!idErrorNoRole && profileWithoutRole) {
-      profileById = { ...profileWithoutRole, role: null } as typeof profileById;
+      profileById = {
+        id: profileWithoutRole.id,
+        email: profileWithoutRole.email,
+        role: null,
+      } as typeof profileById;
       idError = null;
     }
   }
