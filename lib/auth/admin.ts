@@ -103,9 +103,10 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       .single();
 
     if (!idErrorNoRole && profileWithoutRole) {
+      const profile = profileWithoutRole as { id: string; email: string };
       profileById = {
-        id: profileWithoutRole.id,
-        email: profileWithoutRole.email,
+        id: profile.id,
+        email: profile.email,
         role: null,
       };
       idError = null;
@@ -142,9 +143,10 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
         .single();
 
       if (!emailErrorNoRole && profileWithoutRole) {
+        const profile = profileWithoutRole as { id: string; email: string };
         profileByEmail = {
-          id: profileWithoutRole.id,
-          email: profileWithoutRole.email,
+          id: profile.id,
+          email: profile.email,
           role: null,
         };
         emailError = null;
