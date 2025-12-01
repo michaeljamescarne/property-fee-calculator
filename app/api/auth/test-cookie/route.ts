@@ -1,58 +1,109 @@
 /**
  * Test Cookie API Route
- * Diagnostic endpoint to test cookie setting and reading
+ * Diagnostic endpoint to verify cookie can be set and read
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { getCookieOptions, COOKIE_NAME, createSession, verifySession } from "@/lib/auth/session";
+import { getSessionFromRequest } from "@/lib/auth/session-helpers";
+import { createServiceRoleClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
-  const diagnostics: Record<string, unknown> = {};
-
-  // 1. Check if cookie exists in request
-  const cookieHeader = request.headers.get("cookie");
-  diagnostics.requestCookieHeader = cookieHeader || "NOT PRESENT";
-  diagnostics.hasCookieInRequest = !!cookieHeader?.includes("firb-session");
-
-  // 2. Try reading via cookies() API
   try {
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get("firb-session");
-    diagnostics.cookiesApiRead = {
-      exists: !!sessionCookie,
-      value: sessionCookie ? `${sessionCookie.value.substring(0, 20)}...` : null,
+    const diagnostics: Record<string, unknown> = {
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || "development",
     };
+
+    // Test 1: Check cookie options
+    const cookieOptions = getCookieOptions();
+    diagnostics.cookieOptions = {
+      httpOnly: cookieOptions.httpOnly,
+      secure: cookieOptions.secure,
+      sameSite: cookieOptions.sameSite,
+      path: cookieOptions.path,
+      maxAge: cookieOptions.maxAge,
+      domain: cookieOptions.domain || "not set (defaults to current host)",
+    };
+
+    // Test 2: Check if cookie exists in request
+    const cookieHeader = request.headers.get("cookie");
+    const requestCookiesInfo: Record<string, unknown> = {
+      hasCookieHeader: !!cookieHeader,
+      cookieHeaderLength: cookieHeader?.length || 0,
+    };
+
+    if (cookieHeader) {
+      const cookies = cookieHeader.split(";").map((c) => c.trim());
+      const sessionCookie = cookies.find((c) => c.startsWith(`${COOKIE_NAME}=`));
+      requestCookiesInfo.sessionCookieFound = !!sessionCookie;
+      if (sessionCookie) {
+        const token = sessionCookie.split("=")[1];
+        requestCookiesInfo.tokenLength = token?.length || 0;
+        requestCookiesInfo.tokenStartsWithEyJ = token?.startsWith("eyJ") || false;
+      }
+    }
+    diagnostics.requestCookies = requestCookiesInfo;
+
+    // Test 3: Try to get session from request
+    const session = await getSessionFromRequest(request);
+    diagnostics.sessionCheck = {
+      sessionFound: !!session,
+      userId: session?.user?.id || null,
+      userEmail: session?.user?.email || null,
+    };
+
+    // Test 4: Test cookie setting (create a test token)
+    try {
+      // Get a test user profile (or create one if needed)
+      const supabase = createServiceRoleClient();
+      const { data: testProfile } = await supabase
+        .from("user_profiles")
+        .select("*")
+        .limit(1)
+        .single();
+
+      if (testProfile) {
+        const testToken = await createSession(testProfile);
+        const testVerification = await verifySession(testToken);
+        diagnostics.tokenCreation = {
+          success: !!testToken,
+          tokenLength: testToken?.length || 0,
+          verificationSuccess: !!testVerification,
+          verifiedUserId: testVerification?.user?.id || null,
+        };
+      } else {
+        diagnostics.tokenCreation = {
+          success: false,
+          message: "No test user profile found",
+        };
+      }
+    } catch (tokenError) {
+      diagnostics.tokenCreation = {
+        success: false,
+        error: tokenError instanceof Error ? tokenError.message : "Unknown error",
+      };
+    }
+
+    // Test 5: JWT_SECRET validation
+    const jwtSecretSet = !!process.env.JWT_SECRET;
+    const jwtSecretIsDefault =
+      process.env.JWT_SECRET === "your-secret-key-change-this-in-production";
+    diagnostics.jwtSecret = {
+      isSet: jwtSecretSet,
+      isDefault: jwtSecretIsDefault,
+      isSecure: jwtSecretSet && !jwtSecretIsDefault,
+    };
+
+    return NextResponse.json(diagnostics, { status: 200 });
   } catch (error) {
-    diagnostics.cookiesApiRead = {
-      error: error instanceof Error ? error.message : "Unknown error",
-    };
+    return NextResponse.json(
+      {
+        error: "Test failed",
+        message: error instanceof Error ? error.message : "Unknown error",
+        stack: error instanceof Error ? error.stack : undefined,
+      },
+      { status: 500 }
+    );
   }
-
-  // 3. Set a test cookie
-  const testValue = `test-${Date.now()}`;
-  const response = NextResponse.json({
-    message: "Cookie test",
-    diagnostics,
-    testValue,
-  });
-
-  // Method 1: Manual Set-Cookie header
-  const setCookieHeader = `test-cookie=${testValue}; Path=/; Max-Age=3600; SameSite=Lax; HttpOnly`;
-  response.headers.append("Set-Cookie", setCookieHeader);
-
-  // Method 2: Using cookies API
-  response.cookies.set("test-cookie-2", testValue, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 3600,
-    path: "/",
-  });
-
-  // Verify headers
-  const allSetCookies = response.headers.getSetCookie();
-  diagnostics.setCookieHeaders = allSetCookies;
-  diagnostics.setCookieCount = allSetCookies.length;
-
-  return response;
 }

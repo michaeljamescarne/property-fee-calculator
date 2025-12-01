@@ -3,55 +3,59 @@
  * Additional utilities for reading sessions from requests
  */
 
-import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import { verifySession, COOKIE_NAME } from "./session";
 import type { Session } from "@/types/auth";
 
 /**
  * Get session from request (for API routes)
- * Tries both request cookies and next/headers cookies
+ * Uses request Cookie header parsing (most reliable in API routes)
  */
-export async function getSessionFromRequest(request?: NextRequest): Promise<Session | null> {
-  // Try reading from request cookies first (for API routes)
-  if (request) {
-    const cookieHeader = request.headers.get("cookie");
-    if (cookieHeader) {
-      const cookies = parseCookies(cookieHeader);
-      const token = cookies[COOKIE_NAME];
-      if (token) {
-        console.log("getSessionFromRequest - Token found in request, length:", token.length);
-        try {
-          const session = await verifySession(token);
-          if (session) {
-            console.log("getSessionFromRequest - Session verified successfully");
-            return session;
-          } else {
-            console.log("getSessionFromRequest - Session verification failed (invalid token)");
-          }
-        } catch (error) {
-          console.error("getSessionFromRequest - Verification error:", error);
-        }
-      } else {
-        console.log("getSessionFromRequest - No token in cookies object");
-      }
-    } else {
-      console.log("getSessionFromRequest - No cookie header in request");
-    }
+export async function getSessionFromRequest(request: NextRequest): Promise<Session | null> {
+  if (!request) {
+    console.log("getSessionFromRequest - No request provided");
+    return null;
   }
 
-  // Fallback to next/headers cookies (for server components)
+  const cookieHeader = request.headers.get("cookie");
+  if (!cookieHeader) {
+    console.log("getSessionFromRequest - No cookie header in request");
+    return null;
+  }
+
+  // Parse cookies from header
+  const cookies = parseCookies(cookieHeader);
+  const token = cookies[COOKIE_NAME];
+
+  if (!token) {
+    console.log("getSessionFromRequest - No firb-session cookie found in request");
+    // Log available cookies for debugging (without values)
+    const cookieNames = Object.keys(cookies);
+    console.log("getSessionFromRequest - Available cookies:", cookieNames.join(", "));
+    return null;
+  }
+
+  // Validate token format (JWT tokens start with "eyJ")
+  if (!token.startsWith("eyJ")) {
+    console.error("getSessionFromRequest - Token does not appear to be a valid JWT");
+    return null;
+  }
+
+  console.log("getSessionFromRequest - Token found, length:", token.length);
+
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(COOKIE_NAME)?.value;
-    if (token) {
-      console.log("getSessionFromRequest - Token found via cookies() API");
-      return await verifySession(token);
+    const session = await verifySession(token);
+    if (session) {
+      console.log(
+        "getSessionFromRequest - Session verified successfully, userId:",
+        session.user.id
+      );
+      return session;
     } else {
-      console.log("getSessionFromRequest - No token via cookies() API");
+      console.log("getSessionFromRequest - Session verification failed (invalid/expired token)");
     }
   } catch (error) {
-    console.error("Error reading cookies from next/headers:", error);
+    console.error("getSessionFromRequest - Verification error:", error);
   }
 
   return null;

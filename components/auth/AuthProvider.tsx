@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkSession();
   }, []);
 
-  const checkSession = async () => {
+  const checkSession = async (retryCount = 0) => {
     try {
       const response = await fetch("/api/auth/session", {
         credentials: "include", // Ensure cookies are sent
@@ -53,6 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log("Session check response:", {
         authenticated: data.authenticated,
         hasUser: !!data.user,
+        retryCount,
       });
 
       if (data.authenticated && data.user) {
@@ -62,6 +63,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           isLoading: false,
         });
       } else {
+        // If we just logged in and session isn't found, retry once after a short delay
+        // This handles cases where cookie is still propagating
+        if (retryCount === 0) {
+          console.log("Session not found, retrying after delay...");
+          setTimeout(() => checkSession(1), 500);
+          return;
+        }
+
         setState({
           user: null,
           isAuthenticated: false,

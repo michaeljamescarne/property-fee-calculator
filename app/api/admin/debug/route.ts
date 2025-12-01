@@ -3,13 +3,13 @@
  * Diagnostic endpoint to check admin access issues
  */
 
-import { NextResponse } from "next/server";
-import { getSession } from "@/lib/auth/session";
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionFromRequest } from "@/lib/auth/session-helpers";
 import { createClient } from "@/lib/supabase/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
+    const session = await getSessionFromRequest(request);
     const diagnostics: Record<string, unknown> = {
       hasSession: !!session,
       timestamp: new Date().toISOString(),

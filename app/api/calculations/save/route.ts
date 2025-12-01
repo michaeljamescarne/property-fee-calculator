@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "@/lib/auth/session";
+import { getSessionFromRequest } from "@/lib/auth/session-helpers";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import { prepareCalculationForStorage } from "@/lib/calculations/storage";
 import type { CalculationData } from "@/types/database";
@@ -17,7 +17,7 @@ interface SaveCalculationRequest {
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
-    const session = await getSession();
+    const session = await getSessionFromRequest(request);
     if (!session) {
       return NextResponse.json({ error: "Unauthorized. Please login first." }, { status: 401 });
     }

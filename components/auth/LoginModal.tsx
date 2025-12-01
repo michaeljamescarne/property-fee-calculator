@@ -130,19 +130,46 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
 
       const successData = data as VerifyCodeResponse;
       if (successData.user) {
-        login(successData.user);
+        const user = successData.user; // Store in const for use in async callback
+
+        // Update local state immediately
+        login(user);
         setStep("success");
 
-        // Close modal and trigger success callback after animation
-        setTimeout(() => {
+        // Wait for cookie to be set and session to sync
+        // Give extra time in production where cookie propagation might be slower
+        const delay = process.env.NODE_ENV === "production" ? 1000 : 500;
+
+        setTimeout(async () => {
+          // Refresh session from server to ensure cookie is read
+          // Re-check session via API instead of using cached user
+          try {
+            const sessionResponse = await fetch("/api/auth/session", {
+              credentials: "include",
+              cache: "no-store",
+            });
+            const sessionData = await sessionResponse.json();
+            if (sessionData.authenticated && sessionData.user) {
+              login(sessionData.user);
+            }
+          } catch (error) {
+            console.error("Failed to refresh session:", error);
+            // Still proceed with navigation even if refresh fails
+          }
+
+          // Close modal and trigger success callback
           onClose();
           onSuccess?.();
-          // Redirect to dashboard with a delay to ensure cookie is set and propagated
-          // Use window.location.href for a full page load to ensure server reads the cookie
-          setTimeout(() => {
-            window.location.href = "/en/dashboard";
-          }, 500);
-        }, 1500);
+
+          // Use Next.js router for client-side navigation (preserves auth state)
+          // Fallback to window.location if router is not available
+          if (typeof window !== "undefined") {
+            // Small delay to ensure cookie is fully set before navigation
+            setTimeout(() => {
+              window.location.href = "/en/dashboard";
+            }, 300);
+          }
+        }, delay);
       }
     } catch {
       setError("Failed to verify code. Please try again.");

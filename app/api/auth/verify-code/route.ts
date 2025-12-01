@@ -157,54 +157,26 @@ export async function POST(request: NextRequest) {
     const token = await createSession(profile);
     console.log("Verify code - Session token created, length:", token.length);
 
-    // Build cookie string manually to ensure it's set correctly
-    const isProduction = process.env.NODE_ENV === "production";
-    const maxAge = 30 * 24 * 60 * 60; // 30 days
+    // Import cookie options helper
+    const { getCookieOptions, COOKIE_NAME } = await import("@/lib/auth/session");
 
-    // Build Set-Cookie header manually
-    const cookieParts = [
-      `firb-session=${token}`,
-      `Path=/`,
-      `Max-Age=${maxAge}`,
-      `SameSite=Lax`,
-      isProduction ? `Secure` : ``,
-      `HttpOnly`,
-    ].filter(Boolean); // Remove empty strings
+    // Create response
+    const response = NextResponse.json({
+      success: true,
+      message: "Successfully authenticated",
+      user: profile,
+    } as VerifyCodeResponse);
 
-    const setCookieHeader = cookieParts.join("; ");
-    console.log(
-      "Verify code - Set-Cookie header built:",
-      setCookieHeader.substring(0, 100) + "..."
-    );
+    // Set cookie using Next.js cookies API with proper options
+    const cookieOptions = getCookieOptions();
+    response.cookies.set(COOKIE_NAME, token, cookieOptions);
 
-    // Create response with cookie in headers
-    const response = NextResponse.json(
-      {
-        success: true,
-        message: "Successfully authenticated",
-        user: profile,
-      } as VerifyCodeResponse,
-      {
-        headers: {
-          "Set-Cookie": setCookieHeader,
-        },
-      }
-    );
-
-    // Also set using cookies API as backup
-    response.cookies.set("firb-session", token, {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: "lax",
-      maxAge: maxAge,
-      path: "/",
-    });
-
-    // Verify both methods
-    const headerCookie = response.headers.get("set-cookie");
-    console.log("Verify code - Set-Cookie in headers:", headerCookie ? "PRESENT" : "MISSING");
-    if (headerCookie) {
-      console.log("Verify code - Header value (first 100 chars):", headerCookie.substring(0, 100));
+    // Verify cookie was set
+    const setCookieHeader = response.headers.get("set-cookie");
+    console.log("Verify code - Cookie set:", setCookieHeader ? "SUCCESS" : "FAILED");
+    if (setCookieHeader) {
+      console.log("Verify code - Cookie domain:", cookieOptions.domain || "default (current host)");
+      console.log("Verify code - Cookie secure:", cookieOptions.secure);
     }
 
     return response;
