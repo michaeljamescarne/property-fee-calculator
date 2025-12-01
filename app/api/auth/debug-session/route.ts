@@ -106,8 +106,8 @@ export async function GET(request: NextRequest) {
         debug.step6_databaseProfile = {
           found: !!profile,
           error: profileError?.message || null,
-          profileId: profile?.id || null,
-          profileEmail: profile?.email || null,
+          profileId: (profile as { id?: string })?.id || null,
+          profileEmail: (profile as { email?: string })?.email || null,
         };
       } catch (dbError) {
         debug.step6_databaseProfile = {
