@@ -60,8 +60,9 @@ export async function GET(request: NextRequest) {
         };
 
         // Step 4: If session exists, check database
+        // Use service role client to bypass RLS (RLS uses auth.uid() which doesn't work with custom JWT)
         if (session) {
-          const supabase = await createClient();
+          const supabase = createServiceRoleClient();
           const { data: profile, error: profileError } = await supabase
             .from("user_profiles")
             .select("*")

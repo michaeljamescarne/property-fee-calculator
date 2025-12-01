@@ -4,9 +4,8 @@
  */
 
 import { getSession } from "./session";
-import { createClient } from "@/lib/supabase/server";
+import { createServiceRoleClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
 export interface AdminUser {
   id: string;
@@ -68,7 +67,8 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
     redirect(`/${locale}/calculator?login=true`);
   }
 
-  const supabase = await createClient();
+  // Use service role client to bypass RLS (RLS uses auth.uid() which doesn't work with custom JWT)
+  const supabase = createServiceRoleClient();
 
   // Get user profile with role
   const { data: profile, error } = await supabase

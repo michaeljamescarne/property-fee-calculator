@@ -24,7 +24,8 @@ export async function GET(request: NextRequest) {
     console.log("Session API - Session found, userId:", session.user.id);
 
     // Get full user profile from database
-    const supabase = await createClient();
+    // Use service role client to bypass RLS (RLS uses auth.uid() which doesn't work with custom JWT)
+    const supabase = createServiceRoleClient();
     const { data: profile, error: profileError } = await supabase
       .from("user_profiles")
       .select("*")
