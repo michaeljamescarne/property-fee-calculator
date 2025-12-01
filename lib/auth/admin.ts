@@ -83,12 +83,27 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
   // Use service role client to bypass RLS (RLS uses auth.uid() which doesn't work with custom JWT)
   const supabase = createServiceRoleClient();
 
-  // Try to get user profile by ID first
-  const { data: profileById, error: idError } = await supabase
+  // Try to get user profile by ID first (try with role, fallback without if column doesn't exist)
+  let { data: profileById, error: idError } = await supabase
     .from("user_profiles")
     .select("id, email, role")
     .eq("id", session.user.id)
     .single();
+
+  // If error is "column doesn't exist", try without role column
+  if (idError?.code === "42703" && idError?.message?.includes("role")) {
+    console.log("Admin check - Role column doesn't exist, trying without role column");
+    const { data: profileWithoutRole, error: idErrorNoRole } = await supabase
+      .from("user_profiles")
+      .select("id, email")
+      .eq("id", session.user.id)
+      .single();
+
+    if (!idErrorNoRole && profileWithoutRole) {
+      profileById = { ...profileWithoutRole, role: null } as typeof profileById;
+      idError = null;
+    }
+  }
 
   // If profile not found by ID, try by email (handles case where user ID changed)
   let profile = profileById;
@@ -98,11 +113,28 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       userEmail: session.user.email,
     });
 
-    const { data: profileByEmail, error: emailError } = await supabase
+    let { data: profileByEmail, error: emailError } = await supabase
       .from("user_profiles")
       .select("id, email, role")
       .eq("email", session.user.email)
       .single();
+
+    // If error is "column doesn't exist", try without role column
+    if (emailError?.code === "42703" && emailError?.message?.includes("role")) {
+      console.log(
+        "Admin check - Role column doesn't exist in email lookup, trying without role column"
+      );
+      const { data: profileWithoutRole, error: emailErrorNoRole } = await supabase
+        .from("user_profiles")
+        .select("id, email")
+        .eq("email", session.user.email)
+        .single();
+
+      if (!emailErrorNoRole && profileWithoutRole) {
+        profileByEmail = { ...profileWithoutRole, role: null } as typeof profileByEmail;
+        emailError = null;
+      }
+    }
 
     if (emailError || !profileByEmail) {
       console.error("Admin check failed - no profile found by ID or email:", {
@@ -112,6 +144,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
         emailCode: emailError?.code,
         userId: session.user.id,
         userEmail: session.user.email,
+        supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30) + "...",
       });
       redirect(`/${locale}/dashboard`);
     }
