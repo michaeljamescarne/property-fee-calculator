@@ -119,38 +119,31 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
     console.log("Admin check - Profile not found by ID, trying email lookup:", {
       userId: session.user.id,
       userEmail: session.user.email,
+      idErrorCode: idError?.code,
+      idErrorMessage: idError?.message,
     });
 
-    const { data: profileByEmailInitial, error: emailErrorInitial } = await supabase
+    // Always try with role column first for email lookup
+    // (ID lookup might fail due to wrong ID, but email lookup should work)
+    const { data: profileByEmail, error: emailError } = await supabase
       .from("user_profiles")
       .select("id, email, role")
       .eq("email", session.user.email)
       .single();
 
-    let profileByEmail: { id: string; email: string; role: string | null } | null =
-      profileByEmailInitial;
-    let emailError = emailErrorInitial;
-
-    // If error is "column doesn't exist", try without role column
-    if (emailError?.code === "42703" && emailError?.message?.includes("role")) {
-      console.log(
-        "Admin check - Role column doesn't exist in email lookup, trying without role column"
-      );
-      const { data: profileWithoutRole, error: emailErrorNoRole } = await supabase
-        .from("user_profiles")
-        .select("id, email")
-        .eq("email", session.user.email)
-        .single();
-
-      if (!emailErrorNoRole && profileWithoutRole) {
-        const profile = profileWithoutRole as { id: string; email: string };
-        profileByEmail = {
-          id: profile.id,
-          email: profile.email,
-          role: null,
-        };
-        emailError = null;
-      }
+    // Log the email lookup result for debugging
+    if (emailError) {
+      console.log("Admin check - Email lookup error:", {
+        code: emailError.code,
+        message: emailError.message,
+        email: session.user.email,
+      });
+    } else if (profileByEmail) {
+      console.log("Admin check - Email lookup successful:", {
+        id: profileByEmail.id,
+        email: profileByEmail.email,
+        role: (profileByEmail as { role?: string | null }).role,
+      });
     }
 
     if (emailError || !profileByEmail) {
@@ -166,7 +159,8 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       redirect(`/${locale}/dashboard`);
     }
 
-    profile = profileByEmail;
+    // Cast to ensure type safety
+    profile = profileByEmail as { id: string; email: string; role: string | null };
   }
 
   // At this point, profile should not be null (we've checked above)
