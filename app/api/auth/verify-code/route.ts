@@ -96,23 +96,47 @@ export async function POST(request: NextRequest) {
       .update({ used: true } as never)
       .eq("id", magicCode.id);
 
-    // Check if user profile already exists
-    const { data: existingProfile } = await supabase
+    // Check if user profile already exists - ALWAYS query by email to get the correct profile
+    // Use maybeSingle() to handle case where no profile exists, and order by created_at desc
+    // to get the most recent profile if duplicates exist
+    const { data: existingProfileData, error: profileLookupError } = await supabase
       .from("user_profiles")
       .select("*")
       .eq("email", email)
-      .single();
+      .order("created_at", { ascending: false }) // Get most recent if duplicates exist
+      .limit(1)
+      .maybeSingle();
 
-    let userId: string;
+    if (profileLookupError) {
+      console.error("Verify code - Profile lookup error:", {
+        error: profileLookupError,
+        email: email,
+      });
+      const error: AuthErrorResponse = {
+        error: "SERVER_ERROR",
+        message: "Failed to look up user account. Please try again.",
+      };
+      return NextResponse.json(error, { status: 500 });
+    }
 
-    if (existingProfile) {
-      // User profile exists, update last login
-      const profile = existingProfile as UserProfile;
-      userId = profile.id;
+    let profile: UserProfile;
+
+    if (existingProfileData) {
+      // User profile exists - use the EXACT profile from database
+      profile = existingProfileData as UserProfile;
+
+      console.log("Verify code - Found existing profile from database:", {
+        userId: profile.id,
+        email: profile.email,
+        role: (profile as { role?: string | null }).role,
+        created_at: (profile as { created_at?: string }).created_at,
+      });
+
+      // Update last login using the ID from the database profile
       await supabase
         .from("user_profiles")
         .update({ last_login_at: new Date().toISOString() } as never)
-        .eq("id", userId);
+        .eq("id", profile.id);
     } else {
       // Create new user profile directly (bypass Supabase Auth for now)
       const { data: newProfile, error: profileError } = await supabase
@@ -126,7 +150,7 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (profileError || !newProfile) {
-        console.error("Profile creation error:", profileError);
+        console.error("Verify code - Profile creation error:", profileError);
         const error: AuthErrorResponse = {
           error: "SERVER_ERROR",
           message: "Failed to create user account. Please try again.",
@@ -134,28 +158,37 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(error, { status: 500 });
       }
 
-      const profile = newProfile as UserProfile;
-      userId = profile.id;
+      profile = newProfile as UserProfile;
+
+      console.log("Verify code - Created new profile:", {
+        userId: profile.id,
+        email: profile.email,
+      });
     }
 
-    // Get user profile
-    const { data: profile } = await supabase
-      .from("user_profiles")
-      .select("*")
-      .eq("id", userId)
-      .single();
-
-    if (!profile) {
+    // Verify we have the profile with the correct ID from database
+    if (!profile || !profile.id) {
+      console.error("Verify code - Profile or profile.id is missing:", {
+        hasProfile: !!profile,
+        hasId: !!profile?.id,
+      });
       const error: AuthErrorResponse = {
         error: "SERVER_ERROR",
-        message: "Failed to fetch user profile.",
+        message: "Failed to get user profile.",
       };
       return NextResponse.json(error, { status: 500 });
     }
 
-    // Create session
+    // Create session with the EXACT profile from database (ensures correct user ID)
+    // This profile.id is the source of truth from the database
     const token = await createSession(profile);
-    console.log("Verify code - Session token created, length:", token.length);
+    console.log("Verify code - Session token created with database profile:", {
+      tokenLength: token.length,
+      userId: profile.id, // This is the ID from the database
+      email: profile.email,
+      profileId: profile.id,
+      role: (profile as { role?: string | null }).role,
+    });
 
     // Import cookie options helper
     const { getCookieOptions, COOKIE_NAME } = await import("@/lib/auth/session");
