@@ -20,11 +20,23 @@ export async function getSessionFromRequest(request?: NextRequest): Promise<Sess
       const cookies = parseCookies(cookieHeader);
       const token = cookies[COOKIE_NAME];
       if (token) {
-        const session = await verifySession(token);
-        if (session) {
-          return session;
+        console.log("getSessionFromRequest - Token found in request, length:", token.length);
+        try {
+          const session = await verifySession(token);
+          if (session) {
+            console.log("getSessionFromRequest - Session verified successfully");
+            return session;
+          } else {
+            console.log("getSessionFromRequest - Session verification failed (invalid token)");
+          }
+        } catch (error) {
+          console.error("getSessionFromRequest - Verification error:", error);
         }
+      } else {
+        console.log("getSessionFromRequest - No token in cookies object");
       }
+    } else {
+      console.log("getSessionFromRequest - No cookie header in request");
     }
   }
 
@@ -33,7 +45,10 @@ export async function getSessionFromRequest(request?: NextRequest): Promise<Sess
     const cookieStore = await cookies();
     const token = cookieStore.get(COOKIE_NAME)?.value;
     if (token) {
+      console.log("getSessionFromRequest - Token found via cookies() API");
       return await verifySession(token);
+    } else {
+      console.log("getSessionFromRequest - No token via cookies() API");
     }
   } catch (error) {
     console.error("Error reading cookies from next/headers:", error);

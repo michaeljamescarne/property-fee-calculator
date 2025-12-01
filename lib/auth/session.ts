@@ -40,6 +40,7 @@ export async function createSession(user: UserProfile): Promise<string> {
 export async function verifySession(token: string): Promise<Session | null> {
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET);
+    console.log("verifySession - Token verified successfully, userId:", payload.userId);
 
     return {
       user: {
@@ -50,7 +51,11 @@ export async function verifySession(token: string): Promise<Session | null> {
       accessToken: token,
       expiresAt: payload.exp as number,
     };
-  } catch {
+  } catch (error) {
+    console.error(
+      "verifySession - Token verification failed:",
+      error instanceof Error ? error.message : "Unknown error"
+    );
     return null;
   }
 }

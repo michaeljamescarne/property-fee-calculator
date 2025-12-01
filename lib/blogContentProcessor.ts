@@ -283,6 +283,13 @@ export function processMarkdownContent(content: string): string {
     // Add Tailwind classes to paragraphs
     htmlContent = htmlContent.replace(/<p>/g, '<p class="mb-4 leading-relaxed">');
 
+    // Remove <p> tags inside <li> tags (remark-html wraps list item content in <p>)
+    // This fixes the issue where list items show content twice
+    htmlContent = htmlContent.replace(
+      /<li([^>]*)>\s*<p([^>]*)>(.*?)<\/p>\s*<\/li>/gs,
+      "<li$1>$3</li>"
+    );
+
     // Add Tailwind classes to lists
     htmlContent = htmlContent.replace(
       /<ul>/g,
