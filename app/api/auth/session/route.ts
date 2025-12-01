@@ -10,6 +10,21 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
   try {
+    // Debug logging
+    const cookieHeader = request.headers.get("cookie");
+    console.log("Session API - Cookie header present:", !!cookieHeader);
+
+    // Extract firb-session cookie from header manually
+    let tokenFromHeader: string | null = null;
+    if (cookieHeader) {
+      const cookies = cookieHeader.split(";").map((c) => c.trim());
+      const sessionCookie = cookies.find((c) => c.startsWith("firb-session="));
+      if (sessionCookie) {
+        tokenFromHeader = sessionCookie.split("=")[1];
+        console.log("Session API - Token extracted from header, length:", tokenFromHeader.length);
+      }
+    }
+
     // Try getting session from request first (for API routes)
     let session = await getSessionFromRequest(request);
 
@@ -18,11 +33,22 @@ export async function GET(request: NextRequest) {
       session = await getSession();
     }
 
-    // Debug logging
-    const cookieHeader = request.headers.get("cookie");
-    console.log("Session API - Cookie header present:", !!cookieHeader);
-    console.log("Session API - Cookie header value:", cookieHeader?.substring(0, 50));
+    // If still no session but we have a token, try verifying it directly
+    if (!session && tokenFromHeader) {
+      console.log("Session API - No session found, trying direct token verification");
+      const { verifySession } = await import("@/lib/auth/session");
+      session = await verifySession(tokenFromHeader);
+      if (session) {
+        console.log("Session API - Direct verification succeeded");
+      } else {
+        console.log("Session API - Direct verification failed (invalid/expired token)");
+      }
+    }
+
     console.log("Session API - Session found:", !!session);
+    if (session) {
+      console.log("Session API - User ID:", session.user.id);
+    }
 
     if (!session) {
       return NextResponse.json({
