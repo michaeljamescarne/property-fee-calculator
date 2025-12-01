@@ -14,3 +14,4 @@ WHERE email = 'michaeljamescarne@gmail.com';
 -- If the role column doesn't exist, run the migration first:
 -- supabase/migrations/20250118_add_role_to_user_profiles.sql
 
+

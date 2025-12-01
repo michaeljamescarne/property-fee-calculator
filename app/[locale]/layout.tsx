@@ -1,6 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { Inter } from "next/font/google";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "../globals.css";
 
 import Navigation from "@/components/Navigation";
@@ -26,12 +26,6 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(baseUrl),
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 5,
-      userScalable: true,
-    },
     title: {
       default: isZh
         ? "FIRB计算器 - 澳大利亚房产投资费用计算 | 外国投资审批"
@@ -97,6 +91,13 @@ export async function generateMetadata({
     },
   };
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
 
 export default async function LocaleLayout({
   children,

@@ -220,3 +220,4 @@ SELECT
   '✓' as status
 FROM macro_benchmarks;
 
+

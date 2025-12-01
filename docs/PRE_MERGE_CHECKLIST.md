@@ -322,6 +322,7 @@ Test the public API endpoints directly:
    - ✅ Should only return `is_active = true` records
 
 3. **Test FIRB Calculate API** (with benchmarks)
+
    ```bash
    curl -X POST "http://localhost:3000/api/firb-calculate" \
      -H "Content-Type: application/json" \

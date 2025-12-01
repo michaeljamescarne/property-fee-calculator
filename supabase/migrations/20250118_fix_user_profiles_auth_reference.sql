@@ -42,3 +42,4 @@ BEGIN
     RAISE NOTICE 'No foreign key to auth.users should exist';
 END $$;
 
+

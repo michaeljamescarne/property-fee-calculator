@@ -94,3 +94,4 @@ SELECT
         ELSE '⚠️ Step 4: Cannot set - role column missing'
     END as step_4;
 
+

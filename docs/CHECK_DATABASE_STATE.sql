@@ -122,3 +122,4 @@ SELECT
         ELSE '⚠️ 20250118_create_macro_benchmarks.sql (optional for admin page)'
     END as migration_4;
 
+
