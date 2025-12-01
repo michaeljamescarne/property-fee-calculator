@@ -103,11 +103,12 @@ export async function GET(request: NextRequest) {
           .eq("id", session.user.id)
           .single();
 
+        const profileData = profile as { id?: string; email?: string } | null;
         debug.step6_databaseProfile = {
           found: !!profile,
           error: profileError?.message || null,
-          profileId: (profile as { id?: string })?.id || null,
-          profileEmail: (profile as { email?: string })?.email || null,
+          profileId: profileData?.id || null,
+          profileEmail: profileData?.email || null,
         };
       } catch (dbError) {
         debug.step6_databaseProfile = {
