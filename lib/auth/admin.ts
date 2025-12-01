@@ -135,7 +135,11 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
         .single();
 
       if (!emailErrorNoRole && profileWithoutRole) {
-        profileByEmail = { ...profileWithoutRole, role: null } as typeof profileByEmail;
+        profileByEmail = {
+          id: profileWithoutRole.id,
+          email: profileWithoutRole.email,
+          role: null,
+        } as typeof profileByEmail;
         emailError = null;
       }
     }
