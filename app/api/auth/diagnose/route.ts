@@ -108,7 +108,7 @@ export async function GET(request: NextRequest) {
                       hint: createError.hint,
                     }
                   : null,
-                createdProfileId: (newProfile as { id?: string })?.id || null,
+                createdProfileId: (newProfile as { id?: string } | null)?.id || null,
               };
             } catch (createErr) {
               diagnostics.step5_autoCreate = {
@@ -160,11 +160,12 @@ export async function GET(request: NextRequest) {
       success: true,
       diagnostics,
       summary: {
-        hasCookie: !!diagnostics.step1_cookieHeader?.present,
-        hasToken: !!diagnostics.step2_tokenExtraction?.success,
-        hasSession: !!diagnostics.step3_sessionVerification?.hasSession,
-        hasProfile: !!diagnostics.step4_databaseCheck?.hasProfile,
-        profileCreated: !!diagnostics.step5_autoCreate?.success,
+        hasCookie: !!(diagnostics.step1_cookieHeader as { present?: boolean })?.present,
+        hasToken: !!(diagnostics.step2_tokenExtraction as { success?: boolean })?.success,
+        hasSession: !!(diagnostics.step3_sessionVerification as { hasSession?: boolean })
+          ?.hasSession,
+        hasProfile: !!(diagnostics.step4_databaseCheck as { hasProfile?: boolean })?.hasProfile,
+        profileCreated: !!(diagnostics.step5_autoCreate as { success?: boolean })?.success,
       },
     });
   } catch (error) {
