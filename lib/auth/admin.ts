@@ -84,11 +84,14 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
   const supabase = createServiceRoleClient();
 
   // Try to get user profile by ID first (try with role, fallback without if column doesn't exist)
-  let { data: profileById, error: idError } = await supabase
+  const { data: profileByIdInitial, error: idErrorInitial } = await supabase
     .from("user_profiles")
     .select("id, email, role")
     .eq("id", session.user.id)
     .single();
+
+  let profileById: { id: string; email: string; role: string | null } | null = profileByIdInitial;
+  let idError = idErrorInitial;
 
   // If error is "column doesn't exist", try without role column
   if (idError?.code === "42703" && idError?.message?.includes("role")) {
@@ -104,7 +107,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
         id: profileWithoutRole.id,
         email: profileWithoutRole.email,
         role: null,
-      } as { id: string; email: string; role: string | null };
+      };
       idError = null;
     }
   }
@@ -117,11 +120,15 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       userEmail: session.user.email,
     });
 
-    let { data: profileByEmail, error: emailError } = await supabase
+    const { data: profileByEmailInitial, error: emailErrorInitial } = await supabase
       .from("user_profiles")
       .select("id, email, role")
       .eq("email", session.user.email)
       .single();
+
+    let profileByEmail: { id: string; email: string; role: string | null } | null =
+      profileByEmailInitial;
+    let emailError = emailErrorInitial;
 
     // If error is "column doesn't exist", try without role column
     if (emailError?.code === "42703" && emailError?.message?.includes("role")) {
@@ -139,7 +146,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
           id: profileWithoutRole.id,
           email: profileWithoutRole.email,
           role: null,
-        } as { id: string; email: string; role: string | null };
+        };
         emailError = null;
       }
     }
