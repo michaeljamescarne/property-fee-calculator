@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/session";
 import { getSessionFromRequest } from "@/lib/auth/session-helpers";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
   try {
@@ -37,9 +37,11 @@ export async function GET(request: NextRequest) {
       console.error("Session API - User email from session:", session.user.email);
 
       // If profile doesn't exist, try to create it
+      // Use service role client to bypass RLS (since RLS uses auth.uid() which doesn't work with custom JWT)
       if (profileError?.code === "PGRST116" || !profile) {
         console.log("Session API - Profile not found, attempting to create...");
-        const { data: newProfile, error: createError } = await supabase
+        const serviceRoleClient = createServiceRoleClient();
+        const { data: newProfile, error: createError } = await serviceRoleClient
           .from("user_profiles")
           .insert({
             id: session.user.id,
