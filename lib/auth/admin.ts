@@ -84,14 +84,15 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
   const supabase = createServiceRoleClient();
 
   // Try to get user profile by ID first
-  let { data: profile, error } = await supabase
+  const { data: profileById, error: idError } = await supabase
     .from("user_profiles")
     .select("id, email, role")
     .eq("id", session.user.id)
     .single();
 
   // If profile not found by ID, try by email (handles case where user ID changed)
-  if (error || !profile) {
+  let profile = profileById;
+  if (idError || !profile) {
     console.log("Admin check - Profile not found by ID, trying email lookup:", {
       userId: session.user.id,
       userEmail: session.user.email,
@@ -105,8 +106,8 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
 
     if (emailError || !profileByEmail) {
       console.error("Admin check failed - no profile found by ID or email:", {
-        idError: error?.message,
-        idCode: error?.code,
+        idError: idError?.message,
+        idCode: idError?.code,
         emailError: emailError?.message,
         emailCode: emailError?.code,
         userId: session.user.id,
@@ -116,7 +117,15 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
     }
 
     profile = profileByEmail;
-    error = null;
+  }
+
+  // At this point, profile should not be null (we've checked above)
+  if (!profile) {
+    console.error("Admin check failed - profile is null after lookup:", {
+      userId: session.user.id,
+      userEmail: session.user.email,
+    });
+    redirect(`/${locale}/dashboard`);
   }
 
   const profileData = profile as { id: string; email: string; role: string | null };
