@@ -104,7 +104,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
         id: profileWithoutRole.id,
         email: profileWithoutRole.email,
         role: null,
-      } as typeof profileById;
+      } as { id: string; email: string; role: string | null };
       idError = null;
     }
   }
@@ -139,7 +139,7 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
           id: profileWithoutRole.id,
           email: profileWithoutRole.email,
           role: null,
-        } as typeof profileByEmail;
+        } as { id: string; email: string; role: string | null };
         emailError = null;
       }
     }
