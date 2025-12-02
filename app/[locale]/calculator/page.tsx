@@ -501,12 +501,6 @@ export default function FIRBCalculatorPage() {
     return errors;
   };
 
-  // Validate current step
-  const validateStep = (step: Step): boolean => {
-    const errors = getValidationErrors(step);
-    return Object.keys(errors).length === 0;
-  };
-
   // Handle next button
   const handleNext = (e?: React.MouseEvent) => {
     // Prevent any default form submission behavior
