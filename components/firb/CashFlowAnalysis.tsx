@@ -326,7 +326,8 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           <p className="text-sm text-gray-600 mb-1">
             {t("cashFlow.beforeTax") === "FIRBCalculator.investmentAnalytics.cashFlow.beforeTax"
               ? "Before Tax"
-              : t("cashFlow.beforeTax")}
+              : t("cashFlow.beforeTax")}{" "}
+            <span className="text-xs text-gray-500">(per month)</span>
           </p>
           <p
             className={`text-2xl font-bold ${
@@ -340,7 +341,8 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           <p className="text-sm text-gray-600 mb-1">
             {t("cashFlow.afterTax") === "FIRBCalculator.investmentAnalytics.cashFlow.afterTax"
               ? "After Tax"
-              : t("cashFlow.afterTax")}
+              : t("cashFlow.afterTax")}{" "}
+            <span className="text-xs text-gray-500">(per month)</span>
           </p>
           <p
             className={`text-2xl font-bold ${
