@@ -196,6 +196,7 @@ export interface InvestmentAnalytics {
     };
     annualTaxSaving: number;
     monthlyTaxSaving: number;
+    marginalTaxRate: number; // % - Assumed tax rate used in calculations
     cgtOnExit: {
       salePrice: number;
       originalPurchasePrice: number;

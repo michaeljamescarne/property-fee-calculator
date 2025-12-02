@@ -351,6 +351,17 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           </p>
         </div>
       </div>
+
+      {/* Tax Rate Assumption */}
+      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm">
+        <p className="text-blue-900">
+          <span className="font-semibold">Tax Rate Assumption:</span>{" "}
+          {analytics.taxAnalysis.marginalTaxRate}% marginal tax rate used in calculations.{" "}
+          <span className="text-blue-700">
+            Actual tax benefits depend on your individual tax situation and total taxable income.
+          </span>
+        </p>
+      </div>
     </div>
   );
 }

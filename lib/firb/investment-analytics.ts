@@ -597,6 +597,7 @@ export function calculateInvestmentAnalytics(
       annualDeductions: deductions,
       annualTaxSaving: taxBenefit,
       monthlyTaxSaving: taxBenefit / 12,
+      marginalTaxRate: inputs.marginalTaxRate,
       cgtOnExit: cgt,
     },
 

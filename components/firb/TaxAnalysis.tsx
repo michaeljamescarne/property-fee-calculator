@@ -133,6 +133,9 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
               ? "from negative gearing"
               : t("taxAnalysis.fromNegativeGearing")}
           </p>
+          <p className="text-xs text-green-700 mt-2 font-medium">
+            Assumed tax rate: {analytics.taxAnalysis.marginalTaxRate}%
+          </p>
         </div>
 
         <div className="p-5 bg-blue-50 border border-blue-200 rounded-xl">
