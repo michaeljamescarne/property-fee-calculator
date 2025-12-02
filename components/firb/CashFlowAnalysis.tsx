@@ -325,32 +325,34 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
         <div>
           <p className="text-sm text-gray-600 mb-1">
             {t("cashFlow.beforeTax") === "FIRBCalculator.investmentAnalytics.cashFlow.beforeTax"
-              ? "Before Tax"
-              : t("cashFlow.beforeTax")}{" "}
-            <span className="text-xs text-gray-500">(per month)</span>
+              ? "Before Tax (per month)"
+              : t("cashFlow.beforeTax")}
           </p>
           <p
-            className={`text-2xl font-bold ${
+            className={`text-2xl font-bold mb-2 ${
               analytics.cashFlow.monthly.netCashFlow >= 0 ? "text-green-600" : "text-red-600"
             }`}
           >
             {currency(analytics.cashFlow.monthly.netCashFlow)}
           </p>
+          <p className="text-xs text-gray-600">
+            Monthly cash flow before tax benefits (rental income minus all expenses)
+          </p>
         </div>
         <div>
           <p className="text-sm text-gray-600 mb-1">
             {t("cashFlow.afterTax") === "FIRBCalculator.investmentAnalytics.cashFlow.afterTax"
-              ? "After Tax"
-              : t("cashFlow.afterTax")}{" "}
-            <span className="text-xs text-gray-500">(per month)</span>
+              ? "After Tax (per month)"
+              : t("cashFlow.afterTax")}
           </p>
           <p
-            className={`text-2xl font-bold ${
+            className={`text-2xl font-bold mb-2 ${
               analytics.cashFlow.monthly.afterTaxCashFlow >= 0 ? "text-green-600" : "text-amber-600"
             }`}
           >
             {currency(analytics.cashFlow.monthly.afterTaxCashFlow)}
           </p>
+          <p className="text-xs text-gray-600">Monthly cash flow after tax benefits are applied</p>
         </div>
       </div>
 
