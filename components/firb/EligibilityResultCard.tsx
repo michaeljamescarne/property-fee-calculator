@@ -259,7 +259,11 @@ export default function EligibilityResultCard({
                         : "text-green-900"
                 }`}
               >
-                {t("requirements.firbApplication")}
+                {eligibility.requiresFIRB
+                  ? t("requirements.firbApplication")
+                  : t("requirements.firbApplication")
+                      ?.replace(/Required/gi, "")
+                      .trim() || "FIRB Application"}
               </p>
               <p
                 className={`text-sm ${
@@ -302,7 +306,9 @@ export default function EligibilityResultCard({
               <div className="flex-1">
                 <p className="font-medium text-blue-900">{t("requirements.documentation")}</p>
                 <p className="text-sm text-blue-700">
-                  Identification, proof of funds, property contract
+                  {eligibility.requiresFIRB
+                    ? "Identification, proof of funds, property contract"
+                    : "Not applicable"}
                 </p>
               </div>
             </div>
@@ -315,19 +321,30 @@ export default function EligibilityResultCard({
               <div className="flex-1">
                 <p className="font-medium text-blue-900">FIRB Application Fee</p>
                 <p className="text-sm text-blue-700">
-                  {costs?.upfrontCosts?.firbFee
-                    ? formatCurrency(costs.upfrontCosts.firbFee)
-                    : formatCurrency(
-                        calculateFIRBFee(formData.propertyValue, formData.propertyType) *
-                          (formData.expeditedFIRB ? 2 : 1)
-                      )}
-                  {formData.expeditedFIRB ? " (Expedited processing)" : " (Standard processing)"}
+                  {eligibility.requiresFIRB ? (
+                    <>
+                      {costs?.upfrontCosts?.firbFee
+                        ? formatCurrency(costs.upfrontCosts.firbFee)
+                        : formatCurrency(
+                            calculateFIRBFee(formData.propertyValue, formData.propertyType) *
+                              (formData.expeditedFIRB ? 2 : 1)
+                          )}
+                      {formData.expeditedFIRB
+                        ? " (Expedited processing)"
+                        : " (Standard processing)"}
+                    </>
+                  ) : (
+                    "Not applicable"
+                  )}
                 </p>
-                {costs?.upfrontCosts?.firbFee && formData.expeditedFIRB && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    Standard fee: {formatCurrency(costs.upfrontCosts.firbFee / 2)}
-                  </p>
-                )}
+                {eligibility.requiresFIRB &&
+                  costs?.upfrontCosts?.firbFee != null &&
+                  costs.upfrontCosts.firbFee > 0 &&
+                  formData.expeditedFIRB && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Standard fee: {formatCurrency(costs.upfrontCosts.firbFee / 2)}
+                    </p>
+                  )}
               </div>
             </div>
           )}

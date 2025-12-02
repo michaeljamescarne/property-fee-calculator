@@ -298,10 +298,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
                 {currency(analytics.cashFlow.annual.taxBenefit)}
               </p>
               <p className="text-sm text-green-600 mt-2">
-                {currency(
-                  analytics.cashFlow.monthly.afterTaxCashFlow +
-                    analytics.cashFlow.monthly.netCashFlow
-                )}{" "}
+                {currency(analytics.taxAnalysis.monthlyTaxSaving)}{" "}
                 {t("cashFlow.savedPerMonth") ===
                 "FIRBCalculator.investmentAnalytics.cashFlow.savedPerMonth"
                   ? "saved/month"
@@ -328,31 +325,46 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
         <div>
           <p className="text-sm text-gray-600 mb-1">
             {t("cashFlow.beforeTax") === "FIRBCalculator.investmentAnalytics.cashFlow.beforeTax"
-              ? "Before Tax"
+              ? "Before Tax (per month)"
               : t("cashFlow.beforeTax")}
           </p>
           <p
-            className={`text-2xl font-bold ${
+            className={`text-2xl font-bold mb-2 ${
               analytics.cashFlow.monthly.netCashFlow >= 0 ? "text-green-600" : "text-red-600"
             }`}
           >
             {currency(analytics.cashFlow.monthly.netCashFlow)}
           </p>
+          <p className="text-xs text-gray-600">
+            Monthly cash flow before tax benefits (rental income minus all expenses)
+          </p>
         </div>
         <div>
           <p className="text-sm text-gray-600 mb-1">
             {t("cashFlow.afterTax") === "FIRBCalculator.investmentAnalytics.cashFlow.afterTax"
-              ? "After Tax"
+              ? "After Tax (per month)"
               : t("cashFlow.afterTax")}
           </p>
           <p
-            className={`text-2xl font-bold ${
+            className={`text-2xl font-bold mb-2 ${
               analytics.cashFlow.monthly.afterTaxCashFlow >= 0 ? "text-green-600" : "text-amber-600"
             }`}
           >
             {currency(analytics.cashFlow.monthly.afterTaxCashFlow)}
           </p>
+          <p className="text-xs text-gray-600">Monthly cash flow after tax benefits are applied</p>
         </div>
+      </div>
+
+      {/* Tax Rate Assumption */}
+      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm">
+        <p className="text-blue-900">
+          <span className="font-semibold">Tax Rate Assumption:</span>{" "}
+          {analytics.taxAnalysis.marginalTaxRate}% marginal tax rate used in calculations.{" "}
+          <span className="text-blue-700">
+            Actual tax benefits depend on your individual tax situation and total taxable income.
+          </span>
+        </p>
       </div>
     </div>
   );
