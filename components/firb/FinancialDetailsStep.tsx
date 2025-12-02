@@ -53,11 +53,12 @@ export default function FinancialDetailsStep({
   const loanAmount = investmentInputs.loanAmount ?? propertyValue - calculatedDepositAmount;
 
   // Default values - ensure we use the actual input value, not a fallback
-  // Use the input value if it exists (even if 0), otherwise calculate default
-  const weeklyRent =
-    investmentInputs.estimatedWeeklyRent !== undefined &&
-    investmentInputs.estimatedWeeklyRent !== null
-      ? investmentInputs.estimatedWeeklyRent
+  // Use the input value if it exists (even if 0), otherwise calculate default for display
+  // But allow empty string in the input field when user clears it
+  const weeklyRentValue = investmentInputs.estimatedWeeklyRent;
+  const weeklyRentForDisplay =
+    weeklyRentValue !== undefined && weeklyRentValue !== null
+      ? weeklyRentValue
       : Math.round((propertyValue * 0.04) / 52);
   const capitalGrowthRate = investmentInputs.capitalGrowthRate || 6;
   const interestRate = investmentInputs.interestRate || 6.5;
@@ -100,19 +101,34 @@ export default function FinancialDetailsStep({
               <Input
                 id="weekly-rent"
                 type="number"
-                value={weeklyRent || ""}
+                value={
+                  weeklyRentValue !== undefined && weeklyRentValue !== null ? weeklyRentValue : ""
+                }
                 onChange={(e) => {
-                  const value = e.target.value === "" ? undefined : Number(e.target.value);
-                  onInvestmentInputsChange({
-                    estimatedWeeklyRent: value !== undefined && !isNaN(value) ? value : undefined,
-                  });
+                  const inputValue = e.target.value;
+                  // Allow empty string - user can clear the field
+                  if (inputValue === "") {
+                    onInvestmentInputsChange({
+                      estimatedWeeklyRent: undefined,
+                    });
+                    return;
+                  }
+                  // Parse the number
+                  const numValue = Number(inputValue);
+                  if (!isNaN(numValue)) {
+                    onInvestmentInputsChange({
+                      estimatedWeeklyRent: numValue,
+                    });
+                  }
                 }}
                 className={`flex-1 rounded ${errors.estimatedWeeklyRent ? "border-red-500 focus:ring-red-500" : ""}`}
                 placeholder="e.g., 500"
               />
-              <span className="text-sm text-gray-600 whitespace-nowrap">
-                (${(weeklyRent * 52).toLocaleString("en-AU")} per year)
-              </span>
+              {weeklyRentValue !== undefined && weeklyRentValue !== null && (
+                <span className="text-sm text-gray-600 whitespace-nowrap">
+                  (${(weeklyRentValue * 52).toLocaleString("en-AU")} per year)
+                </span>
+              )}
             </div>
 
             {/* Benchmark Suggestion for Rental Yield */}
@@ -140,7 +156,7 @@ export default function FinancialDetailsStep({
                       </span>
                     </div>
                     {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) ===
-                      weeklyRent && (
+                      weeklyRentForDisplay && (
                       <Badge variant="default" className="text-xs">
                         {t("rental.benchmark.using") || "Using benchmark"}
                       </Badge>
@@ -166,16 +182,16 @@ export default function FinancialDetailsStep({
                       <p className="text-xs text-gray-600 mb-1">
                         {t("rental.benchmark.yourInput") || "Your Input"}
                       </p>
-                      <p className="font-semibold text-sm">${weeklyRent}/week</p>
+                      <p className="font-semibold text-sm">${weeklyRentForDisplay}/week</p>
                       <p className="text-xs text-gray-600">
-                        ({(((weeklyRent * 52) / propertyValue) * 100).toFixed(2)}%{" "}
+                        ({(((weeklyRentForDisplay * 52) / propertyValue) * 100).toFixed(2)}%{" "}
                         {t("rental.benchmark.yield") || "yield"})
                       </p>
                     </div>
                   </div>
 
                   {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) !==
-                    weeklyRent && (
+                    weeklyRentForDisplay && (
                     <Button
                       size="sm"
                       variant="default"
@@ -213,10 +229,10 @@ export default function FinancialDetailsStep({
 
           <div className="space-y-2">
             <Label className="text-sm text-gray-900">
-              {t("rental.vacancyRate") || "Vacancy Rate"}: {investmentInputs.vacancyRate || 5}%
+              {t("rental.vacancyRate") || "Vacancy Rate"}: {investmentInputs.vacancyRate ?? 5}%
             </Label>
             <Slider
-              value={[investmentInputs.vacancyRate || 5]}
+              value={[investmentInputs.vacancyRate ?? 5]}
               onValueChange={(value) => onInvestmentInputsChange({ vacancyRate: value[0] })}
               min={0}
               max={20}

@@ -102,7 +102,7 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
                 <tr
                   key={index}
                   className={`hover:bg-muted/30 transition-colors ${
-                    scenario.rate === 5 ? "bg-primary/5" : ""
+                    scenario.rate === 5 ? "bg-blue-50 border-l-4 border-blue-200" : ""
                   }`}
                 >
                   <td className="p-3">
@@ -198,7 +198,7 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
                 <tr
                   key={index}
                   className={`hover:bg-muted/30 transition-colors ${
-                    scenario.rate === 6.5 ? "bg-primary/5" : ""
+                    scenario.rate === 6.5 ? "bg-blue-50 border-l-4 border-blue-200" : ""
                   }`}
                 >
                   <td className="p-3">
@@ -250,74 +250,84 @@ export default function SensitivityAnalysis({ analytics }: SensitivityAnalysisPr
           </span>
         </h4>
         <div className="grid md:grid-cols-3 gap-4">
-          {sensitivity.growthScenarios?.map((scenario, index) => (
-            <div
-              key={index}
-              className={`p-5 rounded-xl border ${
-                scenario.label === "Moderate"
-                  ? "bg-primary/5 border-primary/30"
-                  : "bg-muted/30 border-border/40"
-              }`}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <h5 className="font-semibold text-foreground">
-                  {scenario.label === "Conservative"
-                    ? t("sensitivity.conservative") ===
-                      "FIRBCalculator.investmentAnalytics.sensitivity.conservative"
-                      ? "Conservative"
-                      : t("sensitivity.conservative")
-                    : scenario.label === "Moderate"
-                      ? t("sensitivity.moderate") ===
-                        "FIRBCalculator.investmentAnalytics.sensitivity.moderate"
-                        ? "Moderate"
-                        : t("sensitivity.moderate")
-                      : scenario.label === "Optimistic"
-                        ? t("sensitivity.optimistic") ===
-                          "FIRBCalculator.investmentAnalytics.sensitivity.optimistic"
-                          ? "Optimistic"
-                          : t("sensitivity.optimistic")
-                        : scenario.label}
-                </h5>
-                {scenario.label === "Moderate" && (
-                  <span className="text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full">
-                    {t("sensitivity.base") === "FIRBCalculator.investmentAnalytics.sensitivity.base"
-                      ? "Base Case"
-                      : t("sensitivity.base")}
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-muted-foreground mb-2">
-                {t("sensitivity.growthRate") ===
-                "FIRBCalculator.investmentAnalytics.sensitivity.growthRate"
-                  ? "Growth Rate"
-                  : t("sensitivity.growthRate")}
-                : {scenario.rate}% p.a.
-              </p>
-              <p className="text-sm text-muted-foreground mb-1">
-                {t("sensitivity.finalValue") ===
-                "FIRBCalculator.investmentAnalytics.sensitivity.finalValue"
-                  ? "Final Value"
-                  : t("sensitivity.finalValue")}
-                :
-              </p>
-              <p className="text-xl font-bold text-primary mb-3">{currency(scenario.valueAtEnd)}</p>
-              <div className="pt-3 border-t border-border/40">
-                <p className="text-xs text-muted-foreground mb-1">
-                  {t("sensitivity.totalReturn") ===
-                  "FIRBCalculator.investmentAnalytics.sensitivity.totalReturn"
-                    ? "Total Return"
-                    : t("sensitivity.totalReturn")}
+          {sensitivity.growthScenarios?.map((scenario, index) => {
+            // Determine card color based on scenario label
+            let cardClasses = "p-5 rounded-xl border ";
+            if (scenario.label === "Optimistic") {
+              cardClasses += "bg-green-50 border-green-200";
+            } else if (scenario.label === "Moderate") {
+              cardClasses += "bg-amber-50 border-amber-200";
+            } else if (scenario.label === "Conservative") {
+              cardClasses += "bg-red-50 border-red-200";
+            } else {
+              cardClasses += "bg-muted/30 border-border/40";
+            }
+
+            return (
+              <div key={index} className={cardClasses}>
+                <div className="flex items-center justify-between mb-3">
+                  <h5 className="font-semibold text-foreground">
+                    {scenario.label === "Conservative"
+                      ? t("sensitivity.conservative") ===
+                        "FIRBCalculator.investmentAnalytics.sensitivity.conservative"
+                        ? "Conservative"
+                        : t("sensitivity.conservative")
+                      : scenario.label === "Moderate"
+                        ? t("sensitivity.moderate") ===
+                          "FIRBCalculator.investmentAnalytics.sensitivity.moderate"
+                          ? "Moderate"
+                          : t("sensitivity.moderate")
+                        : scenario.label === "Optimistic"
+                          ? t("sensitivity.optimistic") ===
+                            "FIRBCalculator.investmentAnalytics.sensitivity.optimistic"
+                            ? "Optimistic"
+                            : t("sensitivity.optimistic")
+                          : scenario.label}
+                  </h5>
+                  {scenario.label === "Moderate" && (
+                    <span className="text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full">
+                      {t("sensitivity.base") ===
+                      "FIRBCalculator.investmentAnalytics.sensitivity.base"
+                        ? "Base Case"
+                        : t("sensitivity.base")}
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground mb-2">
+                  {t("sensitivity.growthRate") ===
+                  "FIRBCalculator.investmentAnalytics.sensitivity.growthRate"
+                    ? "Growth Rate"
+                    : t("sensitivity.growthRate")}
+                  : {scenario.rate}% p.a.
+                </p>
+                <p className="text-sm text-muted-foreground mb-1">
+                  {t("sensitivity.finalValue") ===
+                  "FIRBCalculator.investmentAnalytics.sensitivity.finalValue"
+                    ? "Final Value"
+                    : t("sensitivity.finalValue")}
                   :
                 </p>
-                <p className="text-lg font-semibold text-foreground">
-                  {currency(scenario.totalReturn)}
+                <p className="text-xl font-bold text-primary mb-3">
+                  {currency(scenario.valueAtEnd)}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {scenario.annualizedROI.toFixed(1)}% annualized ROI
-                </p>
+                <div className="pt-3 border-t border-border/40">
+                  <p className="text-xs text-muted-foreground mb-1">
+                    {t("sensitivity.totalReturn") ===
+                    "FIRBCalculator.investmentAnalytics.sensitivity.totalReturn"
+                      ? "Total Return"
+                      : t("sensitivity.totalReturn")}
+                    :
+                  </p>
+                  <p className="text-lg font-semibold text-foreground">
+                    {currency(scenario.totalReturn)}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {scenario.annualizedROI.toFixed(1)}% annualized ROI
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

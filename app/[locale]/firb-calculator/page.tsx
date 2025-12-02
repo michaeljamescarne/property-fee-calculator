@@ -791,7 +791,7 @@ export default function FIRBCalculatorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={injectStructuredData(howToSchema)}
       />
-      <main className="min-h-screen bg-gray-50">
+      <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
@@ -1082,7 +1082,7 @@ export default function FIRBCalculatorPage() {
             )}
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }
