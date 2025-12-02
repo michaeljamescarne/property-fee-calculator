@@ -726,6 +726,31 @@
         "assumptionsBased": "假设基于当前市场条件，可能会有所不同。",
         "pastPerformance": "过往表现不能保证未来结果。"
       }
+    },
+    "emailModal": {
+      "title": "发送结果到邮箱",
+      "description": "输入您的邮箱地址，我们将向您发送详细的计算结果PDF报告。",
+      "emailLabel": "邮箱地址",
+      "emailPlaceholder": "your@email.com",
+      "nameLabel": "姓名",
+      "namePlaceholder": "您的姓名（可选）",
+      "optional": "可选",
+      "consentLabel": "我同意接收此邮件",
+      "consentDescription": "勾选此框即表示您同意通过邮件接收计算结果。",
+      "send": "发送结果",
+      "sending": "发送中...",
+      "cancel": "取消",
+      "info": "您的结果将作为PDF附件发送。这可能需要几分钟。",
+      "success": {
+        "title": "邮件发送成功！",
+        "description": "您的计算结果已发送到您的邮箱地址。"
+      },
+      "errors": {
+        "required": "请填写所有必填字段。",
+        "invalidEmail": "请输入有效的邮箱地址。",
+        "sendFailed": "发送邮件失败。请稍后再试。",
+        "general": "发生错误。请重试。"
+      }
     }
   },
   "LeadCapture": {
@@ -881,31 +906,6 @@
         "errorDetails": "错误详情",
         "validationErrors": "验证错误",
         "row": "行"
-      }
-    },
-    "emailModal": {
-      "title": "发送结果到邮箱",
-      "description": "输入您的邮箱地址，我们将向您发送详细的计算结果PDF报告。",
-      "emailLabel": "邮箱地址",
-      "emailPlaceholder": "your@email.com",
-      "nameLabel": "姓名",
-      "namePlaceholder": "您的姓名（可选）",
-      "optional": "可选",
-      "consentLabel": "我同意接收此邮件",
-      "consentDescription": "勾选此框即表示您同意通过邮件接收计算结果。",
-      "send": "发送结果",
-      "sending": "发送中...",
-      "cancel": "取消",
-      "info": "您的结果将作为PDF附件发送。这可能需要几分钟。",
-      "success": {
-        "title": "邮件发送成功！",
-        "description": "您的计算结果已发送到您的邮箱地址。"
-      },
-      "errors": {
-        "required": "请填写所有必填字段。",
-        "invalidEmail": "请输入有效的邮箱地址。",
-        "sendFailed": "发送邮件失败。请稍后再试。",
-        "general": "发生错误。请重试。"
       }
     }
   },
