@@ -102,15 +102,15 @@ export default function CalculationCard({
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold text-lg truncate">{summary.name}</h3>
+            <div className="flex items-start gap-2 mb-1">
+              <h3 className="font-semibold text-lg break-words">{summary.name}</h3>
               {summary.isFavorite && (
-                <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 flex-shrink-0" />
+                <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 flex-shrink-0 mt-0.5" />
               )}
             </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-3 w-3 flex-shrink-0" />
-              <span className="truncate">{summary.address}</span>
+            <div className="flex items-start gap-2 text-sm text-muted-foreground">
+              <MapPin className="h-3 w-3 flex-shrink-0 mt-0.5" />
+              <span className="break-words">{summary.address}</span>
             </div>
           </div>
 
