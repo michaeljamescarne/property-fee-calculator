@@ -763,7 +763,7 @@
       },
       "detailedReports": {
         "title": "Detailed Reports",
-        "description": "Export investor-ready PDF reports that explain every insight."
+        "description": "View comprehensive investment analysis reports with detailed insights and recommendations."
       }
     },
     "sections": {
@@ -785,7 +785,7 @@
         "points": {
           "one": "Dynamic ROI models with sensitivity analysis for rent, rates, and interest changes",
           "two": "Cash flow charts that show gross vs net returns, tax effects, and gearing",
-          "three": "Benchmark comparisons against ASX equities, bonds, and savings products"
+          "three": "Long-term projections showing property value growth and equity accumulation over time"
         },
         "imageAlt": "Investment analytics dashboard",
         "cta": "View Investment Analytics"
@@ -803,14 +803,14 @@
       },
       "detailedReports": {
         "heading": "What must I know before I invest?",
-        "body": "Generate detailed reports that explain your assumptions, risks, and next steps so you can invest with confidence.",
+        "body": "View comprehensive reports that explain your assumptions, risks, and next steps so you can invest with confidence.",
         "points": {
           "one": "Executive summaries covering costs, eligibility, and investment metrics",
           "two": "Scenario comparisons, cash flow tables, and sensitivity analysis sections",
           "three": "Clear disclaimers and action checklists tailored to foreign investors"
         },
         "imageAlt": "Detailed property investment report showing cost breakdown, eligibility status, and analysis",
-        "cta": "Download Sample Report"
+        "cta": "View Sample Report"
       }
     },
     "leadCapture": {

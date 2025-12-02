@@ -210,30 +210,45 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   return (
     <div className="min-h-screen scroll-smooth">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 leading-tight">
-            {t("title") || "Australian Property Investment Analysis"}
-          </h1>
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-            {t("subtitle") || "Comprehensive analysis for Australian property investments"}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild className="rounded">
-              <Link href={`/${locale}/calculator`}>
-                <Calculator className="mr-2 h-5 w-5" />
-                Start Calculator
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild className="rounded">
-              <Link href={`/${locale}/faq`}>Learn More</Link>
-            </Button>
+      <section className="container mx-auto px-4 py-10 md:py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Text Content */}
+            <div className="text-center md:text-left">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 leading-tight">
+                {t("title") || "Australian Property Investment Analysis"}
+              </h1>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                {t("subtitle") || "Comprehensive analysis for Australian property investments"}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <Button size="lg" asChild className="rounded">
+                  <Link href={`/${locale}/calculator`}>
+                    <Calculator className="mr-2 h-5 w-5" />
+                    Start Calculator
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild className="rounded">
+                  <Link href={`/${locale}/faq`}>Learn More</Link>
+                </Button>
+              </div>
+            </div>
+            {/* Hero Image */}
+            <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden shadow-xl">
+              <Image
+                src="/images/hero-sydney-harbor.png"
+                alt="Sydney Harbour with Opera House and Harbour Bridge - Australian property investment backdrop"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Feature Navigation */}
-      <section className="container mx-auto px-4 py-16 bg-gray-50">
+      <section className="container mx-auto px-4 py-8 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-semibold text-center mb-12 text-gray-900">
             {t("features.sectionTitle")}
@@ -272,7 +287,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* Detailed Sections */}
-      <div className="space-y-24 md:space-y-32 mt-16 md:mt-20">
+      <div className="space-y-12 md:space-y-16 mt-8 md:mt-10">
         {detailSections.map((section, index) => (
           <section
             key={section.id}
@@ -320,7 +335,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </div>
 
       {/* What is FIRB Section */}
-      <section className="container mx-auto px-4 py-12 bg-white">
+      <section className="container mx-auto px-4 py-6 bg-gray-50 mt-8">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-semibold text-gray-900 mb-6 text-center">
             {locale === "zh" ? "什么是FIRB？" : "What is FIRB?"}
@@ -346,17 +361,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* Lead Capture */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded shadow-sm px-8 py-12 text-center">
-          <p className="text-sm font-semibold tracking-wide uppercase text-blue-600">
-            {t("leadCapture.title")}
-          </p>
-          <p className="text-2xl md:text-3xl font-semibold text-gray-900 mt-3 mb-4">
+          <p className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8">
             {t("leadCapture.description")}
-          </p>
-          <p className="text-gray-600 mb-8">
-            {t("leadCapture.helper") ||
-              "Get new insights, rate changes, and FIRB updates in your inbox."}
           </p>
           <div className="max-w-xl mx-auto">
             <LeadCaptureForm variant="inline" />
@@ -365,7 +373,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* Disclaimer Section */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="container mx-auto px-4 py-6">
         <div className="max-w-4xl mx-auto">
           <CustomAlert
             variant="default"
@@ -378,7 +386,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 py-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-semibold mb-4 text-gray-900">
             Ready to Analyze Your Property Investment?
