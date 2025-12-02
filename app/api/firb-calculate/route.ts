@@ -19,9 +19,12 @@ export async function POST(request: NextRequest) {
     const validation = firbCalculatorSchema.safeParse(body);
 
     if (!validation.success) {
+      console.error("Validation failed:", validation.error.issues);
       return NextResponse.json(
         {
+          success: false,
           error: "Validation failed",
+          message: "Please check all required fields are filled correctly",
           details: validation.error.issues,
         },
         { status: 400 }
@@ -30,14 +33,48 @@ export async function POST(request: NextRequest) {
 
     const data = validation.data;
 
-    // Perform eligibility check
-    const eligibility = performFullEligibilityCheck(
-      data.citizenshipStatus,
-      data.propertyType,
-      data.propertyValue,
-      data.visaType,
-      data.isOrdinarilyResident
-    );
+    // For existing properties, assume FIRB approval but still perform eligibility check for display
+    // For purchasing, perform full eligibility check
+    let eligibility;
+    if (data.purchaseType === "existing") {
+      // Existing properties: assume FIRB was handled at purchase time, but still show eligibility info
+      eligibility = {
+        isEligible: true,
+        requiresFIRB: false,
+        firbApprovalType: "exempt" as const,
+        canPurchase: true,
+        restrictions: [],
+        recommendations: [
+          "This is an existing property, FIRB approval is assumed to have been obtained or not required at the time of purchase.",
+        ],
+        allowedPropertyTypes: [data.propertyType],
+      };
+    } else {
+      // Perform eligibility check for new purchases
+      if (!data.citizenshipStatus) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Validation failed",
+            message: "Citizenship status is required",
+            details: [
+              {
+                path: ["citizenshipStatus"],
+                message: "Citizenship status is required for new purchases",
+              },
+            ],
+          },
+          { status: 400 }
+        );
+      }
+      eligibility = performFullEligibilityCheck(
+        data.citizenshipStatus,
+        data.propertyType,
+        data.propertyValue,
+        data.visaType,
+        data.isOrdinarilyResident
+      );
+    }
 
     // Calculate costs
     // Fetch cost and macro benchmarks
@@ -61,14 +98,17 @@ export async function POST(request: NextRequest) {
     );
 
     const calculationInput: CalculationInput = {
-      citizenshipStatus: data.citizenshipStatus,
+      citizenshipStatus:
+        data.purchaseType === "existing"
+          ? "australian" // Default for existing properties (not used for eligibility)
+          : data.citizenshipStatus || "australian", // Required for new purchases
       propertyType: data.propertyType,
       propertyValue: data.propertyValue,
       state: data.state,
       isFirstHome: data.isFirstHome || false,
       depositPercent: data.depositPercent || 20,
       entityType: data.entityType || "individual",
-      isOrdinarilyResident: data.isOrdinarilyResident,
+      isOrdinarilyResident: data.isOrdinarilyResident ?? true,
       expeditedFIRB: data.expeditedFIRB || false,
       costBenchmarks,
       macroBenchmarks,
@@ -86,6 +126,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
+        success: false,
         error: "Calculation failed",
         message: error instanceof Error ? error.message : "Unknown error",
       },

@@ -59,8 +59,16 @@ export const propertyDetailsSchema = z.object({
 // Full Form Schema (combines both steps)
 export const firbCalculatorSchema = z
   .object({
-    // Citizenship fields
-    citizenshipStatus: z.enum(["australian", "permanent", "temporary", "foreign"]),
+    // Purchase type
+    purchaseType: z.enum(["purchasing", "existing"], {
+      message: "Please select a purchase type",
+    }),
+    purchaseDate: z.string().optional(), // ISO date string
+
+    // Citizenship fields - required for both purchasing and existing
+    citizenshipStatus: z.enum(["australian", "permanent", "temporary", "foreign"], {
+      message: "Please select your citizenship status",
+    }),
     visaType: z.string().optional(),
     isOrdinarilyResident: z.boolean().optional(),
 
@@ -76,6 +84,19 @@ export const firbCalculatorSchema = z
     // Additional options
     expeditedFIRB: z.boolean().optional().default(false),
   })
+  .refine(
+    (data) => {
+      // If existing property, purchase date is required
+      if (data.purchaseType === "existing" && !data.purchaseDate) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Purchase date is required for existing properties",
+      path: ["purchaseDate"],
+    }
+  )
   .refine(
     (data) => {
       // Temporary residents need visa type

@@ -199,8 +199,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       image: {
         src: "/images/sample-report-page1.png",
         alt: t("sections.detailedReports.imageAlt"),
-        width: 720,
-        height: 512,
+        width: 1998,
+        height: 2122,
       },
       ctaLabel: t("sections.detailedReports.cta"),
       ctaHref: `/${locale}/calculator`,

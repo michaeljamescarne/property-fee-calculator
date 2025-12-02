@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PropertyType, AustralianState, EntityType } from "@/lib/firb/constants";
-import { Home, Building, MapPin, DollarSign, Percent, AlertCircle } from "lucide-react";
+import { Home, Building, MapPin, DollarSign, Percent, AlertCircle, Calendar } from "lucide-react";
 import AddressAutocomplete from "./AddressAutocomplete";
 
 interface PropertyDetailsStepProps {
@@ -30,6 +30,8 @@ interface PropertyDetailsStepProps {
   isFirstHome: boolean;
   depositPercent: number;
   entityType: EntityType;
+  purchaseType?: "purchasing" | "existing";
+  purchaseDate?: string;
   onPropertyTypeChange: (type: PropertyType) => void;
   onPropertyValueChange: (value: number) => void;
   onStateChange: (state: AustralianState) => void;
@@ -37,6 +39,7 @@ interface PropertyDetailsStepProps {
   onFirstHomeChange: (isFirstHome: boolean) => void;
   onDepositPercentChange: (percent: number) => void;
   onEntityTypeChange: (type: EntityType) => void;
+  onPurchaseDateChange?: (date: string) => void;
   errors?: Record<string, boolean>;
 }
 
@@ -48,6 +51,8 @@ export default function PropertyDetailsStep({
   isFirstHome,
   depositPercent,
   entityType,
+  purchaseType,
+  purchaseDate,
   onPropertyTypeChange,
   onPropertyValueChange,
   onStateChange,
@@ -55,6 +60,7 @@ export default function PropertyDetailsStep({
   onFirstHomeChange,
   onDepositPercentChange,
   onEntityTypeChange,
+  onPurchaseDateChange,
   errors = {},
 }: PropertyDetailsStepProps) {
   const t = useTranslations("FIRBCalculator.property");
@@ -198,6 +204,34 @@ export default function PropertyDetailsStep({
             <p className="text-sm text-gray-600">{formatCurrency(propertyValue)}</p>
           )}
         </div>
+
+        {/* Purchase Date (for existing properties only) */}
+        {purchaseType === "existing" && (
+          <div className="space-y-3">
+            <Label
+              htmlFor="purchase-date"
+              className="text-base font-semibold flex items-center gap-2 text-gray-900"
+            >
+              <Calendar className="h-5 w-5 text-gray-600" />
+              {t("purchaseDateLabel")} <span className="text-red-600">*</span>
+            </Label>
+            {errors.purchaseDate && (
+              <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+                <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                <p className="text-sm text-red-600">Please select a purchase date</p>
+              </div>
+            )}
+            <Input
+              id="purchase-date"
+              type="date"
+              value={purchaseDate || ""}
+              onChange={(e) => onPurchaseDateChange?.(e.target.value)}
+              max={new Date().toISOString().split("T")[0]}
+              className={`rounded ${errors.purchaseDate ? "border-red-500 focus:ring-red-500" : ""}`}
+            />
+            <p className="text-xs text-gray-500">{t("purchaseDateDescription")}</p>
+          </div>
+        )}
 
         {/* Property Address (Optional) */}
         <div className="space-y-3">

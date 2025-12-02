@@ -29,16 +29,13 @@ import type { CalculationData } from "@/types/database";
 import InvestmentSummary from "./InvestmentSummary";
 import CashFlowAnalysis from "./CashFlowAnalysis";
 import ProjectionChart from "./ProjectionChart";
-import InvestmentComparison from "./InvestmentComparison";
 import SensitivityAnalysis from "./SensitivityAnalysis";
 import TaxAnalysis from "./TaxAnalysis";
-import InvestmentScore from "./InvestmentScore";
 import OptimalUseCaseSection from "./OptimalUseCaseSection";
 import SaveCalculationButton from "./SaveCalculationButton";
 import LoginModal from "@/components/auth/LoginModal";
 import EligibilityResultCard from "./EligibilityResultCard";
 import PrintableReport from "./PrintableReport";
-import BenchmarkComparison from "./BenchmarkComparison";
 import { calculateOptimalUseCase, getDefaultOccupancyRate } from "@/lib/firb/optimal-use-case";
 import type { ShortStayRegulation } from "@/lib/firb/optimal-use-case";
 import type { BenchmarkData } from "@/app/api/benchmarks/route";
@@ -132,11 +129,7 @@ export default function ResultsPanel({
     // Otherwise generate defaults
     return generateDefaultInputs(propertyValue, state, propertyType, depositPercent, costs);
   }, [propInvestmentInputs, propertyValue, state, propertyType, depositPercent, costs]);
-  const [openSections, setOpenSections] = useState<string[]>([
-    "eligibility",
-    "costs",
-    "assumptions",
-  ]);
+  const [openSections, setOpenSections] = useState<string[]>(["eligibility", "costs"]);
 
   // Short-stay regulations state
   const [shortStayRegulations, setShortStayRegulations] = useState<ShortStayRegulation | null>(
@@ -187,9 +180,18 @@ export default function ResultsPanel({
         state,
         propertyType,
         costs,
-        macroBenchmarks || undefined
+        macroBenchmarks || undefined,
+        formData.purchaseDate
       ),
-    [investmentInputs, propertyValue, state, propertyType, costs, macroBenchmarks]
+    [
+      investmentInputs,
+      propertyValue,
+      state,
+      propertyType,
+      costs,
+      macroBenchmarks,
+      formData.purchaseDate,
+    ]
   );
 
   // Calculate optimal use case
@@ -511,40 +513,6 @@ export default function ResultsPanel({
         defaultOpen: true,
       },
       {
-        id: "assumptions",
-        title:
-          tAnalytics("inputs.title") === "FIRBCalculator.results.investmentAnalytics.inputs.title"
-            ? "Investment Assumptions"
-            : tAnalytics("inputs.title"),
-        description:
-          t("analysisParams.description") === "FIRBCalculator.results.analysisParams.description"
-            ? "These inputs were captured during the wizard. Update them to refine your analysis."
-            : t("analysisParams.description"),
-        content: renderAssumptionsSummary(),
-        defaultOpen: true,
-      },
-      {
-        id: "benchmark",
-        title:
-          t("benchmarkComparison.title") === "FIRBCalculator.results.benchmarkComparison.title"
-            ? "Market Benchmark Comparison"
-            : t("benchmarkComparison.title"),
-        description: t("benchmarkComparison.description", { level: state }),
-        content: isLoadingBenchmarks ? (
-          <div className="py-8 text-center text-gray-600">
-            {t("benchmarkComparison.loading") || "Loading benchmark data..."}
-          </div>
-        ) : (
-          <BenchmarkComparison
-            benchmarkData={benchmarkData}
-            investmentInputs={investmentInputs}
-            investmentAnalytics={investmentAnalytics}
-            propertyValue={propertyValue}
-            state={state}
-          />
-        ),
-      },
-      {
         id: "cashFlow",
         title:
           tAnalytics("cashFlow.title") ===
@@ -565,16 +533,6 @@ export default function ResultsPanel({
         content: <ProjectionChart analytics={investmentAnalytics} />,
       },
       {
-        id: "comparison",
-        title:
-          tAnalytics("comparison.title", { years: projectionYears }) ===
-          "FIRBCalculator.results.investmentAnalytics.comparison.title"
-            ? "Asset Comparison"
-            : tAnalytics("comparison.title", { years: projectionYears }),
-        description: tAnalytics("comparison.description", { years: projectionYears }),
-        content: <InvestmentComparison analytics={investmentAnalytics} />,
-      },
-      {
         id: "sensitivity",
         title:
           tAnalytics("sensitivity.title") ===
@@ -593,15 +551,6 @@ export default function ResultsPanel({
             : tAnalytics("taxAnalysis.title"),
         description: tAnalytics("taxAnalysis.description"),
         content: <TaxAnalysis analytics={investmentAnalytics} />,
-      },
-      {
-        id: "score",
-        title:
-          tAnalytics("score.title") === "FIRBCalculator.results.investmentAnalytics.score.title"
-            ? "Investment Score"
-            : tAnalytics("score.title"),
-        description: tAnalytics("score.description"),
-        content: <InvestmentScore analytics={investmentAnalytics} />,
       },
     ];
 
