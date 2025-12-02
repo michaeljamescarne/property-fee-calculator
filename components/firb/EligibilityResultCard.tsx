@@ -323,11 +323,13 @@ export default function EligibilityResultCard({
                       )}
                   {formData.expeditedFIRB ? " (Expedited processing)" : " (Standard processing)"}
                 </p>
-                {costs?.upfrontCosts?.firbFee && formData.expeditedFIRB && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    Standard fee: {formatCurrency(costs.upfrontCosts.firbFee / 2)}
-                  </p>
-                )}
+                {costs?.upfrontCosts?.firbFee != null &&
+                  costs.upfrontCosts.firbFee > 0 &&
+                  formData.expeditedFIRB && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Standard fee: {formatCurrency(costs.upfrontCosts.firbFee / 2)}
+                    </p>
+                  )}
               </div>
             </div>
           )}
