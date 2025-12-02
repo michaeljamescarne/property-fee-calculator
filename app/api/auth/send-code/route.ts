@@ -76,9 +76,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(error, { status: 500 });
     }
 
+    // Check if Resend API key is configured
+    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === "placeholder") {
+      console.error("RESEND_API_KEY is not configured");
+      const error: AuthErrorResponse = {
+        error: "SERVER_ERROR",
+        message: "Email service is not configured. Please contact support.",
+      };
+      return NextResponse.json(error, { status: 500 });
+    }
+
     // Send email via Resend
     try {
-      await resend.emails.send({
+      const { data, error: emailError } = await resend.emails.send({
         from: EMAIL_CONFIG.from,
         to: [email],
         subject: "Your Login Code - Property Costs",
@@ -116,10 +126,34 @@ export async function POST(request: NextRequest) {
           </html>
         `,
       });
+
+      // Check if email was actually sent
+      if (emailError) {
+        console.error("Resend API error:", emailError);
+        const error: AuthErrorResponse = {
+          error: "SERVER_ERROR",
+          message: "Failed to send email. Please try again or contact support.",
+        };
+        return NextResponse.json(error, { status: 500 });
+      }
+
+      if (!data || !data.id) {
+        console.error("Resend API returned no data or message ID");
+        const error: AuthErrorResponse = {
+          error: "SERVER_ERROR",
+          message: "Failed to send email. Please try again or contact support.",
+        };
+        return NextResponse.json(error, { status: 500 });
+      }
+
+      console.log("Magic code email sent successfully to:", email, "Message ID:", data.id);
     } catch (emailError) {
-      console.error("Email error:", emailError);
-      // Code is stored, so we can still return success
-      // User can request a new code if needed
+      console.error("Email sending exception:", emailError);
+      const error: AuthErrorResponse = {
+        error: "SERVER_ERROR",
+        message: "Failed to send email. Please try again or contact support.",
+      };
+      return NextResponse.json(error, { status: 500 });
     }
 
     // Update rate limit
