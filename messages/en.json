@@ -908,5 +908,17 @@
         "general": "An error occurred. Please try again."
       }
     }
+  },
+  "BetaBanner": {
+    "badge": "Beta",
+    "message": "This service is currently in beta development. Help us improve by sharing your feedback!",
+    "messageMobile": "Beta - Help us improve!",
+    "ctaButton": "Get Updates",
+    "closeButton": "Close banner",
+    "ariaLabel": "Beta development notice",
+    "emailModal": {
+      "title": "Stay Updated",
+      "description": "Enter your email to receive updates about new features, improvements, and important announcements."
+    }
   }
 }

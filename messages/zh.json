@@ -908,5 +908,17 @@
         "general": "发生错误。请重试。"
       }
     }
+  },
+  "BetaBanner": {
+    "badge": "测试版",
+    "message": "此服务目前处于测试开发阶段。通过分享您的反馈帮助我们改进！",
+    "messageMobile": "测试版 - 帮助我们改进！",
+    "ctaButton": "获取更新",
+    "closeButton": "关闭横幅",
+    "ariaLabel": "测试开发通知",
+    "emailModal": {
+      "title": "保持更新",
+      "description": "输入您的电子邮件以接收有关新功能、改进和重要公告的更新。"
+    }
   }
 }

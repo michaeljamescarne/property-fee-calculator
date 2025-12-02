@@ -5,6 +5,7 @@ import "../globals.css";
 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import BetaBanner from "@/components/BetaBanner";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { generateOrganizationSchema, injectStructuredData } from "@/lib/schema/organization-schema";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
@@ -137,6 +138,7 @@ export default async function LocaleLayout({
               Skip to main content
             </a>
             <div className="flex flex-col min-h-screen">
+              <BetaBanner />
               <Navigation />
               <main id="main-content" className="flex-1">
                 {children}
