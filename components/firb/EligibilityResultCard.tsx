@@ -321,7 +321,7 @@ export default function EligibilityResultCard({
                         calculateFIRBFee(formData.propertyValue, formData.propertyType) *
                           (formData.expeditedFIRB ? 2 : 1)
                       )}
-                  {formData.expeditedFIRB && " (Expedited processing)"}
+                  {formData.expeditedFIRB ? " (Expedited processing)" : " (Standard processing)"}
                 </p>
                 {costs?.upfrontCosts?.firbFee && formData.expeditedFIRB && (
                   <p className="text-xs text-gray-500 mt-1">

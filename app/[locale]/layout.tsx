@@ -137,12 +137,10 @@ export default async function LocaleLayout({
             >
               Skip to main content
             </a>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col">
               <BetaBanner />
               <Navigation />
-              <main id="main-content" className="flex-1">
-                {children}
-              </main>
+              <main id="main-content">{children}</main>
               <Footer />
             </div>
           </AuthProvider>

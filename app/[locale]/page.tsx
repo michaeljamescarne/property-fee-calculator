@@ -3,10 +3,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Calculator, TrendingUp, Shield, FileText, CheckCircle, Info } from "lucide-react";
+import { Calculator, TrendingUp, Shield, FileText, CheckCircle } from "lucide-react";
 import LeadCaptureForm from "@/components/lead/LeadCaptureForm";
 import { getLocaleUrl } from "@/lib/utils/schema-base-url";
-import { CustomAlert } from "@/components/ui/custom-alert";
 
 export async function generateMetadata({
   params,
@@ -375,13 +374,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {/* Disclaimer Section */}
       <section className="container mx-auto px-4 py-6">
         <div className="max-w-4xl mx-auto">
-          <CustomAlert
-            variant="default"
-            icon={<Info className="h-4 w-4" />}
-            title={tResults("disclaimer.title")}
-          >
-            <p className="text-sm">{tResults("disclaimer.content")}</p>
-          </CustomAlert>
+          <div className="p-6 bg-blue-50 border border-blue-200 rounded">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+              {tResults("disclaimer.title")}
+            </h2>
+            <p className="text-gray-600">{tResults("disclaimer.content")}</p>
+          </div>
         </div>
       </section>
 
