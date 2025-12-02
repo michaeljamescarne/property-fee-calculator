@@ -298,10 +298,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
                 {currency(analytics.cashFlow.annual.taxBenefit)}
               </p>
               <p className="text-sm text-green-600 mt-2">
-                {currency(
-                  analytics.cashFlow.monthly.afterTaxCashFlow +
-                    analytics.cashFlow.monthly.netCashFlow
-                )}{" "}
+                {currency(analytics.taxAnalysis.monthlyTaxSaving)}{" "}
                 {t("cashFlow.savedPerMonth") ===
                 "FIRBCalculator.investmentAnalytics.cashFlow.savedPerMonth"
                   ? "saved/month"
