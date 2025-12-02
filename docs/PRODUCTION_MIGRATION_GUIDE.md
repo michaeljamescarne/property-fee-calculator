@@ -21,6 +21,7 @@ The error `column user_profiles.role does not exist` indicates the migration has
 
 4. **Verify the Migration**
    - Run this query to confirm the column exists:
+
    ```sql
    SELECT column_name, data_type, column_default
    FROM information_schema.columns

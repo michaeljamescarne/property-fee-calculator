@@ -49,3 +49,4 @@ WHERE email = 'michaeljamescarne@gmail.com';
 -- You should see a row with role = 'admin'
 -- If you see role = 'user' or NULL, the UPDATE didn't work - check your email address
 
+

@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import ProgressIndicator, { Step } from "@/components/firb/ProgressIndicator";
+import PurchaseTypeStep from "@/components/firb/PurchaseTypeStep";
 import CitizenshipStep from "@/components/firb/CitizenshipStep";
 import PropertyDetailsStep from "@/components/firb/PropertyDetailsStep";
 import FinancialDetailsStep from "@/components/firb/FinancialDetailsStep";
@@ -39,14 +40,16 @@ export default function FIRBCalculatorPage() {
   const tPdf = useTranslations("FIRBCalculator.pdf");
   const locale = useLocale();
 
-  // Wizard state
-  const [currentStep, setCurrentStep] = useState<Step>("citizenship");
+  // Wizard state - always start at purchaseType for new calculations
+  const [currentStep, setCurrentStep] = useState<Step>("purchaseType");
   const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
 
   const isResults = currentStep === "results";
 
   // Form data
   const [formData, setFormData] = useState<Partial<FIRBCalculatorFormData>>({
+    purchaseType: undefined,
+    purchaseDate: undefined,
     citizenshipStatus: "" as CitizenshipStatus,
     propertyType: "" as PropertyType,
     propertyValue: 0,
@@ -132,6 +135,17 @@ export default function FIRBCalculatorPage() {
 
   // Get URL search parameters
   const searchParams = useSearchParams();
+
+  // CRITICAL: Force purchaseType step if it's not set - runs on every render
+  useEffect(() => {
+    // If purchaseType is not set, FORCE currentStep to be purchaseType (unless loading saved calc or on results)
+    if (!isLoadingSavedCalculation && !formData.purchaseType && currentStep !== "results") {
+      if (currentStep !== "purchaseType") {
+        setCurrentStep("purchaseType");
+        setCompletedSteps([]);
+      }
+    }
+  }, [formData.purchaseType, currentStep, isLoadingSavedCalculation]);
 
   // Load saved calculation if load parameter is present
   useEffect(() => {
@@ -284,6 +298,8 @@ export default function FIRBCalculatorPage() {
 
         // Pre-fill form data
         setFormData({
+          purchaseType: calculationData.purchaseType || "purchasing", // Default to purchasing for backward compatibility
+          purchaseDate: calculationData.purchaseDate,
           citizenshipStatus: calculationData.citizenshipStatus,
           visaType: calculationData.visaType,
           isOrdinarilyResident: calculationData.isOrdinarilyResident,
@@ -444,6 +460,12 @@ export default function FIRBCalculatorPage() {
   const getValidationErrors = (step: Step): Record<string, boolean> => {
     const errors: Record<string, boolean> = {};
 
+    if (step === "purchaseType") {
+      if (!formData.purchaseType) {
+        errors.purchaseType = true;
+      }
+    }
+
     if (step === "citizenship") {
       if (!formData.citizenshipStatus) {
         errors.citizenshipStatus = true;
@@ -463,6 +485,10 @@ export default function FIRBCalculatorPage() {
       if (!formData.state) {
         errors.state = true;
       }
+      // For existing properties, purchase date is required
+      if (formData.purchaseType === "existing" && !formData.purchaseDate) {
+        errors.purchaseDate = true;
+      }
     }
 
     if (step === "financial") {
@@ -475,17 +501,19 @@ export default function FIRBCalculatorPage() {
     return errors;
   };
 
-  // Validate current step
-  const validateStep = (step: Step): boolean => {
-    const errors = getValidationErrors(step);
-    return Object.keys(errors).length === 0;
-  };
-
   // Handle next button
   const handleNext = (e?: React.MouseEvent) => {
     // Prevent any default form submission behavior
     if (e) {
       e.preventDefault();
+    }
+
+    // CRITICAL: Block navigation if purchaseType is not set (unless we're on purchaseType step)
+    if (!formData.purchaseType && currentStep !== "purchaseType") {
+      console.log("🔴 BLOCKED navigation - purchaseType not set, resetting to purchaseType");
+      setCurrentStep("purchaseType");
+      setValidationErrors({ purchaseType: true });
+      return;
     }
 
     const errors = getValidationErrors(currentStep);
@@ -500,7 +528,11 @@ export default function FIRBCalculatorPage() {
         let elementId = "";
 
         // Map error keys to element IDs
-        if (currentStep === "citizenship") {
+        if (currentStep === "purchaseType") {
+          if (firstErrorKey === "purchaseType") {
+            elementId = "purchase-type-section";
+          }
+        } else if (currentStep === "citizenship") {
           if (firstErrorKey === "citizenshipStatus") {
             elementId = "citizenship-status-section";
           } else if (firstErrorKey === "visaType") {
@@ -513,6 +545,8 @@ export default function FIRBCalculatorPage() {
             elementId = "property-value";
           } else if (firstErrorKey === "state") {
             elementId = "state";
+          } else if (firstErrorKey === "purchaseDate") {
+            elementId = "purchase-date";
           }
         } else if (currentStep === "financial") {
           if (firstErrorKey === "estimatedWeeklyRent") {
@@ -555,7 +589,9 @@ export default function FIRBCalculatorPage() {
     }
 
     // Move to next step
-    if (currentStep === "citizenship") {
+    if (currentStep === "purchaseType") {
+      setCurrentStep("citizenship");
+    } else if (currentStep === "citizenship") {
       setCurrentStep("property");
     } else if (currentStep === "property") {
       setCurrentStep("financial");
@@ -566,8 +602,16 @@ export default function FIRBCalculatorPage() {
 
   // Handle back button
   const handleBack = () => {
+    // CRITICAL: If purchaseType is not set, always go back to purchaseType
+    if (!formData.purchaseType) {
+      setCurrentStep("purchaseType");
+      return;
+    }
+
     if (currentStep === "property") {
       setCurrentStep("citizenship");
+    } else if (currentStep === "citizenship") {
+      setCurrentStep("purchaseType");
     } else if (currentStep === "financial") {
       setCurrentStep("property");
     } else if (currentStep === "review") {
@@ -596,10 +640,29 @@ export default function FIRBCalculatorPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Calculation failed");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Calculation error response:", errorData);
+
+        // Build detailed error message
+        let errorMessage = errorData.message || errorData.error || "Validation failed";
+        if (errorData.details && Array.isArray(errorData.details)) {
+          const validationErrors = errorData.details
+            .map((detail: { path?: string[]; message?: string }) => {
+              const path = detail.path?.join(".") || detail.path?.[0] || "field";
+              return `${path}: ${detail.message || "Invalid value"}`;
+            })
+            .join("\n");
+          errorMessage = `${errorMessage}\n\n${validationErrors}`;
+        }
+
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || "Calculation failed");
+      }
 
       setEligibility(data.eligibility);
       setCosts(data.costs);
@@ -611,7 +674,9 @@ export default function FIRBCalculatorPage() {
       setCurrentStep("results");
     } catch (error) {
       console.error("Calculation error:", error);
-      alert("Failed to calculate. Please try again.");
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to calculate. Please try again.";
+      alert(errorMessage);
     } finally {
       setIsCalculating(false);
     }
@@ -671,6 +736,8 @@ export default function FIRBCalculatorPage() {
   const handleStartAgain = () => {
     // Reset all form data
     setFormData({
+      purchaseType: undefined,
+      purchaseDate: undefined,
       citizenshipStatus: undefined,
       visaType: undefined,
       isOrdinarilyResident: undefined,
@@ -684,7 +751,7 @@ export default function FIRBCalculatorPage() {
     });
 
     // Reset steps
-    setCurrentStep("citizenship");
+    setCurrentStep("purchaseType");
     setCompletedSteps([]);
 
     // Clear results
@@ -726,7 +793,11 @@ export default function FIRBCalculatorPage() {
 
             {/* Progress Indicator */}
             {!isResults && (
-              <ProgressIndicator currentStep={currentStep} completedSteps={completedSteps} />
+              <ProgressIndicator
+                currentStep={currentStep}
+                completedSteps={completedSteps}
+                purchaseType={formData.purchaseType as "purchasing" | "existing" | undefined}
+              />
             )}
 
             {/* Step Content */}
@@ -741,24 +812,22 @@ export default function FIRBCalculatorPage() {
                 </div>
               )}
 
-              {/* Citizenship Step */}
-              {!isLoadingSavedCalculation && currentStep === "citizenship" && (
+              {/* Purchase Type Step - Show when currentStep is purchaseType */}
+              {!isLoadingSavedCalculation && currentStep === "purchaseType" && (
                 <div className="space-y-6">
-                  <CitizenshipStep
-                    citizenshipStatus={formData.citizenshipStatus || ""}
-                    visaType={formData.visaType}
-                    isOrdinarilyResident={formData.isOrdinarilyResident}
-                    onCitizenshipStatusChange={(status) =>
-                      updateFormData({ citizenshipStatus: status })
-                    }
-                    onVisaTypeChange={(type) => updateFormData({ visaType: type })}
-                    onOrdinarilyResidentChange={(isResident) =>
-                      updateFormData({ isOrdinarilyResident: isResident })
-                    }
+                  <PurchaseTypeStep
+                    purchaseType={formData.purchaseType || ""}
+                    onPurchaseTypeChange={(type) => {
+                      updateFormData({ purchaseType: type });
+                      // Ensure we stay on purchaseType step after selection
+                      if (currentStep !== "purchaseType") {
+                        setCurrentStep("purchaseType");
+                      }
+                    }}
                     errors={validationErrors}
                   />
 
-                  {/* Navigation */}
+                  {/* Navigation - No back button on first step */}
                   <div className="flex justify-end">
                     <Button size="lg" onClick={handleNext} className="gap-2">
                       {t("next")}
@@ -768,44 +837,83 @@ export default function FIRBCalculatorPage() {
                 </div>
               )}
 
-              {/* Property Details Step */}
-              {!isLoadingSavedCalculation && currentStep === "property" && (
-                <div className="space-y-6">
-                  <PropertyDetailsStep
-                    propertyType={formData.propertyType || ""}
-                    propertyValue={formData.propertyValue || 0}
-                    state={formData.state || ""}
-                    propertyAddress={formData.propertyAddress}
-                    isFirstHome={formData.isFirstHome || false}
-                    depositPercent={formData.depositPercent || 20}
-                    entityType={formData.entityType || "individual"}
-                    onPropertyTypeChange={(type) => updateFormData({ propertyType: type })}
-                    onPropertyValueChange={(value) => updateFormData({ propertyValue: value })}
-                    onStateChange={(state) => updateFormData({ state })}
-                    onPropertyAddressChange={(address) =>
-                      updateFormData({ propertyAddress: address })
-                    }
-                    onFirstHomeChange={(isFirstHome) => updateFormData({ isFirstHome })}
-                    onDepositPercentChange={(percent) =>
-                      updateFormData({ depositPercent: percent })
-                    }
-                    onEntityTypeChange={(type) => updateFormData({ entityType: type })}
-                    errors={validationErrors}
-                  />
+              {/* Citizenship Step - Show for both purchasing and existing */}
+              {!isLoadingSavedCalculation &&
+                currentStep === "citizenship" &&
+                formData.purchaseType && (
+                  <div className="space-y-6">
+                    <CitizenshipStep
+                      citizenshipStatus={formData.citizenshipStatus || ""}
+                      visaType={formData.visaType}
+                      isOrdinarilyResident={formData.isOrdinarilyResident}
+                      onCitizenshipStatusChange={(status) =>
+                        updateFormData({ citizenshipStatus: status })
+                      }
+                      onVisaTypeChange={(type) => updateFormData({ visaType: type })}
+                      onOrdinarilyResidentChange={(isResident) =>
+                        updateFormData({ isOrdinarilyResident: isResident })
+                      }
+                      errors={validationErrors}
+                    />
 
-                  {/* Navigation */}
-                  <div className="flex justify-between">
-                    <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
-                      <ArrowLeft className="h-5 w-5" />
-                      {t("back")}
-                    </Button>
-                    <Button size="lg" onClick={handleNext} className="gap-2">
-                      {t("next")}
-                      <ArrowRight className="h-5 w-5" />
-                    </Button>
+                    {/* Navigation */}
+                    <div className="flex justify-between">
+                      <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
+                        <ArrowLeft className="h-5 w-5" />
+                        {t("back")}
+                      </Button>
+                      <Button size="lg" onClick={handleNext} className="gap-2">
+                        {t("next")}
+                        <ArrowRight className="h-5 w-5" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+
+              {/* Property Details Step - Show after citizenship step */}
+              {!isLoadingSavedCalculation &&
+                currentStep === "property" &&
+                formData.purchaseType &&
+                formData.citizenshipStatus && (
+                  <div className="space-y-6">
+                    <PropertyDetailsStep
+                      propertyType={formData.propertyType || ""}
+                      propertyValue={formData.propertyValue || 0}
+                      state={formData.state || ""}
+                      propertyAddress={formData.propertyAddress}
+                      isFirstHome={formData.isFirstHome || false}
+                      depositPercent={formData.depositPercent || 20}
+                      entityType={formData.entityType || "individual"}
+                      purchaseType={formData.purchaseType}
+                      purchaseDate={formData.purchaseDate}
+                      onPropertyTypeChange={(type) => updateFormData({ propertyType: type })}
+                      onPropertyValueChange={(value) => updateFormData({ propertyValue: value })}
+                      onStateChange={(state) => updateFormData({ state })}
+                      onPropertyAddressChange={(address) =>
+                        updateFormData({ propertyAddress: address })
+                      }
+                      onFirstHomeChange={(isFirstHome) => updateFormData({ isFirstHome })}
+                      onDepositPercentChange={(percent) =>
+                        updateFormData({ depositPercent: percent })
+                      }
+                      onEntityTypeChange={(type) => updateFormData({ entityType: type })}
+                      onPurchaseDateChange={(date) => updateFormData({ purchaseDate: date })}
+                      errors={validationErrors}
+                    />
+
+                    {/* Navigation */}
+                    <div className="flex justify-between">
+                      <Button size="lg" variant="outline" onClick={handleBack} className="gap-2">
+                        <ArrowLeft className="h-5 w-5" />
+                        {t("back")}
+                      </Button>
+                      <Button size="lg" onClick={handleNext} className="gap-2">
+                        {t("next")}
+                        <ArrowRight className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
 
               {/* Financial Details Step */}
               {!isLoadingSavedCalculation &&

@@ -8,20 +8,37 @@
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export type Step = "citizenship" | "property" | "financial" | "review" | "results";
+export type Step = "purchaseType" | "citizenship" | "property" | "financial" | "review" | "results";
 
 interface ProgressIndicatorProps {
   currentStep: Step;
   completedSteps: Step[];
+  purchaseType?: "purchasing" | "existing";
 }
 
-const steps: Step[] = ["citizenship", "property", "financial", "review", "results"];
+const allSteps: Step[] = [
+  "purchaseType",
+  "citizenship",
+  "property",
+  "financial",
+  "review",
+  "results",
+];
 
 export default function ProgressIndicator({ currentStep, completedSteps }: ProgressIndicatorProps) {
   const t = useTranslations("FIRBCalculator.progress");
 
+  // Always show all steps - citizenship is required for both purchasing and existing
+  const steps: Step[] = allSteps;
+
   const getStepIndex = (step: Step) => steps.indexOf(step);
   const currentIndex = getStepIndex(currentStep);
+
+  // If currentStep is not in the filtered steps, default to purchaseType
+  if (currentIndex === -1 && currentStep !== "results") {
+    // This shouldn't happen, but as a safeguard
+    return null;
+  }
 
   return (
     <div className="w-full py-10">

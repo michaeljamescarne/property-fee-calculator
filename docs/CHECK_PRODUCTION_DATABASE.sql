@@ -47,3 +47,4 @@ SELECT EXISTS (
 -- If role_column_exists = false, you MUST run the migration:
 -- supabase/migrations/20250118_add_role_to_user_profiles.sql
 
+

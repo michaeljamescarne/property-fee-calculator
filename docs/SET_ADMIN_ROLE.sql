@@ -15,3 +15,4 @@ WHERE email = 'michaeljamescarne@gmail.com';
 -- supabase/migrations/20250118_add_role_to_user_profiles.sql
 
 
+

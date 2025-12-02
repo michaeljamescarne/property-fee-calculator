@@ -132,7 +132,8 @@ export function calculateInvestmentAnalytics(
   state: AustralianState,
   propertyType: PropertyType,
   existingCosts: CostBreakdown,
-  macroBenchmarks?: Partial<Record<MacroMetric, number>>
+  macroBenchmarks?: Partial<Record<MacroMetric, number>>,
+  purchaseDate?: string
 ): InvestmentAnalytics {
   // 1. RENTAL YIELD CALCULATIONS
   const annualRent = inputs.estimatedWeeklyRent * 52;
@@ -265,22 +266,40 @@ export function calculateInvestmentAnalytics(
   const yearByYear: YearlyProjection[] = [];
   let cumulativeCashFlow = 0;
 
-  for (let year = 1; year <= inputs.holdPeriod; year++) {
-    const yearPropertyValue = propertyValue * Math.pow(1 + inputs.capitalGrowthRate / 100, year);
-    const yearLoanBalance = loanSchedule[year - 1]?.balance || inputs.loanAmount;
+  // Calculate years owned if purchase date is provided (for existing properties)
+  let yearsOwned = 0;
+  let startYear = 1;
+  if (purchaseDate) {
+    const purchaseDateObj = new Date(purchaseDate);
+    const currentDate = new Date();
+    const yearsDiff = currentDate.getFullYear() - purchaseDateObj.getFullYear();
+    const monthsDiff = currentDate.getMonth() - purchaseDateObj.getMonth();
+    yearsOwned = yearsDiff + (monthsDiff >= 0 ? 0 : -1);
+    startYear = yearsOwned + 1; // Start projections from next year
+  }
+
+  for (let projectionYear = 1; projectionYear <= inputs.holdPeriod; projectionYear++) {
+    // For existing properties, calculate from purchase date
+    const actualYear = purchaseDate ? startYear + projectionYear - 1 : projectionYear;
+    const yearsSincePurchase = purchaseDate ? actualYear - 1 : projectionYear - 1;
+
+    const yearPropertyValue =
+      propertyValue * Math.pow(1 + inputs.capitalGrowthRate / 100, yearsSincePurchase);
+    const yearLoanBalance = loanSchedule[yearsSincePurchase]?.balance || inputs.loanAmount;
     const yearEquity = yearPropertyValue - yearLoanBalance;
 
-    // Rent grows annually
-    const yearRentalIncome = annualRent * Math.pow(1 + inputs.rentGrowthRate / 100, year - 1);
+    // Rent grows annually from purchase date
+    const yearRentalIncome =
+      annualRent * Math.pow(1 + inputs.rentGrowthRate / 100, yearsSincePurchase);
     const yearEffectiveRent = yearRentalIncome * (1 - inputs.vacancyRate / 100);
 
     // Expenses (some grow with inflation, some are fixed)
-    const yearExpenses = totalExpenses * Math.pow(1.025, year - 1); // 2.5% inflation
+    const yearExpenses = totalExpenses * Math.pow(1.025, yearsSincePurchase); // 2.5% inflation
     const yearLoanRepayment = annualLoanRepayment; // Fixed
 
     const yearNetCashFlow = yearEffectiveRent - yearExpenses;
     const yearTaxBenefit = calculateTaxBenefit(
-      deductions.total * Math.pow(1.025, year - 1),
+      deductions.total * Math.pow(1.025, yearsSincePurchase),
       yearEffectiveRent,
       inputs.marginalTaxRate
     );
@@ -291,7 +310,7 @@ export function calculateInvestmentAnalytics(
     const cumulativeReturn = yearEquity - totalCashInvested + cumulativeCashFlow;
 
     yearByYear.push({
-      year,
+      year: actualYear, // Use actual year number for display
       propertyValue: yearPropertyValue,
       loanBalance: yearLoanBalance,
       equity: yearEquity,

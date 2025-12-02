@@ -164,7 +164,9 @@ export interface SavedCalculation {
 // Full calculation data structure
 export interface CalculationData {
   // Form inputs
-  citizenshipStatus: CitizenshipStatus;
+  purchaseType?: "purchasing" | "existing";
+  purchaseDate?: string; // ISO date string
+  citizenshipStatus?: CitizenshipStatus;
   visaType?: string;
   isOrdinarilyResident?: boolean;
   propertyType: PropertyType;

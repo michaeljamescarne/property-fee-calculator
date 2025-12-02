@@ -44,11 +44,25 @@
     "next": "Next",
     "back": "Back",
     "progress": {
+      "purchaseType": "Type",
       "citizenship": "Citizenship",
       "property": "Property",
       "financial": "Financial",
       "review": "Review",
       "results": "Results"
+    },
+    "purchaseType": {
+      "title": "Purchase Type",
+      "description": "Are you purchasing a new property or reviewing an existing investment?",
+      "typeLabel": "What would you like to do?",
+      "purchasing": {
+        "title": "Purchasing a property",
+        "description": "I'm looking to purchase a new property and need FIRB calculations"
+      },
+      "existing": {
+        "title": "Reviewing an existing investment",
+        "description": "I already own a property and want to review its performance"
+      }
     },
     "citizenship": {
       "title": "Citizenship Status",
@@ -120,6 +134,9 @@
       },
       "depositLabel": "Deposit Percentage",
       "depositAmount": "Deposit Amount",
+      "purchaseDateLabel": "Purchase Date",
+      "purchaseDateDescription": "When did you purchase this property?",
+      "purchaseDatePlaceholder": "Select purchase date",
       "entityLabel": "Who is purchasing the property?",
       "entityPlaceholder": "Select entity type",
       "entityDescription": "The entity type may affect FIRB requirements and tax implications",
@@ -215,7 +232,9 @@
           "required": "FIRB Required",
           "requiredDesc": "You must obtain FIRB approval before purchasing this property.",
           "prohibited": "Purchase Prohibited",
-          "prohibitedDesc": "You are not eligible to purchase this property type."
+          "prohibitedDesc": "You are not eligible to purchase this property type.",
+          "existing": "Existing Property, Not Assessed",
+          "existingDesc": "This property was purchased previously. FIRB approval was obtained (or not required) at the time of purchase."
         },
         "summary": {
           "title": "Eligibility Summary",

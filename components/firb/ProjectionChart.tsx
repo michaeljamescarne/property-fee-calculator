@@ -10,7 +10,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { TrendingUp } from "lucide-react";
 import type { InvestmentAnalytics } from "@/types/investment";
 import { useInvestmentTranslations } from "@/lib/hooks/useInvestmentTranslations";
 
@@ -39,7 +38,7 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
       : t("projections.tableHeaders.cumulativeReturn");
 
   const chartData = analytics.yearByYear.map((year) => ({
-    year: `Year ${year.year}`,
+    year: year.year > 10 ? `Year ${year.year}` : `Year ${year.year}`, // Show actual year for existing properties
     [propertyValueKey]: year.propertyValue,
     "Loan Balance": year.loanBalance,
     [equityKey]: year.equity,

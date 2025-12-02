@@ -113,9 +113,19 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
     }
   }
 
-  // If profile not found by ID, try by email (handles case where user ID changed)
+  // If profile not found by ID OR profile found but role is null/missing, try by email
+  // (handles case where user ID changed or profile was created with wrong ID)
   let profile = profileById;
-  if (idError || !profile) {
+  const shouldTryEmailLookup = idError || !profile || !profile.role;
+
+  if (shouldTryEmailLookup) {
+    if (profile && !profile.role) {
+      console.log("Admin check - Profile found by ID but role is null, trying email lookup:", {
+        userId: session.user.id,
+        profileId: profile.id,
+        userEmail: session.user.email,
+      });
+    }
     console.log("Admin check - Profile not found by ID, trying email lookup:", {
       userId: session.user.id,
       userEmail: session.user.email,
@@ -163,8 +173,17 @@ export async function requireAdmin(locale: string = "en"): Promise<AdminUser> {
       redirect(`/${locale}/dashboard`);
     }
 
-    // Use the typed profileByEmail
+    // Use the typed profileByEmail (prefer email lookup result as it's more reliable)
     profile = profileByEmail;
+
+    // Log if we're using email lookup result instead of ID lookup
+    if (profileById && profileById.id !== profileByEmail.id) {
+      console.log("Admin check - Using email lookup result (different ID):", {
+        idLookupId: profileById.id,
+        emailLookupId: profileByEmail.id,
+        emailLookupRole: profileByEmail.role,
+      });
+    }
   }
 
   // At this point, profile should not be null (we've checked above)

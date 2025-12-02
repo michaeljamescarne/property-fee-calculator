@@ -6,7 +6,6 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   CheckCircle,
   XCircle,
@@ -40,6 +39,7 @@ import type { CostBreakdown } from "@/lib/firb/calculations";
 interface EligibilityResultCardProps {
   eligibility: EligibilityResult;
   formData?: {
+    purchaseType?: "purchasing" | "existing";
     citizenshipStatus?: CitizenshipStatus;
     visaType?: string;
     isOrdinarilyResident?: boolean;
@@ -73,6 +73,15 @@ export default function EligibilityResultCard({
 
   // Determine header color and icon based on eligibility
   const getHeaderStyles = () => {
+    // Existing properties get special status
+    if (formData?.purchaseType === "existing") {
+      return {
+        bgClass: "bg-blue-600",
+        icon: <CheckCircle className="w-5 h-5 mr-2" />,
+        badgeText: t("approval.existing"),
+        titleText: t("approval.existingDesc"),
+      };
+    }
     if (!eligibility.canPurchase) {
       return {
         bgClass: "bg-red-600",
@@ -220,14 +229,18 @@ export default function EligibilityResultCard({
         <div className="space-y-3">
           <div
             className={`flex items-start gap-3 p-3 rounded border ${
-              !eligibility.canPurchase
-                ? "bg-red-50 border-red-200"
-                : eligibility.requiresFIRB
-                  ? "bg-amber-50 border-amber-200"
-                  : "bg-green-50 border-green-200"
+              formData?.purchaseType === "existing"
+                ? "bg-blue-50 border-blue-200"
+                : !eligibility.canPurchase
+                  ? "bg-red-50 border-red-200"
+                  : eligibility.requiresFIRB
+                    ? "bg-amber-50 border-amber-200"
+                    : "bg-green-50 border-green-200"
             }`}
           >
-            {!eligibility.canPurchase ? (
+            {formData?.purchaseType === "existing" ? (
+              <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            ) : !eligibility.canPurchase ? (
               <XCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
             ) : eligibility.requiresFIRB ? (
               <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
@@ -237,29 +250,35 @@ export default function EligibilityResultCard({
             <div className="flex-1">
               <p
                 className={`font-medium ${
-                  !eligibility.canPurchase
-                    ? "text-red-900"
-                    : eligibility.requiresFIRB
-                      ? "text-amber-900"
-                      : "text-green-900"
+                  formData?.purchaseType === "existing"
+                    ? "text-blue-900"
+                    : !eligibility.canPurchase
+                      ? "text-red-900"
+                      : eligibility.requiresFIRB
+                        ? "text-amber-900"
+                        : "text-green-900"
                 }`}
               >
                 {t("requirements.firbApplication")}
               </p>
               <p
                 className={`text-sm ${
-                  !eligibility.canPurchase
-                    ? "text-red-700"
-                    : eligibility.requiresFIRB
-                      ? "text-amber-700"
-                      : "text-green-700"
+                  formData?.purchaseType === "existing"
+                    ? "text-blue-700"
+                    : !eligibility.canPurchase
+                      ? "text-red-700"
+                      : eligibility.requiresFIRB
+                        ? "text-amber-700"
+                        : "text-green-700"
                 }`}
               >
-                {!eligibility.canPurchase
-                  ? "Purchase is prohibited"
-                  : eligibility.requiresFIRB
-                    ? "Required before contract signing"
-                    : "No FIRB application required"}
+                {formData?.purchaseType === "existing"
+                  ? "Existing property, not assessed"
+                  : !eligibility.canPurchase
+                    ? "Purchase is prohibited"
+                    : eligibility.requiresFIRB
+                      ? "Required before contract signing"
+                      : "No FIRB application required"}
               </p>
             </div>
           </div>
