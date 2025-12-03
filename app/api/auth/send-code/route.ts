@@ -130,9 +130,50 @@ export async function POST(request: NextRequest) {
       // Check if email was actually sent
       if (emailError) {
         console.error("Resend API error:", emailError);
+
+        // Provide more specific error messages for common Resend errors
+        let errorMessage = "Failed to send email. Please try again or contact support.";
+
+        // Check for Resend validation errors (403 status with specific messages)
+        const errorDetails = emailError as {
+          statusCode?: number;
+          name?: string;
+          message?: string;
+        };
+
+        if (errorDetails.statusCode === 403 || errorDetails.name === "validation_error") {
+          if (
+            errorDetails.message?.includes("testing emails") ||
+            errorDetails.message?.includes("only send testing emails")
+          ) {
+            errorMessage =
+              "Email service is in test mode. Please verify your domain in Resend to send emails to all recipients.";
+            console.error(
+              "Resend domain verification required. Current from address:",
+              EMAIL_CONFIG.from
+            );
+          } else if (
+            errorDetails.message?.includes("verify a domain") ||
+            errorDetails.message?.includes("change the `from` address")
+          ) {
+            errorMessage = "Email service requires domain verification. Please contact support.";
+            console.error(
+              "Resend domain verification required. Set RESEND_FROM_EMAIL environment variable with verified domain."
+            );
+          }
+        }
+
+        // Log full error details for debugging
+        console.error("Resend error details:", {
+          statusCode: errorDetails.statusCode,
+          name: errorDetails.name,
+          message: errorDetails.message,
+          from: EMAIL_CONFIG.from,
+        });
+
         const error: AuthErrorResponse = {
           error: "SERVER_ERROR",
-          message: "Failed to send email. Please try again or contact support.",
+          message: errorMessage,
         };
         return NextResponse.json(error, { status: 500 });
       }

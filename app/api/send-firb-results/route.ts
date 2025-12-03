@@ -184,7 +184,39 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Resend error:", error);
-      return NextResponse.json({ error: "Failed to send email", details: error }, { status: 500 });
+
+      // Provide more specific error messages for Resend validation errors
+      let errorMessage = "Failed to send email";
+
+      const errorDetails = error as {
+        statusCode?: number;
+        name?: string;
+        message?: string;
+      };
+
+      if (errorDetails.statusCode === 403 || errorDetails.name === "validation_error") {
+        if (
+          errorDetails.message?.includes("testing emails") ||
+          errorDetails.message?.includes("only send testing emails")
+        ) {
+          errorMessage =
+            "Email service is in test mode. Please verify your domain in Resend to send emails to all recipients.";
+          console.error(
+            "Resend domain verification required. Current from address:",
+            EMAIL_CONFIG.from
+          );
+        } else if (
+          errorDetails.message?.includes("verify a domain") ||
+          errorDetails.message?.includes("change the `from` address")
+        ) {
+          errorMessage = "Email service requires domain verification. Please contact support.";
+          console.error(
+            "Resend domain verification required. Set RESEND_FROM_EMAIL environment variable with verified domain."
+          );
+        }
+      }
+
+      return NextResponse.json({ error: errorMessage, details: error }, { status: 500 });
     }
 
     return NextResponse.json({
