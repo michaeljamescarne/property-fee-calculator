@@ -10,6 +10,7 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 import { generateOrganizationSchema, injectStructuredData } from "@/lib/schema/organization-schema";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import MetaPixel from "@/components/analytics/MetaPixel";
+import HubSpotTracking from "@/components/analytics/HubSpotTracking";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -147,6 +148,7 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
         <GoogleAnalytics />
         <MetaPixel />
+        <HubSpotTracking />
       </body>
     </html>
   );
