@@ -29,32 +29,61 @@ export const citizenshipSchema = z
   );
 
 // Property Details Step Schema
-export const propertyDetailsSchema = z.object({
-  propertyType: z.enum(["newDwelling", "established", "vacantLand", "commercial"], {
-    message: "Please select a property type",
-  }),
-  propertyValue: z
-    .number({
-      message: "Property value must be a number",
-    })
-    .min(10000, "Property value must be at least $10,000")
-    .max(100000000, "Property value cannot exceed $100,000,000"),
-  state: z.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"], {
-    message: "Please select a state or territory",
-  }),
-  propertyAddress: z.string().optional(),
-  isFirstHome: z.boolean().default(false),
-  depositPercent: z
-    .number()
-    .min(0, "Deposit percentage cannot be negative")
-    .max(100, "Deposit percentage cannot exceed 100%")
-    .default(20),
-  entityType: z
-    .enum(["individual", "company", "trust"], {
-      message: "Please select an entity type",
-    })
-    .default("individual"),
-});
+export const propertyDetailsSchema = z
+  .object({
+    propertyType: z.enum(["newDwelling", "established", "vacantLand", "commercial"], {
+      message: "Please select a property type",
+    }),
+    propertyValue: z
+      .number({
+        message: "Property value must be a number",
+      })
+      .min(10000, "Property value must be at least $10,000")
+      .max(100000000, "Property value cannot exceed $100,000,000"),
+    state: z.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"], {
+      message: "Please select a state or territory",
+    }),
+    propertyAddress: z.string().optional(),
+    isFirstHome: z.boolean().default(false),
+    depositPercent: z
+      .number()
+      .min(0, "Deposit percentage cannot be negative")
+      .max(100, "Deposit percentage cannot exceed 100%")
+      .default(20),
+    entityType: z
+      .enum(["individual", "company", "trust"], {
+        message: "Please select an entity type",
+      })
+      .default("individual"),
+    propertyClassification: z.enum(["unit", "house"]).optional().nullable(),
+    bedrooms: z.number().int().min(0).max(5).optional().nullable(), // 0 = Studio
+  })
+  .refine(
+    (data) => {
+      // If established property, property classification is required
+      if (data.propertyType === "established" && !data.propertyClassification) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Property classification is required for established properties",
+      path: ["propertyClassification"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If established property, bedrooms is required
+      if (data.propertyType === "established" && data.bedrooms === null && data.bedrooms !== 0) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Number of bedrooms is required for established properties",
+      path: ["bedrooms"],
+    }
+  );
 
 // Full Form Schema (combines both steps)
 export const firbCalculatorSchema = z
@@ -80,6 +109,8 @@ export const firbCalculatorSchema = z
     isFirstHome: z.boolean().default(false),
     depositPercent: z.number().min(0).max(100).default(20),
     entityType: z.enum(["individual", "company", "trust"]).default("individual"),
+    propertyClassification: z.enum(["unit", "house"]).optional().nullable(),
+    bedrooms: z.number().int().min(0).max(5).optional().nullable(), // 0 = Studio
 
     // Additional options
     expeditedFIRB: z.boolean().optional().default(false),
@@ -108,6 +139,32 @@ export const firbCalculatorSchema = z
     {
       message: "Visa type is required for temporary residents",
       path: ["visaType"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If established property, property classification is required
+      if (data.propertyType === "established" && !data.propertyClassification) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Property classification is required for established properties",
+      path: ["propertyClassification"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If established property, bedrooms is required
+      if (data.propertyType === "established" && data.bedrooms === null && data.bedrooms !== 0) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Number of bedrooms is required for established properties",
+      path: ["bedrooms"],
     }
   );
 

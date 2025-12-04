@@ -10,6 +10,10 @@ export type PropertyType = "newDwelling" | "established" | "vacantLand" | "comme
 export type AustralianState = "NSW" | "VIC" | "QLD" | "SA" | "WA" | "TAS" | "ACT" | "NT";
 export type EntityType = "individual" | "company" | "trust";
 
+// Property Classification Types
+export type PropertyClassification = "unit" | "house" | null;
+export type Bedrooms = 0 | 1 | 2 | 3 | 4 | 5 | null; // 0 = Studio
+
 // FIRB Application Fee Tiers (2025/26) - Updated from ATO Official Source
 // Source: Australian Taxation Office - Foreign Investment Fees (1 July 2025 – 30 June 2026)
 // Last Verified: October 16, 2025

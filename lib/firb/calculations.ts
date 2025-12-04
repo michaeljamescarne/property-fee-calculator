@@ -56,6 +56,8 @@ export interface CalculationInput {
   entityType: EntityType;
   isOrdinarilyResident?: boolean;
   expeditedFIRB?: boolean;
+  propertyClassification?: "unit" | "house" | null;
+  bedrooms?: number | null; // 0 = Studio, 1-5 = bedrooms
   costBenchmarks?: Partial<Record<CostMetric, number>>;
   macroBenchmarks?: Partial<Record<MacroMetric, number>>;
 }

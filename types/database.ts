@@ -73,6 +73,8 @@ export interface FIRBCalculation {
   is_first_home: boolean;
   deposit_percent: number | null;
   entity_type: EntityType;
+  property_classification: "unit" | "house" | null;
+  bedrooms: number | null; // 0 = Studio, 1-5 = bedrooms
 
   // Calculated results
   eligibility_result: EligibilityResult;
@@ -176,6 +178,8 @@ export interface CalculationData {
   isFirstHome: boolean;
   depositPercent?: number;
   entityType: EntityType;
+  propertyClassification?: "unit" | "house" | null;
+  bedrooms?: number | null; // 0 = Studio, 1-5 = bedrooms
 
   // Investment analytics inputs (optional)
   weeklyRent?: number;

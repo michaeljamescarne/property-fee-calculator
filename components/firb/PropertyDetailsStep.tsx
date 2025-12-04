@@ -6,6 +6,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -18,8 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { PropertyType, AustralianState, EntityType } from "@/lib/firb/constants";
-import { Home, Building, MapPin, DollarSign, Percent, AlertCircle, Calendar } from "lucide-react";
+import { PropertyType, AustralianState, EntityType, PropertyClassification } from "@/lib/firb/constants";
+import { Home, Building, MapPin, DollarSign, Percent, AlertCircle, Calendar, Bed } from "lucide-react";
 import AddressAutocomplete from "./AddressAutocomplete";
 
 interface PropertyDetailsStepProps {
@@ -32,6 +33,8 @@ interface PropertyDetailsStepProps {
   entityType: EntityType;
   purchaseType?: "purchasing" | "existing";
   purchaseDate?: string;
+  propertyClassification?: PropertyClassification;
+  bedrooms?: number | null; // 0 = Studio, 1-5 = bedrooms
   onPropertyTypeChange: (type: PropertyType) => void;
   onPropertyValueChange: (value: number) => void;
   onStateChange: (state: AustralianState) => void;
@@ -40,6 +43,8 @@ interface PropertyDetailsStepProps {
   onDepositPercentChange: (percent: number) => void;
   onEntityTypeChange: (type: EntityType) => void;
   onPurchaseDateChange?: (date: string) => void;
+  onPropertyClassificationChange?: (classification: PropertyClassification) => void;
+  onBedroomsChange?: (bedrooms: number | null) => void;
   errors?: Record<string, boolean>;
 }
 
@@ -53,6 +58,8 @@ export default function PropertyDetailsStep({
   entityType,
   purchaseType,
   purchaseDate,
+  propertyClassification,
+  bedrooms,
   onPropertyTypeChange,
   onPropertyValueChange,
   onStateChange,
@@ -61,6 +68,8 @@ export default function PropertyDetailsStep({
   onDepositPercentChange,
   onEntityTypeChange,
   onPurchaseDateChange,
+  onPropertyClassificationChange,
+  onBedroomsChange,
   errors = {},
 }: PropertyDetailsStepProps) {
   const t = useTranslations("FIRBCalculator.property");
@@ -173,6 +182,125 @@ export default function PropertyDetailsStep({
             </Label>
           </RadioGroup>
         </div>
+
+        {/* Property Classification (only for established properties) */}
+        {propertyType === "established" && (
+          <div className="space-y-4">
+            <Label className="text-base font-semibold flex items-center gap-2 text-gray-900">
+              <Home className="h-5 w-5 text-gray-600" />
+              {t("classificationLabel")} <span className="text-red-600">*</span>
+            </Label>
+            {errors.propertyClassification && (
+              <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+                <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                <p className="text-sm text-red-600">
+                  {t("classificationRequired") || "Please select a property classification"}
+                </p>
+              </div>
+            )}
+            <RadioGroup
+              key={`classification-${propertyType}-${propertyClassification ?? "empty"}`}
+              value={propertyClassification ?? ""}
+              onValueChange={(value) => {
+                if (value === "unit" || value === "house") {
+                  onPropertyClassificationChange?.(value);
+                }
+              }}
+              className={`grid grid-cols-1 md:grid-cols-2 gap-3 ${
+                errors.propertyClassification ? "ring-2 ring-red-500 rounded-lg p-2" : ""
+              }`}
+            >
+              <Label htmlFor="unit" className="cursor-pointer block">
+                <div
+                  className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
+                    errors.propertyClassification ? "border-red-300 bg-red-50/50" : "border-gray-200"
+                  } ${
+                    propertyClassification === "unit" ? "border-blue-600 bg-blue-50" : ""
+                  }`}
+                >
+                  <RadioGroupItem value="unit" id="unit" />
+                  <div className="flex-1">
+                    <div className="font-semibold text-sm text-gray-900">
+                      {t("classificationUnit")}
+                    </div>
+                    <p className="text-xs text-gray-600 mt-0.5">
+                      {t("classificationUnitDescription") || "Apartment, flat, or unit"}
+                    </p>
+                  </div>
+                </div>
+              </Label>
+
+              <Label htmlFor="house" className="cursor-pointer block">
+                <div
+                  className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
+                    errors.propertyClassification ? "border-red-300 bg-red-50/50" : "border-gray-200"
+                  } ${
+                    propertyClassification === "house" ? "border-blue-600 bg-blue-50" : ""
+                  }`}
+                >
+                  <RadioGroupItem value="house" id="house" />
+                  <div className="flex-1">
+                    <div className="font-semibold text-sm text-gray-900">
+                      {t("classificationHouse")}
+                    </div>
+                    <p className="text-xs text-gray-600 mt-0.5">
+                      {t("classificationHouseDescription") || "Detached house or townhouse"}
+                    </p>
+                  </div>
+                </div>
+              </Label>
+            </RadioGroup>
+          </div>
+        )}
+
+        {/* Bedrooms (only for established properties) */}
+        {propertyType === "established" && (
+          <div className="space-y-3">
+            <Label
+              htmlFor="bedrooms"
+              className="text-base font-semibold flex items-center gap-2 text-gray-900"
+            >
+              <Bed className="h-5 w-5 text-gray-600" />
+              {t("bedroomsLabel")} <span className="text-red-600">*</span>
+            </Label>
+            {errors.bedrooms && (
+              <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+                <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                <p className="text-sm text-red-600">
+                  {t("bedroomsRequired") || "Please select the number of bedrooms"}
+                </p>
+              </div>
+            )}
+            <Select
+              value={
+                bedrooms !== null && bedrooms !== undefined
+                  ? bedrooms === 0
+                    ? "studio"
+                    : bedrooms.toString()
+                  : ""
+              }
+              onValueChange={(value) => {
+                const bedroomValue = value === "studio" ? 0 : Number(value);
+                onBedroomsChange?.(bedroomValue);
+              }}
+            >
+              <SelectTrigger
+                id="bedrooms"
+                className={`w-full ${errors.bedrooms ? "border-red-500 focus:ring-red-500" : ""}`}
+              >
+                <SelectValue placeholder={t("bedroomsPlaceholder") || "Select bedrooms"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="studio">{t("bedroomsStudio")}</SelectItem>
+                <SelectItem value="1">{t("bedrooms1")}</SelectItem>
+                <SelectItem value="2">{t("bedrooms2")}</SelectItem>
+                <SelectItem value="3">{t("bedrooms3")}</SelectItem>
+                <SelectItem value="4">{t("bedrooms4")}</SelectItem>
+                <SelectItem value="5">{t("bedrooms5Plus")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         {/* Property Value */}
         <div className="space-y-3">

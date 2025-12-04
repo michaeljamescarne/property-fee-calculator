@@ -144,7 +144,22 @@
         "individual": "Individual",
         "company": "Company",
         "trust": "Trust"
-      }
+      },
+      "classificationLabel": "Property Classification",
+      "classificationUnit": "Unit",
+      "classificationHouse": "House",
+      "classificationUnitDescription": "Apartment, flat, or unit",
+      "classificationHouseDescription": "Detached house or townhouse",
+      "classificationRequired": "Please select a property classification",
+      "bedroomsLabel": "Number of Bedrooms",
+      "bedroomsPlaceholder": "Select bedrooms",
+      "bedroomsStudio": "Studio",
+      "bedrooms1": "1 Bedroom",
+      "bedrooms2": "2 Bedrooms",
+      "bedrooms3": "3 Bedrooms",
+      "bedrooms4": "4 Bedrooms",
+      "bedrooms5Plus": "5+ Bedrooms",
+      "bedroomsRequired": "Please select the number of bedrooms"
     },
     "financialDetails": {
       "title": "Financial Details",

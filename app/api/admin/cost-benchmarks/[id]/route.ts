@@ -24,6 +24,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     if (body.state !== undefined) updateData.state = body.state;
     if (body.property_type !== undefined) updateData.property_type = body.property_type;
+    if (body.property_classification !== undefined) updateData.property_classification = body.property_classification ?? null;
+    if (body.bedrooms !== undefined) updateData.bedrooms = body.bedrooms ?? null;
     if (body.metric !== undefined) updateData.metric = body.metric;
     if (body.value_numeric !== undefined) updateData.value_numeric = body.value_numeric;
     if (body.unit !== undefined) updateData.unit = body.unit;
