@@ -59,6 +59,8 @@ export default function FIRBCalculatorPage() {
     entityType: "individual" as EntityType,
     isOrdinarilyResident: true,
     expeditedFIRB: false,
+    propertyClassification: null,
+    bedrooms: null,
   });
 
   // Investment inputs state
@@ -204,6 +206,13 @@ export default function FIRBCalculatorPage() {
           const params = new URLSearchParams();
           if (formData.state) params.append("state", formData.state);
           if (formData.propertyType) params.append("property_type", formData.propertyType);
+          // Add property classification and bedrooms if available (for established properties)
+          if (formData.propertyClassification) {
+            params.append("property_classification", formData.propertyClassification);
+          }
+          if (formData.bedrooms !== null && formData.bedrooms !== undefined) {
+            params.append("bedrooms", formData.bedrooms.toString());
+          }
           const response = await fetch(`/api/cost-benchmarks?${params.toString()}`);
           const data = await response.json();
           if (data.success && data.benchmarks) {
@@ -237,7 +246,7 @@ export default function FIRBCalculatorPage() {
       fetchCostBenchmarks();
       fetchMacroBenchmarks();
     }
-  }, [formData.state, formData.propertyType]);
+  }, [formData.state, formData.propertyType, formData.propertyClassification, formData.bedrooms]);
 
   // Initialize investment inputs when property details are available
   useEffect(() => {
@@ -886,7 +895,15 @@ export default function FIRBCalculatorPage() {
                       entityType={formData.entityType || "individual"}
                       purchaseType={formData.purchaseType}
                       purchaseDate={formData.purchaseDate}
-                      onPropertyTypeChange={(type) => updateFormData({ propertyType: type })}
+                      propertyClassification={formData.propertyClassification ?? null}
+                      bedrooms={formData.bedrooms ?? null}
+                      onPropertyTypeChange={(type) => {
+                        updateFormData({ propertyType: type });
+                        // Clear classification and bedrooms when property type changes away from established
+                        if (type !== "established") {
+                          updateFormData({ propertyClassification: null, bedrooms: null });
+                        }
+                      }}
                       onPropertyValueChange={(value) => updateFormData({ propertyValue: value })}
                       onStateChange={(state) => updateFormData({ state })}
                       onPropertyAddressChange={(address) =>
@@ -898,6 +915,10 @@ export default function FIRBCalculatorPage() {
                       }
                       onEntityTypeChange={(type) => updateFormData({ entityType: type })}
                       onPurchaseDateChange={(date) => updateFormData({ purchaseDate: date })}
+                      onPropertyClassificationChange={(classification) =>
+                        updateFormData({ propertyClassification: classification })
+                      }
+                      onBedroomsChange={(bedrooms) => updateFormData({ bedrooms })}
                       errors={validationErrors}
                     />
 

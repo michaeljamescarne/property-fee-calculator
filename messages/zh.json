@@ -144,7 +144,22 @@
         "individual": "个人",
         "company": "公司",
         "trust": "信托"
-      }
+      },
+      "classificationLabel": "房产分类",
+      "classificationUnit": "单元",
+      "classificationHouse": "房屋",
+      "classificationUnitDescription": "公寓、单元或单元房",
+      "classificationHouseDescription": "独立房屋或联排别墅",
+      "classificationRequired": "请选择房产分类",
+      "bedroomsLabel": "卧室数量",
+      "bedroomsPlaceholder": "选择卧室",
+      "bedroomsStudio": "单间",
+      "bedrooms1": "1间卧室",
+      "bedrooms2": "2间卧室",
+      "bedrooms3": "3间卧室",
+      "bedrooms4": "4间卧室",
+      "bedrooms5Plus": "5间以上卧室",
+      "bedroomsRequired": "请选择卧室数量"
     },
     "financialDetails": {
       "title": "财务详情",

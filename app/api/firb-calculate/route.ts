@@ -89,7 +89,9 @@ export async function POST(request: NextRequest) {
         "vacancy_rate_percent",
         "loan_cost_basis_points",
       ],
-      supabase
+      supabase,
+      data.propertyClassification || undefined,
+      data.bedrooms !== null && data.bedrooms !== undefined ? data.bedrooms : undefined
     );
 
     const macroBenchmarks = await getMacroBenchmarks(
@@ -110,6 +112,8 @@ export async function POST(request: NextRequest) {
       entityType: data.entityType || "individual",
       isOrdinarilyResident: data.isOrdinarilyResident ?? true,
       expeditedFIRB: data.expeditedFIRB || false,
+      propertyClassification: data.propertyClassification || undefined,
+      bedrooms: data.bedrooms !== null && data.bedrooms !== undefined ? data.bedrooms : undefined,
       costBenchmarks,
       macroBenchmarks,
     };

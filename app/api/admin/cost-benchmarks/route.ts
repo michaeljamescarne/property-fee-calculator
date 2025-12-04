@@ -34,6 +34,8 @@ export type CostUnit =
 export interface CostBenchmarkInput {
   state: AustralianState;
   property_type: PropertyType;
+  property_classification?: "unit" | "house" | null;
+  bedrooms?: number | null;
   metric: CostMetric;
   value_numeric: number;
   unit?: CostUnit;
@@ -134,12 +136,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert benchmark (upsert to handle duplicates)
+    // Note: onConflict now includes property_classification and bedrooms
     const { data, error } = await supabase
       .from("cost_benchmarks")
       .upsert(
         {
           state: body.state,
           property_type: body.property_type,
+          property_classification: body.property_classification ?? null,
+          bedrooms: body.bedrooms ?? null,
           metric: body.metric,
           value_numeric: body.value_numeric,
           unit: body.unit || "percent",
@@ -149,7 +154,7 @@ export async function POST(request: NextRequest) {
           last_updated: new Date().toISOString().split("T")[0],
         } as never,
         {
-          onConflict: "state,property_type,metric",
+          onConflict: "state,property_type,property_classification,bedrooms,metric",
         }
       )
       .select()

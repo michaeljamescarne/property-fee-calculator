@@ -67,6 +67,8 @@ interface CostBenchmark {
   id: string;
   state: AustralianState;
   property_type: PropertyType;
+  property_classification: "unit" | "house" | null;
+  bedrooms: number | null;
   metric: CostMetric;
   value_numeric: number;
   unit: CostUnit;
@@ -129,6 +131,8 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
   const [formData, setFormData] = useState<Partial<CostBenchmark>>({
     state: "NSW" as AustralianState,
     property_type: "newDwelling",
+    property_classification: null,
+    bedrooms: null,
     metric: "council_rate_percent",
     value_numeric: 0,
     unit: "percent",
@@ -182,6 +186,8 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
       setFormData({
         state: "NSW" as AustralianState,
         property_type: "newDwelling",
+        property_classification: null,
+        bedrooms: null,
         metric: "council_rate_percent",
         value_numeric: 0,
         unit: "percent",
@@ -341,6 +347,8 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
               <TableRow>
                 <TableHead>State</TableHead>
                 <TableHead>Property Type</TableHead>
+                <TableHead>Classification</TableHead>
+                <TableHead>Bedrooms</TableHead>
                 <TableHead>Metric</TableHead>
                 <TableHead>Value</TableHead>
                 <TableHead>Unit</TableHead>
@@ -357,6 +365,19 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
                   <TableCell>
                     {PROPERTY_TYPES.find((t) => t.value === benchmark.property_type)?.label ||
                       benchmark.property_type}
+                  </TableCell>
+                  <TableCell>
+                    {benchmark.property_classification
+                      ? benchmark.property_classification.charAt(0).toUpperCase() +
+                        benchmark.property_classification.slice(1)
+                      : "-"}
+                  </TableCell>
+                  <TableCell>
+                    {benchmark.bedrooms !== null
+                      ? benchmark.bedrooms === 0
+                        ? "Studio"
+                        : `${benchmark.bedrooms}`
+                      : "-"}
                   </TableCell>
                   <TableCell>
                     {COST_METRICS.find((m) => m.value === benchmark.metric)?.label ||
@@ -438,9 +459,16 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
                 <select
                   id="property_type"
                   value={formData.property_type}
-                  onChange={(e) =>
-                    setFormData({ ...formData, property_type: e.target.value as PropertyType })
-                  }
+                  onChange={(e) => {
+                    const newType = e.target.value as PropertyType;
+                    setFormData({
+                      ...formData,
+                      property_type: newType,
+                      // Clear classification and bedrooms when property type changes away from established
+                      property_classification: newType === "established" ? formData.property_classification : null,
+                      bedrooms: newType === "established" ? formData.bedrooms : null,
+                    });
+                  }}
                   className="w-full px-3 py-2 border rounded-md"
                 >
                   {PROPERTY_TYPES.map((type) => (
@@ -451,6 +479,51 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
                 </select>
               </div>
             </div>
+            {/* Property Classification and Bedrooms (only for established properties) */}
+            {formData.property_type === "established" && (
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="property_classification">Property Classification</Label>
+                  <select
+                    id="property_classification"
+                    value={formData.property_classification || ""}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        property_classification: e.target.value === "" ? null : (e.target.value as "unit" | "house"),
+                      })
+                    }
+                    className="w-full px-3 py-2 border rounded-md"
+                  >
+                    <option value="">None (General)</option>
+                    <option value="unit">Unit</option>
+                    <option value="house">House</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="bedrooms">Bedrooms</Label>
+                  <select
+                    id="bedrooms"
+                    value={formData.bedrooms !== null && formData.bedrooms !== undefined ? (formData.bedrooms === 0 ? "studio" : formData.bedrooms.toString()) : ""}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        bedrooms: e.target.value === "" ? null : e.target.value === "studio" ? 0 : Number(e.target.value),
+                      })
+                    }
+                    className="w-full px-3 py-2 border rounded-md"
+                  >
+                    <option value="">None (General)</option>
+                    <option value="studio">Studio</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5+</option>
+                  </select>
+                </div>
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="metric">Metric *</Label>
               <select
