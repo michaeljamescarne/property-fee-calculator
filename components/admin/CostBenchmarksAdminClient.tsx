@@ -504,7 +504,7 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
                   <Label htmlFor="bedrooms">Bedrooms</Label>
                   <select
                     id="bedrooms"
-                    value={formData.bedrooms !== null ? (formData.bedrooms === 0 ? "studio" : formData.bedrooms.toString()) : ""}
+                    value={formData.bedrooms !== null && formData.bedrooms !== undefined ? (formData.bedrooms === 0 ? "studio" : formData.bedrooms.toString()) : ""}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
