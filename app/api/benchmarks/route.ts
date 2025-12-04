@@ -1,11 +1,22 @@
 /**
  * Benchmarks API Route
  * Looks up benchmark data (rental yield, capital growth) by state/suburb/postcode
+ * Uses Next.js 16 caching APIs for improved performance
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import type { AustralianState } from "@/lib/firb/constants";
+
+// Cache tags for revalidation
+export const CACHE_TAGS = {
+  benchmarks: "benchmarks",
+  benchmarkState: (state: string) => `benchmarks-${state}`,
+  benchmarkSuburb: (suburb: string) => `benchmarks-suburb-${suburb}`,
+} as const;
+
+// Revalidate every 6 hours (benchmark data changes infrequently)
+export const revalidate = 21600; // 6 hours in seconds
 
 export interface BenchmarkData {
   state: AustralianState;
@@ -60,10 +71,22 @@ export async function GET(request: NextRequest) {
 
     // If specific match found, return it
     if (data && data.length > 0) {
-      return NextResponse.json({
+      const response = NextResponse.json({
         success: true,
         benchmark: formatBenchmark(data[0], suburb ? "suburb" : "state"),
       });
+
+      // Set cache tags
+      const tags = [
+        CACHE_TAGS.benchmarks,
+        CACHE_TAGS.benchmarkState(state),
+      ];
+      if (suburb) {
+        tags.push(CACHE_TAGS.benchmarkSuburb(suburb));
+      }
+      response.headers.set("Cache-Tag", tags.join(","));
+
+      return response;
     }
 
     // Fallback: Try state-level benchmark (suburb_name is NULL)
@@ -81,17 +104,30 @@ export async function GET(request: NextRequest) {
     }
 
     if (stateData && stateData.length > 0) {
-      return NextResponse.json({
+      const response = NextResponse.json({
         success: true,
         benchmark: formatBenchmark(stateData[0], "state"),
       });
+
+      // Set cache tags for state-level benchmark
+      response.headers.set(
+        "Cache-Tag",
+        `${CACHE_TAGS.benchmarks},${CACHE_TAGS.benchmarkState(state)}`
+      );
+
+      return response;
     }
 
     // No benchmark found - return null (calculator will use defaults)
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       benchmark: null,
     });
+
+    // Cache the "not found" response for a shorter time
+    response.headers.set("Cache-Tag", `${CACHE_TAGS.benchmarks},${CACHE_TAGS.benchmarkState(state)}`);
+
+    return response;
   } catch (error) {
     console.error("Benchmarks lookup error:", error);
     return NextResponse.json(

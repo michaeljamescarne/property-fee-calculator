@@ -47,7 +47,10 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="border-b border-blue-100/50 backdrop-blur-sm bg-white/95 sticky top-0 z-50 shadow-sm">
+      <nav
+        className="border-b border-blue-100/50 backdrop-blur-sm bg-white/95 sticky top-0 z-50 shadow-sm"
+        suppressHydrationWarning
+      >
         <div className="container mx-auto px-4 py-5 flex justify-between items-center">
           <Link
             href={`/${locale}`}
