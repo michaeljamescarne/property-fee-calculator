@@ -88,17 +88,21 @@ const nextConfig: NextConfig = {
 
 **Usage Example:**
 ```typescript
-import { revalidateBlogPosts, revalidateBenchmarks } from "@/lib/cache/utils";
+// In a route handler (e.g., app/api/blog-posts/route.ts)
+import { revalidateTag } from "next/cache";
+import { CACHE_TAGS } from "@/lib/cache/utils";
 
-// Revalidate all blog posts
-await revalidateBlogPosts();
-
-// Revalidate specific state benchmarks
-await revalidateBenchmarks("NSW");
-
-// Revalidate a specific page
-await revalidatePage("/en/blog");
+export async function POST() {
+  // ... update blog post ...
+  
+  // Revalidate cache
+  revalidateTag(CACHE_TAGS.blogPosts);
+  
+  return NextResponse.json({ success: true });
+}
 ```
+
+**Note:** `revalidateTag()` can only be called from route handlers or server actions, not from utility functions.
 
 ---
 
