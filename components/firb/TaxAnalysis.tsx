@@ -27,7 +27,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
   const deductions = analytics.taxAnalysis.annualDeductions;
   const cgt = analytics.taxAnalysis.cgtOnExit;
 
-  // Deduction items (filter out zero values) with translations
+  // Deduction items (filter out zero values) with translations and descriptions
   const deductionItems = [
     {
       name:
@@ -36,6 +36,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Loan Interest"
           : t("taxAnalysis.deductionItems.loanInterest"),
       amount: deductions.loanInterest,
+      description: "Annual interest on investment property loan",
       icon: <Receipt className="h-4 w-4" />,
     },
     {
@@ -45,6 +46,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Property Management"
           : t("taxAnalysis.deductionItems.propertyManagement"),
       amount: deductions.propertyManagement,
+      description: "Property management fees",
       icon: <DollarSign className="h-4 w-4" />,
     },
     {
@@ -54,6 +56,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Maintenance"
           : t("taxAnalysis.deductionItems.maintenance"),
       amount: deductions.maintenance,
+      description: "Estimated annual maintenance and repairs",
       icon: <DollarSign className="h-4 w-4" />,
     },
     {
@@ -63,6 +66,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Land Tax"
           : t("taxAnalysis.deductionItems.landTax"),
       amount: deductions.landTax,
+      description: "Annual state land tax",
       icon: <Receipt className="h-4 w-4" />,
     },
     {
@@ -72,6 +76,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Council Rates"
           : t("taxAnalysis.deductionItems.councilRates"),
       amount: deductions.councilRates,
+      description: "Annual local council rates",
       icon: <Receipt className="h-4 w-4" />,
     },
     {
@@ -81,6 +86,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Insurance"
           : t("taxAnalysis.deductionItems.insurance"),
       amount: deductions.insurance,
+      description: "Building and contents insurance",
       icon: <Receipt className="h-4 w-4" />,
     },
     {
@@ -90,6 +96,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Strata Fees"
           : t("taxAnalysis.deductionItems.strataFees"),
       amount: deductions.strataFees,
+      description: "Strata or body corporate fees",
       icon: <Receipt className="h-4 w-4" />,
     },
     {
@@ -99,6 +106,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Depreciation"
           : t("taxAnalysis.deductionItems.depreciation"),
       amount: deductions.depreciation,
+      description: "Capital works and plant equipment depreciation",
       icon: <TrendingDown className="h-4 w-4" />,
     },
     {
@@ -108,6 +116,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
           ? "Other"
           : t("taxAnalysis.deductionItems.other"),
       amount: deductions.other,
+      description: "Other annual expenses",
       icon: <DollarSign className="h-4 w-4" />,
     },
   ].filter((item) => item.amount > 0);
@@ -171,7 +180,15 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
             >
               <div className="flex items-center gap-3">
                 <div className="text-primary">{item.icon}</div>
-                <span className="text-sm font-medium">{item.name}</span>
+                <span className="text-sm font-medium">
+                  {item.description ? (
+                    <>
+                      {item.name}: <span className="text-muted-foreground">{item.description}</span>
+                    </>
+                  ) : (
+                    item.name
+                  )}
+                </span>
               </div>
               <span className="text-sm font-semibold">{currency(item.amount)}</span>
             </div>

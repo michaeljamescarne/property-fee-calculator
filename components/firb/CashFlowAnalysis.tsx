@@ -49,7 +49,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
     },
   ];
 
-  // Expense breakdown data
+  // Expense breakdown data with descriptions
   const expenseBreakdown = [
     {
       name:
@@ -58,6 +58,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Loan Interest"
           : t("taxAnalysis.deductionItems.loanInterest"),
       amount: analytics.cashFlow.annual.loanRepayments,
+      description: "Annual interest on investment property loan",
     },
     {
       name:
@@ -66,6 +67,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Property Management"
           : t("taxAnalysis.deductionItems.propertyManagement"),
       amount: analytics.cashFlow.annual.propertyManagement,
+      description: "Property management fees",
     },
     {
       name:
@@ -74,6 +76,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Maintenance"
           : t("taxAnalysis.deductionItems.maintenance"),
       amount: analytics.cashFlow.annual.maintenance,
+      description: "Estimated annual maintenance and repairs",
     },
     {
       name:
@@ -82,6 +85,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Land Tax"
           : t("taxAnalysis.deductionItems.landTax"),
       amount: analytics.cashFlow.annual.landTax,
+      description: "Annual state land tax",
     },
     {
       name:
@@ -90,6 +94,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Council Rates"
           : t("taxAnalysis.deductionItems.councilRates"),
       amount: analytics.cashFlow.annual.councilRates,
+      description: "Annual local council rates",
     },
     {
       name:
@@ -98,6 +103,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Insurance"
           : t("taxAnalysis.deductionItems.insurance"),
       amount: analytics.cashFlow.annual.insurance,
+      description: "Building and contents insurance",
     },
     {
       name:
@@ -106,6 +112,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Strata Fees"
           : t("taxAnalysis.deductionItems.strataFees"),
       amount: analytics.cashFlow.annual.strataFees,
+      description: "Strata or body corporate fees",
     },
     {
       name:
@@ -114,6 +121,7 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           ? "Other"
           : t("taxAnalysis.deductionItems.other"),
       amount: analytics.cashFlow.annual.otherExpenses,
+      description: "Other annual expenses",
     },
   ].filter((item) => item.amount > 0);
 
@@ -263,9 +271,17 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
           {expenseBreakdown.map((item, index) => (
             <div
               key={index}
-              className="flex justify-between items-center p-3 rounded hover:bg-gray-50 transition-colors"
+              className="flex justify-between items-center p-3 rounded hover:bg-muted/50 transition-colors border border-border/20"
             >
-              <span className="text-sm font-medium">{item.name}</span>
+              <span className="text-sm font-medium">
+                {item.description ? (
+                  <>
+                    {item.name}: <span className="text-muted-foreground">{item.description}</span>
+                  </>
+                ) : (
+                  item.name
+                )}
+              </span>
               <span className="text-sm font-semibold">{currency(item.amount)}</span>
             </div>
           ))}
