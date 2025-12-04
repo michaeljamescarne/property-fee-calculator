@@ -4,6 +4,8 @@ import type { NextConfig } from "next";
 const withNextIntl = createNextIntlPlugin("./i18n.ts");
 
 const nextConfig: NextConfig = {
+  // Enable React Compiler for automatic memoization
+  reactCompiler: true,
   images: {
     formats: ["image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
