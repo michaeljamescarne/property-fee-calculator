@@ -31,13 +31,10 @@ import CashFlowAnalysis from "./CashFlowAnalysis";
 import ProjectionChart from "./ProjectionChart";
 import SensitivityAnalysis from "./SensitivityAnalysis";
 import TaxAnalysis from "./TaxAnalysis";
-import OptimalUseCaseSection from "./OptimalUseCaseSection";
 import SaveCalculationButton from "./SaveCalculationButton";
 import LoginModal from "@/components/auth/LoginModal";
 import EligibilityResultCard from "./EligibilityResultCard";
 import PrintableReport from "./PrintableReport";
-import { calculateOptimalUseCase, getDefaultOccupancyRate } from "@/lib/firb/optimal-use-case";
-import type { ShortStayRegulation } from "@/lib/firb/optimal-use-case";
 import type { BenchmarkData } from "@/app/api/benchmarks/route";
 
 interface ResultsPanelProps {
@@ -131,12 +128,6 @@ export default function ResultsPanel({
   }, [propInvestmentInputs, propertyValue, state, propertyType, depositPercent, costs]);
   const [openSections, setOpenSections] = useState<string[]>(["eligibility", "costs"]);
 
-  // Short-stay regulations state
-  const [shortStayRegulations, setShortStayRegulations] = useState<ShortStayRegulation | null>(
-    null
-  );
-  const [isLoadingRegulations, setIsLoadingRegulations] = useState(false);
-
   // Benchmark data state
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
   const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
@@ -193,54 +184,6 @@ export default function ResultsPanel({
       formData.purchaseDate,
     ]
   );
-
-  // Calculate optimal use case
-  const optimalUseCase = useMemo(() => {
-    if (!investmentInputs.estimatedWeeklyRent) return null;
-    return calculateOptimalUseCase(
-      investmentInputs,
-      propertyValue,
-      state,
-      propertyType,
-      costs,
-      shortStayRegulations
-    );
-  }, [investmentInputs, propertyValue, state, propertyType, costs, shortStayRegulations]);
-
-  // Fetch short-stay regulations on mount
-  useEffect(() => {
-    const fetchRegulations = async () => {
-      setIsLoadingRegulations(true);
-      try {
-        const params = new URLSearchParams({
-          state: state,
-        });
-
-        // Add address details if available
-        if (formData.propertyAddress) {
-          // Try to extract postcode from address
-          const postcodeMatch = formData.propertyAddress.match(/\b\d{4}\b/);
-          if (postcodeMatch) {
-            params.append("postcode", postcodeMatch[0]);
-          }
-        }
-
-        const response = await fetch(`/api/short-stay-regulations?${params.toString()}`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.regulation) {
-            setShortStayRegulations(data.regulation);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch short-stay regulations:", error);
-      } finally {
-        setIsLoadingRegulations(false);
-      }
-    };
-
-    fetchRegulations();
-  }, [state, formData.propertyAddress]);
 
   // Fetch benchmark data on mount
   useEffect(() => {
@@ -554,20 +497,6 @@ export default function ResultsPanel({
       },
     ];
 
-    if (optimalUseCase) {
-      sections.push({
-        id: "optimal",
-        title:
-          t("optimalUseCase.title") === "FIRBCalculator.results.optimalUseCase.title"
-            ? "Optimal Use Case Analysis"
-            : t("optimalUseCase.title"),
-        description: t("optimalUseCase.description"),
-        content: (
-          <OptimalUseCaseSection comparison={optimalUseCase} propertyValue={propertyValue} />
-        ),
-      });
-    }
-
     return sections;
   }, [
     benchmarkData,
@@ -576,7 +505,6 @@ export default function ResultsPanel({
     formData,
     investmentAnalytics,
     investmentInputs,
-    optimalUseCase,
     propertyValue,
     state,
     t,
