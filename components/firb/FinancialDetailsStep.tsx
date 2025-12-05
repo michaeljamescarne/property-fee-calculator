@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DollarSign,
@@ -33,6 +34,7 @@ interface FinancialDetailsStepProps {
   propertyValue: number;
   depositPercent: number;
   benchmarkData?: BenchmarkData | null;
+  costBenchmarks?: Partial<Record<string, number>> | null;
   isLoadingBenchmarks?: boolean;
   errors?: Record<string, boolean>;
 }
@@ -43,13 +45,14 @@ export default function FinancialDetailsStep({
   propertyValue,
   depositPercent,
   benchmarkData,
+  costBenchmarks,
   isLoadingBenchmarks = false,
   errors = {},
 }: FinancialDetailsStepProps) {
   const t = useTranslations("FIRBCalculator.financialDetails");
 
   // Calculate loan amount (use custom values if set, otherwise calculate from propertyValue and depositPercent)
-  const calculatedDepositAmount = propertyValue * (depositPercent / 100);
+  const calculatedDepositAmount = Math.round(propertyValue * (depositPercent / 100));
   const loanAmount = investmentInputs.loanAmount ?? propertyValue - calculatedDepositAmount;
 
   // Default values - ensure we use the actual input value, not a fallback
@@ -64,6 +67,24 @@ export default function FinancialDetailsStep({
   const interestRate = investmentInputs.interestRate || 6.5;
   const councilRates = investmentInputs.annualCouncilRates ?? undefined;
 
+  const handlePropertyUsageChange = (usage: "rental" | "primaryResidence" | "vacant") => {
+    const updates: Partial<InvestmentInputs> = {
+      propertyUsage: usage,
+    };
+
+    if (usage === "primaryResidence") {
+      updates.estimatedWeeklyRent = 0;
+      updates.vacancyRate = 0;
+      updates.selfManaged = true;
+    } else if (usage === "vacant") {
+      updates.estimatedWeeklyRent = 0;
+      updates.vacancyRate = 100;
+      updates.selfManaged = true;
+    }
+
+    onInvestmentInputsChange(updates);
+  };
+
   return (
     <Card className="border border-gray-200 shadow-sm rounded bg-white">
       <CardHeader className="pb-6">
@@ -76,175 +97,214 @@ export default function FinancialDetailsStep({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Rental Income */}
+        {/* Property Usage */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Home className="h-5 w-5 text-gray-600" />
+          <div className="space-y-2">
             <Label className="text-base font-semibold text-gray-900">
-              {t("rental.title") || "Rental Income"}
+              How will this property be used?
             </Label>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="weekly-rent" className="text-sm text-gray-900">
-              {t("rental.weeklyRent") || "Estimated Weekly Rent"}{" "}
-              <span className="text-red-600">*</span>
-            </Label>
-            {errors.estimatedWeeklyRent && (
-              <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
-                <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
-                <p className="text-sm text-red-600">Please enter a valid weekly rent amount</p>
+            <RadioGroup
+              value={investmentInputs.propertyUsage || "rental"}
+              onValueChange={(value) => handlePropertyUsageChange(value as any)}
+              className="flex flex-col space-y-2"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="rental" id="usage-rental" />
+                <Label htmlFor="usage-rental" className="font-normal cursor-pointer">
+                  Make available to rent
+                </Label>
               </div>
-            )}
-            <div className="flex items-center gap-2">
-              <span className="text-gray-500 font-medium">$</span>
-              <Input
-                id="weekly-rent"
-                type="number"
-                value={
-                  weeklyRentValue !== undefined && weeklyRentValue !== null ? weeklyRentValue : ""
-                }
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  // Allow empty string - user can clear the field
-                  if (inputValue === "") {
-                    onInvestmentInputsChange({
-                      estimatedWeeklyRent: undefined,
-                    });
-                    return;
-                  }
-                  // Parse the number
-                  const numValue = Number(inputValue);
-                  if (!isNaN(numValue)) {
-                    onInvestmentInputsChange({
-                      estimatedWeeklyRent: numValue,
-                    });
-                  }
-                }}
-                className={`flex-1 rounded ${errors.estimatedWeeklyRent ? "border-red-500 focus:ring-red-500" : ""}`}
-                placeholder="e.g., 500"
-              />
-              {weeklyRentValue !== undefined && weeklyRentValue !== null && (
-                <span className="text-sm text-gray-600 whitespace-nowrap">
-                  (${(weeklyRentValue * 52).toLocaleString("en-AU")} per year)
-                </span>
-              )}
-            </div>
-
-            {/* Benchmark Suggestion for Rental Yield */}
-            {isLoadingBenchmarks && (
-              <div className="flex items-center gap-2 p-3 rounded bg-gray-50 border border-gray-200">
-                <Loader2 className="h-4 w-4 animate-spin text-gray-500" />
-                <span className="text-sm text-gray-600">
-                  {t("rental.benchmark.loading") || "Loading benchmark data..."}
-                </span>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="primaryResidence" id="usage-primary" />
+                <Label htmlFor="usage-primary" className="font-normal cursor-pointer">
+                  Use as primary residence (and actually live in)
+                </Label>
               </div>
-            )}
-
-            {!isLoadingBenchmarks &&
-              benchmarkData?.grossRentalYield !== undefined &&
-              benchmarkData.grossRentalYield !== null && (
-                <div className="p-3 rounded bg-blue-600/10 border-2 border-blue-600/30 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-blue-600" />
-                      <span className="text-sm font-medium text-blue-600">
-                        {benchmarkData.level === "suburb"
-                          ? t("rental.benchmark.suburb") || "Suburb"
-                          : t("rental.benchmark.state") || "State"}{" "}
-                        {t("rental.benchmark.available") || "Benchmark Available"}
-                      </span>
-                    </div>
-                    {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) ===
-                      weeklyRentForDisplay && (
-                      <Badge variant="default" className="text-xs">
-                        {t("rental.benchmark.using") || "Using benchmark"}
-                      </Badge>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div className="p-2 rounded bg-background border">
-                      <p className="text-xs text-gray-600 mb-1">
-                        {t("rental.benchmark.marketBenchmark") || "Market Benchmark"}
-                      </p>
-                      <p className="font-semibold text-sm">
-                        ${Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52)}
-                        /week
-                      </p>
-                      <p className="text-xs text-gray-600">
-                        ({benchmarkData.grossRentalYield.toFixed(2)}%{" "}
-                        {t("rental.benchmark.yield") || "yield"})
-                      </p>
-                    </div>
-
-                    <div className="p-2 rounded bg-background border">
-                      <p className="text-xs text-gray-600 mb-1">
-                        {t("rental.benchmark.yourInput") || "Your Input"}
-                      </p>
-                      <p className="font-semibold text-sm">${weeklyRentForDisplay}/week</p>
-                      <p className="text-xs text-gray-600">
-                        ({(((weeklyRentForDisplay * 52) / propertyValue) * 100).toFixed(2)}%{" "}
-                        {t("rental.benchmark.yield") || "yield"})
-                      </p>
-                    </div>
-                  </div>
-
-                  {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) !==
-                    weeklyRentForDisplay && (
-                    <Button
-                      size="sm"
-                      variant="default"
-                      className="w-full mt-2"
-                      onClick={() => {
-                        const benchmarkWeeklyRent = Math.round(
-                          (propertyValue * (benchmarkData.grossRentalYield! / 100)) / 52
-                        );
-                        onInvestmentInputsChange({ estimatedWeeklyRent: benchmarkWeeklyRent });
-                      }}
-                    >
-                      <Sparkles className="h-3 w-3 mr-2" />
-                      {t("rental.benchmark.useBenchmark") || "Use Market Benchmark"}
-                    </Button>
-                  )}
-                </div>
-              )}
-
-            {!isLoadingBenchmarks &&
-              (!benchmarkData ||
-                benchmarkData?.grossRentalYield === undefined ||
-                benchmarkData?.grossRentalYield === null) && (
-                <div className="p-2 rounded bg-gray-50/30 border border-gray-200">
-                  <p className="text-xs text-gray-600">
-                    {t("rental.benchmark.noData") ||
-                      "No benchmark data available for this location. Enter your estimated weekly rent above."}
-                  </p>
-                </div>
-              )}
-            <p className="text-xs text-gray-600">
-              {t("rental.help") ||
-                "Based on similar properties in the area. You can adjust this later."}
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-sm text-gray-900">
-              {t("rental.vacancyRate") || "Vacancy Rate"}: {investmentInputs.vacancyRate ?? 5}%
-            </Label>
-            <Slider
-              value={[investmentInputs.vacancyRate ?? 5]}
-              onValueChange={(value) => onInvestmentInputsChange({ vacancyRate: value[0] })}
-              min={0}
-              max={20}
-              step={1}
-              className="w-full"
-            />
-            <p className="text-xs text-gray-600">
-              {t("rental.vacancyHelp") ||
-                "Typical: 3-5% for good locations, 7-10% for high-risk areas"}
-            </p>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="vacant" id="usage-vacant" />
+                <Label htmlFor="usage-vacant" className="font-normal cursor-pointer">
+                  Neither rent nor be used as primary residence
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
         </div>
+
+        {/* Rental Income - Only show if usage is 'rental' (or undefined, defaulting to rental) */}
+        {(!investmentInputs.propertyUsage || investmentInputs.propertyUsage === "rental") && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Home className="h-5 w-5 text-gray-600" />
+              <Label className="text-base font-semibold text-gray-900">
+                {t("rental.title") || "Rental Income"}
+              </Label>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="weekly-rent" className="text-sm text-gray-900">
+                {t("rental.weeklyRent") || "Estimated Weekly Rent"}{" "}
+                <span className="text-red-600">*</span>
+              </Label>
+              {errors.estimatedWeeklyRent && (
+                <div className="flex items-center gap-2 p-3 rounded bg-red-50 border border-red-200">
+                  <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                  <p className="text-sm text-red-600">Please enter a valid weekly rent amount</p>
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <span className="text-gray-500 font-medium">$</span>
+                <Input
+                  id="weekly-rent"
+                  type="number"
+                  value={
+                    weeklyRentValue !== undefined && weeklyRentValue !== null ? weeklyRentValue : ""
+                  }
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    // Allow empty string - user can clear the field
+                    if (inputValue === "") {
+                      onInvestmentInputsChange({
+                        estimatedWeeklyRent: undefined,
+                      });
+                      return;
+                    }
+                    // Parse the number
+                    const numValue = Number(inputValue);
+                    if (!isNaN(numValue)) {
+                      onInvestmentInputsChange({
+                        estimatedWeeklyRent: numValue,
+                      });
+                    }
+                  }}
+                  className={`flex-1 rounded ${errors.estimatedWeeklyRent ? "border-red-500 focus:ring-red-500" : ""}`}
+                  placeholder="e.g., 500"
+                />
+                {weeklyRentValue !== undefined && weeklyRentValue !== null && (
+                  <span className="text-sm text-gray-600 whitespace-nowrap">
+                    (${(weeklyRentValue * 52).toLocaleString("en-AU")} per year)
+                  </span>
+                )}
+              </div>
+
+              {/* Benchmark Suggestion for Rental Yield */}
+              {isLoadingBenchmarks && (
+                <div className="flex items-center gap-2 p-3 rounded bg-gray-50 border border-gray-200">
+                  <Loader2 className="h-4 w-4 animate-spin text-gray-500" />
+                  <span className="text-sm text-gray-600">
+                    {t("rental.benchmark.loading") || "Loading benchmark data..."}
+                  </span>
+                </div>
+              )}
+
+              {!isLoadingBenchmarks &&
+                benchmarkData?.grossRentalYield !== undefined &&
+                benchmarkData.grossRentalYield !== null && (
+                  <div className="p-3 rounded bg-blue-600/10 border-2 border-blue-600/30 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="h-4 w-4 text-blue-600" />
+                        <span className="text-sm font-medium text-blue-600">
+                          {benchmarkData.level === "suburb"
+                            ? t("rental.benchmark.suburb") || "Suburb"
+                            : t("rental.benchmark.state") || "State"}{" "}
+                          {t("rental.benchmark.available") || "Benchmark Available"}
+                        </span>
+                      </div>
+                      {Math.round(
+                        (propertyValue * (benchmarkData.grossRentalYield / 100)) / 52
+                      ) === weeklyRentForDisplay && (
+                        <Badge variant="default" className="text-xs">
+                          {t("rental.benchmark.using") || "Using benchmark"}
+                        </Badge>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 pt-2">
+                      <div className="p-2 rounded bg-background border">
+                        <p className="text-xs text-gray-600 mb-1">
+                          {t("rental.benchmark.marketBenchmark") || "Market Benchmark"}
+                        </p>
+                        <p className="font-semibold text-sm">
+                          $
+                          {Math.round(
+                            (propertyValue * (benchmarkData.grossRentalYield / 100)) / 52
+                          )}
+                          /week
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          ({benchmarkData.grossRentalYield.toFixed(2)}%{" "}
+                          {t("rental.benchmark.yield") || "yield"})
+                        </p>
+                      </div>
+
+                      <div className="p-2 rounded bg-background border">
+                        <p className="text-xs text-gray-600 mb-1">
+                          {t("rental.benchmark.yourInput") || "Your Input"}
+                        </p>
+                        <p className="font-semibold text-sm">${weeklyRentForDisplay}/week</p>
+                        <p className="text-xs text-gray-600">
+                          ({(((weeklyRentForDisplay * 52) / propertyValue) * 100).toFixed(2)}%{" "}
+                          {t("rental.benchmark.yield") || "yield"})
+                        </p>
+                      </div>
+                    </div>
+
+                    {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) !==
+                      weeklyRentForDisplay && (
+                      <Button
+                        size="sm"
+                        variant="default"
+                        className="w-full mt-2"
+                        onClick={() => {
+                          const benchmarkWeeklyRent = Math.round(
+                            (propertyValue * (benchmarkData.grossRentalYield! / 100)) / 52
+                          );
+                          onInvestmentInputsChange({ estimatedWeeklyRent: benchmarkWeeklyRent });
+                        }}
+                      >
+                        <Sparkles className="h-3 w-3 mr-2" />
+                        {t("rental.benchmark.useBenchmark") || "Use Market Benchmark"}
+                      </Button>
+                    )}
+                  </div>
+                )}
+
+              {!isLoadingBenchmarks &&
+                (!benchmarkData ||
+                  benchmarkData?.grossRentalYield === undefined ||
+                  benchmarkData?.grossRentalYield === null) && (
+                  <div className="p-2 rounded bg-gray-50/30 border border-gray-200">
+                    <p className="text-xs text-gray-600">
+                      {t("rental.benchmark.noData") ||
+                        "No benchmark data available for this location. Enter your estimated weekly rent above."}
+                    </p>
+                  </div>
+                )}
+              <p className="text-xs text-gray-600">
+                {t("rental.help") ||
+                  "Based on similar properties in the area. You can adjust this later."}
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-sm text-gray-900">
+                {t("rental.vacancyRate") || "Vacancy Rate"}: {investmentInputs.vacancyRate ?? 5}%
+              </Label>
+              <Slider
+                value={[investmentInputs.vacancyRate ?? 5]}
+                onValueChange={(value) => onInvestmentInputsChange({ vacancyRate: value[0] })}
+                min={0}
+                max={20}
+                step={1}
+                className="w-full"
+              />
+              <p className="text-xs text-gray-600">
+                {t("rental.vacancyHelp") ||
+                  "Typical: 3-5% for good locations, 7-10% for high-risk areas"}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Capital Growth */}
         <div className="space-y-4">
@@ -373,8 +433,9 @@ export default function FinancialDetailsStep({
                 </div>
               )}
             <p className="text-xs text-gray-600">
-              {t("growth.help") ||
-                "Historical average: 6% per year. Adjust based on your expectations."}
+              {benchmarkData?.capitalGrowth5yr
+                ? `Benchmark average: ${benchmarkData.capitalGrowth5yr}% per year. Adjust based on your expectations.`
+                : (t("growth.help") || "Historical average: 6% per year. Adjust based on your expectations.")}
             </p>
           </div>
         </div>
@@ -508,54 +569,124 @@ export default function FinancialDetailsStep({
               placeholder="e.g., 2000"
             />
           </div>
+          
+          {/* Benchmark for Council Rates */}
+          {!isLoadingBenchmarks && costBenchmarks?.council_rates_avg && (
+            <div className="p-3 rounded bg-blue-600/10 border-2 border-blue-600/30 space-y-2 mt-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-blue-600" />
+                  <span className="text-sm font-medium text-blue-600">
+                    State Benchmark Available
+                  </span>
+                </div>
+                {councilRates === Math.round(costBenchmarks.council_rates_avg) && (
+                  <Badge variant="default" className="text-xs">
+                    Using benchmark
+                  </Badge>
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="p-2 rounded bg-background border">
+                  <p className="text-xs text-gray-600 mb-1">
+                    Market Benchmark
+                  </p>
+                  <p className="font-semibold text-sm">
+                    ${Math.round(costBenchmarks.council_rates_avg)}
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    (State average)
+                  </p>
+                </div>
+
+                <div className="p-2 rounded bg-background border">
+                  <p className="text-xs text-gray-600 mb-1">
+                    Your Input
+                  </p>
+                  <p className="font-semibold text-sm">
+                    {councilRates ? `$${councilRates}` : "Not set"}
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    {councilRates && Math.round(costBenchmarks.council_rates_avg) === councilRates 
+                      ? "Matches benchmark" 
+                      : councilRates && councilRates > costBenchmarks.council_rates_avg
+                        ? "Above average"
+                        : councilRates 
+                          ? "Below average"
+                          : "Enter value above"}
+                  </p>
+                </div>
+              </div>
+
+              {councilRates !== Math.round(costBenchmarks.council_rates_avg) && (
+                <Button
+                  size="sm"
+                  variant="default"
+                  className="w-full mt-2"
+                  onClick={() => {
+                    onInvestmentInputsChange({
+                      annualCouncilRates: Math.round(costBenchmarks.council_rates_avg!),
+                    });
+                  }}
+                >
+                  <Sparkles className="h-3 w-3 mr-2" />
+                  Use Market Benchmark
+                </Button>
+              )}
+            </div>
+          )}
+
           <p className="text-xs text-gray-600">
             {t("councilRatesHelp") ||
               "Typical: $1,500-$3,000 per year. Leave blank to use estimate."}
           </p>
         </div>
 
-        {/* Property Management */}
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2 p-3 rounded border bg-white">
-            <Checkbox
-              id="self-managed"
-              checked={investmentInputs.selfManaged || false}
-              onCheckedChange={(checked) =>
-                onInvestmentInputsChange({
-                  selfManaged: checked as boolean,
-                })
-              }
-            />
-            <label
-              htmlFor="self-managed"
-              className="text-sm font-medium leading-none cursor-pointer"
-            >
-              {t("selfManaged") || "I will self-manage this property (no management fees)"}
-            </label>
-          </div>
-
-          {!investmentInputs.selfManaged && (
-            <div className="space-y-2">
-              <Label className="text-sm text-gray-900">
-                {t("managementFee") || "Property Management Fee"}:{" "}
-                {investmentInputs.propertyManagementFee || 8}%
-              </Label>
-              <Slider
-                value={[investmentInputs.propertyManagementFee || 8]}
-                onValueChange={(value) =>
-                  onInvestmentInputsChange({ propertyManagementFee: value[0] })
+        {/* Property Management - Only show if property usage is rental */}
+        {(!investmentInputs.propertyUsage || investmentInputs.propertyUsage === "rental") && (
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2 p-3 rounded border bg-white">
+              <Checkbox
+                id="self-managed"
+                checked={investmentInputs.selfManaged || false}
+                onCheckedChange={(checked) =>
+                  onInvestmentInputsChange({
+                    selfManaged: checked as boolean,
+                  })
                 }
-                min={5}
-                max={12}
-                step={0.5}
-                className="w-full"
               />
-              <p className="text-xs text-gray-600">
-                {t("managementFeeHelp") || "Typical: 7-9% of rental income"}
-              </p>
+              <label
+                htmlFor="self-managed"
+                className="text-sm font-medium leading-none cursor-pointer"
+              >
+                {t("selfManaged") || "I will self-manage this property (no management fees)"}
+              </label>
             </div>
-          )}
-        </div>
+
+            {!investmentInputs.selfManaged && (
+              <div className="space-y-2">
+                <Label className="text-sm text-gray-900">
+                  {t("managementFee") || "Property Management Fee"}:{" "}
+                  {investmentInputs.propertyManagementFee || 8}%
+                </Label>
+                <Slider
+                  value={[investmentInputs.propertyManagementFee || 8]}
+                  onValueChange={(value) =>
+                    onInvestmentInputsChange({ propertyManagementFee: value[0] })
+                  }
+                  min={0}
+                  max={12}
+                  step={0.5}
+                  className="w-full"
+                />
+                <p className="text-xs text-gray-600">
+                  {t("managementFeeHelp") || "Typical: 7-9% of rental income"}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
