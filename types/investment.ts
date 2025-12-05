@@ -1,6 +1,9 @@
 // Investment Analytics Type Definitions
 
 export interface InvestmentInputs {
+  // Usage
+  propertyUsage?: "rental" | "primaryResidence" | "vacant";
+
   // Rental Information
   estimatedWeeklyRent: number;
   vacancyRate: number; // %

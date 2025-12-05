@@ -501,9 +501,14 @@ export default function FIRBCalculatorPage() {
     }
 
     if (step === "financial") {
-      // Financial step is optional but we should have at least weekly rent
-      if (!investmentInputs.estimatedWeeklyRent || investmentInputs.estimatedWeeklyRent <= 0) {
-        errors.estimatedWeeklyRent = true;
+      // Financial step is optional but we should have at least weekly rent if it's a rental
+      const isRental =
+        !investmentInputs.propertyUsage || investmentInputs.propertyUsage === "rental";
+
+      if (isRental) {
+        if (!investmentInputs.estimatedWeeklyRent || investmentInputs.estimatedWeeklyRent <= 0) {
+          errors.estimatedWeeklyRent = true;
+        }
       }
     }
 
@@ -964,6 +969,7 @@ export default function FIRBCalculatorPage() {
                       propertyValue={formData.propertyValue}
                       depositPercent={formData.depositPercent || 20}
                       benchmarkData={benchmarkData}
+                      costBenchmarks={costBenchmarks}
                       isLoadingBenchmarks={isLoadingBenchmarks}
                       errors={validationErrors}
                     />
