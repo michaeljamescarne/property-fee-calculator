@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -23,6 +23,12 @@ export default function Navigation() {
   const { isAuthenticated, user, logout } = useAuth();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure dropdown menus only render on client to avoid hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const switchLocale = (newLocale: string) => {
     const currentPath = window.location.pathname.split("/").slice(2).join("/");
@@ -96,41 +102,56 @@ export default function Navigation() {
             ))}
 
             {/* Language Selector */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="rounded font-medium">
-                  <Globe className="h-4 w-4 mr-2" />
-                  {locale === "en" ? "English" : "中文"}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => switchLocale("en")}>English</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => switchLocale("zh")}>中文</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* Auth Section */}
-            {isAuthenticated && user ? (
+            {isMounted && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="rounded font-medium">
-                    <LayoutDashboard className="h-4 w-4 mr-2" />
-                    {user.email}
+                    <Globe className="h-4 w-4 mr-2" />
+                    {locale === "en" ? "English" : "中文"}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
-                    <Link href={`/${locale}/dashboard`}>
-                      <LayoutDashboard className="h-4 w-4 mr-2" />
-                      {t("dashboard")}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleLogout}>
-                    <LogOut className="h-4 w-4 mr-2" />
-                    {t("logout")}
-                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => switchLocale("en")}>English</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => switchLocale("zh")}>中文</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+            )}
+            {!isMounted && (
+              <Button variant="outline" size="sm" className="rounded font-medium" disabled>
+                <Globe className="h-4 w-4 mr-2" />
+                {locale === "en" ? "English" : "中文"}
+              </Button>
+            )}
+
+            {/* Auth Section */}
+            {isAuthenticated && user ? (
+              isMounted ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="rounded font-medium">
+                      <LayoutDashboard className="h-4 w-4 mr-2" />
+                      {user.email}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/${locale}/dashboard`}>
+                        <LayoutDashboard className="h-4 w-4 mr-2" />
+                        {t("dashboard")}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLogout}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      {t("logout")}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button variant="outline" size="sm" className="rounded font-medium" disabled>
+                  <LayoutDashboard className="h-4 w-4 mr-2" />
+                  {user.email}
+                </Button>
+              )
             ) : (
               <Button
                 variant="default"
@@ -169,22 +190,34 @@ export default function Navigation() {
 
               {/* Language Selector */}
               <div className="pt-2 border-t border-border/40">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start rounded font-medium"
-                    >
-                      <Globe className="h-4 w-4 mr-2" />
-                      {locale === "en" ? "English" : "中文"}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-[200px]">
-                    <DropdownMenuItem onClick={() => switchLocale("en")}>English</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => switchLocale("zh")}>中文</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {isMounted ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full justify-start rounded font-medium"
+                      >
+                        <Globe className="h-4 w-4 mr-2" />
+                        {locale === "en" ? "English" : "中文"}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-[200px]">
+                      <DropdownMenuItem onClick={() => switchLocale("en")}>English</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => switchLocale("zh")}>中文</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full justify-start rounded font-medium"
+                    disabled
+                  >
+                    <Globe className="h-4 w-4 mr-2" />
+                    {locale === "en" ? "English" : "中文"}
+                  </Button>
+                )}
               </div>
 
               {/* Auth Section */}

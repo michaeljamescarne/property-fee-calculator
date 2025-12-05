@@ -33,6 +33,7 @@ import SensitivityAnalysis from "./SensitivityAnalysis";
 import TaxAnalysis from "./TaxAnalysis";
 import SaveCalculationButton from "./SaveCalculationButton";
 import LoginModal from "@/components/auth/LoginModal";
+import { useAuth } from "@/components/auth/AuthProvider";
 import EligibilityResultCard from "./EligibilityResultCard";
 import PrintableReport from "./PrintableReport";
 import type { BenchmarkData } from "@/app/api/benchmarks/route";
@@ -82,7 +83,10 @@ export default function ResultsPanel({
   const tAnalytics = useTranslations("FIRBCalculator.results.investmentAnalytics");
 
   // Auth state
+  const { isAuthenticated } = useAuth();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loginModalTitle, setLoginModalTitle] = useState<string | undefined>(undefined);
+  const [pendingSectionId, setPendingSectionId] = useState<string | null>(null);
 
   // Print ref for browser-based PDF generation
   const printRef = useRef<HTMLDivElement>(null);
@@ -128,6 +132,9 @@ export default function ResultsPanel({
   }, [propInvestmentInputs, propertyValue, state, propertyType, depositPercent, costs]);
   const [openSections, setOpenSections] = useState<string[]>(["eligibility", "costs"]);
 
+  // Restricted sections that require login
+  const restrictedSections = ["cashFlow", "projections", "sensitivity", "tax"];
+
   // Benchmark data state
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
   const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
@@ -135,9 +142,58 @@ export default function ResultsPanel({
     null
   );
   const toggleSection = (id: string) => {
+    // Check if trying to expand a restricted section
+    if (restrictedSections.includes(id) && !isAuthenticated) {
+      // Check if section is currently closed (trying to expand)
+      if (!openSections.includes(id)) {
+        setPendingSectionId(id); // Track which section to expand after login
+        setLoginModalTitle("Login to View");
+        setShowLoginModal(true);
+        return; // Prevent expansion
+      }
+    }
+    // Allow normal toggle for non-restricted sections or authenticated users
     setOpenSections((prev) =>
       prev.includes(id) ? prev.filter((sectionId) => sectionId !== id) : [...prev, id]
     );
+  };
+
+  // Function to save the calculation
+  const saveCalculation = async () => {
+    try {
+      const response = await fetch("/api/calculations/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ calculationData }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        console.error("Failed to save calculation:", data.error || "Unknown error");
+        // Don't show error to user, just log it
+      }
+    } catch (error) {
+      console.error("Error saving calculation:", error);
+      // Don't show error to user, just log it
+    }
+  };
+
+  // Handle successful login from "Login to View" modal
+  const handleLoginSuccess = async () => {
+    // Save the calculation
+    await saveCalculation();
+
+    // Expand the pending section if there is one
+    if (pendingSectionId) {
+      setOpenSections((prev) => {
+        if (!prev.includes(pendingSectionId)) {
+          return [...prev, pendingSectionId];
+        }
+        return prev;
+      });
+      setPendingSectionId(null); // Clear pending section
+    }
   };
   const isSectionOpen = (id: string) => openSections.includes(id);
 
@@ -530,7 +586,10 @@ export default function ResultsPanel({
 
       <SaveCalculationButton
         calculationData={calculationData}
-        onLoginClick={() => setShowLoginModal(true)}
+        onLoginClick={() => {
+          setLoginModalTitle(undefined); // Reset to default title
+          setShowLoginModal(true);
+        }}
         className="sm:flex-shrink-0"
       />
 
@@ -618,7 +677,17 @@ export default function ResultsPanel({
         <p className="text-sm">{t("disclaimer.content")}</p>
       </CustomAlert>
 
-      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => {
+          setShowLoginModal(false);
+          setLoginModalTitle(undefined); // Reset title when closing
+          setPendingSectionId(null); // Clear pending section if modal is closed
+        }}
+        onSuccess={pendingSectionId ? handleLoginSuccess : undefined}
+        title={loginModalTitle}
+        preventRedirect={!!pendingSectionId} // Prevent redirect when logging in to view a section
+      />
 
       <div ref={printRef}>
         <PrintableReport
