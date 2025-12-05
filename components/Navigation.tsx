@@ -15,6 +15,7 @@ import { Globe, LogIn, LogOut, LayoutDashboard, Menu, X } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import LoginModal from "@/components/auth/LoginModal";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export default function Navigation() {
   const t = useTranslations("Nav");
@@ -44,6 +45,14 @@ export default function Navigation() {
     return pathname === `/${locale}${path}` || pathname === path;
   };
 
+  // Detect if we're on a portal page
+  const isPortalPage =
+    pathname?.includes("/dashboard") ||
+    pathname?.includes("/compare") ||
+    pathname?.includes("/properties") ||
+    pathname?.includes("/actions") ||
+    pathname?.includes("/account");
+
   const navLinks = [
     { href: "", label: t("home") },
     { href: "/calculator", label: t("calculator") },
@@ -54,13 +63,27 @@ export default function Navigation() {
   return (
     <>
       <nav
-        className="border-b border-blue-100/50 backdrop-blur-sm bg-white/95 sticky top-0 z-50 shadow-sm"
+        className={cn(
+          "border-b border-blue-100/50 backdrop-blur-sm bg-white/95 sticky top-0 z-50 shadow-sm",
+          // Make nav relative when authenticated so logo can be absolutely positioned
+          isAuthenticated && "lg:relative"
+        )}
         suppressHydrationWarning
       >
-        <div className="container mx-auto px-4 py-5 flex justify-between items-center">
+        <div className={cn(
+          "container mx-auto px-4 py-5 flex items-center",
+          // When authenticated, justify-end to right-align nav items; otherwise justify-between
+          isAuthenticated ? "lg:justify-end lg:pr-4" : "justify-between",
+          // Add left padding when authenticated to account for sidebar (160px)
+          isAuthenticated && "lg:pl-[160px]"
+        )}>
           <Link
             href={`/${locale}`}
-            className="flex items-center gap-2.5 text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors"
+            className={cn(
+              "flex items-center gap-2.5 text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors",
+              // When authenticated, position logo to align with sidebar left edge
+              isAuthenticated && "lg:absolute lg:left-0 lg:pl-3"
+            )}
           >
             <Image
               src="/logo.svg"
@@ -78,7 +101,7 @@ export default function Navigation() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden ml-auto"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >

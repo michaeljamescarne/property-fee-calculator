@@ -16,7 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Filter, Loader2 } from "lucide-react";
+import { Search, Filter, Loader2, GitCompare } from "lucide-react";
+import Link from "next/link";
 import CalculationCard from "./CalculationCard";
 import EmptyState from "./EmptyState";
 import type { SavedCalculation } from "@/types/database";
@@ -199,6 +200,14 @@ export default function CalculationList({ locale }: CalculationListProps) {
             <p className="text-sm text-muted-foreground">
               Showing {calculations.length} calculation{calculations.length !== 1 ? "s" : ""}
             </p>
+            {calculations.length >= 2 && (
+              <Link href={`/${locale}/compare`}>
+                <Button variant="outline" size="sm">
+                  <GitCompare className="mr-2 h-4 w-4" />
+                  {t("compareCalculations")}
+                </Button>
+              </Link>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

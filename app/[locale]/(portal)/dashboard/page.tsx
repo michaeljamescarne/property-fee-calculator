@@ -24,29 +24,31 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
   }
 
   return (
-    <div className="space-y-8">
-      {/* Client-side session refresh */}
-      <DashboardClient />
+    <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Client-side session refresh */}
+        <DashboardClient />
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">{t("title")}</h1>
-          <p className="text-lg text-muted-foreground">
-            {t("welcomeBack", { email: session.user.email })}
-          </p>
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">{t("title")}</h1>
+            <p className="text-lg text-muted-foreground">
+              {t("welcomeBack", { email: session.user.email })}
+            </p>
+          </div>
+
+          <Link href={`/${locale}/calculator`}>
+            <Button size="lg">
+              <Plus className="mr-2 h-5 w-5" />
+              {t("newCalculation")}
+            </Button>
+          </Link>
         </div>
 
-        <Link href={`/${locale}/calculator`}>
-          <Button size="lg">
-            <Plus className="mr-2 h-5 w-5" />
-            {t("newCalculation")}
-          </Button>
-        </Link>
+        {/* Calculations List */}
+        <CalculationList locale={locale} />
       </div>
-
-      {/* Calculations List */}
-      <CalculationList locale={locale} />
     </div>
   );
 }
