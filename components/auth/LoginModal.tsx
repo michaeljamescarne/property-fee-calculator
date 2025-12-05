@@ -25,12 +25,20 @@ import type { SendCodeResponse, VerifyCodeResponse, AuthErrorResponse } from "@/
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess?: () => void;
+  onSuccess?: () => void | Promise<void>;
+  title?: string;
+  preventRedirect?: boolean;
 }
 
 type Step = "email" | "code" | "success";
 
-export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
+export default function LoginModal({
+  isOpen,
+  onClose,
+  onSuccess,
+  title,
+  preventRedirect = false,
+}: LoginModalProps) {
   const t = useTranslations("Auth");
   const { login } = useAuth();
 
@@ -159,11 +167,15 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
 
           // Close modal and trigger success callback
           onClose();
-          onSuccess?.();
+          
+          // Await onSuccess if it's async (e.g., saving calculation)
+          const successResult = onSuccess?.();
+          if (successResult instanceof Promise) {
+            await successResult;
+          }
 
-          // Use Next.js router for client-side navigation (preserves auth state)
-          // Fallback to window.location if router is not available
-          if (typeof window !== "undefined") {
+          // Only redirect if not prevented (e.g., when logging in from results page)
+          if (!preventRedirect && typeof window !== "undefined") {
             // Small delay to ensure cookie is fully set before navigation
             setTimeout(() => {
               window.location.href = "/en/dashboard";
@@ -215,7 +227,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess }: LoginModalPro
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5 text-primary" />
-            {step === "email" && t("loginTitle")}
+            {step === "email" && (title || t("loginTitle"))}
             {step === "code" && "Enter Verification Code"}
             {step === "success" && t("successTitle")}
           </DialogTitle>
