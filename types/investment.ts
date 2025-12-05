@@ -22,6 +22,7 @@ export interface InvestmentInputs {
 
   // Property Details
   buildingAge?: number; // Age of building in years (for depreciation calculations)
+  builtAfter1987?: boolean; // Whether building was constructed after September 15, 1987 (for capital works depreciation eligibility)
 
   // Financing
   loanAmount: number;
@@ -208,10 +209,26 @@ export interface InvestmentAnalytics {
       sellingCosts: number;
       costBase: number;
       capitalGain: number;
+      mainResidenceExemption: number;
+      taxableCapitalGain: number;
       cgtRate: number;
       cgtAmount: number;
       withholdingTax: number;
       netProceedsAfterTax: number;
+      assumptions: {
+        taxResidency: "australian" | "foreign";
+        propertyUsage: "rental" | "primaryResidence" | "vacant";
+        mainResidenceExemptionApplied: boolean;
+        exemptionAmount: number;
+        exemptionExplanation: string;
+        cgtDiscountApplied: boolean;
+        discountFactor: number;
+        discountExplanation: string;
+        withholdingTaxApplies: boolean;
+        withholdingTaxExplanation: string;
+        marginalTaxRate: number;
+        holdPeriodYears: number;
+      };
     };
   };
 

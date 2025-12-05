@@ -332,6 +332,28 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
               </span>
               <span className="font-bold text-lg">{currency(cgt.capitalGain)}</span>
             </div>
+            {cgt.assumptions.mainResidenceExemptionApplied && (
+              <div className="flex justify-between text-green-600">
+                <span className="font-medium">
+                  {t("taxAnalysis.cgtItems.mainResidenceExemption") ===
+                  "FIRBCalculator.investmentAnalytics.taxAnalysis.cgtItems.mainResidenceExemption"
+                    ? "Main Residence Exemption"
+                    : t("taxAnalysis.cgtItems.mainResidenceExemption")}
+                  :
+                </span>
+                <span className="font-bold text-lg">{currency(cgt.mainResidenceExemption)}</span>
+              </div>
+            )}
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">
+                {t("taxAnalysis.cgtItems.taxableCapitalGain") ===
+                "FIRBCalculator.investmentAnalytics.taxAnalysis.cgtItems.taxableCapitalGain"
+                  ? "Taxable Capital Gain"
+                  : t("taxAnalysis.cgtItems.taxableCapitalGain")}
+                :
+              </span>
+              <span className="font-semibold">{currency(cgt.taxableCapitalGain)}</span>
+            </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">
                 {t("taxAnalysis.cgtItems.cgtRate") ===
@@ -378,12 +400,144 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
         </div>
       </div>
 
+      {/* Tax Calculation Assumptions */}
+      <div>
+        <h4 className="text-sm font-semibold text-foreground/70 mb-4 uppercase tracking-wide">
+          {t("taxAnalysis.assumptionsTitle")}
+        </h4>
+        <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl">
+          <div className="space-y-3 text-sm">
+            <div className="flex items-start gap-4">
+              <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                {t("taxAnalysis.assumptions.propertyUsage") ===
+                "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.propertyUsage"
+                  ? "Property Usage:"
+                  : t("taxAnalysis.assumptions.propertyUsage")}
+              </span>
+              <span className="text-amber-700">
+                {cgt.assumptions.propertyUsage === "primaryResidence"
+                  ? t("taxAnalysis.assumptions.primaryResidence") ===
+                      "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.primaryResidence"
+                    ? "Primary Residence"
+                    : t("taxAnalysis.assumptions.primaryResidence")
+                  : cgt.assumptions.propertyUsage === "vacant"
+                    ? t("taxAnalysis.assumptions.vacant") ===
+                        "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.vacant"
+                      ? "Vacant"
+                      : t("taxAnalysis.assumptions.vacant")
+                    : t("taxAnalysis.assumptions.rental") ===
+                        "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.rental"
+                      ? "Rental"
+                      : t("taxAnalysis.assumptions.rental")}
+              </span>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                {t("taxAnalysis.assumptions.taxResidency")}
+              </span>
+              <span className="text-amber-700">
+                {cgt.assumptions.taxResidency === "australian"
+                  ? t("taxAnalysis.assumptions.australianResident")
+                  : t("taxAnalysis.assumptions.foreignResident")}
+              </span>
+            </div>
+            {cgt.assumptions.mainResidenceExemptionApplied && (
+              <div className="flex items-start gap-4">
+                <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                  {t("taxAnalysis.assumptions.mainResidenceExemption") ===
+                  "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.mainResidenceExemption"
+                    ? "Main Residence Exemption:"
+                    : t("taxAnalysis.assumptions.mainResidenceExemption")}
+                </span>
+                <span className="text-amber-700">
+                  {t("taxAnalysis.assumptions.applies")} - {currency(cgt.assumptions.exemptionAmount)}
+                </span>
+              </div>
+            )}
+            {cgt.assumptions.exemptionExplanation && (
+              <div className="flex items-start gap-4">
+                <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                  {t("taxAnalysis.assumptions.exemptionExplanation") ===
+                  "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.exemptionExplanation"
+                    ? "Exemption Explanation:"
+                    : t("taxAnalysis.assumptions.exemptionExplanation")}
+                </span>
+                <span className="text-amber-700">{cgt.assumptions.exemptionExplanation}</span>
+              </div>
+            )}
+            <div className="flex items-start gap-4">
+              <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                {t("taxAnalysis.assumptions.cgtDiscount")}
+              </span>
+              <span className="text-amber-700">
+                {cgt.assumptions.cgtDiscountApplied
+                  ? `${t("taxAnalysis.assumptions.yes")} (${((1 - cgt.assumptions.discountFactor) * 100).toFixed(0)}% ${t("taxAnalysis.assumptions.discountApplied")})`
+                  : t("taxAnalysis.assumptions.noDiscount")}
+              </span>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                {t("taxAnalysis.assumptions.discountExplanation")}
+              </span>
+              <span className="text-amber-700">
+                {cgt.assumptions.discountExplanation}
+              </span>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                {t("taxAnalysis.assumptions.withholdingTax")}
+              </span>
+              <span className="text-amber-700">
+                {cgt.assumptions.withholdingTaxApplies
+                  ? t("taxAnalysis.assumptions.applies")
+                  : t("taxAnalysis.assumptions.doesNotApply")}
+              </span>
+            </div>
+            {cgt.assumptions.withholdingTaxExplanation && (
+              <div className="flex items-start gap-4">
+                <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                  {t("taxAnalysis.assumptions.withholdingExplanation")}
+                </span>
+                <span className="text-amber-700">
+                  {cgt.assumptions.withholdingTaxExplanation}
+                </span>
+              </div>
+            )}
+            <div className="flex items-start gap-4">
+              <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                {t("taxAnalysis.assumptions.marginalTaxRate")}
+              </span>
+              <span className="text-amber-700">
+                {cgt.assumptions.marginalTaxRate}%
+              </span>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
+                {t("taxAnalysis.assumptions.holdingPeriod")}
+              </span>
+              <span className="text-amber-700">
+                {cgt.assumptions.holdPeriodYears}{" "}
+                {cgt.assumptions.holdPeriodYears === 1
+                  ? t("taxAnalysis.assumptions.year")
+                  : t("taxAnalysis.assumptions.years")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Tax Planning Note */}
       <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm">
         <p className="text-blue-900">
+          <span className="font-semibold">
+            {t("taxAnalysis.taxPlanningTipLabel") ===
+            "FIRBCalculator.investmentAnalytics.taxAnalysis.taxPlanningTipLabel"
+              ? "Tax planning tip:"
+              : t("taxAnalysis.taxPlanningTipLabel")}
+          </span>{" "}
           {t("taxAnalysis.taxPlanningTip") ===
           "FIRBCalculator.investmentAnalytics.taxAnalysis.taxPlanningTip"
-            ? "Tax planning tip: Consider speaking with a qualified tax advisor to optimize your investment structure and maximize tax benefits. Tax laws and rates can change, affecting your calculations."
+            ? "You should speak with a qualified tax advisor to optimize your investment structure and maximize tax benefits. Tax laws and rates can change, affecting your calculations."
             : t("taxAnalysis.taxPlanningTip")}
         </p>
       </div>
