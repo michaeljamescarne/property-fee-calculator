@@ -35,7 +35,46 @@
     "firbRequired": "FIRB Required",
     "favorites": "Favorites",
     "noResultsTitle": "No calculations found",
-    "clearFilters": "Clear filters"
+    "clearFilters": "Clear filters",
+    "compareCalculations": "Compare Calculations"
+  },
+  "Portal": {
+    "dashboard": "Dashboard",
+    "calculate": "Calculate",
+    "compare": "Compare",
+    "properties": "Properties",
+    "actions": "Actions",
+    "account": "Account"
+  },
+  "Compare": {
+    "title": "Compare Calculations",
+    "description": "Select up to 3 calculations to compare side-by-side",
+    "selectCalculations": "Select Calculations",
+    "selectUpTo3": "Select up to 3 calculations to compare",
+    "selected": "Selected",
+    "clear": "Clear",
+    "compare": "Compare",
+    "noCalculations": "No calculations selected",
+    "selectAtLeast2": "Please select at least 2 calculations to compare",
+    "max3Calculations": "You can compare up to 3 calculations at a time",
+    "sections": {
+      "eligibility": "Eligibility",
+      "propertyDetails": "Property Details",
+      "upfrontCosts": "Upfront Costs",
+      "ongoingCosts": "Ongoing Costs",
+      "investmentAnalytics": "Investment Analytics"
+    },
+    "labels": {
+      "propertyValue": "Property Value",
+      "propertyType": "Property Type",
+      "propertyState": "State",
+      "propertyAddress": "Address",
+      "eligibilityStatus": "Eligibility Status",
+      "firbRequired": "FIRB Required",
+      "totalUpfront": "Total Upfront Costs",
+      "totalOngoing": "Total Ongoing Costs",
+      "totalInvestment": "Total Investment Cost"
+    }
   },
   "FIRBCalculator": {
     "title": "Calculator",
@@ -390,12 +429,40 @@
             "sellingCosts": "Selling Costs",
             "costBase": "Cost Base",
             "capitalGain": "Capital Gain",
+            "mainResidenceExemption": "Main Residence Exemption",
+            "taxableCapitalGain": "Taxable Capital Gain",
             "cgtRate": "CGT Rate",
             "cgtPayable": "CGT Payable",
             "withholdingTax": "Withholding Tax",
             "netProceeds": "Net Proceeds After Tax"
           },
-          "taxPlanningTip": "Tax planning tip: Consider speaking with a qualified tax advisor to optimize your investment structure and maximize tax benefits. Tax laws and rates can change, affecting your calculations."
+          "assumptionsTitle": "Calculation Assumptions",
+          "assumptions": {
+            "propertyUsage": "Property Usage:",
+            "primaryResidence": "Primary Residence",
+            "rental": "Rental",
+            "vacant": "Vacant",
+            "taxResidency": "Tax Residency Status:",
+            "australianResident": "Australian Tax Resident",
+            "foreignResident": "Foreign Tax Resident",
+            "mainResidenceExemption": "Main Residence Exemption:",
+            "exemptionExplanation": "Exemption Explanation:",
+            "cgtDiscount": "CGT Discount:",
+            "yes": "Yes",
+            "discountApplied": "discount applied",
+            "noDiscount": "No discount applied",
+            "discountExplanation": "Discount Explanation:",
+            "withholdingTax": "Withholding Tax:",
+            "applies": "Applies",
+            "doesNotApply": "Does not apply",
+            "withholdingExplanation": "Withholding Explanation:",
+            "marginalTaxRate": "Marginal Tax Rate Used:",
+            "holdingPeriod": "Holding Period:",
+            "year": "year",
+            "years": "years"
+          },
+          "taxPlanningTipLabel": "Tax planning tip:",
+          "taxPlanningTip": "You should speak with a qualified tax advisor to optimize your investment structure and maximize tax benefits. Tax laws and rates can change, affecting your calculations."
         },
         "sensitivity": {
           "title": "Sensitivity Analysis",

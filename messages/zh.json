@@ -35,7 +35,46 @@
     "firbRequired": "需要FIRB",
     "favorites": "收藏",
     "noResultsTitle": "未找到计算",
-    "clearFilters": "清除筛选"
+    "clearFilters": "清除筛选",
+    "compareCalculations": "比较计算"
+  },
+  "Portal": {
+    "dashboard": "仪表板",
+    "calculate": "计算",
+    "compare": "比较",
+    "properties": "房产",
+    "actions": "操作",
+    "account": "账户"
+  },
+  "Compare": {
+    "title": "比较计算",
+    "description": "选择最多3个计算进行并排比较",
+    "selectCalculations": "选择计算",
+    "selectUpTo3": "选择最多3个计算进行比较",
+    "selected": "已选择",
+    "clear": "清除",
+    "compare": "比较",
+    "noCalculations": "未选择计算",
+    "selectAtLeast2": "请至少选择2个计算进行比较",
+    "max3Calculations": "您最多可以同时比较3个计算",
+    "sections": {
+      "eligibility": "资格",
+      "propertyDetails": "房产详情",
+      "upfrontCosts": "前期成本",
+      "ongoingCosts": "持续成本",
+      "investmentAnalytics": "投资分析"
+    },
+    "labels": {
+      "propertyValue": "房产价值",
+      "propertyType": "房产类型",
+      "propertyState": "州",
+      "propertyAddress": "地址",
+      "eligibilityStatus": "资格状态",
+      "firbRequired": "需要FIRB",
+      "totalUpfront": "总前期成本",
+      "totalOngoing": "总持续成本",
+      "totalInvestment": "总投资成本"
+    }
   },
   "FIRBCalculator": {
     "title": "计算器",
@@ -390,12 +429,40 @@
             "sellingCosts": "销售成本",
             "costBase": "成本基础",
             "capitalGain": "资本收益",
+            "mainResidenceExemption": "主要居所豁免",
+            "taxableCapitalGain": "应税资本收益",
             "cgtRate": "CGT税率",
             "cgtPayable": "应缴CGT",
             "withholdingTax": "预扣税",
             "netProceeds": "税后净收益"
           },
-          "taxPlanningTip": "税务规划提示：考虑咨询合格的税务顾问，以优化您的投资结构并最大化税收优惠。税法可能会发生变化，影响您的计算。"
+          "assumptionsTitle": "计算假设",
+          "assumptions": {
+            "propertyUsage": "物业用途：",
+            "primaryResidence": "主要居所",
+            "rental": "出租",
+            "vacant": "空置",
+            "taxResidency": "税务居民身份：",
+            "australianResident": "澳大利亚税务居民",
+            "foreignResident": "外国税务居民",
+            "mainResidenceExemption": "主要居所豁免：",
+            "exemptionExplanation": "豁免说明：",
+            "cgtDiscount": "CGT折扣：",
+            "yes": "是",
+            "discountApplied": "折扣已应用",
+            "noDiscount": "未应用折扣",
+            "discountExplanation": "折扣说明：",
+            "withholdingTax": "预扣税：",
+            "applies": "适用",
+            "doesNotApply": "不适用",
+            "withholdingExplanation": "预扣税说明：",
+            "marginalTaxRate": "使用的边际税率：",
+            "holdingPeriod": "持有期：",
+            "year": "年",
+            "years": "年"
+          },
+          "taxPlanningTipLabel": "税务规划提示：",
+          "taxPlanningTip": "您应该咨询合格的税务顾问，以优化您的投资结构并最大化税收优惠。税法可能会发生变化，影响您的计算。"
         },
         "sensitivity": {
           "title": "敏感性分析",

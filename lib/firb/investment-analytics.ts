@@ -12,7 +12,12 @@ import {
   calculateLoanSchedule,
   calculateLVR,
 } from "./loan-calculator";
-import { calculateTaxDeductions, calculateTaxBenefit, calculateCGT } from "./tax-calculator";
+import {
+  calculateTaxDeductions,
+  calculateTaxBenefit,
+  calculateCGT,
+  determineTaxResidency,
+} from "./tax-calculator";
 
 /**
  * Generate smart default investment inputs based on property details
@@ -82,7 +87,7 @@ export function generateDefaultInputs(
   const sellingCosts =
     costBenchmarks?.selling_costs_percent ?? DEFAULT_COST_BENCHMARKS.selling_costs_percent;
   const cgtWithholdingRate =
-    macroBenchmarks?.cgt_withholding ?? DEFAULT_MACRO_BENCHMARKS.cgt_withholding;
+    (macroBenchmarks?.cgt_withholding ?? DEFAULT_MACRO_BENCHMARKS.cgt_withholding) / 100; // Convert percentage to decimal
 
   return {
     // Rental
@@ -120,6 +125,9 @@ export function generateDefaultInputs(
     // Exit
     sellingCosts,
     cgtWithholdingRate,
+
+    // Property Details
+    builtAfter1987: propertyType === "newDwelling" ? true : undefined, // Default to true for new dwellings, undefined for others (user should verify)
   };
 }
 
@@ -133,8 +141,14 @@ export function calculateInvestmentAnalytics(
   propertyType: PropertyType,
   existingCosts: CostBreakdown,
   macroBenchmarks?: Partial<Record<MacroMetric, number>>,
-  purchaseDate?: string
+  purchaseDate?: string,
+  citizenshipStatus?: "australian" | "permanent" | "temporary" | "foreign",
+  isOrdinarilyResident?: boolean
 ): InvestmentAnalytics {
+  // Get CGT withholding rate from macro benchmarks
+  const cgtWithholdingRate =
+    (macroBenchmarks?.cgt_withholding ?? DEFAULT_MACRO_BENCHMARKS.cgt_withholding) / 100; // Convert percentage to decimal
+
   // 1. RENTAL YIELD CALCULATIONS
   const annualRent = inputs.estimatedWeeklyRent * 52;
   const vacancyCost = annualRent * (inputs.vacancyRate / 100);
@@ -238,6 +252,25 @@ export function calculateInvestmentAnalytics(
     inputs.buildingAge ??
     (propertyType === "newDwelling" ? 0 : propertyType === "established" ? 10 : 0);
 
+  // Determine if property is income-producing (rental)
+  const isIncomeProducing =
+    !inputs.propertyUsage || inputs.propertyUsage === "rental";
+
+  // Determine if building is eligible for capital works depreciation
+  // Default: newDwelling = true, established = check user input, commercial = true, vacantLand = N/A
+  const builtAfter1987 =
+    inputs.builtAfter1987 ??
+    (propertyType === "newDwelling"
+      ? true
+      : propertyType === "established"
+        ? true // Default to true, but user should verify
+        : propertyType === "commercial"
+          ? true
+          : false);
+
+  // Use purchase price if available (for existing properties), otherwise use current property value
+  const purchasePrice = purchaseDate ? propertyValue : undefined;
+
   const deductions = calculateTaxDeductions(
     firstYearInterest,
     annualExpenses.councilRates,
@@ -248,7 +281,10 @@ export function calculateInvestmentAnalytics(
     annualExpenses.strataFees,
     propertyValue,
     propertyType,
-    buildingAge
+    buildingAge,
+    isIncomeProducing,
+    purchasePrice,
+    builtAfter1987
   );
 
   const taxBenefit = calculateTaxBenefit(deductions.total, effectiveRent, inputs.marginalTaxRate);
@@ -401,13 +437,47 @@ export function calculateInvestmentAnalytics(
   // 8. CGT ON EXIT
   const salePrice = futureValue;
   const sellingCostsAmount = salePrice * (inputs.sellingCosts / 100);
+
+  // Determine tax residency
+  const taxResidency =
+    citizenshipStatus !== undefined
+      ? determineTaxResidency(citizenshipStatus, isOrdinarilyResident)
+      : {
+          isAustralianTaxResident: false,
+          explanation:
+            "Residency status not provided - defaulting to foreign resident for CGT calculations",
+        };
+
+  const holdPeriodYears = inputs.holdPeriod;
+  
+  // Determine property usage for CGT calculations
+  const propertyUsage = inputs.propertyUsage || "rental";
+  
+  // For CGT purposes, determine if property was main residence
+  // If propertyUsage is "primaryResidence", it's currently and always was main residence
+  const wasMainResidence = propertyUsage === "primaryResidence";
+  const yearsAsMainResidence = wasMainResidence ? holdPeriodYears : 0;
+  
+  // If property is rental, we don't know if it was previously main residence
+  // For now, assume rental properties were never main residence (most common case)
+  // In a full implementation, users would specify this
+  // The 6-year rule would apply if property was main residence then rented
+  const yearsRentedAfterMainResidence = undefined; // User would need to specify this
+  
   const cgt = calculateCGT(
     salePrice,
     propertyValue,
     existingCosts.upfrontCosts.total,
     sellingCostsAmount,
-    true,
-    inputs.marginalTaxRate
+    taxResidency.isAustralianTaxResident,
+    inputs.marginalTaxRate,
+    purchaseDate,
+    holdPeriodYears,
+    cgtWithholdingRate,
+    propertyUsage,
+    wasMainResidence,
+    yearsAsMainResidence,
+    yearsRentedAfterMainResidence
   );
 
   // 9. INVESTMENT SCORE

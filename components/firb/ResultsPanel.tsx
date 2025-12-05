@@ -228,7 +228,9 @@ export default function ResultsPanel({
         propertyType,
         costs,
         macroBenchmarks || undefined,
-        formData.purchaseDate
+        formData.purchaseDate,
+        formData.citizenshipStatus,
+        formData.isOrdinarilyResident
       ),
     [
       investmentInputs,
@@ -238,6 +240,8 @@ export default function ResultsPanel({
       costs,
       macroBenchmarks,
       formData.purchaseDate,
+      formData.citizenshipStatus,
+      formData.isOrdinarilyResident,
     ]
   );
 

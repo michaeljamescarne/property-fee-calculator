@@ -13,6 +13,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   DollarSign,
   TrendingUp,
   Home,
@@ -22,6 +27,7 @@ import {
   TrendingDown,
   TrendingUp as TrendingUpIcon,
   AlertCircle,
+  Info,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -129,6 +135,46 @@ export default function FinancialDetailsStep({
             </RadioGroup>
           </div>
         </div>
+
+        {/* Property Depreciation Details - Only show if property is income-producing */}
+        {(!investmentInputs.propertyUsage || investmentInputs.propertyUsage === "rental") && (
+          <div className="space-y-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="built-after-1987"
+                checked={investmentInputs.builtAfter1987 ?? true}
+                onCheckedChange={(checked) =>
+                  onInvestmentInputsChange({
+                    builtAfter1987: checked as boolean,
+                  })
+                }
+              />
+              <Label
+                htmlFor="built-after-1987"
+                className="text-sm font-medium leading-none cursor-pointer flex items-center gap-2"
+              >
+                Building was constructed after September 15, 1987
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-4 w-4 text-blue-600 cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p className="text-sm">
+                      Capital works depreciation (2.5% per year for 40 years) is only available
+                      for properties built after September 15, 1987. This applies to the building
+                      structure and is a significant tax deduction for rental properties. If your
+                      property was built before this date, you cannot claim capital works
+                      depreciation unless it was substantially renovated after this date.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </Label>
+            </div>
+            <p className="text-xs text-blue-700 ml-6">
+              Required for capital works depreciation deductions (Division 43)
+            </p>
+          </div>
+        )}
 
         {/* Rental Income - Only show if usage is 'rental' (or undefined, defaulting to rental) */}
         {(!investmentInputs.propertyUsage || investmentInputs.propertyUsage === "rental") && (
