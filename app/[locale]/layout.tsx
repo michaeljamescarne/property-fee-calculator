@@ -7,6 +7,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import BetaBanner from "@/components/BetaBanner";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import AuthenticatedSidebar from "@/components/portal/AuthenticatedSidebar";
+import MainContentWrapper from "@/components/portal/MainContentWrapper";
 import { generateOrganizationSchema, injectStructuredData } from "@/lib/schema/organization-schema";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import MetaPixel from "@/components/analytics/MetaPixel";
@@ -141,7 +143,12 @@ export default async function LocaleLayout({
             <div className="flex flex-col">
               <BetaBanner />
               <Navigation />
-              <main id="main-content">{children}</main>
+              <div className="flex min-h-screen">
+                {/* Sidebar - only visible when authenticated */}
+                <AuthenticatedSidebar />
+                {/* Main Content - adjust padding when sidebar is visible */}
+                <MainContentWrapper>{children}</MainContentWrapper>
+              </div>
               <Footer />
             </div>
           </AuthProvider>
