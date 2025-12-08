@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import { resend, EMAIL_CONFIG } from "@/lib/resend";
 import { generateCode, hashCode, getExpiryTime, isValidEmail } from "@/lib/auth/magic-code";
+import MagicCodeEmail from "@/emails/MagicCodeEmail";
 import type { SendCodeRequest, SendCodeResponse, AuthErrorResponse } from "@/types/auth";
 import type { Database } from "@/types/database";
 
@@ -92,39 +93,7 @@ export async function POST(request: NextRequest) {
         from: EMAIL_CONFIG.from,
         to: [email],
         subject: "Your Login Code - Property Costs",
-        html: `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <style>
-                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .code-box { background: #f4f4f4; border: 2px solid #6366F1; border-radius: 8px; padding: 20px; text-align: center; margin: 30px 0; }
-                .code { font-size: 36px; font-weight: bold; letter-spacing: 8px; color: #6366F1; }
-                .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #666; }
-              </style>
-            </head>
-            <body>
-              <div class="container">
-                <h2>Your Login Code</h2>
-                <p>Hello!</p>
-                <p>Use the code below to log in to your Property Costs account:</p>
-                
-                <div class="code-box">
-                  <div class="code">${code}</div>
-                </div>
-                
-                <p><strong>This code will expire in 10 minutes.</strong></p>
-                <p>If you didn't request this code, you can safely ignore this email.</p>
-                
-                <div class="footer">
-                  <p>This is an automated email from Property Costs. Please do not reply.</p>
-                  <p>&copy; ${new Date().getFullYear()} Australian Property Investment. All rights reserved.</p>
-                </div>
-              </div>
-            </body>
-          </html>
-        `,
+        react: MagicCodeEmail({ code }),
       });
 
       // Check if email was actually sent

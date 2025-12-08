@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -19,6 +19,7 @@ import FinancialDetailsStep from "@/components/firb/FinancialDetailsStep";
 import ReviewStep from "@/components/firb/ReviewStep";
 import ResultsPanel from "@/components/firb/ResultsPanel";
 import EmailResultsModal from "@/components/firb/EmailResultsModal";
+import { CustomAlert } from "@/components/ui/custom-alert";
 import { CitizenshipStatus, PropertyType, AustralianState, EntityType } from "@/lib/firb/constants";
 import { FIRBCalculatorFormData } from "@/lib/validations/firb";
 import { EligibilityResult } from "@/lib/firb/eligibility";
@@ -86,6 +87,12 @@ export default function FIRBCalculatorPage() {
 
   // Loading state for saved calculations
   const [isLoadingSavedCalculation, setIsLoadingSavedCalculation] = useState(false);
+  const loadedCalculationIdRef = useRef<string | null>(null);
+  const [editingCalculationId, setEditingCalculationId] = useState<string | null>(null);
+  const isEditingRef = useRef<boolean>(false);
+  const shouldNavigateToReviewRef = useRef<boolean>(false);
+  const [savedCalculationName, setSavedCalculationName] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Validation errors state
   const [validationErrors, setValidationErrors] = useState<Record<string, boolean>>({});
@@ -122,11 +129,12 @@ export default function FIRBCalculatorPage() {
     formData.propertyType,
   ]);
 
-  const heroTitle = isResults
-    ? t("results.heroTitle") === "FIRBCalculator.results.heroTitle"
-      ? "Investment Analysis"
-      : t("results.heroTitle")
-    : t("title");
+  const heroTitle = savedCalculationName || 
+    (isResults
+      ? (t("results.heroTitle") === "FIRBCalculator.results.heroTitle"
+          ? "Investment Analysis"
+          : t("results.heroTitle"))
+      : t("title"));
 
   const heroSubtitle = isResults
     ? propertySubtitle ||
@@ -138,24 +146,80 @@ export default function FIRBCalculatorPage() {
   // Get URL search parameters
   const searchParams = useSearchParams();
 
+  // CRITICAL: Immediately navigate to review when edit=true is detected in URL
+  // This must run BEFORE any loading happens to prevent showing results
+  useEffect(() => {
+    const isEdit = searchParams.get("edit") === "true";
+    const loadId = searchParams.get("load");
+    
+    if (isEdit && loadId) {
+      // Set flags immediately to prevent any interference
+      isEditingRef.current = true;
+      shouldNavigateToReviewRef.current = true;
+      
+      // Clear eligibility/costs immediately to prevent ResultsPanel from rendering
+      setEligibility(null);
+      setCosts(null);
+      
+      // Navigate to review step immediately
+      if (currentStep !== "review") {
+        setCurrentStep("review");
+      }
+      
+      // Keep flags active - will be cleared after load completes
+    } else if (!isEdit) {
+      // If edit=false or not present, clear the flags
+      isEditingRef.current = false;
+      shouldNavigateToReviewRef.current = false;
+    }
+  }, [searchParams, currentStep]);
+
   // CRITICAL: Force purchaseType step if it's not set - runs on every render
   useEffect(() => {
-    // If purchaseType is not set, FORCE currentStep to be purchaseType (unless loading saved calc or on results)
-    if (!isLoadingSavedCalculation && !formData.purchaseType && currentStep !== "results") {
+    const isEdit = searchParams.get("edit") === "true";
+    
+    // Don't interfere if we're currently editing a saved calculation or navigating to review
+    // Also check URL param to be extra safe
+    if (isEditingRef.current || shouldNavigateToReviewRef.current || isEdit) return;
+    
+    // If purchaseType is not set, FORCE currentStep to be purchaseType (unless loading saved calc, on results, or on review)
+    // Note: We exclude "review" because when editing, we navigate directly to review step
+    if (
+      !isLoadingSavedCalculation &&
+      !formData.purchaseType &&
+      currentStep !== "results" &&
+      currentStep !== "review"
+    ) {
       if (currentStep !== "purchaseType") {
         setCurrentStep("purchaseType");
         setCompletedSteps([]);
       }
     }
-  }, [formData.purchaseType, currentStep, isLoadingSavedCalculation]);
+  }, [formData.purchaseType, currentStep, isLoadingSavedCalculation, searchParams]);
 
   // Load saved calculation if load parameter is present
   useEffect(() => {
     const loadId = searchParams.get("load");
-    if (loadId && !isLoadingSavedCalculation && !eligibility && !costs) {
-      loadSavedCalculation(loadId);
+    const isEdit = searchParams.get("edit") === "true";
+    
+    if (!loadId || isLoadingSavedCalculation) return;
+    
+    // Determine if we need to reload:
+    // 1. Always reload if it's a different calculation ID
+    // 2. Always reload if edit=true (even for same calculation - needed for edit mode)
+    // 3. For view mode, only reload if eligibility/costs not already loaded (checked inside)
+    const isDifferentCalculation = loadId !== loadedCalculationIdRef.current;
+    const needsReloadForEdit = isEdit; // If editing, always reload to get fresh data
+    
+    // For view mode, check if we need to load (only if data not already loaded)
+    // Use a ref to check current values without adding to dependencies
+    const needsReloadForView = !isEdit && (!eligibility || !costs);
+    
+    if (isDifferentCalculation || needsReloadForEdit || needsReloadForView) {
+      loadSavedCalculation(loadId, isEdit);
+      loadedCalculationIdRef.current = loadId;
     }
-  }, [searchParams, isLoadingSavedCalculation, eligibility, costs]);
+  }, [searchParams, isLoadingSavedCalculation]);
 
   // Fetch benchmarks when property details are available
   useEffect(() => {
@@ -289,24 +353,64 @@ export default function FIRBCalculatorPage() {
   ]);
 
   // Function to load saved calculation
-  const loadSavedCalculation = async (calculationId: string) => {
+  const loadSavedCalculation = async (calculationId: string, isEdit: boolean = false) => {
     setIsLoadingSavedCalculation(true);
+    setLoadError(null); // Clear any previous errors
 
     try {
       const response = await fetch(`/api/calculations/${calculationId}`);
 
       if (!response.ok) {
-        throw new Error("Failed to load calculation");
+        // Handle 404 specifically
+        if (response.status === 404) {
+          setLoadError("This calculation could not be found. It may have been deleted or you don't have permission to access it.");
+        } else {
+          setLoadError("Failed to load the calculation. Please try again or start a new calculation.");
+        }
+        // Reset ref so it doesn't try to reload
+        loadedCalculationIdRef.current = null;
+        // Clear edit flags
+        isEditingRef.current = false;
+        shouldNavigateToReviewRef.current = false;
+        // Reset to initial state
+        setCurrentStep("purchaseType");
+        setCompletedSteps([]);
+        setEditingCalculationId(null);
+        setSavedCalculationName(null);
+        // Remove the load/edit params from URL to prevent retry loops
+        const url = new URL(window.location.href);
+        url.searchParams.delete("load");
+        url.searchParams.delete("edit");
+        window.history.replaceState({}, "", url.toString());
+        return;
       }
 
       const data = await response.json();
 
       if (data.success && data.calculation) {
+        setLoadError(null); // Clear error on success
         const calculation = data.calculation;
         const calculationData = calculation.calculation_data;
 
+        // Set saved calculation name if it exists (always set, even if null to clear previous name)
+        setSavedCalculationName(calculation.calculation_name || null);
+
+        // For editing, set editing ID and ensure flags are set
+        // Note: Eligibility/costs and step should already be cleared/set by the useEffect above
+        if (isEdit) {
+          setEditingCalculationId(calculation.id);
+          // Ensure flags are still set (they should be from the useEffect, but be defensive)
+          isEditingRef.current = true;
+          shouldNavigateToReviewRef.current = true;
+          // Clear eligibility/costs again just in case (defensive)
+          setEligibility(null);
+          setCosts(null);
+        }
+
         // Pre-fill form data
         setFormData({
+          purchaseType: calculationData.purchaseType || "purchasing", // Default to purchasing for backward compatibility
+          purchaseDate: calculationData.purchaseDate,
           citizenshipStatus: calculationData.citizenshipStatus,
           visaType: calculationData.visaType,
           isOrdinarilyResident: calculationData.isOrdinarilyResident,
@@ -318,19 +422,84 @@ export default function FIRBCalculatorPage() {
           depositPercent: calculationData.depositPercent,
           entityType: calculationData.entityType,
           expeditedFIRB: false, // Default value since it's not saved
+          propertyClassification: calculationData.propertyClassification ?? null,
+          bedrooms: calculationData.bedrooms ?? null,
         });
 
-        // Set results
-        setEligibility(calculationData.eligibility);
-        setCosts(calculationData.costs);
+        // Load investment inputs if they exist (stored as individual fields in calculationData)
+        // Note: Some fields might be undefined, which is fine - they'll use defaults
+        const hasInvestmentInputs =
+          calculationData.weeklyRent !== undefined ||
+          calculationData.loanAmount !== undefined ||
+          calculationData.interestRate !== undefined;
 
-        // Mark all steps as completed and jump to results
-        setCompletedSteps(["citizenship", "property", "financial", "review"]);
-        setCurrentStep("results");
+        if (hasInvestmentInputs) {
+          setInvestmentInputs({
+            estimatedWeeklyRent: calculationData.weeklyRent,
+            propertyManagementFee: calculationData.managementFee,
+            loanAmount: calculationData.loanAmount,
+            interestRate: calculationData.interestRate,
+            loanTerm: calculationData.loanTerm,
+            capitalGrowthRate: calculationData.annualGrowthRate,
+            marginalTaxRate: calculationData.marginalTaxRate,
+          });
+        } else {
+          // Clear investment inputs if none were saved
+          setInvestmentInputs({});
+        }
+
+        // Set step AFTER all data is loaded
+        if (isEdit) {
+          // For editing, ensure we're on review step (should already be set by useEffect above)
+          setCompletedSteps(["citizenship", "property", "financial"]);
+          // Ensure step is review (defensive - should already be set)
+          if (currentStep !== "review") {
+            setCurrentStep("review");
+          }
+          
+          // Keep flags active for a period to prevent interference from other useEffects
+          // Will be cleared when edit mode ends (URL changes)
+        } else {
+          // For viewing, set results and navigate to results step
+          setEligibility(calculationData.eligibility);
+          setCosts(calculationData.costs);
+          setCompletedSteps(["citizenship", "property", "financial", "review"]);
+          setCurrentStep("results");
+          // Set editingCalculationId when viewing so we know this is a saved calculation
+          setEditingCalculationId(calculation.id);
+        }
+      } else {
+        // Invalid response data
+        setLoadError("The calculation data is invalid. Please start a new calculation.");
+        loadedCalculationIdRef.current = null;
+        isEditingRef.current = false;
+        shouldNavigateToReviewRef.current = false;
+        setCurrentStep("purchaseType");
+        setCompletedSteps([]);
+        setEditingCalculationId(null);
+        setSavedCalculationName(null);
+        // Remove the load/edit params from URL
+        const url = new URL(window.location.href);
+        url.searchParams.delete("load");
+        url.searchParams.delete("edit");
+        window.history.replaceState({}, "", url.toString());
       }
     } catch (error) {
       console.error("Error loading saved calculation:", error);
-      alert("Failed to load saved calculation. Please try again.");
+      setLoadError("An unexpected error occurred. Please try again or start a new calculation.");
+      // Reset state
+      loadedCalculationIdRef.current = null;
+      isEditingRef.current = false;
+      shouldNavigateToReviewRef.current = false;
+      setCurrentStep("purchaseType");
+      setCompletedSteps([]);
+      setEditingCalculationId(null);
+      setSavedCalculationName(null);
+      // Remove the load/edit params from URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete("load");
+      url.searchParams.delete("edit");
+      window.history.replaceState({}, "", url.toString());
     } finally {
       setIsLoadingSavedCalculation(false);
     }
@@ -779,6 +948,14 @@ export default function FIRBCalculatorPage() {
     // Clear results
     setEligibility(null);
     setCosts(null);
+
+    // Reset loaded calculation ref and editing ID
+    loadedCalculationIdRef.current = null;
+    setEditingCalculationId(null);
+    setSavedCalculationName(null);
+    setLoadError(null); // Clear any load errors
+    isEditingRef.current = false;
+    shouldNavigateToReviewRef.current = false;
   };
 
   // Generate structured data schemas
@@ -803,6 +980,36 @@ export default function FIRBCalculatorPage() {
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-6xl mx-auto">
+            {/* Error Alert - show if there was an error loading calculation */}
+            {loadError && (
+              <div className="mb-6">
+                <CustomAlert variant="destructive" title="Unable to Load Calculation">
+                  <div className="flex items-start justify-between">
+                    <p className="flex-1">{loadError}</p>
+                    <button
+                      onClick={() => setLoadError(null)}
+                      className="ml-4 text-red-600 hover:text-red-800"
+                      aria-label="Dismiss error"
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </CustomAlert>
+              </div>
+            )}
+
             {/* Header */}
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900 leading-tight">
@@ -1019,6 +1226,7 @@ export default function FIRBCalculatorPage() {
               {/* Results Step */}
               {!isLoadingSavedCalculation &&
                 currentStep === "results" &&
+                !isEditingRef.current &&
                 eligibility &&
                 costs &&
                 formData.propertyValue &&
@@ -1038,6 +1246,14 @@ export default function FIRBCalculatorPage() {
                     depositPercent={formData.depositPercent || 20}
                     formData={formData as FIRBCalculatorFormData}
                     investmentInputs={investmentInputs}
+                    editingCalculationId={editingCalculationId}
+                    onSaveSuccess={(name, calculationId) => {
+                      setSavedCalculationName(name);
+                      // Update editingCalculationId if this was a new save
+                      if (!editingCalculationId) {
+                        setEditingCalculationId(calculationId);
+                      }
+                    }}
                   />
                 )}
             </div>
@@ -1051,7 +1267,6 @@ export default function FIRBCalculatorPage() {
                 costs={costs}
                 formData={formData as FIRBCalculatorFormData}
                 locale={locale}
-                pdfTranslations={pdfTranslations}
               />
             )}
 

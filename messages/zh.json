@@ -36,7 +36,12 @@
     "favorites": "收藏",
     "noResultsTitle": "未找到计算",
     "clearFilters": "清除筛选",
-    "compareCalculations": "比较计算"
+    "compareCalculations": "比较计算",
+    "emptyState": {
+      "title": "没有保存的计算",
+      "description": "您还没有保存任何计算。创建您的第一个房产投资计算以开始使用。",
+      "cta": "创建您的第一个计算"
+    }
   },
   "Portal": {
     "dashboard": "仪表板",
@@ -60,9 +65,13 @@
     "sections": {
       "eligibility": "资格",
       "propertyDetails": "房产详情",
+      "investmentPerformance": "投资表现",
       "upfrontCosts": "前期成本",
       "ongoingCosts": "持续成本",
-      "investmentAnalytics": "投资分析"
+      "investmentAnalytics": "投资分析",
+      "projections": "10年预测",
+      "sensitivity": "敏感性分析",
+      "taxAnalysis": "税务分析"
     },
     "labels": {
       "propertyValue": "房产价值",
@@ -73,8 +82,30 @@
       "firbRequired": "需要FIRB",
       "totalUpfront": "总前期成本",
       "totalOngoing": "总持续成本",
-      "totalInvestment": "总投资成本"
-    }
+      "totalInvestment": "总投资成本",
+      "grossRentalYield": "总租金收益率",
+      "netRentalYield": "净租金收益率",
+      "annualizedROI": "年化投资回报率",
+      "monthlyCashFlow": "月度现金流",
+      "propertyValueGrowth": "房产价值增长",
+      "equityAtEnd": "期末权益",
+      "annualTaxSavings": "年度税务节省",
+      "year5PropertyValue": "第5年房产价值",
+      "year10PropertyValue": "第10年房产价值",
+      "year5Equity": "第5年权益",
+      "year10Equity": "第10年权益",
+      "year5CumulativeCashFlow": "第5年累计现金流",
+      "year10CumulativeCashFlow": "第10年累计现金流",
+      "bestCaseScenario": "最佳情况（乐观）",
+      "baseCaseScenario": "基准情况",
+      "worstCaseScenario": "最坏情况（保守）",
+      "interestRateImpact": "利率对现金流的影响",
+      "vacancyRateImpact": "空置率对收入的影响",
+      "annualDeductions": "年度扣除额",
+      "marginalTaxRate": "边际税率",
+      "cgtOnExit": "退出时的资本利得税"
+    },
+    "editCalculation": "编辑计算"
   },
   "FIRBCalculator": {
     "title": "计算器",
@@ -811,7 +842,7 @@
     },
     "emailModal": {
       "title": "发送结果到邮箱",
-      "description": "输入您的邮箱地址，我们将向您发送详细的计算结果PDF报告。",
+      "description": "输入您的邮箱地址，我们将通过邮件向您发送计算结果。",
       "emailLabel": "邮箱地址",
       "emailPlaceholder": "your@email.com",
       "nameLabel": "姓名",
@@ -822,7 +853,7 @@
       "send": "发送结果",
       "sending": "发送中...",
       "cancel": "取消",
-      "info": "您的结果将作为PDF附件发送。这可能需要几分钟。",
+      "info": "您的结果将发送到您的邮箱地址。这可能需要几分钟。",
       "success": {
         "title": "邮件发送成功！",
         "description": "您的计算结果已发送到您的邮箱地址。"

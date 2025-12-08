@@ -10,16 +10,15 @@ import { EligibilityResult } from "@/lib/firb/eligibility";
 import { CostBreakdown } from "@/lib/firb/calculations";
 import type { FIRBCalculatorFormData } from "@/lib/validations/firb";
 import type { InvestmentAnalytics, InvestmentInputs } from "@/types/investment";
-import type { PDFTranslations } from "@/lib/pdf/pdfTranslations";
-import { generateEnhancedPDF } from "@/lib/pdf/generateEnhancedPDF";
 import {
   generateDefaultInputs,
   calculateInvestmentAnalytics,
 } from "@/lib/firb/investment-analytics";
-import { blobToBase64 } from "@/lib/pdf/pdfHelpers";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import { getCostBenchmarks } from "@/lib/benchmarks/cost-benchmarks";
 import { getMacroBenchmarks } from "@/lib/benchmarks/macro-benchmarks";
+import type { FIRBCalculationInsert } from "@/types/database";
+import { createHash } from "crypto";
 
 interface EmailRequest {
   email: string;
@@ -28,7 +27,6 @@ interface EmailRequest {
   costs: CostBreakdown;
   formData: FIRBCalculatorFormData;
   locale: string;
-  pdfTranslations: PDFTranslations;
 }
 
 export async function POST(request: NextRequest) {
@@ -37,7 +35,7 @@ export async function POST(request: NextRequest) {
     const body: EmailRequest = await request.json();
     console.log("Email API: Request body parsed successfully");
     console.log("Email API: Body keys:", Object.keys(body));
-    const { email, name, eligibility, costs, formData, locale, pdfTranslations } = body;
+    const { email, name, eligibility, costs, formData, locale } = body;
     console.log("Email API: Destructured variables successfully");
 
     // Validate email
@@ -61,41 +59,51 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate full investment analytics (always include in emailed PDFs per user request)
+    // Generate full investment analytics for email
     console.log("Email API: Generating investment inputs");
     console.log("Email API: costs object:", JSON.stringify(costs, null, 2));
 
-    // Fetch cost and macro benchmarks
-    const supabase = createServiceRoleClient();
-    const costBenchmarks = await getCostBenchmarks(
-      formData.state!,
-      formData.propertyType!,
-      [
-        "council_rate_percent",
-        "insurance_percent",
-        "maintenance_percent",
-        "vacancy_rate_percent",
-        "management_fee_percent",
-        "letting_fee_weeks",
-        "rent_growth_percent",
-        "interest_rate_percent",
-        "selling_costs_percent",
-      ],
-      supabase
-    );
+    // Fetch cost and macro benchmarks (only if database is configured)
+    let costBenchmarks: Partial<Record<string, number>> = {};
+    let macroBenchmarks: Partial<Record<string, number>> = {};
 
-    const macroBenchmarks = await getMacroBenchmarks(
-      [
-        "asx_total_return",
-        "term_deposit_rate",
-        "bond_rate",
-        "savings_rate",
-        "cgt_withholding",
-        "default_marginal_tax_rate",
-        "default_interest_rate",
-      ],
-      supabase
-    );
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const supabase = createServiceRoleClient();
+        costBenchmarks = await getCostBenchmarks(
+          formData.state!,
+          formData.propertyType!,
+          [
+            "council_rate_percent",
+            "insurance_percent",
+            "maintenance_percent",
+            "vacancy_rate_percent",
+            "management_fee_percent",
+            "letting_fee_weeks",
+            "rent_growth_percent",
+            "interest_rate_percent",
+            "selling_costs_percent",
+          ],
+          supabase
+        );
+
+        macroBenchmarks = await getMacroBenchmarks(
+          [
+            "asx_total_return",
+            "term_deposit_rate",
+            "bond_rate",
+            "savings_rate",
+            "cgt_withholding",
+            "default_marginal_tax_rate",
+            "default_interest_rate",
+          ],
+          supabase
+        );
+      } catch (benchmarkError) {
+        console.warn("Email API: Failed to fetch benchmarks, using defaults:", benchmarkError);
+        // Continue with empty benchmarks - will use defaults
+      }
+    }
 
     let investmentInputs: InvestmentInputs;
     let analytics: InvestmentAnalytics;
@@ -124,61 +132,89 @@ export async function POST(request: NextRequest) {
       console.log("Email API: Investment analytics calculated successfully");
     } catch (analyticsError) {
       console.error("Email API: Analytics generation failed:", analyticsError);
-      // Continue without analytics for now to isolate the issue
+      // Continue without analytics - email will show basic info
       analytics = {} as InvestmentAnalytics;
     }
 
-    // Generate PDF with full analytics
-    let pdfBase64: string | undefined;
+    // Generate shareable URL
+    let shareUrl: string;
     try {
-      console.log("Email API: Generating PDF");
-      // TODO: Get user's content tier from database when payment system is implemented
-      // For now, all users get premium tier
-      const contentTier = "premium"; // await getUserContentTier(userId);
+      console.log("Email API: Generating shareable URL");
+      
+      // Check if database is configured
+      if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        try {
+          const supabase = createServiceRoleClient();
+          const calculationData: FIRBCalculationInsert = {
+            citizenship_status: formData.citizenshipStatus!,
+            visa_type: formData.visaType || null,
+            is_ordinarily_resident: formData.isOrdinarilyResident ?? null,
+            property_type: formData.propertyType!,
+            property_value: formData.propertyValue!,
+            property_state: formData.state!,
+            property_address: formData.propertyAddress || null,
+            is_first_home: formData.isFirstHome || false,
+            deposit_percent: formData.depositPercent || null,
+            entity_type: formData.entityType || "individual",
+            property_classification: formData.propertyClassification || null,
+            bedrooms: formData.bedrooms ?? null,
+            eligibility_result: eligibility as unknown as Record<string, unknown>,
+            cost_breakdown: costs as unknown as Record<string, unknown>,
+            user_email: email,
+            locale: locale || "en",
+          };
 
-      const pdfBlob = await generateEnhancedPDF(
-        formData,
-        eligibility,
-        costs,
-        analytics,
-        locale || "en",
-        pdfTranslations,
-        contentTier
-      );
-      console.log("Email API: PDF generated successfully");
+          const { data: savedCalculation, error: saveError } = await supabase
+            .from("firb_calculations")
+            .insert(calculationData)
+            .select("share_url_slug")
+            .single();
 
-      // Convert PDF blob to base64 for attachment
-      console.log("Email API: Converting PDF to base64");
-      pdfBase64 = await blobToBase64(pdfBlob);
-      console.log("Email API: PDF converted to base64 successfully");
-    } catch (pdfError) {
-      console.error("Email API: PDF generation failed:", pdfError);
-      // Continue without PDF attachment
-      pdfBase64 = undefined;
+          if (!saveError && savedCalculation?.share_url_slug) {
+            shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au"}/${locale || "en"}/results/${savedCalculation.share_url_slug}`;
+            console.log("Email API: Shareable URL generated from database:", shareUrl);
+          } else {
+            throw new Error("Failed to save to database");
+          }
+        } catch (dbError) {
+          console.warn("Email API: Database save failed, using hash-based URL:", dbError);
+          // Fallback to hash-based URL
+          const hash = createHash("md5")
+            .update(JSON.stringify({ formData, eligibility, costs }))
+            .digest("hex")
+            .substring(0, 8);
+          shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au"}/${locale || "en"}/results/${hash}`;
+        }
+      } else {
+        // No database configured - use hash-based URL
+        const hash = createHash("md5")
+          .update(JSON.stringify({ formData, eligibility, costs }))
+          .digest("hex")
+          .substring(0, 8);
+        shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au"}/${locale || "en"}/results/${hash}`;
+        console.log("Email API: Using hash-based shareable URL:", shareUrl);
+      }
+    } catch (urlError) {
+      console.error("Email API: Shareable URL generation failed:", urlError);
+      // Fallback to a basic URL
+      shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au"}/calculator`;
     }
 
-    // Send email with PDF attachment (if available)
-    console.log("Email API: Sending email with attachment");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const emailOptions: any = {
+    // Send email
+    console.log("Email API: Sending email");
+    const emailOptions = {
       from: EMAIL_CONFIG.from,
       to: [email],
       subject: `Your FIRB Investment Analysis - ${eligibility.canPurchase ? "Eligible" : "Review Required"}`,
-      react: FIRBResultsEmail({ name, eligibility, costs }),
+      react: FIRBResultsEmail({
+        name,
+        eligibility,
+        costs,
+        formData,
+        analytics,
+        shareUrl,
+      }),
     };
-
-    // Add PDF attachment if generation was successful
-    if (pdfBase64) {
-      console.log("Email API: Adding PDF attachment to email");
-      emailOptions.attachments = [
-        {
-          filename: `FIRB-Investment-Analysis-${new Date().toISOString().split("T")[0]}.pdf`,
-          content: pdfBase64,
-        },
-      ];
-    } else {
-      console.log("Email API: No PDF attachment (generation failed)");
-    }
 
     const { data, error } = await resend.emails.send(emailOptions);
 

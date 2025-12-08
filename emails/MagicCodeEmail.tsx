@@ -1,6 +1,7 @@
 /**
  * Magic Code Email Template
  * Sent when user requests authentication
+ * Styled to match website design system
  */
 
 import {
@@ -8,7 +9,10 @@ import {
   Container,
   Head,
   Heading,
+  Hr,
   Html,
+  Img,
+  Link,
   Preview,
   Section,
   Text,
@@ -20,36 +24,57 @@ interface MagicCodeEmailProps {
 }
 
 export default function MagicCodeEmail({ code }: MagicCodeEmailProps) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au";
+  const logoUrl = `${baseUrl}/logo.svg`;
+
   return (
     <Html>
       <Head />
       <Preview>Your login code: {code}</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={h1}>Your Login Code</Heading>
-
-          <Text style={text}>Hello!</Text>
-
-          <Text style={text}>Use the code below to log in to your Property Costs account:</Text>
-
-          <Section style={codeBox}>
-            <Text style={codeText}>{code}</Text>
+          {/* Header with Logo */}
+          <Section style={header}>
+            <Link href={baseUrl} style={logoLink}>
+              <Img src={logoUrl} alt="Property Costs" width="32" height="32" style={logo} />
+              <Text style={logoText}>Property Costs</Text>
+            </Link>
+            <Heading style={h1}>Your Login Code</Heading>
           </Section>
 
-          <Text style={text}>
-            <strong>This code will expire in 10 minutes.</strong>
-          </Text>
+          {/* Greeting */}
+          <Section style={section}>
+            <Text style={text}>Hello!</Text>
+            <Text style={text}>
+              Use the code below to log in to your Property Costs account:
+            </Text>
+          </Section>
 
-          <Text style={text}>
-            If you didn&apos;t request this code, you can safely ignore this email.
-          </Text>
+          {/* Code Box */}
+          <Section style={codeBoxWrapper}>
+            <Section style={codeBox}>
+              <Text style={codeText}>{code}</Text>
+            </Section>
+          </Section>
 
+          {/* Instructions */}
+          <Section style={section}>
+            <Text style={text}>
+              <strong>This code will expire in 10 minutes.</strong>
+            </Text>
+            <Text style={text}>
+              If you didn&apos;t request this code, you can safely ignore this email.
+            </Text>
+          </Section>
+
+          {/* Footer */}
+          <Hr style={hr} />
           <Section style={footer}>
             <Text style={footerText}>
-              This is an automated email from Property Costs. Please do not reply.
+              © {new Date().getFullYear()} Property Costs. All rights reserved.
             </Text>
             <Text style={footerText}>
-              &copy; {new Date().getFullYear()} Australian Property Investment. All rights reserved.
+              This is an automated email. Please do not reply to this message.
             </Text>
           </Section>
         </Container>
@@ -58,63 +83,124 @@ export default function MagicCodeEmail({ code }: MagicCodeEmailProps) {
   );
 }
 
+// Styles - Matching website design system
+// Colors: Primary #333333, Background #ffffff, Muted #f7f7f7, Border #ebebeb
+// Font: Inter (with fallbacks)
+// Border radius: 10px (0.625rem)
+
 const main = {
-  backgroundColor: "#f6f9fc",
+  backgroundColor: "#ffffff",
   fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
 };
 
 const container = {
   backgroundColor: "#ffffff",
   margin: "0 auto",
-  padding: "40px 20px",
+  padding: "0",
   maxWidth: "600px",
-  borderRadius: "8px",
+  borderRadius: "10px",
+  border: "1px solid #ebebeb",
+  overflow: "hidden",
+};
+
+const header = {
+  padding: "32px 40px",
+  backgroundColor: "#ffffff",
+  borderBottom: "1px solid #ebebeb",
+  textAlign: "center" as const,
+};
+
+const logoLink = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "10px",
+  textDecoration: "none",
+  marginBottom: "24px",
+};
+
+const logo = {
+  display: "block",
+  width: "32px",
+  height: "32px",
+};
+
+const logoText = {
+  color: "#333333",
+  fontSize: "20px",
+  fontWeight: "bold",
+  margin: "0",
+  fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 };
 
 const h1 = {
-  color: "#1e293b",
+  color: "#333333",
   fontSize: "28px",
-  fontWeight: "700",
-  margin: "0 0 30px",
-  textAlign: "center" as const,
+  fontWeight: "bold",
+  margin: "0",
+  padding: "0",
+  fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+};
+
+const section = {
+  padding: "32px 40px",
+  margin: "0",
 };
 
 const text = {
-  color: "#334155",
+  color: "#333333",
   fontSize: "16px",
-  lineHeight: "1.6",
-  margin: "16px 0",
+  lineHeight: "24px",
+  margin: "0 0 16px 0",
+  fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+};
+
+const codeBoxWrapper = {
+  padding: "0 40px",
+  margin: "24px 0",
 };
 
 const codeBox = {
-  background: "#f8fafc",
-  border: "2px solid #6366f1",
-  borderRadius: "8px",
-  padding: "24px",
+  backgroundColor: "#f7f7f7",
+  border: "1px solid #ebebeb",
+  borderRadius: "10px",
+  padding: "32px 24px",
   textAlign: "center" as const,
-  margin: "32px 0",
+  margin: "0",
 };
 
 const codeText = {
-  fontSize: "36px",
-  fontWeight: "700",
-  letterSpacing: "8px",
-  color: "#6366f1",
+  fontSize: "40px",
+  fontWeight: "bold",
+  letterSpacing: "12px",
+  color: "#333333",
   margin: "0",
-  fontFamily: "monospace",
+  fontFamily: 'Inter, "Courier New", monospace',
+  lineHeight: "1.2",
+};
+
+const hr = {
+  borderColor: "#ebebeb",
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderTop: "none",
+  borderLeft: "none",
+  borderRight: "none",
+  margin: "0",
 };
 
 const footer = {
-  marginTop: "32px",
-  paddingTop: "24px",
-  borderTop: "1px solid #e2e8f0",
+  padding: "32px 40px",
+  margin: "0",
+  textAlign: "center" as const,
+  backgroundColor: "#f7f7f7",
+  borderTop: "1px solid #ebebeb",
 };
 
 const footerText = {
-  color: "#64748b",
+  color: "#666666",
   fontSize: "12px",
-  lineHeight: "1.5",
   margin: "4px 0",
-  textAlign: "center" as const,
+  fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 };

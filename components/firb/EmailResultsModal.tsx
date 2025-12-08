@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { trackConversion } from "@/components/analytics/GoogleAnalytics";
 import { trackMetaEvent } from "@/components/analytics/MetaPixel";
@@ -22,11 +22,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Mail, Loader2, CheckCircle, XCircle } from "lucide-react";
+import { Mail, Loader2, CheckCircle, XCircle, LogIn } from "lucide-react";
 import { EligibilityResult } from "@/lib/firb/eligibility";
 import { CostBreakdown } from "@/lib/firb/calculations";
 import type { FIRBCalculatorFormData } from "@/lib/validations/firb";
-import type { PDFTranslations } from "@/lib/pdf/pdfTranslations";
+import { useAuth } from "@/components/auth/AuthProvider";
+import LoginModal from "@/components/auth/LoginModal";
 
 interface EmailResultsModalProps {
   isOpen: boolean;
@@ -35,7 +36,6 @@ interface EmailResultsModalProps {
   costs: CostBreakdown;
   formData: FIRBCalculatorFormData;
   locale: string;
-  pdfTranslations: PDFTranslations;
 }
 
 export default function EmailResultsModal({
@@ -45,9 +45,9 @@ export default function EmailResultsModal({
   costs,
   formData,
   locale,
-  pdfTranslations,
 }: EmailResultsModalProps) {
   const t = useTranslations("FIRBCalculator.emailModal");
+  const { isAuthenticated, user } = useAuth();
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -55,9 +55,23 @@ export default function EmailResultsModal({
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  // Set email from user if authenticated
+  useEffect(() => {
+    if (isAuthenticated && user?.email && !email) {
+      setEmail(user.email);
+    }
+  }, [isAuthenticated, user?.email, email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check authentication first
+    if (!isAuthenticated) {
+      setShowLoginModal(true);
+      return;
+    }
 
     if (!email || !consent) {
       setErrorMessage(t("errors.required"));
@@ -87,7 +101,6 @@ export default function EmailResultsModal({
           costs,
           formData,
           locale,
-          pdfTranslations,
         }),
       });
 
@@ -136,18 +149,66 @@ export default function EmailResultsModal({
     }
   };
 
-  return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Mail className="h-5 w-5" />
-            {t("title")}
-          </DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
-        </DialogHeader>
+  // Show login prompt if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <>
+        <Dialog open={isOpen} onOpenChange={handleClose}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Mail className="h-5 w-5" />
+                {t("title")}
+              </DialogTitle>
+              <DialogDescription>
+                Please create an account to email your calculation results.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-8 text-center space-y-4">
+              <div className="p-6 bg-muted rounded-lg">
+                <LogIn className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-lg font-semibold mb-2">Account Required</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  You need to create an account before you can email your calculation results.
+                </p>
+                <Button onClick={() => setShowLoginModal(true)} className="w-full">
+                  Create Account or Sign In
+                </Button>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={handleClose}>
+                {t("cancel")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          onSuccess={() => {
+            setShowLoginModal(false);
+            // Email will be pre-filled from user account
+          }}
+          title="Sign in to Email Results"
+        />
+      </>
+    );
+  }
 
-        {status === "success" ? (
+  return (
+    <>
+      <Dialog open={isOpen} onOpenChange={handleClose}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Mail className="h-5 w-5" />
+              {t("title")}
+            </DialogTitle>
+            <DialogDescription>{t("description")}</DialogDescription>
+          </DialogHeader>
+
+          {status === "success" ? (
           <div className="py-8 text-center">
             <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
             <p className="text-lg font-semibold">{t("success.title")}</p>
@@ -229,8 +290,9 @@ export default function EmailResultsModal({
               </Button>
             </DialogFooter>
           </form>
-        )}
-      </DialogContent>
-    </Dialog>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

@@ -36,7 +36,12 @@
     "favorites": "Favorites",
     "noResultsTitle": "No calculations found",
     "clearFilters": "Clear filters",
-    "compareCalculations": "Compare Calculations"
+    "compareCalculations": "Compare Calculations",
+    "emptyState": {
+      "title": "No Saved Calculations",
+      "description": "You haven't saved any calculations yet. Create your first property investment calculation to get started.",
+      "cta": "Create Your First Calculation"
+    }
   },
   "Portal": {
     "dashboard": "Dashboard",
@@ -60,9 +65,13 @@
     "sections": {
       "eligibility": "Eligibility",
       "propertyDetails": "Property Details",
+      "investmentPerformance": "Investment Performance",
       "upfrontCosts": "Upfront Costs",
       "ongoingCosts": "Ongoing Costs",
-      "investmentAnalytics": "Investment Analytics"
+      "investmentAnalytics": "Investment Analytics",
+      "projections": "10-Year Projections",
+      "sensitivity": "Sensitivity Analysis",
+      "taxAnalysis": "Tax Analysis"
     },
     "labels": {
       "propertyValue": "Property Value",
@@ -73,8 +82,30 @@
       "firbRequired": "FIRB Required",
       "totalUpfront": "Total Upfront Costs",
       "totalOngoing": "Total Ongoing Costs",
-      "totalInvestment": "Total Investment Cost"
-    }
+      "totalInvestment": "Total Investment Cost",
+      "grossRentalYield": "Gross Rental Yield",
+      "netRentalYield": "Net Rental Yield",
+      "annualizedROI": "Annualized ROI",
+      "monthlyCashFlow": "Monthly Cash Flow",
+      "propertyValueGrowth": "Property Value Growth",
+      "equityAtEnd": "Equity at End",
+      "annualTaxSavings": "Annual Tax Savings",
+      "year5PropertyValue": "Year 5 Property Value",
+      "year10PropertyValue": "Year 10 Property Value",
+      "year5Equity": "Year 5 Equity",
+      "year10Equity": "Year 10 Equity",
+      "year5CumulativeCashFlow": "Year 5 Cumulative Cash Flow",
+      "year10CumulativeCashFlow": "Year 10 Cumulative Cash Flow",
+      "bestCaseScenario": "Best Case Scenario (Optimistic)",
+      "baseCaseScenario": "Base Case Scenario",
+      "worstCaseScenario": "Worst Case Scenario (Conservative)",
+      "interestRateImpact": "Interest Rate Impact on Cash Flow",
+      "vacancyRateImpact": "Vacancy Rate Impact on Income",
+      "annualDeductions": "Annual Deductions",
+      "marginalTaxRate": "Marginal Tax Rate",
+      "cgtOnExit": "CGT on Exit"
+    },
+    "editCalculation": "Edit Calculation"
   },
   "FIRBCalculator": {
     "title": "Calculator",
@@ -811,7 +842,7 @@
     },
     "emailModal": {
       "title": "Email Your Results",
-      "description": "Enter your email address to receive a detailed PDF report of your calculation results.",
+      "description": "Enter your email address to receive your calculation results via email.",
       "emailLabel": "Email Address",
       "emailPlaceholder": "your@email.com",
       "nameLabel": "Name",
@@ -822,7 +853,7 @@
       "send": "Send Results",
       "sending": "Sending...",
       "cancel": "Cancel",
-      "info": "Your results will be sent as a PDF attachment. This may take a few moments.",
+      "info": "Your results will be sent to your email address. This may take a few moments.",
       "success": {
         "title": "Email Sent Successfully!",
         "description": "Your calculation results have been sent to your email address."

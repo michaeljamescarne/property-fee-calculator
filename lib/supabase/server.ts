@@ -46,18 +46,23 @@ export async function createClient() {
  * Use with caution - bypasses RLS policies
  */
 export function createServiceRoleClient() {
-  return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return [];
-        },
-        setAll() {
-          // Service role client doesn't need to set cookies
-        },
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error(
+      "Supabase is not configured. NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set."
+    );
+  }
+
+  return createServerClient<Database>(supabaseUrl, serviceRoleKey, {
+    cookies: {
+      getAll() {
+        return [];
       },
-    }
-  );
+      setAll() {
+        // Service role client doesn't need to set cookies
+      },
+    },
+  });
 }
