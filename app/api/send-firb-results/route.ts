@@ -167,12 +167,13 @@ export async function POST(request: NextRequest) {
 
           const { data: savedCalculation, error: saveError } = await supabase
             .from("firb_calculations")
-            .insert(calculationData)
+            .insert(calculationData as never)
             .select("share_url_slug")
             .single();
 
-          if (!saveError && savedCalculation?.share_url_slug) {
-            shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au"}/${locale || "en"}/results/${savedCalculation.share_url_slug}`;
+          if (!saveError && savedCalculation && "share_url_slug" in savedCalculation) {
+            const slug = (savedCalculation as { share_url_slug: string }).share_url_slug;
+            shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au"}/${locale || "en"}/results/${slug}`;
             console.log("Email API: Shareable URL generated from database:", shareUrl);
           } else {
             throw new Error("Failed to save to database");
