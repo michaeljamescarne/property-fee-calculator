@@ -158,8 +158,8 @@ export async function POST(request: NextRequest) {
             entity_type: formData.entityType || "individual",
             property_classification: formData.propertyClassification || null,
             bedrooms: formData.bedrooms ?? null,
-            eligibility_result: eligibility as unknown as Record<string, unknown>,
-            cost_breakdown: costs as unknown as Record<string, unknown>,
+            eligibility_result: eligibility as any,
+            cost_breakdown: costs as any,
             user_email: email,
             locale: locale || "en",
           };
