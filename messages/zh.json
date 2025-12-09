@@ -51,6 +51,17 @@
     "actions": "操作",
     "account": "账户"
   },
+  "Account": {
+    "title": "账户",
+    "description": "管理您的账户信息和设置",
+    "accountInfo": "账户信息",
+    "accountInfoDescription": "您的账户详情",
+    "email": "电子邮件地址",
+    "settings": "设置",
+    "settingsDescription": "管理您的账户偏好",
+    "comingSoon": "更多设置即将推出",
+    "logout": "登出"
+  },
   "Compare": {
     "title": "比较计算",
     "description": "选择最多3个计算进行并排比较",

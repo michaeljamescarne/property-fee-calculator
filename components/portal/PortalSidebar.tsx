@@ -8,6 +8,7 @@
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
   LayoutDashboard,
@@ -18,9 +19,11 @@ import {
   User,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 interface NavItem {
   href: string;
@@ -33,6 +36,7 @@ export default function PortalSidebar() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations("Portal");
+  const { isAuthenticated, user, logout } = useAuth();
 
   const navItems: NavItem[] = [
     {
@@ -66,7 +70,7 @@ export default function PortalSidebar() {
       href: `/${locale}/account`,
       label: t("account"),
       icon: User,
-      disabled: true,
+      disabled: false,
     },
   ];
 
@@ -74,12 +78,20 @@ export default function PortalSidebar() {
     return pathname === href || pathname?.startsWith(href + "/");
   };
 
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = `/${locale}`;
+  };
+
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-[160px] border-r border-gray-200 bg-white hidden lg:block">
+    <aside className="fixed left-0 top-0 z-40 h-screen w-[200px] border-r border-gray-200 bg-white hidden lg:block">
       <div className="flex h-full flex-col">
         {/* Logo/Header */}
         <div className="flex h-16 items-center justify-center border-b border-gray-200 px-3">
-          <h2 className="text-base font-semibold text-gray-900 whitespace-nowrap">Portal</h2>
+          <Link href={`/${locale}/dashboard`} className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="Property Costs" width={32} height={32} />
+            <span className="text-base font-semibold text-gray-900">Property Costs</span>
+          </Link>
         </div>
 
         {/* Navigation */}
@@ -100,6 +112,36 @@ export default function PortalSidebar() {
                 >
                   <Icon className="h-5 w-5 flex-shrink-0" />
                   <span className="truncate">{item.label}</span>
+                </div>
+              );
+            }
+
+            // Special handling for Account section - show user email and logout
+            if (item.href === `/${locale}/account`) {
+              return (
+                <div key={item.href} className="space-y-1">
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap",
+                      active
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                    )}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    <Icon className="h-5 w-5 flex-shrink-0" />
+                    <span className="truncate">{item.label}</span>
+                  </Link>
+                  {isAuthenticated && user && (
+                    <button
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors whitespace-nowrap"
+                    >
+                      <LogOut className="h-5 w-5 flex-shrink-0" />
+                      <span className="truncate">Logout</span>
+                    </button>
+                  )}
                 </div>
               );
             }

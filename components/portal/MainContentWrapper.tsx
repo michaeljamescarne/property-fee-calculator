@@ -20,8 +20,8 @@ export default function MainContentWrapper({ children }: MainContentWrapperProps
       id="main-content"
       className={cn(
         "flex-1",
-        // Add padding when authenticated to account for sidebar (160px width)
-        isAuthenticated && "lg:pl-[160px]"
+        // Add padding when authenticated to account for sidebar (200px width)
+        isAuthenticated && "lg:pl-[200px]"
       )}
     >
       {children}

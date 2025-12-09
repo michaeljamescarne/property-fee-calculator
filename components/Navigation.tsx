@@ -74,8 +74,8 @@ export default function Navigation() {
           "container mx-auto px-4 py-5 flex items-center",
           // When authenticated, justify-end to right-align nav items; otherwise justify-between
           isAuthenticated ? "lg:justify-end lg:pr-4" : "justify-between",
-          // Add left padding when authenticated to account for sidebar (160px)
-          isAuthenticated && "lg:pl-[160px]"
+          // Add left padding when authenticated to account for sidebar (200px)
+          isAuthenticated && "lg:pl-[200px]"
         )}>
           <Link
             href={`/${locale}`}
@@ -146,45 +146,49 @@ export default function Navigation() {
               </Button>
             )}
 
-            {/* Auth Section */}
-            {isAuthenticated && user ? (
-              isMounted ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="rounded font-medium">
+            {/* Auth Section - Hide on portal pages */}
+            {!isPortalPage && (
+              <>
+                {isAuthenticated && user ? (
+                  isMounted ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="rounded font-medium">
+                          <LayoutDashboard className="h-4 w-4 mr-2" />
+                          {user.email}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/${locale}/dashboard`}>
+                            <LayoutDashboard className="h-4 w-4 mr-2" />
+                            {t("dashboard")}
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleLogout}>
+                          <LogOut className="h-4 w-4 mr-2" />
+                          {t("logout")}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <Button variant="outline" size="sm" className="rounded font-medium" disabled>
                       <LayoutDashboard className="h-4 w-4 mr-2" />
                       {user.email}
                     </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem asChild>
-                      <Link href={`/${locale}/dashboard`}>
-                        <LayoutDashboard className="h-4 w-4 mr-2" />
-                        {t("dashboard")}
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleLogout}>
-                      <LogOut className="h-4 w-4 mr-2" />
-                      {t("logout")}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Button variant="outline" size="sm" className="rounded font-medium" disabled>
-                  <LayoutDashboard className="h-4 w-4 mr-2" />
-                  {user.email}
-                </Button>
-              )
-            ) : (
-              <Button
-                variant="default"
-                size="sm"
-                className="rounded font-medium"
-                onClick={() => setShowLoginModal(true)}
-              >
-                <LogIn className="h-4 w-4 mr-2" />
-                {t("login")}
-              </Button>
+                  )
+                ) : (
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="rounded font-medium"
+                    onClick={() => setShowLoginModal(true)}
+                  >
+                    <LogIn className="h-4 w-4 mr-2" />
+                    {t("login")}
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -243,47 +247,49 @@ export default function Navigation() {
                 )}
               </div>
 
-              {/* Auth Section */}
-              <div className="pt-2 border-t border-border/40">
-                {isAuthenticated && user ? (
-                  <>
-                    <div className="px-3 py-2 mb-2">
-                      <p className="text-sm font-medium text-muted-foreground">{user.email}</p>
-                    </div>
-                    <Link
-                      href={`/${locale}/dashboard`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center py-2 px-3 rounded-md text-foreground/70 hover:text-primary hover:bg-muted transition-colors"
-                    >
-                      <LayoutDashboard className="h-4 w-4 mr-2" />
-                      {t("dashboard")}
-                    </Link>
-                    <button
+              {/* Auth Section - Hide on portal pages */}
+              {!isPortalPage && (
+                <div className="pt-2 border-t border-border/40">
+                  {isAuthenticated && user ? (
+                    <>
+                      <div className="px-3 py-2 mb-2">
+                        <p className="text-sm font-medium text-muted-foreground">{user.email}</p>
+                      </div>
+                      <Link
+                        href={`/${locale}/dashboard`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center py-2 px-3 rounded-md text-foreground/70 hover:text-primary hover:bg-muted transition-colors"
+                      >
+                        <LayoutDashboard className="h-4 w-4 mr-2" />
+                        {t("dashboard")}
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          handleLogout();
+                        }}
+                        className="flex items-center w-full py-2 px-3 rounded-md text-foreground/70 hover:text-primary hover:bg-muted transition-colors"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        {t("logout")}
+                      </button>
+                    </>
+                  ) : (
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="w-full rounded font-medium"
                       onClick={() => {
                         setIsMobileMenuOpen(false);
-                        handleLogout();
+                        setShowLoginModal(true);
                       }}
-                      className="flex items-center w-full py-2 px-3 rounded-md text-foreground/70 hover:text-primary hover:bg-muted transition-colors"
                     >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      {t("logout")}
-                    </button>
-                  </>
-                ) : (
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="w-full rounded font-medium"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setShowLoginModal(true);
-                    }}
-                  >
-                    <LogIn className="h-4 w-4 mr-2" />
-                    {t("login")}
-                  </Button>
-                )}
-              </div>
+                      <LogIn className="h-4 w-4 mr-2" />
+                      {t("login")}
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
