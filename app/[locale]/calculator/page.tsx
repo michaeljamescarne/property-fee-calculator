@@ -86,7 +86,9 @@ export default function FIRBCalculatorPage() {
 
   // Loading state for saved calculations
   const [isLoadingSavedCalculation, setIsLoadingSavedCalculation] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const loadedCalculationIdRef = useRef<string | null>(null);
+  const loadingAttemptRef = useRef<string | null>(null); // Track current loading attempt to prevent loops
   const [editingCalculationId, setEditingCalculationId] = useState<string | null>(null);
   const isEditingRef = useRef<boolean>(false);
   const shouldNavigateToReviewRef = useRef<boolean>(false);
@@ -206,19 +208,38 @@ export default function FIRBCalculatorPage() {
   useEffect(() => {
     const loadId = searchParams.get("load");
     const isEdit = searchParams.get("edit") === "true";
+    const attemptKey = loadId ? `${loadId}-${isEdit}` : null;
     
-    if (!loadId || isLoadingSavedCalculation) return;
+    // Don't load if: no ID, already loading, or there's an error (prevents retry loops)
+    if (!loadId) {
+      // If no load ID, reset all refs to allow loading a different calculation later
+      loadedCalculationIdRef.current = null;
+      loadingAttemptRef.current = null;
+      return;
+    }
+    
+    // Don't retry if already loading this exact calculation in edit/view mode
+    if (isLoadingSavedCalculation || loadingAttemptRef.current === attemptKey) {
+      return;
+    }
+    
+    // Don't retry if there's an error for this exact calculation
+    if (loadError && loadedCalculationIdRef.current === loadId) {
+      return;
+    }
     
     // Determine if we need to reload:
     const isDifferentCalculation = loadId !== loadedCalculationIdRef.current;
-    const needsReloadForEdit = isEdit; // If editing, always reload to get fresh data
     const needsReloadForView = !isEdit && (!eligibility || !costs);
+    // For edit mode, only reload if it's a different calculation
+    const needsReloadForEdit = isEdit && isDifferentCalculation;
     
     if (isDifferentCalculation || needsReloadForEdit || needsReloadForView) {
+      loadingAttemptRef.current = attemptKey; // Mark that we're attempting to load this
       loadSavedCalculation(loadId, isEdit);
       loadedCalculationIdRef.current = loadId;
     }
-  }, [searchParams, isLoadingSavedCalculation]);
+  }, [searchParams, isLoadingSavedCalculation, loadError, eligibility, costs]);
 
   // Fetch benchmarks when property details are available
   useEffect(() => {
@@ -353,7 +374,11 @@ export default function FIRBCalculatorPage() {
 
   // Function to load saved calculation
   const loadSavedCalculation = async (calculationId: string, isEdit: boolean = false) => {
+    console.log("[loadSavedCalculation] Starting load for:", calculationId, "isEdit:", isEdit);
     setIsLoadingSavedCalculation(true);
+    setLoadError(null); // Clear any previous errors
+    const attemptKey = `${calculationId}-${isEdit}`;
+    loadingAttemptRef.current = attemptKey; // Mark that we're attempting to load this
 
     try {
       let response: Response;
@@ -362,6 +387,7 @@ export default function FIRBCalculatorPage() {
       } catch (fetchError) {
         // Handle network errors (failed to fetch)
         console.error("Network error loading saved calculation:", fetchError);
+        setLoadError("Failed to connect to server. Please check your internet connection and try again.");
         // Reset state and navigate away from edit mode
         loadedCalculationIdRef.current = null;
         isEditingRef.current = false;
@@ -369,32 +395,48 @@ export default function FIRBCalculatorPage() {
         setCurrentStep("purchaseType");
         setCompletedSteps([]);
         setEditingCalculationId(null);
-        // Remove the load/edit params from URL
+        // Clear the loading attempt ref to allow retry only if URL params are re-added
+        loadingAttemptRef.current = null;
+        // Remove the load/edit params from URL to prevent retry loops
         const url = new URL(window.location.href);
         url.searchParams.delete("load");
         url.searchParams.delete("edit");
         window.history.replaceState({}, "", url.toString());
+        console.log("[loadSavedCalculation] Error handled, clearing loading state");
+        setIsLoadingSavedCalculation(false); // Explicitly clear loading state
         return;
       }
 
       if (!response.ok) {
+        let errorMessage = "";
         // Handle 404 specifically
         if (response.status === 404) {
-          // Reset state and navigate away from edit mode
-          loadedCalculationIdRef.current = null;
-          isEditingRef.current = false;
-          shouldNavigateToReviewRef.current = false;
-          setCurrentStep("purchaseType");
-          setCompletedSteps([]);
-          setEditingCalculationId(null);
-          // Remove the load/edit params from URL
-          const url = new URL(window.location.href);
-          url.searchParams.delete("load");
-          url.searchParams.delete("edit");
-          window.history.replaceState({}, "", url.toString());
-          return;
+          errorMessage = "This calculation could not be found. It may have been deleted or you don't have permission to access it.";
+        } else if (response.status === 401) {
+          // Handle 401 (unauthorized)
+          errorMessage = "You need to be logged in to access this calculation. Please sign in and try again.";
+        } else {
+          errorMessage = `Failed to load calculation: ${response.status} ${response.statusText}`;
         }
-        throw new Error(`Failed to load calculation: ${response.status} ${response.statusText}`);
+        
+        setLoadError(errorMessage);
+        // Reset state and navigate away from edit mode
+        loadedCalculationIdRef.current = null;
+        isEditingRef.current = false;
+        shouldNavigateToReviewRef.current = false;
+        setCurrentStep("purchaseType");
+        setCompletedSteps([]);
+        setEditingCalculationId(null);
+        // Clear the loading attempt ref to allow retry only if URL params are re-added
+        loadingAttemptRef.current = null;
+        // Remove the load/edit params from URL to prevent retry loops
+        const url = new URL(window.location.href);
+        url.searchParams.delete("load");
+        url.searchParams.delete("edit");
+        window.history.replaceState({}, "", url.toString());
+        console.log("[loadSavedCalculation] Error handled, clearing loading state");
+        setIsLoadingSavedCalculation(false); // Explicitly clear loading state
+        return;
       }
 
       let data;
@@ -473,12 +515,28 @@ export default function FIRBCalculatorPage() {
           // Set editingCalculationId when viewing so we know this is a saved calculation
           setEditingCalculationId(calculation.id);
         }
+        // Successfully loaded - keep the attempt ref so we don't reload unnecessarily
+        loadingAttemptRef.current = `${calculationId}-${isEdit}`;
+      } else {
+        // If data.success is false or calculation is missing, show error
+        setLoadError("Invalid response from server. The calculation data may be corrupted.");
+        loadedCalculationIdRef.current = null;
+        isEditingRef.current = false;
+        shouldNavigateToReviewRef.current = false;
+        setCurrentStep("purchaseType");
+        setCompletedSteps([]);
+        setEditingCalculationId(null);
+        const url = new URL(window.location.href);
+        url.searchParams.delete("load");
+        url.searchParams.delete("edit");
+        window.history.replaceState({}, "", url.toString());
+        loadingAttemptRef.current = null; // Clear attempt ref
       }
     } catch (error) {
       console.error("Error loading saved calculation:", error);
       const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      setLoadError(`Failed to load calculation: ${errorMessage}. Please try again or start a new calculation.`);
       
-      // Only log network errors, don't show alert
       // Reset state on error to allow user to continue
       loadedCalculationIdRef.current = null;
       isEditingRef.current = false;
@@ -493,12 +551,17 @@ export default function FIRBCalculatorPage() {
         url.searchParams.delete("load");
         url.searchParams.delete("edit");
         window.history.replaceState({}, "", url.toString());
+        loadingAttemptRef.current = null; // Clear attempt ref on error
       } catch (urlError) {
         // Ignore URL errors - we're already handling the main error
         console.error("Error updating URL:", urlError);
       }
     } finally {
+      // Always clear loading state, even if there were early returns
+      console.log("[loadSavedCalculation] Finally block - clearing loading state");
       setIsLoadingSavedCalculation(false);
+      // Note: loadingAttemptRef is cleared in error handlers and URL param removal
+      // For successful loads, we keep it set to prevent unnecessary reloads
     }
   };
 
@@ -800,7 +863,7 @@ export default function FIRBCalculatorPage() {
   };
 
   // Handle edit from review
-  const handleEdit = (step: "citizenship" | "property" | "financial") => {
+  const handleEdit = (step: "purchaseType" | "citizenship" | "property" | "financial") => {
     setCurrentStep(step);
   };
 
@@ -986,6 +1049,61 @@ export default function FIRBCalculatorPage() {
                   <div className="text-center space-y-4">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
                     <p className="text-lg text-gray-600">Loading saved calculation...</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Alert - Show if there was an error loading calculation */}
+              {loadError && !isLoadingSavedCalculation && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <svg
+                        className="h-5 w-5 text-red-400"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <div className="ml-3 flex-1">
+                      <h3 className="text-sm font-medium text-red-800">Failed to Load Calculation</h3>
+                      <div className="mt-2 text-sm text-red-700">
+                        <p>{loadError}</p>
+                      </div>
+                      <div className="mt-4">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setLoadError(null);
+                            setCurrentStep("purchaseType");
+                          }}
+                          className="text-sm font-medium text-red-800 hover:text-red-900 underline"
+                        >
+                          Start a new calculation
+                        </button>
+                      </div>
+                    </div>
+                    <div className="ml-auto pl-3">
+                      <button
+                        type="button"
+                        onClick={() => setLoadError(null)}
+                        className="inline-flex text-red-400 hover:text-red-500"
+                      >
+                        <span className="sr-only">Dismiss</span>
+                        <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path
+                            fillRule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}

@@ -297,6 +297,7 @@
     "review": {
       "title": "Review Your Details",
       "description": "Please review the information you have entered before generating your report.",
+      "typeTitle": "Type",
       "citizenshipTitle": "Citizenship Information",
       "propertyTitle": "Property Information",
       "financialTitle": "Financial Details",

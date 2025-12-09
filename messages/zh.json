@@ -297,6 +297,7 @@
     "review": {
       "title": "审查您的详情",
       "description": "在生成报告之前，请审查您输入的信息。",
+      "typeTitle": "类型",
       "citizenshipTitle": "公民身份信息",
       "propertyTitle": "房产信息",
       "financialTitle": "财务详情",

@@ -23,6 +23,7 @@ import {
   Calculator,
   TrendingUp,
   Info,
+  FileSearch,
 } from "lucide-react";
 import { FIRBCalculatorFormData } from "@/lib/validations/firb";
 import type { InvestmentInputs } from "@/types/investment";
@@ -30,7 +31,7 @@ import type { InvestmentInputs } from "@/types/investment";
 interface ReviewStepProps {
   formData: Partial<FIRBCalculatorFormData>;
   investmentInputs?: Partial<InvestmentInputs>;
-  onEdit: (step: "citizenship" | "property" | "financial") => void;
+  onEdit: (step: "purchaseType" | "citizenship" | "property" | "financial") => void;
   onCalculate: () => void;
   isCalculating?: boolean;
 }
@@ -44,6 +45,7 @@ export default function ReviewStep({
 }: ReviewStepProps) {
   const [disclaimerAcknowledged, setDisclaimerAcknowledged] = useState(false);
   const t = useTranslations("FIRBCalculator.review");
+  const tPurchaseType = useTranslations("FIRBCalculator.purchaseType");
   const tCitizenship = useTranslations("FIRBCalculator.citizenship");
   const tProperty = useTranslations("FIRBCalculator.property");
   const tFinancial = useTranslations("FIRBCalculator.financialDetails");
@@ -83,6 +85,43 @@ export default function ReviewStep({
           <CardTitle className="text-2xl font-semibold text-gray-900">{t("title")}</CardTitle>
           <CardDescription className="text-gray-600">{t("description")}</CardDescription>
         </CardHeader>
+      </Card>
+
+      {/* Type Information */}
+      <Card className="border border-gray-200 shadow-sm rounded bg-white">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <div className="flex items-center gap-2">
+            {formData.purchaseType === "existing" ? (
+              <FileSearch className="h-5 w-5 text-gray-600" />
+            ) : (
+              <Home className="h-5 w-5 text-gray-600" />
+            )}
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              {t("typeTitle") || "Type"}
+            </CardTitle>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onEdit("purchaseType")}
+            className="gap-2 rounded"
+          >
+            <Edit className="h-4 w-4" />
+            {t("edit")}
+          </Button>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div>
+            <p className="text-sm text-gray-600">{tPurchaseType("typeLabel")}</p>
+            <p className="font-medium mt-1 text-gray-900">
+              {formData.purchaseType === "purchasing"
+                ? tPurchaseType("purchasing.title")
+                : formData.purchaseType === "existing"
+                  ? tPurchaseType("existing.title")
+                  : "-"}
+            </p>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Citizenship Information */}
