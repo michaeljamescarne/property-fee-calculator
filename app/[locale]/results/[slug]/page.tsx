@@ -52,6 +52,7 @@ export default async function ResultsPage({ params }: PageProps) {
     // Build formData from stored calculation
     const formData: FIRBCalculatorFormData = {
       purchaseType: "purchasing", // Default since old calculations might not have this
+      purchaseDate: undefined, // Not stored in database, only needed for existing properties
       citizenshipStatus: typedCalculation.citizenship_status,
       visaType: typedCalculation.visa_type || undefined,
       isOrdinarilyResident: typedCalculation.is_ordinarily_resident ?? undefined,
@@ -64,6 +65,7 @@ export default async function ResultsPage({ params }: PageProps) {
       entityType: typedCalculation.entity_type,
       propertyClassification: typedCalculation.property_classification || undefined,
       bedrooms: typedCalculation.bedrooms ?? undefined,
+      expeditedFIRB: false, // Default value since it's not stored in database
     };
 
     return (
