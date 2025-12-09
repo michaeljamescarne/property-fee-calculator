@@ -796,7 +796,7 @@ export default function FIRBCalculatorPage() {
   };
 
   // Handle edit from review
-  const handleEdit = (step: "citizenship" | "property" | "financial") => {
+  const handleEdit = (step: "purchaseType" | "citizenship" | "property" | "financial") => {
     setCurrentStep(step);
   };
 
