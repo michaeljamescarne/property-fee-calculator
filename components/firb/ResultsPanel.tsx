@@ -52,6 +52,8 @@ interface ResultsPanelProps {
   depositPercent: number;
   formData: FIRBCalculatorFormData;
   investmentInputs: Partial<InvestmentInputs>;
+  editingCalculationId?: string | null;
+  onSaveSuccess?: (name: string, calculationId: string) => void;
 }
 
 interface CollapsibleSection {
@@ -78,6 +80,8 @@ export default function ResultsPanel({
   depositPercent,
   formData,
   investmentInputs: propInvestmentInputs,
+  editingCalculationId,
+  onSaveSuccess,
 }: ResultsPanelProps) {
   const t = useTranslations("FIRBCalculator.results");
   const tAnalytics = useTranslations("FIRBCalculator.results.investmentAnalytics");
@@ -161,8 +165,13 @@ export default function ResultsPanel({
   // Function to save the calculation
   const saveCalculation = async () => {
     try {
-      const response = await fetch("/api/calculations/save", {
-        method: "POST",
+      const url = editingCalculationId
+        ? `/api/calculations/${editingCalculationId}`
+        : "/api/calculations/save";
+      const method = editingCalculationId ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ calculationData }),
       });
@@ -316,6 +325,17 @@ export default function ResultsPanel({
     entityType: formData.entityType!,
     eligibility: eligibility,
     costs: costs,
+    // Include investment inputs if provided
+    weeklyRent: investmentInputs.estimatedWeeklyRent,
+    managementFee: investmentInputs.propertyManagementFee,
+    loanAmount: investmentInputs.loanAmount,
+    interestRate: investmentInputs.interestRate,
+    loanTerm: investmentInputs.loanTerm,
+    annualGrowthRate: investmentInputs.capitalGrowthRate,
+    marginalTaxRate: investmentInputs.marginalTaxRate,
+    capitalGainsDiscount: investmentInputs.capitalGainsDiscount,
+    // Include analytics if calculated
+    analytics: investmentAnalytics,
   };
 
   const renderCostBreakdown = () => {
@@ -595,6 +615,8 @@ export default function ResultsPanel({
           setShowLoginModal(true);
         }}
         className="sm:flex-shrink-0"
+        editingCalculationId={editingCalculationId}
+        onSaveSuccess={onSaveSuccess}
       />
 
       <Button
