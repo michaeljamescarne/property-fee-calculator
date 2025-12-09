@@ -10,6 +10,7 @@ import type { EligibilityResult } from "@/lib/firb/eligibility";
 import type { CostBreakdown } from "@/lib/firb/calculations";
 import type { FIRBCalculatorFormData } from "@/lib/validations/firb";
 import { PropertyType, AustralianState } from "@/lib/firb/constants";
+import type { FIRBCalculation } from "@/types/database";
 import PublicResultsWrapper from "./PublicResultsWrapper";
 
 interface PageProps {
@@ -41,25 +42,28 @@ export default async function ResultsPage({ params }: PageProps) {
       notFound();
     }
 
+    // Type the calculation result
+    const typedCalculation = calculation as FIRBCalculation;
+
     // Parse the stored data
-    const eligibility = calculation.eligibility_result as EligibilityResult;
-    const costs = calculation.cost_breakdown as CostBreakdown;
+    const eligibility = typedCalculation.eligibility_result as EligibilityResult;
+    const costs = typedCalculation.cost_breakdown as CostBreakdown;
 
     // Build formData from stored calculation
     const formData: FIRBCalculatorFormData = {
       purchaseType: "purchasing", // Default since old calculations might not have this
-      citizenshipStatus: calculation.citizenship_status,
-      visaType: calculation.visa_type || undefined,
-      isOrdinarilyResident: calculation.is_ordinarily_resident ?? undefined,
-      propertyType: calculation.property_type,
-      propertyValue: Number(calculation.property_value),
-      state: calculation.property_state,
-      propertyAddress: calculation.property_address || undefined,
-      isFirstHome: calculation.is_first_home,
-      depositPercent: calculation.deposit_percent ? Number(calculation.deposit_percent) : 20,
-      entityType: calculation.entity_type,
-      propertyClassification: calculation.property_classification || undefined,
-      bedrooms: calculation.bedrooms ?? undefined,
+      citizenshipStatus: typedCalculation.citizenship_status,
+      visaType: typedCalculation.visa_type || undefined,
+      isOrdinarilyResident: typedCalculation.is_ordinarily_resident ?? undefined,
+      propertyType: typedCalculation.property_type,
+      propertyValue: Number(typedCalculation.property_value),
+      state: typedCalculation.property_state,
+      propertyAddress: typedCalculation.property_address || undefined,
+      isFirstHome: typedCalculation.is_first_home,
+      depositPercent: typedCalculation.deposit_percent ? Number(typedCalculation.deposit_percent) : 20,
+      entityType: typedCalculation.entity_type,
+      propertyClassification: typedCalculation.property_classification || undefined,
+      bedrooms: typedCalculation.bedrooms ?? undefined,
     };
 
     return (
