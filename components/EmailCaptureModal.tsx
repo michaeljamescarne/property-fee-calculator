@@ -39,3 +39,6 @@ export default function EmailCaptureModal({ isOpen, onClose }: EmailCaptureModal
     </Dialog>
   );
 }
+
+
+

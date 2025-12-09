@@ -50,3 +50,6 @@ WHERE email = 'michaeljamescarne@gmail.com';
 -- If you see role = 'user' or NULL, the UPDATE didn't work - check your email address
 
 
+
+
+

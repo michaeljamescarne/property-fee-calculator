@@ -136,3 +136,6 @@ None - this is a feature addition that maintains backward compatibility.
 - No environment variable changes required
 - No database migrations required
 - Clear Next.js cache if image updates don't appear immediately
+
+
+

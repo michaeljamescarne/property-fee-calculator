@@ -202,3 +202,6 @@ WHERE tc.constraint_type = 'FOREIGN KEY'
 -- Check user count
 SELECT COUNT(*) as user_count FROM user_profiles;
 ```
+
+
+

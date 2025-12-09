@@ -375,7 +375,7 @@ export default function EligibilityResultCard({
           <h3 className="text-lg font-semibold mb-4 text-gray-900">{t("recommendations.title")}</h3>
           <div className="space-y-3">
             {!eligibility.canPurchase ? (
-              <div className="flex items-start gap-3 p-3 rounded bg-white border border-blue-200">
+              <div className="flex items-start gap-3 p-3 rounded bg-white border border-gray-200">
                 <XCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-red-900">Purchase is prohibited</p>
               </div>

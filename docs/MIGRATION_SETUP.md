@@ -148,3 +148,6 @@ Expected results:
 - Both tables should exist
 - Row counts depend on whether you ran seed migrations
 - Column counts should be > 10 for each table
+
+
+

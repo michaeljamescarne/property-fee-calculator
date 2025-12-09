@@ -72,3 +72,6 @@ You should see `role: 'admin'` in the result.
 - Check server logs for the exact error
 - Verify the role was set correctly: `SELECT role FROM user_profiles WHERE email = 'your-email@example.com';`
 - Make sure you're logged in with the correct account
+
+
+

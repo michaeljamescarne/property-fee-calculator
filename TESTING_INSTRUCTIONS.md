@@ -225,3 +225,6 @@ npm run build
 - [ ] Buttons are properly styled
 - [ ] Investment analytics toggle works
 - [ ] Responsive design works on mobile/tablet/desktop
+
+
+

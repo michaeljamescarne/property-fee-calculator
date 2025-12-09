@@ -788,3 +788,6 @@ Before making any decisions, use our [comprehensive calculator](https://www.prop
 _Disclaimer: This article provides general information only and should not be relied upon as legal, immigration, or financial advice. Visa classifications and FIRB rules are subject to change. Always verify your visa status with the Department of Home Affairs and seek professional advice specific to your circumstances before making property investment decisions._
 
 _Last updated: November 28, 2025. FIRB rules and visa classifications current as of this date._
+
+
+

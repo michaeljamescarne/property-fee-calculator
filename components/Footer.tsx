@@ -1,11 +1,25 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export default function Footer() {
   const locale = useLocale();
   const t = useTranslations("Nav");
+  const pathname = usePathname();
+
+  // Hide footer on portal/account pages
+  const isPortalPage =
+    pathname?.includes("/dashboard") ||
+    pathname?.includes("/compare") ||
+    pathname?.includes("/properties") ||
+    pathname?.includes("/actions") ||
+    pathname?.includes("/account");
+
+  if (isPortalPage) {
+    return null;
+  }
 
   return (
     <footer className="bg-muted/50 border-t border-border/40 mt-auto w-full">

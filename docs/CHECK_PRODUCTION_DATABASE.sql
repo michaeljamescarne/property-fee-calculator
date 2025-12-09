@@ -48,3 +48,6 @@ SELECT EXISTS (
 -- supabase/migrations/20250118_add_role_to_user_profiles.sql
 
 
+
+
+

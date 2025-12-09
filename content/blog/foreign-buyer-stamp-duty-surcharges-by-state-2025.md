@@ -839,3 +839,6 @@ Before committing to any purchase, use our [complete cost calculator](https://ww
 _Disclaimer: This article provides general information only and should not be relied upon as legal, tax, or financial advice. Stamp duty rates and surcharges are subject to change. Always verify current rates with the relevant state revenue office and seek professional advice specific to your circumstances before making any investment decisions._
 
 _Last updated: November 28, 2025. Rates current as of this date but subject to annual indexation and policy changes._
+
+
+

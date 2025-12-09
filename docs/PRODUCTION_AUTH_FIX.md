@@ -167,3 +167,6 @@ After setting JWT_SECRET, check Vercel logs for:
 - No more "JWT_SECRET must be set" warnings
 - `"verifySession - Token verified successfully"` messages
 - Session API returning `authenticated: true`
+
+
+

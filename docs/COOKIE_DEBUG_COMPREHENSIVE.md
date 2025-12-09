@@ -132,3 +132,6 @@ If cookies still don't work, consider:
 3. **Using middleware** to set cookies (runs before API routes)
 
 But the current approach should work - the manual Set-Cookie header ensures the cookie is sent regardless of Next.js API route limitations.
+
+
+

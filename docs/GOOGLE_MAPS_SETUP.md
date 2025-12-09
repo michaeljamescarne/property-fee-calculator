@@ -172,9 +172,25 @@ If you see "Google Maps API key not configured", the component will work as a re
 
 **"RefererNotAllowedMapError"**
 
-- Check API key restrictions in Google Cloud Console
-- Ensure your domain is in the allowed list
-- Include `http://localhost:3000/*` for local development
+This error occurs when your production domain is not authorized in Google Cloud Console. To fix:
+
+1. **Go to Google Cloud Console**: https://console.cloud.google.com/
+2. **Navigate to**: APIs & Services → Credentials
+3. **Click on your API key** to edit it
+4. **Under "Application restrictions"** → "HTTP referrers (web sites)"
+5. **Add your production domain(s)**:
+   - `https://www.propertycosts.com.au/*`
+   - `https://propertycosts.com.au/*` (without www)
+   - `https://*.propertycosts.com.au/*` (for all subdomains)
+6. **Also include development domains**:
+   - `http://localhost:3000/*`
+   - `http://localhost:3001/*`
+   - `https://*.vercel.app/*` (for Vercel previews)
+7. **Save** the changes
+8. **Wait 1-2 minutes** for changes to propagate
+9. **Refresh your production site** and test again
+
+**Important**: The error message will show the exact URL that needs to be authorized. Make sure to add both the exact URL pattern and wildcard patterns to cover all pages.
 
 **No autocomplete suggestions appearing**
 

@@ -167,3 +167,6 @@ The application now provides better error messages:
 - `app/api/auth/send-code/route.ts` - Magic code email sending
 - `app/api/send-firb-results/route.ts` - FIRB results email sending
 - `env.example.txt` - Environment variable examples
+
+
+

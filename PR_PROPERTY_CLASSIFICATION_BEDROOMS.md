@@ -239,3 +239,6 @@ See the implementation plan or comment on this PR!
 **Branch:** `feature/property-classification-bedrooms-benchmarks`  
 **Base:** `feature/nextjs-16-upgrade` (or `main` if preferred)  
 **Author:** AI Assistant (via Cursor)
+
+
+

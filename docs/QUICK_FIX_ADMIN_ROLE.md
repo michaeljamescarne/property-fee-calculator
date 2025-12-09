@@ -173,3 +173,6 @@ ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'user' NOT NULL;
 - Make sure you ran the UPDATE statement
 - Check for typos in the email address
 - Verify with: `SELECT * FROM user_profiles WHERE email = 'michaeljamescarne@gmail.com';`
+
+
+

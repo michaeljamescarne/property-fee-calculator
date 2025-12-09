@@ -87,3 +87,6 @@ If you find issues, note:
 - Error message (if any)
 - Browser console errors
 - Screenshot (if helpful)
+
+
+

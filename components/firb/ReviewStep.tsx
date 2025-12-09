@@ -219,7 +219,7 @@ export default function ReviewStep({
       </Card>
 
       {/* Financial Details Information */}
-      {investmentInputs && investmentInputs.estimatedWeeklyRent && (
+      {investmentInputs && investmentInputs.estimatedWeeklyRent != null && investmentInputs.estimatedWeeklyRent > 0 && (
         <Card className="border border-gray-200 shadow-sm rounded bg-white">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
             <div className="flex items-center gap-2">

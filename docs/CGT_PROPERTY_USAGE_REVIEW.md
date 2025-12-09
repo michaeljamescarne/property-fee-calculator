@@ -248,3 +248,5 @@ export interface CGTCalculation {
 6. **Update assumptions display** to show exemption information
 7. **Add disclaimer** about foreign resident ineligibility for main residence exemption
 
+
+

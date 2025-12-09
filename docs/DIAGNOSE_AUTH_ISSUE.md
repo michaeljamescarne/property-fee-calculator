@@ -129,3 +129,6 @@ data.diagnostics.step6_environment;
 4. **Check environment variables** in Vercel dashboard
 
 The diagnostic will pinpoint exactly where the issue is.
+
+
+

@@ -7,11 +7,12 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, X } from "lucide-react";
+import { Search, X, ChevronDown, ChevronUp, Edit } from "lucide-react";
 import type { SavedCalculation } from "@/types/database";
 import { getCalculationSummary } from "@/lib/calculations/storage";
 
@@ -29,8 +30,16 @@ export default function CalculationSelector({
   locale,
 }: CalculationSelectorProps) {
   const t = useTranslations("Compare");
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCalculations, setFilteredCalculations] = useState<SavedCalculation[]>(calculations);
+  const [isOpen, setIsOpen] = useState(true);
+  const [prevSelectedCount, setPrevSelectedCount] = useState(0);
+
+  const handleEditCalculation = (calculationId: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card selection when clicking edit button
+    router.push(`/${locale}/calculator?load=${calculationId}&edit=true`);
+  };
 
   useEffect(() => {
     if (!searchTerm) {
@@ -48,6 +57,16 @@ export default function CalculationSelector({
 
     setFilteredCalculations(filtered);
   }, [searchTerm, calculations]);
+
+  // Auto-collapse only when maximum (3) selections are reached, expand when cleared
+  useEffect(() => {
+    if (prevSelectedCount < 3 && selectedIds.length === 3) {
+      setIsOpen(false);
+    } else if (prevSelectedCount > 0 && selectedIds.length === 0) {
+      setIsOpen(true);
+    }
+    setPrevSelectedCount(selectedIds.length);
+  }, [selectedIds.length, prevSelectedCount]);
 
   const handleToggle = (id: string): void => {
     if (selectedIds.includes(id)) {
@@ -83,21 +102,30 @@ export default function CalculationSelector({
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>{t("selectCalculations")}</CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">{t("selectUpTo3")}</p>
-          </div>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle>{t("selectCalculations")}</CardTitle>
+          <p className="text-sm text-muted-foreground mt-1">{t("selectUpTo3")}</p>
+        </div>
+        <div className="flex items-center gap-2">
           {selectedIds.length > 0 && (
             <Button variant="outline" size="sm" onClick={handleClear}>
               <X className="mr-2 h-4 w-4" />
               {t("clear")}
             </Button>
           )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Collapse section" : "Expand section"}
+          >
+            {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+          </Button>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
+      {isOpen && (
+        <CardContent className="space-y-4">
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -152,13 +180,26 @@ export default function CalculationSelector({
                       <span>{formatDate(summary.createdAt)}</span>
                     </div>
                   </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => handleEditCalculation(calculation.id, e)}
+                    className="gap-1.5 shrink-0"
+                    title={t("editCalculation")}
+                  >
+                    <Edit className="h-3.5 w-3.5" />
+                    <span className="hidden sm:inline">{t("editCalculation")}</span>
+                  </Button>
                 </div>
               );
             })
           )}
         </div>
-      </CardContent>
+        </CardContent>
+      )}
     </Card>
   );
 }
+
+
 

@@ -219,3 +219,5 @@ export function calculateTaxDeductions(
 - Capital works: 2.5% of building cost (typically)
 - Plant & equipment: Eligible based on effective life
 
+
+

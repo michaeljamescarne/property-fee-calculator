@@ -28,6 +28,7 @@ export default function AddressAutocomplete({
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const errorHandlerRef = useRef<((event: Event) => void) | null>(null);
 
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
@@ -117,6 +118,39 @@ export default function AddressAutocomplete({
       return () => clearInterval(checkLoaded);
     }
 
+    // Set up Google Maps authentication failure callback
+    // This is called by Google Maps API when there's an authentication/authorization error
+    (window as any).gm_authFailure = () => {
+      const currentUrl = window.location.origin + window.location.pathname;
+      setError(
+        `Address autocomplete is not available. The domain ${currentUrl} needs to be authorized in Google Cloud Console. Please contact support or use manual address entry.`
+      );
+      console.error("Google Maps API authentication failure. Check API key restrictions in Google Cloud Console.");
+    };
+
+    // Set up global error handler for Google Maps API errors
+    errorHandlerRef.current = (event: Event) => {
+      const errorEvent = event as ErrorEvent;
+      const errorMessage = errorEvent.message || String(errorEvent);
+      
+      // Check for RefererNotAllowedMapError
+      if (errorMessage.includes("RefererNotAllowedMapError") || 
+          errorMessage.includes("referer-not-allowed")) {
+        const currentUrl = window.location.origin + window.location.pathname;
+        setError(
+          `Address autocomplete is not available. The domain ${currentUrl} needs to be authorized in Google Cloud Console. Please contact support or use manual address entry.`
+        );
+        console.error("Google Maps API RefererNotAllowedMapError:", errorMessage);
+      } else if (errorMessage.includes("Google Maps") || errorMessage.includes("maps.googleapis.com")) {
+        setError(
+          "Address autocomplete is temporarily unavailable. Please enter your address manually."
+        );
+        console.error("Google Maps API error:", errorMessage);
+      }
+    };
+
+    window.addEventListener("error", errorHandlerRef.current);
+
     // Load Google Maps using script tag (more reliable for API key)
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&loading=async`;
@@ -125,7 +159,44 @@ export default function AddressAutocomplete({
 
     script.onload = () => {
       setIsLoaded(true);
-      initializeAutocomplete();
+      // Small delay to ensure API is fully initialized
+      setTimeout(() => {
+        try {
+          // Check if Google Maps API loaded successfully
+          if (!window.google?.maps?.places) {
+            setError(
+              "Google Maps API failed to load. Please check your API key configuration."
+            );
+            return;
+          }
+          
+          initializeAutocomplete();
+          
+          // Verify autocomplete was created successfully
+          setTimeout(() => {
+            if (!autocompleteRef.current) {
+              const currentUrl = window.location.origin + window.location.pathname;
+              setError(
+                `Address autocomplete could not be initialized. The domain ${currentUrl} may need to be authorized in Google Cloud Console. Please contact support or use manual address entry.`
+              );
+            }
+          }, 500);
+        } catch (err) {
+          console.error("Error initializing Google Maps autocomplete:", err);
+          const errorMessage = err instanceof Error ? err.message : String(err);
+          if (errorMessage.includes("RefererNotAllowedMapError") || 
+              errorMessage.includes("referer-not-allowed")) {
+            const currentUrl = window.location.origin + window.location.pathname;
+            setError(
+              `Address autocomplete is not available. The domain ${currentUrl} needs to be authorized in Google Cloud Console. Please contact support or use manual address entry.`
+            );
+          } else {
+            setError(
+              "Address autocomplete is temporarily unavailable. Please enter your address manually."
+            );
+          }
+        }
+      }, 100);
     };
 
     script.onerror = () => {
@@ -143,6 +214,15 @@ export default function AddressAutocomplete({
         window.google.maps.event.clearInstanceListeners(autocompleteRef.current);
         autocompleteRef.current = null;
       }
+      // Remove error handler
+      if (errorHandlerRef.current) {
+        window.removeEventListener("error", errorHandlerRef.current);
+        errorHandlerRef.current = null;
+      }
+      // Clear Google Maps auth failure callback (only if we set it)
+      if ((window as any).gm_authFailure) {
+        delete (window as any).gm_authFailure;
+      }
       // Note: We don't remove the script tag as it may be used by other components
     };
   }, [onChange, onStateChange]);
@@ -158,7 +238,11 @@ export default function AddressAutocomplete({
         disabled={disabled}
         autoComplete="off"
       />
-      {error && !isLoaded && <p className="text-xs text-muted-foreground mt-1">{error}</p>}
+      {error && (
+        <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 bg-amber-50 dark:bg-amber-950/20 p-2 rounded border border-amber-200 dark:border-amber-800">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

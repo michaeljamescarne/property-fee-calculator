@@ -21,3 +21,6 @@ ON firb_calculations(bedrooms) WHERE bedrooms IS NOT NULL;
 COMMENT ON COLUMN firb_calculations.property_classification IS 'Property classification: unit or house. Only used for established properties.';
 COMMENT ON COLUMN firb_calculations.bedrooms IS 'Number of bedrooms: 0 for studio, 1-5 for bedrooms. Only used for established properties.';
 
+
+
+

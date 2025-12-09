@@ -30,3 +30,6 @@ ON cost_benchmarks(state, property_type, property_classification, bedrooms, metr
 COMMENT ON COLUMN cost_benchmarks.property_classification IS 'Property classification: unit or house. NULL for backward compatibility with existing benchmarks.';
 COMMENT ON COLUMN cost_benchmarks.bedrooms IS 'Number of bedrooms: 0 for studio, 1-5 for bedrooms. NULL for backward compatibility with existing benchmarks.';
 
+
+
+

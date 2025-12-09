@@ -9,6 +9,16 @@ import { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +35,7 @@ import {
   Trash2,
   Edit,
   ExternalLink,
+  Pencil,
 } from "lucide-react";
 import Link from "next/link";
 import type { SavedCalculation } from "@/types/database";
@@ -47,6 +58,8 @@ export default function CalculationCard({
 }: CalculationCardProps) {
   const summary = getCalculationSummary(calculation);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
+  const [renameValue, setRenameValue] = useState(summary.name);
 
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this calculation?")) {
@@ -60,9 +73,27 @@ export default function CalculationCard({
   };
 
   const handleRename = () => {
-    const newName = prompt("Enter a new name for this calculation:", summary.name);
-    if (newName && newName.trim()) {
-      onRename(calculation.id, newName.trim());
+    setRenameValue(summary.name);
+    setIsRenameDialogOpen(true);
+  };
+
+  const handleRenameSubmit = () => {
+    if (renameValue && renameValue.trim()) {
+      onRename(calculation.id, renameValue.trim());
+      setIsRenameDialogOpen(false);
+    }
+  };
+
+  const handleRenameCancel = () => {
+    setIsRenameDialogOpen(false);
+    setRenameValue(summary.name);
+  };
+
+  const handleDialogOpenChange = (open: boolean) => {
+    setIsRenameDialogOpen(open);
+    if (!open) {
+      // Reset to original name when dialog closes
+      setRenameValue(summary.name);
     }
   };
 
@@ -98,8 +129,9 @@ export default function CalculationCard({
   };
 
   return (
-    <Card className={`group hover:shadow-lg transition-all ${isDeleting ? "opacity-50" : ""}`}>
-      <CardHeader className="pb-3">
+    <>
+      <Card className={`group hover:shadow-lg transition-all ${isDeleting ? "opacity-50" : ""}`}>
+        <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <div className="flex items-start gap-2 mb-1">
@@ -130,6 +162,12 @@ export default function CalculationCard({
               <DropdownMenuItem onClick={handleRename}>
                 <Edit className="mr-2 h-4 w-4" />
                 Rename
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={`/${locale}/calculator?load=${calculation.id}&edit=true`}>
+                  <Pencil className="mr-2 h-4 w-4" />
+                  Edit
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleDelete} className="text-destructive">
                 <Trash2 className="mr-2 h-4 w-4" />
@@ -188,5 +226,44 @@ export default function CalculationCard({
         </Link>
       </CardFooter>
     </Card>
+
+    <Dialog open={isRenameDialogOpen} onOpenChange={handleDialogOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Rename Calculation</DialogTitle>
+          <DialogDescription>
+            Enter a new name for this calculation.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="rename-input">Calculation Name</Label>
+            <Input
+              id="rename-input"
+              value={renameValue}
+              onChange={(e) => setRenameValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleRenameSubmit();
+                } else if (e.key === "Escape") {
+                  handleRenameCancel();
+                }
+              }}
+              autoFocus
+              placeholder="Enter calculation name"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={handleRenameCancel}>
+            Cancel
+          </Button>
+          <Button onClick={handleRenameSubmit} disabled={!renameValue?.trim()}>
+            Save
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
