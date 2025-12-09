@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -86,6 +86,10 @@ export default function FIRBCalculatorPage() {
 
   // Loading state for saved calculations
   const [isLoadingSavedCalculation, setIsLoadingSavedCalculation] = useState(false);
+  const loadedCalculationIdRef = useRef<string | null>(null);
+  const [editingCalculationId, setEditingCalculationId] = useState<string | null>(null);
+  const isEditingRef = useRef<boolean>(false);
+  const shouldNavigateToReviewRef = useRef<boolean>(false);
 
   // Validation errors state
   const [validationErrors, setValidationErrors] = useState<Record<string, boolean>>({});
@@ -149,13 +153,72 @@ export default function FIRBCalculatorPage() {
     }
   }, [formData.purchaseType, currentStep, isLoadingSavedCalculation]);
 
+  // CRITICAL: Immediately navigate to review when edit=true is detected in URL
+  useEffect(() => {
+    const isEdit = searchParams.get("edit") === "true";
+    const loadId = searchParams.get("load");
+    
+    if (isEdit && loadId) {
+      // Set flags immediately to prevent any interference
+      isEditingRef.current = true;
+      shouldNavigateToReviewRef.current = true;
+      
+      // Clear eligibility/costs immediately to prevent ResultsPanel from rendering
+      setEligibility(null);
+      setCosts(null);
+      
+      // Navigate to review step immediately
+      if (currentStep !== "review") {
+        setCurrentStep("review");
+      }
+      
+      // Keep flags active - will be cleared after load completes
+    } else if (!isEdit) {
+      // If edit=false or not present, clear the flags
+      isEditingRef.current = false;
+      shouldNavigateToReviewRef.current = false;
+    }
+  }, [searchParams, currentStep]);
+
+  // CRITICAL: Force purchaseType step if it's not set - runs on every render
+  useEffect(() => {
+    const isEdit = searchParams.get("edit") === "true";
+    
+    // Don't interfere if we're currently editing a saved calculation or navigating to review
+    // Also check URL param to be extra safe
+    if (isEditingRef.current || shouldNavigateToReviewRef.current || isEdit) return;
+    
+    // If purchaseType is not set, FORCE currentStep to be purchaseType (unless loading saved calc, on results, or on review)
+    if (
+      !isLoadingSavedCalculation &&
+      !formData.purchaseType &&
+      currentStep !== "results" &&
+      currentStep !== "review"
+    ) {
+      if (currentStep !== "purchaseType") {
+        setCurrentStep("purchaseType");
+        setCompletedSteps([]);
+      }
+    }
+  }, [formData.purchaseType, currentStep, isLoadingSavedCalculation, searchParams]);
+
   // Load saved calculation if load parameter is present
   useEffect(() => {
     const loadId = searchParams.get("load");
-    if (loadId && !isLoadingSavedCalculation && !eligibility && !costs) {
-      loadSavedCalculation(loadId);
+    const isEdit = searchParams.get("edit") === "true";
+    
+    if (!loadId || isLoadingSavedCalculation) return;
+    
+    // Determine if we need to reload:
+    const isDifferentCalculation = loadId !== loadedCalculationIdRef.current;
+    const needsReloadForEdit = isEdit; // If editing, always reload to get fresh data
+    const needsReloadForView = !isEdit && (!eligibility || !costs);
+    
+    if (isDifferentCalculation || needsReloadForEdit || needsReloadForView) {
+      loadSavedCalculation(loadId, isEdit);
+      loadedCalculationIdRef.current = loadId;
     }
-  }, [searchParams, isLoadingSavedCalculation, eligibility, costs]);
+  }, [searchParams, isLoadingSavedCalculation]);
 
   // Fetch benchmarks when property details are available
   useEffect(() => {
@@ -289,50 +352,151 @@ export default function FIRBCalculatorPage() {
   ]);
 
   // Function to load saved calculation
-  const loadSavedCalculation = async (calculationId: string) => {
+  const loadSavedCalculation = async (calculationId: string, isEdit: boolean = false) => {
     setIsLoadingSavedCalculation(true);
 
     try {
-      const response = await fetch(`/api/calculations/${calculationId}`);
-
-      if (!response.ok) {
-        throw new Error("Failed to load calculation");
+      let response: Response;
+      try {
+        response = await fetch(`/api/calculations/${calculationId}`);
+      } catch (fetchError) {
+        // Handle network errors (failed to fetch)
+        console.error("Network error loading saved calculation:", fetchError);
+        // Reset state and navigate away from edit mode
+        loadedCalculationIdRef.current = null;
+        isEditingRef.current = false;
+        shouldNavigateToReviewRef.current = false;
+        setCurrentStep("purchaseType");
+        setCompletedSteps([]);
+        setEditingCalculationId(null);
+        // Remove the load/edit params from URL
+        const url = new URL(window.location.href);
+        url.searchParams.delete("load");
+        url.searchParams.delete("edit");
+        window.history.replaceState({}, "", url.toString());
+        return;
       }
 
-      const data = await response.json();
+      if (!response.ok) {
+        // Handle 404 specifically
+        if (response.status === 404) {
+          // Reset state and navigate away from edit mode
+          loadedCalculationIdRef.current = null;
+          isEditingRef.current = false;
+          shouldNavigateToReviewRef.current = false;
+          setCurrentStep("purchaseType");
+          setCompletedSteps([]);
+          setEditingCalculationId(null);
+          // Remove the load/edit params from URL
+          const url = new URL(window.location.href);
+          url.searchParams.delete("load");
+          url.searchParams.delete("edit");
+          window.history.replaceState({}, "", url.toString());
+          return;
+        }
+        throw new Error(`Failed to load calculation: ${response.status} ${response.statusText}`);
+      }
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        console.error("Error parsing response JSON:", jsonError);
+        throw new Error("Invalid response from server");
+      }
 
       if (data.success && data.calculation) {
         const calculation = data.calculation;
         const calculationData = calculation.calculation_data;
 
+        // For editing, set editing ID and ensure flags are set
+        if (isEdit) {
+          setEditingCalculationId(calculation.id);
+          // Ensure flags are still set
+          isEditingRef.current = true;
+          shouldNavigateToReviewRef.current = true;
+          // Clear eligibility/costs
+          setEligibility(null);
+          setCosts(null);
+        }
+
         // Pre-fill form data
         setFormData({
-          purchaseType: calculationData.purchaseType || "purchasing", // Default to purchasing for backward compatibility
+          purchaseType: calculationData.purchaseType || "purchasing",
           purchaseDate: calculationData.purchaseDate,
           citizenshipStatus: calculationData.citizenshipStatus,
           visaType: calculationData.visaType,
           isOrdinarilyResident: calculationData.isOrdinarilyResident,
           propertyType: calculationData.propertyType,
           propertyValue: calculationData.propertyValue,
-          state: calculationData.propertyState, // Map propertyState to state
+          state: calculationData.propertyState,
           propertyAddress: calculationData.propertyAddress,
           isFirstHome: calculationData.isFirstHome,
           depositPercent: calculationData.depositPercent,
           entityType: calculationData.entityType,
-          expeditedFIRB: false, // Default value since it's not saved
+          expeditedFIRB: false,
         });
 
-        // Set results
-        setEligibility(calculationData.eligibility);
-        setCosts(calculationData.costs);
+        // Load investment inputs if they exist
+        const hasInvestmentInputs =
+          calculationData.weeklyRent !== undefined ||
+          calculationData.loanAmount !== undefined ||
+          calculationData.interestRate !== undefined;
 
-        // Mark all steps as completed and jump to results
-        setCompletedSteps(["citizenship", "property", "financial", "review"]);
-        setCurrentStep("results");
+        if (hasInvestmentInputs) {
+          setInvestmentInputs({
+            estimatedWeeklyRent: calculationData.weeklyRent,
+            propertyManagementFee: calculationData.managementFee,
+            loanAmount: calculationData.loanAmount,
+            interestRate: calculationData.interestRate,
+            loanTerm: calculationData.loanTerm,
+            capitalGrowthRate: calculationData.annualGrowthRate,
+            marginalTaxRate: calculationData.marginalTaxRate,
+          });
+        } else {
+          setInvestmentInputs({});
+        }
+
+        // Set step AFTER all data is loaded
+        if (isEdit) {
+          // For editing, navigate to review step
+          setCompletedSteps(["citizenship", "property", "financial"]);
+          if (currentStep !== "review") {
+            setCurrentStep("review");
+          }
+        } else {
+          // For viewing, set results and navigate to results step
+          setEligibility(calculationData.eligibility);
+          setCosts(calculationData.costs);
+          setCompletedSteps(["citizenship", "property", "financial", "review"]);
+          setCurrentStep("results");
+          // Set editingCalculationId when viewing so we know this is a saved calculation
+          setEditingCalculationId(calculation.id);
+        }
       }
     } catch (error) {
       console.error("Error loading saved calculation:", error);
-      alert("Failed to load saved calculation. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      
+      // Only log network errors, don't show alert
+      // Reset state on error to allow user to continue
+      loadedCalculationIdRef.current = null;
+      isEditingRef.current = false;
+      shouldNavigateToReviewRef.current = false;
+      setCurrentStep("purchaseType");
+      setCompletedSteps([]);
+      setEditingCalculationId(null);
+      
+      // Remove the load/edit params from URL to prevent retry loops
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("load");
+        url.searchParams.delete("edit");
+        window.history.replaceState({}, "", url.toString());
+      } catch (urlError) {
+        // Ignore URL errors - we're already handling the main error
+        console.error("Error updating URL:", urlError);
+      }
     } finally {
       setIsLoadingSavedCalculation(false);
     }
@@ -1031,6 +1195,7 @@ export default function FIRBCalculatorPage() {
                     depositPercent={formData.depositPercent || 20}
                     formData={formData as FIRBCalculatorFormData}
                     investmentInputs={investmentInputs}
+                    editingCalculationId={editingCalculationId}
                   />
                 )}
             </div>
@@ -1044,7 +1209,6 @@ export default function FIRBCalculatorPage() {
                 costs={costs}
                 formData={formData as FIRBCalculatorFormData}
                 locale={locale}
-                pdfTranslations={pdfTranslations}
               />
             )}
 
