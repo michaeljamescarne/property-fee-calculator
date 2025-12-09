@@ -12,7 +12,12 @@ export default function MetaPixel({ pixelId }: MetaPixelProps) {
 
   useEffect(() => {
     if (!id) {
-      console.warn("Meta Pixel ID not configured");
+      // Only show warning in development mode
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          "Meta Pixel ID not configured. Set NEXT_PUBLIC_META_PIXEL_ID environment variable to enable Meta Pixel tracking."
+        );
+      }
       return;
     }
 

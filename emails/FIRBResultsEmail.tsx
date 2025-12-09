@@ -80,7 +80,8 @@ export default function FIRBResultsEmail({
 }: FIRBResultsEmailProps) {
   const previewText = `Your FIRB Calculator Results - ${eligibility.canPurchase ? "Eligible" : "Not Eligible"}`;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au";
-  const logoUrl = `${baseUrl}/logo.svg`;
+  // Ensure logo URL is absolute and properly formatted for email clients
+  const logoUrl = `${baseUrl.replace(/\/$/, "")}/logo.svg`;
 
   return (
     <Html>
@@ -91,10 +92,16 @@ export default function FIRBResultsEmail({
           {/* Header with Logo */}
           <Section style={header}>
             <Link href={baseUrl} style={logoLink}>
-              <Img src={logoUrl} alt="Property Costs" width="32" height="32" style={logo} />
+              <Img 
+                src={logoUrl} 
+                alt="Property Costs" 
+                width="32" 
+                height="32" 
+                style={logo}
+              />
               <Text style={logoText}>Property Costs</Text>
             </Link>
-            <Heading style={h1}>FIRB Investment Analysis</Heading>
+            <Heading style={h1}>Property Costs Analysis</Heading>
           </Section>
 
           {/* Greeting */}
