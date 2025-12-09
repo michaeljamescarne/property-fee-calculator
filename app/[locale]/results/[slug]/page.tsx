@@ -33,7 +33,7 @@ export default async function ResultsPage({ params }: PageProps) {
       .from("firb_calculations")
       .select("*")
       .eq("share_url_slug", slug)
-      .eq("deleted_at", null)
+      .is("deleted_at", null)
       .single();
 
     if (error || !calculation) {
