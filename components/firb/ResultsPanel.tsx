@@ -333,7 +333,7 @@ export default function ResultsPanel({
     loanTerm: investmentInputs.loanTerm,
     annualGrowthRate: investmentInputs.capitalGrowthRate,
     marginalTaxRate: investmentInputs.marginalTaxRate,
-    capitalGainsDiscount: investmentInputs.capitalGainsDiscount,
+    // capitalGainsDiscount is not in InvestmentInputs, so omit it (it's optional in CalculationData)
     // Include analytics if calculated
     analytics: investmentAnalytics,
   };
