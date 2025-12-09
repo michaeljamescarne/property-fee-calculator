@@ -51,6 +51,17 @@
     "actions": "Actions",
     "account": "Account"
   },
+  "Account": {
+    "title": "Account",
+    "description": "Manage your account information and settings",
+    "accountInfo": "Account Information",
+    "accountInfoDescription": "Your account details",
+    "email": "Email Address",
+    "settings": "Settings",
+    "settingsDescription": "Manage your account preferences",
+    "comingSoon": "More settings coming soon",
+    "logout": "Logout"
+  },
   "Compare": {
     "title": "Compare Calculations",
     "description": "Select up to 3 calculations to compare side-by-side",

@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import "../globals.css";
 
-import Navigation from "@/components/Navigation";
+import AuthenticatedNavigation from "@/components/AuthenticatedNavigation";
 import Footer from "@/components/Footer";
 import BetaBanner from "@/components/BetaBanner";
 import { AuthProvider } from "@/components/auth/AuthProvider";
@@ -142,7 +142,7 @@ export default async function LocaleLayout({
             </a>
             <div className="flex flex-col">
               <BetaBanner />
-              <Navigation />
+              <AuthenticatedNavigation />
               <div className="flex min-h-screen">
                 {/* Sidebar - only visible when authenticated */}
                 <AuthenticatedSidebar />
