@@ -134,6 +134,7 @@ export async function deleteProperty(propertyId: string, userId: string): Promis
 
   const { error } = await supabase
     .from("properties")
+    // @ts-expect-error - properties Update type is not properly recognized in Database type
     .update({ deleted_at: new Date().toISOString() })
     .eq("id", propertyId)
     .eq("user_id", userId);
