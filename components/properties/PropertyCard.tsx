@@ -15,9 +15,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreVertical, Trash2, MapPin, DollarSign } from "lucide-react";
+import { MoreVertical, Trash2, MapPin } from "lucide-react";
 import type { Property } from "@/types/database";
-import { formatCurrency } from "@/lib/utils";
 
 interface PropertyCardProps {
   property: Property;
