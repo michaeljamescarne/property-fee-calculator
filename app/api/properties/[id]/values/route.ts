@@ -8,7 +8,7 @@ import { getSessionFromRequest } from "@/lib/auth/session-helpers";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import { getProperty, updateProperty } from "@/lib/properties/storage";
 import { propertyValueHistoryCreateSchema } from "@/lib/validations/properties";
-import type { PropertyValueHistory, PropertyValueHistoryInsert } from "@/types/database";
+import type { PropertyValueHistory } from "@/types/database";
 
 // GET: List value history for a property
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -94,8 +94,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const valueData = validation.data;
 
     const supabase = createServiceRoleClient();
-    // Type assertion needed because property_value_history Insert type is not properly recognized
-    // This is a known limitation with Supabase type generation for new tables
+    // Type assertion needed because property_value_history table types aren't properly generated
+    // This endpoint is for Phase 2 (not fully implemented in Phase 1)
     const insertData = {
       property_id: propertyId,
       valuation_date: valueData.valuation_date,
@@ -104,9 +104,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       valuation_source: valueData.valuation_source ?? null,
       notes: valueData.notes ?? null,
     };
+    // @ts-expect-error - property_value_history Insert type is not properly recognized in Database type
     const { data, error } = await supabase
       .from("property_value_history")
-      .insert(insertData as unknown as PropertyValueHistoryInsert)
+      .insert(insertData)
       .select()
       .single();
 
