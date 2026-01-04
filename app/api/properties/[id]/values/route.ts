@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromRequest } from "@/lib/auth/session-helpers";
 import { createServiceRoleClient } from "@/lib/supabase/server";
-import { getProperty } from "@/lib/properties/storage";
+import { getProperty, updateProperty } from "@/lib/properties/storage";
 import { propertyValueHistoryCreateSchema } from "@/lib/validations/properties";
 import type { PropertyValueHistory } from "@/types/database";
 
@@ -92,14 +92,18 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
 
     const valueData = validation.data;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { property_id, ...insertData } = valueData;
 
     const supabase = createServiceRoleClient();
-
     const { data, error } = await supabase
       .from("property_value_history")
-      .insert(insertData as any)
+      .insert({
+        property_id: propertyId,
+        valuation_date: valueData.valuation_date,
+        value: valueData.value,
+        valuation_type: valueData.valuation_type,
+        valuation_source: valueData.valuation_source ?? null,
+        notes: valueData.notes ?? null,
+      })
       .select()
       .single();
 
@@ -116,15 +120,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
 
     // Optionally update the property's current_value
-    // Note: This will be properly typed when PropertyUpdate is used in Phase 2
     if (body.updateCurrentValue) {
-      const { error: updateError } = await supabase
-        .from("properties")
-        .update({ current_value: valueData.value } as any)
-        .eq("id", propertyId)
-        .eq("user_id", session.user.id);
-
-      if (updateError) {
+      try {
+        await updateProperty(propertyId, session.user.id, {
+          current_value: valueData.value,
+        });
+      } catch (updateError) {
         console.error("Error updating property current_value:", updateError);
       }
     }
