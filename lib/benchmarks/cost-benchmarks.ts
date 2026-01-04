@@ -53,8 +53,12 @@ export async function fetchCostBenchmark(
       // Prefer specific benchmark (with classification/bedrooms) over general ones
       const specificBenchmark = data.benchmarks.find(
         (b: { property_classification: string | null; bedrooms: number | null }) =>
-          (propertyClassification ? b.property_classification === propertyClassification : b.property_classification === null) &&
-          (bedrooms !== null && bedrooms !== undefined ? b.bedrooms === bedrooms : b.bedrooms === null)
+          (propertyClassification
+            ? b.property_classification === propertyClassification
+            : b.property_classification === null) &&
+          (bedrooms !== null && bedrooms !== undefined
+            ? b.bedrooms === bedrooms
+            : b.bedrooms === null)
       );
       if (specificBenchmark) {
         return specificBenchmark.value_numeric;
@@ -140,7 +144,14 @@ export async function getCostBenchmarkWithFallback(
 
   if (supabase) {
     // Server-side
-    value = await getCostBenchmark(state, propertyType, metric, supabase, propertyClassification, bedrooms);
+    value = await getCostBenchmark(
+      state,
+      propertyType,
+      metric,
+      supabase,
+      propertyClassification,
+      bedrooms
+    );
   } else {
     // Client-side
     value = await fetchCostBenchmark(state, propertyType, metric, propertyClassification, bedrooms);
@@ -202,7 +213,12 @@ export async function getCostBenchmarks(
     let { data, error } = await query;
 
     // If no specific benchmarks found and we were looking for specific ones, try general
-    if ((error || !data || data.length === 0) && propertyClassification && bedrooms !== null && bedrooms !== undefined) {
+    if (
+      (error || !data || data.length === 0) &&
+      propertyClassification &&
+      bedrooms !== null &&
+      bedrooms !== undefined
+    ) {
       const fallbackQuery = supabase
         .from("cost_benchmarks")
         .select("metric, value_numeric")

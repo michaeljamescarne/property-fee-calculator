@@ -13,10 +13,7 @@ interface PortalLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function PortalLayout({
-  children,
-  params,
-}: PortalLayoutProps) {
+export default async function PortalLayout({ children, params }: PortalLayoutProps) {
   const { locale } = await params;
 
   // Check if user is authenticated
@@ -33,4 +30,3 @@ export default async function PortalLayout({
     </>
   );
 }
-

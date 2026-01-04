@@ -12,11 +12,7 @@ import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   DollarSign,
   TrendingUp,
@@ -160,8 +156,8 @@ export default function FinancialDetailsStep({
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
                     <p className="text-sm">
-                      Capital works depreciation (2.5% per year for 40 years) is only available
-                      for properties built after September 15, 1987. This applies to the building
+                      Capital works depreciation (2.5% per year for 40 years) is only available for
+                      properties built after September 15, 1987. This applies to the building
                       structure and is a significant tax deduction for rental properties. If your
                       property was built before this date, you cannot claim capital works
                       depreciation unless it was substantially renovated after this date.
@@ -256,9 +252,8 @@ export default function FinancialDetailsStep({
                           {t("rental.benchmark.available") || "Benchmark Available"}
                         </span>
                       </div>
-                      {Math.round(
-                        (propertyValue * (benchmarkData.grossRentalYield / 100)) / 52
-                      ) === weeklyRentForDisplay && (
+                      {Math.round((propertyValue * (benchmarkData.grossRentalYield / 100)) / 52) ===
+                        weeklyRentForDisplay && (
                         <Badge variant="default" className="text-xs">
                           {t("rental.benchmark.using") || "Using benchmark"}
                         </Badge>
@@ -481,7 +476,8 @@ export default function FinancialDetailsStep({
             <p className="text-xs text-gray-600">
               {benchmarkData?.capitalGrowth5yr
                 ? `Benchmark average: ${benchmarkData.capitalGrowth5yr}% per year. Adjust based on your expectations.`
-                : (t("growth.help") || "Historical average: 6% per year. Adjust based on your expectations.")}
+                : t("growth.help") ||
+                  "Historical average: 6% per year. Adjust based on your expectations."}
             </p>
           </div>
         </div>
@@ -615,7 +611,7 @@ export default function FinancialDetailsStep({
               placeholder="e.g., 2000"
             />
           </div>
-          
+
           {/* Benchmark for Council Rates */}
           {!isLoadingBenchmarks && costBenchmarks?.council_rates_avg && (
             <div className="p-3 rounded bg-blue-600/10 border-2 border-blue-600/30 space-y-2 mt-2">
@@ -635,30 +631,24 @@ export default function FinancialDetailsStep({
 
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <div className="p-2 rounded bg-background border">
-                  <p className="text-xs text-gray-600 mb-1">
-                    Market Benchmark
-                  </p>
+                  <p className="text-xs text-gray-600 mb-1">Market Benchmark</p>
                   <p className="font-semibold text-sm">
                     ${Math.round(costBenchmarks.council_rates_avg)}
                   </p>
-                  <p className="text-xs text-gray-600">
-                    (State average)
-                  </p>
+                  <p className="text-xs text-gray-600">(State average)</p>
                 </div>
 
                 <div className="p-2 rounded bg-background border">
-                  <p className="text-xs text-gray-600 mb-1">
-                    Your Input
-                  </p>
+                  <p className="text-xs text-gray-600 mb-1">Your Input</p>
                   <p className="font-semibold text-sm">
                     {councilRates ? `$${councilRates}` : "Not set"}
                   </p>
                   <p className="text-xs text-gray-600">
-                    {councilRates && Math.round(costBenchmarks.council_rates_avg) === councilRates 
-                      ? "Matches benchmark" 
+                    {councilRates && Math.round(costBenchmarks.council_rates_avg) === councilRates
+                      ? "Matches benchmark"
                       : councilRates && councilRates > costBenchmarks.council_rates_avg
                         ? "Above average"
-                        : councilRates 
+                        : councilRates
                           ? "Below average"
                           : "Enter value above"}
                   </p>

@@ -104,6 +104,3 @@ export function extractPostcode(address: string): string | undefined {
   const parsed = parseAddress(address);
   return parsed.postcode;
 }
-
-
-

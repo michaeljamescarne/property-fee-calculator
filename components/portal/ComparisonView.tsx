@@ -59,7 +59,9 @@ export default function ComparisonView({ locale }: ComparisonViewProps) {
       <Alert>
         <Info className="h-4 w-4" />
         <AlertTitle>No Calculations</AlertTitle>
-        <AlertDescription>You don't have any saved calculations yet. Create some calculations to compare them.</AlertDescription>
+        <AlertDescription>
+          You don't have any saved calculations yet. Create some calculations to compare them.
+        </AlertDescription>
       </Alert>
     );
   }
@@ -93,4 +95,3 @@ export default function ComparisonView({ locale }: ComparisonViewProps) {
     </div>
   );
 }
-

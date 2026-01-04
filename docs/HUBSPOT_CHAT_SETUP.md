@@ -177,3 +177,9 @@ Once the chat is working, you can further customize it:
 - ⏳ Testing and verification
 
 Once you complete the HubSpot configuration, the chat widget will automatically appear on your website! 🎉
+
+
+
+
+
+

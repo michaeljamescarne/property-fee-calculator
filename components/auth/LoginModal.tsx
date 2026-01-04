@@ -167,7 +167,7 @@ export default function LoginModal({
 
           // Close modal and trigger success callback
           onClose();
-          
+
           // Await onSuccess if it's async (e.g., saving calculation)
           const successResult = onSuccess?.();
           if (successResult instanceof Promise) {

@@ -8,17 +8,17 @@ interface HubSpotTrackingProps {
 
 /**
  * HubSpot Tracking Component
- * 
+ *
  * Loads the HubSpot tracking code which includes:
  * - Website analytics tracking
  * - Live chat widget (when configured in HubSpot)
  * - Form tracking
  * - Contact tracking
- * 
+ *
  * The chat widget will automatically appear once:
  * 1. This tracking code is installed (✅ already done)
  * 2. A chat channel is configured in HubSpot Inbox settings
- * 
+ *
  * @see https://knowledge.hubspot.com/inbox/connect-and-customize-a-chat-channel-in-the-conversations-inbox
  * @see https://knowledge.hubspot.com/reports/install-the-hubspot-tracking-code
  */

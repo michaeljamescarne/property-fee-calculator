@@ -11,18 +11,14 @@ interface HubSpotBlogTrackingProps {
 
 /**
  * HubSpot Blog Post Tracking Component
- * 
+ *
  * Tracks:
  * - Page views
  * - Time on page
  * - Scroll depth
  * - Engagement metrics
  */
-export default function HubSpotBlogTracking({
-  post,
-  locale,
-  userEmail,
-}: HubSpotBlogTrackingProps) {
+export default function HubSpotBlogTracking({ post, locale, userEmail }: HubSpotBlogTrackingProps) {
   const startTimeRef = useRef<number>(Date.now());
   const maxScrollRef = useRef<number>(0);
   const hasTrackedViewRef = useRef<boolean>(false);
@@ -70,9 +66,7 @@ export default function HubSpotBlogTracking({
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const documentHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
-      const scrollPercent = Math.round(
-        ((scrollTop + windowHeight) / documentHeight) * 100
-      );
+      const scrollPercent = Math.round(((scrollTop + windowHeight) / documentHeight) * 100);
 
       if (scrollPercent > maxScrollRef.current) {
         maxScrollRef.current = scrollPercent;
@@ -111,7 +105,12 @@ export default function HubSpotBlogTracking({
     // Track engagement periodically (every 30 seconds)
     engagementIntervalRef.current = setInterval(() => {
       const timeOnPage = Math.round((Date.now() - startTimeRef.current) / 1000);
-      if (timeOnPage >= 30 && timeOnPage % 30 === 0 && typeof window !== "undefined" && window._hsq) {
+      if (
+        timeOnPage >= 30 &&
+        timeOnPage % 30 === 0 &&
+        typeof window !== "undefined" &&
+        window._hsq
+      ) {
         // Track periodic engagement via HubSpot JavaScript API
         window._hsq.push([
           "trackEvent",
@@ -153,4 +152,3 @@ declare global {
     _hsq?: Array<unknown>;
   }
 }
-

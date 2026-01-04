@@ -61,7 +61,9 @@ export default async function ResultsPage({ params }: PageProps) {
       state: typedCalculation.property_state,
       propertyAddress: typedCalculation.property_address || undefined,
       isFirstHome: typedCalculation.is_first_home,
-      depositPercent: typedCalculation.deposit_percent ? Number(typedCalculation.deposit_percent) : 20,
+      depositPercent: typedCalculation.deposit_percent
+        ? Number(typedCalculation.deposit_percent)
+        : 20,
       entityType: typedCalculation.entity_type,
       propertyClassification: typedCalculation.property_classification || undefined,
       bedrooms: typedCalculation.bedrooms ?? undefined,

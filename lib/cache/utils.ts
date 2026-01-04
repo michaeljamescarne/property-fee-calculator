@@ -1,7 +1,7 @@
 /**
  * Cache Utilities for Next.js 16
  * Provides cache tag constants for consistent naming across the application
- * 
+ *
  * Note: Cache revalidation should be done directly in route handlers or server actions
  * using revalidateTag() and revalidatePath() from "next/cache"
  */
@@ -37,11 +37,11 @@ export const CACHE_TAGS = {
 
 /**
  * Example: How to revalidate cache in a route handler
- * 
+ *
  * ```typescript
  * import { revalidateTag } from "next/cache";
  * import { CACHE_TAGS } from "@/lib/cache/utils";
- * 
+ *
  * export async function POST() {
  *   // ... update data ...
  *   revalidateTag(CACHE_TAGS.blogPosts);
@@ -49,4 +49,3 @@ export const CACHE_TAGS = {
  * }
  * ```
  */
-

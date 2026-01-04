@@ -12,10 +12,10 @@ interface HubSpotFormProps {
 
 /**
  * HubSpot Form Component
- * 
+ *
  * Embeds a HubSpot form for lead capture on blog posts
  * Works with HubSpot Free Tier
- * 
+ *
  * @param formId - HubSpot form ID (get from HubSpot form settings)
  * @param portalId - HubSpot portal ID (your HubSpot account ID, e.g., 442487843)
  * @param region - HubSpot region (default: "na1" for North America, use "ap1" for Asia Pacific)
@@ -62,9 +62,7 @@ export default function HubSpotForm({
   const loadForm = () => {
     if (!window.hbspt || formLoadedRef.current) return;
 
-    const targetElement = target
-      ? document.querySelector(target)
-      : containerRef.current;
+    const targetElement = target ? document.querySelector(target) : containerRef.current;
 
     if (!targetElement) {
       console.error("HubSpot form target not found");
@@ -85,13 +83,7 @@ export default function HubSpotForm({
     }
   };
 
-  return (
-    <div
-      id={`hubspot-form-${formId}`}
-      ref={containerRef}
-      className={className}
-    />
-  );
+  return <div id={`hubspot-form-${formId}`} ref={containerRef} className={className} />;
 }
 
 // Extend Window interface for HubSpot forms
@@ -109,7 +101,3 @@ declare global {
     };
   }
 }
-
-
-
-

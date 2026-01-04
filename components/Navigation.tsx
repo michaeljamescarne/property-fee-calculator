@@ -70,13 +70,15 @@ export default function Navigation() {
         )}
         suppressHydrationWarning
       >
-        <div className={cn(
-          "container mx-auto px-4 py-5 flex items-center",
-          // When authenticated, justify-end to right-align nav items; otherwise justify-between
-          isAuthenticated ? "lg:justify-end lg:pr-4" : "justify-between",
-          // Add left padding when authenticated to account for sidebar (200px)
-          isAuthenticated && "lg:pl-[200px]"
-        )}>
+        <div
+          className={cn(
+            "container mx-auto px-4 py-5 flex items-center",
+            // When authenticated, justify-end to right-align nav items; otherwise justify-between
+            isAuthenticated ? "lg:justify-end lg:pr-4" : "justify-between",
+            // Add left padding when authenticated to account for sidebar (200px)
+            isAuthenticated && "lg:pl-[200px]"
+          )}
+        >
           <Link
             href={`/${locale}`}
             className={cn(
@@ -230,7 +232,9 @@ export default function Navigation() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start" className="w-[200px]">
-                      <DropdownMenuItem onClick={() => switchLocale("en")}>English</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => switchLocale("en")}>
+                        English
+                      </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => switchLocale("zh")}>中文</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

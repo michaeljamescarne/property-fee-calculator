@@ -3,9 +3,9 @@ import { trackEvent } from "@/lib/hubspot/client";
 
 /**
  * API Route: Track HubSpot Event
- * 
+ *
  * POST /api/hubspot/track-event
- * 
+ *
  * Body:
  * {
  *   "eventName": "blog_post_view",
@@ -34,4 +34,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-

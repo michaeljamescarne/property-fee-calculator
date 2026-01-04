@@ -45,9 +45,7 @@ export default function MagicCodeEmail({ code }: MagicCodeEmailProps) {
           {/* Greeting */}
           <Section style={section}>
             <Text style={text}>Hello!</Text>
-            <Text style={text}>
-              Use the code below to log in to your Property Costs account:
-            </Text>
+            <Text style={text}>Use the code below to log in to your Property Costs account:</Text>
           </Section>
 
           {/* Code Box */}

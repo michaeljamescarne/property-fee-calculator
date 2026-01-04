@@ -32,7 +32,8 @@ export default function CalculationSelector({
   const t = useTranslations("Compare");
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCalculations, setFilteredCalculations] = useState<SavedCalculation[]>(calculations);
+  const [filteredCalculations, setFilteredCalculations] =
+    useState<SavedCalculation[]>(calculations);
   const [isOpen, setIsOpen] = useState(true);
   const [prevSelectedCount, setPrevSelectedCount] = useState(0);
 
@@ -126,80 +127,79 @@ export default function CalculationSelector({
       </CardHeader>
       {isOpen && (
         <CardContent className="space-y-4">
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search calculations..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-
-        {/* Selection count */}
-        {selectedIds.length > 0 && (
-          <div className="text-sm text-muted-foreground">
-            {t("selected")}: {selectedIds.length} / 3
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search calculations..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
           </div>
-        )}
 
-        {/* Calculations list */}
-        <div className="space-y-2 max-h-96 overflow-y-auto">
-          {filteredCalculations.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              {searchTerm ? "No calculations found matching your search" : "No calculations available"}
+          {/* Selection count */}
+          {selectedIds.length > 0 && (
+            <div className="text-sm text-muted-foreground">
+              {t("selected")}: {selectedIds.length} / 3
             </div>
-          ) : (
-            filteredCalculations.map((calculation) => {
-              const summary = getCalculationSummary(calculation);
-              const isSelected = selectedIds.includes(calculation.id);
-              const isDisabled = !isSelected && selectedIds.length >= 3;
+          )}
 
-              return (
-                <div
-                  key={calculation.id}
-                  className={`
+          {/* Calculations list */}
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {filteredCalculations.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                {searchTerm
+                  ? "No calculations found matching your search"
+                  : "No calculations available"}
+              </div>
+            ) : (
+              filteredCalculations.map((calculation) => {
+                const summary = getCalculationSummary(calculation);
+                const isSelected = selectedIds.includes(calculation.id);
+                const isDisabled = !isSelected && selectedIds.length >= 3;
+
+                return (
+                  <div
+                    key={calculation.id}
+                    className={`
                     flex items-start gap-3 p-3 rounded-md border transition-colors
                     ${isSelected ? "bg-blue-50 border-blue-200" : "bg-white border-gray-200"}
                     ${isDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-gray-50"}
                   `}
-                  onClick={() => !isDisabled && handleToggle(calculation.id)}
-                >
-                  <Checkbox
-                    checked={isSelected}
-                    disabled={isDisabled}
-                    onCheckedChange={() => !isDisabled && handleToggle(calculation.id)}
-                    className="mt-0.5"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-sm">{summary.name}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{summary.address}</div>
-                    <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
-                      <span>{formatCurrency(summary.value)}</span>
-                      <span>{formatDate(summary.createdAt)}</span>
-                    </div>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={(e) => handleEditCalculation(calculation.id, e)}
-                    className="gap-1.5 shrink-0"
-                    title={t("editCalculation")}
+                    onClick={() => !isDisabled && handleToggle(calculation.id)}
                   >
-                    <Edit className="h-3.5 w-3.5" />
-                    <span className="hidden sm:inline">{t("editCalculation")}</span>
-                  </Button>
-                </div>
-              );
-            })
-          )}
-        </div>
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={isDisabled}
+                      onCheckedChange={() => !isDisabled && handleToggle(calculation.id)}
+                      className="mt-0.5"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-sm">{summary.name}</div>
+                      <div className="text-xs text-muted-foreground mt-1">{summary.address}</div>
+                      <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                        <span>{formatCurrency(summary.value)}</span>
+                        <span>{formatDate(summary.createdAt)}</span>
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => handleEditCalculation(calculation.id, e)}
+                      className="gap-1.5 shrink-0"
+                      title={t("editCalculation")}
+                    >
+                      <Edit className="h-3.5 w-3.5" />
+                      <span className="hidden sm:inline">{t("editCalculation")}</span>
+                    </Button>
+                  </div>
+                );
+              })
+            )}
+          </div>
         </CardContent>
       )}
     </Card>
   );
 }
-
-
-

@@ -209,87 +209,87 @@ export default function EmailResultsModal({
           </DialogHeader>
 
           {status === "success" ? (
-          <div className="py-8 text-center">
-            <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-            <p className="text-lg font-semibold">{t("success.title")}</p>
-            <p className="text-sm text-muted-foreground mt-2">{t("success.description")}</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-4 py-4">
-              {/* Email Input */}
-              <div className="space-y-2">
-                <Label htmlFor="email">
-                  {t("emailLabel")} <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder={t("emailPlaceholder")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={isSending}
-                  required
-                />
-              </div>
-
-              {/* Name Input (Optional) */}
-              <div className="space-y-2">
-                <Label htmlFor="name">
-                  {t("nameLabel")}{" "}
-                  <span className="text-sm text-muted-foreground">({t("optional")})</span>
-                </Label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder={t("namePlaceholder")}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  disabled={isSending}
-                />
-              </div>
-
-              {/* Consent Checkbox */}
-              <div className="flex items-start gap-3 p-4 bg-muted rounded-lg">
-                <Checkbox
-                  id="consent"
-                  checked={consent}
-                  onCheckedChange={(checked) => setConsent(checked as boolean)}
-                  disabled={isSending}
-                  className="mt-1"
-                />
-                <div className="flex-1">
-                  <Label htmlFor="consent" className="cursor-pointer text-sm">
-                    {t("consentLabel")} <span className="text-destructive">*</span>
-                  </Label>
-                  <p className="text-xs text-muted-foreground mt-1">{t("consentDescription")}</p>
-                </div>
-              </div>
-
-              {/* Error Message */}
-              {(errorMessage || status === "error") && (
-                <Alert variant="destructive">
-                  <XCircle className="h-4 w-4" />
-                  <AlertDescription>{errorMessage || t("errors.general")}</AlertDescription>
-                </Alert>
-              )}
-
-              {/* Info Message */}
-              <Alert>
-                <AlertDescription className="text-sm">{t("info")}</AlertDescription>
-              </Alert>
+            <div className="py-8 text-center">
+              <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <p className="text-lg font-semibold">{t("success.title")}</p>
+              <p className="text-sm text-muted-foreground mt-2">{t("success.description")}</p>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-4 py-4">
+                {/* Email Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="email">
+                    {t("emailLabel")} <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder={t("emailPlaceholder")}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isSending}
+                    required
+                  />
+                </div>
 
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={handleClose} disabled={isSending}>
-                {t("cancel")}
-              </Button>
-              <Button type="submit" disabled={isSending || !email || !consent}>
-                {isSending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isSending ? t("sending") : t("send")}
-              </Button>
-            </DialogFooter>
-          </form>
+                {/* Name Input (Optional) */}
+                <div className="space-y-2">
+                  <Label htmlFor="name">
+                    {t("nameLabel")}{" "}
+                    <span className="text-sm text-muted-foreground">({t("optional")})</span>
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder={t("namePlaceholder")}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={isSending}
+                  />
+                </div>
+
+                {/* Consent Checkbox */}
+                <div className="flex items-start gap-3 p-4 bg-muted rounded-lg">
+                  <Checkbox
+                    id="consent"
+                    checked={consent}
+                    onCheckedChange={(checked) => setConsent(checked as boolean)}
+                    disabled={isSending}
+                    className="mt-1"
+                  />
+                  <div className="flex-1">
+                    <Label htmlFor="consent" className="cursor-pointer text-sm">
+                      {t("consentLabel")} <span className="text-destructive">*</span>
+                    </Label>
+                    <p className="text-xs text-muted-foreground mt-1">{t("consentDescription")}</p>
+                  </div>
+                </div>
+
+                {/* Error Message */}
+                {(errorMessage || status === "error") && (
+                  <Alert variant="destructive">
+                    <XCircle className="h-4 w-4" />
+                    <AlertDescription>{errorMessage || t("errors.general")}</AlertDescription>
+                  </Alert>
+                )}
+
+                {/* Info Message */}
+                <Alert>
+                  <AlertDescription className="text-sm">{t("info")}</AlertDescription>
+                </Alert>
+              </div>
+
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={handleClose} disabled={isSending}>
+                  {t("cancel")}
+                </Button>
+                <Button type="submit" disabled={isSending || !email || !consent}>
+                  {isSending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isSending ? t("sending") : t("send")}
+                </Button>
+              </DialogFooter>
+            </form>
           )}
         </DialogContent>
       </Dialog>

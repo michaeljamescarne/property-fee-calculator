@@ -129,11 +129,12 @@ export default function FIRBCalculatorPage() {
     formData.propertyType,
   ]);
 
-  const heroTitle = savedCalculationName || 
+  const heroTitle =
+    savedCalculationName ||
     (isResults
-      ? (t("results.heroTitle") === "FIRBCalculator.results.heroTitle"
-          ? "Investment Analysis"
-          : t("results.heroTitle"))
+      ? t("results.heroTitle") === "FIRBCalculator.results.heroTitle"
+        ? "Investment Analysis"
+        : t("results.heroTitle")
       : t("title"));
 
   const heroSubtitle = isResults
@@ -151,21 +152,21 @@ export default function FIRBCalculatorPage() {
   useEffect(() => {
     const isEdit = searchParams.get("edit") === "true";
     const loadId = searchParams.get("load");
-    
+
     if (isEdit && loadId) {
       // Set flags immediately to prevent any interference
       isEditingRef.current = true;
       shouldNavigateToReviewRef.current = true;
-      
+
       // Clear eligibility/costs immediately to prevent ResultsPanel from rendering
       setEligibility(null);
       setCosts(null);
-      
+
       // Navigate to review step immediately
       if (currentStep !== "review") {
         setCurrentStep("review");
       }
-      
+
       // Keep flags active - will be cleared after load completes
     } else if (!isEdit) {
       // If edit=false or not present, clear the flags
@@ -177,11 +178,11 @@ export default function FIRBCalculatorPage() {
   // CRITICAL: Force purchaseType step if it's not set - runs on every render
   useEffect(() => {
     const isEdit = searchParams.get("edit") === "true";
-    
+
     // Don't interfere if we're currently editing a saved calculation or navigating to review
     // Also check URL param to be extra safe
     if (isEditingRef.current || shouldNavigateToReviewRef.current || isEdit) return;
-    
+
     // If purchaseType is not set, FORCE currentStep to be purchaseType (unless loading saved calc, on results, or on review)
     // Note: We exclude "review" because when editing, we navigate directly to review step
     if (
@@ -201,20 +202,20 @@ export default function FIRBCalculatorPage() {
   useEffect(() => {
     const loadId = searchParams.get("load");
     const isEdit = searchParams.get("edit") === "true";
-    
+
     if (!loadId || isLoadingSavedCalculation) return;
-    
+
     // Determine if we need to reload:
     // 1. Always reload if it's a different calculation ID
     // 2. Always reload if edit=true (even for same calculation - needed for edit mode)
     // 3. For view mode, only reload if eligibility/costs not already loaded (checked inside)
     const isDifferentCalculation = loadId !== loadedCalculationIdRef.current;
     const needsReloadForEdit = isEdit; // If editing, always reload to get fresh data
-    
+
     // For view mode, check if we need to load (only if data not already loaded)
     // Use a ref to check current values without adding to dependencies
     const needsReloadForView = !isEdit && (!eligibility || !costs);
-    
+
     if (isDifferentCalculation || needsReloadForEdit || needsReloadForView) {
       loadSavedCalculation(loadId, isEdit);
       loadedCalculationIdRef.current = loadId;
@@ -363,9 +364,13 @@ export default function FIRBCalculatorPage() {
       if (!response.ok) {
         // Handle 404 specifically
         if (response.status === 404) {
-          setLoadError("This calculation could not be found. It may have been deleted or you don't have permission to access it.");
+          setLoadError(
+            "This calculation could not be found. It may have been deleted or you don't have permission to access it."
+          );
         } else {
-          setLoadError("Failed to load the calculation. Please try again or start a new calculation.");
+          setLoadError(
+            "Failed to load the calculation. Please try again or start a new calculation."
+          );
         }
         // Reset ref so it doesn't try to reload
         loadedCalculationIdRef.current = null;
@@ -456,7 +461,7 @@ export default function FIRBCalculatorPage() {
           if (currentStep !== "review") {
             setCurrentStep("review");
           }
-          
+
           // Keep flags active for a period to prevent interference from other useEffects
           // Will be cleared when edit mode ends (URL changes)
         } else {

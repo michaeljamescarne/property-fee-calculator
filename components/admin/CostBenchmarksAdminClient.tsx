@@ -465,7 +465,8 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
                       ...formData,
                       property_type: newType,
                       // Clear classification and bedrooms when property type changes away from established
-                      property_classification: newType === "established" ? formData.property_classification : null,
+                      property_classification:
+                        newType === "established" ? formData.property_classification : null,
                       bedrooms: newType === "established" ? formData.bedrooms : null,
                     });
                   }}
@@ -490,7 +491,8 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        property_classification: e.target.value === "" ? null : (e.target.value as "unit" | "house"),
+                        property_classification:
+                          e.target.value === "" ? null : (e.target.value as "unit" | "house"),
                       })
                     }
                     className="w-full px-3 py-2 border rounded-md"
@@ -504,11 +506,22 @@ export default function CostBenchmarksAdminClient({ locale }: CostBenchmarksAdmi
                   <Label htmlFor="bedrooms">Bedrooms</Label>
                   <select
                     id="bedrooms"
-                    value={formData.bedrooms !== null && formData.bedrooms !== undefined ? (formData.bedrooms === 0 ? "studio" : formData.bedrooms.toString()) : ""}
+                    value={
+                      formData.bedrooms !== null && formData.bedrooms !== undefined
+                        ? formData.bedrooms === 0
+                          ? "studio"
+                          : formData.bedrooms.toString()
+                        : ""
+                    }
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        bedrooms: e.target.value === "" ? null : e.target.value === "studio" ? 0 : Number(e.target.value),
+                        bedrooms:
+                          e.target.value === ""
+                            ? null
+                            : e.target.value === "studio"
+                              ? 0
+                              : Number(e.target.value),
                       })
                     }
                     className="w-full px-3 py-2 border rounded-md"

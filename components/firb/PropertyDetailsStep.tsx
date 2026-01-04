@@ -19,8 +19,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { PropertyType, AustralianState, EntityType, PropertyClassification } from "@/lib/firb/constants";
-import { Home, Building, MapPin, DollarSign, Percent, AlertCircle, Calendar, Bed } from "lucide-react";
+import {
+  PropertyType,
+  AustralianState,
+  EntityType,
+  PropertyClassification,
+} from "@/lib/firb/constants";
+import {
+  Home,
+  Building,
+  MapPin,
+  DollarSign,
+  Percent,
+  AlertCircle,
+  Calendar,
+  Bed,
+} from "lucide-react";
 import AddressAutocomplete from "./AddressAutocomplete";
 
 interface PropertyDetailsStepProps {
@@ -213,10 +227,10 @@ export default function PropertyDetailsStep({
               <Label htmlFor="unit" className="cursor-pointer block">
                 <div
                   className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
-                    errors.propertyClassification ? "border-red-300 bg-red-50/50" : "border-gray-200"
-                  } ${
-                    propertyClassification === "unit" ? "border-blue-600 bg-blue-50" : ""
-                  }`}
+                    errors.propertyClassification
+                      ? "border-red-300 bg-red-50/50"
+                      : "border-gray-200"
+                  } ${propertyClassification === "unit" ? "border-blue-600 bg-blue-50" : ""}`}
                 >
                   <RadioGroupItem value="unit" id="unit" />
                   <div className="flex-1">
@@ -233,10 +247,10 @@ export default function PropertyDetailsStep({
               <Label htmlFor="house" className="cursor-pointer block">
                 <div
                   className={`flex items-center space-x-3 rounded border-2 p-4 hover:border-blue-600 hover:bg-blue-50 hover:shadow-sm transition-all h-20 ${
-                    errors.propertyClassification ? "border-red-300 bg-red-50/50" : "border-gray-200"
-                  } ${
-                    propertyClassification === "house" ? "border-blue-600 bg-blue-50" : ""
-                  }`}
+                    errors.propertyClassification
+                      ? "border-red-300 bg-red-50/50"
+                      : "border-gray-200"
+                  } ${propertyClassification === "house" ? "border-blue-600 bg-blue-50" : ""}`}
                 >
                   <RadioGroupItem value="house" id="house" />
                   <div className="flex-1">
