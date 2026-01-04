@@ -275,3 +275,9 @@ Build-to-Rent offers unparalleled concessions for foreign investors committed to
 _Disclaimer: This article provides general information only. BTR requirements are complex and vary by state. Always seek professional tax, legal, and FIRB advice specific to your circumstances before proceeding with any BTR investment._
 
 _Last Updated: December 2025 | Sources: Australian Taxation Office, Treasury Australia, State Revenue Offices_
+
+
+
+
+
+

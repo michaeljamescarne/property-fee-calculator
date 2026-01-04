@@ -132,138 +132,138 @@ export default function CalculationCard({
     <>
       <Card className={`group hover:shadow-lg transition-all ${isDeleting ? "opacity-50" : ""}`}>
         <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start gap-2 mb-1">
-              <h3 className="font-semibold text-lg break-words">{summary.name}</h3>
-              {summary.isFavorite && (
-                <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 flex-shrink-0 mt-0.5" />
-              )}
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start gap-2 mb-1">
+                <h3 className="font-semibold text-lg break-words">{summary.name}</h3>
+                {summary.isFavorite && (
+                  <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 flex-shrink-0 mt-0.5" />
+                )}
+              </div>
+              <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                <MapPin className="h-3 w-3 flex-shrink-0 mt-0.5" />
+                <span className="break-words">{summary.address}</span>
+              </div>
             </div>
-            <div className="flex items-start gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-3 w-3 flex-shrink-0 mt-0.5" />
-              <span className="break-words">{summary.address}</span>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleToggleFavorite}>
+                  <Star
+                    className={`mr-2 h-4 w-4 ${summary.isFavorite ? "fill-yellow-500 text-yellow-500" : ""}`}
+                  />
+                  {summary.isFavorite ? "Remove from favorites" : "Add to favorites"}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleRename}>
+                  <Edit className="mr-2 h-4 w-4" />
+                  Rename
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={`/${locale}/calculator?load=${calculation.id}&edit=true`}>
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Edit
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleDelete} className="text-destructive">
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-3 pb-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Property Value</p>
+                <p className="font-semibold truncate">{formatCurrency(summary.value)}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Home className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Type</p>
+                <p className="font-semibold text-sm truncate">
+                  {getPropertyTypeLabel(summary.propertyType)}
+                </p>
+              </div>
             </div>
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleToggleFavorite}>
-                <Star
-                  className={`mr-2 h-4 w-4 ${summary.isFavorite ? "fill-yellow-500 text-yellow-500" : ""}`}
-                />
-                {summary.isFavorite ? "Remove from favorites" : "Add to favorites"}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleRename}>
-                <Edit className="mr-2 h-4 w-4" />
-                Rename
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href={`/${locale}/calculator?load=${calculation.id}&edit=true`}>
-                  <Pencil className="mr-2 h-4 w-4" />
-                  Edit
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDelete} className="text-destructive">
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </CardHeader>
-
-      <CardContent className="space-y-3 pb-3">
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-            <div className="min-w-0">
-              <p className="text-xs text-muted-foreground">Property Value</p>
-              <p className="font-semibold truncate">{formatCurrency(summary.value)}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Home className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-            <div className="min-w-0">
-              <p className="text-xs text-muted-foreground">Type</p>
-              <p className="font-semibold text-sm truncate">
-                {getPropertyTypeLabel(summary.propertyType)}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between gap-2">
-          <Badge variant={getEligibilityVariant(summary.eligibility)}>{summary.eligibility}</Badge>
-          {summary.isFirstHome && (
-            <Badge variant="outline" className="text-xs">
-              First Home
+          <div className="flex items-center justify-between gap-2">
+            <Badge variant={getEligibilityVariant(summary.eligibility)}>
+              {summary.eligibility}
             </Badge>
-          )}
-          <Badge variant="outline" className="text-xs">
-            {summary.propertyState}
-          </Badge>
-        </div>
-
-        <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t">
-          <Calendar className="h-3 w-3" />
-          <span>Created {formatDate(summary.createdAt)}</span>
-        </div>
-      </CardContent>
-
-      <CardFooter className="pt-0">
-        <Link href={`/${locale}/calculator?load=${calculation.id}`} className="w-full">
-          <Button variant="outline" className="w-full" size="sm">
-            <ExternalLink className="mr-2 h-4 w-4" />
-            View Details
-          </Button>
-        </Link>
-      </CardFooter>
-    </Card>
-
-    <Dialog open={isRenameDialogOpen} onOpenChange={handleDialogOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Rename Calculation</DialogTitle>
-          <DialogDescription>
-            Enter a new name for this calculation.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label htmlFor="rename-input">Calculation Name</Label>
-            <Input
-              id="rename-input"
-              value={renameValue}
-              onChange={(e) => setRenameValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleRenameSubmit();
-                } else if (e.key === "Escape") {
-                  handleRenameCancel();
-                }
-              }}
-              autoFocus
-              placeholder="Enter calculation name"
-            />
+            {summary.isFirstHome && (
+              <Badge variant="outline" className="text-xs">
+                First Home
+              </Badge>
+            )}
+            <Badge variant="outline" className="text-xs">
+              {summary.propertyState}
+            </Badge>
           </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={handleRenameCancel}>
-            Cancel
-          </Button>
-          <Button onClick={handleRenameSubmit} disabled={!renameValue?.trim()}>
-            Save
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+
+          <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t">
+            <Calendar className="h-3 w-3" />
+            <span>Created {formatDate(summary.createdAt)}</span>
+          </div>
+        </CardContent>
+
+        <CardFooter className="pt-0">
+          <Link href={`/${locale}/calculator?load=${calculation.id}`} className="w-full">
+            <Button variant="outline" className="w-full" size="sm">
+              <ExternalLink className="mr-2 h-4 w-4" />
+              View Details
+            </Button>
+          </Link>
+        </CardFooter>
+      </Card>
+
+      <Dialog open={isRenameDialogOpen} onOpenChange={handleDialogOpenChange}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Rename Calculation</DialogTitle>
+            <DialogDescription>Enter a new name for this calculation.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="rename-input">Calculation Name</Label>
+              <Input
+                id="rename-input"
+                value={renameValue}
+                onChange={(e) => setRenameValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleRenameSubmit();
+                  } else if (e.key === "Escape") {
+                    handleRenameCancel();
+                  }
+                }}
+                autoFocus
+                placeholder="Enter calculation name"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={handleRenameCancel}>
+              Cancel
+            </Button>
+            <Button onClick={handleRenameSubmit} disabled={!renameValue?.trim()}>
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

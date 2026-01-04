@@ -9,6 +9,9 @@ export type PropertyType = "newDwelling" | "established" | "vacantLand" | "comme
 export type AustralianState = "NSW" | "VIC" | "QLD" | "SA" | "WA" | "TAS" | "ACT" | "NT";
 export type EntityType = "individual" | "company" | "trust";
 export type SubscriptionStatus = "free" | "trial" | "paid";
+export type PropertyStatus = "active" | "sold" | "archived";
+export type LoanType = "principalAndInterest" | "interestOnly";
+export type RecurringFrequency = "monthly" | "quarterly" | "annually";
 
 // Eligibility Result structure (stored as JSON)
 export interface EligibilityResult {
@@ -205,6 +208,112 @@ export type SavedCalculationUpdate = Partial<
   Omit<SavedCalculation, "id" | "user_id" | "created_at" | "updated_at">
 >;
 
+// Properties Section Types
+
+export type TransactionCategory =
+  | "purchase_cost"
+  | "improvement"
+  | "maintenance"
+  | "council_rates"
+  | "water_rates"
+  | "gas"
+  | "electricity"
+  | "insurance"
+  | "strata_fees"
+  | "property_management"
+  | "letting_fees"
+  | "land_tax"
+  | "vacancy_fee"
+  | "depreciation_report"
+  | "accounting_fees"
+  | "legal_fees"
+  | "loan_interest"
+  | "loan_repayment"
+  | "rental_income"
+  | "other_income"
+  | "sale_cost"
+  | "other_expense";
+
+export interface Property {
+  id: string;
+  user_id: string;
+  property_name: string | null;
+  property_address: string;
+  property_state: AustralianState;
+  property_type: PropertyType;
+  property_classification: "unit" | "house" | null;
+  bedrooms: number | null;
+  purchase_date: string;
+  purchase_price: number;
+  purchase_costs: number;
+  deposit_amount: number | null;
+  loan_amount: number | null;
+  current_value: number | null;
+  current_loan_balance: number | null;
+  interest_rate: number | null;
+  loan_term_years: number | null;
+  loan_type: LoanType | null;
+  is_rental: boolean;
+  weekly_rent: number | null;
+  property_management_fee_percent: number | null;
+  status: PropertyStatus;
+  sold_date: string | null;
+  sale_price: number | null;
+  sale_costs: number | null;
+  source_calculation_id: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+export interface PropertyTransaction {
+  id: string;
+  property_id: string;
+  transaction_date: string;
+  category: TransactionCategory;
+  type: "income" | "expense" | "capital";
+  description: string;
+  amount: number;
+  is_tax_deductible: boolean;
+  is_capital_improvement: boolean;
+  is_recurring: boolean;
+  recurring_frequency: RecurringFrequency | null;
+  recurring_end_date: string | null;
+  receipt_url: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+export interface PropertyValueHistory {
+  id: string;
+  property_id: string;
+  valuation_date: string;
+  value: number;
+  valuation_type: "market" | "bank" | "agent" | "user_estimate";
+  valuation_source: string | null;
+  notes: string | null;
+  created_at: string;
+}
+
+// Insert types
+export type PropertyInsert = Omit<Property, "id" | "created_at" | "updated_at" | "deleted_at">;
+export type PropertyTransactionInsert = Omit<
+  PropertyTransaction,
+  "id" | "created_at" | "updated_at" | "deleted_at"
+>;
+export type PropertyValueHistoryInsert = Omit<PropertyValueHistory, "id" | "created_at">;
+
+// Update types
+export type PropertyUpdate = Partial<
+  Omit<Property, "id" | "user_id" | "created_at" | "updated_at" | "deleted_at">
+>;
+export type PropertyTransactionUpdate = Partial<
+  Omit<PropertyTransaction, "id" | "property_id" | "created_at" | "updated_at" | "deleted_at">
+>;
+
 // Supabase Database type
 export interface Database {
   public: {
@@ -224,11 +333,31 @@ export interface Database {
         Insert: SavedCalculationInsert;
         Update: SavedCalculationUpdate;
       };
+      properties: {
+        Row: Property;
+        Insert: PropertyInsert;
+        Update: PropertyUpdate;
+      };
+      property_transactions: {
+        Row: PropertyTransaction;
+        Insert: PropertyTransactionInsert;
+        Update: PropertyTransactionUpdate;
+      };
+      property_value_history: {
+        Row: PropertyValueHistory;
+        Insert: PropertyValueHistoryInsert;
+        Update: never;
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
       subscription_status: SubscriptionStatus;
+      property_status: PropertyStatus;
+      loan_type: LoanType;
+      transaction_category: TransactionCategory;
+      transaction_type: "income" | "expense" | "capital";
+      recurring_frequency: RecurringFrequency;
     };
   };
 }

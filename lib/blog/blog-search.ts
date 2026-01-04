@@ -162,6 +162,3 @@ export function highlightSearchTerm(text: string, searchTerm: string): string {
   const regex = new RegExp(`(${escapedTerm})`, "gi");
   return text.replace(regex, '<mark class="bg-yellow-200 px-1 rounded">$1</mark>');
 }
-
-
-

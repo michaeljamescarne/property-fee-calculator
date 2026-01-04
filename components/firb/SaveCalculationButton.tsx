@@ -236,9 +236,7 @@ export default function SaveCalculationButton({
                 autoFocus
                 maxLength={100}
               />
-              {dialogError && (
-                <p className="text-sm text-destructive">{dialogError}</p>
-              )}
+              {dialogError && <p className="text-sm text-destructive">{dialogError}</p>}
             </div>
           </div>
           <DialogFooter>

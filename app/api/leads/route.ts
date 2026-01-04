@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceRoleClient } from "@/lib/supabase/server";
-import { syncLeadToHubSpot } from "@/lib/hubspot/client";
 import { z } from "zod";
 
 // Validation schema for lead capture
@@ -59,16 +58,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 }
       );
-    }
-
-    // Sync lead to HubSpot asynchronously (don't block response)
-    // Run in background - errors are logged but don't affect API response
-    if (data && typeof data === "object" && "email" in data && "created_at" in data) {
-      const leadData = data as { email: string; created_at: string };
-      syncLeadToHubSpot(leadData.email, new Date(leadData.created_at)).catch((syncError) => {
-        // Log error but don't throw - main operation succeeded
-        console.error("[Leads API] HubSpot sync error (non-blocking):", syncError);
-      });
     }
 
     return NextResponse.json(

@@ -554,3 +554,9 @@ Whether you're purchasing your first Australian property or expanding your portf
 _Disclaimer: This article provides general information only and should not be considered legal or financial advice. FIRB fees and rules are subject to change. Always verify current fees on the official ATO website and seek professional advice for your specific circumstances before making property investment decisions._
 
 _Last Updated: December 2025 | Sources: Australian Taxation Office, Foreign Investment Review Board, Treasury Australia_
+
+
+
+
+
+

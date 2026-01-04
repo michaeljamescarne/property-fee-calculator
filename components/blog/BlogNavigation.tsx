@@ -81,6 +81,3 @@ export default function BlogNavigation({
     </nav>
   );
 }
-
-
-

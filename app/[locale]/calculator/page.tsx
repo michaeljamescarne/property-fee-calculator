@@ -159,21 +159,21 @@ export default function FIRBCalculatorPage() {
   useEffect(() => {
     const isEdit = searchParams.get("edit") === "true";
     const loadId = searchParams.get("load");
-    
+
     if (isEdit && loadId) {
       // Set flags immediately to prevent any interference
       isEditingRef.current = true;
       shouldNavigateToReviewRef.current = true;
-      
+
       // Clear eligibility/costs immediately to prevent ResultsPanel from rendering
       setEligibility(null);
       setCosts(null);
-      
+
       // Navigate to review step immediately
       if (currentStep !== "review") {
         setCurrentStep("review");
       }
-      
+
       // Keep flags active - will be cleared after load completes
     } else if (!isEdit) {
       // If edit=false or not present, clear the flags
@@ -185,11 +185,11 @@ export default function FIRBCalculatorPage() {
   // CRITICAL: Force purchaseType step if it's not set - runs on every render
   useEffect(() => {
     const isEdit = searchParams.get("edit") === "true";
-    
+
     // Don't interfere if we're currently editing a saved calculation or navigating to review
     // Also check URL param to be extra safe
     if (isEditingRef.current || shouldNavigateToReviewRef.current || isEdit) return;
-    
+
     // If purchaseType is not set, FORCE currentStep to be purchaseType (unless loading saved calc, on results, or on review)
     if (
       !isLoadingSavedCalculation &&
@@ -209,7 +209,7 @@ export default function FIRBCalculatorPage() {
     const loadId = searchParams.get("load");
     const isEdit = searchParams.get("edit") === "true";
     const attemptKey = loadId ? `${loadId}-${isEdit}` : null;
-    
+
     // Don't load if: no ID, already loading, or there's an error (prevents retry loops)
     if (!loadId) {
       // If no load ID, reset all refs to allow loading a different calculation later
@@ -217,23 +217,23 @@ export default function FIRBCalculatorPage() {
       loadingAttemptRef.current = null;
       return;
     }
-    
+
     // Don't retry if already loading this exact calculation in edit/view mode
     if (isLoadingSavedCalculation || loadingAttemptRef.current === attemptKey) {
       return;
     }
-    
+
     // Don't retry if there's an error for this exact calculation
     if (loadError && loadedCalculationIdRef.current === loadId) {
       return;
     }
-    
+
     // Determine if we need to reload:
     const isDifferentCalculation = loadId !== loadedCalculationIdRef.current;
     const needsReloadForView = !isEdit && (!eligibility || !costs);
     // For edit mode, only reload if it's a different calculation
     const needsReloadForEdit = isEdit && isDifferentCalculation;
-    
+
     if (isDifferentCalculation || needsReloadForEdit || needsReloadForView) {
       loadingAttemptRef.current = attemptKey; // Mark that we're attempting to load this
       loadSavedCalculation(loadId, isEdit);
@@ -387,7 +387,9 @@ export default function FIRBCalculatorPage() {
       } catch (fetchError) {
         // Handle network errors (failed to fetch)
         console.error("Network error loading saved calculation:", fetchError);
-        setLoadError("Failed to connect to server. Please check your internet connection and try again.");
+        setLoadError(
+          "Failed to connect to server. Please check your internet connection and try again."
+        );
         // Reset state and navigate away from edit mode
         loadedCalculationIdRef.current = null;
         isEditingRef.current = false;
@@ -411,14 +413,16 @@ export default function FIRBCalculatorPage() {
         let errorMessage = "";
         // Handle 404 specifically
         if (response.status === 404) {
-          errorMessage = "This calculation could not be found. It may have been deleted or you don't have permission to access it.";
+          errorMessage =
+            "This calculation could not be found. It may have been deleted or you don't have permission to access it.";
         } else if (response.status === 401) {
           // Handle 401 (unauthorized)
-          errorMessage = "You need to be logged in to access this calculation. Please sign in and try again.";
+          errorMessage =
+            "You need to be logged in to access this calculation. Please sign in and try again.";
         } else {
           errorMessage = `Failed to load calculation: ${response.status} ${response.statusText}`;
         }
-        
+
         setLoadError(errorMessage);
         // Reset state and navigate away from edit mode
         loadedCalculationIdRef.current = null;
@@ -535,8 +539,10 @@ export default function FIRBCalculatorPage() {
     } catch (error) {
       console.error("Error loading saved calculation:", error);
       const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
-      setLoadError(`Failed to load calculation: ${errorMessage}. Please try again or start a new calculation.`);
-      
+      setLoadError(
+        `Failed to load calculation: ${errorMessage}. Please try again or start a new calculation.`
+      );
+
       // Reset state on error to allow user to continue
       loadedCalculationIdRef.current = null;
       isEditingRef.current = false;
@@ -544,7 +550,7 @@ export default function FIRBCalculatorPage() {
       setCurrentStep("purchaseType");
       setCompletedSteps([]);
       setEditingCalculationId(null);
-      
+
       // Remove the load/edit params from URL to prevent retry loops
       try {
         const url = new URL(window.location.href);
@@ -1058,11 +1064,7 @@ export default function FIRBCalculatorPage() {
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
-                      <svg
-                        className="h-5 w-5 text-red-400"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
+                      <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
                         <path
                           fillRule="evenodd"
                           d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -1071,7 +1073,9 @@ export default function FIRBCalculatorPage() {
                       </svg>
                     </div>
                     <div className="ml-3 flex-1">
-                      <h3 className="text-sm font-medium text-red-800">Failed to Load Calculation</h3>
+                      <h3 className="text-sm font-medium text-red-800">
+                        Failed to Load Calculation
+                      </h3>
                       <div className="mt-2 text-sm text-red-700">
                         <p>{loadError}</p>
                       </div>

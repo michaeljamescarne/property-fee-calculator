@@ -55,7 +55,10 @@ export async function GET(request: NextRequest) {
     const state = searchParams.get("state") as AustralianState | null;
     const propertyType = searchParams.get("property_type") as PropertyType | null;
     const metric = searchParams.get("metric") as CostMetric | null;
-    const propertyClassification = searchParams.get("property_classification") as "unit" | "house" | null;
+    const propertyClassification = searchParams.get("property_classification") as
+      | "unit"
+      | "house"
+      | null;
     const bedroomsParam = searchParams.get("bedrooms");
     const bedrooms = bedroomsParam ? parseInt(bedroomsParam, 10) : null;
 

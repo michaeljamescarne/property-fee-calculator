@@ -30,7 +30,9 @@ interface CollapsibleSection {
 export default function ComparisonTable({ calculations, locale }: ComparisonTableProps) {
   const t = useTranslations("Compare");
   const router = useRouter();
-  const [openSections, setOpenSections] = useState<Set<string>>(new Set(["propertyDetails", "investmentPerformance", "eligibility", "upfrontCosts"]));
+  const [openSections, setOpenSections] = useState<Set<string>>(
+    new Set(["propertyDetails", "investmentPerformance", "eligibility", "upfrontCosts"])
+  );
 
   const sections: CollapsibleSection[] = [
     {
@@ -128,7 +130,7 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
     // Parse values to numbers, handling currency, percentages, and dashes
     const numericValues = values.map((val) => {
       if (val === "—" || val === "-" || val === "") return null;
-      
+
       // Remove currency symbols, commas, and parse
       const cleaned = val.replace(/[$,%]/g, "").replace(/,/g, "").trim();
       const num = parseFloat(cleaned);
@@ -192,7 +194,9 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
             </colgroup>
             <thead>
               <tr>
-                <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700 bg-white w-[200px]">Property</th>
+                <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700 bg-white w-[200px]">
+                  Property
+                </th>
                 {calculations.map((calc, index) => {
                   const summary = getCalculationSummary(calc);
                   return (
@@ -200,7 +204,9 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                       key={calc.id}
                       className="text-center py-3 px-4 font-semibold text-sm text-gray-700 bg-white w-[200px]"
                     >
-                      <div className="font-medium">{summary.name || `Calculation ${index + 1}`}</div>
+                      <div className="font-medium">
+                        {summary.name || `Calculation ${index + 1}`}
+                      </div>
                     </th>
                   );
                 })}
@@ -250,7 +256,8 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                               const eligibility = calc.calculation_data.eligibility;
                               // Determine status text based on eligibility data
                               const eligibilityAny = eligibility as any;
-                              const canPurchase = eligibilityAny.canPurchase ?? eligibility.isEligible;
+                              const canPurchase =
+                                eligibilityAny.canPurchase ?? eligibility.isEligible;
                               if (!canPurchase || eligibility.firbApprovalType === "notAllowed") {
                                 return "Purchase Prohibited";
                               } else if (eligibility.requiresFIRB) {
@@ -263,7 +270,8 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                               const eligibility = calc.calculation_data.eligibility;
                               // Apply colors based on eligibility status
                               const eligibilityAny = eligibility as any;
-                              const canPurchase = eligibilityAny.canPurchase ?? eligibility.isEligible;
+                              const canPurchase =
+                                eligibilityAny.canPurchase ?? eligibility.isEligible;
                               if (!canPurchase || eligibility.firbApprovalType === "notAllowed") {
                                 return { textColor: "text-red-700", fontWeight: "font-semibold" };
                               } else if (eligibility.requiresFIRB) {
@@ -316,10 +324,11 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                               // Type assertion needed as propertyUsage may be in analytics inputs
                               const calcData = calc.calculation_data as any;
                               const analytics = calcData.analytics as any;
-                              const usage = analytics?.inputs?.propertyUsage || 
-                                           (calcData as any).investmentInputs?.propertyUsage || 
-                                           (calcData as any).propertyUsage || 
-                                           "rental";
+                              const usage =
+                                analytics?.inputs?.propertyUsage ||
+                                (calcData as any).investmentInputs?.propertyUsage ||
+                                (calcData as any).propertyUsage ||
+                                "rental";
                               const usageLabels: Record<string, string> = {
                                 rental: "Make available to rent",
                                 primaryResidence: "Use as primary residence",
@@ -442,43 +451,57 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                           <ComparisonRow
                             label="Property Price"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.upfrontCosts.propertyPrice);
+                              return formatCurrency(
+                                calc.calculation_data.costs.upfrontCosts.propertyPrice
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="FIRB Fee"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.upfrontCosts.firbFee);
+                              return formatCurrency(
+                                calc.calculation_data.costs.upfrontCosts.firbFee
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Stamp Duty"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.upfrontCosts.stampDuty);
+                              return formatCurrency(
+                                calc.calculation_data.costs.upfrontCosts.stampDuty
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Foreign Surcharge"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.upfrontCosts.foreignSurcharge);
+                              return formatCurrency(
+                                calc.calculation_data.costs.upfrontCosts.foreignSurcharge
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Legal & Conveyancing"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.upfrontCosts.legalFees);
+                              return formatCurrency(
+                                calc.calculation_data.costs.upfrontCosts.legalFees
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Inspection Fees"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.upfrontCosts.inspectionFees);
+                              return formatCurrency(
+                                calc.calculation_data.costs.upfrontCosts.inspectionFees
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Loan Costs"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.upfrontCosts.loanCosts);
+                              return formatCurrency(
+                                calc.calculation_data.costs.upfrontCosts.loanCosts
+                              );
                             })}
                           />
                           <ComparisonRow
@@ -490,7 +513,9 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                           <ComparisonRow
                             label="Total Investment Cost"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.totalInvestmentCost);
+                              return formatCurrency(
+                                calc.calculation_data.costs.totalInvestmentCost
+                              );
                             })}
                             highlight
                           />
@@ -502,31 +527,41 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                           <ComparisonRow
                             label="Annual Land Tax"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.ongoingCosts.annualLandTax);
+                              return formatCurrency(
+                                calc.calculation_data.costs.ongoingCosts.annualLandTax
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Council Rates"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.ongoingCosts.councilRates);
+                              return formatCurrency(
+                                calc.calculation_data.costs.ongoingCosts.councilRates
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Insurance"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.ongoingCosts.insurance);
+                              return formatCurrency(
+                                calc.calculation_data.costs.ongoingCosts.insurance
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Maintenance"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.ongoingCosts.maintenance);
+                              return formatCurrency(
+                                calc.calculation_data.costs.ongoingCosts.maintenance
+                              );
                             })}
                           />
                           <ComparisonRow
                             label="Vacancy Fee"
                             values={calculations.map((calc) => {
-                              return formatCurrency(calc.calculation_data.costs.ongoingCosts.vacancyFee);
+                              return formatCurrency(
+                                calc.calculation_data.costs.ongoingCosts.vacancyFee
+                              );
                             })}
                           />
                           <ComparisonRow
@@ -575,7 +610,9 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                             label="Negative Gearing Benefit"
                             values={calculations.map((calc) => {
                               const analytics = calc.calculation_data.analytics as any;
-                              const taxBenefit = analytics?.cashFlow?.annual?.taxBenefit ?? analytics?.taxAnalysis?.annualTaxSaving;
+                              const taxBenefit =
+                                analytics?.cashFlow?.annual?.taxBenefit ??
+                                analytics?.taxAnalysis?.annualTaxSaving;
                               if (taxBenefit !== undefined) {
                                 return formatCurrency(taxBenefit);
                               }
@@ -676,8 +713,15 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                             label={t("labels.interestRateImpact")}
                             values={calculations.map((calc) => {
                               const analytics = calc.calculation_data.analytics as any;
-                              if (analytics?.sensitivity?.interestRateImpact && Array.isArray(analytics.sensitivity.interestRateImpact) && analytics.sensitivity.interestRateImpact.length > 0) {
-                                const base = analytics.sensitivity.interestRateImpact[Math.floor(analytics.sensitivity.interestRateImpact.length / 2)];
+                              if (
+                                analytics?.sensitivity?.interestRateImpact &&
+                                Array.isArray(analytics.sensitivity.interestRateImpact) &&
+                                analytics.sensitivity.interestRateImpact.length > 0
+                              ) {
+                                const base =
+                                  analytics.sensitivity.interestRateImpact[
+                                    Math.floor(analytics.sensitivity.interestRateImpact.length / 2)
+                                  ];
                                 if (base?.netCashFlow !== undefined) {
                                   return formatCurrency(base.netCashFlow);
                                 }
@@ -689,8 +733,15 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                             label={t("labels.vacancyRateImpact")}
                             values={calculations.map((calc) => {
                               const analytics = calc.calculation_data.analytics as any;
-                              if (analytics?.sensitivity?.vacancyImpact && Array.isArray(analytics.sensitivity.vacancyImpact) && analytics.sensitivity.vacancyImpact.length > 0) {
-                                const base = analytics.sensitivity.vacancyImpact[Math.floor(analytics.sensitivity.vacancyImpact.length / 2)];
+                              if (
+                                analytics?.sensitivity?.vacancyImpact &&
+                                Array.isArray(analytics.sensitivity.vacancyImpact) &&
+                                analytics.sensitivity.vacancyImpact.length > 0
+                              ) {
+                                const base =
+                                  analytics.sensitivity.vacancyImpact[
+                                    Math.floor(analytics.sensitivity.vacancyImpact.length / 2)
+                                  ];
                                 if (base?.annualRent !== undefined) {
                                   return formatCurrency(base.annualRent);
                                 }
@@ -713,8 +764,14 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                             label={t("labels.worstCaseScenario")}
                             values={calculations.map((calc) => {
                               const analytics = calc.calculation_data.analytics as any;
-                              if (analytics?.sensitivity?.growthScenarios && Array.isArray(analytics.sensitivity.growthScenarios)) {
-                                const conservative = analytics.sensitivity.growthScenarios.find((s: any) => s.label?.toLowerCase().includes("conservative") || s.rate < 4);
+                              if (
+                                analytics?.sensitivity?.growthScenarios &&
+                                Array.isArray(analytics.sensitivity.growthScenarios)
+                              ) {
+                                const conservative = analytics.sensitivity.growthScenarios.find(
+                                  (s: any) =>
+                                    s.label?.toLowerCase().includes("conservative") || s.rate < 4
+                                );
                                 if (conservative) {
                                   return `${formatPercent(conservative.annualizedROI)} ROI`;
                                 }
@@ -726,8 +783,14 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
                             label={t("labels.bestCaseScenario")}
                             values={calculations.map((calc) => {
                               const analytics = calc.calculation_data.analytics as any;
-                              if (analytics?.sensitivity?.growthScenarios && Array.isArray(analytics.sensitivity.growthScenarios)) {
-                                const optimistic = analytics.sensitivity.growthScenarios.find((s: any) => s.label?.toLowerCase().includes("optimistic") || s.rate > 6);
+                              if (
+                                analytics?.sensitivity?.growthScenarios &&
+                                Array.isArray(analytics.sensitivity.growthScenarios)
+                              ) {
+                                const optimistic = analytics.sensitivity.growthScenarios.find(
+                                  (s: any) =>
+                                    s.label?.toLowerCase().includes("optimistic") || s.rate > 6
+                                );
                                 if (optimistic) {
                                   return `${formatPercent(optimistic.annualizedROI)} ROI`;
                                 }
@@ -824,4 +887,3 @@ export default function ComparisonTable({ calculations, locale }: ComparisonTabl
     </div>
   );
 }
-

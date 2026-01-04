@@ -28,4 +28,3 @@ export default function MainContentWrapper({ children }: MainContentWrapperProps
     </main>
   );
 }
-

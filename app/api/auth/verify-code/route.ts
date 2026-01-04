@@ -7,8 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 // Removed unused import
 import { verifyCode, isExpired, isValidEmail, isValidCodeFormat } from "@/lib/auth/magic-code";
-import { createSession } from "@/lib/auth/session";
-import { syncUserToHubSpot } from "@/lib/hubspot/client";
+import { createSession, setSessionCookie } from "@/lib/auth/session";
 import type { MagicCode, UserProfile } from "@/types/database";
 import type { VerifyCodeRequest, VerifyCodeResponse, AuthErrorResponse } from "@/types/auth";
 
@@ -138,21 +137,6 @@ export async function POST(request: NextRequest) {
         .from("user_profiles")
         .update({ last_login_at: new Date().toISOString() } as never)
         .eq("id", profile.id);
-
-      // Sync updated user to HubSpot asynchronously (don't block authentication)
-      // Fetch updated profile to get latest last_login_at
-      const { data: updatedProfile } = await supabase
-        .from("user_profiles")
-        .select("*")
-        .eq("id", profile.id)
-        .single();
-
-      if (updatedProfile) {
-        syncUserToHubSpot(updatedProfile as UserProfile).catch((syncError) => {
-          // Log error but don't throw - authentication succeeded
-          console.error("[Auth] HubSpot sync error for user update (non-blocking):", syncError);
-        });
-      }
     } else {
       // Create new user profile directly (bypass Supabase Auth for now)
       const { data: newProfile, error: profileError } = await supabase
@@ -179,12 +163,6 @@ export async function POST(request: NextRequest) {
       console.log("Verify code - Created new profile:", {
         userId: profile.id,
         email: profile.email,
-      });
-
-      // Sync new user to HubSpot asynchronously (don't block authentication)
-      syncUserToHubSpot(profile).catch((syncError) => {
-        // Log error but don't throw - authentication succeeded
-        console.error("[Auth] HubSpot sync error for new user (non-blocking):", syncError);
       });
     }
 

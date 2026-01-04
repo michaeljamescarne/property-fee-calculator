@@ -417,12 +417,12 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
               <span className="text-amber-700">
                 {cgt.assumptions.propertyUsage === "primaryResidence"
                   ? t("taxAnalysis.assumptions.primaryResidence") ===
-                      "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.primaryResidence"
+                    "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.primaryResidence"
                     ? "Primary Residence"
                     : t("taxAnalysis.assumptions.primaryResidence")
                   : cgt.assumptions.propertyUsage === "vacant"
                     ? t("taxAnalysis.assumptions.vacant") ===
-                        "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.vacant"
+                      "FIRBCalculator.investmentAnalytics.taxAnalysis.assumptions.vacant"
                       ? "Vacant"
                       : t("taxAnalysis.assumptions.vacant")
                     : t("taxAnalysis.assumptions.rental") ===
@@ -450,7 +450,8 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
                     : t("taxAnalysis.assumptions.mainResidenceExemption")}
                 </span>
                 <span className="text-amber-700">
-                  {t("taxAnalysis.assumptions.applies")} - {currency(cgt.assumptions.exemptionAmount)}
+                  {t("taxAnalysis.assumptions.applies")} -{" "}
+                  {currency(cgt.assumptions.exemptionAmount)}
                 </span>
               </div>
             )}
@@ -479,9 +480,7 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
               <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
                 {t("taxAnalysis.assumptions.discountExplanation")}
               </span>
-              <span className="text-amber-700">
-                {cgt.assumptions.discountExplanation}
-              </span>
+              <span className="text-amber-700">{cgt.assumptions.discountExplanation}</span>
             </div>
             <div className="flex items-start gap-4">
               <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
@@ -498,18 +497,14 @@ export default function TaxAnalysis({ analytics }: TaxAnalysisProps) {
                 <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
                   {t("taxAnalysis.assumptions.withholdingExplanation")}
                 </span>
-                <span className="text-amber-700">
-                  {cgt.assumptions.withholdingTaxExplanation}
-                </span>
+                <span className="text-amber-700">{cgt.assumptions.withholdingTaxExplanation}</span>
               </div>
             )}
             <div className="flex items-start gap-4">
               <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">
                 {t("taxAnalysis.assumptions.marginalTaxRate")}
               </span>
-              <span className="text-amber-700">
-                {cgt.assumptions.marginalTaxRate}%
-              </span>
+              <span className="text-amber-700">{cgt.assumptions.marginalTaxRate}%</span>
             </div>
             <div className="flex items-start gap-4">
               <span className="font-medium text-amber-900 whitespace-nowrap min-w-[180px]">

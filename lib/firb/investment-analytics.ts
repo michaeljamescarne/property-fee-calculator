@@ -253,8 +253,7 @@ export function calculateInvestmentAnalytics(
     (propertyType === "newDwelling" ? 0 : propertyType === "established" ? 10 : 0);
 
   // Determine if property is income-producing (rental)
-  const isIncomeProducing =
-    !inputs.propertyUsage || inputs.propertyUsage === "rental";
+  const isIncomeProducing = !inputs.propertyUsage || inputs.propertyUsage === "rental";
 
   // Determine if building is eligible for capital works depreciation
   // Default: newDwelling = true, established = check user input, commercial = true, vacantLand = N/A
@@ -449,21 +448,21 @@ export function calculateInvestmentAnalytics(
         };
 
   const holdPeriodYears = inputs.holdPeriod;
-  
+
   // Determine property usage for CGT calculations
   const propertyUsage = inputs.propertyUsage || "rental";
-  
+
   // For CGT purposes, determine if property was main residence
   // If propertyUsage is "primaryResidence", it's currently and always was main residence
   const wasMainResidence = propertyUsage === "primaryResidence";
   const yearsAsMainResidence = wasMainResidence ? holdPeriodYears : 0;
-  
+
   // If property is rental, we don't know if it was previously main residence
   // For now, assume rental properties were never main residence (most common case)
   // In a full implementation, users would specify this
   // The 6-year rule would apply if property was main residence then rented
   const yearsRentedAfterMainResidence = undefined; // User would need to specify this
-  
+
   const cgt = calculateCGT(
     salePrice,
     propertyValue,

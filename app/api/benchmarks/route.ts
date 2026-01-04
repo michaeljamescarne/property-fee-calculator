@@ -77,10 +77,7 @@ export async function GET(request: NextRequest) {
       });
 
       // Set cache tags
-      const tags = [
-        CACHE_TAGS.benchmarks,
-        CACHE_TAGS.benchmarkState(state),
-      ];
+      const tags = [CACHE_TAGS.benchmarks, CACHE_TAGS.benchmarkState(state)];
       if (suburb) {
         tags.push(CACHE_TAGS.benchmarkSuburb(suburb));
       }
@@ -125,7 +122,10 @@ export async function GET(request: NextRequest) {
     });
 
     // Cache the "not found" response for a shorter time
-    response.headers.set("Cache-Tag", `${CACHE_TAGS.benchmarks},${CACHE_TAGS.benchmarkState(state)}`);
+    response.headers.set(
+      "Cache-Tag",
+      `${CACHE_TAGS.benchmarks},${CACHE_TAGS.benchmarkState(state)}`
+    );
 
     return response;
   } catch (error) {

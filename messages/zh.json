@@ -1045,5 +1045,117 @@
       "title": "保持更新",
       "description": "输入您的电子邮件以接收有关新功能、改进和重要公告的更新。"
     }
+  },
+  "Properties": {
+    "title": "我的房产",
+    "description": "跟踪和管理您的房产投资",
+    "addProperty": "添加房产",
+    "emptyState": {
+      "title": "还没有房产",
+      "description": "通过添加您的第一处房产来开始跟踪您的房产投资。"
+    },
+    "delete": "删除",
+    "deleteConfirm": "您确定要删除 {name} 吗？",
+    "currentValue": "当前价值",
+    "weeklyRent": "周租金",
+    "status": "状态",
+    "viewDetails": "查看详情",
+    "detail": {
+      "backToProperties": "返回房产列表",
+      "tabs": {
+        "overview": "概览",
+        "financial": "财务",
+        "transactions": "交易",
+        "values": "价值历史"
+      },
+      "overview": {
+        "title": "房产概览",
+        "description": "关于此房产的基本信息",
+        "propertyType": "房产类型",
+        "classification": "分类",
+        "bedrooms": "卧室",
+        "status": "状态",
+        "notes": "备注"
+      },
+      "financial": {
+        "title": "财务信息",
+        "description": "购买和贷款详情",
+        "purchasePrice": "购买价格",
+        "currentValue": "当前价值",
+        "purchaseCosts": "购买成本",
+        "depositAmount": "首付金额",
+        "loanAmount": "贷款金额",
+        "currentLoanBalance": "当前贷款余额",
+        "interestRate": "利率",
+        "loanTerm": "贷款期限",
+        "weeklyRent": "周租金",
+        "managementFee": "管理费"
+      },
+      "transactions": {
+        "title": "交易",
+        "description": "收入和支出交易",
+        "comingSoon": "交易跟踪即将推出"
+      },
+      "values": {
+        "title": "价值历史",
+        "description": "房产估值历史",
+        "comingSoon": "价值历史跟踪即将推出"
+      },
+      "edit": "编辑房产"
+    },
+    "editProperty": {
+      "title": "编辑房产",
+      "description": "更新房产信息",
+      "form": {
+        "basicInfo": {
+          "title": "基本信息",
+          "description": "房产位置和类型",
+          "name": "房产名称",
+          "namePlaceholder": "例如：123 Main Street",
+          "address": "房产地址",
+          "addressPlaceholder": "输入完整地址",
+          "state": "州",
+          "statePlaceholder": "选择州",
+          "type": "房产类型",
+          "classification": "房产分类",
+          "bedrooms": "卧室数量",
+          "bedroomsPlaceholder": "选择卧室数量"
+        },
+        "purchaseInfo": {
+          "title": "购买信息",
+          "description": "购买详情和融资",
+          "date": "购买日期",
+          "price": "购买价格（澳元）",
+          "costs": "购买成本（澳元）",
+          "deposit": "首付金额（澳元）",
+          "loan": "贷款金额（澳元）"
+        },
+        "currentInfo": {
+          "title": "当前信息",
+          "description": "当前房产价值和贷款详情",
+          "currentValue": "当前价值（澳元）",
+          "currentLoanBalance": "当前贷款余额（澳元）",
+          "interestRate": "利率（%）",
+          "loanTerm": "贷款期限（年）",
+          "loanType": "贷款类型",
+          "loanTypePlaceholder": "选择贷款类型"
+        },
+        "rentalInfo": {
+          "title": "租赁信息",
+          "description": "租金收入和管理详情",
+          "isRental": "这是出租房产",
+          "weeklyRent": "周租金（澳元）",
+          "managementFee": "物业管理费（%）"
+        },
+        "otherInfo": {
+          "title": "其他信息",
+          "description": "状态和备注",
+          "status": "状态",
+          "notes": "备注",
+          "notesPlaceholder": "添加关于此房产的任何其他备注..."
+        },
+        "submit": "更新房产"
+      }
+    }
   }
 }

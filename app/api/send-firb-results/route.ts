@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
     let shareUrl: string;
     try {
       console.log("Email API: Generating shareable URL");
-      
+
       // Check if database is configured
       if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
         try {

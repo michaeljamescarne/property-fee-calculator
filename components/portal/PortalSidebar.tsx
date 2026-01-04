@@ -58,7 +58,7 @@ export default function PortalSidebar() {
       href: `/${locale}/properties`,
       label: t("properties"),
       icon: Building2,
-      disabled: true,
+      disabled: false,
     },
     {
       href: `/${locale}/actions`,
@@ -168,4 +168,3 @@ export default function PortalSidebar() {
     </aside>
   );
 }
-

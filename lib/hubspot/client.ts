@@ -215,11 +215,7 @@ export function isHubSpotConfigured(): boolean {
  * @param email - Lead email address
  * @param createdAt - Date when lead was created (currently unused, kept for future use)
  */
-export async function syncLeadToHubSpot(
-  email: string,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _createdAt: Date
-): Promise<boolean> {
+export async function syncLeadToHubSpot(email: string, _createdAt: Date): Promise<boolean> {
   try {
     const properties: Record<string, string> = {
       hs_lead_status: "NEW",

@@ -3,9 +3,9 @@ import { trackBlogPostView } from "@/lib/hubspot/client";
 
 /**
  * API Route: Track Blog Post View
- * 
+ *
  * POST /api/hubspot/track-blog-view
- * 
+ *
  * Body:
  * {
  *   "slug": "ultimate-firb-guide-2025",
@@ -39,4 +39,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-

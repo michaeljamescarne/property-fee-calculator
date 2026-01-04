@@ -258,96 +258,98 @@ export default function ReviewStep({
       </Card>
 
       {/* Financial Details Information */}
-      {investmentInputs && investmentInputs.estimatedWeeklyRent != null && investmentInputs.estimatedWeeklyRent > 0 && (
-        <Card className="border border-gray-200 shadow-sm rounded bg-white">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-            <div className="flex items-center gap-2">
-              <Calculator className="h-5 w-5 text-gray-600" />
-              <CardTitle className="text-lg font-semibold text-gray-900">
-                {t("financialTitle") || "Financial Details"}
-              </CardTitle>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onEdit("financial")}
-              className="gap-2 rounded"
-            >
-              <Edit className="h-4 w-4" />
-              {t("edit")}
-            </Button>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-gray-600">
-                  {tFinancial("rental.weeklyRent") || "Weekly Rent"}
-                </p>
-                <p className="font-medium mt-1 flex items-center gap-1 text-gray-900">
-                  <DollarSign className="h-4 w-4 text-gray-600" />$
-                  {investmentInputs.estimatedWeeklyRent?.toLocaleString("en-AU")}/week
-                  <span className="text-sm text-gray-600 ml-2">
-                    (${((investmentInputs.estimatedWeeklyRent || 0) * 52).toLocaleString("en-AU")}
-                    /year)
-                  </span>
-                </p>
+      {investmentInputs &&
+        investmentInputs.estimatedWeeklyRent != null &&
+        investmentInputs.estimatedWeeklyRent > 0 && (
+          <Card className="border border-gray-200 shadow-sm rounded bg-white">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+              <div className="flex items-center gap-2">
+                <Calculator className="h-5 w-5 text-gray-600" />
+                <CardTitle className="text-lg font-semibold text-gray-900">
+                  {t("financialTitle") || "Financial Details"}
+                </CardTitle>
               </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onEdit("financial")}
+                className="gap-2 rounded"
+              >
+                <Edit className="h-4 w-4" />
+                {t("edit")}
+              </Button>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-600">
+                    {tFinancial("rental.weeklyRent") || "Weekly Rent"}
+                  </p>
+                  <p className="font-medium mt-1 flex items-center gap-1 text-gray-900">
+                    <DollarSign className="h-4 w-4 text-gray-600" />$
+                    {investmentInputs.estimatedWeeklyRent?.toLocaleString("en-AU")}/week
+                    <span className="text-sm text-gray-600 ml-2">
+                      (${((investmentInputs.estimatedWeeklyRent || 0) * 52).toLocaleString("en-AU")}
+                      /year)
+                    </span>
+                  </p>
+                </div>
 
-              <div>
-                <p className="text-sm text-gray-600">
-                  {tFinancial("growth.rate") || "Capital Growth Rate"}
-                </p>
-                <p className="font-medium mt-1 flex items-center gap-1 text-gray-900">
-                  <TrendingUp className="h-4 w-4 text-gray-600" />
-                  {investmentInputs.capitalGrowthRate || 6}%
-                </p>
+                <div>
+                  <p className="text-sm text-gray-600">
+                    {tFinancial("growth.rate") || "Capital Growth Rate"}
+                  </p>
+                  <p className="font-medium mt-1 flex items-center gap-1 text-gray-900">
+                    <TrendingUp className="h-4 w-4 text-gray-600" />
+                    {investmentInputs.capitalGrowthRate || 6}%
+                  </p>
+                </div>
+
+                {investmentInputs.loanAmount && investmentInputs.loanAmount > 0 && (
+                  <>
+                    <div>
+                      <p className="text-sm text-gray-600">
+                        {tFinancial("loan.interestRate") || "Interest Rate"}
+                      </p>
+                      <p className="font-medium mt-1 text-gray-900">
+                        {investmentInputs.interestRate || 6.5}%
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-gray-600">
+                        {tFinancial("loan.term") || "Loan Term"}
+                      </p>
+                      <p className="font-medium mt-1 text-gray-900">
+                        {investmentInputs.loanTerm || 30} years
+                      </p>
+                    </div>
+                  </>
+                )}
+
+                <div>
+                  <p className="text-sm text-gray-600">
+                    {tFinancial("rental.vacancyRate") || "Vacancy Rate"}
+                  </p>
+                  <p className="font-medium mt-1 text-gray-900">
+                    {investmentInputs.vacancyRate || 5}%
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-600">
+                    {tFinancial("managementFee") || "Property Management"}
+                  </p>
+                  <p className="font-medium mt-1 text-gray-900">
+                    {investmentInputs.selfManaged
+                      ? tFinancial("selfManaged") || "Self-Managed"
+                      : `${investmentInputs.propertyManagementFee || 8}%`}
+                  </p>
+                </div>
               </div>
-
-              {investmentInputs.loanAmount && investmentInputs.loanAmount > 0 && (
-                <>
-                  <div>
-                    <p className="text-sm text-gray-600">
-                      {tFinancial("loan.interestRate") || "Interest Rate"}
-                    </p>
-                    <p className="font-medium mt-1 text-gray-900">
-                      {investmentInputs.interestRate || 6.5}%
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-sm text-gray-600">
-                      {tFinancial("loan.term") || "Loan Term"}
-                    </p>
-                    <p className="font-medium mt-1 text-gray-900">
-                      {investmentInputs.loanTerm || 30} years
-                    </p>
-                  </div>
-                </>
-              )}
-
-              <div>
-                <p className="text-sm text-gray-600">
-                  {tFinancial("rental.vacancyRate") || "Vacancy Rate"}
-                </p>
-                <p className="font-medium mt-1 text-gray-900">
-                  {investmentInputs.vacancyRate || 5}%
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-600">
-                  {tFinancial("managementFee") || "Property Management"}
-                </p>
-                <p className="font-medium mt-1 text-gray-900">
-                  {investmentInputs.selfManaged
-                    ? tFinancial("selfManaged") || "Self-Managed"
-                    : `${investmentInputs.propertyManagementFee || 8}%`}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            </CardContent>
+          </Card>
+        )}
 
       {/* Disclaimer Acknowledgment */}
       <div className="p-6 bg-blue-50 border border-blue-200 rounded">

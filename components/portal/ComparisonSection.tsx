@@ -10,6 +10,3 @@ export interface ComparisonSectionData {
   description?: string;
   defaultOpen?: boolean;
 }
-
-
-
