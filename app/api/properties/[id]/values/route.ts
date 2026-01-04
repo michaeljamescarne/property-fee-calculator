@@ -104,9 +104,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       valuation_source: valueData.valuation_source ?? null,
       notes: valueData.notes ?? null,
     };
-    // @ts-expect-error - property_value_history Insert type is not properly recognized in Database type
     const { data, error } = await supabase
       .from("property_value_history")
+      // @ts-expect-error - property_value_history Insert type is not properly recognized in Database type
       .insert(insertData)
       .select()
       .single();
