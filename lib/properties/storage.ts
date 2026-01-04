@@ -105,6 +105,7 @@ export async function updateProperty(
 
   const { data, error } = await supabase
     .from("properties")
+    // @ts-expect-error - properties Update type is not properly recognized in Database type
     .update(updates)
     .eq("id", propertyId)
     .eq("user_id", userId)
