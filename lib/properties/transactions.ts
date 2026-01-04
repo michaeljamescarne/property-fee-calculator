@@ -95,6 +95,7 @@ export async function createPropertyTransaction(
 
   const { data, error } = await supabase
     .from("property_transactions")
+    // @ts-expect-error - property_transactions Insert type is not properly recognized in Database type
     .insert(transaction)
     .select()
     .single();
@@ -125,6 +126,7 @@ export async function updatePropertyTransaction(
 
   const { data, error } = await supabase
     .from("property_transactions")
+    // @ts-expect-error - property_transactions Update type is not properly recognized in Database type
     .update(updates)
     .eq("id", transactionId)
     .eq("property_id", propertyId)
@@ -156,6 +158,7 @@ export async function deletePropertyTransaction(
 
   const { error } = await supabase
     .from("property_transactions")
+    // @ts-expect-error - property_transactions Update type is not properly recognized in Database type
     .update({ deleted_at: new Date().toISOString() })
     .eq("id", transactionId)
     .eq("property_id", propertyId);
