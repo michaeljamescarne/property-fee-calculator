@@ -93,7 +93,17 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const transactionData = validation.data;
 
-    const transaction = await createPropertyTransaction(transactionData);
+    // Convert undefined to null for optional fields to match database types
+    const transactionInsert = {
+      ...transactionData,
+      notes: transactionData.notes ?? null,
+      receipt_url: transactionData.receipt_url ?? null,
+      recurring_frequency: transactionData.recurring_frequency ?? null,
+      recurring_end_date: transactionData.recurring_end_date ?? null,
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const transaction = await createPropertyTransaction(transactionInsert as any);
 
     return NextResponse.json({
       success: true,
