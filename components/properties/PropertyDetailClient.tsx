@@ -5,7 +5,6 @@
 
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -14,15 +13,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft,
   MapPin,
-  DollarSign,
   Home,
   Building,
   Calendar,
-  Percent,
   Edit,
 } from "lucide-react";
 import type { Property } from "@/types/database";
 import { formatCurrency } from "@/lib/utils/format";
+import TransactionsList from "./TransactionsList";
+import ValueHistoryList from "./ValueHistoryList";
+import PerformanceMetrics from "./PerformanceMetrics";
 
 interface PropertyDetailClientProps {
   property: Property;
@@ -66,6 +66,7 @@ export default function PropertyDetailClient({ property, locale }: PropertyDetai
         <TabsList>
           <TabsTrigger value="overview">{t("tabs.overview")}</TabsTrigger>
           <TabsTrigger value="financial">{t("tabs.financial")}</TabsTrigger>
+          <TabsTrigger value="performance">{t("tabs.performance")}</TabsTrigger>
           <TabsTrigger value="transactions">{t("tabs.transactions")}</TabsTrigger>
           <TabsTrigger value="values">{t("tabs.values")}</TabsTrigger>
         </TabsList>
@@ -239,30 +240,19 @@ export default function PropertyDetailClient({ property, locale }: PropertyDetai
           </Card>
         </TabsContent>
 
+        {/* Performance Tab */}
+        <TabsContent value="performance">
+          <PerformanceMetrics propertyId={property.id} locale={locale} />
+        </TabsContent>
+
         {/* Transactions Tab */}
         <TabsContent value="transactions">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("transactions.title")}</CardTitle>
-              <CardDescription>{t("transactions.description")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{t("transactions.comingSoon")}</p>
-            </CardContent>
-          </Card>
+          <TransactionsList propertyId={property.id} locale={locale} />
         </TabsContent>
 
         {/* Values Tab */}
         <TabsContent value="values">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("values.title")}</CardTitle>
-              <CardDescription>{t("values.description")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{t("values.comingSoon")}</p>
-            </CardContent>
-          </Card>
+          <ValueHistoryList propertyId={property.id} locale={locale} />
         </TabsContent>
       </Tabs>
     </div>

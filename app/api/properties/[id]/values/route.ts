@@ -97,10 +97,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const supabase = createServiceRoleClient();
 
+    // Include property_id in the insert (it was removed for validation but is required for insert)
     const { data, error } = await supabase
       .from("property_value_history")
       // @ts-expect-error - property_value_history Insert type is not properly recognized in Database type
-      .insert(insertData)
+      .insert({ ...insertData, property_id: propertyId })
       .select()
       .single();
 

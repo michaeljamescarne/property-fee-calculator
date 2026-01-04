@@ -7,7 +7,8 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useReactToPrint } from "react-to-print";
 import { trackConversion } from "@/components/analytics/GoogleAnalytics";
 import { trackMetaEvent } from "@/components/analytics/MetaPixel";
@@ -15,7 +16,7 @@ import { initializeUTMTracking, getUTMParamsForAnalytics } from "@/lib/utils/utm
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomAlert } from "@/components/ui/custom-alert";
-import { Download, Mail, Edit, Info, RotateCcw, ChevronDown, ChevronUp } from "lucide-react";
+import { Download, Mail, Edit, Info, RotateCcw, ChevronDown, ChevronUp, Home, Loader2 } from "lucide-react";
 import { EligibilityResult } from "@/lib/firb/eligibility";
 import { CostBreakdown } from "@/lib/firb/calculations";
 import { PropertyType, AustralianState } from "@/lib/firb/constants";
@@ -41,7 +42,7 @@ import type { BenchmarkData } from "@/app/api/benchmarks/route";
 interface ResultsPanelProps {
   eligibility: EligibilityResult;
   costs: CostBreakdown;
-  onDownloadPDF: (analytics?: InvestmentAnalytics) => void;
+  onDownloadPDF?: (analytics?: InvestmentAnalytics) => void;
   onEmailResults: () => void;
   onEditCalculation: () => void;
   onEditInvestmentInputs: () => void;
@@ -56,6 +57,9 @@ interface ResultsPanelProps {
   onSaveSuccess?: (name: string, calculationId: string) => void;
 }
 
+// Suppress unused variable warnings for intentionally unused parameters
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 interface CollapsibleSection {
   id: string;
   title: string;
@@ -69,7 +73,7 @@ const PDF_DOWNLOAD_ENABLED = false; // Temporarily disable PDF downloads (UI but
 export default function ResultsPanel({
   eligibility,
   costs,
-  onDownloadPDF,
+  onDownloadPDF: _onDownloadPDF,
   onEmailResults,
   onEditCalculation,
   onEditInvestmentInputs,
@@ -85,9 +89,13 @@ export default function ResultsPanel({
 }: ResultsPanelProps) {
   const t = useTranslations("FIRBCalculator.results");
   const tAnalytics = useTranslations("FIRBCalculator.results.investmentAnalytics");
+  const locale = useLocale();
+  const router = useRouter();
 
   // Auth state
   const { isAuthenticated } = useAuth();
+  const [isConverting, setIsConverting] = useState(false);
+  const [convertError, setConvertError] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginModalTitle, setLoginModalTitle] = useState<string | undefined>(undefined);
   const [pendingSectionId, setPendingSectionId] = useState<string | null>(null);
@@ -141,7 +149,7 @@ export default function ResultsPanel({
 
   // Benchmark data state
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
-  const [isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
+  const [_isLoadingBenchmarks, setIsLoadingBenchmarks] = useState(false);
   const [macroBenchmarks, setMacroBenchmarks] = useState<Partial<Record<string, number>> | null>(
     null
   );
@@ -202,6 +210,54 @@ export default function ResultsPanel({
         return prev;
       });
       setPendingSectionId(null); // Clear pending section
+    }
+  };
+
+  const handleConvertToProperty = async () => {
+    if (!isAuthenticated) {
+      setLoginModalTitle("Login to Convert to Property");
+      setShowLoginModal(true);
+      return;
+    }
+
+    if (!editingCalculationId) {
+      setConvertError(
+        t("actions.convertToProperty.requiresSave") ||
+          "Please save this calculation first before converting to a property."
+      );
+      return;
+    }
+
+    setIsConverting(true);
+    setConvertError(null);
+
+    try {
+      const response = await fetch(`/api/calculations/${editingCalculationId}/convert-to-property`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || errorData.error || "Failed to convert calculation");
+      }
+
+      const data = await response.json();
+      if (data.success && data.property) {
+        // Redirect to property detail page
+        router.push(`/${locale}/properties/${data.property.id}`);
+      } else {
+        throw new Error("Conversion failed");
+      }
+    } catch (error) {
+      console.error("Convert to property error:", error);
+      setConvertError(
+        error instanceof Error ? error.message : "Failed to convert calculation to property"
+      );
+      setIsConverting(false);
     }
   };
   const isSectionOpen = (id: string) => openSections.includes(id);
@@ -447,7 +503,7 @@ export default function ResultsPanel({
     );
   };
 
-  const renderAssumptionsSummary = () => {
+  const _renderAssumptionsSummary = () => {
     const summaryItems = [
       {
         label:
@@ -596,6 +652,7 @@ export default function ResultsPanel({
       .filter((section) => section.defaultOpen)
       .map((section) => section.id);
     setOpenSections((prev) => Array.from(new Set([...defaults, ...prev])));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collapsibleSections]);
 
   const renderActionCluster = () => (
@@ -618,6 +675,28 @@ export default function ResultsPanel({
         editingCalculationId={editingCalculationId}
         onSaveSuccess={onSaveSuccess}
       />
+
+      {isAuthenticated && (
+        <Button
+          onClick={handleConvertToProperty}
+          variant="default"
+          size="lg"
+          className="gap-2 rounded"
+          disabled={isConverting || !editingCalculationId}
+        >
+          {isConverting ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              {t("actions.convertToProperty.converting") || "Converting..."}
+            </>
+          ) : (
+            <>
+              <Home className="h-5 w-5" />
+              {t("actions.convertToProperty.label") || "Convert to Property"}
+            </>
+          )}
+        </Button>
+      )}
 
       <Button
         onClick={() => {
@@ -648,6 +727,11 @@ export default function ResultsPanel({
 
   return (
     <div className="space-y-6">
+      {convertError && (
+        <CustomAlert variant="destructive" title="Conversion Error">
+          <p className="text-sm">{convertError}</p>
+        </CustomAlert>
+      )}
       {renderActionCluster()}
 
       <InvestmentSummary analytics={investmentAnalytics} costs={costs} eligibility={eligibility} />

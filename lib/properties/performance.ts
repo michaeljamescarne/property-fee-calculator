@@ -56,7 +56,6 @@ export async function calculatePropertyPerformance(
 
   // Get current property value (use current_value or fall back to purchase_price)
   const currentValue = property.current_value || property.purchase_price;
-  const purchasePrice = property.purchase_price;
 
   // Calculate rental yield (if rental property)
   const rentalYield = calculateRentalYield(property, currentValue);
@@ -124,7 +123,7 @@ function calculateRentalYield(
 function calculateCashFlow(
   property: Property,
   transactions: PropertyTransaction[],
-  yearsOwned: number
+  _yearsOwned: number // Years owned - currently not used in calculation but part of function signature
 ): {
   annual: number;
   monthly: number;
@@ -143,20 +142,73 @@ function calculateCashFlow(
     (tx) => new Date(tx.transaction_date) >= oneYearAgo
   );
 
-  // Calculate income
-  const income = recentTransactions
+  // Calculate income from transactions
+  let income = recentTransactions
     .filter((tx) => tx.type === "income")
     .reduce((sum, tx) => sum + tx.amount, 0);
 
-  // Calculate expenses (excluding loan repayments)
-  const expenses = recentTransactions
+  // For rental properties, add annual rental income if not already captured in transactions
+  if (property.is_rental && property.weekly_rent) {
+    const annualRent = property.weekly_rent * 52;
+    // Only add if there's no rental income in transactions for the last year
+    const hasRentalIncome = recentTransactions.some(
+      (tx) => tx.type === "income" && tx.category === "rental_income"
+    );
+    if (!hasRentalIncome) {
+      income += annualRent;
+    }
+  }
+
+  // Calculate expenses from transactions (excluding loan repayments)
+  let expenses = recentTransactions
     .filter((tx) => tx.type === "expense" && tx.category !== "loan_repayment")
     .reduce((sum, tx) => sum + tx.amount, 0);
 
-  // Calculate loan repayments
-  const loanRepayments = recentTransactions
+  // For rental properties, add property management fees if applicable
+  if (property.is_rental && property.weekly_rent && property.property_management_fee_percent) {
+    const annualRent = property.weekly_rent * 52;
+    const managementFee = annualRent * (property.property_management_fee_percent / 100);
+    // Only add if there's no management fee in transactions for the last year
+    const hasManagementFee = recentTransactions.some(
+      (tx) => tx.type === "expense" && tx.category === "property_management"
+    );
+    if (!hasManagementFee) {
+      expenses += managementFee;
+    }
+  }
+
+  // Calculate loan repayments from transactions
+  let loanRepayments = recentTransactions
     .filter((tx) => tx.category === "loan_repayment" || tx.category === "loan_interest")
     .reduce((sum, tx) => sum + tx.amount, 0);
+
+  // Calculate estimated loan repayments if loan details are available but no transactions
+  if (loanRepayments === 0 && property.loan_amount && property.interest_rate) {
+    const loanAmount = property.current_loan_balance || property.loan_amount;
+    const annualInterestRate = property.interest_rate / 100;
+    
+    if (property.loan_type === "interestOnly") {
+      // Interest-only loan: annual repayment = loan amount * interest rate
+      loanRepayments = loanAmount * annualInterestRate;
+    } else {
+      // Principal and interest loan: calculate monthly payment using standard formula
+      const monthlyInterestRate = annualInterestRate / 12;
+      const loanTermYears = property.loan_term_years || 30;
+      const numberOfPayments = loanTermYears * 12;
+      
+      if (monthlyInterestRate > 0) {
+        const monthlyPayment =
+          (loanAmount *
+            monthlyInterestRate *
+            Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
+          (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+        loanRepayments = monthlyPayment * 12; // Annual repayments
+      } else {
+        // If interest rate is 0, divide loan amount by term
+        loanRepayments = loanAmount / loanTermYears;
+      }
+    }
+  }
 
   // Annual cash flow
   const annualCashFlow = income - expenses - loanRepayments;

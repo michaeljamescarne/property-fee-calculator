@@ -1,6 +1,6 @@
 /**
  * Property Performance API Route
- * Calculate performance metrics for a property
+ * Calculate and return performance metrics for a property
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -24,6 +24,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return NextResponse.json({ error: "Property not found" }, { status: 404 });
     }
 
+    // Calculate performance metrics
     const metrics = await calculatePropertyPerformance(property);
 
     return NextResponse.json({
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       metrics,
     });
   } catch (error) {
-    console.error("Calculate performance error:", error);
+    console.error("Get performance metrics error:", error);
     return NextResponse.json(
       {
         error: "An unexpected error occurred",

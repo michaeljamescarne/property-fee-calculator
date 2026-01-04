@@ -370,7 +370,12 @@
         "downloadPDF": "下载PDF报告",
         "emailResults": "发送结果",
         "editCalculation": "编辑计算",
-        "startAgain": "开始新计算"
+        "startAgain": "开始新计算",
+        "convertToProperty": {
+          "label": "转换为房产",
+          "converting": "正在转换...",
+          "requiresSave": "请先保存此计算，然后再转换为房产。"
+        }
       },
       "analysisParams": {
         "description": "这些输入已在向导中填写，可在财务步骤中调整以优化分析。",
@@ -1065,6 +1070,7 @@
       "tabs": {
         "overview": "概览",
         "financial": "财务",
+        "performance": "表现",
         "transactions": "交易",
         "values": "价值历史"
       },
@@ -1094,14 +1100,160 @@
       "transactions": {
         "title": "交易",
         "description": "收入和支出交易",
-        "comingSoon": "交易跟踪即将推出"
+        "comingSoon": "交易跟踪即将推出",
+        "addTransaction": "添加交易",
+        "editTransaction": "编辑交易",
+        "addDescription": "为此物业添加新交易",
+        "editDescription": "更新交易详情",
+        "deleteConfirm": "确定要删除此交易吗？",
+        "emptyState": "还没有交易。添加您的第一笔交易以开始跟踪收入和支出。",
+        "table": {
+          "date": "日期",
+          "category": "类别",
+          "description": "描述",
+          "type": "类型",
+          "amount": "金额",
+          "taxDeductible": "可抵扣税款",
+          "actions": "操作",
+          "yes": "是",
+          "no": "否"
+        },
+        "types": {
+          "income": "收入",
+          "expense": "支出",
+          "capital": "资本"
+        },
+        "categories": {
+          "purchase_cost": "购买成本",
+          "improvement": "改善",
+          "maintenance": "维护",
+          "council_rates": "市政费",
+          "water_rates": "水费",
+          "gas": "燃气费",
+          "electricity": "电费",
+          "insurance": "保险费",
+          "strata_fees": "物业管理费",
+          "property_management": "物业管理",
+          "letting_fees": "租赁费",
+          "land_tax": "土地税",
+          "vacancy_fee": "空置费",
+          "depreciation_report": "折旧报告",
+          "accounting_fees": "会计费",
+          "legal_fees": "法律费",
+          "loan_interest": "贷款利息",
+          "loan_repayment": "贷款还款",
+          "rental_income": "租金收入",
+          "other_income": "其他收入",
+          "sale_cost": "销售成本",
+          "other_expense": "其他支出"
+        },
+        "form": {
+          "transactionDate": "交易日期",
+          "type": "类型",
+          "category": "类别",
+          "amount": "金额",
+          "description": "描述",
+          "descriptionPlaceholder": "输入交易描述",
+          "taxDeductible": "可抵扣税款",
+          "capitalImprovement": "资本改善",
+          "recurring": " recurring交易",
+          "recurringFrequency": "频率",
+          "recurringFrequencyPlaceholder": "选择频率",
+          "recurringFrequencyOptions": {
+            "monthly": "每月",
+            "quarterly": "每季度",
+            "annually": "每年"
+          },
+          "recurringEndDate": "结束日期",
+          "receiptUrl": "收据URL",
+          "receiptUrlPlaceholder": "https://example.com/receipt",
+          "notes": "备注",
+          "notesPlaceholder": "其他备注（可选）",
+          "cancel": "取消",
+          "create": "创建交易",
+          "update": "更新交易"
+        }
       },
       "values": {
         "title": "价值历史",
         "description": "房产估值历史",
-        "comingSoon": "价值历史跟踪即将推出"
+        "comingSoon": "价值历史跟踪即将推出",
+        "addValue": "添加估值",
+        "addDescription": "记录新的房产估值",
+        "deleteConfirm": "确定要删除此估值吗？",
+        "emptyState": "还没有估值。添加您的第一个估值以跟踪房产价值随时间的变化。",
+        "table": {
+          "date": "日期",
+          "value": "价值",
+          "type": "类型",
+          "source": "来源",
+          "actions": "操作"
+        },
+        "types": {
+          "market": "市场价值",
+          "bank": "银行估值",
+          "agent": "代理估算",
+          "user_estimate": "用户估算"
+        },
+        "form": {
+          "valuationDate": "估值日期",
+          "value": "价值",
+          "valuationType": "估值类型",
+          "valuationTypePlaceholder": "选择估值类型",
+          "valuationSource": "估值来源",
+          "valuationSourcePlaceholder": "例如：CoreLogic、房地产代理",
+          "updateCurrentValue": "使用此估值更新房产的当前价值",
+          "notes": "备注",
+          "notesPlaceholder": "其他备注（可选）",
+          "cancel": "取消",
+          "create": "添加估值"
+        }
       },
-      "edit": "编辑房产"
+      "edit": "编辑房产",
+      "performance": {
+        "title": "表现指标",
+        "description": "房产表现和财务分析",
+        "rentalYield": {
+          "title": "租金收益率",
+          "description": "租金收入占房产价值的百分比",
+          "gross": "总收益率",
+          "net": "净收益率",
+          "effective": "有效收益率"
+        },
+        "cashFlow": {
+          "title": "现金流",
+          "description": "房产运营的年度和月度现金流",
+          "annual": "年度现金流",
+          "monthly": "月度现金流",
+          "cumulative": "累计现金流",
+          "breakdown": {
+            "income": "收入",
+            "expenses": "支出",
+            "loanRepayments": "贷款还款"
+          }
+        },
+        "roi": {
+          "title": "投资回报率",
+          "description": "投资回报和盈利能力指标",
+          "total": "总回报率",
+          "annualized": "年化回报率",
+          "cashOnCash": "现金回报率"
+        },
+        "capitalGrowth": {
+          "title": "资本增长",
+          "description": "房产价值随时间升值",
+          "total": "总升值",
+          "annualRate": "年增长率",
+          "percentageGain": "百分比增长"
+        },
+        "equity": {
+          "title": "权益",
+          "description": "房产权益和贷款价值比",
+          "current": "当前权益",
+          "gain": "权益增长",
+          "lvr": "贷款价值比 (LVR)"
+        }
+      }
     },
     "editProperty": {
       "title": "编辑房产",

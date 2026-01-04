@@ -26,6 +26,7 @@ export default function AddressAutocomplete({
 }: AddressAutocompleteProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const isPlaceSelectedRef = useRef(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,30 +44,6 @@ export default function AddressAutocomplete({
       return;
     }
 
-    // Check if Google Maps is already loaded
-    if (window.google && window.google.maps && window.google.maps.places) {
-      initializeAutocomplete();
-      return;
-    }
-
-    // Load Google Maps script
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=Function.prototype`;
-    script.async = true;
-    script.defer = true;
-
-    script.onload = () => {
-      setIsLoaded(true);
-      initializeAutocomplete();
-    };
-
-    script.onerror = () => {
-      console.error("Error loading Google Maps");
-      setError("Failed to load address autocomplete. Using regular text input.");
-    };
-
-    document.head.appendChild(script);
-
     function initializeAutocomplete() {
       if (inputRef.current && !autocompleteRef.current && window.google) {
         // Initialize autocomplete with Australian address restrictions
@@ -81,7 +58,19 @@ export default function AddressAutocomplete({
           const place = autocompleteRef.current?.getPlace();
 
           if (place && place.formatted_address) {
-            onChange(place.formatted_address);
+            isPlaceSelectedRef.current = true;
+            const formattedAddress = place.formatted_address;
+
+            // Explicitly set the input value
+            if (inputRef.current) {
+              inputRef.current.value = formattedAddress;
+            }
+
+            // Update state after a brief delay to ensure DOM is updated
+            setTimeout(() => {
+              onChange(formattedAddress);
+              isPlaceSelectedRef.current = false;
+            }, 0);
 
             // Extract state from address components
             if (place.address_components && onStateChange) {
@@ -123,6 +112,48 @@ export default function AddressAutocomplete({
       }
     }
 
+    // Check if Google Maps is already loaded
+    if (window.google && window.google.maps && window.google.maps.places) {
+      initializeAutocomplete();
+      return;
+    }
+
+    // Check if script is already being loaded or exists in DOM
+    const scriptSrc = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=Function.prototype`;
+    const existingScript = document.querySelector(`script[src="${scriptSrc}"]`);
+
+    if (existingScript) {
+      // Script is already in DOM, wait for it to load
+      if (window.google && window.google.maps && window.google.maps.places) {
+        initializeAutocomplete();
+      } else {
+        // Script is loading, wait for the load event
+        existingScript.addEventListener("load", () => {
+          setIsLoaded(true);
+          initializeAutocomplete();
+        });
+      }
+      return;
+    }
+
+    // Load Google Maps script (only if not already in DOM)
+    const script = document.createElement("script");
+    script.src = scriptSrc;
+    script.async = true;
+    script.defer = true;
+
+    script.onload = () => {
+      setIsLoaded(true);
+      initializeAutocomplete();
+    };
+
+    script.onerror = () => {
+      console.error("Error loading Google Maps");
+      setError("Failed to load address autocomplete. Using regular text input.");
+    };
+
+    document.head.appendChild(script);
+
     // Cleanup
     return () => {
       if (autocompleteRef.current && window.google) {
@@ -131,13 +162,25 @@ export default function AddressAutocomplete({
     };
   }, [onChange, onStateChange]);
 
+  // Sync input value with prop when not during place selection
+  useEffect(() => {
+    if (inputRef.current && !isPlaceSelectedRef.current && inputRef.current.value !== value) {
+      inputRef.current.value = value;
+    }
+  }, [value]);
+
   return (
     <div className="relative">
       <Input
         ref={inputRef}
         type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          // Only update if not during place selection (normal typing)
+          if (!isPlaceSelectedRef.current) {
+            onChange(e.target.value);
+          }
+        }}
         placeholder={placeholder}
         disabled={disabled}
         autoComplete="off"

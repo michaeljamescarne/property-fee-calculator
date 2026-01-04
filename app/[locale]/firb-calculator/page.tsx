@@ -413,6 +413,21 @@ export default function FIRBCalculatorPage() {
         }
 
         // Pre-fill form data
+        // For established properties, ensure propertyClassification is set (default to "house" if missing)
+        // This handles backward compatibility with older saved calculations that may not have this field
+        const propertyClassification =
+          calculationData.propertyClassification ??
+          (calculationData.propertyType === "established" ? "house" : null);
+
+        // For established properties, ensure bedrooms is set (default to 3 if missing)
+        // This handles backward compatibility with older saved calculations that may not have this field
+        const bedrooms =
+          calculationData.bedrooms !== undefined && calculationData.bedrooms !== null
+            ? calculationData.bedrooms
+            : calculationData.propertyType === "established"
+              ? 3
+              : null;
+
         setFormData({
           purchaseType: calculationData.purchaseType || "purchasing", // Default to purchasing for backward compatibility
           purchaseDate: calculationData.purchaseDate,
@@ -427,8 +442,8 @@ export default function FIRBCalculatorPage() {
           depositPercent: calculationData.depositPercent,
           entityType: calculationData.entityType,
           expeditedFIRB: false, // Default value since it's not saved
-          propertyClassification: calculationData.propertyClassification ?? null,
-          bedrooms: calculationData.bedrooms ?? null,
+          propertyClassification,
+          bedrooms,
         });
 
         // Load investment inputs if they exist (stored as individual fields in calculationData)
@@ -824,12 +839,26 @@ export default function FIRBCalculatorPage() {
         setEligibility(existingEligibility);
       }
 
+      // Ensure required fields are set for established properties
+      // This handles edge cases where formData might be missing these fields
+      const submitData = { ...formData };
+      if (submitData.propertyType === "established") {
+        // Ensure propertyClassification is set (default to "house" if missing)
+        if (!submitData.propertyClassification) {
+          submitData.propertyClassification = "house";
+        }
+        // Ensure bedrooms is set (default to 3 if missing or null)
+        if (submitData.bedrooms === null || submitData.bedrooms === undefined) {
+          submitData.bedrooms = 3;
+        }
+      }
+
       const response = await fetch("/api/firb-calculate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       if (!response.ok) {

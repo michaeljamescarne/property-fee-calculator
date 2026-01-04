@@ -370,7 +370,12 @@
         "downloadPDF": "Download PDF Report",
         "emailResults": "Email Results",
         "editCalculation": "Edit Calculation",
-        "startAgain": "Start New Calculation"
+        "startAgain": "Start New Calculation",
+        "convertToProperty": {
+          "label": "Convert to Property",
+          "converting": "Converting...",
+          "requiresSave": "Please save this calculation first before converting to a property."
+        }
       },
       "analysisParams": {
         "description": "These inputs were captured during the wizard. Adjust them in the financial step to refine your analysis.",
@@ -1065,6 +1070,7 @@
       "tabs": {
         "overview": "Overview",
         "financial": "Financial",
+        "performance": "Performance",
         "transactions": "Transactions",
         "values": "Value History"
       },
@@ -1094,14 +1100,189 @@
       "transactions": {
         "title": "Transactions",
         "description": "Income and expense transactions",
-        "comingSoon": "Transaction tracking coming soon"
+        "comingSoon": "Transaction tracking coming soon",
+        "addTransaction": "Add Transaction",
+        "editTransaction": "Edit Transaction",
+        "addDescription": "Add a new transaction for this property",
+        "editDescription": "Update transaction details",
+        "deleteConfirm": "Are you sure you want to delete this transaction?",
+        "emptyState": "No transactions yet. Add your first transaction to start tracking income and expenses.",
+        "table": {
+          "date": "Date",
+          "category": "Category",
+          "description": "Description",
+          "type": "Type",
+          "amount": "Amount",
+          "taxDeductible": "Tax Deductible",
+          "actions": "Actions",
+          "yes": "Yes",
+          "no": "No"
+        },
+        "types": {
+          "income": "Income",
+          "expense": "Expense",
+          "capital": "Capital"
+        },
+        "categories": {
+          "purchase_cost": "Purchase Cost",
+          "improvement": "Improvement",
+          "maintenance": "Maintenance",
+          "council_rates": "Council Rates",
+          "water_rates": "Water Rates",
+          "gas": "Gas",
+          "electricity": "Electricity",
+          "insurance": "Insurance",
+          "strata_fees": "Strata Fees",
+          "property_management": "Property Management",
+          "letting_fees": "Letting Fees",
+          "land_tax": "Land Tax",
+          "vacancy_fee": "Vacancy Fee",
+          "depreciation_report": "Depreciation Report",
+          "accounting_fees": "Accounting Fees",
+          "legal_fees": "Legal Fees",
+          "loan_interest": "Loan Interest",
+          "loan_repayment": "Loan Repayment",
+          "rental_income": "Rental Income",
+          "other_income": "Other Income",
+          "sale_cost": "Sale Cost",
+          "other_expense": "Other Expense"
+        },
+        "form": {
+          "transactionDate": "Transaction Date",
+          "type": "Type",
+          "category": "Category",
+          "amount": "Amount",
+          "description": "Description",
+          "descriptionPlaceholder": "Enter transaction description",
+          "taxDeductible": "Tax Deductible",
+          "capitalImprovement": "Capital Improvement",
+          "recurring": "Recurring Transaction",
+          "recurringFrequency": "Frequency",
+          "recurringFrequencyPlaceholder": "Select frequency",
+          "recurringFrequencyOptions": {
+            "monthly": "Monthly",
+            "quarterly": "Quarterly",
+            "annually": "Annually"
+          },
+          "recurringEndDate": "End Date",
+          "receiptUrl": "Receipt URL",
+          "receiptUrlPlaceholder": "https://example.com/receipt",
+          "notes": "Notes",
+          "notesPlaceholder": "Additional notes (optional)",
+          "cancel": "Cancel",
+          "create": "Create Transaction",
+          "update": "Update Transaction"
+        }
       },
       "values": {
         "title": "Value History",
         "description": "Property valuation history over time",
-        "comingSoon": "Value history tracking coming soon"
+        "comingSoon": "Value history tracking coming soon",
+        "addValue": "Add Valuation",
+        "addDescription": "Record a new property valuation",
+        "deleteConfirm": "Are you sure you want to delete this valuation?",
+        "emptyState": "No valuations yet. Add your first valuation to track property value over time.",
+        "table": {
+          "date": "Date",
+          "value": "Value",
+          "type": "Type",
+          "source": "Source",
+          "actions": "Actions"
+        },
+        "types": {
+          "market": "Market Value",
+          "bank": "Bank Valuation",
+          "agent": "Agent Estimate",
+          "user_estimate": "User Estimate"
+        },
+        "form": {
+          "valuationDate": "Valuation Date",
+          "value": "Value",
+          "valuationType": "Valuation Type",
+          "valuationTypePlaceholder": "Select valuation type",
+          "valuationSource": "Valuation Source",
+          "valuationSourcePlaceholder": "e.g., CoreLogic, Real Estate Agent",
+          "updateCurrentValue": "Update property's current value with this valuation",
+          "notes": "Notes",
+          "notesPlaceholder": "Additional notes (optional)",
+          "cancel": "Cancel",
+          "create": "Add Valuation"
+        }
       },
-      "edit": "Edit Property"
+      "edit": "Edit Property",
+      "performance": {
+        "title": "Performance Metrics",
+        "description": "Property performance and financial analytics",
+        "rentalYield": {
+          "title": "Rental Yield",
+          "description": "Rental income as a percentage of property value",
+          "gross": "Gross Yield",
+          "net": "Net Yield",
+          "effective": "Effective Yield"
+        },
+        "cashFlow": {
+          "title": "Cash Flow",
+          "description": "Annual and monthly cash flow from property operations",
+          "annual": "Annual Cash Flow",
+          "monthly": "Monthly Cash Flow",
+          "cumulative": "Cumulative Cash Flow",
+          "breakdown": {
+            "income": "Income",
+            "expenses": "Expenses",
+            "loanRepayments": "Loan Repayments"
+          }
+        },
+        "roi": {
+          "title": "Return on Investment",
+          "description": "Investment returns and profitability metrics",
+          "total": "Total ROI",
+          "annualized": "Annualized ROI",
+          "cashOnCash": "Cash-on-Cash Return"
+        },
+        "capitalGrowth": {
+          "title": "Capital Growth",
+          "description": "Property value appreciation over time",
+          "total": "Total Appreciation",
+          "annualRate": "Annual Growth Rate",
+          "percentageGain": "Percentage Gain"
+        },
+        "equity": {
+          "title": "Equity",
+          "description": "Property equity and loan-to-value ratio",
+          "current": "Current Equity",
+          "gain": "Equity Gain",
+          "lvr": "Loan-to-Value Ratio (LVR)"
+        }
+      },
+      "comparison": {
+        "title": "Compare Properties",
+        "description": "Compare multiple properties side-by-side",
+        "loading": "Loading comparison data...",
+        "noProperties": "No properties to compare",
+        "backToProperties": "Back to Properties",
+        "viewDetails": "View Details",
+        "metric": "Metric",
+        "purchasePrice": "Purchase Price",
+        "currentValue": "Current Value",
+        "purchaseDate": "Purchase Date",
+        "propertyType": "Property Type",
+        "isRental": "Is Rental",
+        "weeklyRent": "Weekly Rent",
+        "grossYield": "Gross Rental Yield",
+        "netYield": "Net Rental Yield",
+        "annualCashFlow": "Annual Cash Flow",
+        "totalROI": "Total ROI",
+        "capitalGrowth": "Capital Growth",
+        "currentEquity": "Current Equity",
+        "notSet": "Not Set",
+        "yes": "Yes",
+        "no": "No",
+        "selected": "{count} selected",
+        "clear": "Clear Selection",
+        "compare": "Compare Properties",
+        "selectAtLeast2": "Select at least 2 properties to compare",
+        "hint": "Click on property cards to select and compare"
+      }
     },
     "editProperty": {
       "title": "Edit Property",

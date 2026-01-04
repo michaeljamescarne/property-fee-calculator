@@ -70,13 +70,13 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
 
     try {
       // Prepare data for validation
-      const submitData: any = {
+      const submitData: Record<string, unknown> = {
         property_address: formData.property_address,
         property_state: formData.property_state,
         property_type: formData.property_type,
         purchase_date: formData.purchase_date,
         purchase_price: parseFloat(formData.purchase_price),
-        purchase_costs: parseFloat(formData.purchase_costs) || 0,
+        purchase_costs: Math.max(0, parseFloat(formData.purchase_costs) || 0),
         status: formData.status,
       };
 
@@ -94,7 +94,10 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
       if (formData.loan_term_years) submitData.loan_term_years = parseInt(formData.loan_term_years);
       if (formData.loan_type) submitData.loan_type = formData.loan_type;
       submitData.is_rental = formData.is_rental;
-      if (formData.weekly_rent) submitData.weekly_rent = parseFloat(formData.weekly_rent);
+      // Always include weekly_rent if is_rental is true, or if the field has a value (to allow clearing it)
+      if (formData.is_rental || formData.weekly_rent) {
+        submitData.weekly_rent = formData.weekly_rent ? parseFloat(formData.weekly_rent) : null;
+      }
       if (formData.property_management_fee_percent)
         submitData.property_management_fee_percent = parseFloat(
           formData.property_management_fee_percent
@@ -128,9 +131,11 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
       if (!response.ok) {
         if (result.details) {
           const fieldErrors: Record<string, string> = {};
-          result.details.forEach((issue: any) => {
-            const path = issue.path[0] as string;
-            fieldErrors[path] = issue.message;
+          result.details.forEach((issue: { path?: string[]; message?: string }) => {
+            const path = issue.path?.[0] as string | undefined;
+            if (path && issue.message) {
+              fieldErrors[path] = issue.message;
+            }
           });
           setErrors(fieldErrors);
         } else {
@@ -350,7 +355,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="purchase_price"
               type="number"
-              step="1000"
               min="0"
               value={formData.purchase_price}
               onChange={(e) => setFormData({ ...formData, purchase_price: e.target.value })}
@@ -368,10 +372,17 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="purchase_costs"
               type="number"
-              step="100"
               min="0"
               value={formData.purchase_costs}
-              onChange={(e) => setFormData({ ...formData, purchase_costs: e.target.value })}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Prevent negative values - if negative, set to empty string or 0
+                if (value && parseFloat(value) < 0) {
+                  setFormData({ ...formData, purchase_costs: "0" });
+                } else {
+                  setFormData({ ...formData, purchase_costs: value });
+                }
+              }}
               placeholder="45000"
             />
           </div>
@@ -382,7 +393,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="deposit_amount"
               type="number"
-              step="1000"
               min="0"
               value={formData.deposit_amount}
               onChange={(e) => setFormData({ ...formData, deposit_amount: e.target.value })}
@@ -396,7 +406,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="loan_amount"
               type="number"
-              step="1000"
               min="0"
               value={formData.loan_amount}
               onChange={(e) => setFormData({ ...formData, loan_amount: e.target.value })}
@@ -418,7 +427,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="current_value"
               type="number"
-              step="1000"
               min="0"
               value={formData.current_value}
               onChange={(e) => setFormData({ ...formData, current_value: e.target.value })}
@@ -432,7 +440,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="current_loan_balance"
               type="number"
-              step="1000"
               min="0"
               value={formData.current_loan_balance}
               onChange={(e) => setFormData({ ...formData, current_loan_balance: e.target.value })}
@@ -446,7 +453,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="interest_rate"
               type="number"
-              step="0.1"
               min="0"
               max="100"
               value={formData.interest_rate}
@@ -461,7 +467,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
             <Input
               id="loan_term_years"
               type="number"
-              step="1"
               min="1"
               max="50"
               value={formData.loan_term_years}
@@ -519,15 +524,14 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
               {/* Weekly Rent */}
               <div className="space-y-2">
                 <Label htmlFor="weekly_rent">{t("form.rentalInfo.weeklyRent")}</Label>
-                <Input
-                  id="weekly_rent"
-                  type="number"
-                  step="10"
-                  min="0"
-                  value={formData.weekly_rent}
-                  onChange={(e) => setFormData({ ...formData, weekly_rent: e.target.value })}
-                  placeholder="650"
-                />
+              <Input
+                id="weekly_rent"
+                type="number"
+                min="0"
+                value={formData.weekly_rent}
+                onChange={(e) => setFormData({ ...formData, weekly_rent: e.target.value })}
+                placeholder="650"
+              />
               </div>
 
               {/* Property Management Fee */}
@@ -538,7 +542,6 @@ export default function EditPropertyForm({ property, locale }: EditPropertyFormP
                 <Input
                   id="property_management_fee_percent"
                   type="number"
-                  step="0.1"
                   min="0"
                   max="100"
                   value={formData.property_management_fee_percent}
