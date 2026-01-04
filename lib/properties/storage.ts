@@ -76,6 +76,7 @@ export async function getProperty(propertyId: string, userId: string): Promise<P
 export async function createProperty(property: PropertyInsert): Promise<Property> {
   const supabase = createServiceRoleClient();
 
+  // @ts-expect-error - properties Insert type is not properly recognized in Database type
   const { data, error } = await supabase.from("properties").insert(property).select().single();
 
   if (error) {
@@ -132,6 +133,7 @@ export async function deleteProperty(propertyId: string, userId: string): Promis
 
   const { error } = await supabase
     .from("properties")
+    // @ts-expect-error - properties Update type is not properly recognized in Database type
     .update({ deleted_at: new Date().toISOString() })
     .eq("id", propertyId)
     .eq("user_id", userId);
