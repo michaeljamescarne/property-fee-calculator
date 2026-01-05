@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const locale = searchParams.get("locale") || "en";
 
-    const posts = getAllBlogPosts(locale);
+    const posts = getAllBlogPosts();
 
     const response = NextResponse.json({
       success: true,

@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Add blog posts dynamically
     try {
-      const blogPosts = getAllBlogPosts(locale);
+      const blogPosts = getAllBlogPosts();
       blogPosts.forEach((post) => {
         routes.push({
           url: `${baseUrl}/${locale}/blog/${post.slug}`,

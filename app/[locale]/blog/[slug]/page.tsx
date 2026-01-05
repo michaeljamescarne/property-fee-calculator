@@ -22,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = getBlogPost(slug, locale);
+  const post = getBlogPost(slug);
 
   if (!post) {
     return {
@@ -77,8 +77,8 @@ export default async function BlogPostPage({
 }) {
   const { locale, slug } = await params;
 
-  const post = getBlogPost(slug, locale);
-  const allPosts = getAllBlogPosts(locale);
+  const post = getBlogPost(slug);
+  const allPosts = getAllBlogPosts();
   const relatedPosts = post ? getRelatedPosts(post, allPosts, 3) : [];
 
   if (!post) {

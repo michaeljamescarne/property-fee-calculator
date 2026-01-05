@@ -7,6 +7,6 @@ import { getAllBlogPosts } from "@/lib/blogContentProcessor";
 /**
  * Get all blog posts (server-side only)
  */
-export function getBlogPosts(locale: string): BlogPost[] {
-  return getAllBlogPosts(locale);
+export function getBlogPosts(): BlogPost[] {
+  return getAllBlogPosts();
 }

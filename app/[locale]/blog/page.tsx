@@ -83,7 +83,7 @@ export async function generateMetadata({
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const posts = getAllBlogPosts(locale);
+  const posts = getAllBlogPosts();
 
   // Structured data
   const blogSchema = generateBlogSchema(posts, locale);
