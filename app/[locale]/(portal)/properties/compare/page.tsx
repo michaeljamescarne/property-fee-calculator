@@ -3,7 +3,6 @@
  * Displays side-by-side comparison of selected properties
  */
 
-import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import PropertyComparison from "@/components/properties/PropertyComparison";
 import { getSession } from "@/lib/auth/session";
@@ -44,13 +43,10 @@ export default async function ComparePage({ params, searchParams }: ComparePageP
   );
 }
 
-export async function generateMetadata({ params }: ComparePageProps) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Properties.comparison" });
-
+export async function generateMetadata(_props: ComparePageProps) {
   return {
-    title: t("title"),
-    description: t("description"),
+    title: "Compare Properties",
+    description: "Compare multiple properties side-by-side",
   };
 }
 
