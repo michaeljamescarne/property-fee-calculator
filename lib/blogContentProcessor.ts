@@ -143,15 +143,14 @@ export function convertMarkdownTableToHTML(markdownTable: string): string {
 export function removeExcessiveSpacingBeforeTables(content: string): string {
   // Pattern to match heading followed by blank lines and then a table
   const headingTablePattern = /(###? .+?)\n(\n+)(<table)/g;
-
-  return content.replace(headingTablePattern, (match, heading, blankLines, table) => {
+  let result = content.replace(headingTablePattern, (match, heading, blankLines, table) => {
     // Keep only one blank line before the table
     return `${heading}\n${table}`;
   });
 
   // Also handle cases where there's text followed by blank lines and then a table
   const textTablePattern = /([^\n])\n(\n+)(<table)/g;
-  return content.replace(textTablePattern, (match, text, blankLines, table) => {
+  return result.replace(textTablePattern, (match, text, blankLines, table) => {
     // Keep only one blank line before the table
     return `${text}\n${table}`;
   });
@@ -302,6 +301,23 @@ export function processMarkdownContent(content: string): string {
       '<ol class="list-decimal list-inside mb-4 space-y-2 ml-4">'
     );
     htmlContent = htmlContent.replace(/<li>/g, '<li class="mb-1">');
+
+    // Remove default bullets for list items that contain emoji markers (❌ or ✅) at the start
+    // Match <li> tags whose text content starts with ❌ or ✅ emoji
+    // This handles both cases: <li>❌ text</li> and <li class="...">❌ text</li>
+    htmlContent = htmlContent.replace(
+      /<li([^>]*)>(\s*)([❌✅])/g,
+      (match, attrs, whitespace, emoji) => {
+        // Check if class attribute exists
+        if (attrs.includes("class=")) {
+          // Add data-emoji-bullet attribute
+          return `<li${attrs} data-emoji-bullet>${whitespace}${emoji}`;
+        } else {
+          // Add both class and data-emoji-bullet attribute
+          return `<li class="mb-1" data-emoji-bullet>${whitespace}${emoji}`;
+        }
+      }
+    );
 
     // Add Tailwind classes to links (if not already styled)
     // Use a more robust pattern that checks if class attribute already exists
@@ -470,7 +486,7 @@ export function createBlogPost(
  * Reads markdown files from content/blog directory
  * Server-side only function
  */
-export function getAllBlogPosts(_locale: string): BlogPost[] {
+export function getAllBlogPosts(): BlogPost[] {
   // Only load Node.js modules on the server
   if (typeof window !== "undefined") {
     return [] as BlogPost[];
@@ -548,7 +564,7 @@ export function getAllBlogPosts(_locale: string): BlogPost[] {
  * Returns null if not found
  * Server-side only function
  */
-export function getBlogPost(slug: string, _locale: string): BlogPost | null {
+export function getBlogPost(slug: string): BlogPost | null {
   // Only load Node.js modules on the server
   if (typeof window !== "undefined") {
     return null;
