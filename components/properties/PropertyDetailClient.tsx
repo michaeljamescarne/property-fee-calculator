@@ -6,6 +6,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,6 +25,11 @@ interface PropertyDetailClientProps {
 
 export default function PropertyDetailClient({ property, locale }: PropertyDetailClientProps) {
   const t = useTranslations("Properties.detail");
+  const router = useRouter();
+
+  const handleEdit = () => {
+    router.push(`/${locale}/properties/${property.id}/edit`);
+  };
 
   return (
     <div className="space-y-6">
@@ -46,11 +52,9 @@ export default function PropertyDetailClient({ property, locale }: PropertyDetai
             </span>
           </div>
         </div>
-        <Button asChild>
-          <Link href={`/${locale}/properties/${property.id}/edit`}>
-            <Edit className="mr-2 h-4 w-4" />
-            {t("edit")}
-          </Link>
+        <Button onClick={handleEdit}>
+          <Edit className="mr-2 h-4 w-4" />
+          {t("edit")}
         </Button>
       </div>
 
