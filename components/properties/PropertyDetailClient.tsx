@@ -10,14 +10,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  ArrowLeft,
-  MapPin,
-  Home,
-  Building,
-  Calendar,
-  Edit,
-} from "lucide-react";
+import { ArrowLeft, MapPin, Home, Building, Calendar, Edit } from "lucide-react";
 import type { Property } from "@/types/database";
 import { formatCurrency } from "@/lib/utils/format";
 import TransactionsList from "./TransactionsList";
@@ -53,12 +46,12 @@ export default function PropertyDetailClient({ property, locale }: PropertyDetai
             </span>
           </div>
         </div>
-        <Link href={`/${locale}/properties/${property.id}/edit`}>
-          <Button>
+        <Button asChild>
+          <Link href={`/${locale}/properties/${property.id}/edit`}>
             <Edit className="mr-2 h-4 w-4" />
             {t("edit")}
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
 
       {/* Property Information Tabs */}
