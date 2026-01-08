@@ -64,19 +64,19 @@ export interface CalculationInput {
 
 /**
  * Calculate FIRB application fees
+ * Note: Australian citizens are ALWAYS exempt from FIRB per Section 35 of the
+ * Foreign Acquisitions and Takeovers Regulation 2015, regardless of residency status
  */
 export function calculateFIRBFees(
   propertyValue: number,
   citizenshipStatus: CitizenshipStatus,
   propertyType: PropertyType,
-  isOrdinarilyResident?: boolean,
+
+  _isOrdinarilyResident?: boolean, // Kept for API compatibility but not used for FIRB determination
   expedited: boolean = false
 ): number {
-  // Check if FIRB is required
-  const requiresFIRB =
-    citizenshipStatus === "temporary" ||
-    citizenshipStatus === "foreign" ||
-    (citizenshipStatus === "australian" && isOrdinarilyResident === false);
+  // Check if FIRB is required - Australian citizens and permanent residents are exempt
+  const requiresFIRB = citizenshipStatus === "temporary" || citizenshipStatus === "foreign";
 
   if (!requiresFIRB) {
     return 0;
@@ -100,18 +100,19 @@ export function calculateStateDuties(
 
 /**
  * Calculate foreign buyer surcharge
+ * Note: Australian citizens are exempt from foreign buyer surcharges in all states,
+ * regardless of residency status
  */
 export function calculateForeignSurcharge(
   propertyValue: number,
   state: AustralianState,
   citizenshipStatus: CitizenshipStatus,
-  isOrdinarilyResident?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _isOrdinarilyResident?: boolean // Kept for API compatibility but not used
 ): number {
-  // Foreign surcharge applies to temporary residents and foreign persons
-  const isForeignBuyer =
-    citizenshipStatus === "temporary" ||
-    citizenshipStatus === "foreign" ||
-    (citizenshipStatus === "australian" && isOrdinarilyResident === false);
+  // Foreign surcharge applies to temporary residents and foreign persons only
+  // Australian citizens are exempt regardless of where they live
+  const isForeignBuyer = citizenshipStatus === "temporary" || citizenshipStatus === "foreign";
 
   if (!isForeignBuyer) {
     return 0;
@@ -123,16 +124,19 @@ export function calculateForeignSurcharge(
 
 /**
  * Calculate annual land tax
+ * Note: Australian citizens are NOT treated as foreign owners for land tax purposes.
+ * Some states may have separate "absentee owner" surcharges for Australians living abroad,
+ * but that is distinct from "foreign owner" surcharges.
  */
 export function calculateAnnualLandTax(
   landValue: number,
   state: AustralianState,
   citizenshipStatus: CitizenshipStatus,
-  isOrdinarilyResident?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _isOrdinarilyResident?: boolean // Kept for API compatibility
 ): number {
-  const isForeignOwner =
-    citizenshipStatus === "foreign" ||
-    (citizenshipStatus === "australian" && isOrdinarilyResident === false);
+  // Only foreign persons (non-citizens) are subject to foreign owner land tax surcharges
+  const isForeignOwner = citizenshipStatus === "foreign";
 
   return calculateLandTax(landValue, state, isForeignOwner);
 }

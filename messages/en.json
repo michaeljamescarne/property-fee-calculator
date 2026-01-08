@@ -171,11 +171,11 @@
         "placeholder": "Select visa type"
       },
       "ordinarilyResident": {
-        "label": "Are you ordinarily resident in Australia?",
-        "description": "If you are not ordinarily resident, you may need FIRB approval even as an Australian citizen"
+        "label": "Do you ordinarily reside in Australia?",
+        "description": "This affects tax calculations only. Australian citizens are always exempt from FIRB regardless of where they live."
       },
       "info": {
-        "australian": "Australian citizens generally do not need FIRB approval unless they are not ordinarily resident in Australia.",
+        "australian": "Australian citizens do not need FIRB approval for any property purchase in Australia, regardless of where you currently live. Living abroad may affect your tax residency and CGT treatment.",
         "permanent": "Permanent residents generally do not need FIRB approval for residential property purchases.",
         "temporary": "Temporary residents require FIRB approval and may have restrictions on property types they can purchase.",
         "foreign": "Foreign persons require FIRB approval for all residential property purchases in Australia."

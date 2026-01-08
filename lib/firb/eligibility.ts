@@ -48,23 +48,20 @@ export function checkCitizenshipEligibility(
     allowedPropertyTypes: eligibilityRules.canBuy as PropertyType[],
   };
 
-  // Australian Citizens
+  // Australian Citizens - ALWAYS exempt from FIRB per Section 35 of the
+  // Foreign Acquisitions and Takeovers Regulation 2015, regardless of residency status
   if (status === "australian") {
+    baseResult.recommendations.push(
+      "As an Australian citizen, you have no restrictions on property purchases"
+    );
+    baseResult.recommendations.push(
+      "No FIRB approval required - Australian citizens are exempt regardless of where they live"
+    );
     if (isOrdinarilyResident === false) {
-      // Australian citizens not ordinarily resident are treated as foreign
-      baseResult.requiresFIRB = true;
-      baseResult.firbApprovalType = "required";
-      baseResult.restrictions.push(
-        "As you are not ordinarily resident in Australia, FIRB approval is required"
-      );
+      // Note: Residency status may affect tax treatment but NOT FIRB eligibility
       baseResult.recommendations.push(
-        "Ensure you apply for FIRB approval before signing any contract"
+        "Note: Living abroad may affect your tax residency status and CGT treatment, but does not affect FIRB eligibility"
       );
-    } else {
-      baseResult.recommendations.push(
-        "As an Australian citizen, you have no restrictions on property purchases"
-      );
-      baseResult.recommendations.push("No FIRB approval required - you can purchase immediately");
     }
   }
 
@@ -167,13 +164,12 @@ export function checkCitizenshipEligibility(
 export function checkPropertyEligibility(
   propertyType: PropertyType,
   citizenshipStatus: CitizenshipStatus,
-  isOrdinarilyResident?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  isOrdinarilyResident?: boolean // Kept for API compatibility but not used (Australian citizens always exempt)
 ): { eligible: boolean; reason?: string } {
-  // Australian citizens who are not ordinarily resident are treated as foreign
-  let effectiveStatus = citizenshipStatus;
-  if (citizenshipStatus === "australian" && isOrdinarilyResident === false) {
-    effectiveStatus = "foreign";
-  }
+  // Australian citizens are ALWAYS treated as Australian for property eligibility,
+  // regardless of residency status (per Section 35 of the Foreign Acquisitions and Takeovers Regulation 2015)
+  const effectiveStatus = citizenshipStatus;
 
   // Check if affected by temporary ban (April 1, 2025 - March 31, 2027)
   if (isAffectedByTemporaryBan(propertyType, effectiveStatus)) {
