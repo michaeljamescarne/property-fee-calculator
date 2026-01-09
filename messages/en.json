@@ -1284,6 +1284,60 @@
         "hint": "Click on property cards to select and compare"
       }
     },
+    "createProperty": {
+      "title": "Add New Property",
+      "description": "Create a new property to track in your portfolio",
+      "form": {
+        "basicInfo": {
+          "title": "Basic Information",
+          "description": "Property location and type",
+          "name": "Property Name",
+          "namePlaceholder": "e.g., 123 Main Street",
+          "address": "Property Address",
+          "addressPlaceholder": "Enter the full address",
+          "state": "State",
+          "statePlaceholder": "Select state",
+          "type": "Property Type",
+          "classification": "Property Classification",
+          "bedrooms": "Number of Bedrooms",
+          "bedroomsPlaceholder": "Select number of bedrooms"
+        },
+        "purchaseInfo": {
+          "title": "Purchase Information",
+          "description": "Purchase details and financing",
+          "date": "Purchase Date",
+          "price": "Purchase Price (AUD)",
+          "costs": "Purchase Costs (AUD)",
+          "deposit": "Deposit Amount (AUD)",
+          "loan": "Loan Amount (AUD)"
+        },
+        "currentInfo": {
+          "title": "Current Information",
+          "description": "Current property value and loan details",
+          "currentValue": "Current Value (AUD)",
+          "currentLoanBalance": "Current Loan Balance (AUD)",
+          "interestRate": "Interest Rate (%)",
+          "loanTerm": "Loan Term (years)",
+          "loanType": "Loan Type",
+          "loanTypePlaceholder": "Select loan type"
+        },
+        "rentalInfo": {
+          "title": "Rental Information",
+          "description": "Rental income and management details",
+          "isRental": "This is a rental property",
+          "weeklyRent": "Weekly Rent (AUD)",
+          "managementFee": "Property Management Fee (%)"
+        },
+        "otherInfo": {
+          "title": "Other Information",
+          "description": "Status and notes",
+          "status": "Status",
+          "notes": "Notes",
+          "notesPlaceholder": "Add any additional notes about this property"
+        },
+        "submit": "Create Property"
+      }
+    },
     "editProperty": {
       "title": "Edit Property",
       "description": "Update property information",

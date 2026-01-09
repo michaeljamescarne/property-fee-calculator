@@ -49,6 +49,13 @@ export async function getProperties(
  * Get a single property by ID
  */
 export async function getProperty(propertyId: string, userId: string): Promise<Property | null> {
+  // Validate property ID format (UUID v4)
+  // This prevents treating "new" or other invalid IDs as property IDs
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(propertyId)) {
+    return null; // Invalid ID format
+  }
+
   const supabase = createServiceRoleClient();
 
   const { data, error } = await supabase
@@ -64,7 +71,9 @@ export async function getProperty(propertyId: string, userId: string): Promise<P
       return null; // Not found
     }
     console.error("Error fetching property:", error);
-    throw new Error("Failed to fetch property");
+    // Provide more context in error message
+    const errorMessage = error.message || JSON.stringify(error);
+    throw new Error(`Failed to fetch property: ${errorMessage}`);
   }
 
   return data as Property;
