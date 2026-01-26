@@ -5,9 +5,9 @@
 
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft } from "lucide-react";
@@ -24,9 +24,14 @@ import { CitizenshipStatus, PropertyType, AustralianState, EntityType } from "@/
 import { FIRBCalculatorFormData } from "@/lib/validations/firb";
 import { EligibilityResult } from "@/lib/firb/eligibility";
 import { CostBreakdown } from "@/lib/firb/calculations";
-import { generateFIRBPDF } from "@/lib/pdf/generateFIRBPDF";
-import { generateEnhancedPDF } from "@/lib/pdf/generateEnhancedPDF";
 import type { InvestmentAnalytics, InvestmentInputs } from "@/types/investment";
+import {
+  captureProjectionChart,
+  captureCashFlowChart,
+  captureROIComparisonChart,
+} from "@/lib/pdf/chartCapture";
+import { useAuth } from "@/components/auth/AuthProvider";
+import LoginModal from "@/components/auth/LoginModal";
 import { parseAddress } from "@/lib/utils/address-parser";
 import { generateDefaultInputs } from "@/lib/firb/investment-analytics";
 import type { BenchmarkData } from "@/app/api/benchmarks/route";
@@ -40,9 +45,15 @@ export default function FIRBCalculatorPage() {
   const t = useTranslations("FIRBCalculator");
   const tPdf = useTranslations("FIRBCalculator.pdf");
   const locale = useLocale();
+  const router = useRouter();
 
   // Wizard state - always start at purchaseType for new calculations
   const [currentStep, setCurrentStep] = useState<Step>("purchaseType");
+
+  // Debug: Log every step change
+  useEffect(() => {
+    console.log("🔷 STEP CHANGED TO:", currentStep);
+  }, [currentStep]);
   const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
 
   const isResults = currentStep === "results";
@@ -85,12 +96,22 @@ export default function FIRBCalculatorPage() {
   // Email modal state
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
 
+  // Authentication and PDF state
+  const { isAuthenticated } = useAuth();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loginModalTitle, setLoginModalTitle] = useState<string | undefined>();
+  const [loginModalMessage, setLoginModalMessage] = useState<string | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const pendingPDFAnalyticsRef = useRef<InvestmentAnalytics | undefined>(undefined);
+
   // Loading state for saved calculations
   const [isLoadingSavedCalculation, setIsLoadingSavedCalculation] = useState(false);
   const loadedCalculationIdRef = useRef<string | null>(null);
   const [editingCalculationId, setEditingCalculationId] = useState<string | null>(null);
   const isEditingRef = useRef<boolean>(false);
   const shouldNavigateToReviewRef = useRef<boolean>(false);
+  const editModeInitializedRef = useRef<boolean>(false); // Track if edit mode has been initialized
   const [savedCalculationName, setSavedCalculationName] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -148,12 +169,16 @@ export default function FIRBCalculatorPage() {
   const searchParams = useSearchParams();
 
   // CRITICAL: Immediately navigate to review when edit=true is detected in URL
-  // This must run BEFORE any loading happens to prevent showing results
+  // This runs ONLY ONCE when edit mode is first detected, not on every step change
   useEffect(() => {
     const isEdit = searchParams.get("edit") === "true";
     const loadId = searchParams.get("load");
 
-    if (isEdit && loadId) {
+    // Only initialize edit mode ONCE when first detected
+    if (isEdit && loadId && !editModeInitializedRef.current) {
+      console.log("useEffect: Initializing edit mode", { currentStep, isEdit, loadId });
+      editModeInitializedRef.current = true;
+
       // Set flags immediately to prevent any interference
       isEditingRef.current = true;
       shouldNavigateToReviewRef.current = true;
@@ -166,14 +191,15 @@ export default function FIRBCalculatorPage() {
       if (currentStep !== "review") {
         setCurrentStep("review");
       }
-
-      // Keep flags active - will be cleared after load completes
     } else if (!isEdit) {
-      // If edit=false or not present, clear the flags
+      // Reset when edit mode is cleared
+      editModeInitializedRef.current = false;
       isEditingRef.current = false;
       shouldNavigateToReviewRef.current = false;
     }
-  }, [searchParams, currentStep]);
+    // NOTE: We intentionally do NOT check currentStep or respond to step changes
+    // This prevents interference when user clicks Edit buttons
+  }, [searchParams]); // Only run when searchParams change, NOT when currentStep changes
 
   // CRITICAL: Force purchaseType step if it's not set - runs on every render
   useEffect(() => {
@@ -181,7 +207,15 @@ export default function FIRBCalculatorPage() {
 
     // Don't interfere if we're currently editing a saved calculation or navigating to review
     // Also check URL param to be extra safe
-    if (isEditingRef.current || shouldNavigateToReviewRef.current || isEdit) return;
+    // IMPORTANT: Don't interfere if user is on any form step (they clicked Edit)
+    const formSteps: Step[] = ["purchaseType", "citizenship", "property", "financial"];
+    if (
+      isEditingRef.current ||
+      shouldNavigateToReviewRef.current ||
+      isEdit ||
+      formSteps.includes(currentStep)
+    )
+      return;
 
     // If purchaseType is not set, FORCE currentStep to be purchaseType (unless loading saved calc, on results, or on review)
     // Note: We exclude "review" because when editing, we navigate directly to review step
@@ -407,6 +441,11 @@ export default function FIRBCalculatorPage() {
           // Ensure flags are still set (they should be from the useEffect, but be defensive)
           isEditingRef.current = true;
           shouldNavigateToReviewRef.current = true;
+          // Remove edit param from URL after successful load to allow step navigation
+          // Use router.replace to properly update searchParams
+          const url = new URL(window.location.href);
+          url.searchParams.delete("edit");
+          router.replace(url.pathname + (url.search ? url.search : ""), { scroll: false });
           // Clear eligibility/costs again just in case (defensive)
           setEligibility(null);
           setCosts(null);
@@ -526,7 +565,8 @@ export default function FIRBCalculatorPage() {
   };
 
   // Prepare PDF translations (memoized for performance)
-  const pdfTranslations = useMemo(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _pdfTranslations = useMemo(
     () => ({
       title: tPdf("title"),
       subtitle: tPdf("subtitle"),
@@ -815,10 +855,24 @@ export default function FIRBCalculatorPage() {
     }
   };
 
-  // Handle edit from review
-  const handleEdit = (step: "purchaseType" | "citizenship" | "property" | "financial") => {
-    setCurrentStep(step);
-  };
+  // Handle edit from review - VERSION 2024-12-19-FIX-2
+  const handleEdit = useCallback(
+    (step: "purchaseType" | "citizenship" | "property" | "financial") => {
+      console.log("=== HANDLEEDIT CALLED VERSION FIX 2 ===", step, currentStep);
+      // Clear ALL flags immediately
+      isEditingRef.current = false;
+      shouldNavigateToReviewRef.current = false;
+      editModeInitializedRef.current = false;
+      // Remove edit param from URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete("edit");
+      router.replace(url.pathname + (url.search ? url.search : ""), { scroll: false });
+      // Set step - useEffect won't interfere because editModeInitializedRef is false
+      console.log("=== SETTING STEP TO ===", step);
+      setCurrentStep(step);
+    },
+    [currentStep, router]
+  );
 
   // Handle calculate
   const handleCalculate = async () => {
@@ -909,22 +963,366 @@ export default function FIRBCalculatorPage() {
 
   // Handle download PDF
   const handleDownloadPDF = async (analytics?: InvestmentAnalytics) => {
-    if (!eligibility || !costs) return;
+    console.log("═══════════════════════════════════════════");
+    console.log("🔵🔵🔵 handleDownloadPDF CALLED 🔵🔵🔵");
+    console.log("═══════════════════════════════════════════");
+    console.log("🔵 Analytics parameter:", {
+      hasAnalytics: !!analytics,
+      analyticsType: typeof analytics,
+      analyticsValue: analytics,
+      analyticsKeys: analytics ? Object.keys(analytics) : [],
+      hasYearByYear: !!analytics?.yearByYear,
+    });
+    console.log("🔵 isAuthenticated:", isAuthenticated);
+    console.log("🔵 eligibility:", !!eligibility);
+    console.log("🔵 costs:", !!costs);
+
+    // 1. Check authentication
+    if (!isAuthenticated) {
+      // Store analytics for retry after login
+      pendingPDFAnalyticsRef.current = analytics;
+      setLoginModalTitle("Create Account to Download PDF");
+      setLoginModalMessage(
+        "Download PDF reports requires a free account. Create one now to access your reports."
+      );
+      setShowLoginModal(true);
+      return;
+    }
+
+    // Clear any pending analytics since we're authenticated
+    pendingPDFAnalyticsRef.current = undefined;
+
+    console.log("🔵 After auth check - eligibility:", !!eligibility, "costs:", !!costs);
+    if (!eligibility || !costs) {
+      console.warn("🔵 EARLY RETURN: Missing eligibility or costs");
+      return;
+    }
 
     try {
-      // Use enhanced PDF if analytics are provided, otherwise basic PDF
-      const pdfBlob = analytics
-        ? await generateEnhancedPDF(
-            formData,
-            eligibility,
-            costs,
-            analytics,
-            locale,
-            pdfTranslations
-          )
-        : generateFIRBPDF(formData, eligibility, costs);
+      console.log("🔵 Entering try block, setting isGeneratingPDF to true");
+      setIsGeneratingPDF(true);
+      console.log("🔵 About to start chart capture section");
 
-      const url = URL.createObjectURL(pdfBlob);
+      // 2. Capture charts if analytics exist
+      console.log("═══════════════════════════════════════════");
+      console.log("🔵 About to check analytics for chart capture");
+      console.log("═══════════════════════════════════════════");
+      console.log("🔵 Analytics check:", {
+        hasAnalytics: !!analytics,
+        analyticsType: typeof analytics,
+        analyticsValue: analytics,
+        analyticsIsNull: analytics === null,
+        analyticsIsUndefined: analytics === undefined,
+        analyticsTruthy: !!analytics,
+      });
+
+      let chartImages: {
+        projectionChart: string | null;
+        cashFlowChart: string | null;
+        roiComparisonChart: string | null;
+      } = {
+        projectionChart: null,
+        cashFlowChart: null,
+        roiComparisonChart: null,
+      };
+
+      console.log("🔵 About to check: if (analytics) {");
+      if (analytics) {
+        console.log("═══════════════════════════════════════════");
+        console.log("✅✅✅ ANALYTICS EXISTS! STARTING CHART CAPTURE ✅✅✅");
+        console.log("═══════════════════════════════════════════");
+        console.log("📊 Starting chart capture for PDF generation...");
+        console.log("   Analytics provided:", !!analytics);
+        console.log("   Checking if charts exist in DOM...");
+
+        // First, check if charts exist BEFORE trying to open sections
+        const initialCheck = {
+          projection: !!document.getElementById("projection-chart-container"),
+          cashFlow: !!document.getElementById("cash-flow-chart-container"),
+          roiComparison: !!document.getElementById("roi-comparison-chart-container"),
+        };
+        console.log("   Initial chart check (before opening sections):", initialCheck);
+
+        // Ensure chart sections are open before capture
+        // Strategy: Check if chart containers exist, if not, try to open sections
+        const chartContainers = [
+          { id: "cash-flow-chart-container", section: "cashFlow" },
+          { id: "projection-chart-container", section: "projections" },
+          { id: "roi-comparison-chart-container", section: "comparison" },
+        ];
+
+        for (const { id, section } of chartContainers) {
+          const element = document.getElementById(id);
+          if (!element) {
+            console.log(`   Chart "${id}" not visible, attempting to open section "${section}"`);
+
+            // Find all buttons that might toggle sections
+            const allButtons = Array.from(
+              document.querySelectorAll("button[aria-expanded]")
+            ) as HTMLElement[];
+            for (const button of allButtons) {
+              const isClosed = button.getAttribute("aria-expanded") === "false";
+              if (isClosed) {
+                // Click and wait to see if our chart appears
+                button.click();
+                await new Promise((resolve) => setTimeout(resolve, 500));
+
+                // Check if chart now exists
+                if (document.getElementById(id)) {
+                  console.log(`   ✅ Opened section containing "${id}"`);
+                  break;
+                }
+              }
+            }
+          } else {
+            console.log(`   ✅ Chart "${id}" already visible`);
+          }
+        }
+
+        // Wait for charts to render after opening sections
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Increased wait time for chart rendering
+
+        // Verify chart elements exist and are visible before capture
+        const projectionEl = document.getElementById("projection-chart-container");
+        const cashFlowEl = document.getElementById("cash-flow-chart-container");
+        const roiEl = document.getElementById("roi-comparison-chart-container");
+
+        const projectionExists = !!projectionEl;
+        const cashFlowExists = !!cashFlowEl;
+        const roiExists = !!roiEl;
+
+        // Check if elements have actual content (SVG or canvas)
+        const projectionHasContent = projectionEl?.querySelector("svg, canvas") !== null;
+        const cashFlowHasContent = cashFlowEl?.querySelector("svg, canvas") !== null;
+        const roiHasContent = roiEl?.querySelector("svg, canvas") !== null;
+
+        console.log("🔍 Chart element verification:", {
+          projection: { exists: projectionExists, hasContent: projectionHasContent },
+          cashFlow: { exists: cashFlowExists, hasContent: cashFlowHasContent },
+          roiComparison: { exists: roiExists, hasContent: roiHasContent },
+        });
+
+        if (!projectionExists || !cashFlowExists || !roiExists) {
+          console.warn("⚠️ Some chart containers are missing. Charts may not be captured.");
+        }
+
+        if (!projectionHasContent || !cashFlowHasContent || !roiHasContent) {
+          console.warn(
+            "⚠️ Some chart containers exist but have no content. Charts may not render properly."
+          );
+        }
+
+        // Capture all charts sequentially to avoid race conditions
+        console.log("   ===== CAPTURING PROJECTION CHART =====");
+        const projectionElement = document.getElementById("projection-chart-container");
+        console.log("   Projection element exists:", !!projectionElement);
+        if (projectionElement) {
+          console.log("   Projection element dimensions:", {
+            width: projectionElement.offsetWidth,
+            height: projectionElement.offsetHeight,
+            hasSVG: !!projectionElement.querySelector("svg"),
+            hasCanvas: !!projectionElement.querySelector("canvas"),
+          });
+        }
+
+        let projection = await captureProjectionChart().catch((err) => {
+          console.error("   ❌ Failed to capture projection chart:", err);
+          console.error("   Error details:", err instanceof Error ? err.message : String(err));
+          return null;
+        });
+
+        console.log("   Projection capture result:", {
+          success: !!projection,
+          length: projection?.length || 0,
+          preview: projection?.substring(0, 50) || "null",
+        });
+
+        // If capture failed, wait and retry once
+        if (!projection) {
+          console.log("   ⚠️ Projection chart capture failed, waiting and retrying...");
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          projection = await captureProjectionChart().catch((err) => {
+            console.error("   ❌ Retry also failed:", err);
+            return null;
+          });
+          console.log("   Retry result:", {
+            success: !!projection,
+            length: projection?.length || 0,
+          });
+        }
+
+        console.log("   ===== CAPTURING CASH FLOW CHART =====");
+        const cashFlowElement = document.getElementById("cash-flow-chart-container");
+        console.log("   Cash flow element exists:", !!cashFlowElement);
+        if (cashFlowElement) {
+          console.log("   Cash flow element dimensions:", {
+            width: cashFlowElement.offsetWidth,
+            height: cashFlowElement.offsetHeight,
+            hasSVG: !!cashFlowElement.querySelector("svg"),
+            hasCanvas: !!cashFlowElement.querySelector("canvas"),
+          });
+        }
+
+        let cashFlow = await captureCashFlowChart().catch((err) => {
+          console.error("   ❌ Failed to capture cash flow chart:", err);
+          console.error("   Error details:", err instanceof Error ? err.message : String(err));
+          return null;
+        });
+
+        console.log("   Cash flow capture result:", {
+          success: !!cashFlow,
+          length: cashFlow?.length || 0,
+          preview: cashFlow?.substring(0, 50) || "null",
+        });
+
+        // If capture failed, wait and retry once
+        if (!cashFlow) {
+          console.log("   ⚠️ Cash flow chart capture failed, waiting and retrying...");
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          cashFlow = await captureCashFlowChart().catch((err) => {
+            console.error("   ❌ Retry also failed:", err);
+            return null;
+          });
+          console.log("   Retry result:", { success: !!cashFlow, length: cashFlow?.length || 0 });
+        }
+
+        console.log("   ===== CAPTURING ROI COMPARISON CHART =====");
+        const roiElement = document.getElementById("roi-comparison-chart-container");
+        console.log("   ROI comparison element exists:", !!roiElement);
+        if (roiElement) {
+          console.log("   ROI comparison element dimensions:", {
+            width: roiElement.offsetWidth,
+            height: roiElement.offsetHeight,
+            hasSVG: !!roiElement.querySelector("svg"),
+            hasCanvas: !!roiElement.querySelector("canvas"),
+          });
+        }
+
+        let roi = await captureROIComparisonChart().catch((err) => {
+          console.error("   ❌ Failed to capture ROI chart:", err);
+          console.error("   Error details:", err instanceof Error ? err.message : String(err));
+          return null;
+        });
+
+        console.log("   ROI comparison capture result:", {
+          success: !!roi,
+          length: roi?.length || 0,
+          preview: roi?.substring(0, 50) || "null",
+        });
+
+        // If capture failed, wait and retry once
+        if (!roi) {
+          console.log("   ⚠️ ROI comparison chart capture failed, waiting and retrying...");
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          roi = await captureROIComparisonChart().catch((err) => {
+            console.error("   ❌ Retry also failed:", err);
+            return null;
+          });
+          console.log("   Retry result:", { success: !!roi, length: roi?.length || 0 });
+        }
+
+        chartImages = {
+          projectionChart: projection,
+          cashFlowChart: cashFlow,
+          roiComparisonChart: roi,
+        };
+
+        console.log("📊 Chart capture complete:", {
+          projection: {
+            captured: !!projection,
+            length: projection?.length || 0,
+            isValid: projection?.startsWith("data:image/png") || false,
+          },
+          cashFlow: {
+            captured: !!cashFlow,
+            length: cashFlow?.length || 0,
+            isValid: cashFlow?.startsWith("data:image/png") || false,
+          },
+          roiComparison: {
+            captured: !!roi,
+            length: roi?.length || 0,
+            isValid: roi?.startsWith("data:image/png") || false,
+          },
+        });
+
+        // Validate chart images
+        const validCharts = [projection, cashFlow, roi].filter(
+          (img) => img && img.startsWith("data:image/png")
+        );
+        if (validCharts.length === 0) {
+          console.error("❌ CRITICAL: No valid chart images captured!");
+          console.error("   This means charts will NOT appear in the PDF.");
+          console.error("   Possible causes:");
+          console.error("   - Chart elements not found in DOM");
+          console.error("   - html2canvas failed to capture");
+          console.error("   - Charts not rendered yet");
+          console.warn("⚠️ PDF will be generated without charts.");
+        } else {
+          console.log(`✅ Successfully captured ${validCharts.length}/3 charts`);
+          if (validCharts.length < 3) {
+            console.warn(
+              `⚠️ Only ${validCharts.length}/3 charts captured. Some charts will be missing from PDF.`
+            );
+          }
+        }
+      } else {
+        console.warn("⚠️ Analytics is null/undefined - skipping chart capture");
+        console.warn("   This means charts will NOT be included in PDF");
+        console.warn("   Analytics value:", analytics);
+        console.warn("   Analytics type:", typeof analytics);
+        console.warn("   Analytics === null:", analytics === null);
+        console.warn("   Analytics === undefined:", analytics === undefined);
+      }
+
+      // 3. Call server API to generate PDF
+      console.log("🔵 FINAL CHECK before API call:", {
+        analyticsExists: !!analytics,
+        analyticsValue: analytics,
+        chartImagesInitialized: !!chartImages,
+        chartImagesValues: chartImages,
+      });
+      console.log("🔵 About to send PDF generation request with:", {
+        hasFormData: !!formData,
+        hasEligibility: !!eligibility,
+        hasCosts: !!costs,
+        hasAnalytics: !!analytics,
+        hasChartImages: !!chartImages,
+        chartImagesDetail: {
+          projection: !!chartImages.projectionChart,
+          cashFlow: !!chartImages.cashFlowChart,
+          roiComparison: !!chartImages.roiComparisonChart,
+        },
+      });
+      const response = await fetch("/api/pdf/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Include auth cookies
+        body: JSON.stringify({
+          formData,
+          eligibility,
+          costs,
+          analytics: analytics || undefined,
+          chartImages,
+          locale,
+        }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          setShowLoginModal(true);
+          setLoginModalTitle("Please Log In");
+          setLoginModalMessage("Your session has expired. Please log in again to download PDFs.");
+          return;
+        }
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to generate PDF");
+      }
+
+      // 4. Download PDF blob
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
       const filename = analytics
@@ -939,7 +1337,9 @@ export default function FIRBCalculatorPage() {
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error("PDF generation error:", error);
-      alert("Failed to generate PDF. Please try again.");
+      alert(error instanceof Error ? error.message : "Failed to generate PDF. Please try again.");
+    } finally {
+      setIsGeneratingPDF(false);
     }
   };
 
@@ -1012,7 +1412,7 @@ export default function FIRBCalculatorPage() {
         dangerouslySetInnerHTML={injectStructuredData(howToSchema)}
       />
       <div className="bg-gray-50">
-        <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="container mx-auto px-4 py-8 md:py-12">
           <div className="max-w-6xl mx-auto">
             {/* Error Alert - show if there was an error loading calculation */}
             {loadError && (
@@ -1045,13 +1445,9 @@ export default function FIRBCalculatorPage() {
             )}
 
             {/* Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900 leading-tight">
-                {heroTitle}
-              </h1>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                {heroSubtitle}
-              </p>
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold mb-2 text-gray-900">{heroTitle}</h1>
+              <p className="text-lg text-muted-foreground">{heroSubtitle}</p>
             </div>
 
             {/* Progress Indicator */}
@@ -1303,6 +1699,23 @@ export default function FIRBCalculatorPage() {
                 locale={locale}
               />
             )}
+
+            {/* Login Modal for PDF Downloads */}
+            <LoginModal
+              isOpen={showLoginModal}
+              onClose={() => {
+                setShowLoginModal(false);
+                setLoginModalTitle(undefined);
+                setLoginModalMessage(undefined);
+              }}
+              title={loginModalTitle}
+              message={loginModalMessage}
+              preventRedirect={true}
+              onSuccess={async () => {
+                // Retry PDF download after successful login with stored analytics
+                await handleDownloadPDF(pendingPDFAnalyticsRef.current);
+              }}
+            />
 
             {/* Purpose Statement - At bottom of page */}
             {(currentStep === "purchaseType" ||
