@@ -64,3 +64,5 @@ COMMENT ON COLUMN user_profiles.role IS 'User role: "user" (default) or "admin" 
 
 
 
+
+

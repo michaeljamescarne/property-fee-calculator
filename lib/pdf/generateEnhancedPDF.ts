@@ -12,11 +12,7 @@ import type { InvestmentAnalytics } from "@/types/investment";
 import type { PDFTranslations } from "./pdfTranslations";
 import { ContentTier } from "./contentAccess";
 import { mapAnalyticsToPDFData, type PDFReportData } from "./dataMappers";
-import {
-  generateProjectionChart,
-  generateCashFlowChart,
-  generateROIComparisonChart,
-} from "./generateChartImages";
+// Chart generation removed - charts are now generated client-side and passed as parameters
 import {
   addCoverPage,
   addTableOfContents,
@@ -40,7 +36,12 @@ export async function generateEnhancedPDF(
   analytics: InvestmentAnalytics,
   _locale: string = "en",
   _translations: PDFTranslations,
-  _contentTier: ContentTier = "premium"
+  _contentTier: ContentTier = "premium",
+  chartImages?: {
+    projectionChart: string | null;
+    cashFlowChart: string | null;
+    roiComparisonChart: string | null;
+  }
 ): Promise<Blob> {
   console.log("🚀 Generating Enhanced PDF with template design -", new Date().toISOString());
 
@@ -49,44 +50,31 @@ export async function generateEnhancedPDF(
   // Map data to template format
   const reportData = mapAnalyticsToPDFData(formData, eligibility, costs, analytics);
 
-  // Generate chart images asynchronously (with error handling)
-  console.log("📊 Generating chart images...");
-  let chartImages: {
-    projectionChart: string | null;
-    cashFlowChart: string | null;
-    roiComparisonChart: string | null;
-  } = {
+  // Use provided chart images or default to null
+  // Charts are generated client-side and passed to this function
+  const chartImagesToUse = chartImages || {
     projectionChart: null,
     cashFlowChart: null,
     roiComparisonChart: null,
   };
 
-  try {
-    const [projectionChart, cashFlowChart, roiComparisonChart] = await Promise.all([
-      generateProjectionChart(analytics).catch((err) => {
-        console.warn("Failed to generate projection chart:", err);
-        return "";
-      }),
-      generateCashFlowChart(analytics).catch((err) => {
-        console.warn("Failed to generate cash flow chart:", err);
-        return "";
-      }),
-      generateROIComparisonChart(analytics).catch((err) => {
-        console.warn("Failed to generate ROI comparison chart:", err);
-        return "";
-      }),
-    ]);
-
-    chartImages = {
-      projectionChart: projectionChart || null,
-      cashFlowChart: cashFlowChart || null,
-      roiComparisonChart: roiComparisonChart || null,
-    };
-    console.log("✅ Chart generation complete");
-  } catch (error) {
-    console.error("Chart generation error (continuing without charts):", error);
-    // Continue without charts - tables will still be shown
-  }
+  console.log("📊 Chart images provided to PDF generator:", {
+    projection: {
+      exists: !!chartImagesToUse.projectionChart,
+      length: chartImagesToUse.projectionChart?.length || 0,
+      isValid: chartImagesToUse.projectionChart?.startsWith("data:image/") || false,
+    },
+    cashFlow: {
+      exists: !!chartImagesToUse.cashFlowChart,
+      length: chartImagesToUse.cashFlowChart?.length || 0,
+      isValid: chartImagesToUse.cashFlowChart?.startsWith("data:image/") || false,
+    },
+    roiComparison: {
+      exists: !!chartImagesToUse.roiComparisonChart,
+      length: chartImagesToUse.roiComparisonChart?.length || 0,
+      isValid: chartImagesToUse.roiComparisonChart?.startsWith("data:image/") || false,
+    },
+  });
 
   // Track Y position explicitly
   let currentY: number = SPACING.margin;
@@ -98,15 +86,15 @@ export async function generateEnhancedPDF(
   currentY = generateFIRBEligibility(doc, reportData, currentY);
   currentY = generateInvestmentCosts(doc, reportData, currentY);
   currentY = generatePerformanceMetrics(doc, reportData, currentY);
-  currentY = generateCashFlowAnalysis(doc, reportData, currentY, chartImages.cashFlowChart);
+  currentY = generateCashFlowAnalysis(doc, reportData, currentY, chartImagesToUse.cashFlowChart);
   currentY = generateTaxAnalysisAndCGT(doc, reportData, currentY);
-  currentY = generateProjection(doc, reportData, currentY, chartImages.projectionChart);
+  currentY = generateProjection(doc, reportData, analytics, currentY, chartImagesToUse.projectionChart);
   currentY = generateSensitivityAnalysis(doc, reportData, currentY);
   currentY = generateInvestmentComparison(
     doc,
     reportData,
     currentY,
-    chartImages.roiComparisonChart
+    chartImagesToUse.roiComparisonChart
   );
   currentY = generateGlossary(doc, currentY);
   generateDisclaimer(doc, currentY);
@@ -619,22 +607,67 @@ function generateCashFlowAnalysis(
   let expenseBreakdownY = cardStartY + cardHeight + 30;
   if (chartImageDataUrl) {
     try {
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const chartWidth = pageWidth - SPACING.margin * 2;
-      const chartHeight = 60; // 60mm height for chart
+      console.log("🔍 Attempting to add cash flow chart:", {
+        hasData: !!chartImageDataUrl,
+        length: chartImageDataUrl?.length || 0,
+        startsWithData: chartImageDataUrl?.startsWith("data:") || false,
+        preview: chartImageDataUrl?.substring(0, 100) || "N/A",
+      });
 
-      doc.addImage(
-        chartImageDataUrl,
-        "PNG",
-        SPACING.margin,
-        expenseBreakdownY,
-        chartWidth,
-        chartHeight
-      );
-      expenseBreakdownY += chartHeight + 20;
+      // Validate image data URL format
+      if (!chartImageDataUrl.startsWith("data:image/png") && !chartImageDataUrl.startsWith("data:image/jpeg")) {
+        console.warn("❌ Invalid chart image format for cash flow chart:", chartImageDataUrl.substring(0, 50));
+      } else {
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const chartWidth = pageWidth - SPACING.margin * 2;
+        const chartHeight = 60; // 60mm height for chart
+
+        // Try multiple approaches to add the image
+        try {
+          // Approach 1: Try with full data URL (standard approach)
+          doc.addImage(
+            chartImageDataUrl,
+            "PNG",
+            SPACING.margin,
+            expenseBreakdownY,
+            chartWidth,
+            chartHeight
+          );
+          console.log("✅ Successfully added cash flow chart to PDF (method: data URL)");
+        } catch (error1) {
+          console.warn("⚠️ Method 1 (data URL) failed, trying base64 extraction:", error1);
+          try {
+            // Approach 2: Extract base64 from data URL
+            const base64Match = chartImageDataUrl.match(/^data:image\/\w+;base64,(.+)$/);
+            if (base64Match && base64Match[1]) {
+              const base64Data = base64Match[1];
+              doc.addImage(
+                base64Data,
+                "PNG",
+                SPACING.margin,
+                expenseBreakdownY,
+                chartWidth,
+                chartHeight
+              );
+              console.log("✅ Successfully added cash flow chart to PDF (method: base64)");
+            } else {
+              throw new Error("Could not extract base64 from data URL");
+            }
+          } catch (error2) {
+            console.error("❌ Both methods failed for cash flow chart:", { error1, error2 });
+            throw error2;
+          }
+        }
+        expenseBreakdownY += chartHeight + 20;
+      }
     } catch (error) {
-      console.warn("Failed to add cash flow chart to PDF:", error);
+      console.error("❌ Failed to add cash flow chart to PDF:", error);
+      console.error("   Error details:", error instanceof Error ? error.message : String(error));
+      console.error("   Chart data URL length:", chartImageDataUrl?.length || 0);
+      console.warn("   Chart will be omitted from PDF");
     }
+  } else {
+    console.warn("⚠️ Cash flow chart not provided, omitting from PDF");
   }
 
   // Expense Breakdown table
@@ -802,6 +835,7 @@ function generateTaxAnalysisAndCGT(doc: jsPDF, data: PDFReportData, startY: numb
 function generateProjection(
   doc: jsPDF,
   data: PDFReportData,
+  analytics: InvestmentAnalytics,
   startY: number,
   chartImageDataUrl?: string | null
 ): number {
@@ -859,15 +893,53 @@ function generateProjection(
   let tableY = cardStartY + cardHeight + 30;
   if (chartImageDataUrl) {
     try {
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const chartWidth = pageWidth - SPACING.margin * 2;
-      const chartHeight = 60; // 60mm height for chart
+      console.log("🔍 Attempting to add projection chart:", {
+        hasData: !!chartImageDataUrl,
+        length: chartImageDataUrl?.length || 0,
+        startsWithData: chartImageDataUrl?.startsWith("data:") || false,
+        preview: chartImageDataUrl?.substring(0, 100) || "N/A",
+      });
 
-      doc.addImage(chartImageDataUrl, "PNG", SPACING.margin, tableY, chartWidth, chartHeight);
-      tableY += chartHeight + 20;
+      // Validate image data URL format
+      if (!chartImageDataUrl.startsWith("data:image/png") && !chartImageDataUrl.startsWith("data:image/jpeg")) {
+        console.warn("❌ Invalid chart image format for projection chart:", chartImageDataUrl.substring(0, 50));
+      } else {
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const chartWidth = pageWidth - SPACING.margin * 2;
+        const chartHeight = 60; // 60mm height for chart
+
+        // Try multiple approaches to add the image
+        try {
+          // Approach 1: Try with full data URL (standard approach)
+          doc.addImage(chartImageDataUrl, "PNG", SPACING.margin, tableY, chartWidth, chartHeight);
+          console.log("✅ Successfully added projection chart to PDF (method: data URL)");
+        } catch (error1) {
+          console.warn("⚠️ Method 1 (data URL) failed, trying base64 extraction:", error1);
+          try {
+            // Approach 2: Extract base64 from data URL
+            const base64Match = chartImageDataUrl.match(/^data:image\/\w+;base64,(.+)$/);
+            if (base64Match && base64Match[1]) {
+              const base64Data = base64Match[1];
+              doc.addImage(base64Data, "PNG", SPACING.margin, tableY, chartWidth, chartHeight);
+              console.log("✅ Successfully added projection chart to PDF (method: base64)");
+            } else {
+              throw new Error("Could not extract base64 from data URL");
+            }
+          } catch (error2) {
+            console.error("❌ Both methods failed for projection chart:", { error1, error2 });
+            throw error2;
+          }
+        }
+        tableY += chartHeight + 20;
+      }
     } catch (error) {
-      console.warn("Failed to add projection chart to PDF:", error);
+      console.error("❌ Failed to add projection chart to PDF:", error);
+      console.error("   Error details:", error instanceof Error ? error.message : String(error));
+      console.error("   Chart data URL length:", chartImageDataUrl?.length || 0);
+      console.warn("   Chart will be omitted from PDF");
     }
+  } else {
+    console.warn("⚠️ Projection chart not provided, omitting from PDF");
   }
 
   // Year-by-Year Summary table
@@ -876,24 +948,45 @@ function generateProjection(
   doc.setTextColor(COLORS.gray[800]);
   doc.text("Year-by-Year Summary", SPACING.margin, tableY);
 
-  // Generate year-by-year data
-  const yearByYearRows = [];
-  let currentValue = data.projection.startingValue;
-  let cumulativeReturn = 0;
-
-  for (let year = 1; year <= 10; year++) {
-    currentValue = currentValue * (1 + data.projection.growthRate);
-    const equity = currentValue * 0.8; // Assuming 80% LVR
+  // Use actual analytics data instead of recalculating (avoids calculation bugs)
+  // The analytics already contain accurate year-by-year projections calculated correctly
+  const yearByYearRows: string[][] = [];
+  
+  // Get first 10 years from analytics (or all if less than 10)
+  const projectionYears = analytics.yearByYear.slice(0, 10);
+  
+  if (projectionYears.length === 0) {
+    // Fallback: use simple calculation if no analytics data
+    console.warn("⚠️ No year-by-year analytics data available, using simplified calculation");
+    const growthRateDecimal = data.projection.growthRate / 100;
+    let currentValue = data.projection.startingValue;
+    let cumulativeReturn = 0;
     const annualCashFlow = data.performance.monthlyCashFlow * 12;
-    cumulativeReturn += annualCashFlow;
 
-    yearByYearRows.push([
-      `Year ${year}`,
-      formatCurrency(currentValue),
-      formatCurrency(equity),
-      formatCurrency(annualCashFlow),
-      formatCurrency(cumulativeReturn),
-    ]);
+    for (let year = 1; year <= 10; year++) {
+      currentValue = currentValue * (1 + growthRateDecimal);
+      const equity = currentValue * 0.8; // Simplified: 80% of value
+      cumulativeReturn += annualCashFlow;
+
+      yearByYearRows.push([
+        `Year ${year}`,
+        formatCurrency(currentValue),
+        formatCurrency(equity),
+        formatCurrency(annualCashFlow),
+        formatCurrency(cumulativeReturn),
+      ]);
+    }
+  } else {
+    // Use the accurately calculated analytics data
+    projectionYears.forEach((yearData) => {
+      yearByYearRows.push([
+        yearData.year > 0 ? `Year ${yearData.year}` : `${yearData.year}`,
+        formatCurrency(yearData.propertyValue),
+        formatCurrency(yearData.equity),
+        formatCurrency(yearData.afterTaxCashFlow),
+        formatCurrency(yearData.cumulativeReturn),
+      ]);
+    });
   }
 
   addDataTable(
@@ -953,15 +1046,53 @@ function generateInvestmentComparison(
   let tableStartY = currentY + 20;
   if (chartImageDataUrl) {
     try {
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const chartWidth = pageWidth - SPACING.margin * 2;
-      const chartHeight = 60; // 60mm height for chart
+      console.log("🔍 Attempting to add ROI comparison chart:", {
+        hasData: !!chartImageDataUrl,
+        length: chartImageDataUrl?.length || 0,
+        startsWithData: chartImageDataUrl?.startsWith("data:") || false,
+        preview: chartImageDataUrl?.substring(0, 100) || "N/A",
+      });
 
-      doc.addImage(chartImageDataUrl, "PNG", SPACING.margin, tableStartY, chartWidth, chartHeight);
-      tableStartY += chartHeight + 20;
+      // Validate image data URL format
+      if (!chartImageDataUrl.startsWith("data:image/png") && !chartImageDataUrl.startsWith("data:image/jpeg")) {
+        console.warn("❌ Invalid chart image format for ROI comparison chart:", chartImageDataUrl.substring(0, 50));
+      } else {
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const chartWidth = pageWidth - SPACING.margin * 2;
+        const chartHeight = 60; // 60mm height for chart
+
+        // Try multiple approaches to add the image
+        try {
+          // Approach 1: Try with full data URL (standard approach)
+          doc.addImage(chartImageDataUrl, "PNG", SPACING.margin, tableStartY, chartWidth, chartHeight);
+          console.log("✅ Successfully added ROI comparison chart to PDF (method: data URL)");
+        } catch (error1) {
+          console.warn("⚠️ Method 1 (data URL) failed, trying base64 extraction:", error1);
+          try {
+            // Approach 2: Extract base64 from data URL
+            const base64Match = chartImageDataUrl.match(/^data:image\/\w+;base64,(.+)$/);
+            if (base64Match && base64Match[1]) {
+              const base64Data = base64Match[1];
+              doc.addImage(base64Data, "PNG", SPACING.margin, tableStartY, chartWidth, chartHeight);
+              console.log("✅ Successfully added ROI comparison chart to PDF (method: base64)");
+            } else {
+              throw new Error("Could not extract base64 from data URL");
+            }
+          } catch (error2) {
+            console.error("❌ Both methods failed for ROI comparison chart:", { error1, error2 });
+            throw error2;
+          }
+        }
+        tableStartY += chartHeight + 20;
+      }
     } catch (error) {
-      console.warn("Failed to add ROI comparison chart to PDF:", error);
+      console.error("❌ Failed to add ROI comparison chart to PDF:", error);
+      console.error("   Error details:", error instanceof Error ? error.message : String(error));
+      console.error("   Chart data URL length:", chartImageDataUrl?.length || 0);
+      console.warn("   Chart will be omitted from PDF");
     }
+  } else {
+    console.warn("⚠️ ROI comparison chart not provided, omitting from PDF");
   }
 
   // Investment comparison table

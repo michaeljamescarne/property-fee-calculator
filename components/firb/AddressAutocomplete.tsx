@@ -103,7 +103,11 @@ export default function AddressAutocomplete({
                 const stateAbbr = stateMap[stateName];
 
                 if (stateAbbr) {
-                  onStateChange(stateAbbr as AustralianState);
+                  // Use setTimeout to ensure state update happens after address update
+                  // This ensures React properly batches the updates and the Select component re-renders
+                  setTimeout(() => {
+                    onStateChange(stateAbbr as AustralianState);
+                  }, 0);
                 }
               }
             }

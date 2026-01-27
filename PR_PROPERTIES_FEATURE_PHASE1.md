@@ -585,3 +585,5 @@ If you have questions about:
 4. Monitor application logs
 5. Begin Phase 2 development (Property Transactions)
 
+
+

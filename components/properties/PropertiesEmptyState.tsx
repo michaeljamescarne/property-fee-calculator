@@ -33,3 +33,5 @@ export default function PropertiesEmptyState({ locale }: PropertiesEmptyStatePro
     </div>
   );
 }
+
+

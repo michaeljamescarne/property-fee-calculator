@@ -27,7 +27,10 @@ export default function PropertyDetailClient({ property, locale }: PropertyDetai
   const t = useTranslations("Properties.detail");
   const router = useRouter();
 
-  const handleEdit = () => {
+  const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Edit button clicked!', { propertyId: property.id, locale, url: `/${locale}/properties/${property.id}/edit` });
     router.push(`/${locale}/properties/${property.id}/edit`);
   };
 

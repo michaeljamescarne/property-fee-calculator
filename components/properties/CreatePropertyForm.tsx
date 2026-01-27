@@ -197,7 +197,7 @@ export default function CreatePropertyForm({ locale }: CreatePropertyFormProps) 
               {t("form.basicInfo.state")} <span className="text-red-600">*</span>
             </Label>
             <Select
-              value={formData.property_state}
+              value={formData.property_state || undefined}
               onValueChange={(value) =>
                 setFormData({ ...formData, property_state: value as AustralianState })
               }
@@ -243,7 +243,7 @@ export default function CreatePropertyForm({ locale }: CreatePropertyFormProps) 
                 <div className="flex items-center space-x-2 border rounded-md p-3">
                   <RadioGroupItem value="established" id="established" />
                   <Label htmlFor="established" className="cursor-pointer flex-1">
-                    Established
+                    Established Dwelling
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2 border rounded-md p-3">
@@ -255,7 +255,7 @@ export default function CreatePropertyForm({ locale }: CreatePropertyFormProps) 
                 <div className="flex items-center space-x-2 border rounded-md p-3">
                   <RadioGroupItem value="commercial" id="commercial" />
                   <Label htmlFor="commercial" className="cursor-pointer flex-1">
-                    Commercial
+                    Commercial Property
                   </Label>
                 </div>
               </div>

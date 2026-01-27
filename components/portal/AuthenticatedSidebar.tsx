@@ -17,3 +17,5 @@ export default function AuthenticatedSidebar() {
 
   return <PortalSidebar />;
 }
+
+

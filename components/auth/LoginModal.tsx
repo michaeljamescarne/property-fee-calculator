@@ -27,6 +27,7 @@ interface LoginModalProps {
   onClose: () => void;
   onSuccess?: () => void | Promise<void>;
   title?: string;
+  message?: string;
   preventRedirect?: boolean;
 }
 
@@ -37,6 +38,7 @@ export default function LoginModal({
   onClose,
   onSuccess,
   title,
+  message,
   preventRedirect = false,
 }: LoginModalProps) {
   const t = useTranslations("Auth");
@@ -232,7 +234,7 @@ export default function LoginModal({
             {step === "success" && t("successTitle")}
           </DialogTitle>
           <DialogDescription>
-            {step === "email" && t("loginDescription")}
+            {step === "email" && (message || t("loginDescription"))}
             {step === "code" && `Code sent to ${email}`}
             {step === "success" && t("successDescription")}
           </DialogDescription>

@@ -741,3 +741,5 @@ Every development is different. Use our FIRB Calculator to model your specific s
 _Disclaimer: This guide provides general information only and should not be relied upon as legal, financial, or investment advice. Off-the-plan purchases involve significant risks that vary by development, developer, state, and individual circumstances. Property values can go down as well as up. Always engage qualified professionals including property lawyers, financial advisors, and buyer's agents before making any property purchase decisions. Verify all fees, rates, and regulations with official sources as they are subject to change._
 
 _Last updated: January 2025. FIRB fees based on 2025/26 financial year. Foreign buyer surcharges current as of January 2025._
+
+

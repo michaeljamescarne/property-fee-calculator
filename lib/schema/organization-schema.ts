@@ -48,3 +48,5 @@ export function injectStructuredData(schema: object) {
     __html: JSON.stringify(schema),
   };
 }
+
+

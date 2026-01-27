@@ -70,43 +70,45 @@ export default function ProjectionChart({ analytics }: ProjectionChartProps) {
   return (
     <div className="space-y-6">
       {/* Chart */}
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-          <XAxis dataKey="year" stroke="#6B7280" tick={{ fontSize: 12 }} />
-          <YAxis
-            stroke="#6B7280"
-            tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-            tick={{ fontSize: 12 }}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend wrapperStyle={{ paddingTop: "20px" }} iconType="line" />
-          <Line
-            type="monotone"
-            dataKey={propertyValueKey}
-            stroke="#8B5CF6"
-            strokeWidth={3}
-            dot={{ fill: "#8B5CF6", r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-          <Line
-            type="monotone"
-            dataKey="Loan Balance"
-            stroke="#EF4444"
-            strokeWidth={2}
-            strokeDasharray="5 5"
-            dot={{ fill: "#EF4444", r: 3 }}
-          />
-          <Line
-            type="monotone"
-            dataKey={equityKey}
-            stroke="#10B981"
-            strokeWidth={3}
-            dot={{ fill: "#10B981", r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <div id="projection-chart-container" className="w-full">
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <XAxis dataKey="year" stroke="#6B7280" tick={{ fontSize: 12 }} />
+            <YAxis
+              stroke="#6B7280"
+              tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+              tick={{ fontSize: 12 }}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend wrapperStyle={{ paddingTop: "20px" }} iconType="line" />
+            <Line
+              type="monotone"
+              dataKey={propertyValueKey}
+              stroke="#8B5CF6"
+              strokeWidth={3}
+              dot={{ fill: "#8B5CF6", r: 4 }}
+              activeDot={{ r: 6 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="Loan Balance"
+              stroke="#EF4444"
+              strokeWidth={2}
+              strokeDasharray="5 5"
+              dot={{ fill: "#EF4444", r: 3 }}
+            />
+            <Line
+              type="monotone"
+              dataKey={equityKey}
+              stroke="#10B981"
+              strokeWidth={3}
+              dot={{ fill: "#10B981", r: 4 }}
+              activeDot={{ r: 6 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
 
       {/* Key Milestones */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">

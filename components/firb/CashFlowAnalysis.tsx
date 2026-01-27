@@ -244,19 +244,21 @@ export default function CashFlowAnalysis({ analytics }: CashFlowAnalysisProps) {
             ? "Annual Cash Flow Breakdown"
             : t("cashFlow.chartTitle")}
         </h4>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={cashFlowData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-            <XAxis dataKey="name" stroke="#6B7280" />
-            <YAxis stroke="#6B7280" tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="amount" radius={[8, 8, 0, 0]}>
-              {cashFlowData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+        <div id="cash-flow-chart-container" className="w-full">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={cashFlowData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="name" stroke="#6B7280" />
+              <YAxis stroke="#6B7280" tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="amount" radius={[8, 8, 0, 0]}>
+                {cashFlowData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       {/* Detailed Breakdown */}

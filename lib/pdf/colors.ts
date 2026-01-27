@@ -16,20 +16,27 @@
 export type RGBColor = [number, number, number];
 
 // Website brand colors converted to RGB
+// Updated to match purple/indigo web theme (Violet-500: #8B5CF6)
 export const PDF_COLORS = {
-  // Primary blue (oklch(0.65 0.15 250))
-  primary: [59, 130, 246] as RGBColor,
+  // Primary purple/indigo (#8B5CF6 - Violet-500) - matches web interface
+  primary: [139, 92, 246] as RGBColor,
 
-  // Accent lighter blue (oklch(0.75 0.12 240))
-  accent: [96, 165, 250] as RGBColor,
+  // Primary dark (Violet-600: #7C3AED)
+  primaryDark: [124, 58, 237] as RGBColor,
 
-  // Success green
+  // Primary light (Violet-400: #A78BFA)
+  primaryLight: [167, 139, 250] as RGBColor,
+
+  // Accent (same as primary for consistency)
+  accent: [139, 92, 246] as RGBColor,
+
+  // Success green (#10B981 - Green-500) - matches web
   success: [16, 185, 129] as RGBColor,
 
-  // Warning amber
+  // Warning amber (#F59E0B - Amber-500)
   warning: [245, 158, 11] as RGBColor,
 
-  // Danger red (oklch(0.577 0.245 27.325))
+  // Danger red (#EF4444 - Red-500) - matches web
   danger: [239, 68, 68] as RGBColor,
 
   // Neutral grays

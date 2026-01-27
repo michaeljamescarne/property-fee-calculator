@@ -39,3 +39,5 @@ COMMENT ON COLUMN cost_benchmarks.bedrooms IS 'Number of bedrooms: 0 for studio,
 
 
 
+
+

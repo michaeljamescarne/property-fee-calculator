@@ -43,6 +43,7 @@ export default function ReviewStep({
   onCalculate,
   isCalculating,
 }: ReviewStepProps) {
+  console.log('ReviewStep rendered', { onEdit: typeof onEdit, onEditToString: onEdit?.toString?.()?.substring(0, 100) });
   const [disclaimerAcknowledged, setDisclaimerAcknowledged] = useState(false);
   const t = useTranslations("FIRBCalculator.review");
   const tPurchaseType = useTranslations("FIRBCalculator.purchaseType");
@@ -103,7 +104,17 @@ export default function ReviewStep({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onEdit("purchaseType")}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              // Remove edit param from URL FIRST to prevent useEffect interference
+              const url = new URL(window.location.href);
+              if (url.searchParams.has("edit")) {
+                url.searchParams.delete("edit");
+                window.history.replaceState({}, "", url.toString());
+              }
+              onEdit("purchaseType");
+            }}
             className="gap-2 rounded"
           >
             <Edit className="h-4 w-4" />
@@ -136,7 +147,26 @@ export default function ReviewStep({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onEdit("citizenship")}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('ReviewStep: Edit citizenship clicked');
+              // Remove edit param from URL FIRST to prevent useEffect interference
+              const url = new URL(window.location.href);
+              if (url.searchParams.has("edit")) {
+                url.searchParams.delete("edit");
+                window.history.replaceState({}, "", url.toString());
+                console.log('ReviewStep: Removed edit param from URL');
+              }
+              // Then call onEdit
+              console.log('ReviewStep: About to call onEdit("citizenship")');
+              try {
+                onEdit("citizenship");
+                console.log('ReviewStep: onEdit("citizenship") called successfully');
+              } catch (error) {
+                console.error('ReviewStep: Error calling onEdit', error);
+              }
+            }}
             className="gap-2 rounded"
           >
             <Edit className="h-4 w-4" />
@@ -183,7 +213,17 @@ export default function ReviewStep({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onEdit("property")}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              // Remove edit param from URL FIRST to prevent useEffect interference
+              const url = new URL(window.location.href);
+              if (url.searchParams.has("edit")) {
+                url.searchParams.delete("edit");
+                window.history.replaceState({}, "", url.toString());
+              }
+              onEdit("property");
+            }}
             className="gap-2 rounded"
           >
             <Edit className="h-4 w-4" />
@@ -272,7 +312,17 @@ export default function ReviewStep({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => onEdit("financial")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  // Remove edit param from URL FIRST to prevent useEffect interference
+                  const url = new URL(window.location.href);
+                  if (url.searchParams.has("edit")) {
+                    url.searchParams.delete("edit");
+                    window.history.replaceState({}, "", url.toString());
+                  }
+                  onEdit("financial");
+                }}
                 className="gap-2 rounded"
               >
                 <Edit className="h-4 w-4" />

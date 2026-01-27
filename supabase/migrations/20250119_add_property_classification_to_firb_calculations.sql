@@ -30,3 +30,5 @@ COMMENT ON COLUMN firb_calculations.bedrooms IS 'Number of bedrooms: 0 for studi
 
 
 
+
+

@@ -19,6 +19,10 @@ import { getCostBenchmarks } from "@/lib/benchmarks/cost-benchmarks";
 import { getMacroBenchmarks } from "@/lib/benchmarks/macro-benchmarks";
 import type { FIRBCalculationInsert } from "@/types/database";
 import { createHash } from "crypto";
+import { generateEnhancedPDF } from "@/lib/pdf/generateEnhancedPDF";
+import { generateFIRBPDF } from "@/lib/pdf/generateFIRBPDF";
+import { getPDFTranslations } from "@/lib/pdf/pdfTranslations";
+import { getSessionFromRequest } from "@/lib/auth/session-helpers";
 
 interface EmailRequest {
   email: string;
@@ -31,6 +35,15 @@ interface EmailRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    // 1. Check authentication (PDFs require auth)
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      return NextResponse.json(
+        { error: "Authentication required to email PDF reports." },
+        { status: 401 }
+      );
+    }
+
     console.log("Email API: Starting request processing");
     const body: EmailRequest = await request.json();
     console.log("Email API: Request body parsed successfully");
@@ -202,7 +215,45 @@ export async function POST(request: NextRequest) {
       shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://propertycosts.com.au"}/calculator`;
     }
 
-    // Send email
+    // 2. Generate PDF attachment
+    let pdfAttachment: { filename: string; content: Buffer } | null = null;
+
+    try {
+      console.log("Email API: Generating PDF attachment");
+      const translations = getPDFTranslations(locale || "en");
+
+      // Generate PDF - charts will be null in email context (client-side only)
+      const pdfBlob = analytics && Object.keys(analytics).length > 0
+        ? await generateEnhancedPDF(
+            formData,
+            eligibility,
+            costs,
+            analytics,
+            locale || "en",
+            translations,
+            "premium",
+            null // Charts not available in email context (generated client-side)
+          )
+        : generateFIRBPDF(formData, eligibility, costs);
+
+      // Convert blob to buffer for email attachment
+      const pdfArrayBuffer = await pdfBlob.arrayBuffer();
+      const pdfBuffer = Buffer.from(pdfArrayBuffer);
+
+      pdfAttachment = {
+        filename: `FIRB-Investment-Analysis-${Date.now()}.pdf`,
+        content: pdfBuffer,
+      };
+      console.log("Email API: PDF attachment generated successfully");
+    } catch (pdfError) {
+      console.warn(
+        "Email API: Failed to generate PDF for email, sending email without attachment:",
+        pdfError
+      );
+      // Continue without PDF - email still sends with shareable link
+    }
+
+    // 3. Send email with PDF attachment
     console.log("Email API: Sending email");
     const emailOptions = {
       from: EMAIL_CONFIG.from,
@@ -216,6 +267,7 @@ export async function POST(request: NextRequest) {
         analytics,
         shareUrl,
       }),
+      attachments: pdfAttachment ? [pdfAttachment] : undefined,
     };
 
     const { data, error } = await resend.emails.send(emailOptions);

@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import type { ReactNode } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ import type { CalculationData } from "@/types/database";
 import InvestmentSummary from "./InvestmentSummary";
 import CashFlowAnalysis from "./CashFlowAnalysis";
 import ProjectionChart from "./ProjectionChart";
+import InvestmentComparison from "./InvestmentComparison";
 import SensitivityAnalysis from "./SensitivityAnalysis";
 import TaxAnalysis from "./TaxAnalysis";
 import SaveCalculationButton from "./SaveCalculationButton";
@@ -68,7 +69,7 @@ interface CollapsibleSection {
   defaultOpen?: boolean;
 }
 
-const PDF_DOWNLOAD_ENABLED = false; // Temporarily disable PDF downloads (UI button hidden)
+// PDF downloads are now enabled with authentication gating
 
 export default function ResultsPanel({
   eligibility,
@@ -99,11 +100,12 @@ export default function ResultsPanel({
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginModalTitle, setLoginModalTitle] = useState<string | undefined>(undefined);
   const [pendingSectionId, setPendingSectionId] = useState<string | null>(null);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
-  // Print ref for browser-based PDF generation
+  // Print ref for browser-based PDF generation (for printable report view)
   const printRef = useRef<HTMLDivElement>(null);
 
-  // Setup print handler
+  // Browser print handler (for printable view)
   const handlePrint = useReactToPrint({
     contentRef: printRef,
     documentTitle: `FIRB-Investment-Analysis-${new Date().toISOString().split("T")[0]}`,
@@ -123,6 +125,13 @@ export default function ResultsPanel({
     if (Object.keys(utmParams).length > 0) {
       // Additional tracking with UTM context can be added here
       console.log("UTM params:", utmParams);
+    }
+
+    // Load PDF testing utilities in development mode
+    if (process.env.NODE_ENV === "development") {
+      import("@/lib/pdf/testPDFGeneration").catch(() => {
+        // Silently fail if module can't be loaded (e.g., SSR)
+      });
     }
   }, []); // Only run once on mount
 
@@ -145,7 +154,7 @@ export default function ResultsPanel({
   const [openSections, setOpenSections] = useState<string[]>(["eligibility", "costs"]);
 
   // Restricted sections that require login
-  const restrictedSections = ["cashFlow", "projections", "sensitivity", "tax"];
+  const restrictedSections = ["cashFlow", "projections", "comparison", "sensitivity", "tax"];
 
   // Benchmark data state
   const [benchmarkData, setBenchmarkData] = useState<BenchmarkData | null>(null);
@@ -309,6 +318,35 @@ export default function ResultsPanel({
       formData.isOrdinarilyResident,
     ]
   );
+
+  // PDF download handler - calls parent's onDownloadPDF which handles auth
+  // Defined after investmentAnalytics to ensure it's available
+  const handleDownloadPDF = useCallback(async () => {
+    console.log("🟢 ResultsPanel.handleDownloadPDF called");
+    console.log("   _onDownloadPDF exists:", !!_onDownloadPDF);
+    console.log("   investmentAnalytics:", {
+      exists: !!investmentAnalytics,
+      type: typeof investmentAnalytics,
+      keys: investmentAnalytics ? Object.keys(investmentAnalytics) : [],
+      hasYearByYear: !!investmentAnalytics?.yearByYear,
+    });
+    
+    if (!_onDownloadPDF) {
+      console.error("❌ _onDownloadPDF is not defined!");
+      return;
+    }
+    
+    setIsGeneratingPDF(true);
+    try {
+      console.log("   Calling _onDownloadPDF with investmentAnalytics...");
+      await _onDownloadPDF(investmentAnalytics);
+      console.log("   _onDownloadPDF completed");
+    } catch (error) {
+      console.error("❌ PDF download error:", error);
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  }, [_onDownloadPDF, investmentAnalytics]);
 
   // Fetch benchmark data on mount
   useEffect(() => {
@@ -612,6 +650,16 @@ export default function ResultsPanel({
         content: <ProjectionChart analytics={investmentAnalytics} />,
       },
       {
+        id: "comparison",
+        title:
+          tAnalytics("comparison.title") ===
+          "FIRBCalculator.results.investmentAnalytics.comparison.title"
+            ? "Investment Comparison"
+            : tAnalytics("comparison.title"),
+        description: tAnalytics("comparison.description"),
+        content: <InvestmentComparison analytics={investmentAnalytics} />,
+      },
+      {
         id: "sensitivity",
         title:
           tAnalytics("sensitivity.title") ===
@@ -657,13 +705,26 @@ export default function ResultsPanel({
 
   const renderActionCluster = () => (
     <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
-      {/* Temporarily disabled: re-enable when PDF downloads are available again */}
-      {PDF_DOWNLOAD_ENABLED && (
-        <Button onClick={handlePrint} variant="default" size="lg" className="gap-2 rounded">
-          <Download className="h-5 w-5" />
-          {t("actions.downloadPDF")}
-        </Button>
-      )}
+      {/* PDF Download Button - always visible, auth check happens in handler */}
+      <Button
+        onClick={handleDownloadPDF}
+        variant="default"
+        size="lg"
+        className="gap-2 rounded"
+        disabled={isGeneratingPDF || !_onDownloadPDF}
+      >
+        {isGeneratingPDF ? (
+          <>
+            <Loader2 className="h-5 w-5 animate-spin" />
+            {t("actions.generatingPDF") || "Generating PDF..."}
+          </>
+        ) : (
+          <>
+            <Download className="h-5 w-5" />
+            {t("actions.downloadPDF")}
+          </>
+        )}
+      </Button>
 
       <SaveCalculationButton
         calculationData={calculationData}

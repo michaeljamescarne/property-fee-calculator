@@ -18,3 +18,5 @@ export default function AuthenticatedNavigation() {
 
   return <Navigation />;
 }
+
+

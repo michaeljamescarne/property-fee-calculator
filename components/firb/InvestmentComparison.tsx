@@ -199,33 +199,35 @@ export default function InvestmentComparison({ analytics }: InvestmentComparison
       )}
 
       {/* Comparison Chart */}
-      <ResponsiveContainer width="100%" height={350}>
-        <BarChart
-          data={comparisonData}
-          layout="vertical"
-          margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" horizontal={false} />
-          <XAxis
-            type="number"
-            stroke="#6B7280"
-            tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-          />
-          <YAxis
-            type="category"
-            dataKey="name"
-            stroke="#6B7280"
-            width={110}
-            tick={{ fontSize: 12 }}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Bar dataKey="return" radius={[0, 8, 8, 0]}>
-            {comparisonData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.fill} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+      <div id="roi-comparison-chart-container" className="w-full">
+        <ResponsiveContainer width="100%" height={350}>
+          <BarChart
+            data={comparisonData}
+            layout="vertical"
+            margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" horizontal={false} />
+            <XAxis
+              type="number"
+              stroke="#6B7280"
+              tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+            />
+            <YAxis
+              type="category"
+              dataKey="name"
+              stroke="#6B7280"
+              width={110}
+              tick={{ fontSize: 12 }}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Bar dataKey="return" radius={[0, 8, 8, 0]}>
+              {comparisonData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
 
       {/* Detailed Comparison Table */}
       <div>

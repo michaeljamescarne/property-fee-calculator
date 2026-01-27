@@ -7,11 +7,14 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 // Color constants matching template design
+// Updated to match purple/indigo web theme
 export const COLORS = {
-  primary: "#3B82F6", // Blue
-  success: "#10B981", // Green
-  danger: "#DC2626", // Red
-  warning: "#F97316", // Orange
+  primary: "#8B5CF6", // Violet-500 - matches web interface
+  primaryDark: "#7C3AED", // Violet-600
+  primaryLight: "#A78BFA", // Violet-400
+  success: "#10B981", // Green-500 - already matches web
+  danger: "#EF4444", // Red-500 - matches web (was #DC2626)
+  warning: "#F59E0B", // Amber-500 - matches web (was #F97316)
   gray: {
     50: "#F9FAFB",
     100: "#F3F4F6",
@@ -415,12 +418,24 @@ export function addPageBreak(doc: jsPDF): number {
  * Formats currency values with proper locale formatting
  */
 export function formatCurrency(amount: number, currency: string = "AUD"): string {
-  return new Intl.NumberFormat("en-AU", {
-    style: "currency",
-    currency: currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount);
+  // Validate input - handle NaN, Infinity, and null/undefined
+  if (typeof amount !== "number" || !isFinite(amount) || isNaN(amount)) {
+    console.warn(`Invalid amount for formatCurrency: ${amount}, defaulting to $0`);
+    return "$0";
+  }
+  
+  try {
+    return new Intl.NumberFormat("en-AU", {
+      style: "currency",
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  } catch (error) {
+    console.error(`Error formatting currency for amount ${amount}:`, error);
+    // Fallback formatting
+    return `$${Math.round(amount).toLocaleString("en-AU")}`;
+  }
 }
 
 /**

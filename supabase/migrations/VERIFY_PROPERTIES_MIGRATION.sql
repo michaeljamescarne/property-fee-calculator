@@ -174,3 +174,5 @@ WHERE event_object_table IN ('properties', 'property_transactions');
 
 -- Expected: All categories showing ✅ status
 
+
+
