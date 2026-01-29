@@ -12,7 +12,7 @@ import type { FIRBCalculatorFormData } from "@/lib/validations/firb";
 import type { EligibilityResult } from "@/lib/firb/eligibility";
 import type { CostBreakdown } from "@/lib/firb/calculations";
 import type { InvestmentAnalytics } from "@/types/investment";
-import { getPDFTranslations } from "@/lib/pdf/pdfTranslations";
+import { loadPDFTranslations } from "@/lib/pdf/pdfTranslations";
 
 interface PDFGenerateRequest {
   formData: Partial<FIRBCalculatorFormData>;
@@ -46,39 +46,38 @@ export async function POST(request: NextRequest) {
     console.log("📄 PDF Generation Request:", {
       hasAnalytics: !!analytics,
       hasChartImages: !!chartImages,
-      chartImagesDetail: chartImages ? {
-        projection: {
-          exists: !!chartImages.projectionChart,
-          length: chartImages.projectionChart?.length || 0,
-          isValid: chartImages.projectionChart?.startsWith("data:image/") || false,
-          preview: chartImages.projectionChart?.substring(0, 50) || "N/A",
-        },
-        cashFlow: {
-          exists: !!chartImages.cashFlowChart,
-          length: chartImages.cashFlowChart?.length || 0,
-          isValid: chartImages.cashFlowChart?.startsWith("data:image/") || false,
-          preview: chartImages.cashFlowChart?.substring(0, 50) || "N/A",
-        },
-        roiComparison: {
-          exists: !!chartImages.roiComparisonChart,
-          length: chartImages.roiComparisonChart?.length || 0,
-          isValid: chartImages.roiComparisonChart?.startsWith("data:image/") || false,
-          preview: chartImages.roiComparisonChart?.substring(0, 50) || "N/A",
-        },
-      } : null,
+      chartImagesDetail: chartImages
+        ? {
+            projection: {
+              exists: !!chartImages.projectionChart,
+              length: chartImages.projectionChart?.length || 0,
+              isValid: chartImages.projectionChart?.startsWith("data:image/") || false,
+              preview: chartImages.projectionChart?.substring(0, 50) || "N/A",
+            },
+            cashFlow: {
+              exists: !!chartImages.cashFlowChart,
+              length: chartImages.cashFlowChart?.length || 0,
+              isValid: chartImages.cashFlowChart?.startsWith("data:image/") || false,
+              preview: chartImages.cashFlowChart?.substring(0, 50) || "N/A",
+            },
+            roiComparison: {
+              exists: !!chartImages.roiComparisonChart,
+              length: chartImages.roiComparisonChart?.length || 0,
+              isValid: chartImages.roiComparisonChart?.startsWith("data:image/") || false,
+              preview: chartImages.roiComparisonChart?.substring(0, 50) || "N/A",
+            },
+          }
+        : null,
       locale,
     });
 
     // 3. Validate required data
     if (!formData || !eligibility || !costs) {
-      return NextResponse.json(
-        { error: "Missing required calculation data" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing required calculation data" }, { status: 400 });
     }
 
     // 4. Get PDF translations
-    const translations = getPDFTranslations(locale);
+    const translations = await loadPDFTranslations(locale);
 
     // 5. Generate PDF
     let pdfBlob: Blob;
